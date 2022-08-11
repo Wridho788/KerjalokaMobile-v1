@@ -10,26 +10,33 @@
         <entry key="app/src/main/res/drawable/button_circle_secondary_white.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_enabled_primary.xml" value="0.199" />
         <entry key="app/src/main/res/drawable/button_flat_primary.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/button_primary.xml" value="0.2165" />
         <entry key="app/src/main/res/drawable/button_primary_disabled.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_hoover.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_white_disable.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_white_hoover.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/button_primary_white_style.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/button_secondary.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_hoover.xml" value="0.112" />
+        <entry key="app/src/main/res/drawable/button_secondary_style.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/button_secondary_white.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
+        <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka_round.xml" value="0.177" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.177" />
       </map>
     </option>
   </component>

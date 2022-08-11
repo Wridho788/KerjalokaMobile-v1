@@ -67,6 +67,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+                                                <entry key="color" value="000000" />
                                                 <entry key="imagePath" value="/private/var/folders/18/vbm0jbv97hl9qntgdbv_wr5h0000gn/T/ic_android_black_24dp.xml" />
                                               </map>
                                             </option>
@@ -79,7 +80,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$PROJECT_DIR$/app/src/main/res/drawable/ic_kerjaloka.png" />
+                                                <entry key="imagePath" value="$USER_HOME$/Downloads/Rectangle 1865.png" />
                                                 <entry key="scalingPercent" value="47" />
                                               </map>
                                             </option>
