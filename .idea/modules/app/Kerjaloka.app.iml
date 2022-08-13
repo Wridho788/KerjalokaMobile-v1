@@ -4,7 +4,11 @@
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
         <option name="GRADLE_PROJECT_PATH" value=":app" />
+<<<<<<< HEAD
         <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" />
+=======
+        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="7.2.2" />
+>>>>>>> a42309bec63cd854e6a3b844dc504693a15993d0
         <option name="LAST_KNOWN_AGP_VERSION" value="7.2.2" />
       </configuration>
     </facet>

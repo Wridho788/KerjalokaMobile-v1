@@ -7,4 +7,39 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--  customize color -->
+
+    <!--  danger color  -->
+    <color name="danger_100">#FFF1F1</color>
+    <color name="danger_300">#FFDEDE</color>
+    <color name="danger_500">#FF6666</color>
+    <color name="danger_700">#E74D4D</color>
+    <color name="danger_900">#C12929</color>
+
+    <!--  light color  -->
+    <color name="light_100">#FFFFFF</color>
+    <color name="light_300">#FAFAFA</color>
+    <color name="light_500">#E9E9E9</color>
+
+    <!-- trueGray color   -->
+    <color name="trueGray_100">#C4C4C4</color>
+    <color name="trueGray_300">#999999</color>
+    <color name="trueGray_500">#595959</color>
+    <color name="trueGray_700">#393939</color>
+
+    <!--    dark color -->
+    <color name="dark_100">#111111</color>
+
+    <!--  green color  -->
+    <color name="green_100">#E5F5EC</color>
+    <color name="green_300">#27AE60</color>
+
+    <!--    amber color-->
+    <color name="amber_100">#FFEFAC</color>
+    <color name="amber_300">#F0C718</color>
+    <color name="amber_500">#F38B01</color>
+
+    <!--    info color -->
+    <color name="info_900">#086599</color>
 </resources>
