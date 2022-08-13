@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.WelcomingPage.SplashScreen.SplashScreen">
+    tools:context=".ui.WelcomingPage.SplashScreen.SplashScreen"
+    android:background="@android:color/white"
+    >
 
 
     <LinearLayout
@@ -18,7 +20,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:textAlignment="center"
         android:gravity="center"
-        android:background="@android:color/white"
         >
 
         <ImageView

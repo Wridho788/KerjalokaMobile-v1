@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.WelcomingPage.OnBoarding.OnBoarding
 
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +22,7 @@ class SplashScreen : AppCompatActivity() {
         backgroundImg.startAnimation(sideAnimation)
 
         Handler(). postDelayed({
-          startActivity(Intent(this,MainActivity::class.java))
+          startActivity(Intent(this,OnBoarding::class.java))
             finish()
         },3000)
     }
