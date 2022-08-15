@@ -19,7 +19,9 @@ class OnBoardingItemAdapter(private val onboardingItems: List<OnBoardingItem>) :
 RecyclerView.Adapter<OnBoardingItemAdapter.OnBoarding>()
 {
     inner class OnBoarding(view: View) : RecyclerView.ViewHolder(view){
-        private val imageOnBoarding = view.findViewById<ImageView>(R.id.imageOnBoarding)
+//        private val Title = view.findViewById<TextView>(R.id.Title)
+//        private val Description = view.findViewById<TextView>(R.id.Description)
+        private val imageOnBoarding= view.findViewById<ImageView>(R.id.imageOnBoarding)
         private val Title = view.findViewById<TextView>(R.id.Title)
         private val Description = view.findViewById<TextView>(R.id.Description)
 
