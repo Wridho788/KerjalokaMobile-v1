@@ -2,42 +2,51 @@ package com.ciptakerjaarunika.kerjaloka.ui.WelcomingPage.OnBoarding
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.LinearLayout
+import android.view.View
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.ciptakerjaarunika.kerjaloka.R
+import com.google.android.material.button.MaterialButton
 
 class OnBoarding : AppCompatActivity() {
 
     private lateinit var onboardingItemsAdapter: OnBoardingItemAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_on_boarding2)
         setOnBoardingItems()
     }
 
+
+
     private fun setOnBoardingItems(){
+
         onboardingItemsAdapter = OnBoardingItemAdapter(
             listOf(
                 OnBoardingItem(
-                    onboardingImage = R.drawable.apply,
+                    id =1,
+                    onboardingImage = R.drawable.cv,
                     title = "Melamar Pekerjaan",
-                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                ),
+                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+                    ),
                 OnBoardingItem(
-                    onboardingImage = R.drawable.cv,
+                    id=2,
+                    onboardingImage = R.drawable.apply,
                     title = "Melamar Wanita Pujaanmu",
-                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
                 ),
                 OnBoardingItem(
+                    id=3,
+                    onboardingImage = R.drawable.cv,
+                    title = "Lorem Ipsum",
+                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+                ),
+                OnBoardingItem(
+                    id =4,
                     onboardingImage = R.drawable.apply,
                     title = "Lorem Ipsum",
-                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-                ),
-                OnBoardingItem(
-                    onboardingImage = R.drawable.cv,
-                    title = "Lorem Ipsum",
-                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
+                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
                 )
             )
         )
