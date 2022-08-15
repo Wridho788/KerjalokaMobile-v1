@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.interview -> replaceFragment((InterviewPage()))
                 R.id.akun -> replaceFragment((AkunPage()))
 
-                else
+                else ->{
 
                 }
             }

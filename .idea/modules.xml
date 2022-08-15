@@ -3,10 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Kerjaloka.iml" filepath="$PROJECT_DIR$/.idea/modules/Kerjaloka.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.Kerjaloka.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.Kerjaloka.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.Kerjaloka.app.androidTest~1.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.Kerjaloka.app.androidTest~1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.Kerjaloka.app.main~1.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.Kerjaloka.app.main~1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.Kerjaloka.app.unitTest~1.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.Kerjaloka.app.unitTest~1.iml" />
     </modules>
   </component>
 </project>
