@@ -77,14 +77,11 @@
                 android:id="@+id/my_test_section"
                 layout="@layout/section_my_test" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/content"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+            <include
+                android:id="@+id/my_interview_section"
+                layout="@layout/section_my_interview" />
 
+            <include android:id="@+id/recommandation_job_section" layout="@layout/section_recommendation_job" />
 
         </LinearLayout>
 

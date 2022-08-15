@@ -39,4 +39,8 @@ Mauris vel orci blandit, venenatis nisl nec, gravida ligula. Aenean sagittis arc
     <string name="date_test">30 Dec 2019 pada 05:18</string>
     <string name="sub_title_test">Dapat dikerjakan sebelum:</string>
     <string name="timer_text">180 min</string>
+    <string name="my_interview">Interview Saya</string>
+    <string name="title_job_interview">Enterprise Sales Representative</string>
+    <string name="name_of_interviewer">Nama Interviewer:</string>
+    <string name="interviewer">John Doe</string>
 </resources>
