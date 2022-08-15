@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -29,7 +30,7 @@ class HomePage : Fragment() {
     ): View? {
 //        val see_all = findViewById(R.id.btn_see_all) as TextView
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val btn_search = view.findViewById<MaterialButton>(R.id.btn_search) as MaterialButton
+        val btn_search = view.findViewById<LinearLayout>(R.id.btn_search) as LinearLayout
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn) as MaterialButton
         val btn_job = view.findViewById<MaterialCardView>(R.id.btn_job) as MaterialCardView
         val btn_company = view.findViewById<MaterialCardView>(R.id.btn_company) as MaterialCardView
@@ -38,10 +39,16 @@ class HomePage : Fragment() {
         var btn_see_all = view.findViewById<TextView>(R.id.btn_see_all) as TextView
         var card_test_section =
             view.findViewById<MaterialCardView>(R.id.card_test) as MaterialCardView
-        var card_interview_section = view.findViewById<MaterialCardView>(R.id.card_interview) as MaterialCardView;
-        var btn_see_all_interview = view.findViewById<TextView>(R.id.btn_see_all_interview) as TextView;
-        var card_recommendation_job = view.findViewById<MaterialCardView>(R.id.card_recommendation_job) as MaterialCardView;
-        var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
+        var card_interview_section =
+            view.findViewById<MaterialCardView>(R.id.card_interview) as MaterialCardView
+        var btn_see_all_interview =
+            view.findViewById<TextView>(R.id.btn_see_all_interview) as TextView
+        var card_recommendation_job =
+            view.findViewById<MaterialCardView>(R.id.card_recommendation_job) as MaterialCardView
+        var btn_see_all_recommendation_job =
+            view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView
+        var btn_bookmark = view.findViewById<MaterialButton>(R.id.btn_bookmark) as MaterialButton
+        var btn_share = view.findViewById<MaterialButton>(R.id.btn_share) as MaterialButton
 
         btn_search.setOnClickListener {
             // code here to handle intent to search activity
@@ -85,6 +92,14 @@ class HomePage : Fragment() {
         btn_see_all_recommendation_job.setOnClickListener {
             // code here to handle intent to see all activity
             Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
+        }
+        btn_bookmark.setOnClickListener {
+            // code here to handle intent to bookmark activity
+            Toast.makeText(activity, "bookmark", Toast.LENGTH_SHORT).show()
+        }
+        btn_share.setOnClickListener {
+            // code here to handle intent to share activity
+            Toast.makeText(activity, "share", Toast.LENGTH_SHORT).show()
         }
         // Inflate the layout for this fragment
         return view

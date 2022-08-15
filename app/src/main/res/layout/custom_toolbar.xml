@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+android:background="@null"    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-            android:paddingVertical="18dp">
+       >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -49,39 +50,47 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-                <com.google.android.material.button.MaterialButton
+                <LinearLayout
                     android:id="@+id/btn_search"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
+                    android:layout_weight="1"
                     android:background="@drawable/search_bar_background"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="start"
-                    android:paddingEnd="60dp"
-                    android:text="@string/search_placeholder"
-                    android:textAllCaps="false"
-                    android:textColor="#546E7A"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="@color/light_300"
-                    app:icon="@drawable/ic_search"
-                    app:iconTint="@color/trueGray_50"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.023"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="RtlSymmetry"
-                    tools:text="Cari Kerja atau Perusahaan" />
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginHorizontal="15dp"
+                        android:src="@drawable/ic_search"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginHorizontal="5dp"
+                        android:paddingVertical="8dp"
+                        android:text="@string/search_placeholder" />
+
+                </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/notif_btn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/white"
                     android:gravity="center"
                     android:insetLeft="0dp"
@@ -93,13 +102,8 @@
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
                     app:iconSize="27dp"
-                    app:iconTint="@color/danger_500"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@id/btn_search"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:iconTint="@color/danger_500" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
