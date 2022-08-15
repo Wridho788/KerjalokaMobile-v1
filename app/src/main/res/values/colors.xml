@@ -42,11 +42,8 @@
 
     <!--    info color -->
     <color name="info_900">#086599</color>
-<<<<<<< HEAD
-=======
     <color name="light_blue_400">#FF29B6F6</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
->>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
 </resources>
