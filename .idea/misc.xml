@@ -24,15 +24,26 @@
         <entry key="app/src/main/res/drawable/button_secondary_white_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
+        <entry key="app/src/main/res/drawable/custom_app_bar_background.xml" value="0.3465" />
+        <entry key="app/src/main/res/drawable/ic_notif_svg.xml" value="0.233" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.3465" />
+        <entry key="app/src/main/res/drawable/search_bar_background.xml" value="0.3465" />
+        <entry key="app/src/main/res/drawable/search_btn.xml" value="0.3465" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
+        <entry key="app/src/main/res/layout/content_card.xml" value="0.29981884057971014" />
+        <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.49635416666666665" />
+        <entry key="app/src/main/res/layout/find_category.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3508449669360764" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
+        <entry key="app/src/main/res/layout/section_find_category.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/section_my_test.xml" value="0.375" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka_round.xml" value="0.177" />
