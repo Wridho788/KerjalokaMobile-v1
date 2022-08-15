@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
@@ -15,7 +18,14 @@
         <entry key="app/src/main/res/drawable/button_primary.xml" value="0.2165" />
         <entry key="app/src/main/res/drawable/button_primary_disabled.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_hoover.xml" value="0.125" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/drawable/button_primary_white_disable.xml" value="0.125" />
+=======
+        <entry key="app/src/main/res/drawable/button_primary_style.xml" value="0.2855" />
+        <entry key="app/src/main/res/drawable/button_primary_white.xml" value="0.2855" />
+        <entry key="app/src/main/res/drawable/button_primary_white_disable.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/button_primary_white_disabled.xml" value="0.2855" />
+>>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
         <entry key="app/src/main/res/drawable/button_primary_white_hoover.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_white_style.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/button_secondary.xml" value="0.112" />
@@ -26,6 +36,12 @@
         <entry key="app/src/main/res/drawable/button_secondary_white_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
+<<<<<<< HEAD
+=======
+        <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2855" />
+        <entry key="app/src/main/res/drawable/ic_applicant.xml" value="0.2855" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.2855" />
+>>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
@@ -35,6 +51,11 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
+<<<<<<< HEAD
+=======
+        <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.1425925925925926" />
+        <entry key="app/src/main/res/layout/sample_myapplicant_card.xml" value="0.23489583333333333" />
+>>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka_round.xml" value="0.177" />
@@ -42,11 +63,24 @@
       </map>
     </option>
   </component>
+<<<<<<< HEAD
 >>>>>>> a42309bec63cd854e6a3b844dc504693a15993d0
+=======
+>>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1425925925925926" />
+      </ProjectState>
+    </option>
+  </component>
+>>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
 </project>
