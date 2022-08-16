@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.SearchActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -28,7 +30,6 @@ class HomePage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val see_all = findViewById(R.id.btn_see_all) as TextView
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val btn_search = view.findViewById<LinearLayout>(R.id.btn_search) as LinearLayout
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn) as MaterialButton
@@ -52,7 +53,12 @@ class HomePage : Fragment() {
 
         btn_search.setOnClickListener {
             // code here to handle intent to search activity
-            Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
+            // create intent to search activity
+            val intent = Intent(activity, SearchActivity::class.java)
+            // start activity
+            startActivity(intent)
+
+//            Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
         }
         btn_notif.setOnClickListener {
             // code here to handle intent to notification  activity
