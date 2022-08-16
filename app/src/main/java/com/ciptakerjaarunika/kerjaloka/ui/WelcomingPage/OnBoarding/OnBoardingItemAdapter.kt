@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
-import java.util.*
 
 
 data class OnBoardingItem(
@@ -23,49 +22,54 @@ data class OnBoardingItem(
 )
 
 class OnBoardingItemAdapter(private val onboardingItems: List<OnBoardingItem>) :
-RecyclerView.Adapter<OnBoardingItemAdapter.OnBoarding>()
-{
+    RecyclerView.Adapter<OnBoardingItemAdapter.OnBoarding>() {
 
-    inner class OnBoarding(view: View, context: Context) : RecyclerView.ViewHolder(view){
+    inner class OnBoarding(view: View, context: Context) : RecyclerView.ViewHolder(view) {
 
-        private val imageOnBoarding= view.findViewById<ImageView>(R.id.imageOnBoarding)
+        private val imageOnBoarding = view.findViewById<ImageView>(R.id.imageOnBoarding)
         private val Title = view.findViewById<TextView>(R.id.Title)
         private val Description = view.findViewById<TextView>(R.id.Description)
         private val Mulai = view.findViewById<MaterialButton>(R.id.mulai)
 
-        fun bind(onboardingItem: OnBoardingItem){
+        fun bind(onboardingItem: OnBoardingItem) {
             imageOnBoarding.setImageResource(onboardingItem.onboardingImage)
             Title.text = onboardingItem.title
             Description.text = onboardingItem.description
-            if(onboardingItem.id==4){
+            Mulai.setOnClickListener(View.OnClickListener {
+                val context=Mulai.context
+                val intent = Intent( context, MainActivity::class.java)
+                context.startActivity(intent)
+            })
+            if (onboardingItem.id == 4) {
                 Mulai.isVisible = true
 
             }
-//            Mulai.setOnClickListener(object: View.OnClickListener) {
-//                fun onClick(view: View): Unit {
-//                    val intent = Intent(context, MainActivity::class.java);
-//                    startActivity(intent);
-//                }
-//            })
+
         }
 
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBoarding {
-        val view = OnBoarding(
+        return OnBoarding(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.onboarding_container,
                 parent,
                 false
-            )
+            ), parent.context
         )
-
-        return view;
     }
 
     override fun onBindViewHolder(holder: OnBoarding, position: Int) {
         holder.bind(onboardingItems[position])
+        holder.itemView.setOnClickListener {
+            if (position == onboardingItems.size - 1) {
+                val context=holder.itemView.context
+                val intent = Intent( context, MainActivity::class.java)
+                context.startActivity(intent)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {
