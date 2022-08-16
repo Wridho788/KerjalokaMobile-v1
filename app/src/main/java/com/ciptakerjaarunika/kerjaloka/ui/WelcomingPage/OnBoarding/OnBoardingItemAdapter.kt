@@ -62,14 +62,6 @@ class OnBoardingItemAdapter(private val onboardingItems: List<OnBoardingItem>) :
 
     override fun onBindViewHolder(holder: OnBoarding, position: Int) {
         holder.bind(onboardingItems[position])
-        holder.itemView.setOnClickListener {
-            if (position == onboardingItems.size - 1) {
-                val context=holder.itemView.context
-                val intent = Intent( context, MainActivity::class.java)
-                context.startActivity(intent)
-            }
-        }
-
     }
 
     override fun getItemCount(): Int {
