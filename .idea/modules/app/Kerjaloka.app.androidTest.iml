@@ -142,5 +142,4 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.navigation:navigation-ui-ktx:2.3.5@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.navigation:navigation-ui:2.3.5@aar" level="project" />
   </component>
-  <component name="TestModuleProperties" production-module="Kerjaloka.app.main" />
 </module>
