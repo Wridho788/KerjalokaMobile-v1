@@ -33,7 +33,6 @@ RecyclerView.Adapter<OnBoardingItemAdapter.OnBoarding>()
         private val Title = view.findViewById<TextView>(R.id.Title)
         private val Description = view.findViewById<TextView>(R.id.Description)
         private val Mulai = view.findViewById<MaterialButton>(R.id.mulai)
-        //val btn_Mulai = view.findViewById<MaterialButton>(R.id.mulai)
 
         fun bind(onboardingItem: OnBoardingItem){
             imageOnBoarding.setImageResource(onboardingItem.onboardingImage)
@@ -42,12 +41,6 @@ RecyclerView.Adapter<OnBoardingItemAdapter.OnBoarding>()
             if(onboardingItem.id==4){
                 Mulai.isVisible = true
             }
-//            Mulai.setOnClickListener(object: View.OnClickListener) {
-//                fun onClick(view: View): Unit {
-//                    val intent = Intent(context, MainActivity::class.java);
-//                    startActivity(intent);
-//                }
-//            })
         }
 
 
