@@ -5,7 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.Kerjaloka.NoActionBar"
-    tools:context=".ui.WelcomingPage.OnBoarding.OnBoarding">
+    tools:context=".ui.WelcomingPage.OnBoarding.OnBoarding"
+    tools:ignore="MissingClass">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/OnBoardingViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+    />
 
     <TextView
         android:id="@+id/textSkip"
@@ -22,22 +33,15 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/OnBoardingViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="50sp"
-    />
-
-
-
-
-
-
-
-
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        app:ci_drawable_unselected="@drawable/ic_unselected_indicator"
+        app:ci_drawable="@drawable/ic_selected"
+        app:layout_constraintBottom_toBottomOf="@id/OnBoardingViewPager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="97sp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

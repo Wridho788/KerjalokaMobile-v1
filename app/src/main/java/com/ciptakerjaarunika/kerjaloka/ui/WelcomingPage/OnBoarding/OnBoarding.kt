@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
+import me.relex.circleindicator.CircleIndicator3
 
 class OnBoarding : AppCompatActivity() {
 
@@ -25,7 +26,6 @@ class OnBoarding : AppCompatActivity() {
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
         }
-
         setOnBoardingItems()
     }
 
@@ -63,5 +63,7 @@ class OnBoarding : AppCompatActivity() {
         )
         val onboardLayer = findViewById<ViewPager2>(R.id.OnBoardingViewPager)
         onboardLayer.adapter = onboardingItemsAdapter
+        val indicator = findViewById<CircleIndicator3>(R.id.indicator)
+        indicator.setViewPager(onboardLayer)
     }
 }
