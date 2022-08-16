@@ -31,6 +31,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:padding="15sp"
         />
 
     <me.relex.circleindicator.CircleIndicator3

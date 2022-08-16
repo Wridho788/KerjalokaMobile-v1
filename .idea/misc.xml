@@ -26,10 +26,12 @@
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/ic_selected.xml" value="0.333" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
         <entry key="app/src/main/res/layout/activity_on_boarding2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.3697916666666667" />

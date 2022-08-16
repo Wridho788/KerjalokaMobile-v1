@@ -3,14 +3,10 @@ package com.ciptakerjaarunika.kerjaloka.ui.WelcomingPage.OnBoarding
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.TextView
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
-import com.google.android.material.button.MaterialButton
 import me.relex.circleindicator.CircleIndicator3
 
 class OnBoarding : AppCompatActivity() {
