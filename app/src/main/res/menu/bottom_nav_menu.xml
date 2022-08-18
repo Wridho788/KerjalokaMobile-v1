@@ -11,7 +11,7 @@
         android:title="@string/lamaran" />
     <item
         android:id="@+id/interview"
-        android:icon="@drawable/ic_interview"
+        android:icon="@drawable/ic_chat"
         android:title="@string/interview" />
     <item
         android:id="@+id/akun"
