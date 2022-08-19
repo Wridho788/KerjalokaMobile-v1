@@ -1,17 +1,20 @@
 package com.ciptakerjaarunika.kerjaloka.utils
 
-import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Retro {
-    val apiHome = "https://api.kerjaloka.com/users/home/job"
+object Retro {
+    val Base_URL = "https://api.kerjaloka.com"
+    private var mRetrofit: Retrofit? = null
 
-    fun getRetroClientInstance(): Retrofit{
-        val clientApi = GsonBuilder().setLenient().create()
-        return Retrofit.Builder()
-            .baseUrl(apiHome)
-            .addConverterFactory(GsonConverterFactory.create(clientApi))
-            .build()
-    }
+    val client: Retrofit
+        get() {
+            if (mRetrofit == null) {
+                mRetrofit = Retrofit.Builder()
+                    .baseUrl(Base_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            }
+            return mRetrofit!!
+        }
 }

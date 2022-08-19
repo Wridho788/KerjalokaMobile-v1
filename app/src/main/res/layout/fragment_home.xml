@@ -81,7 +81,57 @@
                 android:id="@+id/my_interview_section"
                 layout="@layout/section_my_interview" />
 
-            <include android:id="@+id/recommandation_job_section" layout="@layout/section_recommendation_job" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/recommandation_job"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/btn_see_all_recommendation_jobs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/see_all"
+                            android:textColor="@color/danger_500"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <include
+                        android:id="@+id/list_recommendation_job"
+                        layout="@layout/list_recommendation_job" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <!--            <include-->
+            <!--                android:id="@+id/recommandation_job_section"-->
+            <!--                layout="@layout/section_recommendation_job" />-->
 
         </LinearLayout>
 
