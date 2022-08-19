@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,6 +29,24 @@ class InterviewPage : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+        }
+    }
+    private fun getData(): Object {
+        var list = listOf(
+            "Testing","Testing","Testing","Testing","Testing","Testing","Testing","Testing","Testing",
+            "Testing","Testing","Testing","Testing","Testing","Testing","Testing","Testing","Testing"
+        );
+
+        return list;
+    }
+    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(itemView, savedInstanceState)
+//        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
+//        toolbar.setTitle("Lamaran Saya")
+        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = interview_adapter(getData())
         }
     }
 

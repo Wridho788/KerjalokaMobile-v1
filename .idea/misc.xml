@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-anydpi-v24/ic_attach_file.xml" value="0.2145" />
+        <entry key="app/src/main/res/drawable-anydpi-v24/ic_emoji.xml" value="0.2145" />
         <entry key="app/src/main/res/drawable/btn_circle.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_circle_primary.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_circle_primary_white.xml" value="0.1395" />
@@ -34,6 +36,7 @@
         <entry key="app/src/main/res/drawable/left_message1.xml" value="0.1585" />
         <entry key="app/src/main/res/drawable/left_message2.xml" value="0.1585" />
         <entry key="app/src/main/res/drawable/message_card.xml" value="0.1585" />
+        <entry key="app/src/main/res/drawable/right_message1.xml" value="0.138" />
         <entry key="app/src/main/res/drawable/right_message2.xml" value="0.1585" />
         <entry key="app/src/main/res/drawable/round_background.xml" value="0.1925" />
         <entry key="app/src/main/res/drawable/search_bar_background.xml" value="0.1925" />
@@ -43,17 +46,19 @@
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
+        <entry key="app/src/main/res/layout/chat_page.xml" value="0.375" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.20436083796494228" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.3546666666666667" />
+        <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.329608938547486" />
         <entry key="app/src/main/res/layout/message_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/message_section.xml" value="0.335" />
         <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.19281744335185977" />
         <entry key="app/src/main/res/layout/sample_myapplicant_card.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/layout/search_component.xml" value="0.375" />
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.3817870884993587" />
+        <entry key="app/src/main/res/layout/section_my_test.xml" value="0.18896964514749892" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka_round.xml" value="0.177" />

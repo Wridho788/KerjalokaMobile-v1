@@ -20,8 +20,8 @@
                 android:id="@+id/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hi"
-                android:textSize="16dp"
+                android:text="Reyhan Keren Abizzz"
+                android:textSize="12dp"
                 android:textFontWeight="900"
                android:fontFamily="@font/poppins"/>
 
@@ -32,6 +32,7 @@
         android:text="Terkirim 11:09"
         android:textSize="11dp"
         android:textFontWeight="200"
+
         android:fontFamily="@font/poppins"
         />
 

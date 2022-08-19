@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/userPhoto"
-        android:src="@drawable/ic_account"
+        android:src="@drawable/kerjaloka_logo_small"
         android:scaleType="centerInside"
         />
     </androidx.cardview.widget.CardView>
@@ -61,16 +61,19 @@
             android:layout_height="18dp"
             android:layout_marginBottom="5dp"
             android:text="17:47"
-            android:textSize="15dp"
+            android:textSize="12dp"
             android:fontFamily="@font/poppins"
             android:textAlignment="textEnd"/>
         <TextView
             android:id="@+id/not_read"
             android:layout_width="25dp"
             android:layout_height="20dp"
+            android:paddingTop="2dp"
             android:fontFamily="@font/poppins"
             android:textColor="@color/white"
             android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="10dp"
             android:textFontWeight="700"
             android:ellipsize="end"
             android:singleLine="true"
