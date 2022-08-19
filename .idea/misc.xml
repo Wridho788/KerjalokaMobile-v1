@@ -35,6 +35,7 @@
         <entry key="app/src/main/res/drawable/left_message2.xml" value="0.1585" />
         <entry key="app/src/main/res/drawable/message_card.xml" value="0.1585" />
         <entry key="app/src/main/res/drawable/right_message2.xml" value="0.1585" />
+        <entry key="app/src/main/res/drawable/text_rounded.xml" value="0.2145" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
@@ -45,6 +46,7 @@
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/message_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/message_section.xml" value="0.335" />
         <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.19281744335185977" />
         <entry key="app/src/main/res/layout/sample_myapplicant_card.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
