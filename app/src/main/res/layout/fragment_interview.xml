@@ -3,24 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.InterviewPage.InterviewPage">
+    tools:context=".ui.InterviewPage.InterviewPage"
+    android:padding="15dp">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <EditText
-            android:layout_width=""
-            android:layout_height=""
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/search"
+            layout="@layout/search_component"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/message_section" />
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Interview Page"
-        android:fontFamily="@font/poppins_bold"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="@color/danger_500"
-        android:layout_gravity="center"
-        />
 
 </FrameLayout>
