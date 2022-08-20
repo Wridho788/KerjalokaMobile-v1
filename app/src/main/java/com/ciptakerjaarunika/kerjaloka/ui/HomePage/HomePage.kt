@@ -11,19 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
-import com.ciptakerjaarunika.kerjaloka.utils.Retro
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomePage.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomePage : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>? = null
@@ -43,7 +35,6 @@ class HomePage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val see_all = findViewById(R.id.btn_see_all) as TextView
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val btn_search = view.findViewById<MaterialButton>(R.id.btn_search) as MaterialButton
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn) as MaterialButton
@@ -94,20 +85,67 @@ class HomePage : Fragment() {
 //            // code here to handle intent to see all activity
 //            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
 //        }
-//    ®
+
         // Inflate the layout for this fragment
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.list_recommendation_job) as RecyclerView
+
+        val list = ArrayList<rJobModel>()
+        val rJob1 = rJobModel(
+            1,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+        val rJob2 = rJobModel(
+            2,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+        val rJob3 = rJobModel(
+            3,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+        val rJob4 = rJobModel(
+            4,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+        val rJob5 = rJobModel(
+            5,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+
+        list.add(rJob1)
+        list.add(rJob2)
+        list.add(rJob3)
+        list.add(rJob4)
+        list.add(rJob5)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = RecommendationJobAdapter()
+        adapter = RecommendationJobAdapter(list)
         recyclerView.adapter = adapter
     }
-
 
 
     companion object {
