@@ -6,6 +6,7 @@
     android:layout_height="50dp"
     android:layout_marginVertical="15dp"
     android:clickable="true"
+    android:id="@+id/section_container"
     android:orientation="horizontal">
     <androidx.cardview.widget.CardView
         android:layout_width="50dp"
@@ -30,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/userName"
+            android:id="@+id/sectionName"
             android:text="PT. Cipta Kerja Arunika Nusantara"
             android:textSize="15dp"
             android:ellipsize="end"
