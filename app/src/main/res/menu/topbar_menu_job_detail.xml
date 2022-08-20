@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    <item-->
+<!--        android:id="@+id/backButton"-->
+<!--        android:icon="@drawable/ic_back"-->
+<!--        -->
+<!--        app:showAsAction="ifRoom" />-->
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_bookmark_filled"
+        app:showAsAction="always"
+        tools:ignore="UnusedAttribute" />
+
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/ic_share_filled"
+        android:iconTint="@color/white"
+        app:showAsAction="always" />
+
+</menu>

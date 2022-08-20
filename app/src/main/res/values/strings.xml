@@ -44,4 +44,7 @@ Mauris vel orci blandit, venenatis nisl nec, gravida ligula. Aenean sagittis arc
     <string name="name_of_interviewer">Nama Interviewer:</string>
     <string name="interviewer">John Doe</string>
     <string name="recommandation_job">Pekerjaan Rekomendasi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lamar_kerja">Lamar Kerjaan</string>
 </resources>
