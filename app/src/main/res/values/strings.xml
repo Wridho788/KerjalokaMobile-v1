@@ -43,4 +43,5 @@ Mauris vel orci blandit, venenatis nisl nec, gravida ligula. Aenean sagittis arc
     <string name="title_job_interview">Enterprise Sales Representative</string>
     <string name="name_of_interviewer">Nama Interviewer:</string>
     <string name="interviewer">John Doe</string>
+    <string name="recommandation_job">Pekerjaan Rekomendasi</string>
 </resources>
