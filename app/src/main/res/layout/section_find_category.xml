@@ -35,7 +35,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical"
+<<<<<<< HEAD
                 android:paddingHorizontal="8dp"
+=======
+                android:paddingHorizontal="4dp"
+>>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
@@ -75,7 +79,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical"
+<<<<<<< HEAD
                 android:paddingHorizontal="8dp"
+=======
+                android:paddingHorizontal="4dp"
+>>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
@@ -93,6 +101,10 @@
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins"
                     android:text="@string/company"
+<<<<<<< HEAD
+=======
+                    android:textAlignment="center"
+>>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
                     android:textColor="@color/trueGray_500"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -114,7 +126,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical"
+<<<<<<< HEAD
                 android:paddingHorizontal="8dp"
+=======
+                android:paddingHorizontal="4dp"
+>>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
                 tools:ignore="UseCompoundDrawables">
 
                 <ImageView
@@ -131,6 +147,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/poppins"
+<<<<<<< HEAD
+=======
+                    android:textAlignment="center"
+>>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
                     android:text="@string/job_offer"
                     android:textColor="@color/trueGray_500"
                     android:textSize="10sp"

@@ -50,7 +50,11 @@
             android:clickable="true"
             android:focusable="true"
             app:cardCornerRadius="10dp"
+<<<<<<< HEAD
             app:strokeColor="@color/trueGray_50"
+=======
+            app:strokeColor="@color/light_500"
+>>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
             app:strokeWidth="1dp"
             >
 
