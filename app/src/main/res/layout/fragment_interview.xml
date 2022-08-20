@@ -17,6 +17,7 @@
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@color/white"
         android:background="#FF6666"
+        android:elevation="5dp"
         app:title="Interview"/>
 
     <LinearLayout
