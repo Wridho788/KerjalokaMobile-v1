@@ -13,22 +13,93 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/mainAppbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
-            app:titleTextAppearance="@style/Theme.Kerjaloka"
             android:layout_height="?attr/actionBarSize"
-            app:title="Notifikasi"
             app:titleTextColor="@color/white"
+            app:title="Notifikasi"
             />
-
     </com.google.android.material.appbar.AppBarLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:text="Hari Ini"
+                        android:layout_weight="1"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="16sp"
+                        android:textColor="@color/danger_500"
+                        android:layout_weight="1"
+                        android:text="Tandai semua telah dibaca"
+                        android:gravity="end|center_horizontal"
+                        />
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/notifContainertoday"
+                    android:nestedScrollingEnabled="false"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/notifContainer"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:text="Minggu Ini"
+                            android:layout_weight="1"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textSize="16sp"
+                            android:textColor="@color/danger_500"
+                            android:layout_weight="1"
+                            android:text="Tandai semua telah dibaca"
+                            android:gravity="end|center_horizontal"
+                            />
+                    </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/notifContainerweek"
+                        android:nestedScrollingEnabled="false"/>
+            </LinearLayout>
+        </ScrollView>
+
 
 </LinearLayout>
