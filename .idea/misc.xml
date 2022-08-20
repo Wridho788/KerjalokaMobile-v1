@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
+
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
@@ -21,14 +17,11 @@
         <entry key="app/src/main/res/drawable/button_primary.xml" value="0.2165" />
         <entry key="app/src/main/res/drawable/button_primary_disabled.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_hoover.xml" value="0.125" />
-<<<<<<< HEAD
-        <entry key="app/src/main/res/drawable/button_primary_white_disable.xml" value="0.125" />
-=======
+
         <entry key="app/src/main/res/drawable/button_primary_style.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/button_primary_white.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/button_primary_white_disable.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_white_disabled.xml" value="0.2855" />
->>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
         <entry key="app/src/main/res/drawable/button_primary_white_hoover.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_white_style.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/button_secondary.xml" value="0.112" />
@@ -39,22 +32,17 @@
         <entry key="app/src/main/res/drawable/button_secondary_white_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
         <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/ic_applicant.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.2855" />
->>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
-=======
+
         <entry key="app/src/main/res/drawable/custom_app_bar_background.xml" value="0.3465" />
         <entry key="app/src/main/res/drawable/ic_notif_svg.xml" value="0.233" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.3465" />
         <entry key="app/src/main/res/drawable/search_bar_background.xml" value="0.3465" />
         <entry key="app/src/main/res/drawable/search_btn.xml" value="0.3465" />
->>>>>>> 6489ad552def13b95151c5705a01fceeaac96c67
-=======
+
         <entry key="app/src/main/res/drawable/card_background.xml" value="0.1585" />
         <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/ic_applicant.xml" value="0.2855" />
@@ -69,14 +57,12 @@
         <entry key="app/src/main/res/drawable/search_bar_background.xml" value="0.1925" />
         <entry key="app/src/main/res/drawable/text_rounded.xml" value="0.2145" />
         <entry key="app/src/main/res/drawable/video_call_icon.xml" value="0.2505" />
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout-v28/section_recommendation_job.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
-<<<<<<< HEAD
         <entry key="app/src/main/res/layout/content_card.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/layout/find_category.xml" value="0.45" />
@@ -84,20 +70,13 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3508449669360764" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.1425925925925926" />
         <entry key="app/src/main/res/layout/sample_myapplicant_card.xml" value="0.23489583333333333" />
->>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
-=======
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.375" />
         <entry key="app/src/main/res/layout/section_recommendation_job.xml" value="0.49635416666666665" />
->>>>>>> 6489ad552def13b95151c5705a01fceeaac96c67
-=======
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.375" />
         <entry key="app/src/main/res/layout/content_card.xml" value="0.2056434373663959" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.20436083796494228" />
@@ -117,7 +96,6 @@
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.3817870884993587" />
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.2056434373663959" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.18896964514749892" />
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka_round.xml" value="0.177" />
@@ -125,18 +103,12 @@
       </map>
     </option>
   </component>
-<<<<<<< HEAD
->>>>>>> a42309bec63cd854e6a3b844dc504693a15993d0
-=======
->>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
-<<<<<<< HEAD
-=======
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
@@ -144,5 +116,4 @@
       </ProjectState>
     </option>
   </component>
->>>>>>> 8e253d0887c5c601713b3f8c0121fae86e48e527
 </project>

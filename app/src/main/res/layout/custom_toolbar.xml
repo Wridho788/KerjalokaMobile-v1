@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-=======
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@null"    >
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,11 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-<<<<<<< HEAD
-            android:paddingVertical="18dp">
-=======
             >
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -62,36 +50,6 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-<<<<<<< HEAD
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:background="@drawable/search_bar_background"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="start"
-                    android:paddingEnd="60dp"
-                    android:text="@string/search_placeholder"
-                    android:textAllCaps="false"
-                    android:textColor="#546E7A"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="@color/light_300"
-                    app:icon="@drawable/ic_search"
-                    app:iconTint="@color/trueGray_50"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.023"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="RtlSymmetry"
-                    tools:text="Cari Kerja atau Perusahaan" />
-=======
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,16 +85,12 @@
                         android:text="@string/search_placeholder" />
 
                 </LinearLayout>
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/notif_btn"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-<<<<<<< HEAD
-=======
                     android:layout_weight="1"
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
                     android:backgroundTint="@color/white"
                     android:gravity="center"
                     android:insetLeft="0dp"
@@ -148,18 +102,8 @@
                     app:iconGravity="textStart"
                     app:iconPadding="0dp"
                     app:iconSize="27dp"
-<<<<<<< HEAD
-                    app:iconTint="@color/danger_500"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toEndOf="@id/btn_search"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="SpeakableTextPresentCheck" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-=======
                     app:iconTint="@color/danger_500" />
             </LinearLayout>
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
 
         </LinearLayout>
     </LinearLayout>

@@ -4,10 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
-    android:background="@color/white"
-=======
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
     android:fitsSystemWindows="true"
     tools:context=".ui.HomePage.HomePage">
 
@@ -15,14 +11,10 @@
         android:id="@+id/home_appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:background="@color/white">
-=======
         app:elevation="@dimen/cardview_compat_inset_shadow"
         android:backgroundTint="@color/danger_500"
         app:liftOnScroll="true"
         android:background="@null">
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -34,20 +26,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-<<<<<<< HEAD
-                android:layout_height="160dp"
-=======
                 android:layout_height="140dp"
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
                 android:background="@drawable/custom_app_bar_background">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-<<<<<<< HEAD
-                    android:layout_marginTop="20dp"
-=======
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
                     android:background="@null"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -61,22 +45,13 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-<<<<<<< HEAD
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="pin"
-                app:title="@string/app_name"
-                app:titleTextColor="@color/trueGray_50" />
-=======
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="pin"
 
-          />
->>>>>>> bb56fe13ee67be685b4e3abf5d1a5c2615576df2
+                />
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
