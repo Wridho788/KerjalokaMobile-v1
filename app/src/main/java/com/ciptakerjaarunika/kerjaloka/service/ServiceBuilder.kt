@@ -47,6 +47,16 @@ class ServiceBuilder {
             }
         )
     }.build()
+    private val clientPostFile  = OkHttpClient.Builder().apply {
+        addInterceptor(
+            Interceptor { chain ->
+                val builder = chain.request().newBuilder()
+                builder.header("Authorization", access_token)
+                builder.method("POST", body)
+                return@Interceptor chain.proceed(builder.build())
+            }
+        )
+    }.build()
 
 
 
@@ -64,6 +74,14 @@ class ServiceBuilder {
             .baseUrl(config().portAddress) // change this IP for testing by your actual machine IP
             .addConverterFactory(GsonConverterFactory.create())
             .client(clientPost)
+            .build()
+        return retrofit.create(service)
+    }
+    fun<T> POSTFILE(service: Class<T>): T{
+        val retrofit = Retrofit.Builder()
+            .baseUrl(config().portAddress) // change this IP for testing by your actual machine IP
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(clientPostFile)
             .build()
         return retrofit.create(service)
     }
