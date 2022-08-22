@@ -16,10 +16,11 @@
         android:clickable="true"
         android:focusable="true"
         app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/light_300"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/light_500"
+        app:strokeColor="@color/trueGray_100"
         app:strokeWidth="1dp">
 
         <LinearLayout
