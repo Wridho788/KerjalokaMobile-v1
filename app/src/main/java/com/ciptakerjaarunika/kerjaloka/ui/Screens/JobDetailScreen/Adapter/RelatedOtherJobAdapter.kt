@@ -7,14 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.OnFragmentClickListener
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Model.relatedJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Model.relatedOtherJobModel
 import com.google.android.material.card.MaterialCardView
 
-class RelatedJobAdapter() :
-    RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>() {
-    private var listItem = listOf<relatedJobModel>(
-        relatedJobModel(
+class RelatedOtherJobAdapter() :
+    RecyclerView.Adapter<RelatedOtherJobAdapter.ViewHolder>() {
+    private var listItem = listOf<relatedOtherJobModel>(
+        relatedOtherJobModel(
             1,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -22,7 +22,7 @@ class RelatedJobAdapter() :
             "satu jam lalu",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
         ),
-        relatedJobModel(
+        relatedOtherJobModel(
             2,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -30,7 +30,7 @@ class RelatedJobAdapter() :
             "satu jam lalu",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
         ),
-        relatedJobModel(
+        relatedOtherJobModel(
             3,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -38,7 +38,7 @@ class RelatedJobAdapter() :
             "satu jam lalu",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
         ),
-        relatedJobModel(
+        relatedOtherJobModel(
             4,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -46,7 +46,7 @@ class RelatedJobAdapter() :
             "satu jam lalu",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
         ),
-        relatedJobModel(
+        relatedOtherJobModel(
             5,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -75,7 +75,7 @@ class RelatedJobAdapter() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
+        val view = View.inflate(parent.context, R.layout.item_card_job_other_related, null)
         return ViewHolder(view)
     }
 
