@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
+package com.ciptakerjaarunika.kerjaloka.model.Chat
 
 import java.util.*
 
