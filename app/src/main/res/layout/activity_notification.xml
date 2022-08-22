@@ -24,82 +24,50 @@
             app:title="Notifikasi"
             />
     </com.google.android.material.appbar.AppBarLayout>
-        <ScrollView
-            android:layout_width="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_height="match_parent"
-            android:scrollbars="vertical">
+            android:layout_width="match_parent"
+            android:id="@+id/scrollNotif">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="16dp"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="16dp"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:text="Hari Ini"
-                        android:layout_weight="1"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:textSize="16sp"
-                        android:textColor="@color/danger_500"
-                        android:layout_weight="1"
-                        android:text="Tandai semua telah dibaca"
-                        android:gravity="end|center_horizontal"
-                        />
-                </LinearLayout>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingRight="16dp"-->
+<!--                    android:paddingLeft="16dp"-->
+<!--                    android:paddingTop="16dp"-->
+<!--                    >-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="@font/poppins_semibold"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:text="Hari Ini"-->
+<!--                        android:layout_weight="1"-->
+<!--                        />-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="@font/poppins_semibold"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="@color/danger_500"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="Tandai semua telah dibaca"-->
+<!--                        android:gravity="end|center_horizontal"-->
+<!--                        />-->
+<!--                </LinearLayout>-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/notifContainertoday"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/notifContainer"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
                     android:nestedScrollingEnabled="false"/>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="16dp"
-                        android:paddingLeft="16dp"
-                        android:paddingTop="16dp"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:text="Minggu Ini"
-                            android:layout_weight="1"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:textSize="16sp"
-                            android:textColor="@color/danger_500"
-                            android:layout_weight="1"
-                            android:text="Tandai semua telah dibaca"
-                            android:gravity="end|center_horizontal"
-                            />
-                    </LinearLayout>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/notifContainerweek"
-                        android:nestedScrollingEnabled="false"/>
             </LinearLayout>
-        </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

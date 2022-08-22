@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
-import kotlinx.coroutines.android.awaitFrame
+
 
 
 data class OnBoardingItem(

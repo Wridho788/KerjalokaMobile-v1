@@ -1,9 +1,14 @@
 package com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model
 
-class Model(
+import java.time.LocalDate
+import java.time.LocalDateTime
+
+data class Model(
+    val read: Int,
     val title: String,
     val desc: String,
-    val time: String,
-    val img: Int) {
-
-}
+    val time: LocalDateTime,
+    val img: Int
+//        val title: String,
+//        val date: String
+    )

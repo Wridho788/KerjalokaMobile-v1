@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="3dp"
     android:elevation="3dp"
-    app:cardUseCompatPadding="true"
     >
 
         <RelativeLayout
@@ -15,6 +14,9 @@
             android:paddingRight="16dp"
             android:paddingTop="10dp"
             android:gravity="center"
+            android:id="@+id/cardNotif"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
             >
             <ImageView
                 android:id="@+id/icNotif"
