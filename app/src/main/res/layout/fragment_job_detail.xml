@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="10dp">
+        app:elevation="5dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
@@ -30,26 +30,294 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="20dp">
+            android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="card"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/apply_job_button"
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:backgroundTint="@color/light_300"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/logo_company"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/kerjaloka_logo_small" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/jobTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="job position"
+                                android:textColor="@color/dark_100"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/jobCompany"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="job company"
+                                android:textColor="@color/dark_100"
+                                android:textSize="10sp"
+                                tools:ignore="SmallSp" />
+
+                            <TextView
+                                android:id="@+id/jobLocation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="job location"
+                                android:textColor="@color/trueGray_50"
+                                android:textSize="10sp"
+                                tools:ignore="SmallSp" />
+
+                            <TextView
+                                android:id="@+id/jobDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="satu jam lalu"
+                                android:textColor="@color/trueGray_50"
+                                android:textSize="10sp"
+                                tools:ignore="SmallSp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/apply_job_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_primary"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/lamar_kerja"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/button_primary"
-                android:text="@string/lamar_kerja"
-                android:textAllCaps="false" />
+                android:layout_height="5dp"
+                android:layout_marginVertical="20dp"
+                android:background="@color/light_500" />
 
+            <!--requirenment section-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/requirentments"
+                    android:textColor="@color/dark_100"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/jobRequirement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/content"
+                    android:textColor="@color/dark_100"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginVertical="20dp"
+                android:background="@color/light_500" />
+
+            <!--  additional information -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/additional_information"
+                    android:textColor="@color/dark_100"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/kualifikasi"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/jobQualification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Bachelor’s Degree, Master, Prof Cert"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/minimal_pengalaman"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/jobExperience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Bachelor’s Degree, Master, Prof Cert"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/job_field"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/jobField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Marketing, Business Development"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/role"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/jobRole"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Manager"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/report_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_report"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/lapor_lowongan"
+                        android:textColor="@color/danger_500"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginVertical="20dp"
+                android:background="@color/light_500" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/pekerjaan_lainnya_dari_perusahaan_ini"
+                    android:textColor="@color/dark_100"
+                    android:textSize="16sp" />
+            </LinearLayout>
         </LinearLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

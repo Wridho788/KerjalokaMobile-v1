@@ -35,7 +35,7 @@ class InterviewPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_interview, container, false)
+        return inflater.inflate(R.layout.fragment_job_detail, container, false)
     }
 
     companion object {

@@ -3,22 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--    <item-->
-<!--        android:id="@+id/backButton"-->
-<!--        android:icon="@drawable/ic_back"-->
-<!--        -->
-<!--        app:showAsAction="ifRoom" />-->
-
     <item
-        android:id="@+id/search"
-        android:icon="@drawable/ic_bookmark_filled"
+        android:id="@+id/menu_bookmark"
+        android:icon="@drawable/ic_bookmark"
         app:showAsAction="always"
         tools:ignore="UnusedAttribute" />
 
     <item
-        android:id="@+id/more"
-        android:icon="@drawable/ic_share_filled"
-        android:iconTint="@color/white"
+        android:id="@+id/menu_share"
+        android:icon="@drawable/ic_share"
         app:showAsAction="always" />
 
 </menu>

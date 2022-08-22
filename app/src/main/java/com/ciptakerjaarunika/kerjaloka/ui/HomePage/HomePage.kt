@@ -43,13 +43,6 @@ class HomePage : Fragment() {
         val btn_company = view.findViewById<MaterialCardView>(R.id.btn_company) as MaterialCardView
         val btn_offer_job =
             view.findViewById<MaterialCardView>(R.id.btn_job_offer) as MaterialCardView
-//        var btn_see_all = view.findViewById<TextView>(R.id.btn_see_all) as TextView
-//        var card_test_section =
-//            view.findViewById<MaterialCardView>(R.id.card_test) as MaterialCardView
-//        var card_interview_section = view.findViewById<MaterialCardView>(R.id.card_interview) as MaterialCardView;
-//        var btn_see_all_interview = view.findViewById<TextView>(R.id.btn_see_all_interview) as TextView;
-//        var card_recommendation_job = view.findViewById<MaterialCardView>(R.id.card_recommendation_job) as MaterialCardView;
-//        var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
 
         btn_search.setOnClickListener {
             // code here to handle intent to search activity
