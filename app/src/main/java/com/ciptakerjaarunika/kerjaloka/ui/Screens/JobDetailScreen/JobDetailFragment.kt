@@ -4,17 +4,69 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedJobAdapter
+import com.google.android.material.appbar.MaterialToolbar
 
 class JobDetailFragment : Fragment() {
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>? = null
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun setContentView(root: ConstraintLayout) {
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_job_detail, container, false)
+        val view = inflater.inflate(R.layout.fragment_job_detail, container, false)
+        val btn_applyJob = view.findViewById<View>(R.id.apply_job_button)
+        val report_job = view.findViewById<View>(R.id.report_job)
+
+        btn_applyJob.setOnClickListener {
+            Toast.makeText(context, "Apply Job", Toast.LENGTH_SHORT).show()
+        }
+
+        report_job.setOnClickListener {
+            Toast.makeText(context, "Report Job", Toast.LENGTH_SHORT).show()
+        }
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar) as MaterialToolbar
+        val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark) as ImageView
+        val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share) as ImageView
+
+        toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
+        toolbarBookmark.setOnClickListener {
+            Toast.makeText(context, "Bookmark", Toast.LENGTH_SHORT).show()
+        }
+        toolbarShare.setOnClickListener {
+            Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show()
+        }
+
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+
     }
 
     companion object {

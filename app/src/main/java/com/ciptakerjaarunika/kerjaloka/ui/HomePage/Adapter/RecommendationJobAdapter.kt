@@ -9,11 +9,57 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.OnFragmentClickListener
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
-class RecommendationJobAdapter(private val rJobList: List<rJobModel>) :
+class RecommendationJobAdapter(
+    private val onFragmentClickListener: OnFragmentClickListener
+) :
     RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>() {
+
+    private var list = listOf<rJobModel>(
+        rJobModel(
+            1,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        ),
+        rJobModel(
+            2,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        ),
+        rJobModel(
+            3,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        ),
+        rJobModel(
+            4,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        ),
+        rJobModel(
+            5,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        ),
+    )
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,12 +92,12 @@ class RecommendationJobAdapter(private val rJobList: List<rJobModel>) :
     }
 
     override fun getItemCount(): Int {
-        return rJobList.size
+        return list.size
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = rJobList[position]
+        val currentItem = list[position]
         holder.jobPosition.text = currentItem.jobPosition
         holder.jobCompany.text = currentItem.jobCompany
         holder.jobLocation.text = currentItem.jobLocation
@@ -128,36 +174,7 @@ class RecommendationJobAdapter(private val rJobList: List<rJobModel>) :
             }
         }
         holder.cardRecommendationJob.setOnClickListener {
-            when (currentItem.jobNo) {
-                1 -> {
-                    Toast.makeText(
-                        holder.itemView.context,
-                        "Job 1 telah di klik",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                2 -> {
-                    Toast.makeText(
-                        holder.itemView.context,
-                        "Job 2 telah di klik",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                3 -> {
-                    Toast.makeText(
-                        holder.itemView.context,
-                        "Job 3 telah di klik",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                4 -> {
-                    Toast.makeText(
-                        holder.itemView.context,
-                        "Job 4 telah di klik",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            onFragmentClickListener.onFragmentClick()
         }
     }
 
