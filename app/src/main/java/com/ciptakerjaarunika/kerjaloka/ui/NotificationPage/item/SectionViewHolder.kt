@@ -10,7 +10,7 @@ class SectionViewHolder(
 context: Context
 ): FrameLayout(context) {
     private lateinit var textViewDate: TextView
-
+    private lateinit var readAll: TextView
 
     init {
         inflate(context, R.layout.view_holder_section, this)
@@ -19,9 +19,11 @@ context: Context
 
     private fun findView(){
         textViewDate = findViewById(R.id.sectionTxt)
+        readAll = findViewById(R.id.readAll)
     }
 
-    fun setDate(dateString: String){
+    fun setDate(dateString: String, mark: String){
         textViewDate.text = dateString
+        readAll.text = mark
         }
 }

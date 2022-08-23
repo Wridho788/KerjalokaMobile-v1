@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.item
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.text.format.DateUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -10,6 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.Model
 import java.lang.ref.WeakReference
 import com.ciptakerjaarunika.kerjaloka.R
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
+import java.util.*
 
 @SuppressLint("ResourceAsColor")
 class itemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -37,7 +43,16 @@ class itemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun updateView(){
         Title?.text = itemModel?.title
         Desc?.text = itemModel?.desc
-        Time?.text = itemModel?.time.toString()
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"))
+            val time: Long = sdf.parse(itemModel?.time.toString()).getTime()
+            val now = System.currentTimeMillis()
+            val ago = DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
+
+
+        Time?.text = ago
+            //itemModel?.time.toString()
         itemModel?.img?.let { Image?.setImageResource(it)
             if(itemModel?.read == 1){
                 card.setBackgroundColor(Color.parseColor("#fff1f1"))

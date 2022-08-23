@@ -2,17 +2,20 @@ package com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.item
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.os.Build
+import android.text.format.DateUtils
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.RelativeLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.Model
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.util.*
+
 
 class ItemSectionDecoration(
     private val context: Context,
@@ -62,11 +65,29 @@ class ItemSectionDecoration(
         val currentModel = getItemList()[position]
         val previousModel = getItemList()[position-1]
 
-        if(currentModel.time != previousModel.time){
-            outRect.top = sectionItemHeight
+        if(currentModel.time.dayOfYear == LocalDateTime.now().dayOfYear){
+            outRect.top = dividerHeight
+        }
+        else if(LocalDateTime.now().dayOfYear - currentModel.time.dayOfYear <= 7){
+            if(previousModel.time.dayOfYear == LocalDateTime.now().dayOfYear){
+                outRect.top = sectionItemHeight
+            }else{
+                outRect.top = dividerHeight
+            }
+        }
+        else if(LocalDateTime.now().month == currentModel.time.month){
+            if(LocalDateTime.now().dayOfYear - previousModel.time.dayOfYear <= 7){
+                outRect.top = sectionItemHeight
+            }else{
+                outRect.top = dividerHeight
+            }
         }
         else{
-            outRect.top = dividerHeight
+            if(LocalDateTime.now().month == previousModel.time.month){
+                outRect.top = sectionItemHeight
+            }else{
+                outRect.top = dividerHeight
+            }
         }
 
     }
@@ -75,23 +96,41 @@ class ItemSectionDecoration(
         super.onDraw(c, parent, state)
 
         val childCount = parent.childCount
+        var temp = 0
+
         for (i in 0 until childCount){
             val childView: View=parent.getChildAt(i)
             val position: Int = parent.getChildAdapterPosition(childView)
             val itemModel = getItemList()[position]
 
-            if(itemModel.time.dayOfMonth == LocalDateTime.now().dayOfMonth){
-                val top = childView.top - sectionItemHeight
-                drawSectionView(c, "Hari Ini", top)
-            }
-            else if(LocalDateTime.now().dayOfYear - itemModel.time.dayOfYear >= 1 && LocalDateTime.now().dayOfYear - itemModel.time.dayOfYear <= 7){
+            if(itemModel.time.dayOfYear == LocalDateTime.now().dayOfYear){
+//                if(temp == 0){
+                    val top = childView.top - sectionItemHeight
+                    drawSectionView(c, "Hari Ini", top, "Tandai semua telah dibaca")
+//                    temp = 1
+//                }
 
-                val top = childView.top - sectionItemHeight
-                drawSectionView(c, "Minggu Ini", top)
+            }
+            else if(LocalDateTime.now().dayOfYear - itemModel.time.dayOfYear <= 7){
+//                if(temp == 1){
+                    val top = childView.top - sectionItemHeight
+                    drawSectionView(c, "Minggu Ini", top, "")
+//                    temp = 2
+//                }
+            }
+            else if(LocalDateTime.now().month == itemModel.time.month){
+//                if(temp == 2){
+                    val top = childView.top - sectionItemHeight
+                    drawSectionView(c, "Bulan Ini", top, "")
+//                    temp = 3
+//                }
             }
             else{
-                val top = childView.top - sectionItemHeight
-                drawSectionView(c, "Bulan Ini", top)
+//                if(temp == 3){
+                    val top = childView.top - sectionItemHeight
+                    drawSectionView(c, "Terdahulu", top, "")
+//                    temp = 69
+//                }
             }
         }
 
@@ -107,9 +146,9 @@ class ItemSectionDecoration(
         )
     }
 
-    private fun drawSectionView(canvas: Canvas, text: String, top: Int){
+    private fun drawSectionView(canvas: Canvas, text: String, top: Int, mark: String){
         val view = SectionViewHolder(context)
-        view.setDate(text)
+        view.setDate(text, mark)
 
         val bitmap = getViewGroupBitmap(view)
         val bitmapCanvas = Canvas(bitmap)
