@@ -4,6 +4,7 @@
     package="com.ciptakerjaarunika.kerjaloka">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,14 +18,15 @@
         android:theme="@style/Theme.Kerjaloka"
         tools:targetApi="31">
         <activity
-            android:windowSoftInputMode="adjustPan"
+            android:name=".JobPage"
+            android:exported="false" />
+        <activity
             android:name=".ui.NotificationPage.Notification"
-            android:exported="true">
-        </activity>
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".ui.LoginPage.Login"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ui.WelcomingPage.OnBoarding.OnBoarding"
             android:exported="true"
