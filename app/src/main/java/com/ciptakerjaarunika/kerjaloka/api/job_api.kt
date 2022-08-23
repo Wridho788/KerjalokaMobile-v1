@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.api
 
-
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.model.Job.homejob_model
 import com.ciptakerjaarunika.kerjaloka.model.ResponseResult
@@ -9,9 +8,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rjob_model
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 import retrofit2.http.GET
-import java.util.*
 
 class JobAPI {
     interface getJobHome {

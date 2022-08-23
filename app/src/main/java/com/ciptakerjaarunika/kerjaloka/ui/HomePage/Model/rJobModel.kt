@@ -1,6 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model
 
-//import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
+import org.ocpsoft.prettytime.PrettyTime
 
 data class rjob_model(
     val code : Int,
@@ -12,10 +12,11 @@ data class rJobModel(
     val companyNo: Long,
     val jobNo: Long,
     val jobPosition: String,
-    val jobCompany: String,
     val jobLocation: String,
-    val timeUploadApplicant: String,
+//    val timeUploadApplicant: String,
     val logo: String,
     val status: String,
-    val link: String
+    val link: String,
+    val CompanyName : String,
+//    val CreatedOn : PrettyTime
 )
