@@ -8,22 +8,41 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/kerjaloka_logo_small"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kerjaloka"
         tools:targetApi="31">
         <activity
             android:windowSoftInputMode="adjustPan"
-            android:name=".MainActivity"
+            android:name=".ui.NotificationPage.Notification"
             android:exported="true">
+        </activity>
+        <activity
+            android:name=".ui.LoginPage.Login"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".ui.WelcomingPage.OnBoarding.OnBoarding"
+            android:exported="true"
+            android:theme="@style/Theme.Kerjaloka.NoActionBar" />
+        <activity
+            android:name=".ui.WelcomingPage.SplashScreen.SplashScreen"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
