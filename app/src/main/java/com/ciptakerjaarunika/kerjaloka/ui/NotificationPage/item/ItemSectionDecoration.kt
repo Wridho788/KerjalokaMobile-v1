@@ -104,33 +104,21 @@ class ItemSectionDecoration(
             val itemModel = getItemList()[position]
 
             if(itemModel.time.dayOfYear == LocalDateTime.now().dayOfYear){
-//                if(temp == 0){
                     val top = childView.top - sectionItemHeight
                     drawSectionView(c, "Hari Ini", top, "Tandai semua telah dibaca")
-//                    temp = 1
-//                }
 
             }
             else if(LocalDateTime.now().dayOfYear - itemModel.time.dayOfYear <= 7){
-//                if(temp == 1){
                     val top = childView.top - sectionItemHeight
                     drawSectionView(c, "Minggu Ini", top, "")
-//                    temp = 2
-//                }
             }
             else if(LocalDateTime.now().month == itemModel.time.month){
-//                if(temp == 2){
                     val top = childView.top - sectionItemHeight
                     drawSectionView(c, "Bulan Ini", top, "")
-//                    temp = 3
-//                }
             }
             else{
-//                if(temp == 3){
                     val top = childView.top - sectionItemHeight
                     drawSectionView(c, "Terdahulu", top, "")
-//                    temp = 69
-//                }
             }
         }
 

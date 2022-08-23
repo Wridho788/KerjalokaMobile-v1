@@ -52,7 +52,6 @@ class itemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
 
         Time?.text = ago
-            //itemModel?.time.toString()
         itemModel?.img?.let { Image?.setImageResource(it)
             if(itemModel?.read == 1){
                 card.setBackgroundColor(Color.parseColor("#fff1f1"))

@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model
 
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class Model(
@@ -9,6 +8,5 @@ data class Model(
     val desc: String,
     val time: LocalDateTime,
     val img: Int
-//        val title: String,
-//        val date: String
+
     )
