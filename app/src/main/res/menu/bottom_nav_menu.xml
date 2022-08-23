@@ -13,14 +13,9 @@
         />
     <item
         android:id="@+id/interview"
-<<<<<<< HEAD
         android:icon="@drawable/ic_chat"
         android:title="@string/interview" />
-=======
-        android:icon="@drawable/ic_interview"
-        android:title="@string/interview"
-        />
->>>>>>> reyhan
+
     <item
         android:id="@+id/akun"
         android:icon="@drawable/ic_account"

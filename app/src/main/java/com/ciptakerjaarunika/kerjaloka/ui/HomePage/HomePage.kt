@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<< HEAD
-=======
+
 import android.widget.LinearLayout
 import android.widget.TextView
->>>>>>> reyhan
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -47,7 +45,6 @@ class HomePage : Fragment() {
         val btn_company = view.findViewById<MaterialCardView>(R.id.btn_company) as MaterialCardView
         val btn_offer_job =
             view.findViewById<MaterialCardView>(R.id.btn_job_offer) as MaterialCardView
-<<<<<<< HEAD
 //        var btn_see_all = view.findViewById<TextView>(R.id.btn_see_all) as TextView
 //        var card_test_section =
 //            view.findViewById<MaterialCardView>(R.id.card_test) as MaterialCardView
@@ -55,21 +52,9 @@ class HomePage : Fragment() {
 //        var btn_see_all_interview = view.findViewById<TextView>(R.id.btn_see_all_interview) as TextView;
 //        var card_recommendation_job = view.findViewById<MaterialCardView>(R.id.card_recommendation_job) as MaterialCardView;
 //        var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
-=======
-        var btn_see_all = view.findViewById<TextView>(R.id.btn_see_all) as TextView
-        var card_test_section =
-            view.findViewById<MaterialCardView>(R.id.card_test) as MaterialCardView
-        var card_interview_section =
-            view.findViewById<MaterialCardView>(R.id.card_interview) as MaterialCardView
-        var btn_see_all_interview =
-            view.findViewById<TextView>(R.id.btn_see_all_interview) as TextView
-        var card_recommendation_job =
-            view.findViewById<MaterialCardView>(R.id.card_recommendation_job) as MaterialCardView
-        var btn_see_all_recommendation_job =
-            view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView
-        var btn_bookmark = view.findViewById<MaterialButton>(R.id.btn_bookmark) as MaterialButton
-        var btn_share = view.findViewById<MaterialButton>(R.id.btn_share) as MaterialButton
->>>>>>> reyhan
+
+//        var btn_bookmark = view.findViewById<MaterialButton>(R.id.btn_bookmark) as MaterialButton
+//        var btn_share = view.findViewById<MaterialButton>(R.id.btn_share) as MaterialButton
 
         btn_search.setOnClickListener {
             // code here to handle intent to search activity
@@ -91,7 +76,6 @@ class HomePage : Fragment() {
             // code here to handle intent to offer job activity
             Toast.makeText(activity, "Go to Offer Job Activity", Toast.LENGTH_SHORT).show()
         }
-<<<<<<< HEAD
 //        btn_see_all.setOnClickListener {
 //            // code here to handle intent to see all activity
 //            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
@@ -108,39 +92,23 @@ class HomePage : Fragment() {
 //            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
 //        }
 
-=======
-        btn_see_all.setOnClickListener {
-            // code here to handle intent to see all activity
-            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
-        }
-        card_test_section.setOnClickListener {  // code here to handle intent to Selection List activity
-            Toast.makeText(activity, "Seleksi Saya!", Toast.LENGTH_SHORT).show()
-        }
-        card_interview_section.setOnClickListener {
-            // code here to handle intent to Selection Interview activity
-            Toast.makeText(activity, "Interview Saya!", Toast.LENGTH_SHORT).show()
-        }
-        btn_see_all_interview.setOnClickListener {
-            // code here to handle intent to see all activity
-            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
-        }
-        card_recommendation_job.setOnClickListener {
-            // code here to handle intent to recommend job activity
-            Toast.makeText(activity, "Pekerjaan Rekomendasi ", Toast.LENGTH_SHORT).show()
-        }
-        btn_see_all_recommendation_job.setOnClickListener {
-            // code here to handle intent to see all activity
-            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
-        }
-        btn_bookmark.setOnClickListener {
-            // code here to handle intent to bookmark activity
-            Toast.makeText(activity, "bookmark", Toast.LENGTH_SHORT).show()
-        }
-        btn_share.setOnClickListener {
-            // code here to handle intent to share activity
-            Toast.makeText(activity, "share", Toast.LENGTH_SHORT).show()
-        }
->>>>>>> reyhan
+
+//        card_recommendation_job.setOnClickListener {
+//            // code here to handle intent to recommend job activity
+//            Toast.makeText(activity, "Pekerjaan Rekomendasi ", Toast.LENGTH_SHORT).show()
+//        }
+//        btn_see_all_recommendation_job.setOnClickListener {
+//            // code here to handle intent to see all activity
+//            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
+//        }
+//        btn_bookmark.setOnClickListener {
+//            // code here to handle intent to bookmark activity
+//            Toast.makeText(activity, "bookmark", Toast.LENGTH_SHORT).show()
+//        }
+//        btn_share.setOnClickListener {
+//            // code here to handle intent to share activity
+//            Toast.makeText(activity, "share", Toast.LENGTH_SHORT).show()
+//        }
         // Inflate the layout for this fragment
         return view
     }
