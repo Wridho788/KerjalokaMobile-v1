@@ -7,7 +7,8 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Job_Page
+//import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 
 class  MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -21,7 +22,7 @@ class  MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> replaceFragment((HomePage()))
-                R.id.lamaran -> replaceFragment((LamaranPage()))
+                R.id.lamaran -> replaceFragment((Job_Page()))
                 R.id.interview -> replaceFragment((InterviewPage()))
                 R.id.akun -> replaceFragment((AkunPage()))
                 else -> {
