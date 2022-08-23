@@ -128,6 +128,7 @@
                         app:layout_constraintTop_toBottomOf="@id/title_recommendation_section"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        tools:listitem="@layout/item_card_recommendation_job"
                         tools:itemCount="5" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
