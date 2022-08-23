@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Chat.chat_model
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 
 
 class ChatPage(val section: chat_model) : Fragment() {

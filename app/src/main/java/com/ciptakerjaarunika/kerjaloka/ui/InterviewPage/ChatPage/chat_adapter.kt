@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Chat.Messages
+import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import java.text.SimpleDateFormat
 import java.util.*
 

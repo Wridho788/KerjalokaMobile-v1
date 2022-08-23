@@ -4,5 +4,90 @@
     <string name="lamaran">Lamaran</string>
     <string name="interview">Interview</string>
     <string name="akun">Akun</string>
-
+    <string name="content">With the idea of imparting programming
+      knowledge, Mr. Sandeep Jain, an IIT Roorkee alumnus started a
+      dream, GeeksforGeeks. Whether programming excites you or you feel
+      stifled, wondering how to prepare for interview questions or how to
+      ace data structures and algorithms, GeeksforGeeks is a one-stop solution.
+      With every tick of time, we are adding arrows in our quiver. From articles
+      on various computer science subjects to programming problems for practice,
+      from basic to premium courses, from technologies to entrance examinations,
+      we have been building ample content with superior quality. In a short span,
+      we have built a community of 1 Million+ Geeks around the world, 20,000+
+      Contributors and 500+ Campus Ambassadors in various colleges across the nation.
+      Our success stories include a lot of students who benefitted in their placements
+      and landed jobs at tech giants. Our vision is to build a gigantic network of
+      geeks and we are only a fraction of it yet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ornare mauris blandit nisl commodo pulvinar quis a nulla. Nunc sed consequat sapien, a pharetra est. In ut quam dignissim lectus tempus tristique. Morbi pulvinar euismod dolor vel vestibulum. Donec et mauris efficitur, sollicitudin nulla et, scelerisque ante. Fusce interdum lacinia fringilla. Integer mollis mollis ultrices. Morbi est urna, dapibus nec commodo vel, feugiat ut nibh. Sed felis turpis, bibendum vel congue nec, consectetur in eros. Nam et facilisis enim. Sed dignissim libero nec ornare sollicitudin. Aenean at posuere dolor, at fermentum neque. Nunc dignissim ornare rhoncus. Aenean pretium feugiat aliquam.
+        Morbi malesuada risus nisi, egestas condimentum elit sollicitudin et. Maecenas vel lacinia arcu, ut condimentum ipsum.
+Integer viverra aliquet quam, sit amet mollis sapien. Integer dictum enim dui, ut commodo purus sagittis aliquam. Fusce fermentum in velit eget ornare. Quisque semper sodales quam, quis sagittis elit tincidunt vitae. Integer feugiat ligula efficitur eros lacinia scelerisque. Mauris ultrices, orci ultricies blandit pellentesque, enim lectus rutrum purus, quis blandit ex urna ac augue. Proin blandit arcu vestibulum, elementum nisi at, luctus ante.
+Fusce ligula tortor, porta ut magna in, placerat interdum lectus. Maecenas aliquam tellus ut augue laoreet, vitae porta massa convallis. Nulla vitae sodales diam. Duis elit ante, convallis dignissim tempus in, pulvinar et libero. Maecenas vestibulum dolor luctus diam vehicula pharetra. Morbi lobortis fermentum congue. Nam quis vulputate ipsum. Mauris mattis dignissim enim quis cursus. Suspendisse egestas lectus id facilisis eleifend.
+Quisque rhoncus velit nec erat suscipit, in dapibus sem iaculis. Nam dignissim, purus ut ornare consequat, lacus neque volutpat sem, sit amet posuere nunc neque id lacus. In luctus ipsum vehicula, vulputate est et, ullamcorper ante. Curabitur luctus, tellus non pretium lobortis, erat sapien vehicula mi, sed iaculis mi velit vitae quam. Proin ut finibus justo, a elementum elit. Aenean euismod nunc ac tellus pretium, et tincidunt est pretium. Vestibulum pellentesque convallis metus.
+Mauris vel orci blandit, venenatis nisl nec, gravida ligula. Aenean sagittis arcu in malesuada euismod. Sed sit amet elit erat. Nunc accumsan erat ac erat egestas, nec cursus odio venenatis. Nullam interdum suscipit dui, vel gravida purus scelerisque at. Pellentesque porta, eros eu molestie sodales, felis arcu sodales elit, in sodales elit risus in turpis. Aenean bibendum, tortor tempor consectetur fermentum, ante libero eleifend nibh, sed interdum mi neque eu urna.
+</string>
+    <string name="header">Halo</string>
+    <string name="header_sub">Raih Mimpimu Bersama Kami!</string>
+    <string name="search_placeholder">Cari Kerja atau Perusahaan ..</string>
+    <string name="find_category">Cari berdasarkan kategori</string>
+    <string name="job">Pekerjaan</string>
+    <string name="company">Perusahaan</string>
+    <string name="job_offer">Tawaran Kerja</string>
+    <string name="see_all">Lihat Semua</string>
+    <string name="my_test">Test Saya</string>
+    <string name="title_test">Tes Seleksi</string>
+    <string name="by_company">Oleh:</string>
+    <string name="company_name">Cipta Kerja Arunika Nusantara</string>
+    <string name="date_test">30 Dec 2019 pada 05:18</string>
+    <string name="sub_title_test">Dapat dikerjakan sebelum:</string>
+    <string name="timer_text">180 min</string>
+    <string name="my_interview">Interview Saya</string>
+    <string name="title_job_interview">Enterprise Sales Representative</string>
+    <string name="name_of_interviewer">Nama Interviewer:</string>
+    <string name="interviewer">John Doe</string>
+    <string name="title_activity_search">Search_activity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+    <string name="result_search">Hasil pencarian kamu:</string>
+    <string name="latest_search">Latest Search</string>
+    <string name="top_search">Top Search</string>
+    <string name="delete_history">Hapus Riwayat</string>
+    <string name="recommandation_job">Pekerjaan Rekomendasi</string>
 </resources>

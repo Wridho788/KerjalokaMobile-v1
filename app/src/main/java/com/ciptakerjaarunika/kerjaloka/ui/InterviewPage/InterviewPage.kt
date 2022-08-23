@@ -5,22 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
-import com.ciptakerjaarunika.kerjaloka.model.Chat.Messages
-import com.ciptakerjaarunika.kerjaloka.model.Chat.chat_model
+import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage.ChatPage
 import java.util.*
 
 class InterviewPage : Fragment(), CellClickListener{
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var isCompany : Boolean = true
+    private var isLoading : Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -193,21 +195,26 @@ class InterviewPage : Fragment(), CellClickListener{
 //        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
 //        toolbar.setTitle("Lamaran Saya")
 
-        var a : List<jobHomeListData>? = null;
-        var testing = JobAPI().getJobHomeAsync {
-            if (it != null) {
-                a = it.data
-                Log.d("Response", it.data.toString())
-                Log.d("Response", it.data[0].jobPosition)
-            }
-        };
-        Log.d("Response", a.toString())
-
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
         val Context = this;
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = interview_adapter(getData(), Context)
+        if(isCompany) {
+            itemView.findViewById<EditText>(R.id.searchInput).hint= "Cari Lowongan"
+            InterviewAPI().CompanyGetInterviewList {
+                Log.d("Response", it.toString())
+                if(it!=null) {
+                    isLoading = false
+                    recyclerView.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        adapter = company_interview_adapter(it.data, Context)
+                    }
+                }
+            }
+        }
+        else{
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = jobseeker_interview_adapter(getData(), Context)
+            }
         }
     }
     override fun onCellClickListener(data: chat_model) {
@@ -215,6 +222,13 @@ class InterviewPage : Fragment(), CellClickListener{
         ft.replace(id, ChatPage(data), "ChatFragment")
         ft.addToBackStack("ChatFragment")
         ft.commit()
+    }
+
+    override fun companyInterviewClick() {
+//        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+//        ft.replace(id, ChatPage(data), "ChatFragment")
+//        ft.addToBackStack("ChatFragment")
+//        ft.commit()
     }
 
     override fun onCreateView(
@@ -227,4 +241,5 @@ class InterviewPage : Fragment(), CellClickListener{
 }
 interface CellClickListener {
     fun onCellClickListener(data : chat_model)
+    fun companyInterviewClick()
 }

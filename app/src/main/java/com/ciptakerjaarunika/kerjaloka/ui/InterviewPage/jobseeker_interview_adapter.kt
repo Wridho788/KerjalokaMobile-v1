@@ -7,17 +7,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Chat.chat_model
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import java.text.SimpleDateFormat
 import java.util.*
 
 //class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
 //
 //
-class interview_adapter
+class jobseeker_interview_adapter
 
     (private val dataSet: List<chat_model>, private val cellClickListener: CellClickListener) :
-    RecyclerView.Adapter<interview_adapter.ViewHolder>() {
+    RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
 
     private lateinit var mListner : onItemClickListner
     interface onItemClickListner{
