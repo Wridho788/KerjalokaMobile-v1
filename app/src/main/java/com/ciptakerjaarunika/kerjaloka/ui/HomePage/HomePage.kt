@@ -1,15 +1,16 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
@@ -19,7 +20,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdap
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
-import kotlin.math.log
 
 class HomePage : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -27,15 +27,12 @@ class HomePage : Fragment() {
     private lateinit var binding: ActivityMainBinding
     private var listJob : List<rJobModel>?=null;
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
-
     private fun setContentView(root: ConstraintLayout) {
-
     }
 
     override fun onCreateView(
@@ -55,7 +52,7 @@ class HomePage : Fragment() {
 //        var card_interview_section = view.findViewById<MaterialCardView>(R.id.card_interview) as MaterialCardView;
 //        var btn_see_all_interview = view.findViewById<TextView>(R.id.btn_see_all_interview) as TextView;
 //        var card_recommendation_job = view.findViewById<MaterialCardView>(R.id.card_recommendation_job) as MaterialCardView;
-//        var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
+        var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
 
 //        var btn_bookmark = view.findViewById<MaterialButton>(R.id.btn_bookmark) as MaterialButton
 //        var btn_share = view.findViewById<MaterialButton>(R.id.btn_share) as MaterialButton
@@ -97,15 +94,10 @@ class HomePage : Fragment() {
 //            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
 //        }
 
-
-//        card_recommendation_job.setOnClickListener {
-//            // code here to handle intent to recommend job activity
-//            Toast.makeText(activity, "Pekerjaan Rekomendasi ", Toast.LENGTH_SHORT).show()
-//        }
-//        btn_see_all_recommendation_job.setOnClickListener {
-//            // code here to handle intent to see all activity
-//            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
-//        }
+        btn_see_all_recommendation_job.setOnClickListener {
+            // code here to handle intent to see all activity
+            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
+        }
 //        btn_bookmark.setOnClickListener {
 //            // code here to handle intent to bookmark activity
 //            Toast.makeText(activity, "bookmark", Toast.LENGTH_SHORT).show()
@@ -136,9 +128,7 @@ class HomePage : Fragment() {
             }
         }
 
-//        recyclerView.adapter = adapter
     }
-
 
     companion object {
         @JvmStatic

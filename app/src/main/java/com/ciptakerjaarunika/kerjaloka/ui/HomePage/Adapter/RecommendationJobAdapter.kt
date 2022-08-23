@@ -13,6 +13,7 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import org.ocpsoft.prettytime.PrettyTime
 
 class RecommendationJobAdapter(private val rJobList: List<rJobModel>?) :
     RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>() {
@@ -20,9 +21,9 @@ class RecommendationJobAdapter(private val rJobList: List<rJobModel>?) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobPosition: TextView
         var logo: ImageView
-        var jobCompany: TextView
+        var companyName: TextView
         var jobLocation: TextView
-        var timeUploadApplicant: TextView
+        var CreatedOn: TextView
         var bookmarkedJob: MaterialButton
         var shareableJob: MaterialButton
         var cardRecommendationJob: MaterialCardView
@@ -30,9 +31,9 @@ class RecommendationJobAdapter(private val rJobList: List<rJobModel>?) :
         init {
             jobPosition = itemView.findViewById(R.id.jobPosition)
             logo = itemView.findViewById(R.id.logo)
-            jobCompany = itemView.findViewById(R.id.jobCompany)
+            companyName = itemView.findViewById(R.id.jobCompany)
             jobLocation = itemView.findViewById(R.id.jobLocation)
-            timeUploadApplicant = itemView.findViewById(R.id.timeUploadApplicant)
+            CreatedOn = itemView.findViewById(R.id.timeUploadApplicant)
             bookmarkedJob = itemView.findViewById(R.id.btn_bookmark)
             shareableJob = itemView.findViewById(R.id.btn_share)
             cardRecommendationJob = itemView.findViewById(R.id.card_recommendation_job)
@@ -54,9 +55,9 @@ class RecommendationJobAdapter(private val rJobList: List<rJobModel>?) :
         if(rJobList!= null){
         val currentItem = rJobList[position]
         holder.jobPosition.text = currentItem.jobPosition
-        holder.jobCompany.text = currentItem.jobCompany
+        holder.companyName.text = currentItem.CompanyName
         holder.jobLocation.text = currentItem.jobLocation
-        holder.timeUploadApplicant.text = currentItem.timeUploadApplicant
+//        holder.CreatedOn.text = currentItem.CreatedOn.toString()
         Glide.with(holder.itemView.context).load(config().portAddress+"/photo/Profile/"+currentItem.logo).fitCenter().into(holder.logo)
 
 //        holder.bookmarkedJob.setOnClickListener {
