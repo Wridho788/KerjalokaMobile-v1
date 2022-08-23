@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainAppbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Company.Test.view_mytest_list">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:title="Lamaran Saya"
-        app:titleTextColor="@color/white" />
+        app:logo="@drawable/back_primary_icon"
+        app:title="My Test List"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -20,6 +24,7 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:fitsSystemWindows="true"
-        tools:listitem="@layout/myapplicant_card" />
+        tools:listitem="@layout/mytestlist_card" />
+    </LinearLayout>
 
-</com.google.android.material.appbar.AppBarLayout>
+</FrameLayout>

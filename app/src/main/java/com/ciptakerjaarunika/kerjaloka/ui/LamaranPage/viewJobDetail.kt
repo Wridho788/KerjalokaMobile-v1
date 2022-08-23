@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 
 class viewJobDetail() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,6 +21,18 @@ class viewJobDetail() : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_view_job_detail, container, false)
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val btnWithdraw = view.findViewById<MaterialButton>(R.id.btnWithdraw) as MaterialButton
+        btnWithdraw.setOnClickListener {
+            val sheet = BottomSheetApplicant()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
     }
 
 }

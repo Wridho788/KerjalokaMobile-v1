@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.Model.ApplicantModel
 import java.util.*
 
-class Application(private val cellClickListener: CellClickListener):RecyclerView.Adapter<Application.ViewHolder>() {
+class Application(private val cellClickListener: LamaranPage):RecyclerView.Adapter<Application.ViewHolder>() {
 
         /**
          * Provide a reference to the type of views that you are using

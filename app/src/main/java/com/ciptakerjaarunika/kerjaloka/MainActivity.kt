@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.Company.Test.view_mytest_list
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
