@@ -43,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/title_list_view"
@@ -67,68 +68,138 @@
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
 
-                <!--                <ListView-->
-                <!--                    android:id="@+id/listView"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="match_parent"-->
-                <!--                    android:visibility="visible" />-->
+
             </LinearLayout>
 
-            <!--            <LinearLayout-->
-            <!--                android:id="@+id/layout_latest_search_results"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginBottom="20dp"-->
-            <!--                android:orientation="vertical">-->
+            <LinearLayout
+                android:id="@+id/layout_latest_search_results"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:orientation="vertical">
 
-            <!--                <LinearLayout-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_marginBottom="15dp"-->
-            <!--                    android:orientation="horizontal"-->
-            <!--                    android:weightSum="1">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
-            <!--                    <TextView-->
-            <!--                        android:layout_width="0dp"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:layout_weight="1"-->
-            <!--                        android:fontFamily="@font/poppins_bold"-->
-            <!--                        android:text="@string/latest_search"-->
-            <!--                        android:textColor="@color/dark_100"-->
-            <!--                        android:textSize="16sp" />-->
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/latest_search"
+                        android:textColor="@color/dark_100"
+                        android:textSize="16sp" />
 
-            <!--                    <TextView-->
-            <!--                        android:id="@+id/btn_remove_latest_search"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:fontFamily="@font/poppins_bold"-->
-            <!--                        android:text="@string/delete_history"-->
-            <!--                        android:textColor="@color/danger_500"-->
-            <!--                        android:textSize="14sp" />-->
-            <!--                </LinearLayout>-->
+                    <TextView
+                        android:id="@+id/btn_remove_latest_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/delete_history"
+                        android:textColor="@color/danger_500"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
-            <!--                <LinearLayout-->
-            <!--                    android:layout_width="match_parent"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:orientation="horizontal">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <!--                    <Button-->
-            <!--                        android:id="@+id/btn_latest_search"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="32dp"-->
-            <!--                        android:layout_marginHorizontal="10dp"-->
-            <!--                        android:layout_marginBottom="15dp"-->
-            <!--                        android:background="@drawable/button_flat"-->
-            <!--                        android:fontFamily="@font/poppins"-->
-            <!--                        android:text=""-->
-            <!--                        android:textColor="@color/dark_100"-->
-            <!--                        android:textSize="12sp"-->
-            <!--                        app:cornerRadius="100dp" />-->
+                    <Button
+                        android:id="@+id/btn_latest_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/button_flat"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:text="Engineer"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp"
+                        app:cornerRadius="100dp" />
 
-            <!--                </LinearLayout>-->
+                    <Button
+                        android:id="@+id/btn_latest_search_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/button_flat"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:text="Pertamina"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp"
+                        app:cornerRadius="100dp" />
+
+                    <Button
+                        android:id="@+id/btn_latest_search_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/button_flat"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:text="UX Researcher"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp"
+                        app:cornerRadius="100dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_latest_search_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/button_flat"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:text="PT. Cipta Kerja Indonesia"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp"
+                        app:cornerRadius="100dp" />
+
+                    <Button
+                        android:id="@+id/btn_latest_search_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/button_flat"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:text="Accounting"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp"
+                        app:cornerRadius="100dp" />
 
 
-            <!--            </LinearLayout>-->
+                </LinearLayout>
+
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
@@ -139,6 +210,7 @@
                 android:id="@+id/layout_top_search_results"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical">
 
@@ -155,8 +227,6 @@
                         android:text="@string/top_search"
                         android:textColor="@color/dark_100"
                         android:textSize="16sp" />
-
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -168,13 +238,13 @@
                         android:id="@+id/btn_top_search"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
-                        android:layout_marginHorizontal="10dp"
                         android:layout_marginBottom="15dp"
                         android:background="@drawable/button_flat"
                         android:fontFamily="@font/poppins"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="7dp"
                         android:text="UI UX Designer"
+                        android:textAllCaps="false"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp"
                         app:cornerRadius="100dp" />
@@ -189,7 +259,8 @@
                         android:fontFamily="@font/poppins"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="7dp"
-                        android:text="Pertamina"
+                        android:text="Project Manager"
+                        android:textAllCaps="false"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp"
                         app:cornerRadius="100dp" />
@@ -198,19 +269,41 @@
                         android:id="@+id/btn_top_search_3"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
-                        android:layout_marginHorizontal="10dp"
                         android:layout_marginBottom="15dp"
                         android:background="@drawable/button_flat"
                         android:fontFamily="@font/poppins"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="7dp"
-                        android:text="UX Researcher"
+                        android:text="Art Director"
+                        android:textAllCaps="false"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp"
+                        app:cornerRadius="100dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_top_search_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/button_flat"
+                        android:fontFamily="@font/poppins"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="7dp"
+                        android:text="Gojek"
+                        android:textAllCaps="false"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp"
                         app:cornerRadius="100dp" />
 
                     <Button
-                        android:id="@+id/btn_top_search_4"
+                        android:id="@+id/btn_top_search_5"
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
                         android:layout_marginHorizontal="10dp"
@@ -219,18 +312,14 @@
                         android:fontFamily="@font/poppins"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="7dp"
-                        android:text="PT. Cipta Kerja Indonesia Accounting"
+                        android:text="Traveloka"
+                        android:textAllCaps="false"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp"
                         app:cornerRadius="100dp" />
-
                 </LinearLayout>
-
-
             </LinearLayout>
-
         </LinearLayout>
-
     </androidx.core.widget.NestedScrollView>
 
 
