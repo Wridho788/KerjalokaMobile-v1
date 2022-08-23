@@ -1,6 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +15,14 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedOtherJobAdapter
 import com.google.android.material.appbar.MaterialToolbar
 
-class JobDetailFragment : Fragment(), OnFragmentClickListener {
+class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long) : Fragment(), OnFragmentClickListener {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var layoutManager2: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>? = null
@@ -34,52 +38,6 @@ class JobDetailFragment : Fragment(), OnFragmentClickListener {
     private fun setContentView(root: ConstraintLayout) {
     }
 
-//    private fun getData(): List<relatedJobModel> {
-//        var list = listOf(
-//            relatedJobModel(
-//                1,
-//                "Pekerjaan 1",
-//                "Lokasi 1",
-//                "Deskripsi 1",
-//                "satu detik lalu",
-//                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-//            ),
-//            relatedJobModel(
-//                2,
-//                "Pekerjaan 2",
-//                "Lokasi 2",
-//                "Deskripsi 2",
-//                "dua detik lalu",
-//                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-//            ),
-//            relatedJobModel(
-//                3,
-//                "Pekerjaan 3",
-//                "Lokasi 3",
-//                "Deskripsi 3",
-//                "tiga detik lalu",
-//                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-//            ),
-//            relatedJobModel(
-//                4,
-//                "Pekerjaan 4",
-//                "Lokasi 4",
-//                "Deskripsi 4",
-//                "empat detik lalu",
-//                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-//            ),
-//            relatedJobModel(
-//                5,
-//                "Pekerjaan 5",
-//                "Lokasi 5",
-//                "Deskripsi 5",
-//                "lima detik lalu",
-//                "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-//            ),
-//        )
-//        return list
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -87,6 +45,15 @@ class JobDetailFragment : Fragment(), OnFragmentClickListener {
         val view = inflater.inflate(R.layout.fragment_job_detail, container, false)
         val btn_applyJob = view.findViewById<View>(R.id.apply_job_button)
         val report_job = view.findViewById<View>(R.id.report_job)
+
+        Log.d("Job No", JobNo.toString())
+        val Context = this;
+        val fetch = config().portAddress+"/job/"+CompanyNo+"/"+JobNo+"/visitor"
+        Log.d("fetch", fetch.toString())
+        JobAPI().getJobDetai(,) {
+            Log.d("Response Job Detail", it.toString())
+
+        }
 
         btn_applyJob.setOnClickListener {
             Toast.makeText(context, "Apply Job", Toast.LENGTH_SHORT).show()
@@ -138,18 +105,18 @@ class JobDetailFragment : Fragment(), OnFragmentClickListener {
 
     override fun onFragmentClick() {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, JobDetailFragment(), "jobDetailFragment")
+        ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "jobDetailFragment")
         ft.addToBackStack("jobDetailFragment")
         ft.commit()
     }
 
     companion object {
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            JobDetailFragment().apply {
-
-            }
+//        @JvmStatic
+//        fun newInstance(param1: String, param2: String) =
+//            JobDetailFragment(JobNo).apply {
+//
+//            }
     }
 }
 

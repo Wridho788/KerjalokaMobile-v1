@@ -3,7 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/btn_circle.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_circle_primary.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_circle_primary_white.xml" value="0.1395" />
@@ -14,7 +13,10 @@
         <entry key="app/src/main/res/drawable/button_primary.xml" value="0.2165" />
         <entry key="app/src/main/res/drawable/button_primary_disabled.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_hoover.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/button_primary_style.xml" value="0.2855" />
+        <entry key="app/src/main/res/drawable/button_primary_white.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/button_primary_white_disable.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/button_primary_white_disabled.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/button_primary_white_hoover.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_primary_white_style.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/button_secondary.xml" value="0.112" />
@@ -44,7 +46,7 @@
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
-        <entry key="app/src/main/res/layout-v28/section_recommendation_job.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="app/src/main/res/layout/content_card.xml" value="0.29981884057971014" />
@@ -77,5 +79,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1425925925925926" />
+      </ProjectState>
+    </option>
   </component>
 </project>
