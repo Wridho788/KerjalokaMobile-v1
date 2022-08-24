@@ -22,9 +22,12 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedOtherJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ApplyJob
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ReportJob
 import com.google.android.material.appbar.MaterialToolbar
 
-class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long) : Fragment(),
+class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long,
+) : Fragment(),
     OnFragmentClickListener {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var layoutManager2: RecyclerView.LayoutManager? = null
@@ -84,15 +87,20 @@ class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long) : 
         }
 
         btn_applyJob.setOnClickListener {
-            Toast.makeText(context, "Apply Job", Toast.LENGTH_SHORT).show()
+            val sheet = ApplyJob()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ApplyJob") }
         }
 
         report_job.setOnClickListener {
-            Toast.makeText(context, "Report Job", Toast.LENGTH_SHORT).show()
+           val sheet = ReportJob()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
+
         }
 
         return view
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -139,15 +147,10 @@ class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long) : 
     }
 
     companion object {
-
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            JobDetailFragment(JobNo).apply {
-//
-//            }
     }
 }
 
 interface OnFragmentClickListener {
+
     fun onFragmentClick()
 }

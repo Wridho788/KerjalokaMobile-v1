@@ -48,4 +48,11 @@
     <string name="pekerjaan_lainnya_dari_perusahaan_ini">Pekerjaan Lainnya Dari Perusahaan Ini</string>
     <string name="detail_pekerjaan">Detail Pekerjaan</string>
     <string name="relate_job_2">Pekerjaan Serupa</string>
+    <string name="subtitle_melamar">Kamu akan melamar ke pekerjaan ini, apa kamu yakin untuk melamar pekerjaan ini?</string>
+    <string name="title_melamar">Yakin Ingin Melamar?</string>
+    <string name="konfimasi">Konfimasi</string>
+    <string name="report">Lapor</string>
+    <string name="placeholder_edit_report">Masukkan alasan melakukan report</string>
+    <string name="melamar">Melamar</string>
+    <string name="report_lowongan_ini">Report lowongan ini:</string>
 </resources>

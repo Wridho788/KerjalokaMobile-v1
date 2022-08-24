@@ -60,6 +60,7 @@ dependencies {
     implementation "androidx.emoji2:emoji2:$emojiVersion"
     implementation "androidx.emoji2:emoji2-views:$emojiVersion"
     implementation "androidx.emoji2:emoji2-bundled:$emojiVersion"
+    implementation 'com.github.andrefrsousa:SuperBottomSheet:2.0.0'
 
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -67,6 +68,4 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
     implementation 'com.squareup.okhttp3:mockwebserver:3.12.1'
 
-    // pretty-time
-    implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
 }
