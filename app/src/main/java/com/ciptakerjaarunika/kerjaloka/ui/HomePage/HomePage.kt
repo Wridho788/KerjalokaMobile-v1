@@ -5,9 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<<<< Temporary merge branch 1
-=========
-
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -63,6 +60,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
         }
         btn_company.setOnClickListener {
             Toast.makeText(activity, "Go to Company Activity", Toast.LENGTH_SHORT).show()
+//            onCompanyPage()
         }
         btn_offer_job.setOnClickListener {
             Toast.makeText(activity, "Go to Offer Job Activity", Toast.LENGTH_SHORT).show()
@@ -105,8 +103,17 @@ class HomePage : Fragment(), OnFragmentClickListener {
         ft.addToBackStack(null)
         ft.commit()
     }
+
+//    override fun onCompanyPage() {
+//        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+//        ft.replace(id, CompanyWantToKnowFragment(), "jobDetailFragment")
+//        ft.addToBackStack(null)
+//        ft.commit()
+//    }
+
 }
 
 interface OnFragmentClickListener {
     fun onFragmentClick(JobNo:Long, CompanyNo:Long)
+//    fun onCompanyPage()
 }
