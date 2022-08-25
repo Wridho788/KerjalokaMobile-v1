@@ -1,12 +1,10 @@
-package com.ciptakerjaarunika.kerjaloka.ui.JobPage
+package com.ciptakerjaarunika.kerjaloka.ui.JobPage;
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -17,11 +15,12 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
+
 
 class Job_Page : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>? = null
+
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +39,9 @@ class Job_Page : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.activity_job_page, container, false)
         val btn_search = view.findViewById<LinearLayout>(R.id.btn_search) as LinearLayout
+        val btn_seeBookmarkedJob = view.findViewById<MaterialButton>(R.id.btnSeeBookmarked)
+        val btn_seeNearMeJob = view.findViewById<MaterialButton>(R.id.btnSeeNearMe)
+        val btn_seeRecommendJob = view.findViewById<MaterialButton>(R.id.seeRecommend)
 //        val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn) as MaterialButton
 //        val btn_job = view.findViewById<MaterialCardView>(R.id.btn_job) as MaterialCardView
 //        val btn_company = view.findViewById<MaterialCardView>(R.id.btn_company) as MaterialCardView
@@ -60,6 +62,19 @@ class Job_Page : Fragment() {
             // code here to handle intent to search activity
             Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
         }
+
+        btn_seeBookmarkedJob.setOnClickListener {
+            replaceFragment(BookmarkJob())
+        }
+
+        btn_seeNearMeJob.setOnClickListener {
+            replaceFragment(nearMe_Job())
+        }
+
+        btn_seeRecommendJob.setOnClickListener {
+            replaceFragment(RecommendedJob())
+        }
+
 //        btn_notif.setOnClickListener {
 //            // code here to handle intent to notification  activity
 //            Toast.makeText(activity, "Go to Notification Activity", Toast.LENGTH_SHORT).show()
@@ -168,6 +183,26 @@ class Job_Page : Fragment() {
         recyclerView.layoutManager = layoutManager
         adapter = RecommendationJobAdapter(list)
         recyclerView.adapter = adapter
+
+        val recyclerView2 = view.findViewById<RecyclerView>(R.id.nearmeJob)
+        layoutManager = LinearLayoutManager(activity)
+        recyclerView2.layoutManager = layoutManager
+        adapter = RecommendationJobAdapter(list)
+        recyclerView2.adapter = adapter
+
+        val recyclerView3 = view.findViewById<RecyclerView>(R.id.bookmaredJob)
+        layoutManager = LinearLayoutManager(activity)
+        recyclerView3.layoutManager = layoutManager
+        adapter = RecommendationJobAdapter(list)
+        recyclerView3.adapter = adapter
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.commit()
     }
 
 
