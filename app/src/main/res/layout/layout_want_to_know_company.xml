@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/want_to_know_company"
+            android:text="@string/browse"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
