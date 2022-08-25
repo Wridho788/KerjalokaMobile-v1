@@ -34,6 +34,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/ic_selected.xml" value="0.333" />
+        <entry key="app/src/main/res/drawable/search_background.xml" value="0.1985" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
@@ -43,6 +44,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_on_boarding2.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/content_card.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.190625" />
@@ -63,6 +66,7 @@
         <entry key="app/src/main/res/layout/onboarding_container.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/search_component.xml" value="0.16032608695652173" />
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.2375" />
+        <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/section_recommendation_job.xml" value="0.19021739130434784" />
         <entry key="app/src/main/res/layout/view_holder_layout.xml" value="0.36875" />
