@@ -1,10 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.ui.LamaranPage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,7 +35,7 @@ class LamaranPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lamaran, container, false)
+        return inflater.inflate(R.layout.fragment_company_detail, container, false)
     }
 
     companion object {

@@ -55,4 +55,5 @@
     <string name="placeholder_edit_report">Masukkan alasan melakukan report</string>
     <string name="melamar">Melamar</string>
     <string name="report_lowongan_ini">Report lowongan ini:</string>
+    <string name="detail_perusahaan">Detail Perusahaan</string>
 </resources>
