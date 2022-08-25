@@ -5,9 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<<<< Temporary merge branch 1
-=========
-
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
