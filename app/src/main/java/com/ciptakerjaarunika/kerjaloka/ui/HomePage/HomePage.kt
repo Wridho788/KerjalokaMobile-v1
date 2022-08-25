@@ -5,9 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-<<<<<<<<< Temporary merge branch 1
-=========
-
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -21,6 +18,7 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -62,7 +60,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
             Toast.makeText(activity, "Go to job Activity", Toast.LENGTH_SHORT).show()
         }
         btn_company.setOnClickListener {
-            Toast.makeText(activity, "Go to Company Activity", Toast.LENGTH_SHORT).show()
+            onCompanyPage()
         }
         btn_offer_job.setOnClickListener {
             Toast.makeText(activity, "Go to Offer Job Activity", Toast.LENGTH_SHORT).show()
@@ -105,8 +103,17 @@ class HomePage : Fragment(), OnFragmentClickListener {
         ft.addToBackStack(null)
         ft.commit()
     }
+
+    override fun onCompanyPage() {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, CompanyPage(), "jobDetailFragment")
+        ft.addToBackStack(null)
+        ft.commit()
+    }
+
 }
 
 interface OnFragmentClickListener {
     fun onFragmentClick(JobNo:Long, CompanyNo:Long)
+    fun onCompanyPage()
 }
