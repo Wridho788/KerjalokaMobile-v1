@@ -193,15 +193,15 @@ class InterviewPage : Fragment(), CellClickListener{
 //        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
 //        toolbar.setTitle("Lamaran Saya")
 
-        var a : List<jobHomeListData>? = null;
-        var testing = JobAPI().getJobHomeAsync {
-            if (it != null) {
-                a = it.data
-                Log.d("Response", it.data.toString())
-                Log.d("Response", it.data[0].jobPosition)
-            }
-        };
-        Log.d("Response", a.toString())
+//        var a : List<jobHomeListData>? = null;
+//        var testing = JobAPI().getJobHomeAsync {
+//            if (it != null) {
+//                a = it.data
+//                Log.d("Response", it.data.toString())
+//                Log.d("Response", it.data[0].jobPosition)
+//            }
+//        };
+//        Log.d("Response", a.toString())
 
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
         val Context = this;

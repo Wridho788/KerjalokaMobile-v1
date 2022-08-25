@@ -12,12 +12,8 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 
-<<<<<<< HEAD
 
-class MainActivity : AppCompatActivity() {
-=======
 class  MainActivity : AppCompatActivity() {
->>>>>>> onBoardingPage
     private lateinit var binding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
