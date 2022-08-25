@@ -34,11 +34,12 @@ data class rJobDetailModel(
     val jobLocation: List<jobLocation>,
     val link: String,
     val company: company,
-    val JobDescription: String,
+    val jobDescription: String,
     val jobTitle: List<jobTitle>,
     val jobMinExperience: Int,
     val jobField: jobField,
     val jobRole: jobRole,
+    val createdOn: String,
     )
 
 data class jobLocation(

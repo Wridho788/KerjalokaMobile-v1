@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +27,13 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.Relate
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ApplyJob
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ReportJob
 import com.google.android.material.appbar.MaterialToolbar
+import org.ocpsoft.prettytime.PrettyTime
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
-class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long,
+class JobDetailFragment(
+    private val JobNo: Long, private val CompanyNo: Long,
 ) : Fragment(),
     OnFragmentClickListener {
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -44,7 +51,12 @@ class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long,
     private fun setContentView(root: ConstraintLayout) {
     }
 
-    @SuppressLint("SetTextI18n")
+    var inputDate: Date? = null
+    var outputDate: Date? = null
+    var formattedDateString: String? = null
+    var prettyTimeString: String? = null
+
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,28 +73,49 @@ class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long,
         val job_experience = view.findViewById<TextView>(R.id.jobExperience)
         val job_field = view.findViewById<TextView>(R.id.jobField)
         val job_role = view.findViewById<TextView>(R.id.jobRole)
-
+        val createdOn = view.findViewById<TextView>(R.id.jobDate)
+        val job_description = view.findViewById<TextView>(R.id.jobRequirement)
 
         val Context = this
         val fetch = config().portAddress + "/job/" + CompanyNo + "/" + JobNo + "/visitor"
-        Log.d("fetch", fetch.toString())
         JobAPI().getJobDetailAsync(CompanyNo, JobNo) {
-            Log.d("Response Job Detail", it.toString())
             if (it != null) {
+                Log.d("response", it.data.toString())
                 Glide.with(this)
                     .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
                     .fitCenter().into(company_logo)
                 job_position.text = it.data.jobPosition
                 job_location.text = it.data.jobLocation[0].label
                 company_name.text = it.data.company.companyName
-                job_qualications.text =  it.data.jobTitle.joinToString { data-> data.titleName +" " }
+                job_qualications.text =
+                    it.data.jobTitle.joinToString { data -> data.titleName + " " }
                 if (it.data.jobMinExperience == 0) {
-                    job_experience.text = it.data.jobMinExperience.toString()
+                    job_experience.text = ""
                 } else {
                     job_experience.text = it.data.jobMinExperience.toString() + " Tahun"
                 }
+                val dateString = it.data.createdOn
+                val convertToDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+                val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+                try {
+                    inputDate = convertToDate.parse(dateString.toString())
+                    formattedDateString = inputDate?.let { it1 -> dateFormat.format(it1) }
+                    outputDate = formattedDateString?.let { it1 -> dateFormat.parse(it1) }
+                } catch (e: ParseException) {
+                    e.printStackTrace()
+                }
+                val prettyTime = PrettyTime()
+                prettyTimeString = prettyTime.format(outputDate)
+                createdOn.text = prettyTimeString
                 job_field.text = it.data.jobField.fieldName
                 job_role.text = it.data.jobRole.jobRoleName
+                val jobDesc = it.data.jobDescription
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    job_description.text =
+                        Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_COMPACT);
+                } else {
+                    job_description.text = Html.fromHtml(jobDesc);
+                }
             }
         }
 
@@ -92,14 +125,13 @@ class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long,
         }
 
         report_job.setOnClickListener {
-           val sheet = ReportJob()
+            val sheet = ReportJob()
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
 
         }
 
         return view
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -146,8 +178,7 @@ class JobDetailFragment(private val JobNo: Long, private val CompanyNo: Long,
         ft.commit()
     }
 
-    companion object {
-    }
+    companion object
 }
 
 interface OnFragmentClickListener {

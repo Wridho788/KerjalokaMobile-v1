@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -45,7 +44,6 @@ class RecommendationJobAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
-//        Log.d("tes", rJobList.toString())
         return ViewHolder(view)
     }
 
@@ -60,17 +58,15 @@ class RecommendationJobAdapter(
             holder.jobPosition.text = currentItem.jobPosition
             holder.companyName.text = currentItem.CompanyName
             holder.jobLocation.text = currentItem.jobLocation
-//        holder.CreatedOn.text = currentItem.CreatedOn.toString()
+//            holder.CreatedOn.text = currentItem.CreatedOn.toString()
             Glide.with(holder.itemView.context)
                 .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
                 .into(holder.logo)
 
-            holder.bookmarkedJob.setOnClickListener {
-//                Toast.makeText(this, "testing", Toast.LENGTH_SHORT).show()
-            }
-            holder.shareableJob.setOnClickListener {
-//                onFragmentClickListener?.onFragmentClick()
-            }
+//            holder.bookmarkedJob.setOnClickListener {
+//            }
+//            holder.shareableJob.setOnClickListener {
+//            }
             holder.cardRecommendationJob.setOnClickListener {
                 onFragmentClickListener?.onFragmentClick(currentItem.jobNo, currentItem.companyNo)
             }

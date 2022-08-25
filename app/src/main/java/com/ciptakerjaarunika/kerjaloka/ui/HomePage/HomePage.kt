@@ -47,17 +47,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
         val btn_company = view.findViewById<MaterialCardView>(R.id.btn_company) as MaterialCardView
         val btn_offer_job =
             view.findViewById<MaterialCardView>(R.id.btn_job_offer) as MaterialCardView
-//        var btn_see_all = view.findViewById<TextView>(R.id.btn_see_all) as TextView
-//        var card_test_section =
-//            view.findViewById<MaterialCardView>(R.id.card_test) as MaterialCardView
-//        var card_interview_section = view.findViewById<MaterialCardView>(R.id.card_interview) as MaterialCardView;
-//        var btn_see_all_interview = view.findViewById<TextView>(R.id.btn_see_all_interview) as TextView;
-//        var card_recommendation_job = view.findViewById<MaterialCardView>(R.id.card_recommendation_job) as MaterialCardView;
         var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
-
-//        var btn_bookmark = view.findViewById<MaterialButton>(R.id.btn_bookmark) as MaterialButton
-//        var btn_share = view.findViewById<MaterialButton>(R.id.btn_share) as MaterialButton
-
 
         btn_search.setOnClickListener {
             Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
@@ -74,34 +64,9 @@ class HomePage : Fragment(), OnFragmentClickListener {
         btn_offer_job.setOnClickListener {
             Toast.makeText(activity, "Go to Offer Job Activity", Toast.LENGTH_SHORT).show()
         }
-//        btn_see_all.setOnClickListener {
-//            // code here to handle intent to see all activity
-//            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
-//        }
-//        card_test_section.setOnClickListener {  // code here to handle intent to Selection List activity
-//            Toast.makeText(activity, "Seleksi Saya!", Toast.LENGTH_SHORT).show()
-//        }
-//        card_interview_section.setOnClickListener {
-//            // code here to handle intent to Selection Interview activity
-//            Toast.makeText(activity, "Interview Saya!", Toast.LENGTH_SHORT).show()
-//        }
-//        btn_see_all_interview.setOnClickListener {
-//            // code here to handle intent to see all activity
-//            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
-//        }
-
         btn_see_all_recommendation_job.setOnClickListener {
-            // code here to handle intent to see all activity
             Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
         }
-//        btn_bookmark.setOnClickListener {
-//            // code here to handle intent to bookmark activity
-//            Toast.makeText(activity, "bookmark", Toast.LENGTH_SHORT).show()
-//        }
-//        btn_share.setOnClickListener {
-//            // code here to handle intent to share activity
-//            Toast.makeText(activity, "share", Toast.LENGTH_SHORT).show()
-//        }
         return view
     }
 
@@ -120,10 +85,8 @@ class HomePage : Fragment(), OnFragmentClickListener {
                     recyclerView.layoutManager = layoutManager
                     adapter = RecommendationJobAdapter(listJob, Context)
                 }
-
             }
         }
-
     }
 
     companion object {
