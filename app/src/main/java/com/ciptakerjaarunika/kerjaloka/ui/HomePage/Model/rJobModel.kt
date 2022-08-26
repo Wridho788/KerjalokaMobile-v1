@@ -12,12 +12,11 @@ data class rJobModel(
     val jobNo: Long,
     val jobPosition: String,
     val jobLocation: String,
-//    val timeUploadApplicant: String,
     val logo: String,
     val status: String,
     val link: String,
-    val CompanyName: String,
-//    val CreatedOn : PrettyTime
+    val companyName: String,
+    val createdOn: String,
 )
 
 data class rJobDetailResponse(

@@ -93,7 +93,7 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -109,8 +109,9 @@
                     android:id="@+id/btn_share"
                     android:layout_width="24dp"
                     android:layout_height="26dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/ic_share" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </LinearLayout>
 
 
         </LinearLayout>

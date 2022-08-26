@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,6 +13,10 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.OnFragmentClickListener
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import org.ocpsoft.prettytime.PrettyTime
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecommendationJobAdapter(
     private val rJobList: List<rJobModel>?,
@@ -51,14 +56,31 @@ class RecommendationJobAdapter(
         return rJobList?.size ?: 0
     }
 
+    var inputDate: Date? = null
+    var outputDate: Date? = null
+    var formattedDateString: String? = null
+    var prettyTimeString: String? = null
 
+    @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (rJobList != null) {
             val currentItem = rJobList[position]
             holder.jobPosition.text = currentItem.jobPosition
-            holder.companyName.text = currentItem.CompanyName
+            holder.companyName.text = currentItem.companyName
             holder.jobLocation.text = currentItem.jobLocation
-//            holder.CreatedOn.text = currentItem.CreatedOn.toString()
+            val dateString = currentItem.createdOn
+            val convertToDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+            val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+            try {
+                inputDate = convertToDate.parse(dateString.toString())
+                formattedDateString = inputDate?.let { it1 -> dateFormat.format(it1) }
+                outputDate = formattedDateString?.let { it1 -> dateFormat.parse(it1) }
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            val prettyTime = PrettyTime()
+            prettyTimeString = prettyTime.format(outputDate)
+            holder.CreatedOn.text = prettyTimeString
             Glide.with(holder.itemView.context)
                 .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
                 .into(holder.logo)
