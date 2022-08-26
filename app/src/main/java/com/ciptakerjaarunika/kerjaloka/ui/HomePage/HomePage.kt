@@ -45,8 +45,8 @@ class HomePage : Fragment(), OnFragmentClickListener {
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn) as MaterialButton
         val btn_job = view.findViewById<MaterialCardView>(R.id.btn_job) as MaterialCardView
         val btn_company = view.findViewById<MaterialCardView>(R.id.btn_company) as MaterialCardView
-        val btn_offer_job =
-            view.findViewById<MaterialCardView>(R.id.btn_job_offer) as MaterialCardView
+//        val btn_offer_job =
+//            view.findViewById<MaterialCardView>(R.id.btn_job_offer) as MaterialCardView
         var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
 
         btn_search.setOnClickListener {
@@ -61,9 +61,9 @@ class HomePage : Fragment(), OnFragmentClickListener {
         btn_company.setOnClickListener {
             Toast.makeText(activity, "Go to Company Activity", Toast.LENGTH_SHORT).show()
         }
-        btn_offer_job.setOnClickListener {
-            Toast.makeText(activity, "Go to Offer Job Activity", Toast.LENGTH_SHORT).show()
-        }
+//        btn_offer_job.setOnClickListener {
+//            Toast.makeText(activity, "Go to Offer Job Activity", Toast.LENGTH_SHORT).show()
+//        }
         btn_see_all_recommendation_job.setOnClickListener {
             Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
         }
