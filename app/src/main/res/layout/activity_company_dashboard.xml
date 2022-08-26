@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_home"
     android:fitsSystemWindows="true"
-    tools:context=".ui.HomePage.HomePage">
+    tools:context=".Company.dashboard.CompanyDashboard">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/home_appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="0dp"
+        app:elevation="@dimen/cardview_compat_inset_shadow"
         android:backgroundTint="@color/danger_500"
         app:liftOnScroll="true"
         android:background="@null">
@@ -21,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:elevation="0dp"
             app:expandedTitleTextAppearance="@style/Theme.Kerjaloka"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:toolbarId="@+id/general_toolbar">
@@ -43,7 +41,7 @@
 
                     <include
                         android:id="@+id/custom_toolbar"
-                        layout="@layout/custom_toolbar" />
+                        layout="@layout/company_custom_toolbar" />
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -51,9 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
-                app:layout_collapseMode="pin"
-
-                />
+                app:layout_collapseMode="pin" />
 
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -75,7 +71,7 @@
 
             <include
                 android:id="@+id/find_category_section"
-                layout="@layout/section_find_category" />
+                layout="@layout/company_section_find_category" />
 
             <include
                 android:id="@+id/my_test_section"
@@ -83,55 +79,10 @@
 
             <include
                 android:id="@+id/my_interview_section"
-                layout="@layout/section_my_interview" />
+                layout="@layout/company_section" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:ignore="UselessParent">
+<!--            <include android:id="@+id/recommandation_job_section" layout="@layout/section_recommendation_job" />-->
 
-                <LinearLayout
-                    android:id="@+id/title_recommendation_section"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="Rekomendasi Pekerjaan"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/btn_see_all_recommendation_jobs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/see_all"
-                        android:textColor="@color/danger_500"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view_recommendation_jobs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/title_recommendation_section"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:listitem="@layout/item_card_recommendation_job"
-                    tools:itemCount="5" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

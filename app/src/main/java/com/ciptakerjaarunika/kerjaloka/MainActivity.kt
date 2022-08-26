@@ -1,12 +1,11 @@
 package com.ciptakerjaarunika.kerjaloka
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.Company.Test.view_mytest_list
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.CompanyDashboard
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 
@@ -17,11 +16,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(HomePage())
+        replaceFragment(CompanyDashboard())
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.home -> replaceFragment((HomePage()))
+                R.id.home -> replaceFragment((CompanyDashboard()))
                 R.id.lamaran -> replaceFragment((LamaranPage()))
                 R.id.interview -> replaceFragment((InterviewPage()))
                 R.id.akun -> replaceFragment((AkunPage()))

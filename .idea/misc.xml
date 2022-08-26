@@ -35,6 +35,9 @@
         <entry key="app/src/main/res/drawable/custom_app_bar_background.xml" value="0.3465" />
         <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/ic_applicant.xml" value="0.2855" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.145" />
+        <entry key="app/src/main/res/drawable/ic_bookmark.xml" value="0.145" />
+        <entry key="app/src/main/res/drawable/ic_company_tes.xml" value="0.145" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/ic_notif_svg.xml" value="0.233" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.3465" />
@@ -55,6 +58,9 @@
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout-v28/section_recommendation_job.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/activity_company_dashboard.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_company_notifications.xml" value="0.34692028985507245" />
+        <entry key="app/src/main/res/layout/activity_companydashboard.xml" value="0.20969202898550723" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
         <entry key="app/src/main/res/layout/activity_modal_report.xml" value="0.24214792299898683" />
         <entry key="app/src/main/res/layout/activity_modal_report2.xml" value="0.165" />
@@ -62,8 +68,11 @@
         <entry key="app/src/main/res/layout/activity_view_mytestlist.xml" value="0.22282608695652173" />
         <entry key="app/src/main/res/layout/bottomsheetlayout.xml" value="1.0" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/company_section.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/company_section_find_category.xml" value="0.11" />
         <entry key="app/src/main/res/layout/content_card.xml" value="0.2056434373663959" />
-        <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.20436083796494228" />
+        <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.3649851632047478" />
         <entry key="app/src/main/res/layout/find_category.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_company_package_list.xml" value="0.165" />
@@ -71,8 +80,8 @@
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.3546666666666667" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.329608938547486" />
         <entry key="app/src/main/res/layout/fragment_myreviewpage.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_view_mytest_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.2411467116357504" />
+        <entry key="app/src/main/res/layout/fragment_view_mytest_list.xml" value="0.625" />
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/message_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/message_left1.xml" value="0.375" />
@@ -80,16 +89,16 @@
         <entry key="app/src/main/res/layout/message_right1.xml" value="0.20521590423257802" />
         <entry key="app/src/main/res/layout/message_right2.xml" value="0.335" />
         <entry key="app/src/main/res/layout/message_section.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/modal_report_layout.xml" value="0.24214792299898683" />
-        <entry key="app/src/main/res/layout/modal_withdraw_layout.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/modal_report_layout.xml" value="0.3290083410565338" />
+        <entry key="app/src/main/res/layout/modal_withdraw_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.45" />
         <entry key="app/src/main/res/layout/mytestlist_card.xml" value="0.25" />
         <entry key="app/src/main/res/layout/packagelist_card.xml" value="0.3359375" />
         <entry key="app/src/main/res/layout/sample_myapplicant_card.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/layout/search_component.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/section_find_category.xml" value="0.3817870884993587" />
-        <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.2056434373663959" />
-        <entry key="app/src/main/res/layout/section_my_test.xml" value="0.18896964514749892" />
+        <entry key="app/src/main/res/layout/section_find_category.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.526706231454006" />
+        <entry key="app/src/main/res/layout/section_my_test.xml" value="0.335" />
         <entry key="app/src/main/res/layout/section_recommendation_job.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />

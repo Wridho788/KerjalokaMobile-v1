@@ -11,10 +11,10 @@ import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
 
-class BottomSheetApplicant: SuperBottomSheetFragment() {
+class BottomSheetApplicantReport: SuperBottomSheetFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.modal_withdraw_layout, container, false)
+        return inflater.inflate(R.layout.modal_report_layout, container, false)
     }
 
     override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
@@ -30,8 +30,6 @@ class BottomSheetApplicant: SuperBottomSheetFragment() {
     }
 
     @SuppressLint("Range")
-    override fun getExpandedHeight(): Int {
-        return 1700
-    }
+    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
 
 }

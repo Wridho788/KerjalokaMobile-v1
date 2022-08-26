@@ -52,5 +52,8 @@ dependencies {
     implementation "androidx.emoji2:emoji2-views:$emojiVersion"
     implementation "androidx.emoji2:emoji2-bundled:$emojiVersion"
     implementation "com.github.andrefrsousa:SuperBottomSheet:2.0.0"
+    implementation "com.wdullaer:materialdatetimepicker:4.2.3"
+    implementation "com.github.AnyChart:AnyChart-Android:1.1.2"
+
 }
 

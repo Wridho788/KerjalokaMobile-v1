@@ -35,6 +35,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingBottom="200sp">
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/bag1"
             android:layout_width="match_parent"
@@ -354,10 +355,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
-            android:text="Report Job"
+            android:text="Lapor Lowongan"
             android:textColor="@color/danger_500"
             android:id="@+id/lapor"
-            android:textSize="14dp" />
+            android:textSize="14dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"

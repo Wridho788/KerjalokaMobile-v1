@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
@@ -30,6 +32,12 @@ class viewJobDetail() : Fragment() {
         val btnWithdraw = view.findViewById<MaterialButton>(R.id.btnWithdraw) as MaterialButton
         btnWithdraw.setOnClickListener {
             val sheet = BottomSheetApplicant()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
+        val lapor = view.findViewById<TextView>(R.id.lapor) as TextView
+        lapor.setOnClickListener {
+            val sheet = BottomSheetApplicantReport()
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
         }
 
