@@ -3,17 +3,22 @@ package com.ciptakerjaarunika.kerjaloka.model.User
 import java.util.*
 
 data class User(
-    val userNo : Long,
-    val email : String,
-    val phone : String,
-    val username : String,
-    val userFullname : String,
-    val roleNo : Int,
-    val suspended : Boolean,
-    val deactivated : Boolean,
-    val jobseekers : Jobseeker,
-    val jobseekerAdditional : JobseekerAdditional,
-    val company : Company,
-    val companyAdditional: CompanyAdditional,
-    val rolePrevileges: RolePrevileges
+    var userNo : Long,
+    var email : String,
+    var phone : String,
+    var username : String,
+    var userFullname : String,
+    var roleNo : Int,
+    var photo : String?,
+    var suspended : Boolean,
+    var deactivated : Boolean,
+    var dataComplete : Boolean,
+    var ownerStatus : Boolean,
+    var jobseekers : Jobseeker?,
+    var authorized : Boolean,
+    var notice : Long?,
+    var jobseekerAdditional : JobseekerAdditional?,
+    var company : Company?,
+    var companyAdditional: CompanyAdditional?,
+    var rolePrivileges: List<RolePrevileges>?
 )

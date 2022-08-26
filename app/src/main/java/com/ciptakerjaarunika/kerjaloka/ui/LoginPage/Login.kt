@@ -29,7 +29,7 @@ class Login : Fragment() {
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
         btn_login.setOnClickListener(View.OnClickListener {
             Log.d("Klik", "Clicked")
-            AUTHAPI().Login(LoginRequest(email,password)){
+            AUTHAPI().Login(context,LoginRequest(email,password)){
                 if(it != null){
                     Log.d("Login Response", it.toString());
                 }

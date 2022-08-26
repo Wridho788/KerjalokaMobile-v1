@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage
+package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
 import android.view.LayoutInflater
 import android.view.View
@@ -16,10 +16,10 @@ import java.util.*
 //class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
 //
 //
-class chat_adapter
+class ChatAdapter
 
-    (private val dataSet: List<Messages>) :
-    RecyclerView.Adapter<chat_adapter.ViewHolder>() {
+    (private val dataSet: List<Messages>?) :
+    RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     private val Right1 = 1
     private val Right2 = 2
@@ -39,7 +39,7 @@ class chat_adapter
 
     // determine which layout to use for the row
     override fun getItemViewType(position: Int): Int {
-        val sender : Long = dataSet[position].CreatedBy
+        val sender : Long = dataSet!![position].CreatedBy
         return if (sender == UserNo && (position == 0 || dataSet[position-1].CreatedBy != UserNo)) {
             Right1
         } else if (sender == UserNo && (position == 0 || dataSet[position-1].CreatedBy == UserNo)) {
@@ -78,7 +78,7 @@ class chat_adapter
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.message.text = dataSet[position].Message
+        viewHolder.message.text = dataSet!![position].Message
         viewHolder.createdOn.text = dataSet[position].CreatedOn.dateToString("HH:mm")
 
         val sender : Long = dataSet[position].CreatedBy
@@ -96,6 +96,6 @@ class chat_adapter
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = if(dataSet == null)  0 else dataSet.size
 
 }

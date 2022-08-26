@@ -11,9 +11,11 @@ data class conmpany_interview_list_api(
 )
 data class company_interview_list(
     val jobPosition : String,
+    val jobNo : Long,
     val interviewer :  List<interview_data>,
 )
 data class interview_data(
     val jobseekerName : String,
-    val photo : String
+    val photo : String,
+    val userNo : Long,
 )

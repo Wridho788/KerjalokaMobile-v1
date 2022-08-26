@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.service.WebSocket
 
 import MessageListener
 import  android.util.Log
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import okhttp3.*
 import okio.ByteString
 import  java.util.concurrent.TimeUnit
@@ -90,14 +91,15 @@ object  WebSocketManager {
                     messageListener.onConnectSuccess()
                 }
             }
-
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
+                Log.i(TAG, text)
                 messageListener.onMessage(text)
             }
 
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
                 super.onMessage(webSocket, bytes)
+                Log.i(TAG, bytes.toString())
                 messageListener.onMessage(bytes.base64())
             }
 

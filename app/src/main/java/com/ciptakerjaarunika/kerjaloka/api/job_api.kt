@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.api
 
 
+import android.content.Context
 import com.ciptakerjaarunika.kerjaloka.model.Job.homejob_model
 import com.ciptakerjaarunika.kerjaloka.model.ResponseResult
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
@@ -16,8 +17,8 @@ class JobAPI {
         @GET("users/home/job")
         fun getJobHome(): Call<homejob_model>
     }
-     fun getJobHomeAsync(onResult: (homejob_model?) -> Unit){
-        val retrofit = ServiceBuilder().GET(getJobHome::class.java)
+     fun getJobHomeAsync(context: Context?, onResult: (homejob_model?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getJobHome::class.java)
 
         retrofit.getJobHome().enqueue(
             object : Callback<homejob_model> {

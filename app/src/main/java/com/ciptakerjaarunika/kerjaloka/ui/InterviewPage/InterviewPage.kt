@@ -1,28 +1,36 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
-import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
-import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage.ChatPage
+import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_adapter
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker.jobseeker_interview_adapter
 import java.util.*
 
 class InterviewPage : Fragment(), CellClickListener{
     // TODO: Rename and change types of parameters
     private var isCompany : Boolean = true
     private var isLoading : Boolean = true
+    private var Context = this;
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +40,7 @@ class InterviewPage : Fragment(), CellClickListener{
         var list = listOf(
             chat_model(
                 "PT. Pergi Hilang dan Lupakan",
+                1,
                 5,
                 listOf(
                     Messages(
@@ -44,6 +53,7 @@ class InterviewPage : Fragment(), CellClickListener{
             ),
             chat_model(
                 "PT. Suka Suka",
+                2,
                 12,
                 listOf(
                     Messages(
@@ -56,6 +66,7 @@ class InterviewPage : Fragment(), CellClickListener{
             ),
             chat_model(
                 "Sayang 1",
+                3,
                 1,
                 listOf(
                     Messages(
@@ -128,6 +139,7 @@ class InterviewPage : Fragment(), CellClickListener{
             ),
             chat_model(
                 "Sayang 2",
+                3,
                 1,
                 listOf(
                     Messages(
@@ -140,6 +152,7 @@ class InterviewPage : Fragment(), CellClickListener{
             ),
             chat_model(
                 "Sayang 3",
+                4,
                 1,
                 listOf(
                     Messages(
@@ -152,6 +165,7 @@ class InterviewPage : Fragment(), CellClickListener{
             ),
             chat_model(
                 "Sayang 4",
+                5,
                 1,
                 listOf(
                     Messages(
@@ -164,6 +178,7 @@ class InterviewPage : Fragment(), CellClickListener{
             ),
             chat_model(
                 "Sayang 5",
+                6,
                 1,
                 listOf(
                     Messages(
@@ -176,6 +191,7 @@ class InterviewPage : Fragment(), CellClickListener{
             ),
             chat_model(
                 "Sayang 6",
+                7,
                 1,
                 listOf(
                     Messages(
@@ -190,45 +206,71 @@ class InterviewPage : Fragment(), CellClickListener{
 
         return list;
     }
+
+    private fun getCompanyData(){
+        view?.findViewById<TextView>(R.id.titleToolbar)!!.text = "Interview"
+        view?.findViewById<ImageButton>(R.id.backButton)!!.visibility = GONE;
+
+        view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Lowongan"
+        InterviewAPI().CompanyGetInterviewList(context) {
+            if(it!=null) {
+                isLoading = false
+                val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+
+                recyclerView.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = company_interview_adapter(it.data, Context)
+                }
+            }
+        }
+    }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
 //        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
 //        toolbar.setTitle("Lamaran Saya")
 
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
-        val Context = this;
+        var user = SessionManager(context).user
+        isCompany = user != null && user.roleNo == 2
         if(isCompany) {
-            itemView.findViewById<EditText>(R.id.searchInput).hint= "Cari Lowongan"
-            InterviewAPI().CompanyGetInterviewList {
-                Log.d("Response", it.toString())
-                if(it!=null) {
-                    isLoading = false
-                    recyclerView.apply {
-                        layoutManager = LinearLayoutManager(activity)
-                        adapter = company_interview_adapter(it.data, Context)
-                    }
-                }
-            }
+            this.getCompanyData()
         }
         else{
+            val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)
                 adapter = jobseeker_interview_adapter(getData(), Context)
             }
         }
     }
-    override fun onCellClickListener(data: chat_model) {
-        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, ChatPage(data), "ChatFragment")
-        ft.addToBackStack("ChatFragment")
-        ft.commit()
-    }
 
-    override fun companyInterviewClick() {
-//        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-//        ft.replace(id, ChatPage(data), "ChatFragment")
-//        ft.addToBackStack("ChatFragment")
-//        ft.commit()
+
+    override fun companyInterviewClick(SectionDetail : company_interview_list) {
+        view?.findViewById<TextView>(R.id.titleToolbar)!!.text = SectionDetail.jobPosition;
+        var backButton = view?.findViewById<ImageButton>(R.id.backButton) as ImageButton;
+
+        backButton.visibility = VISIBLE;
+        view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Pelamar"
+        backButton.setOnClickListener{
+            getCompanyData()
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            getCompanyData()
+        }
+
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = company_interview_byjob(SectionDetail, Context)
+        }
+    }
+    override fun goToChatPage(sectionName: String, sectionNo:Int?) {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id,  ChatPage(sectionName, sectionNo), "ChatFragment")
+        ft.addToBackStack("SectionMessage")
+        ft.commit()
     }
 
     override fun onCreateView(
@@ -240,6 +282,6 @@ class InterviewPage : Fragment(), CellClickListener{
     }
 }
 interface CellClickListener {
-    fun onCellClickListener(data : chat_model)
-    fun companyInterviewClick()
+    fun goToChatPage(sectionName: String, sectionNo: Int?)
+    fun companyInterviewClick(SectionDetail : company_interview_list)
 }

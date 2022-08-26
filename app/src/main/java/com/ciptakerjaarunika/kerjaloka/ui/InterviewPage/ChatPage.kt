@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage
+package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 
+class ChatPage(var sectionName: String,var sectionNo : Int?) : Fragment() {
 
-class ChatPage(val section: chat_model) : Fragment() {
+    private var chatModel : chat_model? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
@@ -27,15 +27,18 @@ class ChatPage(val section: chat_model) : Fragment() {
         backButton.setOnClickListener{
             parentFragmentManager.popBackStack()
         }
+        titlePage.text = sectionName
+        if(sectionNo != null){
+            //search Section Message And Filter Required Dta
+        }
 
 
-        titlePage.text = section.SectionName
         var LinearLayoutManager = LinearLayoutManager(activity)
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
-        recyclerView.scrollToPosition(section.Messages.size-1)
+        //recyclerView.scrollToPosition(section.Messages.size-1)
         recyclerView.apply {
             layoutManager = LinearLayoutManager
-            adapter = chat_adapter(section.Messages)
+            adapter = ChatAdapter(null)
         }
     }
     override fun onCreateView(

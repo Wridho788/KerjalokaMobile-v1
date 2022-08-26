@@ -12,7 +12,7 @@ import okio.ByteString.Companion.decodeHex
 
 
 class SessionManager (context: Context?) : ISessionManager{
-   private val appContext : Context = context!!.applicationContext
+   private val appContext : Context =  context!!.applicationContext
 
     companion object{
         const val SHARED_PREF_NAME = "com.ciptakerjaarunika.kerjaloka"

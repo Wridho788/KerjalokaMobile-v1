@@ -1,8 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.service
 
+import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.ResponseResult
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,13 +12,12 @@ import retrofit2.http.GET
 import java.io.IOException
 import java.util.logging.Level.parse
 
-class ServiceBuilder {
+class ServiceBuilder(context: Context?) {
     private lateinit var url : String
-    private var access_token : String = "";
+
+    private var access_token : String = SessionManager(context).access_token.toString();
     private var body : RequestBody? = null;
 
-    constructor(){
-    }
 //    constructor(url : String){
 //        this.url = url
 //    }
@@ -63,6 +64,7 @@ class ServiceBuilder {
 
 
     fun<T> GET(service: Class<T>): T{
+        Log.d("Builder Access Token : ", access_token)
         val retrofit = Retrofit.Builder()
             .baseUrl(config().portAddress) // change this IP for testing by your actual machine IP
             .addConverterFactory(GsonConverterFactory.create())

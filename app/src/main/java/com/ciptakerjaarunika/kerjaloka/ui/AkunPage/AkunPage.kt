@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.AkunPage
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,9 +13,9 @@ import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
+import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 
 
 class AkunPage : Fragment() {
@@ -35,10 +34,37 @@ class AkunPage : Fragment() {
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
             val loginRequest = LoginRequest(email = email, password=password)
-            AUTHAPI().Login(loginRequest){
+            AUTHAPI().Login(context, loginRequest){
                 if(it != null && it.code == 252){
-                    SessionManager(context).access_token = it.userToken
                     Log.d("Login Response", it.toString());
+
+                    SessionManager(context).access_token = it.userToken
+
+                    var user = User(
+                        userNo = it.userNo,
+                        userFullname = it.userFullname,
+                        suspended = it.suspended,
+                        roleNo = it.userRole,
+                        photo = it.photo,
+                        deactivated = it.deactivated,
+                        dataComplete = it.dataComplete,
+                        ownerStatus = it.ownerStatus == true,
+                        authorized = it.ownerStatus == true,
+                        notice = it.notice,
+                        rolePrivileges = it.privilege,
+                        email =  email,
+                        username = "",
+                        company = null,
+                        companyAdditional = null,
+                        jobseekerAdditional = null,
+                        jobseekers = null,
+                        phone = "",
+                    );
+                    SessionManager(context).user = user
+
+                }
+                else{
+                    SessionManager(context).user = null
                 }
             }
         })
