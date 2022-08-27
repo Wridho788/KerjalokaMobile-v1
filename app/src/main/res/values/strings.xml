@@ -82,6 +82,11 @@
     <string name="latest_search">Latest Search</string>
     <string name="top_search">Top Search</string>
     <string name="delete_history">Hapus Riwayat</string>
+    <string name="recommandation_job">Pekerjaan Rekomendasi</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lamar_kerja">Lamar Kerjaan</string>
+    <string name="requirentments">Requirentments</string>
+    <string name="additional_information">Additional Information</string>
     <string name="kualifikasi">Kualifikasi</string>
     <string name="minimal_pengalaman">Minimal Pengalaman</string>
     <string name="role">Peran</string>
@@ -97,5 +102,7 @@
     <string name="placeholder_edit_report">Masukkan alasan melakukan report</string>
     <string name="melamar">Melamar</string>
     <string name="report_lowongan_ini">Report lowongan ini:</string>
-
+    <string name="pekerjaan">Pekerjaan:</string>
+    <string name="lihat_selengkapnya">Lihat Selengkapnya</string>
+    <string name="company2">Company:</string>
 </resources>
