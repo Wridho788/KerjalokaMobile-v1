@@ -4,6 +4,8 @@ import MessageListener
 import android.content.Context
 import android.content.SharedPreferences
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.User.*
 import com.google.gson.Gson
 import okhttp3.*
@@ -18,6 +20,7 @@ class SessionManager (context: Context?) : ISessionManager{
         const val SHARED_PREF_NAME = "com.ciptakerjaarunika.kerjaloka"
         const val ACCESS_TOKEN = "access_token"
         const val USER = "user"
+        const val CHAT_DATA = "chat_data"
         const val JOBSEEKER = "Jobseeker"
         const val COMPANY= "company"
         const val COMPANY_ADDITIONAL= "ocmpanyadditional"
@@ -31,6 +34,10 @@ class SessionManager (context: Context?) : ISessionManager{
     override var user: User?
         get() = Gson().fromJson(getData(USER), User::class.java)
         set(value) {setData(USER, Gson().toJson(value))}
+
+    override var chatData: chat_data?
+        get() = Gson().fromJson(getData(CHAT_DATA), chat_data::class.java)
+        set(value) {setData(CHAT_DATA, Gson().toJson(value))}
 
     override var company: Company?
         get() = Gson().fromJson(getData(COMPANY), Company::class.java)

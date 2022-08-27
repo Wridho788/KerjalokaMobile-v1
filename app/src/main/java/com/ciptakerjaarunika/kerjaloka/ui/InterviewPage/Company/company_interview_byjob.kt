@@ -7,8 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
+import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
@@ -18,7 +22,12 @@ import java.util.*
 //
 class company_interview_byjob
 
-    (private val dataSet: company_interview_list, private val cellClickListener: CellClickListener) :
+    (private val dataSet: company_interview_list,
+     private val cellClickListener: CellClickListener,
+     private val hubConnection: HubConnection,
+     private val jobNo : Long?,
+     private val chatData: chat_data?,
+) :
     RecyclerView.Adapter<company_interview_byjob.ViewHolder>() {
 
     private lateinit var mListner : onItemClickListner
@@ -67,8 +76,28 @@ class company_interview_byjob
         viewHolder.lastMessage.text = ""
         viewHolder.lastMessageOn.text = ""
 
-        viewHolder.itemView.setOnClickListener {
-            cellClickListener.goToChatPage(dataSet.interviewer[position].jobseekerName, null)
+        val receiver = listOf<Long>(dataSet.interviewer[position].userNo)
+        if(chatData!= null) {
+            val sectionNo = chatData.sections?.find {
+                it.jobNo == jobNo &&
+                        it.receiver.contains(dataSet.interviewer[position].userNo) &&
+                        it.sectionName == dataSet.interviewer[position].jobseekerName
+            }
+
+            viewHolder.itemView.setOnClickListener {
+                cellClickListener.goToChatPage(
+                    dataSet.interviewer[position].jobseekerName,
+                    sectionNo?.sectionNo, hubConnection, jobNo, receiver
+                )
+            }
+        }
+        else{
+            viewHolder.itemView.setOnClickListener {
+                cellClickListener.goToChatPage(
+                    dataSet.interviewer[position].jobseekerName,
+                    null, hubConnection, jobNo, receiver
+                )
+            }
         }
     }
     public fun LocalDateTime.dateToString(format: String): String {

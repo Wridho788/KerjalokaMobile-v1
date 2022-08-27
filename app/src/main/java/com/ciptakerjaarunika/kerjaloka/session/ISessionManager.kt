@@ -3,6 +3,8 @@ package com.ciptakerjaarunika.kerjaloka.session
 import MessageListener
 import android.content.Context
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.User.*
 import okhttp3.*
 import okio.ByteString
@@ -16,6 +18,7 @@ interface ISessionManager{
     var company: Company?
     var companyAdditional: CompanyAdditional?
     var jobseekerAdditional: JobseekerAdditional?
+    var chatData : chat_data?
 
     suspend fun clearData()
 }

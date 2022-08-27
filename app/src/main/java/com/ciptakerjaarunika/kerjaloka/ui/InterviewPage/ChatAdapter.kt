@@ -39,12 +39,12 @@ class ChatAdapter
 
     // determine which layout to use for the row
     override fun getItemViewType(position: Int): Int {
-        val sender : Long = dataSet!![position].CreatedBy
-        return if (sender == UserNo && (position == 0 || dataSet[position-1].CreatedBy != UserNo)) {
+        val sender : Long = dataSet!![position].createdBy
+        return if (sender == UserNo && (position == 0 || dataSet[position-1].createdBy != UserNo)) {
             Right1
-        } else if (sender == UserNo && (position == 0 || dataSet[position-1].CreatedBy == UserNo)) {
+        } else if (sender == UserNo && (position == 0 || dataSet[position-1].createdBy == UserNo)) {
             Right2
-        } else if (sender != UserNo && (position == 0 || dataSet[position-1].CreatedBy != sender)) {
+        } else if (sender != UserNo && (position == 0 || dataSet[position-1].createdBy != sender)) {
             Left1
         } else{
             Left2
@@ -78,12 +78,12 @@ class ChatAdapter
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.message.text = dataSet!![position].Message
-        viewHolder.createdOn.text = dataSet[position].CreatedOn.dateToString("HH:mm")
+        viewHolder.message.text = dataSet!![position].message
+        viewHolder.createdOn.text = dataSet[position].createdOn.dateToString("HH:mm")
 
-        val sender : Long = dataSet[position].CreatedBy
+        val sender : Long = dataSet[position].createdBy
 
-        if (dataSet.size -1 == position || dataSet[position+1].CreatedBy != sender || dataSet[position+1].CreatedOn != dataSet[position].CreatedOn) {
+        if (dataSet.size -1 == position || dataSet[position+1].createdBy != sender || dataSet[position+1].createdOn != dataSet[position].createdOn) {
             viewHolder.createdOn.visibility= VISIBLE
         } else{
             viewHolder.createdOn.visibility= GONE

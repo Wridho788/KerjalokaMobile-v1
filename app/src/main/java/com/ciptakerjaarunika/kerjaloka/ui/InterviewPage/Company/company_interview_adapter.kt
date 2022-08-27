@@ -1,13 +1,21 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
+import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,8 +24,14 @@ import java.util.*
 //
 class company_interview_adapter
 
-    (private val dataSet: List<company_interview_list>, private val cellClickListener: CellClickListener) :
-    RecyclerView.Adapter<company_interview_adapter.ViewHolder>() {
+    (
+    private val dataSet: List<company_interview_list>,
+    private val cellClickListener: CellClickListener,
+    val hubConnection: HubConnection,
+    val chatData: chat_data?,
+    val context: Context
+    )
+    : RecyclerView.Adapter<company_interview_adapter.ViewHolder>() {
 
     private lateinit var mListner : onItemClickListner
     interface onItemClickListner{
@@ -59,13 +73,28 @@ class company_interview_adapter
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.jobName.text = dataSet[position].jobPosition
-        viewHolder.notRead.text = "12"
-        viewHolder.applicantCount.text = dataSet[position].interviewer.count().toString()
-        viewHolder.lastMessageOn.text = "12:50"
+
+        if(chatData != null){
+            var currentSection = if (chatData.sections != null) chatData.sections.find {
+                it.jobNo == dataSet[position].jobNo
+            }
+            else null;
+
+            Log.d("Current Section", currentSection.toString())
+            if (currentSection != null) {
+                viewHolder.notRead.text = currentSection.notRead.toString()
+                viewHolder.notRead.visibility = VISIBLE
+
+                viewHolder.lastMessageOn.text =
+                    currentSection.messages.last().createdOn.dateToString("HH:mm")
+                viewHolder.lastMessageOn.visibility = VISIBLE
+            }
+            viewHolder.applicantCount.text = dataSet[position].interviewer.count().toString()
+        }
 //        viewHolder.lastMessageOn.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].CreatedOn.dateToString("HH:mm")
 
         viewHolder.itemView.setOnClickListener {
-            cellClickListener.companyInterviewClick(dataSet[position])
+            cellClickListener.companyInterviewClick(dataSet[position], hubConnection, dataSet[position].jobNo)
         }
     }
     public fun Date.dateToString(format: String): String {

@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.2598958333333333" />
+        <entry key="app/src/main/res/drawable-anydpi-v24/ic_attach_file.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/back_primary_icon.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/back_white_icon.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/btn_circle.xml" value="0.1395" />
@@ -30,6 +31,8 @@
         <entry key="app/src/main/res/drawable/button_secondary_white_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
+        <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/icon_send.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/text_rounded.xml" value="0.148" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />

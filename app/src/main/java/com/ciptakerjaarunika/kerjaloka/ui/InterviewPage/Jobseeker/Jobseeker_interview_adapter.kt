@@ -7,8 +7,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
+import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,7 +19,10 @@ import java.util.*
 //
 class jobseeker_interview_adapter
 
-    (private val dataSet: List<chat_model>, private val cellClickListener: CellClickListener) :
+    (
+        private val dataSet: chat_data?,
+        private val cellClickListener: CellClickListener,
+        val hubConnection: HubConnection) :
     RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
 
     private lateinit var mListner : onItemClickListner
@@ -61,13 +66,32 @@ class jobseeker_interview_adapter
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.sectionName.text = dataSet[position].SectionName
-        viewHolder.notRead.text = dataSet[position].NotRead.toString()
-        viewHolder.lastMessage.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].Message
-        viewHolder.lastMessageOn.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].CreatedOn.dateToString("HH:mm")
+        viewHolder.sectionName.text = dataSet.sections[position].sectionName
+        viewHolder.notRead.text = dataSet.sections[position].notRead.toString()
+        viewHolder.lastMessage.text = dataSet.sections[position].messages[dataSet.sections[position].messages.count()-1].message
+        viewHolder.lastMessageOn.text = dataSet.sections[position].messages.last().createdOn.dateToString("HH:mm")
 
-        viewHolder.itemView.setOnClickListener {
-            cellClickListener.goToChatPage(dataSet[position].SectionName,dataSet[position].SectionNo)
+        if(chat_data != null) {
+            viewHolder.itemView.setOnClickListener {
+                cellClickListener.goToChatPage(
+                    dataSet.sections[position].sectionName,
+                    dataSet.sections[position].sectionNo,
+                    hubConnection,
+                    null,
+                    dataSet.sections[position].receiver
+                )
+            }
+        }
+        else{
+            viewHolder.itemView.setOnClickListener {
+                cellClickListener.goToChatPage(
+                    dataSet.sections[position].sectionName,
+                    dataSet.sections[position].sectionNo,
+                    hubConnection,
+                    null,
+                    dataSet.sections[position].receiver
+                )
+            }
         }
     }
     public fun Date.dateToString(format: String): String {
@@ -76,6 +100,6 @@ class jobseeker_interview_adapter
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = dataSet.sections.size
 
 }
