@@ -4,12 +4,17 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.core.view.size
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchJobBinding
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Adapter.NearMeJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.search_job.Adapter.SearchJobAdapter
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -17,6 +22,8 @@ import java.lang.reflect.Type
 
 
 class SearchJob : AppCompatActivity() {
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<SearchJobAdapter.ViewHolder>? = null
 
     var list = ArrayList<SearchModel>()
     var list2 = ArrayList<String>()
@@ -36,15 +43,25 @@ class SearchJob : AppCompatActivity() {
                     text = it
                     id = int
                     isChipIconVisible = false
-                    isCloseIconVisible = true
+                    isCloseIconVisible = false
                     isClickable = true
                     isCheckable = false
-                    closeIconSize = 30f
                     binding.apply {
                         chipGroup.addView(chip as View)
-                        chip.setOnCloseIconClickListener {
-                            chipGroup.removeView(chip as View)
-                        }
+                    }
+                }
+                val chipTop = Chip(this)
+                chipTop.setChipBackgroundColorResource(R.color.danger_100)
+                chipTop.apply {
+                    textSize = 12f
+                    text = it
+                    id = int
+                    isChipIconVisible = false
+                    isCloseIconVisible = false
+                    isClickable = true
+                    isCheckable = false
+                    binding.apply {
+                        chipGroupTopSearch.addView(chipTop as View)
                     }
                 }
                 int++
@@ -55,13 +72,76 @@ class SearchJob : AppCompatActivity() {
                 if (query?.isNotEmpty() == true) {
                     newChips(query)
                 }
+                binding.searchResult.isVisible=true
+                binding.history.isVisible=false
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                if (newText!!.isBlank()){
+                    binding.searchResult.isVisible=false
+                    binding.history.isVisible=true
+                }
+                return true
             }
         })
+
+        binding.removeHistory.setOnClickListener(){
+            removeArrayList(list2,"SearchJob")
+            binding.chipGroup.removeAllViews()
+        }
+
+        val list = ArrayList<rJobModel>()
+        val rJob1 = rJobModel(
+            1,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+        val rJob2 = rJobModel(
+            2,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+        val rJob3 = rJobModel(
+            3,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+        val rJob4 = rJobModel(
+            4,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+        val rJob5 = rJobModel(
+            5,
+            "Software Engineer",
+            "PT. KerjaLoka",
+            "Jakarta",
+            "satu jam lalu",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+        )
+
+        list.add(rJob1)
+        list.add(rJob2)
+        list.add(rJob3)
+        list.add(rJob4)
+        list.add(rJob5)
+        layoutManager = LinearLayoutManager(this)
+        binding.searchResult.layoutManager = layoutManager
+        adapter = SearchJobAdapter(list)
+        binding.searchResult.adapter = adapter
     }
 
     private fun newChips(name: String) {
@@ -73,10 +153,9 @@ class SearchJob : AppCompatActivity() {
             textSize=12f
             text=name
             isChipIconVisible=false
-            isCloseIconVisible=true
+            isCloseIconVisible=false
             isClickable=true
             isCheckable=false
-            closeIconSize=30f
             binding.apply {
                 if (chipGroup.size > 7){
                     chipGroup.removeViewAt(0)
@@ -84,10 +163,6 @@ class SearchJob : AppCompatActivity() {
                 }
                 else {
                     chipGroup.addView(chip as View)
-                }
-                chip.setOnCloseIconClickListener {
-                    chipGroup.removeView(chip as View)
-
                 }
             }
         }
