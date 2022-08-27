@@ -7,7 +7,7 @@
     tools:context=".ui.search_job.SearchJob"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -15,18 +15,18 @@
         android:gravity="center"
         android:padding="16dp"
         >
+
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchJob"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense"
-            android:background="@drawable/search_background"
             android:layout_weight="1"
-            app:defaultQueryHint="Cari Kerjaan"
+            android:background="@drawable/search_background"
             android:iconifiedByDefault="false"
+            app:defaultQueryHint="Cari Kerjaan"
             app:iconifiedByDefault="false"
-            app:queryBackground="@null"
-            />
+            app:queryBackground="@null" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="50dp"
@@ -36,7 +36,7 @@
             app:backgroundTint="@color/light_500"
             android:layout_marginLeft="10dp"
             />
-    </RelativeLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,16 +62,16 @@
                 android:textColor="@color/danger_500"
                 android:text="Hapus Riwayat"/>
         </LinearLayout>
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"/>
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"></com.google.android.material.chip.ChipGroup>
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+
+            >
+        </com.google.android.material.chip.ChipGroup>
 
     </LinearLayout>
 
