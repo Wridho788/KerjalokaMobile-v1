@@ -82,4 +82,20 @@
     <string name="latest_search">Latest Search</string>
     <string name="top_search">Top Search</string>
     <string name="delete_history">Hapus Riwayat</string>
+    <string name="kualifikasi">Kualifikasi</string>
+    <string name="minimal_pengalaman">Minimal Pengalaman</string>
+    <string name="role">Peran</string>
+    <string name="job_field">Bidang Pekerjaan</string>
+    <string name="lapor_lowongan">Lapor Lowongan</string>
+    <string name="pekerjaan_lainnya_dari_perusahaan_ini">Pekerjaan Lainnya Dari Perusahaan Ini</string>
+    <string name="detail_pekerjaan">Detail Pekerjaan</string>
+    <string name="relate_job_2">Pekerjaan Serupa</string>
+    <string name="subtitle_melamar">Kamu akan melamar ke pekerjaan ini, apa kamu yakin untuk melamar pekerjaan ini?</string>
+    <string name="title_melamar">Yakin Ingin Melamar?</string>
+    <string name="konfimasi">Konfirmasi</string>
+    <string name="report">Lapor</string>
+    <string name="placeholder_edit_report">Masukkan alasan melakukan report</string>
+    <string name="melamar">Melamar</string>
+    <string name="report_lowongan_ini">Report lowongan ini:</string>
+
 </resources>
