@@ -47,9 +47,10 @@
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.2964724534284582" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
-        <entry key="app/src/main/res/layout/activity_search.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.27900552486187846" />
         <entry key="app/src/main/res/layout/content_card.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/layout/find_category.xml" value="0.45" />
@@ -61,11 +62,12 @@
         <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
-        <entry key="app/src/main/res/layout/item_card_job.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_card_job.xml" value="0.165" />
         <entry key="app/src/main/res/layout/item_card_job_other_related.xml" value="0.10885416666666667" />
         <entry key="app/src/main/res/layout/item_card_job_related.xml" value="0.45" />
-        <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.27900552486187846" />
         <entry key="app/src/main/res/layout/list_recommendation_job.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/search_component.xml" value="0.1426872770511296" />
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.375" />

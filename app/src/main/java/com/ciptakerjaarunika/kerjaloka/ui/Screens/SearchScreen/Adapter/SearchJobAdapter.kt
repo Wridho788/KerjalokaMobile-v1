@@ -1,32 +1,52 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.SearchView
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.general_search_model
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.jobList
+import com.google.android.material.card.MaterialCardView
 
-class SearchJobAdapter(private val general_search_list: List<general_search_model>) :
+class SearchJobAdapter(private val joblist: List<jobList>, private val context: Context) :
     RecyclerView.Adapter<SearchJobAdapter.ViewHolder>() {
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-            var keyword: SearchView
+                    var jobPosition: TextView
+                    var jobLocation: TextView
+                    var jobCompany: TextView
+                    var createOn: TextView
+                    var logo: ImageView
+                    var cardJob: MaterialCardView
+
 
             init {
-                keyword = itemView.findViewById(R.id.search_bar)
+                jobPosition = itemView.findViewById(R.id.jobPosition)
+                jobLocation = itemView.findViewById(R.id.jobLocation)
+                jobCompany = itemView.findViewById(R.id.jobCompany)
+                createOn = itemView.findViewById(R.id.createdOn)
+                logo = itemView.findViewById(R.id.logo)
+                cardJob = itemView.findViewById(R.id.card_recommendation_job)
             }
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+       val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+            val currentItem = joblist[position]
+            holder.jobPosition.text = currentItem.jobPosition
+//            holder.jobLocation.text = currentItem.location
+
+
+
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return joblist.size
     }
 }
