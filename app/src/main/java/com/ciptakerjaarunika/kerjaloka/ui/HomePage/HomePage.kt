@@ -20,6 +20,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdap
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.WantToKnowCompanyScreen.CompanyWantToKnowFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -111,9 +112,18 @@ class HomePage : Fragment(), OnFragmentClickListener {
         ft.commit()
     }
 
+
+    override fun onCompanyPage() {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, CompanyWantToKnowFragment(), "jobDetailFragment")
+        ft.addToBackStack(null)
+        ft.commit()
+    }
+
 }
 
 interface OnFragmentClickListener {
     fun onFragmentClick(JobNo:Long, CompanyNo:Long)
+    fun onCompanyPage()
     fun onCompanyPage()
 }

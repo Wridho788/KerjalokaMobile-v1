@@ -53,6 +53,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_company_page.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_company_want_to_know.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
