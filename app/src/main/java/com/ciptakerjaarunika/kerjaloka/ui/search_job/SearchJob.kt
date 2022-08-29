@@ -67,6 +67,9 @@ class SearchJob : AppCompatActivity() {
                 int++
             }
         }
+        else{
+            binding.historyChips.isVisible=false
+        }
         binding.searchJob.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
@@ -146,6 +149,7 @@ class SearchJob : AppCompatActivity() {
     }
 
     private fun newChips(name: String) {
+        binding.historyChips.isVisible=true
         list2.add(name)
         saveArrayList(list2, "SearchJob")
         val chip = Chip(this)
