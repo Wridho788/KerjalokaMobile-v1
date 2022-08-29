@@ -8,13 +8,10 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.Model
+import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.CompanyNotificationModel
 import java.lang.ref.WeakReference
 import com.ciptakerjaarunika.kerjaloka.R
-import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatter.ofPattern
 import java.util.*
 
 @SuppressLint("ResourceAsColor")
@@ -28,7 +25,7 @@ class itemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private var Time: TextView? = null
     private var Image: ImageView? = null
 
-    var itemModel: Model? = null
+    var itemModel: CompanyNotificationModel? = null
 
     init {
         view.get()?.let {

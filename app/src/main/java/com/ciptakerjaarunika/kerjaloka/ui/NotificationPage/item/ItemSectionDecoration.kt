@@ -3,23 +3,19 @@ package com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.item
 import android.content.Context
 import android.graphics.*
 import android.os.Build
-import android.text.format.DateUtils
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.Model
-import java.text.ParseException
-import java.text.SimpleDateFormat
+import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.CompanyNotificationModel
 import java.time.LocalDateTime
-import java.util.*
 
 
 class ItemSectionDecoration(
     private val context: Context,
-    private val getItemList: () -> MutableList<Model>
+    private val getItemList: () -> MutableList<CompanyNotificationModel>
 ): RecyclerView.ItemDecoration() {
 
     private val dividerHeight = dipToPx(context, 0.8f)
@@ -135,7 +131,7 @@ class ItemSectionDecoration(
     }
 
     private fun drawSectionView(canvas: Canvas, text: String, top: Int, mark: String){
-        val view = SectionViewHolder(context)
+        val view = CompanySectionViewHolder(context)
         view.setDate(text, mark)
 
         val bitmap = getViewGroupBitmap(view)

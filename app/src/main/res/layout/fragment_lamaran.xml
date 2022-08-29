@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainAppbar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.LamaranPage.LamaranPage">
+    android:layout_height="wrap_content">
 
-    <TextView
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lamaran Page"
-        android:fontFamily="@font/poppins_bold"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textColor="@color/danger_500"
-        android:layout_gravity="center"
-        />
+        android:layout_height="?attr/actionBarSize"
+        app:title="Lamaran Saya"
+        app:titleTextColor="@color/white" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
+        tools:listitem="@layout/myapplicant_card" />
+
+</com.google.android.material.appbar.AppBarLayout>
