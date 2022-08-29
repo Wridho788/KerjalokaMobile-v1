@@ -20,6 +20,8 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdap
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.BookmarkJob
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Job_Page
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -55,7 +57,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
             Toast.makeText(activity, "Go to Notification Activity", Toast.LENGTH_SHORT).show()
         }
         btn_job.setOnClickListener {
-            Toast.makeText(activity, "Go to job Activity", Toast.LENGTH_SHORT).show()
+            onReplaceFragment()
         }
         btn_company.setOnClickListener {
             onCompanyPage()
@@ -106,9 +108,18 @@ class HomePage : Fragment(), OnFragmentClickListener {
         ft.commit()
     }
 
+    override fun onReplaceFragment() {
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.commit()
+
+    }
+
 }
 
 interface OnFragmentClickListener {
     fun onFragmentClick(JobNo:Long, CompanyNo:Long)
     fun onCompanyPage()
+    fun onReplaceFragment()
 }
