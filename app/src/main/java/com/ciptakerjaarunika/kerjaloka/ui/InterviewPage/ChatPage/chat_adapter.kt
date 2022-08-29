@@ -1,17 +1,14 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage
 
-import android.content.ClipData.Item
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.emoji2.widget.EmojiTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Messages
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.chat_model
+import com.ciptakerjaarunika.kerjaloka.model.Chat.Messages
 import java.text.SimpleDateFormat
 import java.util.*
 

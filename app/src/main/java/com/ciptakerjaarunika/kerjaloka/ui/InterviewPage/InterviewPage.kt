@@ -1,30 +1,23 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
-import android.graphics.ColorSpace
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.api.UserAPI
+import com.ciptakerjaarunika.kerjaloka.model.Chat.Messages
+import com.ciptakerjaarunika.kerjaloka.model.Chat.chat_model
+import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage.ChatPage
-import java.io.Console
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [InterviewPage.newInstance] factory method to
- * create an instance of this fragment.
- */
 class InterviewPage : Fragment(), CellClickListener{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -33,10 +26,6 @@ class InterviewPage : Fragment(), CellClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
     private fun getData(): List<chat_model> {
         var list = listOf(
@@ -205,6 +194,16 @@ class InterviewPage : Fragment(), CellClickListener{
 //        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
 //        toolbar.setTitle("Lamaran Saya")
 
+        var a : List<jobHomeListData>? = null;
+
+        var testing = JobAPI().getJobHomeAsync {
+            if (it != null) {
+                a = it.data
+                Log.d("Response", it.toString())
+                Log.d("Response", it.data[0].jobPosition)
+            }
+        };
+
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
         val Context = this;
         recyclerView.apply {
@@ -225,18 +224,6 @@ class InterviewPage : Fragment(), CellClickListener{
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_interview, container, false)
-    }
-
-    companion object {
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            InterviewPage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
 interface CellClickListener {

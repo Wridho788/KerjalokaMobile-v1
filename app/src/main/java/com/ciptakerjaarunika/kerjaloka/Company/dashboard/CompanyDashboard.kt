@@ -1,22 +1,28 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import com.anychart.APIlib
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
-import com.anychart.AnyChart.pie
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyDashboardBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.datepicker.*
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -31,17 +37,18 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 
-private lateinit var binding: ActivityCompanyDashboardBinding
 
 class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
+    private val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var binding: ActivityCompanyDashboardBinding = ActivityCompanyDashboardBinding.inflate(inflater, container, false)
 
-        binding = ActivityCompanyDashboardBinding.inflate(inflater, container, false)
 //        val see_all = findViewById(R.id.btn_see_all) as TextView
         val view = inflater.inflate(R.layout.activity_company_dashboard, container, false)
         val btn_search = view.findViewById<LinearLayout>(R.id.btn_search) as LinearLayout
@@ -49,6 +56,11 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         val btn_job = view.findViewById<MaterialCardView>(R.id.btn_pekerjaanComp) as MaterialCardView
         val btn_paket = view.findViewById<MaterialCardView>(R.id.btn_paket) as MaterialCardView
         val btn_tes = view.findViewById<MaterialCardView>(R.id.btn_tes) as MaterialCardView
+        val img_btn_calendar1 = view.findViewById<LinearLayout>(R.id.set_calendar1) as LinearLayout
+        val img_btn_calendar2 = view.findViewById<LinearLayout>(R.id.set_calendar2) as LinearLayout
+        val plg_tgl2 = view.findViewById<TextView>(R.id.plg_tgl2) as TextView
+        val plg_tgl1 = view.findViewById<TextView>(R.id.plg_tgl1) as TextView
+
 //        var card_test_section =
 //            view.findViewById<MaterialCardView>(R.id.card_test) as MaterialCardView
 //        val card_interview_section =
@@ -77,6 +89,48 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         btn_paket.setOnClickListener {
             // code here to handle intent to company activity
             Toast.makeText(activity, "Paket di Klik!", Toast.LENGTH_SHORT).show()
+        }
+
+//        val now = Calendar.getInstance()
+//        val dpd = DatePickerDialog.newInstance(
+//            dateSetListener,
+//            now[Calendar.YEAR],  // Initial year selection
+//            now[Calendar.MONTH],  // Initial month selection
+//            now[Calendar.DAY_OF_MONTH] // Inital day selection
+//        )
+//// If you're calling this from a support Fragment
+//// If you're calling this from a support Fragment
+//        dpd.show(requireActivity().supportFragmentManager, "Datepickerdialog")
+        img_btn_calendar2.setOnClickListener {
+            val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker
+                .Builder
+                .dateRangePicker()
+                .setTitleText("Select a date")
+                .setCalendarConstraints(calendarConstraints())
+            val datePicker = datePickerBuilder.build()
+            datePicker.show(requireActivity().supportFragmentManager, "DATE_PICKER_RANGE")
+
+            datePicker.addOnPositiveButtonClickListener {
+                val startDate = sdf.format(it.first)
+                val endDate = sdf.format(it.second)
+                plg_tgl2.setText(startDate + " - " +endDate)
+            }
+        }
+
+        img_btn_calendar1.setOnClickListener {
+            val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker
+                .Builder
+                .dateRangePicker()
+                .setTitleText("Select a date")
+                .setCalendarConstraints(calendarConstraints())
+            val datePicker = datePickerBuilder.build()
+            datePicker.show(requireActivity().supportFragmentManager, "DATE_PICKER_RANGE")
+
+            datePicker.addOnPositiveButtonClickListener {
+                val startDate = sdf.format(it.first)
+                val endDate = sdf.format(it.second)
+                plg_tgl1.setText(startDate + " - " +endDate)
+            }
         }
         val anyChartView2 = view.findViewById(R.id.chart2) as AnyChartView
         APIlib.getInstance().setActiveAnyChartView(anyChartView2);
@@ -113,10 +167,6 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
         anyChartView.setChart(pie)
 
-
-
-
-
 //        card_test_section.setOnClickListener {  // code here to handle intent to Selection List activity
 //            Toast.makeText(activity, "Seleksi Saya!", Toast.LENGTH_SHORT).show()
 //        }
@@ -147,6 +197,31 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
         // Inflate the layout for this fragment
         return view
+    }
+
+    private fun calendarConstraints(): CalendarConstraints {
+        val min = getLongAsDate(2019,12, 31)
+        val dateValidatorMin: CalendarConstraints.DateValidator = DateValidatorPointForward.from(min)
+        val dateValidatorMax: CalendarConstraints.DateValidator = DateValidatorPointBackward.now()
+
+        val listValidators = ArrayList<CalendarConstraints.DateValidator>()
+        listValidators.apply {
+            add(dateValidatorMin)
+            add(dateValidatorMax)
+        }
+        val validators = CompositeDateValidator.allOf(listValidators)
+
+        return CalendarConstraints.Builder()
+            .setValidator(validators)
+            .build()
+    }
+
+    fun getLongAsDate(year: Int, month: Int, date: Int): Long {
+        val calendar: Calendar = GregorianCalendar()
+        calendar[Calendar.DAY_OF_MONTH] = date
+        calendar[Calendar.MONTH] = month - 1
+        calendar[Calendar.YEAR] = year
+        return calendar.timeInMillis
     }
     companion object {
         /**

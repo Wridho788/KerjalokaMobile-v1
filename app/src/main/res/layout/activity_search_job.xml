@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.search_job.SearchJob"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/danger_100"
+        android:gravity="center"
+        android:padding="16dp"
+        >
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox.Dense"
+            android:background="@drawable/search_background"
+            android:layout_weight="1"
+            app:defaultQueryHint="Cari Kerjaan"
+            android:iconifiedByDefault="false"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:icon="@drawable/ic_account"
+            style="@style/Widget.Material3.Button.IconButton"
+            app:backgroundTint="@color/light_500"
+            android:layout_marginLeft="10dp"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="Latest Search"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="16sp"
+                android:textColor="@color/danger_500"
+                android:text="Hapus Riwayat"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"/>
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"></com.google.android.material.chip.ChipGroup>
+
+    </LinearLayout>
+
+</LinearLayout>

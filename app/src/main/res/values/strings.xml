@@ -25,6 +25,7 @@ Quisque rhoncus velit nec erat suscipit, in dapibus sem iaculis. Nam dignissim, 
 Mauris vel orci blandit, venenatis nisl nec, gravida ligula. Aenean sagittis arcu in malesuada euismod. Sed sit amet elit erat. Nunc accumsan erat ac erat egestas, nec cursus odio venenatis. Nullam interdum suscipit dui, vel gravida purus scelerisque at. Pellentesque porta, eros eu molestie sodales, felis arcu sodales elit, in sodales elit risus in turpis. Aenean bibendum, tortor tempor consectetur fermentum, ante libero eleifend nibh, sed interdum mi neque eu urna.
 </string>
     <string name="header">Halo</string>
+    <string name="recommandation_job">Rekomendasi Pekerjaan</string>
     <string name="header_sub">Raih Mimpimu Bersama Kami!</string>
     <string name="search_placeholder">Cari Kerja atau Perusahaan </string>
     <string name="find_category">Cari berdasarkan kategori</string>

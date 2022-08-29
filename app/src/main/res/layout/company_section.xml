@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -44,6 +45,7 @@
                     android:textSize="14sp"/>
 
                 <LinearLayout
+                    android:id="@+id/set_calendar1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp">
@@ -52,7 +54,6 @@
                             android:layout_width="match_parent"
                             app:cardCornerRadius="20dp"
                             app:cardElevation="0dp"
-
                             android:layout_height="wrap_content">
                             <LinearLayout
                             android:layout_width="fill_parent"
@@ -73,10 +74,11 @@
                                 android:textSize="12dp" />
 
                             <ImageView
-                                android:id="@+id/btn_calendar1"
+                                android:id="@+id/img_btn_calendar1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="24dp"
                                 android:layout_alignParentRight="true"
+                                android:clickable="true"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginRight="8dp"
@@ -105,7 +107,7 @@
         android:paddingRight="8dp"
         android:paddingLeft="8dp">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_pelamar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,6 +148,7 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
+                            android:id="@+id/set_calendar2"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
@@ -164,9 +167,9 @@
                                 android:textSize="12dp" />
 
                             <ImageView
-                                android:id="@+id/btn_calendar2"
+                                android:id="@+id/img_btn_calendar2"
                                 android:layout_width="wrap_content"
-                                android:layout_height="24dp"
+                                android:layout_height="19dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginTop="8dp"
@@ -266,7 +269,9 @@
                                 android:textAlignment="center"
                                 android:textColor="@color/danger_500"
                                 android:layout_marginTop="4dp"
+                                android:focusable="true"
                                 android:text="Lihat Semua"
+                                android:clickable="true"
                                 android:textSize="14dp" />
                         </LinearLayout>
 
