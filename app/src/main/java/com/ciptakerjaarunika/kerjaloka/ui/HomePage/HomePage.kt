@@ -20,7 +20,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdap
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.WantToKnowCompanyScreen.CompanyWantToKnowFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -47,8 +46,6 @@ class HomePage : Fragment(), OnFragmentClickListener {
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn) as MaterialButton
         val btn_job = view.findViewById<MaterialCardView>(R.id.btn_job) as MaterialCardView
         val btn_company = view.findViewById<MaterialCardView>(R.id.btn_company) as MaterialCardView
-//        val btn_offer_job =
-//            view.findViewById<MaterialCardView>(R.id.btn_job_offer) as MaterialCardView
         var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
 
         btn_search.setOnClickListener {
@@ -63,9 +60,6 @@ class HomePage : Fragment(), OnFragmentClickListener {
         btn_company.setOnClickListener {
             onCompanyPage()
         }
-//        btn_offer_job.setOnClickListener {
-//            Toast.makeText(activity, "Go to Offer Job Activity", Toast.LENGTH_SHORT).show()
-//        }
         btn_see_all_recommendation_job.setOnClickListener {
             Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
         }
@@ -107,15 +101,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
 
     override fun onCompanyPage() {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, CompanyPage(), "jobDetailFragment")
-        ft.addToBackStack(null)
-        ft.commit()
-    }
-
-
-    override fun onCompanyPage() {
-        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, CompanyWantToKnowFragment(), "jobDetailFragment")
+        ft.replace(id, CompanyPage(), "companyFragment")
         ft.addToBackStack(null)
         ft.commit()
     }
@@ -124,6 +110,5 @@ class HomePage : Fragment(), OnFragmentClickListener {
 
 interface OnFragmentClickListener {
     fun onFragmentClick(JobNo:Long, CompanyNo:Long)
-    fun onCompanyPage()
     fun onCompanyPage()
 }
