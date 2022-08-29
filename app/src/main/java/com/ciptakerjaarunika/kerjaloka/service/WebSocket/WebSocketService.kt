@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.service.WebSocket
 
 import MessageListener
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import okhttp3.*
 import okio.ByteString
 import okio.ByteString.Companion.decodeHex
@@ -27,7 +28,11 @@ class WebSocketService : MessageListener {
         println( " Receive message: $text \n " )
     }
 
-    private fun startChat() {
+    override fun getMessage(ListMessage: List<chat_model>) {
+        println( ListMessage.toString() )
+    }
+
+    open fun startWebsocket() {
        WebSocketManager.init(config().portAddress+"ws/chat", this)
        WebSocketManager.connect()
     }

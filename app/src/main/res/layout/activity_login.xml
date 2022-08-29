@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/LoginPage"
@@ -65,23 +66,28 @@
                 android:textSize="14sp"
                 android:text="Email"
                 />
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Masukan email kamu"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
-                android:layout_marginTop="7sp"
-                >
-                <com.google.android.material.textfield.TextInputEditText
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/light_300"
-                    android:textColor="@color/trueGray_300"
-                    android:fontFamily="@font/poppins_light"
-                    android:textSize="12sp"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:cardElevation="0dp"
+                    android:layout_marginTop="7sp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:cardCornerRadius="@dimen/edittext_radius">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/light_300"
+                        android:textColor="@color/black"
+                        android:hint="Masukan email kamu"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="12sp"
+                        android:id="@+id/txt_email"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        android:padding="14dp"
+                        />
+                </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -96,25 +102,29 @@
                 app:cornerRadius="100sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Masukan password kamu"
                 app:boxStrokeWidth="0dp"
+                app:placeholderText=""
+                android:hint=""
                 app:boxStrokeWidthFocused="0dp"
+                app:hintEnabled="false"
                 android:layout_marginTop="7sp"
                 app:passwordToggleEnabled="true"
                 >
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/light_300"
-                    android:textColor="@color/trueGray_300"
-                    android:fontFamily="@font/poppins_light"
+                    android:hint="Masukan password kamu"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins"
                     android:inputType="textPassword"
                     android:textSize="12sp"
+                    android:id="@+id/txt_password"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnmulai"
+                android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
                 android:text="Masuk"
@@ -219,4 +229,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

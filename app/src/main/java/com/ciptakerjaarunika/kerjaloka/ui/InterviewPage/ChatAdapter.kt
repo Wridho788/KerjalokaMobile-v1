@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage
+package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Chat.Messages
+import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,10 +16,10 @@ import java.util.*
 //class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
 //
 //
-class chat_adapter
+class ChatAdapter
 
-    (private val dataSet: List<Messages>) :
-    RecyclerView.Adapter<chat_adapter.ViewHolder>() {
+    (private val dataSet: List<Messages>?) :
+    RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     private val Right1 = 1
     private val Right2 = 2
@@ -39,12 +39,12 @@ class chat_adapter
 
     // determine which layout to use for the row
     override fun getItemViewType(position: Int): Int {
-        val sender : Long = dataSet[position].CreatedBy
-        return if (sender == UserNo && (position == 0 || dataSet[position-1].CreatedBy != UserNo)) {
+        val sender : Long = dataSet!![position].createdBy
+        return if (sender == UserNo && (position == 0 || dataSet[position-1].createdBy != UserNo)) {
             Right1
-        } else if (sender == UserNo && (position == 0 || dataSet[position-1].CreatedBy == UserNo)) {
+        } else if (sender == UserNo && (position == 0 || dataSet[position-1].createdBy == UserNo)) {
             Right2
-        } else if (sender != UserNo && (position == 0 || dataSet[position-1].CreatedBy != sender)) {
+        } else if (sender != UserNo && (position == 0 || dataSet[position-1].createdBy != sender)) {
             Left1
         } else{
             Left2
@@ -78,12 +78,12 @@ class chat_adapter
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.message.text = dataSet[position].Message
-        viewHolder.createdOn.text = dataSet[position].CreatedOn.dateToString("HH:mm")
+        viewHolder.message.text = dataSet!![position].message
+        viewHolder.createdOn.text = dataSet[position].createdOn.dateToString("HH:mm")
 
-        val sender : Long = dataSet[position].CreatedBy
+        val sender : Long = dataSet[position].createdBy
 
-        if (dataSet.size -1 == position || dataSet[position+1].CreatedBy != sender || dataSet[position+1].CreatedOn != dataSet[position].CreatedOn) {
+        if (dataSet.size -1 == position || dataSet[position+1].createdBy != sender || dataSet[position+1].createdOn != dataSet[position].createdOn) {
             viewHolder.createdOn.visibility= VISIBLE
         } else{
             viewHolder.createdOn.visibility= GONE
@@ -96,6 +96,6 @@ class chat_adapter
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = if(dataSet == null)  0 else dataSet.size
 
 }

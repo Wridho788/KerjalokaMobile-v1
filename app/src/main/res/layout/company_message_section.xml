@@ -8,21 +8,7 @@
     android:clickable="true"
     android:id="@+id/section_container"
     android:orientation="horizontal">
-    <androidx.cardview.widget.CardView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="15dp"
-        app:cardElevation="0dp"
-        app:cardCornerRadius="100dp"
-        >
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/userPhoto"
-        android:src="@drawable/kerjaloka_logo_small"
-        android:scaleType="centerInside"
-        />
-    </androidx.cardview.widget.CardView>
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -30,30 +16,53 @@
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight=".8"
+            android:layout_height="wrap_content"
             android:id="@+id/sectionName"
             android:text="PT. Cipta Kerja Arunika Nusantara"
             android:textSize="15dp"
-            android:gravity="center_vertical"
             android:ellipsize="end"
             android:singleLine="true"
-            android:layout_gravity=""
             android:textColor="@color/black"
             android:fontFamily="@font/poppins_semibold"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:id="@+id/lastMessage"
-            android:layout_height="wrap_content"
-            android:text="Selamat Pagi, terima kasih telah melamar di kerjaloka"
-            android:textSize="12dp"
-            android:fontFamily="@font/poppins"
-            android:visibility="gone"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textFontWeight="500"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Interview : "
+                android:textSize="12dp"
+                android:fontFamily="@font/poppins"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textFontWeight="500"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12"
+                android:textSize="12dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:ellipsize="end"
+                android:id="@+id/applicantCount"
+                android:textColor="@color/danger_500"
+                android:singleLine="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="orang"
+                android:textSize="12dp"
+                android:layout_marginLeft="2dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:textColor="@color/danger_500"
+                android:ellipsize="end"
+                android:singleLine="true"
+                />
+        </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -66,13 +75,12 @@
             android:layout_height="18dp"
             android:layout_marginBottom="5dp"
             android:text="17:47"
-            android:visibility="invisible"
             android:textSize="12dp"
+            android:visibility="invisible"
             android:fontFamily="@font/poppins"
             android:textAlignment="textEnd"/>
         <TextView
             android:id="@+id/not_read"
-            android:visibility="gone"
             android:layout_width="25dp"
             android:layout_height="20dp"
             android:paddingTop="2dp"
@@ -82,6 +90,7 @@
             android:textAlignment="center"
             android:textSize="10dp"
             android:textFontWeight="700"
+            android:visibility="invisible"
             android:ellipsize="end"
             android:singleLine="true"
             android:background="@drawable/text_rounded"

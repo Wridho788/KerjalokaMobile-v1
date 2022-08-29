@@ -1,6 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.api
 
-import android.util.Log
+
+import android.content.Context
+import com.ciptakerjaarunika.kerjaloka.model.Job.homejob_model
+import com.ciptakerjaarunika.kerjaloka.model.ResponseResult
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailResponse
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rjob_model

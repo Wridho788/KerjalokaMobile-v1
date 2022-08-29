@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
+package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,17 +7,28 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Chat.chat_model
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
+import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
+import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 //class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
 //
 //
-class interview_adapter
+class company_interview_byjob
 
-    (private val dataSet: List<chat_model>, private val cellClickListener: CellClickListener) :
-    RecyclerView.Adapter<interview_adapter.ViewHolder>() {
+    (private val dataSet: company_interview_list,
+     private val cellClickListener: CellClickListener,
+     private val hubConnection: HubConnection,
+     private val jobNo : Long?,
+     private val chatData: chat_data?,
+) :
+    RecyclerView.Adapter<company_interview_byjob.ViewHolder>() {
 
     private lateinit var mListner : onItemClickListner
     interface onItemClickListner{
@@ -60,21 +71,41 @@ class interview_adapter
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.sectionName.text = dataSet[position].SectionName
-        viewHolder.notRead.text = dataSet[position].NotRead.toString()
-        viewHolder.lastMessage.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].Message
-        viewHolder.lastMessageOn.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].CreatedOn.dateToString("HH:mm")
+        viewHolder.sectionName.text = dataSet.interviewer[position].jobseekerName
+        viewHolder.notRead.text = ""
+        viewHolder.lastMessage.text = ""
+        viewHolder.lastMessageOn.text = ""
 
-        viewHolder.itemView.setOnClickListener {
-            cellClickListener.onCellClickListener(dataSet[position])
+        val receiver = listOf<Long>(dataSet.interviewer[position].userNo)
+        if(chatData!= null) {
+            val sectionNo = chatData.sections?.find {
+                it.jobNo == jobNo &&
+                        it.receiver.contains(dataSet.interviewer[position].userNo) &&
+                        it.sectionName == dataSet.interviewer[position].jobseekerName
+            }
+
+            viewHolder.itemView.setOnClickListener {
+                cellClickListener.goToChatPage(
+                    dataSet.interviewer[position].jobseekerName,
+                    sectionNo?.sectionNo, hubConnection, jobNo, receiver
+                )
+            }
+        }
+        else{
+            viewHolder.itemView.setOnClickListener {
+                cellClickListener.goToChatPage(
+                    dataSet.interviewer[position].jobseekerName,
+                    null, hubConnection, jobNo, receiver
+                )
+            }
         }
     }
-    public fun Date.dateToString(format: String): String {
+    public fun LocalDateTime.dateToString(format: String): String {
         val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
         return dateFormatter.format(this)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = dataSet.interviewer.size
 
 }

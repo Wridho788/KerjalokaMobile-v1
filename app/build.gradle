@@ -79,4 +79,5 @@ dependencies {
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
 
+    implementation 'com.microsoft.signalr:signalr:3.0.0-preview4-19216-03'
 }

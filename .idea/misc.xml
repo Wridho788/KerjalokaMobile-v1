@@ -3,10 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../../layout/custom_preview.xml" value="0.3880208333333333" />
-        <entry key="app/src/main/res/drawable-anydpi-v24/ic_attach_file.xml" value="0.2145" />
-        <entry key="app/src/main/res/drawable-anydpi-v24/ic_emoji.xml" value="0.2145" />
-        <entry key="app/src/main/res/drawable/back_primary_icon.xml" value="0.2505" />
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.2598958333333333" />
+        <entry key="app/src/main/res/drawable-anydpi-v24/ic_attach_file.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/back_primary_icon.xml" value="0.202" />
+        <entry key="app/src/main/res/drawable/back_white_icon.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/btn_circle.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_circle_primary.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_circle_primary_white.xml" value="0.1395" />
@@ -31,6 +31,9 @@
         <entry key="app/src/main/res/drawable/button_secondary_white_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
+        <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/icon_send.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/text_rounded.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/card_background.xml" value="0.1585" />
         <entry key="app/src/main/res/drawable/custom_app_bar_background.xml" value="0.3465" />
         <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2855" />
@@ -58,8 +61,10 @@
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout-v28/section_recommendation_job.xml" value="0.4973958333333333" />
-        <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.4590625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
+        <entry key="app/src/main/res/layout/chat_page.xml" value="0.19196237708422403" />
+        <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/activity_modal_report.xml" value="0.24214792299898683" />
         <entry key="app/src/main/res/layout/activity_modal_report2.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_view_job_detail.xml" value="0.22282608695652173" />
@@ -100,6 +105,12 @@
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.335" />
         <entry key="app/src/main/res/layout/section_recommendation_job.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/layout/view_holder_section.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/message_right2.xml" value="0.19196237708422403" />
+        <entry key="app/src/main/res/layout/message_section.xml" value="0.19196237708422403" />
+        <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.2419837537409149" />
+        <entry key="app/src/main/res/layout/onboarding_container.xml" value="0.2419837537409149" />
+        <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.19196237708422403" />
+        <entry key="app/src/main/res/layout/section_my_test.xml" value="0.2419837537409149" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/menu/topbar_menu_job_detail.xml" value="0.2657407407407407" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />

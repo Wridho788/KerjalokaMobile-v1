@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:id="@+id/fragment_interview"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     tools:context=".ui.InterviewPage.InterviewPage"
     >
     <LinearLayout
@@ -17,8 +19,38 @@
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@color/white"
         android:background="#FF6666"
-        android:elevation="5dp"
-        app:title="Interview"/>
+        android:elevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="2dp"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="22dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:background="@drawable/back_white_icon"
+                android:layout_height="22dp"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Interview"
+                android:textSize="15dp"
+                android:id="@+id/titleToolbar"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                />
+        </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
