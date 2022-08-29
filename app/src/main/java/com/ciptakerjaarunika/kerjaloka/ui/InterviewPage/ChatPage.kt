@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.microsoft.signalr.HubConnection
 
 
@@ -36,11 +38,6 @@ class ChatPage(var sectionName: String,var sectionNo : Int?, val hubConnection: 
         backButton.setOnClickListener{
             parentFragmentManager.popBackStack()
         }
-        titlePage.text = sectionName
-        if(sectionNo != null){
-            //search Section Message And Filter Required Dta
-        }
-
 
         var LinearLayoutManager = LinearLayoutManager(activity)
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;

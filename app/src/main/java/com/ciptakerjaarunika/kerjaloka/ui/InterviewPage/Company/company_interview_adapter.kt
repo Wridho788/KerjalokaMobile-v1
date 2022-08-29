@@ -73,6 +73,7 @@ class company_interview_adapter
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.jobName.text = dataSet[position].jobPosition
+        viewHolder.applicantCount.text = dataSet[position].interviewer.count().toString()
 
         if(chatData != null){
             var currentSection = if (chatData.sections != null) chatData.sections.find {
@@ -89,7 +90,7 @@ class company_interview_adapter
                     currentSection.messages.last().createdOn.dateToString("HH:mm")
                 viewHolder.lastMessageOn.visibility = VISIBLE
             }
-            viewHolder.applicantCount.text = dataSet[position].interviewer.count().toString()
+
         }
 //        viewHolder.lastMessageOn.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].CreatedOn.dateToString("HH:mm")
 

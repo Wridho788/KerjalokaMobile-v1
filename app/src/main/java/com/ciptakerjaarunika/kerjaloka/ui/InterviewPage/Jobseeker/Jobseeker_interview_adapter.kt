@@ -25,15 +25,6 @@ class jobseeker_interview_adapter
         val hubConnection: HubConnection) :
     RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
 
-    private lateinit var mListner : onItemClickListner
-    interface onItemClickListner{
-        fun onItemClick(position : Int)
-    }
-
-    fun setOnItemClickListner(listner : onItemClickListner){
-        mListner = listner
-    }
-
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val userPhoto: ImageView
@@ -66,40 +57,43 @@ class jobseeker_interview_adapter
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.sectionName.text = dataSet.sections[position].sectionName
-        viewHolder.notRead.text = dataSet.sections[position].notRead.toString()
-        viewHolder.lastMessage.text = dataSet.sections[position].messages[dataSet.sections[position].messages.count()-1].message
-        viewHolder.lastMessageOn.text = dataSet.sections[position].messages.last().createdOn.dateToString("HH:mm")
+        if (dataSet != null) {
+            viewHolder.sectionName.text = dataSet.sections[position].sectionName
+            viewHolder.notRead.text = dataSet.sections[position].notRead.toString()
+            viewHolder.lastMessage.text =
+                dataSet.sections[position].messages[dataSet.sections[position].messages.count() - 1].message
+            viewHolder.lastMessageOn.text =
+                dataSet.sections[position].messages.last().createdOn.dateToString("HH:mm")
 
-        if(chat_data != null) {
-            viewHolder.itemView.setOnClickListener {
-                cellClickListener.goToChatPage(
-                    dataSet.sections[position].sectionName,
-                    dataSet.sections[position].sectionNo,
-                    hubConnection,
-                    null,
-                    dataSet.sections[position].receiver
-                )
-            }
-        }
-        else{
-            viewHolder.itemView.setOnClickListener {
-                cellClickListener.goToChatPage(
-                    dataSet.sections[position].sectionName,
-                    dataSet.sections[position].sectionNo,
-                    hubConnection,
-                    null,
-                    dataSet.sections[position].receiver
-                )
-            }
+//        if(chat_data != null) {
+//            viewHolder.itemView.setOnClickListener {
+//                cellClickListener.goToChatPage(
+//                    dataSet.sections[position].sectionName,
+//                    dataSet.sections[position].sectionNo,
+//                    hubConnection,
+//                    null,
+//                    dataSet.sections[position].receiver
+//                )
+//            }
+//        }
+//        else{
+//            viewHolder.itemView.setOnClickListener {
+            cellClickListener.goToChatPage(
+                dataSet.sections[position].sectionName,
+                dataSet.sections[position].sectionNo,
+                hubConnection,
+                null,
+                dataSet.sections[position].receiver
+            )
+//            }
         }
     }
     public fun Date.dateToString(format: String): String {
         val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
         return dateFormatter.format(this)
     }
-
+    val count = if(dataSet == null) 0 else dataSet.sections.size
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.sections.size
+    override fun getItemCount() = count
 
 }

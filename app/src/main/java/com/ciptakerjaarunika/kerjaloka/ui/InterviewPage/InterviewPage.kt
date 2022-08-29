@@ -266,7 +266,7 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
 
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = company_interview_byjob(SectionDetail, Context, hubConnection, jobNo, SessionManager(context).chatData.sections)
+            adapter = company_interview_byjob(SectionDetail, Context, hubConnection, jobNo, SessionManager(context).chatData)
         }
     }
     override fun goToChatPage(sectionName: String, sectionNo:Int?, hubConnection: HubConnection, jobNo : Long?, receiver : List<Long>) {
