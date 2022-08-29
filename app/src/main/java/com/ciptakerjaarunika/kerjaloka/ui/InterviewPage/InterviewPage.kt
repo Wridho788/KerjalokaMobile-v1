@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,12 +18,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_adapter
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker.jobseeker_interview_adapter
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.microsoft.signalr.HubConnection
 import java.util.*
 
@@ -233,11 +237,21 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
         var user = SessionManager(context).user
         isCompany = user != null && user.roleNo == 2
         println(user)
-        println(isCompany)
+
         if(isCompany) {
+            hubConnection.send("RefreshMessage", user!!.userNo)
+
+
             this.getCompanyData()
         }
-        else{
+        else if(user!= null){
+            hubConnection.on("getmessage",
+                {
+                    Log.d("newMessage", it.toString())
+                    SessionManager(context).chatData = it as chat_data?
+                    Log.d("Chat data", SessionManager(context).chatData.toString())
+                }, Any::class.java )
+
             val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
 
             recyclerView.apply {

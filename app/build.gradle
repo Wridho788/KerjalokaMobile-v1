@@ -78,6 +78,7 @@ dependencies {
     implementation "com.google.android.material:material:1.4.0"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
+    implementation 'org.slf4j:slf4j-jdk14:1.7.25'
 
     implementation 'com.microsoft.signalr:signalr:3.0.0-preview4-19216-03'
 }

@@ -23,7 +23,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.microsoft.signalr.HubConnection
 
 
-class ChatPage(var sectionName: String,var sectionNo : Int?, val hubConnection: HubConnection, val jobNo : Long?, val Receiver : List<Long>) : Fragment() {
+class ChatPage(var sectionName: String,var sectionNo : Int?, val hubConnection: HubConnection, val jobNo : Long?, val Receiver : List<Long>)
+    :  Fragment() {
 
     private var chatModel : chat_model? = null
 
@@ -75,7 +76,6 @@ class ChatPage(var sectionName: String,var sectionNo : Int?, val hubConnection: 
                         val receiver = Receiver;
 
                         hubConnection.send("SendMessage", sectionNo, sender, message, receiver, jobNo)
-                        hubConnection.send("sendMessage", sectionNo, sender, message, receiver, jobNo)
                     }
                 }
                 else{

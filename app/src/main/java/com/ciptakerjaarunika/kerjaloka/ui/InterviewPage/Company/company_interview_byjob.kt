@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,10 +78,11 @@ class company_interview_byjob
         viewHolder.lastMessageOn.text = ""
 
         val receiver = listOf<Long>(dataSet.interviewer[position].userNo)
+
         if(chatData!= null) {
             val sectionNo = chatData.sections?.find {
                 it.jobNo == jobNo &&
-                        it.receiver.contains(dataSet.interviewer[position].userNo) &&
+                        it.receiver!!.contains(dataSet.interviewer[position].userNo) &&
                         it.sectionName == dataSet.interviewer[position].jobseekerName
             }
 

@@ -1,17 +1,21 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker
 
+import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.scales.DateTime
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
 import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 //class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
@@ -63,7 +67,8 @@ class jobseeker_interview_adapter
             viewHolder.lastMessage.text =
                 dataSet.sections[position].messages[dataSet.sections[position].messages.count() - 1].message
             viewHolder.lastMessageOn.text =
-                dataSet.sections[position].messages.last().createdOn.dateToString("HH:mm")
+                dataSet.sections[position].messages.last().createdOn
+//                dataSet.sections[position].messages.last().createdOn.dateToString("HH:mm")
 
 //        if(chat_data != null) {
 //            viewHolder.itemView.setOnClickListener {
@@ -88,10 +93,20 @@ class jobseeker_interview_adapter
 //            }
         }
     }
-    public fun Date.dateToString(format: String): String {
-        val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
-        return dateFormatter.format(this)
-    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+//    public fun String.ChatTimeFormat(): String {
+//        var dateValue = LocalDateTime.parse(this)
+//        Log.d("Month :", (Calendar.getInstance().time - dateValue).month.toString())
+//
+//        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+//        var Date = this.split("T")[0]
+//        var Time = this.split("T")[0]
+////        val formatter = SimpleDateFormat(format)
+////        return formatter.format(parser.parse(this))
+////        val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
+//        return dateFormatter.format(this)
+//    }
     val count = if(dataSet == null) 0 else dataSet.sections.size
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = count

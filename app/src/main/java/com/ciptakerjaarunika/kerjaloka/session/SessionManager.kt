@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.session
 import MessageListener
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
@@ -37,7 +38,8 @@ class SessionManager (context: Context?) : ISessionManager{
 
     override var chatData: chat_data?
         get() = Gson().fromJson(getData(CHAT_DATA), chat_data::class.java)
-        set(value) {setData(CHAT_DATA, Gson().toJson(value))}
+        set(value) {
+            setData(CHAT_DATA, Gson().toJson(value))}
 
     override var company: Company?
         get() = Gson().fromJson(getData(COMPANY), Company::class.java)

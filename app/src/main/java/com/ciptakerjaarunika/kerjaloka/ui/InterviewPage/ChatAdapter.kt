@@ -7,9 +7,11 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.scales.DateTime
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -79,7 +81,8 @@ class ChatAdapter
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.message.text = dataSet!![position].message
-        viewHolder.createdOn.text = dataSet[position].createdOn.dateToString("HH:mm")
+        viewHolder.createdOn.text = dataSet[position].createdOn
+//        viewHolder.createdOn.text = dataSet[position].createdOn.dateToString("HH:mm")
 
         val sender : Long = dataSet[position].createdBy
 
@@ -90,10 +93,11 @@ class ChatAdapter
         }
     }
 
-    private fun Date.dateToString(format: String): String {
+    private fun DateTime.dateToString(format: String): String {
         val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
         return dateFormatter.format(this)
     }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = if(dataSet == null)  0 else dataSet.size
