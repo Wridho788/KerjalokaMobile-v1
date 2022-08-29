@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Adapter
 
 import android.view.View
 import android.view.ViewGroup
@@ -7,13 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Model.relatedOtherJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Model.relatedCompanyJobModel
 import com.google.android.material.card.MaterialCardView
 
-class RelatedOtherJobAdapter() :
-    RecyclerView.Adapter<RelatedOtherJobAdapter.ViewHolder>() {
-    private var listItem = listOf<relatedOtherJobModel>(
-        relatedOtherJobModel(
+class RelatedCompanyJobAdapter() :
+    RecyclerView.Adapter<RelatedCompanyJobAdapter.ViewHolder>() {
+    private var listItem = listOf<relatedCompanyJobModel>(
+        relatedCompanyJobModel(
             1,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -21,7 +21,7 @@ class RelatedOtherJobAdapter() :
             "satu jam lalu",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
         ),
-        relatedOtherJobModel(
+        relatedCompanyJobModel(
             2,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -29,7 +29,7 @@ class RelatedOtherJobAdapter() :
             "satu jam lalu",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
         ),
-        relatedOtherJobModel(
+        relatedCompanyJobModel(
             3,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -37,7 +37,7 @@ class RelatedOtherJobAdapter() :
             "satu jam lalu",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
         ),
-        relatedOtherJobModel(
+        relatedCompanyJobModel(
             4,
             "Software Engineer",
             "PT. KerjaLoka",
@@ -45,7 +45,7 @@ class RelatedOtherJobAdapter() :
             "satu jam lalu",
             "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
         ),
-        relatedOtherJobModel(
+        relatedCompanyJobModel(
             5,
             "Software Engineer",
             "PT. KerjaLoka",

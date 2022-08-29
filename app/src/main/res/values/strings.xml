@@ -63,4 +63,10 @@
     <string name="yang_diikuti">Yang Diikuti</string>
     <string name="browse">Jelajah</string>
     <string name="sedang_merekrut">Sedang Merekrut</string>
+    <string name="detail_perusahaan">Detail Perusahaan</string>
+    <string name="rating_perusahaan">Rating Perusahaan</string>
+    <string name="perusahaan_lainnya">Perusahaan Lainnya</string>
+    <string name="pekerjaan_dari_perusahaan_ini">Pekerjaan Dari Perusahaan Ini</string>
+    <string name="tentang_perusahaan">Tentang Perusahaan</string>
+    <string name="ukuran_perusahaan">Ukuran Perusahaan</string>
 </resources>
