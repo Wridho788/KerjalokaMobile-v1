@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchJobBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
-import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Adapter.NearMeJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.search_job.Adapter.SearchJobAdapter
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
@@ -98,43 +97,58 @@ class SearchJob : AppCompatActivity() {
         val list = ArrayList<rJobModel>()
         val rJob1 = rJobModel(
             1,
+            1,
             "Software Engineer",
-            "PT. KerjaLoka",
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
             "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "Kerjaloka",
+            "satu jam lalu"
         )
         val rJob2 = rJobModel(
-            2,
+            1,
+            1,
             "Software Engineer",
-            "PT. KerjaLoka",
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
             "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "Kerjaloka",
+            "satu jam lalu"
         )
         val rJob3 = rJobModel(
-            3,
+            1,
+            1,
             "Software Engineer",
-            "PT. KerjaLoka",
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
             "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "Kerjaloka",
+            "satu jam lalu"
         )
         val rJob4 = rJobModel(
-            4,
+            1,
+            1,
             "Software Engineer",
-            "PT. KerjaLoka",
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
             "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "Kerjaloka",
+            "satu jam lalu"
         )
         val rJob5 = rJobModel(
-            5,
+            1,
+            1,
             "Software Engineer",
-            "PT. KerjaLoka",
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
             "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "Kerjaloka",
+            "satu jam lalu"
         )
 
         list.add(rJob1)

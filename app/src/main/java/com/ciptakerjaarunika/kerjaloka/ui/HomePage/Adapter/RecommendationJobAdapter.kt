@@ -20,8 +20,7 @@ import java.util.*
 
 class RecommendationJobAdapter(
     private val rJobList: List<rJobModel>?,
-    private val onFragmentClickListener: OnFragmentClickListener
-    ?
+    private val onFragmentClick: OnFragmentClickListener,
 ) :
     RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>() {
 
@@ -90,7 +89,7 @@ class RecommendationJobAdapter(
 //            holder.shareableJob.setOnClickListener {
 //            }
             holder.cardRecommendationJob.setOnClickListener {
-                onFragmentClickListener?.onFragmentClick(currentItem.jobNo, currentItem.companyNo)
+              onFragmentClick.onFragmentClick(currentItem.jobNo, currentItem.companyNo)
             }
         }
     }

@@ -1,12 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.ui.JobPage;
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,11 +13,11 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
-import com.ciptakerjaarunika.kerjaloka.ui.search_job.SearchJob
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.OnFragmentClickListener
 import com.google.android.material.button.MaterialButton
 
 
-class Job_Page : Fragment() {
+class Job_Page(val onFragmentClickListener: OnFragmentClickListener) : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>? = null
 
@@ -75,7 +73,7 @@ class Job_Page : Fragment() {
         }
 
         btn_seeRecommendJob.setOnClickListener {
-            replaceFragment(RecommendedJob())
+            replaceFragment(RecommendedJob(onFragmentClickListener))
         }
 
 //        btn_notif.setOnClickListener {
@@ -137,43 +135,58 @@ class Job_Page : Fragment() {
         val list = ArrayList<rJobModel>()
         val rJob1 = rJobModel(
             1,
-            "Software Engineer",
+            1,
             "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "other",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+        "kerjaloka",
+        "one minutes ago"
         )
         val rJob2 = rJobModel(
             2,
-            "Software Engineer",
+            2,
             "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "other",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "kerjaloka",
+            "one minutes ago"
         )
         val rJob3 = rJobModel(
             3,
-            "Software Engineer",
+            3,
             "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "other",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "kerjaloka",
+            "one minutes ago"
         )
         val rJob4 = rJobModel(
             4,
-            "Software Engineer",
+            4,
             "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "other",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "kerjaloka",
+            "one minutes ago"
         )
         val rJob5 = rJobModel(
-            5,
-            "Software Engineer",
+            4,
+            4,
             "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
+            "Medan",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "other",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
+            "kerjaloka",
+            "one minutes ago"
         )
 
         list.add(rJob1)
@@ -184,20 +197,21 @@ class Job_Page : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recommenJob)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = RecommendationJobAdapter(list)
+        val Context = this
+        adapter = RecommendationJobAdapter(list,  onFragmentClickListener )
         recyclerView.adapter = adapter
 
-        val recyclerView2 = view.findViewById<RecyclerView>(R.id.nearmeJob)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView2.layoutManager = layoutManager
-        adapter = RecommendationJobAdapter(list)
-        recyclerView2.adapter = adapter
+//        val recyclerView2 = view.findViewById<RecyclerView>(R.id.nearmeJob)
+//        layoutManager = LinearLayoutManager(activity)
+//        recyclerView2.layoutManager = layoutManager
+//        adapter = RecommendationJobAdapter(list)
+//        recyclerView2.adapter = adapter
 
-        val recyclerView3 = view.findViewById<RecyclerView>(R.id.bookmaredJob)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView3.layoutManager = layoutManager
-        adapter = RecommendationJobAdapter(list)
-        recyclerView3.adapter = adapter
+//        val recyclerView3 = view.findViewById<RecyclerView>(R.id.bookmaredJob)
+//        layoutManager = LinearLayoutManager(activity)
+//        recyclerView3.layoutManager = layoutManager
+//        adapter = RecommendationJobAdapter(list)
+//        recyclerView3.adapter = adapter
     }
 
     private fun replaceFragment(fragment: Fragment){
@@ -219,10 +233,10 @@ class Job_Page : Fragment() {
          * @return A new instance of fragment HomePage.
          */
         // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Job_Page().apply {
-
-            }
+//        @JvmStatic
+//        fun newInstance(param1: String, param2: String) =
+//            Job_Page().apply {
+//
+//            }
     }
 }

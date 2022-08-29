@@ -17,7 +17,6 @@
       Contributors and 500+ Campus Ambassadors in various colleges across the nation.
       Our success stories include a lot of students who benefitted in their placements </string>
     <string name="header">Halo</string>
-    <string name="recommandation_job">Rekomendasi Pekerjaan</string>
     <string name="header_sub">Raih Mimpimu Bersama Kami!</string>
     <string name="search_placeholder">Cari Kerja atau Perusahaan </string>
     <string name="find_category">Cari berdasarkan kategori</string>
@@ -63,14 +62,8 @@
     <string name="company">Perusahaan</string>
     <string name="job_offer">Tawaran Kerja</string>
     <string name="see_all">Lihat Semua</string>
-    <string name="title_test">Tes Seleksi</string>
-    <string name="by_company">Oleh:</string>
     <string name="date_test">30 Dec 2019 pada 05:18</string>
-    <string name="sub_title_test">Dapat dikerjakan sebelum:</string>
     <string name="timer_text">180 min</string>
-    <string name="my_interview">Interview Saya</string>
-    <string name="title_job_interview">Enterprise Sales Representative</string>
-    <string name="name_of_interviewer">Nama Interviewer:</string>
     <string name="interviewer">John Doe</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

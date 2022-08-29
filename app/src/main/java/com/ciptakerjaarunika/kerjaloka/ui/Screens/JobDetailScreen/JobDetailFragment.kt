@@ -77,10 +77,10 @@ class JobDetailFragment(
         val job_description = view.findViewById<TextView>(R.id.jobRequirement)
 
         val Context = this
-        val fetch = config().portAddress + "/job/" + CompanyNo + "/" + JobNo + "/visitor"
-        JobAPI().getJobDetailAsync(CompanyNo, JobNo) {
+//        val fetch = config().portAddress + "/job/" + CompanyNo + "/" + JobNo + "/visitor"
+        JobAPI().getJobDetailAsync(context, CompanyNo, JobNo) {
             if (it != null) {
-                Log.d("response", it.data.toString())
+                Log.d("response", it.toString())
                 Glide.with(this)
                     .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
                     .fitCenter().into(company_logo)
@@ -95,8 +95,8 @@ class JobDetailFragment(
                     job_experience.text = it.data.jobMinExperience.toString() + " Tahun"
                 }
                 val dateString = it.data.createdOn
-                val convertToDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-                val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+                val convertToDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss")
+                val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa")
                 try {
                     inputDate = convertToDate.parse(dateString.toString())
                     formattedDateString = inputDate?.let { it1 -> dateFormat.format(it1) }
@@ -107,14 +107,19 @@ class JobDetailFragment(
                 val prettyTime = PrettyTime()
                 prettyTimeString = prettyTime.format(outputDate)
                 createdOn.text = prettyTimeString
-                job_field.text = it.data.jobField.fieldName
-                job_role.text = it.data.jobRole.jobRoleName
+                Log.d("data", it.data.toString())
+                job_field.text = if (it.data.jobField != null) it.data.jobField.fieldName else ""
+                job_role.text = if (it.data.jobRole != null) it.data.jobRole.jobRoleName else ""
                 val jobDesc = it.data.jobDescription
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    job_description.text =
-                        Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_COMPACT);
+                job_description.text = if (jobDesc != null) {
+                    (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        job_description.text =
+                            Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_COMPACT)
+                    } else {
+                        job_description.text = Html.fromHtml(jobDesc)
+                    }).toString()
                 } else {
-                    job_description.text = Html.fromHtml(jobDesc);
+                    ""
                 }
             }
         }

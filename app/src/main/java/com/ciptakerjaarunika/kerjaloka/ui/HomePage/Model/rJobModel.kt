@@ -36,8 +36,8 @@ data class rJobDetailModel(
     val jobDescription: String,
     val jobTitle: List<jobTitle>,
     val jobMinExperience: Int,
-    val jobField: jobField,
-    val jobRole: jobRole,
+    val jobField: jobField?,
+    val jobRole: jobRole?,
     val createdOn: String,
     )
 

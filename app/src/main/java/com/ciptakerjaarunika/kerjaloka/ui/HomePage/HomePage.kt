@@ -18,10 +18,9 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Job_Page
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
-import com.ciptakerjaarunika.kerjaloka.ui.JobPage.BookmarkJob
-import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Job_Page
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -56,8 +55,9 @@ class HomePage : Fragment(), OnFragmentClickListener {
         btn_notif.setOnClickListener {
             Toast.makeText(activity, "Go to Notification Activity", Toast.LENGTH_SHORT).show()
         }
+        val Context =this;
         btn_job.setOnClickListener {
-            onReplaceFragment()
+            onReplaceFragment(Context)
         }
         btn_company.setOnClickListener {
             onCompanyPage()
@@ -74,14 +74,14 @@ class HomePage : Fragment(), OnFragmentClickListener {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
 
         val Context = this;
-        JobAPI().getJobHomeAsync {
+        JobAPI().getJobHomeAsync(context) {
             Log.d("Response API", it.toString())
             if (it != null) {
                 listJob = it.data
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)
                     recyclerView.layoutManager = layoutManager
-                    adapter = RecommendationJobAdapter(listJob, Context)
+                    adapter = RecommendationJobAdapter(listJob,Context)
                 }
             }
         }
@@ -108,10 +108,10 @@ class HomePage : Fragment(), OnFragmentClickListener {
         ft.commit()
     }
 
-    override fun onReplaceFragment() {
+    override fun onReplaceFragment(onFragmentClickListener: OnFragmentClickListener) {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.replace(id, Job_Page(onFragmentClickListener), "JobFragment")
         fragmentTransaction?.commit()
 
     }
@@ -121,5 +121,5 @@ class HomePage : Fragment(), OnFragmentClickListener {
 interface OnFragmentClickListener {
     fun onFragmentClick(JobNo:Long, CompanyNo:Long)
     fun onCompanyPage()
-    fun onReplaceFragment()
+    fun onReplaceFragment(onFragmentClickListener: OnFragmentClickListener)
 }

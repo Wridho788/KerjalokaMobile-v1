@@ -1,9 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.api
 
-
 import android.content.Context
-import com.ciptakerjaarunika.kerjaloka.model.Job.homejob_model
-import com.ciptakerjaarunika.kerjaloka.model.ResponseResult
+import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailResponse
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rjob_model
@@ -12,15 +10,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 class JobAPI {
     interface getJobHome {
         @GET("users/home/job")
         fun getJobHome(): Call<rjob_model>
     }
-     fun getJobHomeAsync(onResult: (rjob_model?) -> Unit){
-        val retrofit = ServiceBuilder().GET(getJobHome::class.java)
+     fun getJobHomeAsync(context: Context?, onResult: (rjob_model?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getJobHome::class.java)
 
         retrofit.getJobHome().enqueue(
             object : Callback<rjob_model> {
@@ -39,8 +36,8 @@ class JobAPI {
         fun getJobDetail(@Path("CompanyNo") CompanyNo: Long?, @Path("JobNo") JobNo: Long) : Call<rJobDetailResponse>
     }
 
-    fun getJobDetailAsync(CompanyNo:Long, JobNo:Long,onResult: (rJobDetailResponse?) -> Unit){
-        val retrofit = ServiceBuilder().GET(getJobDetail::class.java)
+    fun getJobDetailAsync(context: Context?,CompanyNo:Long, JobNo:Long,onResult: (rJobDetailResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getJobDetail::class.java)
 
         retrofit.getJobDetail(CompanyNo, JobNo).enqueue(
             object : Callback<rJobDetailResponse> {
