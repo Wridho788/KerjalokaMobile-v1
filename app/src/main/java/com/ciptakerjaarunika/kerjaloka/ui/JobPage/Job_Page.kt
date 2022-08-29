@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.JobPage;
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.search_job.SearchJob
 import com.google.android.material.button.MaterialButton
 
 
@@ -59,8 +61,9 @@ class Job_Page : Fragment() {
 //        var btn_share = view.findViewById<MaterialButton>(R.id.btn_share) as MaterialButton
 
         btn_search.setOnClickListener {
-            // code here to handle intent to search activity
-            Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
+//            val intent = Intent(this, SearchJob::class.java)
+//            intent.putExtra("keyIdentifier", value)
+//            startActivity(intent)
         }
 
         btn_seeBookmarkedJob.setOnClickListener {

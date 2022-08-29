@@ -16,6 +16,8 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.BookmarkJob
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Job_Page
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -65,8 +67,7 @@ class HomePage : Fragment() {
             Toast.makeText(activity, "Go to Notification Activity", Toast.LENGTH_SHORT).show()
         }
         btn_job.setOnClickListener {
-            // code here to handle intent to job activity
-            Toast.makeText(activity, "Go to job Activity", Toast.LENGTH_SHORT).show()
+            replaceFragment(Job_Page())
         }
         btn_company.setOnClickListener {
             // code here to handle intent to company activity
@@ -168,6 +169,14 @@ class HomePage : Fragment() {
         recyclerView.layoutManager = layoutManager
         adapter = RecommendationJobAdapter(list)
         recyclerView.adapter = adapter
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.commit()
     }
 
 

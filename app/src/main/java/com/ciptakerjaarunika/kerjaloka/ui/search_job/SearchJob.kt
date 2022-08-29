@@ -74,6 +74,7 @@ class SearchJob : AppCompatActivity() {
                 }
                 binding.searchResult.isVisible=true
                 binding.history.isVisible=false
+                binding.query.text=query
                 return true
             }
 
@@ -139,9 +140,9 @@ class SearchJob : AppCompatActivity() {
         list.add(rJob4)
         list.add(rJob5)
         layoutManager = LinearLayoutManager(this)
-        binding.searchResult.layoutManager = layoutManager
+        binding.jobs.layoutManager = layoutManager
         adapter = SearchJobAdapter(list)
-        binding.searchResult.adapter = adapter
+        binding.jobs.adapter = adapter
     }
 
     private fun newChips(name: String) {
