@@ -8,10 +8,13 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.CompanyNotificationModel
+import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.Model
 import java.lang.ref.WeakReference
 import com.ciptakerjaarunika.kerjaloka.R
+import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
 import java.util.*
 
 @SuppressLint("ResourceAsColor")
@@ -25,7 +28,7 @@ class itemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private var Time: TextView? = null
     private var Image: ImageView? = null
 
-    var itemModel: CompanyNotificationModel? = null
+    var itemModel: Model? = null
 
     init {
         view.get()?.let {
@@ -43,9 +46,9 @@ class itemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"))
-            val time: Long = sdf.parse(itemModel?.time.toString()).getTime()
-            val now = System.currentTimeMillis()
-            val ago = DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
+        val time: Long = sdf.parse(itemModel?.time.toString()).getTime()
+        val now = System.currentTimeMillis()
+        val ago = DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
 
 
         Time?.text = ago

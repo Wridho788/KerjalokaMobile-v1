@@ -7,7 +7,7 @@ import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
 
 class SectionViewHolder(
-context: Context
+    context: Context
 ): FrameLayout(context) {
     private lateinit var textViewDate: TextView
     private lateinit var readAll: TextView
@@ -25,5 +25,5 @@ context: Context
     fun setDate(dateString: String, mark: String){
         textViewDate.text = dateString
         readAll.text = mark
-        }
+    }
 }
