@@ -132,32 +132,40 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
                     android:text="Audio / Video Technology"
-                    android:clickable="true"
-                    >
+                    android:clickable="true">
                 </com.google.android.material.chip.Chip>
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
+                    app:closeIconEnabled="true"
+                    app:closeIconTint="@color/danger_500"
+                    app:chipBackgroundColor="@color/danger_100"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/danger_100"
                     android:fontFamily="@font/poppins"
-                    android:text="Science">
+                    android:text="Science"
+                    android:clickable="true">
                 </com.google.android.material.chip.Chip>
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
+                    app:closeIconEnabled="true"
+                    app:closeIconTint="@color/danger_500"
+                    app:chipBackgroundColor="@color/danger_100"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/danger_100"
                     android:fontFamily="@font/poppins"
-                    android:text="Art / Craft">
+                    android:text="Art / Craft"
+                    android:clickable="true">
                 </com.google.android.material.chip.Chip>
 
                 <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
+                    app:closeIconEnabled="true"
+                    app:closeIconTint="@color/danger_500"
+                    app:chipBackgroundColor="@color/danger_100"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/danger_100"
                     android:fontFamily="@font/poppins"
-                    android:text="Communication">
+                    android:text="Communication"
+                    android:clickable="true">
                 </com.google.android.material.chip.Chip>
 
             </com.google.android.material.chip.ChipGroup>

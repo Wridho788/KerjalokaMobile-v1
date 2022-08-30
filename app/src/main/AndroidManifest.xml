@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".modal_edit_ekspektasi_gaji_layout"
+            android:exported="false" />
+        <activity
             android:name=".modal_edit_interest_layout"
             android:exported="false" />
         <activity
