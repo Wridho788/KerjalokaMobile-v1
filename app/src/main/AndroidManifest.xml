@@ -19,9 +19,32 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".modal_edit_interest_layout"
+            android:exported="false" />
+        <activity
+            android:name=".modal_edit_job_layout"
+            android:exported="false" />
+        <activity
+            android:name=".item_profile_minat_page"
+            android:exported="false" />
+        <activity
+            android:name=".item_profile_user_page"
+            android:exported="false" />
+        <activity
+            android:name=".profile_page"
+            android:exported="false" />
+        <activity
+            android:name=".activity_item_js_preference_minat"
+            android:exported="false" />
+        <activity
+            android:name=".item_js_profile_user"
+            android:exported="false" />
+        <activity
+            android:name=".js_profile"
+            android:exported="false" />
+        <activity
             android:name=".ui.search_job.SearchJob"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".ui.WelcomingPage.OnBoarding.OnBoarding"
             android:exported="true"
@@ -38,8 +61,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"
