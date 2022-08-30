@@ -30,31 +30,47 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(HomePage())
         var context= baseContext
 
         hubConnection = HubConnectionBuilder.create(config().portAddress+"ws/chat").build()
-        Log.d("User", SessionManager(context).user.toString())
-
-        Log.d("state : ",hubConnection.connectionState.toString())
         if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
             hubConnection.start()
         }
+        hubConnection.keepAliveInterval = 2000
+
         hubConnection.on("connected",
             {res -> Log.d("Websocket Response : ", res.toString())
                 val userNo = SessionManager(context).user!!.userNo.toString()
-                hubConnection.send("Connecting", userNo)
+                hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
+                SessionManager(context).refreshChat(hubConnection);
+
+                replaceFragment(HomePage())
+
+                binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.home -> replaceFragment((HomePage()))
+                        R.id.lamaran -> replaceFragment((LamaranPage()))
+                        R.id.interview -> replaceFragment((InterviewPage(hubConnection)))
+                        R.id.akun -> replaceFragment((AkunPage()))
+
+                        else ->{
+
+                        }
+                    }
+                    true
+                }
+
             }, String::class.java)
 
         hubConnection.on<chat_data>(
             "getMessage",
             Action1<chat_data> { res: chat_data ->
-                Log.d("Cast", res.toString())
+                Log.d("Chat Data :", res.toString())
                 SessionManager(context).chatData = res
-                Log.d("Cast", SessionManager(context).chatData.toString())
             },
             chat_data::class.java
         )
+
 
 //        hubConnection.<chat_data>on("getMessage",
 //            {
@@ -75,20 +91,6 @@ class MainActivity : AppCompatActivity() {
 //            }, Any::class.java )
 
         //WebSocketService().startWebsocket();
-
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home -> replaceFragment((HomePage()))
-                R.id.lamaran -> replaceFragment((LamaranPage()))
-                R.id.interview -> replaceFragment((InterviewPage(hubConnection)))
-                R.id.akun -> replaceFragment((AkunPage()))
-
-            else ->{
-
-                }
-            }
-            true
-        }
     }
 
     private fun replaceFragment(fragment: Fragment) {

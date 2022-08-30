@@ -61,12 +61,12 @@
         android:gravity="right"
         android:orientation="vertical">
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:id="@+id/lastMessageOn"
             android:layout_height="18dp"
             android:layout_marginBottom="5dp"
             android:text="17:47"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:textSize="12dp"
             android:fontFamily="@font/poppins"
             android:textAlignment="textEnd"/>

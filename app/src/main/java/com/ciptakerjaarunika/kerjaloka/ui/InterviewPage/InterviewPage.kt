@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,200 +16,28 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
-import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_adapter
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker.jobseeker_interview_adapter
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.microsoft.signalr.HubConnection
-import java.util.*
 
 class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickListener{
     // TODO: Rename and change types of parameters
     private var isCompany : Boolean = true
     private var isLoading : Boolean = true
     private var Context = this;
+    private lateinit var recyclerView : RecyclerView;
+
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        SessionManager(context).refreshChat(hubConnection);
     }
-//    private fun getData(): List<chat_model> {
-//        var list = listOf(
-//            chat_model(
-//                "PT. Pergi Hilang dan Lupakan",
-//                1,
-//                5,
-//                listOf(
-//                    Messages(
-//                    "Hai",
-//                    2918310239,
-//                        Date(2022,8, 10,14,13),
-//                    false,
-//                    listOf())
-//                )
-//            ),
-//            chat_model(
-//                "PT. Suka Suka",
-//                2,
-//                12,
-//                listOf(
-//                    Messages(
-//                        "Selamat siang, terimakasih telah melamar di PT. Suka Suka",
-//                        2918310239,
-//                        Date(2022,8, 18,10,13),
-//                        false,
-//                        listOf())
-//                )
-//            ),
-//            chat_model(
-//                "Sayang 1",
-//                3,
-//                1,
-//                listOf(
-//                    Messages(
-//                        "Semangat kerjanya :-*",
-//                        2918310239,
-//                        Date(2022,8, 20,15,1),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "jngn telat makan siang ya",
-//                        2918310239,
-//                        Date(2022,8, 20,15,1),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "Iya kamu juga ya",
-//                        2022,
-//                        Date(2022,8, 20,15,2),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "Nanti malam keluar yuk?",
-//                        2022,
-//                        Date(2022,8, 20,15,3),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "Ada Cafe baru kemrin aku liat, kyknya enak tempatnya",
-//                        2022,
-//                        Date(2022,8, 20,15,3),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "Okey.. Jam berapa ?",
-//                        2918310239,
-//                        Date(2022,8, 20,15,3),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-//                        2022,
-//                        Date(2022,8, 20,15,3),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "P",
-//                        2918310239,
-//                        Date(2022,8, 20,15,3),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "P",
-//                        2022,
-//                        Date(2022,8, 20,15,3),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "P",
-//                        2918310239,
-//                        Date(2022,8, 20,15,3),
-//                        false,
-//                        listOf()),
-//                    Messages(
-//                        "P",
-//                        2022,
-//                        Date(2022,8, 20,15,3),
-//                        false,
-//                        listOf()),
-//                )
-//            ),
-//            chat_model(
-//                "Sayang 2",
-//                3,
-//                1,
-//                listOf(
-//                    Messages(
-//                        "Semangat kerjanya :-*",
-//                        2918310239,
-//                        Date(2022,8, 20,10,1),
-//                        false,
-//                        listOf())
-//                )
-//            ),
-//            chat_model(
-//                "Sayang 3",
-//                4,
-//                1,
-//                listOf(
-//                    Messages(
-//                        "Semangat kerjanya :-*",
-//                        2918310239,
-//                        Date(2022,8, 20,9,1),
-//                        false,
-//                        listOf())
-//                )
-//            ),
-//            chat_model(
-//                "Sayang 4",
-//                5,
-//                1,
-//                listOf(
-//                    Messages(
-//                        "Semangat kerjanya :-*",
-//                        2918310239,
-//                        Date(2022,8, 20,11,1),
-//                        false,
-//                        listOf())
-//                )
-//            ),
-//            chat_model(
-//                "Sayang 5",
-//                6,
-//                1,
-//                listOf(
-//                    Messages(
-//                        "Semangat kerjanya :-*",
-//                        2918310239,
-//                        Date(2022,8, 20,12,1),
-//                        false,
-//                        listOf())
-//                )
-//            ),
-//            chat_model(
-//                "Sayang 6",
-//                7,
-//                1,
-//                listOf(
-//                    Messages(
-//                        "Semangat kerjanya :-*",
-//                        2918310239,
-//                        Date(2022,8, 20,13,1),
-//                        false,
-//                        listOf())
-//                )
-//            )
-//        );
-//
-//        return list;
-//    }
 
     private fun getCompanyData(){
         view?.findViewById<TextView>(R.id.titleToolbar)!!.text = "Interview"
@@ -220,11 +47,10 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
         InterviewAPI().CompanyGetInterviewList(context) {
             if(it!=null) {
                 isLoading = false
-                val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
 
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter = company_interview_adapter(it.data, Context, hubConnection, SessionManager(context).chatData, context)
+                    adapter = company_interview_adapter(it.data, Context, hubConnection, context)
                 }
             }
         }
@@ -233,26 +59,21 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
         super.onViewCreated(itemView, savedInstanceState)
 //        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
 //        toolbar.setTitle("Lamaran Saya")
+        hubConnection.send("RefreshMessage", SessionManager(context).user!!.userNo.toString())
+
+        recyclerView = itemView?.findViewById<RecyclerView>(R.id.recyclerViewSection) as RecyclerView;
 
         var user = SessionManager(context).user
         isCompany = user != null && user.roleNo == 2
-        println(user)
 
         if(isCompany) {
-            hubConnection.send("RefreshMessage", user!!.userNo)
-
-
             this.getCompanyData()
         }
         else if(user!= null){
-            hubConnection.on("getmessage",
-                {
-                    Log.d("newMessage", it.toString())
-                    SessionManager(context).chatData = it as chat_data?
-                    Log.d("Chat data", SessionManager(context).chatData.toString())
-                }, Any::class.java )
+            view?.findViewById<TextView>(R.id.titleToolbar)!!.text = "Interview"
+            view?.findViewById<ImageButton>(R.id.backButton)!!.visibility = GONE;
 
-            val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+            view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Perusahaan"
 
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)
@@ -275,15 +96,12 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             getCompanyData()
         }
-
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
-
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = company_interview_byjob(SectionDetail, Context, hubConnection, jobNo, SessionManager(context).chatData)
+            adapter = company_interview_byjob(SectionDetail, Context, hubConnection, jobNo, context)
         }
     }
-    override fun goToChatPage(sectionName: String, sectionNo:Int?, hubConnection: HubConnection, jobNo : Long?, receiver : List<Long>) {
+    override fun goToChatPage(sectionName: String, sectionNo:Int?, hubConnection: HubConnection, jobNo : Long?, receiver : Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id,  ChatPage(sectionName, sectionNo, hubConnection, jobNo, receiver), "ChatFragment")
         ft.addToBackStack("SectionMessage")
@@ -299,6 +117,6 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
     }
 }
 interface CellClickListener {
-    fun goToChatPage(sectionName: String, sectionNo: Int?, hubConnection: HubConnection, jobNo : Long?, receiver : List<Long>)
+    fun goToChatPage(sectionName: String, sectionNo: Int?, hubConnection: HubConnection, jobNo : Long?, receiver : Long)
     fun companyInterviewClick(SectionDetail : company_interview_list, hubConnection: HubConnection, jobNo : Long?)
 }

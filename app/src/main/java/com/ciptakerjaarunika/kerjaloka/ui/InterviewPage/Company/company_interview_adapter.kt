@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
@@ -14,7 +15,10 @@ import com.anychart.scales.DateTime
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -29,20 +33,9 @@ class company_interview_adapter
     private val dataSet: List<company_interview_list>,
     private val cellClickListener: CellClickListener,
     val hubConnection: HubConnection,
-    val chatData: chat_data?,
     val context: Context
     )
     : RecyclerView.Adapter<company_interview_adapter.ViewHolder>() {
-
-    private lateinit var mListner : onItemClickListner
-    interface onItemClickListner{
-        fun onItemClick(position : Int)
-    }
-
-    fun setOnItemClickListner(listner : onItemClickListner){
-        mListner = listner
-    }
-
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val jobName: TextView
@@ -65,6 +58,8 @@ class company_interview_adapter
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.company_message_section, viewGroup, false)
 
+        hubConnection.send("RefreshMessage", SessionManager(context).user?.userNo.toString())
+
         return ViewHolder(view)
     }
 
@@ -77,19 +72,19 @@ class company_interview_adapter
         viewHolder.jobName.text = dataSet[position].jobPosition
         viewHolder.applicantCount.text = dataSet[position].interviewer.count().toString()
 
+        val chatData = SessionManager(context).chatData
         if(chatData != null){
             var currentSection = if (chatData.sections != null) chatData.sections!!.find {
                 it.jobNo == dataSet[position].jobNo
             }
             else null;
 
-            Log.d("Current Section", currentSection.toString())
             if (currentSection != null) {
                 viewHolder.notRead.text = currentSection.notRead.toString()
-                viewHolder.notRead.visibility = VISIBLE
+                viewHolder.notRead.visibility = if(currentSection.notRead != 0) VISIBLE else GONE
 
                 viewHolder.lastMessageOn.text =
-                    currentSection.messages?.last()?.createdOn?: ""
+                   DateUtils().GetLastMessageOn(currentSection.messages?.last()?.createdOn?: "")
 //                    currentSection.messages?.last()?.createdOn?.dateToString("HH:mm") ?: ""
                 viewHolder.lastMessageOn.visibility = VISIBLE
             }
@@ -101,22 +96,7 @@ class company_interview_adapter
             cellClickListener.companyInterviewClick(dataSet[position], hubConnection, dataSet[position].jobNo)
         }
     }
-    @RequiresApi(Build.VERSION_CODES.O)
-    public fun String.ChatTimeFormat(): String {
-        var dateValue = LocalDateTime.parse(this).minute
-        Log.d("CurrentDate :", (LocalDateTime.now().minusMinutes(dateValue.toLong())).toString())
-        Log.d("Chat date:", dateValue.toString())
 
-
-        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        var Date = this.split("T")[0]
-        var Time = this.split("T")[0]
-//        val formatter = SimpleDateFormat(format)
-//        return formatter.format(parser.parse(this))
-//        val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
-//        return dateFormatter.format(this)
-        return "";
-    }
 
 
     // Return the size of your dataset (invoked by the layout manager)

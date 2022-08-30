@@ -40,8 +40,11 @@
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
+        <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.19196237708422403" />
+        <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
+        <entry key="app/src/main/res/layout/company_section.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />

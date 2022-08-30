@@ -6,6 +6,7 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.User.*
+import com.microsoft.signalr.HubConnection
 import okhttp3.*
 import okio.ByteString
 import okio.ByteString.Companion.decodeHex
@@ -19,6 +20,8 @@ interface ISessionManager{
     var companyAdditional: CompanyAdditional?
     var jobseekerAdditional: JobseekerAdditional?
     var chatData : chat_data?
+    var deviceId : String
 
     suspend fun clearData()
+    fun refreshChat(hubConnection: HubConnection)
 }

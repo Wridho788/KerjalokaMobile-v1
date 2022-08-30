@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -26,7 +27,8 @@ class jobseeker_interview_adapter
     (
         private val dataSet: chat_data?,
         private val cellClickListener: CellClickListener,
-        val hubConnection: HubConnection) :
+        val hubConnection: HubConnection,
+) :
     RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
 
 
@@ -83,12 +85,13 @@ class jobseeker_interview_adapter
 //        }
 //        else{
 //            viewHolder.itemView.setOnClickListener {
+
             cellClickListener.goToChatPage(
                 dataSet.sections[position].sectionName,
                 dataSet.sections[position].sectionNo,
                 hubConnection,
-                null,
-                dataSet.sections[position].receiver
+                dataSet.sections[position].jobNo,
+                dataSet.sections[position].receiver[0]
             )
 //            }
         }
@@ -109,6 +112,7 @@ class jobseeker_interview_adapter
 //    }
     val count = if(dataSet == null) 0 else dataSet.sections.size
     // Return the size of your dataset (invoked by the layout manager)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun getItemCount() = count
 
 }

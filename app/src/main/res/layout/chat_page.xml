@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/chat_page"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.InterviewPage.Jobseeker.ChatPage"
+    tools:context=".ui.InterviewPage.ChatPage"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,7 +83,7 @@
         android:orientation="vertical">
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="10dp"
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerViewChat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".8"

@@ -1,11 +1,14 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company
 
+import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
@@ -13,6 +16,8 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -27,7 +32,7 @@ class company_interview_byjob
      private val cellClickListener: CellClickListener,
      private val hubConnection: HubConnection,
      private val jobNo : Long?,
-     private val chatData: chat_data?,
+     private val context : Context,
 ) :
     RecyclerView.Adapter<company_interview_byjob.ViewHolder>() {
 
@@ -64,40 +69,58 @@ class company_interview_byjob
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.message_section, viewGroup, false)
 
+        hubConnection.send("RefreshMessage", SessionManager(context).user!!.userNo.toString())
+
         return ViewHolder(view)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.sectionName.text = dataSet.interviewer[position].jobseekerName
-        viewHolder.notRead.text = ""
+
         viewHolder.lastMessage.text = ""
         viewHolder.lastMessageOn.text = ""
 
-        val receiver = listOf<Long>(dataSet.interviewer[position].userNo)
-
+        val chatData = SessionManager(context).chatData
         if(chatData!= null) {
-            val sectionNo = chatData.sections?.find {
+            val currentSection = chatData.sections?.find {
                 it.jobNo == jobNo &&
-                        it.receiver!!.contains(dataSet.interviewer[position].userNo) &&
-                        it.sectionName == dataSet.interviewer[position].jobseekerName
+                        it.receiver.contains(dataSet.interviewer[position].userNo)
             }
 
-            viewHolder.itemView.setOnClickListener {
-                cellClickListener.goToChatPage(
-                    dataSet.interviewer[position].jobseekerName,
-                    sectionNo?.sectionNo, hubConnection, jobNo, receiver
-                )
+            if(currentSection != null) {
+                viewHolder.notRead.text = currentSection.notRead.toString()
+                viewHolder.notRead.visibility = if(currentSection.notRead != 0) View.VISIBLE else View.GONE
+
+                viewHolder.lastMessageOn.text =
+                    DateUtils().GetLastMessageOn(currentSection.messages?.last()?.createdOn?: "")
+                viewHolder.lastMessageOn.visibility = View.VISIBLE
+
+                viewHolder.itemView.setOnClickListener {
+                    cellClickListener.goToChatPage(
+                        dataSet.interviewer[position].jobseekerName,
+                        currentSection.sectionNo, hubConnection, jobNo, dataSet.interviewer[position].userNo
+                    )
+                }
+            }
+            else{
+                viewHolder.itemView.setOnClickListener {
+                    cellClickListener.goToChatPage(
+                        dataSet.interviewer[position].jobseekerName,
+                        null, hubConnection, jobNo, dataSet.interviewer[position].userNo
+                    )
+                }
             }
         }
         else{
             viewHolder.itemView.setOnClickListener {
                 cellClickListener.goToChatPage(
                     dataSet.interviewer[position].jobseekerName,
-                    null, hubConnection, jobNo, receiver
+                    null, hubConnection, jobNo, dataSet.interviewer[position].userNo
                 )
             }
         }
