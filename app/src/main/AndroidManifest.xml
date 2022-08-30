@@ -21,15 +21,20 @@
         <activity
             android:name=".ui.MyTestList.TestList"
             android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".ui.NotificationPage.Notification"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".ui.ProfilePage.profile_page"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.NotificationPage.Notification"
-            android:exported="true">
         </activity>
         <activity
             android:name=".ui.WelcomingPage.OnBoarding.OnBoarding"
