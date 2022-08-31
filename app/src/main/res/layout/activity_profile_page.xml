@@ -1,17 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_500"
+    android:orientation="vertical"
     tools:context=".ui.ProfilePage.profile_page">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/danger_500"
         app:title="Profile"
-        app:titleTextColor="@color/white"/>
+        app:titleTextColor="@color/white"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/profile"
+            layout="@layout/activity_item_profile_user_page" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:scrollbars="none"
+        android:layout_marginTop="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/manageProfile"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Kelola Profil"
+                android:textAllCaps="false"
+                android:textColor="@color/danger_500"
+                app:cornerRadius="100dp"
+                app:strokeColor="@color/danger_500"
+                app:strokeWidth="1dp"
+                android:layout_margin="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/CV"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="CV"
+                android:textAllCaps="false"
+                android:textColor="@color/danger_500"
+                app:cornerRadius="100dp"
+                app:strokeColor="@color/danger_500"
+                app:strokeWidth="1dp"
+                android:layout_margin="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/Preference"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Preferensi"
+                android:textAllCaps="false"
+                android:textColor="@color/danger_500"
+                app:cornerRadius="100dp"
+                app:strokeColor="@color/danger_500"
+                app:strokeWidth="1dp"
+                android:layout_margin="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/attachment"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Lampiran"
+                android:textAllCaps="false"
+                android:textColor="@color/danger_500"
+                app:cornerRadius="100dp"
+                app:strokeColor="@color/danger_500"
+                app:strokeWidth="1dp"
+                android:layout_margin="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/myReview"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Review Saya"
+                android:textAllCaps="false"
+                android:textColor="@color/danger_500"
+                app:cornerRadius="100dp"
+                app:strokeColor="@color/danger_500"
+                app:strokeWidth="1dp"
+                android:layout_margin="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/myRecord"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Record Saya"
+                android:textAllCaps="false"
+                android:textColor="@color/danger_500"
+                app:cornerRadius="100dp"
+                app:strokeColor="@color/danger_500"
+                app:strokeWidth="1dp"
+                android:layout_margin="10dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/setting"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Pengaturan"
+                android:textAllCaps="false"
+                android:textColor="@color/danger_500"
+                app:cornerRadius="100dp"
+                app:strokeColor="@color/danger_500"
+                app:strokeWidth="1dp"
+                android:layout_margin="10dp"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/profileContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_marginTop="6dp">
+
+        <include
+            android:id="@+id/profile"
+            layout="@layout/jsprofile_basic_info" />
+    </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

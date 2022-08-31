@@ -19,9 +19,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.ProfilePage.modal_edit_ekspektasi_gaji_layout"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ProfilePage.modal_edit_interest_layout"
+            android:exported="false" />
+        <activity
             android:name=".ui.MyTestList.TestList"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".ui.NotificationPage.Notification"
@@ -52,7 +57,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"
