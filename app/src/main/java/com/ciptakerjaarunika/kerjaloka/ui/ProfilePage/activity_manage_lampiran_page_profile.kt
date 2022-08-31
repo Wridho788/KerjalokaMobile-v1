@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ciptakerjaarunika.kerjaloka.R
 
 class activity_manage_lampiran_page_profile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

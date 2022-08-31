@@ -19,6 +19,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity_editinterest_layout"
+            android:exported="false" />
+        <activity
+            android:name=".activity_editjob_layout"
+            android:exported="false" />
+        <activity
+            android:name=".modal_edit_lampiran_profile_page"
+            android:exported="false" />
+        <activity
+            android:name=".activity_manage_lampiran_page_profile"
+            android:exported="false" />
+        <activity
             android:name=".modal_edit_ekspektasi_gaji_layout"
             android:exported="false" />
         <activity

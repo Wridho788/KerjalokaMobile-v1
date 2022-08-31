@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ciptakerjaarunika.kerjaloka.R
 
-class modal_edit_interest_layout : AppCompatActivity() {
+class modal_edit_lampiran_profile_page : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_modal_edit_interest_layout)
+        setContentView(R.layout.activity_modal_edit_lampiran_profile_page)
     }
 }

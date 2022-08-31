@@ -1,9 +1,545 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
     tools:context=".ui.ProfilePage.activity_manage_lampiran_page_profile">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        tools:ignore="UselessParent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_lampiran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="10dp"
+            app:strokeColor="@color/light_500"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="378dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/lampiran_pelamar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Lampiran"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/edit_lampiran_pelamar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Edit"
+                        android:textColor="@color/danger_500"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="Lampirkan berkas-berkasmu supaya kamu lebih diperhatikan oleh perusahaan."
+                        android:textColor="@color/black"
+                        android:textSize="12dp"></TextView>
+
+                    <LinearLayout
+                        android:id="@+id/set_berkas_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/light_300"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/insert_nama_tes1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:height="40dp"
+                                    android:fontFamily="@font/poppins"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="12dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Nama Tes"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                                <ImageView
+                                    android:id="@+id/img_btn_add_test1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="24dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@color/light_300"
+                                    android:clickable="true"
+                                    android:src="@drawable/ic_download"
+                                    tools:ignore="ContentDescription" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/set_berkas_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/light_300"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/insert_nama_tes2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:height="40dp"
+                                    android:fontFamily="@font/poppins"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="12dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Nama Tes"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                                <ImageView
+                                    android:id="@+id/img_btn_add_test2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="24dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@color/light_300"
+                                    android:clickable="true"
+                                    android:src="@drawable/ic_download"
+                                    tools:ignore="ContentDescription" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/set_berkas_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/light_300"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/insert_nama_tes3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight=".8"
+                                    android:height="40dp"
+                                    android:fontFamily="@font/poppins"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="12dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Nama Tes"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                                <ImageView
+                                    android:id="@+id/img_btn_add_test3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="24dp"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@color/light_300"
+                                    android:clickable="true"
+                                    android:src="@drawable/ic_download"
+                                    tools:ignore="ContentDescription" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        tools:ignore="UselessParent"
+        android:layout_marginTop="2dp">
+
+        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_video_resume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="10dp"
+            app:strokeColor="@color/light_500"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/video_resume_pelamar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Video Resume"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/edit_lampiran_pelamar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Edit"
+                        android:textColor="@color/danger_500"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Unggah video resume kamu, video resume berguna untuk mempermudah mengevaluasi kompetensi dan bakat pelamar yang memiliki relevansi dengan apa yang benar-benar dibutuhkan oleh perusahaan."
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="12dp">
+                    </TextView>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/btn_tbh_video_resume"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top"
+                        android:backgroundTint="@color/white"
+                        app:strokeColor="@color/danger_500"
+                        app:strokeWidth="1dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Upload Video Resume"
+                        android:textColor="@color/danger_500"
+                        android:textAllCaps="false"
+                        android:textSize="14dp"
+                        app:cornerRadius="100dp"
+                        tools:layout_editor_absoluteX="17dp"
+                        tools:layout_editor_absoluteY="346dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        tools:ignore="UselessParent"
+        android:layout_marginTop="2dp">
+
+        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_status_vaksin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="10dp"
+            app:strokeColor="@color/light_500"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/status_vaksin_pelamar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Status Vaksin"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/edit_status_vaksin_pelamar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Edit"
+                        android:textColor="@color/danger_500"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Unggah sertifikat tanda bukti vaksin kamu agar perusahaan dapat dengan tenang menawarkan lowongan kepada kamu."
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="12dp">
+                    </TextView>
+
+                    <LinearLayout
+                        android:id="@+id/set_status_vaksin_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/light_300"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/insert_vaksin_pertama"
+                                    android:layout_width="0dp"
+                                    android:layout_weight=".8"
+                                    android:layout_height="wrap_content"
+                                    android:height="40dp"
+                                    android:fontFamily="@font/poppins"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="12dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Vaksin Pertama"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                                <ImageView
+                                    android:id="@+id/img_status_vaksin_pertama"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="24dp"
+                                    android:layout_alignParentRight="true"
+                                    android:clickable="true"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:src="@drawable/ic_vaccine_green"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@color/light_300"
+                                    tools:ignore="ContentDescription" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/set_status_vaksin_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/light_300"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/insert_vaksin_kedua"
+                                    android:layout_width="0dp"
+                                    android:layout_weight=".8"
+                                    android:layout_height="wrap_content"
+                                    android:height="40dp"
+                                    android:fontFamily="@font/poppins"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="12dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Vaksin Kedua"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                                <ImageView
+                                    android:id="@+id/img_status_vaksin_kedua"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="24dp"
+                                    android:layout_alignParentRight="true"
+                                    android:clickable="true"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@color/light_300"
+                                    android:src="@drawable/ic_vaccine_green"
+                                    tools:ignore="ContentDescription" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/set_status_vaksin_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/light_300"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/insert_vaksin_ketiga"
+                                    android:layout_width="0dp"
+                                    android:layout_weight=".8"
+                                    android:layout_height="wrap_content"
+                                    android:height="40dp"
+                                    android:fontFamily="@font/poppins"
+                                    android:paddingLeft="8dp"
+                                    android:paddingTop="12dp"
+                                    android:paddingBottom="10dp"
+                                    android:text="Vaksin Ketiga"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                                <ImageView
+                                    android:id="@+id/img_status_vaksin_ketiga"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="24dp"
+                                    android:layout_alignParentRight="true"
+                                    android:clickable="true"
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginRight="8dp"
+                                    android:background="@color/light_300"
+                                    android:src="@drawable/ic_vaccine_green"
+                                    tools:ignore="ContentDescription" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
