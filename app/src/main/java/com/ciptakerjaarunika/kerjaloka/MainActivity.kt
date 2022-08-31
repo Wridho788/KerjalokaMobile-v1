@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.PackageManagerCompat.LOG_TAG
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
@@ -16,25 +17,43 @@ import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
-import java.lang.reflect.Type
 import java.util.*
-import kotlin.jvm.internal.TypeReference
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
+    private var stateFragment : Fragment? = null;
     lateinit var hubConnection: HubConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         var context= baseContext
 
-        hubConnection = HubConnectionBuilder.create(config().portAddress+"ws/chat").build()
+        hubConnection = HubConnectionBuilder.create(config().portAddress+"/ws/chat").build()
         if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
             hubConnection.start()
+        }
+        else{
+            if(stateFragment == null) {
+                binding = ActivityMainBinding.inflate(layoutInflater)
+                setContentView(binding.root)
+                replaceFragment(HomePage(hubConnection))
+
+                binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.home -> replaceFragment((HomePage(hubConnection)))
+                        R.id.lamaran -> replaceFragment((LamaranPage(hubConnection)))
+                        R.id.interview -> replaceFragment((InterviewPage(hubConnection)))
+                        R.id.akun -> replaceFragment((AkunPage(hubConnection)))
+
+                        else -> {
+
+                        }
+                    }
+                    true
+                }
+            }
         }
         hubConnection.keepAliveInterval = 2000
 
@@ -44,24 +63,36 @@ class MainActivity : AppCompatActivity() {
                 hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
                 SessionManager(context).refreshChat(hubConnection);
 
-                replaceFragment(HomePage())
+                this?.runOnUiThread(Runnable {
+                    if(stateFragment == null) {
+                        binding = ActivityMainBinding.inflate(layoutInflater)
+                        setContentView(binding.root)
 
-                binding.bottomNavigationView.setOnItemSelectedListener { item ->
-                    when (item.itemId) {
-                        R.id.home -> replaceFragment((HomePage()))
-                        R.id.lamaran -> replaceFragment((LamaranPage()))
-                        R.id.interview -> replaceFragment((InterviewPage(hubConnection)))
-                        R.id.akun -> replaceFragment((AkunPage()))
+                        replaceFragment(HomePage(hubConnection))
 
-                        else ->{
+                        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                            when (item.itemId) {
+                                R.id.home -> replaceFragment((HomePage(hubConnection)))
+                                R.id.lamaran -> replaceFragment((LamaranPage(hubConnection)))
+                                R.id.interview -> replaceFragment((InterviewPage(hubConnection)))
+                                R.id.akun -> replaceFragment((AkunPage(hubConnection)))
 
+                                else -> {
+
+                                }
+                            }
+                            true
                         }
                     }
-                    true
-                }
+                })
 
             }, String::class.java)
-
+//        hubConnection.onClosed{
+//                if(SessionManager(context).user != null
+//                    && hubConnection.connectionState != HubConnectionState.CONNECTED){
+//                    hubConnection.start()
+//                }
+//        }
         hubConnection.on<chat_data>(
             "getMessage",
             Action1<chat_data> { res: chat_data ->
@@ -94,6 +125,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment: Fragment) {
+        stateFragment = fragment
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)

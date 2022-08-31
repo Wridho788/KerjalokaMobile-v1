@@ -12,6 +12,7 @@ import com.ciptakerjaarunika.kerjaloka.model.User.*
 import com.google.gson.Gson
 import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
+import com.microsoft.signalr.HubConnectionState
 import okhttp3.*
 import okio.ByteString
 import okio.ByteString.Companion.decodeHex
@@ -80,7 +81,29 @@ class SessionManager (context: Context?) : ISessionManager{
     }
 
     override fun refreshChat(hubConnection: HubConnection) {
-        hubConnection.send("RefreshMessage", SessionManager(appContext).user!!.userNo.toString())
+        if(SessionManager(appContext).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
+            Log.d("HubConnection", "ReConnect")
+            hubConnection.start().doOnComplete {
+                Log.d("HubConnection", "Refresh Message")
+
+                hubConnection.send("RefreshMessage", SessionManager(appContext).user!!.userNo.toString())
+            }
+        }
+        else {
+            Log.d("HubConnection", "Refresh Message")
+
+            hubConnection.send("RefreshMessage", SessionManager(appContext).user!!.userNo.toString())
+        }
+    }
+    override fun readSectionMessage(hubConnection: HubConnection, sectionNo : Int?) {
+        if(sectionNo != null) {
+            if (SessionManager(appContext).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
+                Log.d("HubConnection", "ReConnect")
+                hubConnection.start().doOnComplete { hubConnection.send("ReadSectionMessage",sectionNo.toString())}
+            } else {
+                hubConnection.send("ReadSectionMessage",sectionNo.toString())
+            }
+        }
     }
 }
 

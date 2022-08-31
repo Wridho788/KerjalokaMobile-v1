@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_adapter
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker.jobseeker_interview_adapter
+import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 
 class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickListener{
@@ -31,12 +33,10 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
     private lateinit var recyclerView : RecyclerView;
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        SessionManager(context).refreshChat(hubConnection);
+
     }
 
     private fun getCompanyData(){
@@ -52,6 +52,16 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
                     layoutManager = LinearLayoutManager(activity)
                     adapter = company_interview_adapter(it.data, Context, hubConnection, context)
                 }
+                hubConnection.on<chat_data>(
+                    "getMessage",
+                    Action1<chat_data> { res: chat_data ->
+                        SessionManager(context).chatData = res
+                        activity?.runOnUiThread(Runnable {
+                            recyclerView.adapter?.notifyDataSetChanged()
+                        })
+                    },
+                    chat_data::class.java
+                )
             }
         }
     }
@@ -59,7 +69,8 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
         super.onViewCreated(itemView, savedInstanceState)
 //        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
 //        toolbar.setTitle("Lamaran Saya")
-        hubConnection.send("RefreshMessage", SessionManager(context).user!!.userNo.toString())
+
+        SessionManager(context).refreshChat(hubConnection);
 
         recyclerView = itemView?.findViewById<RecyclerView>(R.id.recyclerViewSection) as RecyclerView;
 
@@ -79,31 +90,29 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
                 layoutManager = LinearLayoutManager(activity)
                 adapter = jobseeker_interview_adapter(SessionManager(context).chatData, Context, hubConnection)
             }
+            hubConnection.on<chat_data>(
+                "getMessage",
+                Action1<chat_data> { res: chat_data ->
+                    SessionManager(context).chatData = res
+                    activity?.runOnUiThread(Runnable {
+                        recyclerView.adapter?.notifyDataSetChanged()
+                    })
+                },
+                chat_data::class.java
+            )
         }
     }
 
 
     override fun companyInterviewClick(SectionDetail : company_interview_list, hubConnection: HubConnection, jobNo : Long?) {
-        view?.findViewById<TextView>(R.id.titleToolbar)!!.text = SectionDetail.jobPosition;
-        var backButton = view?.findViewById<ImageButton>(R.id.backButton) as ImageButton;
-
-        backButton.visibility = VISIBLE;
-        view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Pelamar"
-        backButton.setOnClickListener{
-            getCompanyData()
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            getCompanyData()
-        }
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = company_interview_byjob(SectionDetail, Context, hubConnection, jobNo, context)
-        }
-    }
-    override fun goToChatPage(sectionName: String, sectionNo:Int?, hubConnection: HubConnection, jobNo : Long?, receiver : Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id,  ChatPage(sectionName, sectionNo, hubConnection, jobNo, receiver), "ChatFragment")
+        ft.replace(id,  company_interview_byjob(SectionDetail, hubConnection, jobNo), "ChatFragment")
+        ft.addToBackStack("interview_perjob")
+        ft.commit()
+    }
+    override fun goToChatPage(sectionName: String, sectionNo:Int?, hubConnection: HubConnection, jobNo : Long?, receiver : Long, logo:String?) {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id,  ChatPage(sectionName, sectionNo, hubConnection, jobNo, receiver, logo), "ChatFragment")
         ft.addToBackStack("SectionMessage")
         ft.commit()
     }
@@ -117,6 +126,6 @@ class InterviewPage(val hubConnection: HubConnection) : Fragment(), CellClickLis
     }
 }
 interface CellClickListener {
-    fun goToChatPage(sectionName: String, sectionNo: Int?, hubConnection: HubConnection, jobNo : Long?, receiver : Long)
+    fun goToChatPage(sectionName: String, sectionNo: Int?, hubConnection: HubConnection, jobNo : Long?, receiver : Long, logo : String?)
     fun companyInterviewClick(SectionDetail : company_interview_list, hubConnection: HubConnection, jobNo : Long?)
 }

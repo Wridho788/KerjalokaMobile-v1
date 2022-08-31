@@ -11,9 +11,12 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.anychart.scales.DateTime
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -35,6 +38,7 @@ class jobseeker_interview_adapter
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val userPhoto: ImageView
         val sectionName: TextView
+        val logo : ImageView
         val lastMessage: TextView
         val lastMessageOn : TextView
         val notRead : TextView
@@ -46,6 +50,7 @@ class jobseeker_interview_adapter
             lastMessage = view.findViewById(R.id.lastMessage)
             lastMessageOn = view.findViewById(R.id.lastMessageOn)
             notRead = view.findViewById(R.id.not_read)
+            logo = view.findViewById(R.id.userPhoto)
         }
     }
 
@@ -59,17 +64,28 @@ class jobseeker_interview_adapter
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         if (dataSet != null) {
+            Log.d("dataSet ", dataSet.toString())
+            Glide.with(viewHolder.itemView.context)
+                .load(config().portAddress + "/photo/Profile/" + dataSet.sections[position].logo).fitCenter()
+                .into(viewHolder.logo)
+
             viewHolder.sectionName.text = dataSet.sections[position].sectionName
             viewHolder.notRead.text = dataSet.sections[position].notRead.toString()
-            viewHolder.lastMessage.text =
-                dataSet.sections[position].messages[dataSet.sections[position].messages.count() - 1].message
+            viewHolder.notRead.visibility = if(dataSet.sections[position].notRead != 0) View.VISIBLE else View.GONE
+
             viewHolder.lastMessageOn.text =
-                dataSet.sections[position].messages.last().createdOn
+                DateUtils().GetLastMessageOn(dataSet.sections[position].messages?.last()?.createdOn?: "")
+
+
+            viewHolder.lastMessage.text =
+                dataSet.sections[position].messages.last().message
+
 //                dataSet.sections[position].messages.last().createdOn.dateToString("HH:mm")
 
 //        if(chat_data != null) {
@@ -85,14 +101,16 @@ class jobseeker_interview_adapter
 //        }
 //        else{
 //            viewHolder.itemView.setOnClickListener {
-
-            cellClickListener.goToChatPage(
-                dataSet.sections[position].sectionName,
-                dataSet.sections[position].sectionNo,
-                hubConnection,
-                dataSet.sections[position].jobNo,
-                dataSet.sections[position].receiver[0]
-            )
+            viewHolder.itemView.setOnClickListener {
+                cellClickListener.goToChatPage(
+                    dataSet.sections[position].sectionName,
+                    dataSet.sections[position].sectionNo,
+                    hubConnection,
+                    dataSet.sections[position].jobNo,
+                    dataSet.sections[position].receiver[0],
+                    dataSet.sections[position].logo
+                )
+            }
 //            }
         }
     }

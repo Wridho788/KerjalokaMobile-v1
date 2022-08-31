@@ -16,9 +16,10 @@ import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.google.android.material.button.MaterialButton
+import com.microsoft.signalr.HubConnection
 
 
-class AkunPage : Fragment() {
+class AkunPage(val hubConnection: HubConnection) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

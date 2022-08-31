@@ -8,11 +8,14 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.anychart.scales.DateTime
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -23,6 +26,7 @@ import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.math.log
 
 //class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
 //
@@ -57,8 +61,7 @@ class company_interview_adapter
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.company_message_section, viewGroup, false)
-
-        hubConnection.send("RefreshMessage", SessionManager(context).user?.userNo.toString())
+        SessionManager(context).refreshChat(hubConnection);
 
         return ViewHolder(view)
     }
@@ -74,6 +77,7 @@ class company_interview_adapter
 
         val chatData = SessionManager(context).chatData
         if(chatData != null){
+
             var currentSection = if (chatData.sections != null) chatData.sections!!.find {
                 it.jobNo == dataSet[position].jobNo
             }

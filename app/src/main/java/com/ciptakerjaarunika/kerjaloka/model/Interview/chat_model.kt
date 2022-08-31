@@ -6,6 +6,7 @@ import java.util.*
 data class chat_data(var sections :List<chat_model>)
 data class chat_model(
     var sectionName: String,
+    var logo: String?,
     var sectionNo: Int,
     var notRead: Int,
     var jobNo: Long?,

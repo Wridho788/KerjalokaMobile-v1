@@ -23,8 +23,9 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.microsoft.signalr.HubConnection
 
-class HomePage : Fragment(), OnFragmentClickListener {
+class HomePage(private val hubConnection: HubConnection) : Fragment(), OnFragmentClickListener {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>? = null
     private lateinit var binding: ActivityMainBinding
@@ -87,12 +88,12 @@ class HomePage : Fragment(), OnFragmentClickListener {
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomePage().apply {
-            }
-    }
+//    companion object {
+//        @JvmStatic
+//        fun newInstance(param1: String, param2: String) =
+//            HomePage().apply {
+//            }
+//    }
 
     override fun onFragmentClick(JobNo: Long, CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()

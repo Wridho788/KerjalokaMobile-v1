@@ -46,10 +46,15 @@
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_section.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
-        <entry key="app/src/main/res/layout/message_right2.xml" value="0.19196237708422403" />
+        <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.21633176571184268" />
+        <entry key="app/src/main/res/layout/message_left1.xml" value="0.21633176571184268" />
+        <entry key="app/src/main/res/layout/message_left2.xml" value="0.21633176571184268" />
+        <entry key="app/src/main/res/layout/message_right1.xml" value="0.21633176571184268" />
+        <entry key="app/src/main/res/layout/message_right2.xml" value="0.375" />
         <entry key="app/src/main/res/layout/message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.2419837537409149" />
         <entry key="app/src/main/res/layout/onboarding_container.xml" value="0.2419837537409149" />

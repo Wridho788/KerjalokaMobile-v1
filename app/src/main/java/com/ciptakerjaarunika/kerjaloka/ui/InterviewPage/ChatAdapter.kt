@@ -2,11 +2,13 @@ package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
@@ -36,10 +38,12 @@ class ChatAdapter
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val message: TextView
         val createdOn : TextView
+        val timeContainer : LinearLayout
 
         init {
             message = view.findViewById(R.id.message)
             createdOn = view.findViewById(R.id.createdOn)
+            timeContainer = view.findViewById(R.id.timeContainer)
         }
     }
 
@@ -104,13 +108,27 @@ class ChatAdapter
             viewHolder.createdOn.text = DateUtils().GetTime(dataSet[position].createdOn)
 //        viewHolder.createdOn.text = dataSet[position].createdOn.dateToString("HH:mm")
 
-            val sender : Long = dataSet[position].createdBy
+            val sender : Long? = SessionManager(context).user?.userNo
 
-            if (dataSet.size -1 == position || dataSet[position+1].createdBy != sender || dataSet[position+1].createdOn != dataSet[position].createdOn) {
-                viewHolder.createdOn.visibility= VISIBLE
-            } else{
-                viewHolder.createdOn.visibility= GONE
+            if (dataSet.size -1 == position) {
+                viewHolder.timeContainer.visibility= VISIBLE
             }
+            else{
+                var temp = dataSet[position].createdOn.split("T")
+                var time = temp[1].split(":")
+                val time1 = "${temp[0]} ${time[0]}:${time[1]}"
+
+                temp = dataSet[position+1].createdOn.split("T")
+                time = temp[1].split(":")
+                val time2 = "${temp[0]} ${time[0]}:${time[1]}"
+
+                if(dataSet[position+1].createdBy != sender || time1 != time2 ) {
+                    viewHolder.timeContainer.visibility= VISIBLE
+                } else{
+                    viewHolder.timeContainer.visibility= GONE
+                }
+            }
+
         }
     }
 
@@ -118,7 +136,6 @@ class ChatAdapter
         val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
         return dateFormatter.format(this)
     }
-
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() : Int{

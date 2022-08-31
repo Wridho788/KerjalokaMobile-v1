@@ -12,14 +12,22 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.core.resource.Logo
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_adapter
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
 import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import java.util.*
@@ -29,7 +37,8 @@ class ChatPage(var sectionName: String,
                var sectionNo : Int?,
                val hubConnection: HubConnection,
                val jobNo : Long?,
-               val Receiver : Long)
+               val Receiver : Long,
+               val logo: String?)
     :  Fragment() {
 
     private var chatModel : chat_model? = null
@@ -38,7 +47,7 @@ class ChatPage(var sectionName: String,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        hubConnection.send("RefreshMessage", SessionManager(context).user!!.userNo.toString())
+        SessionManager(context).refreshChat(hubConnection);
 
         hubConnection.on<chat_data>(
             "getMessage",
@@ -60,9 +69,67 @@ class ChatPage(var sectionName: String,
         titlePage.text = sectionName
         val backButton = itemView.findViewById<ImageButton>(R.id.backButton)
 
+        Glide.with(itemView.context)
+            .load(config().portAddress + "/photo/Profile/" + logo).fitCenter()
+            .into(itemView.findViewById<ImageView>(R.id.userPhoto))
+
         backButton.setOnClickListener{
-            parentFragmentManager.popBackStack()
+            var user = SessionManager(context).user
+            val isCompany = user != null && user.roleNo == 2
+
+            if(isCompany) {
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                InterviewAPI().CompanyGetInterviewList(context) {
+                    if (it != null) {
+                        val current_data = it.data.find { data -> data.jobNo == jobNo }
+                        if (current_data != null) {
+                            ft.remove(this)
+                            ft.replace(
+                                id,
+                                company_interview_byjob(current_data, hubConnection, jobNo),
+                                "ChatFragment"
+                            )
+                            ft.commit()
+                        }
+                    }
+                }
+            }
+            else{
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(id,  InterviewPage(hubConnection), "InterviewPage")
+                ft.commit()
+            }
+
+//            parentFragmentManager.popBackStack()
         }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            var user = SessionManager(context).user
+            val isCompany = user != null && user.roleNo == 2
+
+            if(isCompany) {
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                InterviewAPI().CompanyGetInterviewList(context) {
+                    if (it != null) {
+                        val current_data = it.data.find { data -> data.jobNo == jobNo }
+                        if (current_data != null) {
+                            ft.replace(
+                                id,
+                                company_interview_byjob(current_data, hubConnection, jobNo),
+                                "ChatFragment"
+                            )
+                            ft.commit()
+                        }
+                    }
+                }
+            }
+            else{
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(id,  InterviewPage(hubConnection), "InterviewPage")
+                ft.commit()
+            }
+        }
+
+        SessionManager(context).readSectionMessage(hubConnection, sectionNo)
 
         var LinearLayoutManager = LinearLayoutManager(activity)
 
@@ -72,6 +139,9 @@ class ChatPage(var sectionName: String,
             layoutManager = LinearLayoutManager
             adapter = ChatAdapter(context, jobNo, Receiver)
         }
+
+        recyclerView.scrollToPosition(1000)
+        recyclerView.smoothScrollToPosition(100000)
 
         var message = itemView.findViewById<EditText>(R.id.txt_message);
         var img_btnsend = itemView.findViewById<ImageView>(R.id.img_btnsend);
@@ -103,6 +173,7 @@ class ChatPage(var sectionName: String,
                                 val receiver = listOf<Long>(Receiver);
 
                                 hubConnection.send("SendMessage", sectionNo, sender, message, receiver, jobNo)
+                                itemView.findViewById<EditText>(R.id.txt_message).text = null
                                 recyclerView?.adapter?.notifyDataSetChanged()
                             }
                         }

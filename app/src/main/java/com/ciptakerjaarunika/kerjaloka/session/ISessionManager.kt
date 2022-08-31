@@ -24,4 +24,5 @@ interface ISessionManager{
 
     suspend fun clearData()
     fun refreshChat(hubConnection: HubConnection)
+    fun readSectionMessage(hubConnection: HubConnection, sectionNo: Int?)
 }
