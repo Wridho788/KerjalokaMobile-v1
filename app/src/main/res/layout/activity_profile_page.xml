@@ -8,6 +8,15 @@
     android:orientation="vertical"
     tools:context=".ui.ProfilePage.profile_page">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
@@ -36,6 +45,7 @@
         android:layout_marginTop="5dp">
 
         <LinearLayout
+            android:id="@+id/navProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -150,19 +160,18 @@
                 android:layout_margin="10dp"/>
         </LinearLayout>
     </HorizontalScrollView>
-
-    <LinearLayout
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/profileContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical"
-        android:layout_marginTop="6dp">
+        android:scrollbars="horizontal"
+        android:layout_marginTop="6dp"
+        />
 
-        <include
-            android:id="@+id/profile"
-            layout="@layout/jsprofile_basic_info" />
-    </LinearLayout>
-
-
+<!--        <include-->
+<!--            android:id="@+id/profile"-->
+<!--            layout="@layout/jsprofile_basic_info" />-->
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
