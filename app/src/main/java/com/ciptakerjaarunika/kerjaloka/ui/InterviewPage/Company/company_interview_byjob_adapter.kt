@@ -96,7 +96,7 @@ class company_interview_byjob_adapter
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
                         currentSection.sectionNo ,jobNo, dataSet.interviewer[position].userNo,
-                        currentSection.logo
+                        dataSet.interviewer[position].photo
                     )
                 }
             }
