@@ -36,10 +36,10 @@ class company_interview_adapter
     (
     private val dataSet: List<company_interview_list>,
     private val cellClickListener: CellClickListener,
-    val hubConnection: HubConnection,
     val context: Context
     )
     : RecyclerView.Adapter<company_interview_adapter.ViewHolder>() {
+
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val jobName: TextView
@@ -61,7 +61,6 @@ class company_interview_adapter
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.company_message_section, viewGroup, false)
-        SessionManager(context).refreshChat(hubConnection);
 
         return ViewHolder(view)
     }
@@ -97,7 +96,7 @@ class company_interview_adapter
 //        viewHolder.lastMessageOn.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].CreatedOn.dateToString("HH:mm")
 
         viewHolder.itemView.setOnClickListener {
-            cellClickListener.companyInterviewClick(dataSet[position], hubConnection, dataSet[position].jobNo)
+            cellClickListener.companyInterviewClick(dataSet[position], dataSet[position].jobNo)
         }
     }
 

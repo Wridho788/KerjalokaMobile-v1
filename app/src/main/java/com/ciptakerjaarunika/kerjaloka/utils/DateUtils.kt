@@ -33,16 +33,8 @@ class DateUtils {
     }
     @RequiresApi(Build.VERSION_CODES.O)
     open fun GetLastMessageOn(value : String): String {
-        val temp = value.split("T")
-        val date = "${temp[0]} ${temp[1]}"
-
-        var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-
-        var dateValue = dateFormat.parse(date)
-
-        val tempNow = LocalDateTime.now().toString().split("T")
-        val dateNow = "${tempNow[0]} ${tempNow[1]}"
-        val diffMinute = (dateFormat.parse(dateNow).time - dateValue.time)/6000
+        val dateValue =  GetDateValue(value)
+        val diffMinute = GetDiffMinute(LocalDateTime.now().toString(), value)
 
         var Time = value.split("T")[1].split(":")
         if(diffMinute < 1440 && LocalDateTime.now().dayOfMonth == dateValue.date){
@@ -55,7 +47,34 @@ class DateUtils {
             return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
         }
     }
+    open fun GetDiffMinute(start : String, end : String): Int {
+        val date1 = GetDateValue(start).time
+        val date2 = GetDateValue(end).time
+        return if (date1 > date2) ((date1 - date2)/60000).toInt() else ((date2 - date1)/60000).toInt()
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    open fun GetHeaderMessage(value: String) : String {
+        val dateValue =  GetDateValue(value)
+        val diffMinute = GetDiffMinute(LocalDateTime.now().toString(), value)
 
+        var Time = value.split("T")[1].split(":")
+        if(diffMinute < 1440 && LocalDateTime.now().dayOfMonth == dateValue.date){
+            return "Hari ini";
+        }
+        else if(diffMinute < 10080){
+            return DateUtils().GetDayName(dateValue.day)
+        }
+        else{
+            return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+        }
+    }
+    private fun GetDateValue(value: String) : Date{
+        val temp = value.split("T")
+        val time = temp[1].split(":")
+        val date = "${temp[0]} ${time[0]}:${time[1]}"
+        var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        return dateFormat.parse(date)
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     open fun GetTime(value : String): String {
         return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("HH:mm"))

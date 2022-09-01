@@ -28,7 +28,6 @@ class company_interview_byjob_adapter
 
     (private val dataSet: company_interview_list,
      private val cellClickListener: com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.CellClickListener,
-     private val hubConnection: HubConnection,
      private val jobNo : Long?,
      private val context : Context,
 ) :
@@ -58,8 +57,6 @@ class company_interview_byjob_adapter
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.message_section, viewGroup, false)
-
-        SessionManager(context).refreshChat(hubConnection);
 
         return ViewHolder(view)
     }
@@ -98,7 +95,7 @@ class company_interview_byjob_adapter
                 viewHolder.itemView.setOnClickListener {
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
-                        currentSection.sectionNo, hubConnection, jobNo, dataSet.interviewer[position].userNo,
+                        currentSection.sectionNo ,jobNo, dataSet.interviewer[position].userNo,
                         currentSection.logo
                     )
                 }
@@ -107,7 +104,7 @@ class company_interview_byjob_adapter
                 viewHolder.itemView.setOnClickListener {
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
-                        null, hubConnection, jobNo, dataSet.interviewer[position].userNo,
+                        null,  jobNo, dataSet.interviewer[position].userNo,
                         dataSet.interviewer[position].photo
                     )
                 }
@@ -117,7 +114,7 @@ class company_interview_byjob_adapter
             viewHolder.itemView.setOnClickListener {
                 cellClickListener.goToChatPage(
                     dataSet.interviewer[position].jobseekerName,
-                    null, hubConnection, jobNo, dataSet.interviewer[position].userNo,
+                    null, jobNo, dataSet.interviewer[position].userNo,
                     dataSet.interviewer[position].photo
                 )
             }

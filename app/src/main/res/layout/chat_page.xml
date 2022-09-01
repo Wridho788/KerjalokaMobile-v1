@@ -80,9 +80,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="10dp"
             android:id="@+id/recyclerViewChat"
             android:layout_width="match_parent"
             android:layout_height="0dp"

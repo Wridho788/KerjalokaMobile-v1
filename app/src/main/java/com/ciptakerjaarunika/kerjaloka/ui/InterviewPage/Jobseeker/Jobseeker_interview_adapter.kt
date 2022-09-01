@@ -26,12 +26,10 @@ import java.util.*
 //
 //
 class jobseeker_interview_adapter
-
     (
         private val dataSet: chat_data?,
-        private val cellClickListener: CellClickListener,
-        val hubConnection: HubConnection,
-) :
+        private val cellClickListener: CellClickListener
+    ) :
     RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
 
 
@@ -86,32 +84,16 @@ class jobseeker_interview_adapter
             viewHolder.lastMessage.text =
                 dataSet.sections[position].messages.last().message
 
-//                dataSet.sections[position].messages.last().createdOn.dateToString("HH:mm")
 
-//        if(chat_data != null) {
-//            viewHolder.itemView.setOnClickListener {
-//                cellClickListener.goToChatPage(
-//                    dataSet.sections[position].sectionName,
-//                    dataSet.sections[position].sectionNo,
-//                    hubConnection,
-//                    null,
-//                    dataSet.sections[position].receiver
-//                )
-//            }
-//        }
-//        else{
-//            viewHolder.itemView.setOnClickListener {
             viewHolder.itemView.setOnClickListener {
                 cellClickListener.goToChatPage(
                     dataSet.sections[position].sectionName,
                     dataSet.sections[position].sectionNo,
-                    hubConnection,
                     dataSet.sections[position].jobNo,
                     dataSet.sections[position].receiver[0],
                     dataSet.sections[position].logo
                 )
             }
-//            }
         }
     }
 

@@ -18,7 +18,6 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 
@@ -26,47 +25,84 @@ import java.util.*
 //
 //
 class ChatAdapter
-
     (private val context: Context, private val jobNo : Long?, private val receiver : Long) :
     RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+    private val Header = 0
     private val Right1 = 1
     private val Right2 = 2
     private val Left1 = 3
     private val Left2 = 4
     private val UserNo :Long? = SessionManager(context).user?.userNo
+    private var messagesGroup : Map<String ,List<Messages>>? = null;
+    private var indexHeader : List<HeaderMessages> = listOf();
 
+    private data class HeaderMessages(val Header : String, val Index : Int)
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewRecycled(holder: ViewHolder) {
+        super.onViewRecycled(holder)
+        val currentSection = SessionManager(context).chatData!!.sections?.find {
+            it.jobNo == jobNo && it.receiver.contains(receiver)
+        }
+        messagesGroup = currentSection!!.messages.groupBy { item -> DateUtils().GetHeaderMessage(item.createdOn) }
+
+        var index = 0
+        if(messagesGroup != null) {
+            indexHeader = listOf()
+            for (header in messagesGroup!!) {
+                indexHeader += (HeaderMessages(header.key, index))
+                index += header.value.size
+            }
+        }
+    }
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val message: TextView
-        val createdOn : TextView
-        val timeContainer : LinearLayout
+        val message: TextView?
+        val createdOn: TextView?
+        val timeContainer: LinearLayout?
+        val header: TextView?
+        val headerContainer : LinearLayout?
 
         init {
             message = view.findViewById(R.id.message)
             createdOn = view.findViewById(R.id.createdOn)
             timeContainer = view.findViewById(R.id.timeContainer)
+            header = view.findViewById(R.id.txt_header)
+            headerContainer = view.findViewById(R.id.headerMessage)
         }
     }
+    /*
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getHeader(){
+        for(message in currentSection!!.messages){
+            var header = DateUtils().GetHeaderMessage(message.createdOn)
+            var exist = headerList.find { header -> header == header }
+            if(exist != null) {
+                headerList += header
+            }
+        }
+    }
+    */
 
     // determine which layout to use for the row
     override fun getItemViewType(position: Int): Int {
-        val currentSection = SessionManager(context).chatData!!.sections?.find {
-            it.jobNo == jobNo &&
-                    it.receiver.contains(receiver)
-        }
-
+            val currentSection = SessionManager(context).chatData!!.sections?.find {
+                it.jobNo == jobNo && it.receiver.contains(receiver)
+            }
             var dataSet = currentSection!!.messages
 
-            val sender : Long = dataSet[position].createdBy
-            return if (sender == UserNo && (position == 0 || dataSet[position-1].createdBy != UserNo)) {
-                Right1
-            } else if (sender == UserNo && (position == 0 || dataSet[position-1].createdBy == UserNo)) {
-                Right2
-            } else if (sender != UserNo && (position == 0 || dataSet[position-1].createdBy != sender)) {
-                Left1
+            var founded = indexHeader?.find { head-> head.Index == position } != null
+            var viewSelected = Header
+            if (dataSet[position].createdBy == UserNo && (founded || (position == 0 || dataSet[position-1].createdBy != UserNo))) {
+                viewSelected = Right1
+            } else if (dataSet[position].createdBy == UserNo && (position == 0 || dataSet[position-1].createdBy == UserNo)) {
+                viewSelected = Right2
+            } else if (dataSet[position].createdBy != UserNo && (founded || (position == 0 || dataSet[position-1].createdBy != dataSet[position].createdBy))) {
+                viewSelected = Left1
             } else{
-                Left2
+                viewSelected = Left2
             }
-
+            return viewSelected
     }
 
     // Create new views (invoked by the layout manager)
@@ -74,8 +110,12 @@ class ChatAdapter
         // Create a new view, which defines the UI of the list item
 
         var view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.message_right1, viewGroup, false)
-        if(viewType == Right1){
+            .inflate(R.layout.header_message, viewGroup, false)
+        if(viewType == Header){
+            view = LayoutInflater.from(viewGroup.context)
+                .inflate(R.layout.header_message, viewGroup, false)
+        }
+        else if(viewType == Right1){
             view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.message_right1, viewGroup, false)
         }
@@ -98,34 +138,40 @@ class ChatAdapter
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val currentSection = SessionManager(context).chatData!!.sections?.find {
-            it.jobNo == jobNo &&
-                    it.receiver.contains(receiver)
+            it.jobNo == jobNo && it.receiver.contains(receiver)
         }
-
         if(currentSection != null) {
+            if(viewHolder.header != null){
+                viewHolder.header.text = indexHeader?.find { head-> head.Index == position }?.Header
+            }
             var dataSet = currentSection.messages
-            viewHolder.message.text = dataSet!![position].message
-            viewHolder.createdOn.text = DateUtils().GetTime(dataSet[position].createdOn)
+
+            var founded = indexHeader?.find { head-> head.Index == position } != null
+            if(founded){
+                viewHolder.headerContainer?.visibility = VISIBLE
+            }
+            else{
+                viewHolder.headerContainer?.visibility = GONE
+            }
+
+            viewHolder.message?.text = dataSet!![position].message
+            viewHolder.createdOn?.text = DateUtils().GetTime(dataSet[position].createdOn)
 //        viewHolder.createdOn.text = dataSet[position].createdOn.dateToString("HH:mm")
 
             val sender : Long? = SessionManager(context).user?.userNo
 
-            if (dataSet.size -1 == position) {
-                viewHolder.timeContainer.visibility= VISIBLE
+            if (dataSet.size == position+1 ) {
+                viewHolder.timeContainer?.visibility= VISIBLE
             }
             else{
-                var temp = dataSet[position].createdOn.split("T")
-                var time = temp[1].split(":")
-                val time1 = "${temp[0]} ${time[0]}:${time[1]}"
-
-                temp = dataSet[position+1].createdOn.split("T")
-                time = temp[1].split(":")
-                val time2 = "${temp[0]} ${time[0]}:${time[1]}"
-
-                if(dataSet[position+1].createdBy != sender || time1 != time2 ) {
-                    viewHolder.timeContainer.visibility= VISIBLE
+                var date1 = dataSet[position].createdOn
+                var date2 = dataSet[position+1].createdOn
+                if(
+                    (dataSet[position+1].createdBy != dataSet[position].createdBy)
+                    || DateUtils().GetDiffMinute(date2, date1) >= 5 ) {
+                    viewHolder.timeContainer?.visibility= VISIBLE
                 } else{
-                    viewHolder.timeContainer.visibility= GONE
+                    viewHolder.timeContainer?.visibility= GONE
                 }
             }
 
@@ -139,10 +185,8 @@ class ChatAdapter
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() : Int{
-
-      val currentSection = SessionManager(context).chatData!!.sections?.find {
-          it.jobNo == jobNo &&
-                  it.receiver.contains(receiver)
+        val currentSection = SessionManager(context).chatData!!.sections?.find {
+            it.jobNo == jobNo && it.receiver.contains(receiver)
         }
         if(currentSection != null){
           return currentSection.messages.size

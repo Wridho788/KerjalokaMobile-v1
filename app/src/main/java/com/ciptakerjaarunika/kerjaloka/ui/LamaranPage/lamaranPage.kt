@@ -24,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LamaranPage.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LamaranPage(val hubConnection: HubConnection) : Fragment(),CellClickListener {
+class LamaranPage : Fragment(),CellClickListener {
     // TODO: Rename and change types of parameters
 
     private var layoutManager:RecyclerView.LayoutManager?=null

@@ -19,7 +19,7 @@ import com.google.android.material.button.MaterialButton
 import com.microsoft.signalr.HubConnection
 
 
-class AkunPage(val hubConnection: HubConnection) : Fragment() {
+class AkunPage : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

@@ -25,7 +25,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.microsoft.signalr.HubConnection
 
-class HomePage(private val hubConnection: HubConnection) : Fragment(), OnFragmentClickListener {
+class HomePage : Fragment(), OnFragmentClickListener {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>? = null
     private lateinit var binding: ActivityMainBinding

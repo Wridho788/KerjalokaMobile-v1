@@ -31,8 +31,10 @@
         <entry key="app/src/main/res/drawable/button_secondary_white_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
+        <entry key="app/src/main/res/drawable/header_message.xml" value="0.1015" />
         <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/icon_send.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/left_message1.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/text_rounded.xml" value="0.148" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
@@ -47,10 +49,13 @@
         <entry key="app/src/main/res/layout/company_section.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
+        <entry key="app/src/main/res/layout/fragment_company_interview_perjob.xml" value="0.2231722958529286" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/header_message.xml" value="0.375" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.21633176571184268" />
+        <entry key="app/src/main/res/layout/layout_want_to_know_company.xml" value="0.23300555793073963" />
         <entry key="app/src/main/res/layout/message_left1.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/message_left2.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/message_right1.xml" value="0.21633176571184268" />
