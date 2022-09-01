@@ -112,7 +112,6 @@
     <string name="see_all">Lihat Semua</string>
     <string name="date_test">30 Dec 2019 pada 05:18</string>
     <string name="timer_text">180 min</string>
-    <string name="interviewer">John Doe</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -202,7 +201,6 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="kualifikasi">Kualifikasi</string>
     <string name="lapor_lowongan">Lapor Lowongan</string>
