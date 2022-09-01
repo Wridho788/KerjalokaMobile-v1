@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -39,7 +40,7 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val searchBar = findViewById<SearchView>(R.id.search_bar)
+//        val searchBar = findViewById<SearchView>(R.id.search_bar)
         val recyclerView = findViewById<RecyclerView>(R.id.searchResult)
         val recyclerView2 = findViewById<RecyclerView>(R.id.searchCompany)
         val btn_see_more_job = findViewById<MaterialCardView>(R.id.see_more_job)
@@ -87,9 +88,10 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
             binding.layoutTopSearchResults.isVisible = true
         }
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            val context: Context = thisActivity
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
-                    Search_Api().getGeneralSearchAsync(query) {
+                    Search_Api().getGeneralSearchAsync(context, query) {
                         Log.d("response Search Api", it.toString())
                         if (it != null) {
                             list = it.data

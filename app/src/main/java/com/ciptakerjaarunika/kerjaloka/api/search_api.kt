@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.api
 
+import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.search_model
@@ -16,8 +17,8 @@ class Search_Api {
         fun getGeneralSearch( @Query("keyword") keyword : String?): Call<search_model>
     }
 
-    fun getGeneralSearchAsync(keyword: String?,onResult: (search_model?) -> Unit){
-        val retrofit = ServiceBuilder().GET(getGeneralSearch::class.java)
+    fun getGeneralSearchAsync(context: Context?,keyword: String?,onResult: (search_model?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getGeneralSearch::class.java)
 
         retrofit.getGeneralSearch(keyword).enqueue(
             object : Callback<search_model> {
