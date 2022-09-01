@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+    android:theme="@style/Theme.Kerjaloka.NoActionBar"
     tools:context=".ui.Screens.SearchScreen.SearchActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -180,7 +180,7 @@
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:visibility="visible"
-                        tools:itemCount="5"
+                        tools:itemCount="4"
                         tools:listitem="@layout/item_card_recommendation_job" />
 
 
@@ -190,6 +190,7 @@
                         android:layout_height="40dp"
                         android:layout_marginHorizontal="16dp"
                         android:background="@null"
+                        android:layout_marginTop="15dp"
                         app:cardCornerRadius="40dp"
                         app:cardElevation="0dp"
                         app:strokeColor="@color/danger_500"
@@ -234,7 +235,7 @@
                         android:layout_height="match_parent"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        tools:itemCount="5"
+                        tools:itemCount="4"
                         tools:listitem="@layout/item_card_job" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -243,6 +244,7 @@
                         android:layout_height="40dp"
                         android:layout_marginHorizontal="16dp"
                         android:background="@null"
+                        android:layout_marginTop="15dp"
                         app:cardCornerRadius="40dp"
                         app:cardElevation="0dp"
                         app:strokeColor="@color/danger_500"

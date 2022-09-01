@@ -19,16 +19,19 @@ data class jobList(
     val link: String,
     val photo: String,
     val createdOn: String,
-    val location: location,
+    val jobLocations: List<location>,
+    val companyNo: Long,
+    val jobNo: String
 )
 
 data class location(
-    val locationText: String,
+    val location: String,
 )
 
 data class companyList(
+    val companyNo: Long,
     val companyName: String,
     val fieldName: String,
     val locationText: String,
-//    val logo?: String,
+    val logo: String,
 )

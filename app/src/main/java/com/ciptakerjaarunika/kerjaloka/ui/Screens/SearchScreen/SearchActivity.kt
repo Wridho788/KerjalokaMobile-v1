@@ -6,6 +6,8 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -15,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.Search_Api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchBinding
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.general_search_model
 import com.google.android.material.card.MaterialCardView
@@ -23,11 +27,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
-class SearchActivity : AppCompatActivity() {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<SearchJobAdapter.ViewHolder>? = null
+class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
+    onFragmentTransactionListCompany {
+    private var list: general_search_model? = null
 
-    private var list : general_search_model? = null
     var list_Latest_search = ArrayList<String>()
     private lateinit var binding: ActivitySearchBinding
 
@@ -38,8 +41,11 @@ class SearchActivity : AppCompatActivity() {
 
         val searchBar = findViewById<SearchView>(R.id.search_bar)
         val recyclerView = findViewById<RecyclerView>(R.id.searchResult)
+        val recyclerView2 = findViewById<RecyclerView>(R.id.searchCompany)
         val btn_see_more_job = findViewById<MaterialCardView>(R.id.see_more_job)
         val btn_see_more_company = findViewById<MaterialCardView>(R.id.see_more_company)
+        val thisActivity = this
+
 
         list_Latest_search = getArrayList("SearchJob")
         if (list_Latest_search.isNotEmpty()) {
@@ -83,19 +89,28 @@ class SearchActivity : AppCompatActivity() {
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
-                    val context = baseContext
                     Search_Api().getGeneralSearchAsync(query) {
                         Log.d("response Search Api", it.toString())
                         if (it != null) {
                             list = it.data
-                            if (list!!.jobList.size == 0 ) {
+
+                            if (list?.jobList?.size == 0) {
                                 btn_see_more_job.visibility = GONE
-                            }
+                            } else btn_see_more_job.visibility = VISIBLE
+
+                            if (list?.companyList?.size == 0) {
+                                btn_see_more_company.visibility = GONE
+                            } else btn_see_more_company.visibility = VISIBLE
+
                             Log.d("response sukses", it.data.toString())
                             recyclerView.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                recyclerView.layoutManager = layoutManager
-                                adapter = SearchJobAdapter(list!!.jobList, context)
+                                adapter = SearchJobAdapter(list!!.jobList, context, thisActivity)
+                            }
+                            recyclerView2.apply {
+                                layoutManager = LinearLayoutManager(context)
+                                adapter =
+                                    SearchCompanyAdapter(list!!.companyList, context, thisActivity)
                             }
                         }
                     }
@@ -186,4 +201,33 @@ class SearchActivity : AppCompatActivity() {
         return gson.fromJson(json, type)
     }
 
+//    override fun onFragmentClick(companyNo: Long, jobNo: Long) {
+//
+//    }
+
+    override fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long) {
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(
+            R.id.fragment_job_detail,
+            JobDetailFragment(companyNo, jobNo),
+            "JobDetailFragment"
+        )
+
+    }
+
+    override fun onFragmentCompanyDetailsClick(companyNo: Long) {
+//        var ft = supportFragmentManager.beginTransaction()
+//        ft.replace()
+        Toast.makeText(baseContext, "companyNo ${companyNo}", Toast.LENGTH_SHORT).show()
+    }
+
+
+}
+
+interface onFragmentTransactionList {
+    fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long)
+}
+
+interface onFragmentTransactionListCompany {
+    fun onFragmentCompanyDetailsClick(companyNo: Long)
 }

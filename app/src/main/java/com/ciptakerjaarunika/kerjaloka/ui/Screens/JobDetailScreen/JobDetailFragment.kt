@@ -95,8 +95,8 @@ class JobDetailFragment(
                     job_experience.text = it.data.jobMinExperience.toString() + " Tahun"
                 }
                 val dateString = it.data.createdOn
-                val convertToDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-                val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
+                val convertToDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss")
+                val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa")
                 try {
                     inputDate = convertToDate.parse(dateString.toString())
                     formattedDateString = inputDate?.let { it1 -> dateFormat.format(it1) }
@@ -112,9 +112,9 @@ class JobDetailFragment(
                 val jobDesc = it.data.jobDescription
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     job_description.text =
-                        Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_COMPACT);
+                        Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_COMPACT)
                 } else {
-                    job_description.text = Html.fromHtml(jobDesc);
+                    job_description.text = Html.fromHtml(jobDesc)
                 }
             }
         }
@@ -145,16 +145,19 @@ class JobDetailFragment(
         val recyclerView2 =
             view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs) as RecyclerView
 
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.layoutManager = layoutManager
-        recyclerView2.layoutManager = layoutManager2
-        adapter = RelatedJobAdapter()
-        adapter2 = RelatedOtherJobAdapter()
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.layoutManager = layoutManager
+            adapter = RelatedJobAdapter()
+            recyclerView.adapter = adapter
+        }
 
-        recyclerView.adapter = adapter
-        recyclerView2.adapter = adapter2
-
+        recyclerView2.apply {
+            layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView2.layoutManager = layoutManager2
+            adapter2 = RelatedOtherJobAdapter()
+            recyclerView2.adapter = adapter2
+        }
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
@@ -171,7 +174,7 @@ class JobDetailFragment(
 
     }
 
-    override fun onFragmentClick() {
+    override fun onFragmentClick(companyNo: Long, jobNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "jobDetailFragment")
         ft.addToBackStack("jobDetailFragment")
@@ -183,5 +186,5 @@ class JobDetailFragment(
 
 interface OnFragmentClickListener {
 
-    fun onFragmentClick()
+    fun onFragmentClick(companyNo: Long, jobNo: Long)
 }
