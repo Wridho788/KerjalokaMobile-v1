@@ -54,11 +54,13 @@
                             app:cardCornerRadius="20dp"
                             app:cardElevation="0dp"
                             android:layout_height="wrap_content">
+
                             <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                                 android:background="@color/light_300"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/plg_tgl1"
                                 android:layout_width="0dp"

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="15dp"
+    android:layout_height="50dp"
+    android:clickable="true"
+    android:id="@+id/section_container"
+     android:background="@color/white"
+    android:layout_marginBottom="2dp"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".1"
+            android:id="@+id/sectionName"
+            android:text="PT. Cipta Kerja Arunika Nusantara"
+            android:textSize="15dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppins_semibold"
+            />
+        <CheckBox
+            android:layout_width="25dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="18dp"
+            android:checked="true"/>
+    </LinearLayout>
+
+</LinearLayout>

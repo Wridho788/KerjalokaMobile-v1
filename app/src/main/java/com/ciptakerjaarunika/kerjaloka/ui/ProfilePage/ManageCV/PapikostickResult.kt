@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
+package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ManageProfile.newInstance] factory method to
+ * Use the [PapikostickResult.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ManageProfile : Fragment() {
+class PapikostickResult : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,7 @@ class ManageProfile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.jsprofile_basic_info, container, false)
+        return inflater.inflate(R.layout.fragment_papikostick_result, container, false)
     }
 
     companion object {
@@ -45,12 +45,12 @@ class ManageProfile : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ManageProfile.
+         * @return A new instance of fragment PapikostickResult.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ManageProfile().apply {
+            PapikostickResult().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
