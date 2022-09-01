@@ -1,10 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -12,12 +14,13 @@ import com.ciptakerjaarunika.kerjaloka.R
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+
 /**
  * A simple [Fragment] subclass.
- * Use the [manage_lampiran.newInstance] factory method to
+ * Use the [manage_cv_edit_experience_page.newInstance] factory method to
  * create an instance of this fragment.
  */
-class manage_lampiran : Fragment() {
+class manage_cv_edit_experience_page : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +37,9 @@ class manage_lampiran : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_manage_lampiran_page_profile, container, false)
+
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_manage_cv_edit_experience_page, container, false)
     }
 
     companion object {
@@ -44,16 +49,18 @@ class manage_lampiran : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment manage_lampiran.
+         * @return A new instance of fragment manage_cv_edit_experience_page.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            manage_lampiran().apply {
+            manage_cv_edit_experience_page().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
+
+
     }
 }

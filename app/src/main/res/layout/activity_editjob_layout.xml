@@ -67,7 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:paddingTop="8dp"
+                        android:paddingTop="4dp"
                         android:text="Pilih tipe pekerjaan yang sesuai dengan preferensi kamu :"
                         android:textColor="@color/black"
                         android:textSize="14dp"
@@ -202,7 +202,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnWithdraw"
+                android:id="@+id/btn_simpan_type_job"
                 android:layout_marginTop="250dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

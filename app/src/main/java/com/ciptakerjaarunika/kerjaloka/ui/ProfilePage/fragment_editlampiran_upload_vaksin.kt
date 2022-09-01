@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [manage_lampiran.newInstance] factory method to
+ * Use the [fragment_editlampiran_upload_vaksin.newInstance] factory method to
  * create an instance of this fragment.
  */
-class manage_lampiran : Fragment() {
+class fragment_editlampiran_upload_vaksin : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +34,8 @@ class manage_lampiran : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_manage_lampiran_page_profile, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_editlampiran_upload_vaksin, container, false)
     }
 
     companion object {
@@ -44,12 +45,12 @@ class manage_lampiran : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment manage_lampiran.
+         * @return A new instance of fragment fragment_editlampiran_upload_vaksin.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            manage_lampiran().apply {
+            fragment_editlampiran_upload_vaksin().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

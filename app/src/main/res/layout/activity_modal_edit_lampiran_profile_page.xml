@@ -1,34 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_centerInParent="true"
+    android:layout_gravity="top">
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
     app:layout_constraintHeight_percent="80"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="8dp"
-        android:background="@color/black"
-        android:backgroundTint="@color/black"
-        android:layout_height="4dp"
-        android:elevation="0dp"
-        android:padding="16dp"
-        android:layout_marginBottom="24dp"
-        app:cardCornerRadius="10dp"/>
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mainAppbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.Icon"
+                android:backgroundTint="@color/white"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                app:cornerRadius="100sp"
+                app:icon="@drawable/ic_back"
+                app:iconTint="@color/danger_500"/>
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mainToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleTextColor="@color/black"
+                app:title="Edit Lampiran"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/show_sheet_manage_lampiran"
-        android:layout_marginBottom="32dp"
         android:layout_width="match_parent"
-        android:layout_height="1000dp"
+        android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:textAlignment="center"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        android:textAlignment="center">
 
         <LinearLayout
             android:id="@+id/manage_lampiran"
@@ -40,477 +78,479 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semibold"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
-                android:text="Edit Lampiran"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
                 android:fontFamily="@font/poppins"
-                android:paddingTop="0dp"
+                android:layout_marginTop="10dp"
                 android:text="Judul Dokumen"
                 android:textColor="@color/black"
-                android:textSize="14dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"/>
+                android:textSize="14dp" />
 
             <EditText
+                android:id="@+id/insert_dokument"
                 android:layout_width="match_parent"
-                android:layout_marginRight="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:height="40dp"
+                android:background="@color/light_300"
+                android:fontFamily="@font/poppins"
+                android:gravity="top"
+                android:hint="Masukkan nama dokumen"
+                android:inputType="text|textMultiLine"
+                android:lines="8"
+                android:maxLines="10"
                 android:paddingLeft="4dp"
                 android:paddingTop="12dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/insert_dokument"
-                android:height="40dp"
-                android:inputType="text|textMultiLine"
-                android:gravity="top"
-                android:fontFamily="@font/poppins"
-                android:lines="8"
-                android:background="@color/light_300"
-                android:maxLines="10"
                 android:scrollbars="horizontal"
-                android:hint="Masukkan nama dokumen"
-                android:textSize="10dp"/>
+                android:textSize="10dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="16dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:paddingTop="0dp"
                 android:text="Upload Lampiran"
                 android:textColor="@color/danger_500"
-                android:textSize="14dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"/>
+                android:textSize="14dp" />
 
 
             <com.google.android.material.button.MaterialButton
-                android:layout_marginTop="16dp"
                 android:id="@+id/btn_lampiran_selesai"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="top"
-                android:backgroundTint="@color/white"
-                app:strokeColor="@color/danger_500"
-                app:strokeWidth="1dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:backgroundTint="@color/white"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Selesai"
-                android:textColor="@color/danger_500"
                 android:textAllCaps="false"
+                android:textColor="@color/danger_500"
                 android:textSize="14dp"
                 app:cornerRadius="100dp"
+                app:strokeColor="@color/danger_500"
+                app:strokeWidth="1dp"
                 tools:layout_editor_absoluteX="17dp"
-                tools:layout_editor_absoluteY="346dp"/>
+                tools:layout_editor_absoluteY="346dp" />
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            tools:ignore="UselessParent"
-                android:layout_marginTop="8dp">
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_dokumen_kamu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:checkable="true"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardCornerRadius="10dp"
-                app:strokeColor="@color/light_500"
-                app:strokeWidth="1dp">
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                tools:ignore="UselessParent">
 
-                <LinearLayout
-                    android:layout_width="378dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="16dp"
-                    android:layout_marginTop="8dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_dokumen_kamu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:checkable="true"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="10dp"
+                    app:strokeColor="@color/light_500"
+                    app:strokeWidth="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="16dp">
 
-                        <TextView
-                            android:id="@+id/dokumen_pelamar"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Dokumen Kamu"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-                    </LinearLayout>
+                            android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
+                            <TextView
+                                android:id="@+id/dokumen_pelamar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Dokumen Kamu"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/portfolio1"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="vertical">
 
-                            <androidx.cardview.widget.CardView
+                            <LinearLayout
+                                android:id="@+id/portfolio1"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="0dp">
+                                android:layout_height="wrap_content">
 
-                                <LinearLayout
-                                    android:layout_width="fill_parent"
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/light_300"
-                                    android:orientation="horizontal">
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp">
 
                                     <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="0dp"
+                                        android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight=".8">
-                                        <TextView
-                                            android:id="@+id/insert_portfolio1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:height="40dp"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="12dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio"
-                                            android:textColor="@color/black"
-                                            android:textSize="12dp" />
-
-                                        <TextView
-                                            android:id="@+id/filename_portfolio1"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="0dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio.pdf"
-                                            android:textColor="@color/trueGray_300"
-                                            android:textSize="12dp" />
-                                    </LinearLayout>
-                                    <ImageView
-                                        android:id="@+id/img_btn_add_test1"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="24dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginLeft="8dp"
-                                        android:layout_marginTop="20dp"
-                                        android:layout_marginRight="8dp"
                                         android:background="@color/light_300"
-                                        android:clickable="true"
-                                        android:src="@drawable/ic_button_close"
-                                        tools:ignore="ContentDescription" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight=".8"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/insert_portfolio1"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:height="40dp"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="12dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio"
+                                                android:textColor="@color/black"
+                                                android:textSize="12dp" />
+
+                                            <TextView
+                                                android:id="@+id/filename_portfolio1"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="0dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio.pdf"
+                                                android:textColor="@color/trueGray_300"
+                                                android:textSize="12dp" />
+                                        </LinearLayout>
+
+                                        <ImageView
+                                            android:id="@+id/img_btn_add_test1"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="24dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginTop="20dp"
+                                            android:layout_marginRight="8dp"
+                                            android:background="@color/light_300"
+                                            android:clickable="true"
+                                            android:src="@drawable/ic_button_close"
+                                            tools:ignore="ContentDescription" />
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
 
                         <LinearLayout
-                            android:id="@+id/portfolio2"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="vertical">
 
-                            <androidx.cardview.widget.CardView
+                            <LinearLayout
+                                android:id="@+id/portfolio2"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="0dp">
+                                android:layout_height="wrap_content">
 
-                                <LinearLayout
-                                    android:layout_width="fill_parent"
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/light_300"
-                                    android:orientation="horizontal">
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp">
 
                                     <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="0dp"
+                                        android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight=".8">
-                                        <TextView
-                                            android:id="@+id/insert_portfolio2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:height="40dp"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="12dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio"
-                                            android:textColor="@color/black"
-                                            android:textSize="12dp" />
-
-                                        <TextView
-                                            android:id="@+id/filename_portfolio2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="0dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio.pdf"
-                                            android:textColor="@color/trueGray_300"
-                                            android:textSize="12dp" />
-                                    </LinearLayout>
-                                    <ImageView
-                                        android:id="@+id/img_btn_add_test2"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="24dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginLeft="8dp"
-                                        android:layout_marginTop="20dp"
-                                        android:layout_marginRight="8dp"
                                         android:background="@color/light_300"
-                                        android:clickable="true"
-                                        android:src="@drawable/ic_button_close"
-                                        tools:ignore="ContentDescription" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight=".8"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/insert_portfolio2"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:height="40dp"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="12dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio"
+                                                android:textColor="@color/black"
+                                                android:textSize="12dp" />
+
+                                            <TextView
+                                                android:id="@+id/filename_portfolio2"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="0dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio.pdf"
+                                                android:textColor="@color/trueGray_300"
+                                                android:textSize="12dp" />
+                                        </LinearLayout>
+
+                                        <ImageView
+                                            android:id="@+id/img_btn_add_test2"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="24dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginTop="20dp"
+                                            android:layout_marginRight="8dp"
+                                            android:background="@color/light_300"
+                                            android:clickable="true"
+                                            android:src="@drawable/ic_button_close"
+                                            tools:ignore="ContentDescription" />
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
 
                         <LinearLayout
-                            android:id="@+id/portfolio3"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="vertical">
 
-                            <androidx.cardview.widget.CardView
+                            <LinearLayout
+                                android:id="@+id/portfolio3"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="0dp">
+                                android:layout_height="wrap_content">
 
-                                <LinearLayout
-                                    android:layout_width="fill_parent"
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/light_300"
-                                    android:orientation="horizontal">
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp">
 
                                     <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="0dp"
+                                        android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight=".8">
-                                        <TextView
-                                            android:id="@+id/insert_portfolio3"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:height="40dp"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="12dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio"
-                                            android:textColor="@color/black"
-                                            android:textSize="12dp" />
-
-                                        <TextView
-                                            android:id="@+id/filename_portfolio3"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="0dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio.pdf"
-                                            android:textColor="@color/trueGray_300"
-                                            android:textSize="12dp" />
-                                    </LinearLayout>
-                                    <ImageView
-                                        android:id="@+id/img_btn_add_test3"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="24dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginLeft="8dp"
-                                        android:layout_marginTop="20dp"
-                                        android:layout_marginRight="8dp"
                                         android:background="@color/light_300"
-                                        android:clickable="true"
-                                        android:src="@drawable/ic_button_close"
-                                        tools:ignore="ContentDescription" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight=".8"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/insert_portfolio3"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:height="40dp"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="12dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio"
+                                                android:textColor="@color/black"
+                                                android:textSize="12dp" />
+
+                                            <TextView
+                                                android:id="@+id/filename_portfolio3"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="0dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio.pdf"
+                                                android:textColor="@color/trueGray_300"
+                                                android:textSize="12dp" />
+                                        </LinearLayout>
+
+                                        <ImageView
+                                            android:id="@+id/img_btn_add_test3"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="24dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginTop="20dp"
+                                            android:layout_marginRight="8dp"
+                                            android:background="@color/light_300"
+                                            android:clickable="true"
+                                            android:src="@drawable/ic_button_close"
+                                            tools:ignore="ContentDescription" />
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
 
                         <LinearLayout
-                            android:id="@+id/portfolio4"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="vertical">
 
-                            <androidx.cardview.widget.CardView
+                            <LinearLayout
+                                android:id="@+id/portfolio4"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="0dp">
+                                android:layout_height="wrap_content">
 
-                                <LinearLayout
-                                    android:layout_width="fill_parent"
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/light_300"
-                                    android:orientation="horizontal">
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp">
 
                                     <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="0dp"
+                                        android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight=".8">
-                                        <TextView
-                                            android:id="@+id/insert_portfolio4"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:height="40dp"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="12dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio"
-                                            android:textColor="@color/black"
-                                            android:textSize="12dp" />
-
-                                        <TextView
-                                            android:id="@+id/filename_portfolio4"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="0dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio.pdf"
-                                            android:textColor="@color/trueGray_300"
-                                            android:textSize="12dp" />
-                                    </LinearLayout>
-                                    <ImageView
-                                        android:id="@+id/img_btn_add_test4"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="24dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginLeft="8dp"
-                                        android:layout_marginTop="20dp"
-                                        android:layout_marginRight="8dp"
                                         android:background="@color/light_300"
-                                        android:clickable="true"
-                                        android:src="@drawable/ic_button_close"
-                                        tools:ignore="ContentDescription" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight=".8"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/insert_portfolio4"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:height="40dp"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="12dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio"
+                                                android:textColor="@color/black"
+                                                android:textSize="12dp" />
+
+                                            <TextView
+                                                android:id="@+id/filename_portfolio4"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="0dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio.pdf"
+                                                android:textColor="@color/trueGray_300"
+                                                android:textSize="12dp" />
+                                        </LinearLayout>
+
+                                        <ImageView
+                                            android:id="@+id/img_btn_add_test4"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="24dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginTop="20dp"
+                                            android:layout_marginRight="8dp"
+                                            android:background="@color/light_300"
+                                            android:clickable="true"
+                                            android:src="@drawable/ic_button_close"
+                                            tools:ignore="ContentDescription" />
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="16dp">
 
                         <LinearLayout
-                            android:id="@+id/portfolio5"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:orientation="vertical">
 
-                            <androidx.cardview.widget.CardView
+                            <LinearLayout
+                                android:id="@+id/portfolio5"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                app:cardCornerRadius="10dp"
-                                app:cardElevation="0dp">
+                                android:layout_height="wrap_content">
 
-                                <LinearLayout
-                                    android:layout_width="fill_parent"
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/light_300"
-                                    android:orientation="horizontal">
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="0dp">
 
                                     <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="0dp"
+                                        android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight=".8">
-                                        <TextView
-                                            android:id="@+id/insert_portfolio5"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:height="40dp"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="12dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio"
-                                            android:textColor="@color/black"
-                                            android:textSize="12dp" />
-
-                                        <TextView
-                                            android:id="@+id/filename_portfolio5"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:fontFamily="@font/poppins"
-                                            android:paddingLeft="8dp"
-                                            android:paddingTop="0dp"
-                                            android:paddingBottom="0dp"
-                                            android:text="Portofolio.pdf"
-                                            android:textColor="@color/trueGray_300"
-                                            android:textSize="12dp" />
-                                    </LinearLayout>
-                                    <ImageView
-                                        android:id="@+id/img_btn_add_test5"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="24dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_marginLeft="8dp"
-                                        android:layout_marginTop="20dp"
-                                        android:layout_marginRight="8dp"
                                         android:background="@color/light_300"
-                                        android:clickable="true"
-                                        android:src="@drawable/ic_button_close"
-                                        tools:ignore="ContentDescription" />
-                                </LinearLayout>
-                            </androidx.cardview.widget.CardView>
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight=".8"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                android:id="@+id/insert_portfolio5"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:height="40dp"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="12dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio"
+                                                android:textColor="@color/black"
+                                                android:textSize="12dp" />
+
+                                            <TextView
+                                                android:id="@+id/filename_portfolio5"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/poppins"
+                                                android:paddingLeft="8dp"
+                                                android:paddingTop="0dp"
+                                                android:paddingBottom="0dp"
+                                                android:text="Portofolio.pdf"
+                                                android:textColor="@color/trueGray_300"
+                                                android:textSize="12dp" />
+                                        </LinearLayout>
+
+                                        <ImageView
+                                            android:id="@+id/img_btn_add_test5"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="24dp"
+                                            android:layout_alignParentRight="true"
+                                            android:layout_marginLeft="8dp"
+                                            android:layout_marginTop="20dp"
+                                            android:layout_marginRight="8dp"
+                                            android:background="@color/light_300"
+                                            android:clickable="true"
+                                            android:src="@drawable/ic_button_close"
+                                            tools:ignore="ContentDescription" />
+                                    </LinearLayout>
+                                </androidx.cardview.widget.CardView>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnWithdraw"
@@ -527,4 +567,7 @@
         app:cornerRadius="100dp"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="346dp"/>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+</LinearLayout>
