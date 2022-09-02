@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageProfile
+package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -35,7 +35,7 @@ class ManageProfile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.jsprofile_basic_info, container, false)
+        return inflater.inflate(R.layout.fragment_papikostick_result, container, false)
     }
 
     companion object {

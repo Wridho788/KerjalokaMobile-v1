@@ -51,7 +51,6 @@ class Notification : AppCompatActivity() {
         }
 
         notifContainer.addItemDecoration(itemSectionDecoration)
-
         notifContainer.layoutManager = layoutManager
         notifContainer.adapter = adapter
     }

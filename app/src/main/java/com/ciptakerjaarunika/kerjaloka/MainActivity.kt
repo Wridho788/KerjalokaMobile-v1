@@ -11,6 +11,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.PapikostickResult
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home -> replaceFragment((HomePage()))
-                R.id.lamaran -> replaceFragment((LamaranPage()))
+                R.id.lamaran -> replaceFragment((PapikostickResult()))
                 R.id.interview -> replaceFragment((InterviewPage(hubConnection)))
                 R.id.akun -> replaceFragment((AkunPage()))
 

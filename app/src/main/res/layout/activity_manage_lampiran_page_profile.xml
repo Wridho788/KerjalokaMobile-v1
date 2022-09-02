@@ -270,13 +270,14 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/edit_lampiran_pelamar"
+                        android:id="@+id/edit_video_resume"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Edit"
                         android:textColor="@color/danger_500"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        />
                 </LinearLayout>
 
                 <LinearLayout

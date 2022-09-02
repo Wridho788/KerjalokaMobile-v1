@@ -1,14 +1,895 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:layout_constraintHeight_percent="80"
     tools:context=".ui.ProfilePage.ManageCV.PapikostickResult">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="50dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="8dp"
+            android:layout_marginBottom="24dp"
+            android:background="@color/black"
+            android:backgroundTint="@color/black"
+            android:elevation="0dp"
+            android:padding="16dp"
+            app:cardCornerRadius="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="Hasil PAPI Kostick"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_500" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <com.github.mikephil.charting.charts.RadarChart
+                        android:id="@+id/papi_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="480dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Hasil Tes PAPI Kostick"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Arah Kerja"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="N"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan Menyelesaikan Tugas Secara Mandiri"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Nscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="G"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Peran Pekerja Keras"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Gscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="A"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan Berprestasi"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Ascore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Kepemimpinan"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="L"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Jiwa Pemimpin"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Lscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="P"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan - Mengatur Orang Lain"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Pscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="I"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Membuat Keputusan"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Iscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Aktivitas"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="T"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Peran Sibuk"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Tscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="V"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Peran Penuh Semangat"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Vscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Social Nature"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="X"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan untuk diperhatikan"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Xscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="S"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Peran Hubungan Sosial"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Sscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="B"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan Diterima Dalam Kelompok"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Bscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="O"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan Kedekatan dan Kasih Sayang"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Oscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Gaya Kerja"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="R"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Tipe Teoritis"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Rscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="D"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Bekerja dengan Hal - hal Rinci"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Dscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="C"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Tipe Teratur"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Cscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Tempramen"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Z"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan untuk Berubah"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Zscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="E"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Pengendalian Emosi"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Escore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="K"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan Untuk Agresif"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Kscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Followership"
+                            android:textColor="@color/black"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="F"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan untuk Berubah"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Fscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="W"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:fontFamily="@font/poppins"
+                                android:text="Kebutuhan Mengikuti Aturan dan Pengawasan"
+                                android:textColor="@color/black"
+                                android:textSize="10dp" />
+
+                            <TextView
+                                android:id="@+id/Wscore"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="35"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="2"
+                                android:textColor="@color/danger_500"
+                                android:textSize="10dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

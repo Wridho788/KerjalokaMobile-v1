@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageProfile
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.ManageProfile
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.cvPage
 
 class viewpagerAdapter (fragmentManager: FragmentManager, lifecycle: Lifecycle,): FragmentStateAdapter(fragmentManager,lifecycle){
