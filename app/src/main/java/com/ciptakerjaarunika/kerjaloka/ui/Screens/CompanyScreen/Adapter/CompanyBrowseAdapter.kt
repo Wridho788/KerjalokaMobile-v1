@@ -10,29 +10,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_followed_list
+import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_browse_list
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.OnFragmentClickListener
 import com.google.android.material.card.MaterialCardView
 
-class CompanyFollowedAdapter(
+class CompanyBrowseAdapter(
     val context: Context?,
-    private val companyModel: List<company_followed_list>,
+    private val companyModel: List<company_browse_list>,
     private val onFragmentClick: OnFragmentClickListener
-) : RecyclerView.Adapter<CompanyFollowedAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<CompanyBrowseAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var companyName: TextView
         var logo: ImageView
         var field: TextView
         var location: TextView
-        var cardCompanyFollower: MaterialCardView
+        var cardCompanyBrowse: MaterialCardView
 
         init {
             companyName = itemView.findViewById(R.id.followCompanyjobPosition)
             logo = itemView.findViewById(R.id.followCompanyJoblogo)
             field = itemView.findViewById(R.id.followCompanyjobCompany)
             location = itemView.findViewById(R.id.followCompanyjobLocation)
-            cardCompanyFollower = itemView.findViewById(R.id.card_followed_company_job)
+            cardCompanyBrowse = itemView.findViewById(R.id.card_followed_company_job)
         }
     }
 
@@ -51,10 +51,10 @@ class CompanyFollowedAdapter(
             .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
             .into(holder.logo)
 
-        holder.cardCompanyFollower.setOnClickListener {
+        holder.cardCompanyBrowse.setOnClickListener {
             onFragmentClick.onCompanyDetailPage(currentItem.companyNo)
-        }
 
+        }
     }
 
     override fun getItemCount(): Int {

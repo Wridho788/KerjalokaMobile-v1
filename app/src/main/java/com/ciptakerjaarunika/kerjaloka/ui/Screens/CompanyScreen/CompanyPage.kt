@@ -1,43 +1,77 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.CompanyBrowseAPI
+import com.ciptakerjaarunika.kerjaloka.api.CompanyFollowedAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_browse_list
+import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_followed_list
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.CompanyDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyFollowedAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyVacanciesAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyWantToKnowAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Model.companyModel
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Model.companyVacanciesModel
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Model.companyWantToKnowModel
 import com.google.android.material.appbar.MaterialToolbar
 
-class CompanyPage : Fragment() {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var layoutManager2: RecyclerView.LayoutManager? = null
-    private var layoutManager3: RecyclerView.LayoutManager? = null
-
-    private var adapter: RecyclerView.Adapter<CompanyFollowedAdapter.ViewHolder>? = null
-    private var adapter2: RecyclerView.Adapter<CompanyWantToKnowAdapter.ViewHolder>? = null
-    private var adapter3: RecyclerView.Adapter<CompanyVacanciesAdapter.ViewHolder>? = null
-
+class CompanyPage : Fragment(), OnFragmentClickListener{
+    private var isLoading: Boolean = true
+    private var isFollowed: Boolean = true
     private lateinit var binding: ActivityMainBinding
+    private val Context = this
+    private var listFollowedJob : List<company_followed_list>?= null
+    private var listSearchJob : List<company_browse_list>?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private fun setContentView(root: ConstraintLayout) {
-        TODO("Not yet implemented")
+    private fun getFollowedJobData() {
+        CompanyFollowedAPI().CompanyGetFollowedJob(context) {
+            if (it != null) {
+                isLoading = false
+                listFollowedJob = it.data
+                Log.d("response followed api", it.toString())
+                val recyclerViewFollowedCompany =
+                    view?.findViewById<RecyclerView>(R.id.rv_followed_company)
+
+                recyclerViewFollowedCompany?.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter =
+                        CompanyFollowedAdapter(context, listFollowedJob!!, this@CompanyPage);
+                }
+
+            }
+        }
     }
+
+    private fun getBrowserJobData() {
+        CompanyBrowseAPI().CompanyGetBrowserJob(context){
+            if(it != null){
+                isLoading = false
+                listSearchJob = it.data
+                Log.d("response browse api", it.toString())
+                val recyclerViewCompanyBrowse =
+                    view?.findViewById<RecyclerView>(R.id.rv_browse_company)
+
+                recyclerViewCompanyBrowse?.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = CompanyBrowseAdapter(context, listSearchJob!!, this@CompanyPage)
+                }
+            }
+        }
+    }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,10 +81,22 @@ class CompanyPage : Fragment() {
         return inflater.inflate(R.layout.fragment_company_page, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var user = SessionManager(context).user
+        Log.d("response token", user.toString())
 
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar) as MaterialToolbar
+        isFollowed = user != null && user.roleNo == 4
+        println(user)
+        println(isFollowed)
+
+        if (isFollowed) {
+            getFollowedJobData()
+        }
+        getBrowserJobData()
+
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -58,158 +104,19 @@ class CompanyPage : Fragment() {
             activity?.onBackPressed()
         }
 
-        val list = ArrayList<companyModel>()
-        val companyJob1 = companyModel(
-            1,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyJob2 = companyModel(
-            2,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyJob3 = companyModel(
-            3,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyJob4 = companyModel(
-            4,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyJob5 = companyModel(
-            5,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        list.add(companyJob1)
-        list.add(companyJob2)
-        list.add(companyJob3)
-        list.add(companyJob4)
-        list.add(companyJob5)
+        val recyclerViewVacanciesCompany =
+            view.findViewById<RecyclerView>(R.id.rv_vacancies_company)
 
-        val list_want_to_know_company = ArrayList<companyWantToKnowModel>()
-        val companyJob_1 = companyWantToKnowModel(
-            1,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyJob_2 = companyWantToKnowModel(
-            2,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyJob_3 = companyWantToKnowModel(
-            3,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyJob_4 = companyWantToKnowModel(
-            4,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyJob_5 = companyWantToKnowModel(
-            5,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        list_want_to_know_company.add(companyJob_1)
-        list_want_to_know_company.add(companyJob_2)
-        list_want_to_know_company.add(companyJob_3)
-        list_want_to_know_company.add(companyJob_4)
-        list_want_to_know_company.add(companyJob_5)
-
-        val list_vancancies_company = ArrayList<companyVacanciesModel>()
-        val companyVacancies_1 = companyVacanciesModel(
-            1,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyVacancies_2 = companyVacanciesModel(
-            2,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyVacancies_3 = companyVacanciesModel(
-            3,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyVacancies_4 = companyVacanciesModel(
-            4,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        val companyVacancies_5 = companyVacanciesModel(
-            5,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        )
-        list_vancancies_company.add(companyVacancies_1)
-        list_vancancies_company.add(companyVacancies_2)
-        list_vancancies_company.add(companyVacancies_3)
-        list_vancancies_company.add(companyVacancies_4)
-        list_vancancies_company.add(companyVacancies_5)
-
-        val recyclerViewFollowedCompany = view.findViewById<RecyclerView>(R.id.rv_followed_company)
-        val recyclerViewWantToKnoewCompany = view.findViewById<RecyclerView>(R.id.rv_want_to_know_company)
-        val recyclerViewVacanciesCompany = view.findViewById<RecyclerView>(R.id.rv_vacancies_company)
-
-        layoutManager = LinearLayoutManager(activity)
-        layoutManager2 = LinearLayoutManager(activity)
-        layoutManager3 = LinearLayoutManager(activity)
-
-        recyclerViewFollowedCompany.layoutManager = layoutManager
-        recyclerViewWantToKnoewCompany.layoutManager = layoutManager2
-        recyclerViewVacanciesCompany.layoutManager = layoutManager3
-
-        adapter = CompanyFollowedAdapter(list)
-        adapter2 = CompanyWantToKnowAdapter(list_want_to_know_company)
-        adapter3 = CompanyVacanciesAdapter(list_vancancies_company)
-
-        recyclerViewFollowedCompany.adapter = adapter
-        recyclerViewWantToKnoewCompany.adapter = adapter2
-        recyclerViewVacanciesCompany.adapter = adapter3
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CompanyPage().apply {
-
-            }
+    override fun onCompanyDetailPage(CompanyNo: Long){
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, CompanyDetailFragment(CompanyNo), "company detail page")
+        ft.addToBackStack("CompanyPage")
+        ft.commit()
     }
+}
+
+interface OnFragmentClickListener {
+    fun onCompanyDetailPage(CompanyNo: Long)
 }

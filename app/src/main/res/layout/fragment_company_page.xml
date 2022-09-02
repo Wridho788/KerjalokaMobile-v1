@@ -28,10 +28,13 @@
             app:elevation="5dp">
 
             <LinearLayout
+                android:id="@+id/search_company_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/search_bar_background"
                 android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"
                 tools:ignore="UselessParent">
 
                 <ImageView
@@ -41,18 +44,14 @@
                     android:layout_marginStart="5dp"
                     android:src="@drawable/ic_search"
                     tools:ignore="ContentDescription" />
-
-                <EditText
-                    android:id="@+id/search_company"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@string/cari_perusahaan"
                     android:layout_marginStart="10dp"
-                    android:background="@null"
                     android:fontFamily="@font/poppins_light"
-                    android:hint="@string/cari_perusahaan"
-                    android:inputType="textShortMessage"
                     android:textSize="12sp"
-                    tools:ignore="Autofill" />
+                    />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -69,7 +68,7 @@
             android:orientation="vertical">
 
             <include layout="@layout/layout_followed_company" />
-            <include layout="@layout/layout_want_to_know_company" />
+            <include layout="@layout/layout_browse_company" />
             <include layout="@layout/layout_vacancies_company" />
 
         </LinearLayout>

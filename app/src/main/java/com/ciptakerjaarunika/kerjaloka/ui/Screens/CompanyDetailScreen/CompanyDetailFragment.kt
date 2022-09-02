@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,8 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Adapter.Re
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 
-class CompanyDetailFragment : Fragment() {
+class CompanyDetailFragment(private val CompanyNo: Long) : Fragment() {
+
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var layoutManager2: RecyclerView.LayoutManager? = null
@@ -32,6 +34,7 @@ class CompanyDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
     }
 
     override fun onCreateView(
@@ -66,6 +69,7 @@ class CompanyDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar) as MaterialToolbar
         val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share) as ImageView
+        Log.d("company No ${CompanyNo}", CompanyNo.toString())
 
         val rv_recommendations_job =
             view.findViewById<RecyclerView>(R.id.recycler_view_company_recommendation_jobs)
@@ -97,12 +101,5 @@ class CompanyDetailFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CompanyDetailFragment().apply {
-
-            }
-    }
+    companion object
 }
