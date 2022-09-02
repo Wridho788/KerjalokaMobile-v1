@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ededed"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfilePage.manage_cv_edit_experience_page">
+    tools:context=".ui.ProfilePage.fragment_manage_cv_edit_education_page">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/mainAppbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="20dp">
-
-        <LinearLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/mainAppbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@color/white"
+            android:elevation="20dp"/>
 
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.Icon"
-                android:backgroundTint="@color/white"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:paddingLeft="16dp"
-                app:cornerRadius="100sp"
-                app:icon="@drawable/ic_back"
-                app:iconTint="@color/danger_500"/>
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/mainToolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:titleTextColor="@color/black"
-                app:title="Edit Pengalaman"
-                android:layout_gravity="center"/>
-        </LinearLayout>
+                android:orientation="horizontal">
 
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:backgroundTint="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:paddingLeft="16dp"
+                    app:cornerRadius="sp"
+                    app:icon="@drawable/ic_back"
+                    app:iconTint="@color/danger_500"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/mainToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:titleTextColor="@color/black"
+                    app:title="Edit Edukasi"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,13 +54,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/posisi"
+                android:id="@+id/sekolah_universitas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins"
-                android:text="Posisi"
+                android:text="Sekolah atau Universitas"
                 android:textColor="@color/dark_100"
                 android:textSize="14sp" />
 
@@ -77,12 +77,12 @@
                 app:cardElevation="0dp">
 
                 <EditText
-                    android:id="@+id/pilih_posisi"
+                    android:id="@+id/insert_sekolah_universitas"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
                     android:ems="10"
-                    android:hint="Pilih Posisi"
+                    android:hint="Masukkan Nama Sekolah/Universitas"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
@@ -92,13 +92,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/perusahaan"
+                android:id="@+id/gelar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins"
-                android:text="Perusahaan"
+                android:text="Gelar"
                 android:textColor="@color/dark_100"
                 android:textSize="14sp" />
 
@@ -114,12 +114,12 @@
                 app:cardElevation="0dp">
 
                 <EditText
-                    android:id="@+id/pilih_perusahaan"
+                    android:id="@+id/pilih_gelar"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
                     android:ems="10"
-                    android:hint="Masukkan Nama Perusahaan"
+                    android:hint="Pilih Gelar"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
@@ -129,13 +129,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/tipe_pekerjaan_tipe"
+                android:id="@+id/bidang_studi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins"
-                android:text="Tipe Pekerjaan"
+                android:text="Bidang Studi"
                 android:textColor="@color/dark_100"
                 android:textSize="14sp" />
 
@@ -151,12 +151,12 @@
                 app:cardElevation="0dp">
 
                 <EditText
-                    android:id="@+id/pilih_tipe_pekerjaan"
+                    android:id="@+id/pilih_bidang_studi"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
                     android:ems="10"
-                    android:hint="Masukkan Tipe Pekerjaan"
+                    android:hint="Pilih bidang studi"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
@@ -167,13 +167,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/lokasi_perusahaan"
+                android:id="@+id/lokasi_sekolah"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins"
-                android:text="Lokasi Perusahaan"
+                android:text="Lokasi Sekolah"
                 android:textColor="@color/dark_100"
                 android:textSize="14sp" />
 
@@ -189,12 +189,12 @@
                 app:cardElevation="0dp">
 
                 <EditText
-                    android:id="@+id/pilih_lokasi_perusahaan"
+                    android:id="@+id/pilih_lokasi_sekolah"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
                     android:ems="10"
-                    android:hint="Pilih Lokasi Perusahaan"
+                    android:hint="Masukkan lokasi sekolah"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
@@ -212,7 +212,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tanggal_mulai"
+                    android:id="@+id/tanggal_mulai_edukasi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
@@ -244,7 +244,8 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Bulan"
-                            android:textColor="@color/dark_100"></TextView>
+                            android:textColor="@color/dark_100">
+                        </TextView>
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
@@ -257,7 +258,7 @@
                             app:cardElevation="0dp">
 
                             <EditText
-                                android:id="@+id/pilih_bulan_mulai"
+                                android:id="@+id/pilih_bulan_mulai_edukasi"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/light_300"
@@ -301,7 +302,7 @@
                             app:cardElevation="0dp">
 
                             <EditText
-                                android:id="@+id/pilih_tahun_mulai"
+                                android:id="@+id/pilih_tahun_mulai_edukasi"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/light_300"
@@ -329,7 +330,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tanggal_berakhir"
+                    android:id="@+id/tanggal_berakhi_edukasi"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
@@ -361,7 +362,8 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Bulan"
-                            android:textColor="@color/dark_100"></TextView>
+                            android:textColor="@color/dark_100">
+                        </TextView>
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
@@ -374,7 +376,7 @@
                             app:cardElevation="0dp">
 
                             <EditText
-                                android:id="@+id/pilih_bulan_berakhir"
+                                android:id="@+id/pilih_bulan_berakhir_edukasi"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/light_300"
@@ -418,7 +420,7 @@
                             app:cardElevation="0dp">
 
                             <EditText
-                                android:id="@+id/pilih_tahun_berakhir"
+                                android:id="@+id/pilih_tahun_berakhir_edukasi"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/light_300"
@@ -437,13 +439,13 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/jlh_gaji"
+                android:id="@+id/jlh_gpa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins"
-                android:text="Gaji"
+                android:text="GPA"
                 android:textColor="@color/dark_100"
                 android:textSize="14sp" />
 
@@ -459,12 +461,12 @@
                 app:cardElevation="0dp">
 
                 <EditText
-                    android:id="@+id/masukkan_jlh_gaji"
+                    android:id="@+id/masukkan_skor_gpa"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
                     android:ems="10"
-                    android:hint="Masukkan Gaji"
+                    android:hint="Masukkan skor GPA kamu"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
@@ -474,13 +476,13 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/deskripsi_pekerjaan"
+                android:id="@+id/deskripsi_pekerjaan_edukasi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins"
-                android:text="Deskripsi Pekerjaan"
+                android:text="Deskripsi (optional)"
                 android:textColor="@color/dark_100"
                 android:textSize="14sp" />
 
@@ -496,7 +498,7 @@
                 app:cardElevation="0dp">
 
                 <EditText
-                    android:id="@+id/masukkan_deskr_pekerjaan"
+                    android:id="@+id/masukkan_deskripsi_pekerjaan_edukasi"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
@@ -511,6 +513,8 @@
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 
