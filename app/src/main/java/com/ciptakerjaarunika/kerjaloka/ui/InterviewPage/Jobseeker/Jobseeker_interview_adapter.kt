@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.microsoft.signalr.HubConnection
@@ -27,7 +28,7 @@ import java.util.*
 //
 class jobseeker_interview_adapter
     (
-        private val dataSet: chat_data?,
+        private val context: Context?,
         private val cellClickListener: CellClickListener
     ) :
     RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
@@ -67,6 +68,8 @@ class jobseeker_interview_adapter
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
+        val dataSet = SessionManager(context).chatData
+
         if (dataSet != null) {
             Log.d("dataSet ", dataSet.toString())
             Glide.with(viewHolder.itemView.context)
@@ -110,7 +113,7 @@ class jobseeker_interview_adapter
 ////        val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
 //        return dateFormatter.format(this)
 //    }
-    val count = if(dataSet == null) 0 else dataSet.sections.size
+    val count = if(SessionManager(context).chatData == null) 0 else SessionManager(context).chatData?.sections!!.size
     // Return the size of your dataset (invoked by the layout manager)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getItemCount() = count

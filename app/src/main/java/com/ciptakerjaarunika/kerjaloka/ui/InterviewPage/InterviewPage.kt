@@ -22,6 +22,7 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_adapter
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker.jobseeker_interview_adapter
+import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
@@ -62,6 +63,13 @@ class InterviewPage : Fragment(), CellClickListener{
         super.onViewCreated(itemView, savedInstanceState)
 //        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
 //        toolbar.setTitle("Lamaran Saya")
+        var user = SessionManager(context).user
+        if(user == null){
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(id, Login())
+            fragmentTransaction.commit()
+        }
+
         var spinner = view?.findViewById<LinearLayout>(R.id.spinnerInterviw)
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewSection);
 
@@ -75,18 +83,19 @@ class InterviewPage : Fragment(), CellClickListener{
         hubConnection.on<chat_data>(
             "getMessage",
             Action1<chat_data> { res: chat_data ->
+                Log.d("Chat data : ", res.toString())
                 SessionManager(context).chatData = res
 
                 activity?.runOnUiThread(Runnable {
+                    recyclerView?.adapter?.notifyDataSetChanged()
                     spinner?.visibility = GONE;
                     recyclerView?.visibility = VISIBLE;
-                    recyclerView?.adapter?.notifyDataSetChanged()
                 })
             },
             chat_data::class.java
         )
 
-        var user = SessionManager(context).user
+
         isCompany = user != null && user.roleNo == 2
 
         if(isCompany) {
@@ -100,7 +109,7 @@ class InterviewPage : Fragment(), CellClickListener{
 
             recyclerView?.apply {
                 layoutManager = LinearLayoutManager(activity)
-                adapter = jobseeker_interview_adapter(SessionManager(context).chatData, Context)
+                adapter = jobseeker_interview_adapter(context, Context)
             }
         }
     }

@@ -25,9 +25,8 @@ import java.util.*
 //
 //
 class ChatAdapter
-    (private val context: Context, private val jobNo : Long?, private val receiver : Long) :
-    RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
-    private val Header = 0
+    (private val context: Context, private val jobNo : Long?, private val receiver : Long, val positionOnBottom : PositionOnBottom) :
+    RecyclerView.Adapter<ChatAdapter.ViewHolder>(){
     private val Right1 = 1
     private val Right2 = 2
     private val Left1 = 3
@@ -42,19 +41,6 @@ class ChatAdapter
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
-        val currentSection = SessionManager(context).chatData!!.sections?.find {
-            it.jobNo == jobNo && it.receiver.contains(receiver)
-        }
-        messagesGroup = currentSection!!.messages.groupBy { item -> DateUtils().GetHeaderMessage(item.createdOn) }
-
-        var index = 0
-        if(messagesGroup != null) {
-            indexHeader = listOf()
-            for (header in messagesGroup!!) {
-                indexHeader += (HeaderMessages(header.key, index))
-                index += header.value.size
-            }
-        }
     }
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val message: TextView?
@@ -92,7 +78,7 @@ class ChatAdapter
             var dataSet = currentSection!!.messages
 
             var founded = indexHeader?.find { head-> head.Index == position } != null
-            var viewSelected = Header
+            var viewSelected = Right1
             if (dataSet[position].createdBy == UserNo && (founded || (position == 0 || dataSet[position-1].createdBy != UserNo))) {
                 viewSelected = Right1
             } else if (dataSet[position].createdBy == UserNo && (position == 0 || dataSet[position-1].createdBy == UserNo)) {
@@ -106,16 +92,26 @@ class ChatAdapter
     }
 
     // Create new views (invoked by the layout manager)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
+        val currentSection = SessionManager(context).chatData!!.sections?.find {
+            it.jobNo == jobNo && it.receiver.contains(receiver)
+        }
+        messagesGroup = currentSection!!.messages.groupBy { item -> DateUtils().GetHeaderMessage(item.createdOn) }
+
+        var index = 0
+        if(messagesGroup != null) {
+            indexHeader = listOf()
+            for (header in messagesGroup!!) {
+                indexHeader += (HeaderMessages(header.key, index))
+                index += header.value.size
+            }
+        }
 
         var view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.header_message, viewGroup, false)
-        if(viewType == Header){
-            view = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.header_message, viewGroup, false)
-        }
-        else if(viewType == Right1){
+            .inflate(R.layout.message_right1, viewGroup, false)
+        if(viewType == Right1){
             view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.message_right1, viewGroup, false)
         }
@@ -137,6 +133,8 @@ class ChatAdapter
     // Replace the contents of a view (invoked by the layout manager)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        positionOnBottom.isOnBottom(position == (itemCount -1))
+
         val currentSection = SessionManager(context).chatData!!.sections?.find {
             it.jobNo == jobNo && it.receiver.contains(receiver)
         }
@@ -146,12 +144,14 @@ class ChatAdapter
             }
             var dataSet = currentSection.messages
 
-            var founded = indexHeader?.find { head-> head.Index == position } != null
-            if(founded){
-                viewHolder.headerContainer?.visibility = VISIBLE
-            }
-            else{
-                viewHolder.headerContainer?.visibility = GONE
+            if(indexHeader.any()){
+                var founded = indexHeader.find { head-> head.Index == position } != null
+                if(founded){
+                    viewHolder.headerContainer?.visibility = VISIBLE
+                }
+                else{
+                    viewHolder.headerContainer?.visibility = GONE
+                }
             }
 
             viewHolder.message?.text = dataSet!![position].message

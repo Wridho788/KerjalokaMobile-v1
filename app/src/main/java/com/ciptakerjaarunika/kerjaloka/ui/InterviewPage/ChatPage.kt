@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
+import android.R
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
@@ -8,28 +9,27 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.activity.addCallback
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anychart.core.resource.Logo
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_adapter
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
@@ -42,11 +42,12 @@ class ChatPage(var sectionName: String,
                val jobNo : Long?,
                val Receiver : Long,
                val logo: String?)
-    :  Fragment() {
+    :  Fragment(), PositionOnBottom {
 
     private var chatModel : chat_model? = null
     private lateinit var recyclerView : RecyclerView;
     private lateinit var hubConnection: HubConnection
+    private var onBottom : Boolean = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +64,11 @@ class ChatPage(var sectionName: String,
         val titlePage = itemView.findViewById<TextView>(R.id.title)
         titlePage.text = sectionName
         val backButton = itemView.findViewById<ImageButton>(R.id.backButton)
+        val navBottom  = view?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        if(navBottom != null){
+            navBottom.visibility = GONE
+        }
+
 
         Glide.with(itemView.context)
             .load(config().portAddress + "/photo/Profile/" + logo).fitCenter()
@@ -139,25 +145,28 @@ class ChatPage(var sectionName: String,
         hubConnection.on<chat_data>(
             "getMessage",
             Action1<chat_data> { res: chat_data ->
+
                 SessionManager(context).chatData = res
                 Log.d("Message", res.toString())
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
                 activity?.runOnUiThread(Runnable {
+                    Log.d("Scroll X",recyclerView. scrollX.toString())
                     recyclerView.adapter?.notifyDataSetChanged()
+                    if(onBottom) {
+                         recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
+                    }
                 })
             },
             chat_data::class.java
         )
 
         var LinearLayoutManager = LinearLayoutManager(activity)
-
+        val thisContext = this
         recyclerView?.apply {
             layoutManager = LinearLayoutManager
-            adapter = ChatAdapter(context, jobNo, Receiver)
+            adapter = ChatAdapter(context, jobNo, Receiver, thisContext)
         }
-
-        recyclerView.scrollToPosition(1000)
-        recyclerView.smoothScrollToPosition(100000)
+        recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
 
         var message = itemView.findViewById<EditText>(R.id.txt_message);
         var img_btnsend = itemView.findViewById<ImageView>(R.id.img_btnsend);
@@ -183,10 +192,22 @@ class ChatPage(var sectionName: String,
                             img_btnsend.rotation=-25f
                             btn_send.setOnClickListener{
                                 val sender = SessionManager(context).user!!.userNo.toString()
-                                val message = itemView.findViewById<EditText>(R.id.txt_message).text.toString()
+                                val message = itemView.findViewById<EditText>(com.ciptakerjaarunika.kerjaloka.R.id.txt_message).text.toString()
 
                                 val receiver = listOf<Long>(Receiver);
-                                hubConnection.send("SendMessage", sectionNo, sender, message, receiver, jobNo)
+                                hubConnection.send("SendMessage", sectionNo, sender, message, receiver, jobNo, MessageType.NormalMessage.type.toString().toInt())
+//                                val ayout = view.findViewById(R.id.myLinearLayout) as LinearLayout
+//                                val imm =
+//                                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+//                                imm!!.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0)
+                                Timer().schedule(object : TimerTask() {
+                                    override fun run() {
+                                        activity?.runOnUiThread(Runnable {
+                                            recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
+                                        })
+                                    }
+                                }, 500)
+
                                 itemView.findViewById<EditText>(R.id.txt_message).text = null
                                 recyclerView?.adapter?.notifyDataSetChanged()
                             }
@@ -198,10 +219,19 @@ class ChatPage(var sectionName: String,
                     }
                 })
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.chat_page, container, false)
     }
+
+    override fun isOnBottom(isOnBottom: Boolean) {
+        onBottom = isOnBottom
+    }
 }
+interface PositionOnBottom{
+    fun isOnBottom(isOnBottom : Boolean)
+}
+

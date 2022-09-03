@@ -38,7 +38,6 @@ android {
 }
 
 dependencies {
-
     implementation 'me.relex:circleindicator:2.1.6'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -81,4 +80,8 @@ dependencies {
     implementation 'org.slf4j:slf4j-jdk14:1.7.25'
 
     implementation 'com.microsoft.signalr:signalr:3.0.0-preview4-19216-03'
+    implementation platform('com.google.firebase:firebase-bom:30.3.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
 }
+

@@ -23,3 +23,10 @@ data class Reader(var chatMessageNo : Int,
                   var readBy: Long,
                   var readOn: String,
                   var hasRemove: Boolean)
+
+enum class MessageType(val type: Int) {
+    NormalMessage(1),
+    VoiceMessage(2),
+    ImageMessage(3),
+    FileMessage(4)
+}
