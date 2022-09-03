@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -43,7 +45,11 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
                 Log.d("response followed api", it.toString())
                 val recyclerViewFollowedCompany =
                     view?.findViewById<RecyclerView>(R.id.rv_followed_company)
+                val btn_see_more_job = view?.findViewById<LinearLayout>(R.id.btn_see_more)
 
+                if (listFollowedJob?.size == 0) {
+                    btn_see_more_job?.visibility = View.GONE
+                }
                 recyclerViewFollowedCompany?.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter =
@@ -62,7 +68,10 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
                 Log.d("response browse api", it.toString())
                 val recyclerViewCompanyBrowse =
                     view?.findViewById<RecyclerView>(R.id.rv_browse_company)
-
+                val btn_see_more = view?.findViewById<Button>(R.id.btn_see_more)
+                if (listFollowedJob?.size == 0) {
+                    btn_see_more?.visibility = View.GONE
+                }
                 recyclerViewCompanyBrowse?.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = CompanyBrowseAdapter(context, listSearchJob!!, this@CompanyPage)
@@ -87,15 +96,19 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
         var user = SessionManager(context).user
         Log.d("response token", user.toString())
 
+        val layout_followed_company = view.findViewById<LinearLayout>(R.id.layout_followed_company)
+
+        if (user == null) {
+            layout_followed_company.visibility = View.GONE
+        }
         isFollowed = user != null && user.roleNo == 4
-        println(user)
-        println(isFollowed)
+//        println(user)
+//        println(isFollowed)
 
         if (isFollowed) {
             getFollowedJobData()
         }
         getBrowserJobData()
-
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)

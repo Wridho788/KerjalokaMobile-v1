@@ -68,6 +68,8 @@
         <entry key="app/src/main/res/layout/item_card_job_other_related.xml" value="0.10885416666666667" />
         <entry key="app/src/main/res/layout/item_card_job_related.xml" value="0.45" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/layout_browse_company.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/layout_followed_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_vacancies_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_want_to_know_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_recommendation_job.xml" value="0.1" />
