@@ -72,6 +72,9 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
                 if (listFollowedJob?.size == 0) {
                     btn_see_more?.visibility = View.GONE
                 }
+                if (listFollowedJob?.size == 0 && listFollowedJob?.size == 1) {
+                    btn_see_more?.visibility = View.GONE
+                }
                 recyclerViewCompanyBrowse?.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = CompanyBrowseAdapter(context, listSearchJob!!, this@CompanyPage)
