@@ -64,7 +64,7 @@
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.27239583333333334" />
         <entry key="app/src/main/res/layout/activity_on_boarding2.xml" value="0.27239583333333334" />
         <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_search.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.27900552486187846" />
         <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/activity_test_list.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/activity_test_list2.xml" value="0.335" />
@@ -77,16 +77,21 @@
         <entry key="app/src/main/res/layout/edit_basic.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/find_category.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_company_page.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/fragment_edit_about_me.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/fragment_edit_add_info.xml" value="0.625" />
         <entry key="app/src/main/res/layout/fragment_edit_bahasa.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_edit_basic_info.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_edit_interest_layout.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/fragment_edit_kemampuan.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_editlampiran_upload_vaksin.xml" value="0.3641025641025641" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_manage_cv_edit_education_page.xml" value="0.2109375" />
+        <entry key="app/src/main/res/layout/fragment_manage_cv_edit_experience_page.xml" value="0.2375" />
+        <entry key="app/src/main/res/layout/fragment_manage_preference.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/fragment_papikostick_result.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/fragment_recommended_job.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/fragment_view_mytest_list.xml" value="0.2109375" />
@@ -110,6 +115,7 @@
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.375" />
         <entry key="app/src/main/res/layout/section_recommendation_job.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/viewpager.xml" value="0.27239583333333334" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/menu/topbar_menu_job_detail.xml" value="0.2657407407407407" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />

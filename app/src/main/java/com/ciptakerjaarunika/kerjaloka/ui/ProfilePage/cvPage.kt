@@ -5,7 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.PapikostickResult
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.edit_kemampuan
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.fragment_manage_cv_edit_education_page
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.manage_cv_edit_experience_page
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditAddInfo
+import com.google.android.material.button.MaterialButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +41,26 @@ class cvPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.jsprofile_cv, container, false)
+        val view = inflater.inflate(R.layout.jsprofile_cv, container, false)
+        val btn_edSkil = view?.findViewById<TextView>(R.id.editSkill)
+        val btn_seePapiRes = view?.findViewById<MaterialButton>(R.id.seePapiResult)
+        val btn_edExp = view?.findViewById<TextView>(R.id.addExp)
+        val btn_edEdu = view?.findViewById<TextView>(R.id.addEdu)
+        val btn_edlang = view?.findViewById<TextView>(R.id.addLang)
+
+        btn_edSkil?.setOnClickListener{
+            replaceFragment(edit_kemampuan())
+        }
+        btn_seePapiRes?.setOnClickListener{
+            replaceFragment(PapikostickResult())
+        }
+        btn_edExp?.setOnClickListener{
+            replaceFragment(manage_cv_edit_experience_page())
+        }
+        btn_edEdu?.setOnClickListener{
+            replaceFragment(fragment_manage_cv_edit_education_page())
+        }
+        return view
     }
 
     companion object {
@@ -56,5 +81,13 @@ class cvPage : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.commit()
     }
 }

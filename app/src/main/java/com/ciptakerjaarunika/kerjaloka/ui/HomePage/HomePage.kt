@@ -19,7 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
-import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Job_Page
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.JobPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.SearchActivity
@@ -119,7 +119,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
     override fun onReplaceFragment(onFragmentClickListener: OnFragmentClickListener) {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(id, Job_Page(onFragmentClickListener), "JobFragment")
+        fragmentTransaction?.replace(id, JobPage(onFragmentClickListener), "JobFragment")
         fragmentTransaction?.commit()
 
     }

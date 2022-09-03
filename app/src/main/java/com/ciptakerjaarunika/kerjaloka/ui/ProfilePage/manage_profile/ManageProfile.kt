@@ -38,10 +38,19 @@ class ManageProfile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.jsprofile_basic_info, container, false)
-
         val editBasic = view?.findViewById<TextView>(R.id.editBasicInfo)
+        val btn_edAboutMe = view?.findViewById<TextView>(R.id.editAboutMe)
+        val btn_edAddInfo = view?.findViewById<TextView>(R.id.editAddInfo)
+
+
         editBasic?.setOnClickListener {
           replaceFragment(EditBasicInfo())
+        }
+        btn_edAboutMe?.setOnClickListener{
+            replaceFragment(EditAboutMe())
+        }
+        btn_edAddInfo?.setOnClickListener{
+            replaceFragment(EditAddInfo())
         }
 
         // Inflate the layout for this fragment

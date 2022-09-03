@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
+package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

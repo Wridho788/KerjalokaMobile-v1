@@ -1,41 +1,95 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
-import androidx.appcompat.app.AppCompatActivity
+import android.animation.ValueAnimator
 import android.os.Bundle
-import android.widget.TextView
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityProfilePageBinding
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditBasicInfo
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.ManageProfile
 import com.google.android.material.button.MaterialButton
 
-class profile_page : AppCompatActivity() {
-    private lateinit var binding: ActivityProfilePageBinding
+
+class profilepage : Fragment() {
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile_page)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
 
-        val content = findViewById<ViewPager2>(R.id.profileContent)
-        val btn_mngProfile = findViewById<MaterialButton>(R.id.manageProfile)
-        val btn_mngCV = findViewById<MaterialButton>(R.id.CV)
-        val btn_mngPref = findViewById<MaterialButton>(R.id.Preference)
-        val btn_mngAttach = findViewById<MaterialButton>(R.id.attachment)
-        val btn_mngMyReview= findViewById<MaterialButton>(R.id.myReview)
-        val btn_mngMyRecord = findViewById<MaterialButton>(R.id.myRecord)
-        val btn_mngSetting = findViewById<MaterialButton>(R.id.setting)
+    private fun setContentView(root: ConstraintLayout) {
+    }
 
-        val adapter = viewpagerAdapter(supportFragmentManager, lifecycle)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.activity_profile_page, container, false)
+        val profileLl = view.findViewById<LinearLayout>(R.id.profileLl)
+        val content = view.findViewById<ViewPager2>(R.id.profileContent)
+        val btn_mngProfile = view.findViewById<MaterialButton>(R.id.manageProfile)
+        val btn_mngCV = view.findViewById<MaterialButton>(R.id.CV)
+        val btn_mngPref = view.findViewById<MaterialButton>(R.id.Preference)
+        val btn_mngAttach = view.findViewById<MaterialButton>(R.id.attachment)
+        val btn_mngMyReview= view.findViewById<MaterialButton>(R.id.myReview)
+        val btn_mngMyRecord = view.findViewById<MaterialButton>(R.id.myRecord)
+        val btn_mngSetting = view.findViewById<MaterialButton>(R.id.setting)
+
+        val adapter = viewpagerAdapter(parentFragmentManager, lifecycle)
         content.adapter = adapter
+//        content.layoutParams = ViewGroup.LayoutParams.WRAP_CONTENT
+        content.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//            override fun onPageScrolled(
+//                position: Int,
+//                positionOffset: Float,
+//                positionOffsetPixels: Int
+//            ) {
+//                super.onPageScrolled(position,positionOffset,positionOffsetPixels)
+//                if (position>0 && positionOffset==0.0f && positionOffsetPixels==0){
+//                    content.layoutParams.height =
+//                        content.getChildAt(0).height
+//                }
+//            }
+
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+
+                profileLl.post {
+                    val wMeasureSpec = View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
+                    val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(view.height, View.MeasureSpec.UNSPECIFIED)
+                    view.measure(wMeasureSpec, hMeasureSpec)
+
+                    if (content.layoutParams.height != view.measuredHeight) {
+                        // ParentViewGroup is, for example, LinearLayout
+                        // ... or whatever the parent of the ViewPager2 is
+//                        content.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+                        content.layoutParams = (content.layoutParams as ViewGroup.LayoutParams)
+                            .also { lp -> lp.height = view.measuredHeight }
+                    }
+                }
+            }
+        })
 
         btn_mngProfile.setOnClickListener(){
             content.setCurrentItem(0)
         }
         btn_mngCV.setOnClickListener(){
+//            val adapter = viewpagerAdapter(parentFragmentManager, lifecycle)
+//            content.adapter = adapter
             content.setCurrentItem(1)
+//            content.adapter?.notifyDataSetChanged()
         }
         btn_mngPref.setOnClickListener(){
             content.setCurrentItem(2)
@@ -52,5 +106,9 @@ class profile_page : AppCompatActivity() {
         btn_mngSetting.setOnClickListener(){
             content.setCurrentItem(6)
         }
+
+
+        return view
     }
+
 }

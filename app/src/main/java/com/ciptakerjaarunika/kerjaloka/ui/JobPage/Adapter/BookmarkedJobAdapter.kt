@@ -31,7 +31,7 @@ class BookmarkedJobAdapter(private val rJobList: List<rJobModel>) :
             logo = itemView.findViewById(R.id.logo)
             jobCompany = itemView.findViewById(R.id.jobCompany)
             jobLocation = itemView.findViewById(R.id.jobLocation)
-            timeUploadApplicant = itemView.findViewById(R.id.timeUploadApplicant)
+            timeUploadApplicant = itemView.findViewById(R.id.createdOn)
             bookmarkedJob = itemView.findViewById(R.id.btn_bookmark)
             shareableJob = itemView.findViewById(R.id.btn_share)
             cardRecommendationJob = itemView.findViewById(R.id.card_recommendation_job)

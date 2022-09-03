@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.modal_edit_lampiran_profile_page
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +37,22 @@ class manage_lampiran : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.activity_manage_lampiran_page_profile, container, false)
+        val view = inflater.inflate(R.layout.activity_manage_lampiran_page_profile, container, false)
+        val btn_EdLamp = view.findViewById<TextView>(R.id.edit_lampiran_pelamar)
+//        val btn_edResume = view.findViewById<TextView>(R.id.edit_video_resume_pelamar)
+        val btn_edVaccine = view.findViewById<TextView>(R.id.edit_status_vaksin_pelamar)
+
+
+        btn_EdLamp.setOnClickListener{
+            replaceFragment(modal_edit_lampiran_profile_page())
+        }
+//        btn_edResume.setOnClickListener{
+//
+//        }
+        btn_edVaccine.setOnClickListener{
+            replaceFragment(fragment_editlampiran_upload_vaksin())
+        }
+        return view
     }
 
     companion object {
@@ -55,5 +73,13 @@ class manage_lampiran : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.commit()
     }
 }

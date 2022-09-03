@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditAboutMe
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +37,24 @@ class manage_preference : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_item_profile_minat_page, container, false)
+        val view = inflater.inflate(R.layout.activity_item_profile_minat_page, container, false)
+        val btn_EdMinat = view.findViewById<TextView>(R.id.edit_minat)
+        val btn_EdJobType = view.findViewById<TextView>(R.id.edit_tipe_pekerjaan)
+        val btn_gaji = view.findViewById<TextView>(R.id.edit_ekspektasi_gaji)
+
+        btn_EdMinat.setOnClickListener{
+            replaceFragment(fragment_edit_interest_layout())
+        }
+        btn_EdJobType.setOnClickListener{
+            replaceFragment(activity_editjob_layout())
+        }
+        btn_gaji.setOnClickListener{
+            replaceFragment(EditAboutMe())
+        }
+
+
+
+        return view
     }
 
     companion object {
@@ -56,5 +75,13 @@ class manage_preference : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.commit()
     }
 }

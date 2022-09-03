@@ -1,6 +1,5 @@
-package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
+package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

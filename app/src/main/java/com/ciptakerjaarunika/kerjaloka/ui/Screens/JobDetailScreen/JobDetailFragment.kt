@@ -150,16 +150,19 @@ class JobDetailFragment(
         val recyclerView2 =
             view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs) as RecyclerView
 
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.layoutManager = layoutManager
-        recyclerView2.layoutManager = layoutManager2
-        adapter = RelatedJobAdapter()
-        adapter2 = RelatedOtherJobAdapter()
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.layoutManager = layoutManager
+            adapter = RelatedJobAdapter()
+            recyclerView.adapter = adapter
+        }
 
-        recyclerView.adapter = adapter
-        recyclerView2.adapter = adapter2
-
+        recyclerView2.apply {
+            layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView2.layoutManager = layoutManager2
+            adapter2 = RelatedOtherJobAdapter()
+            recyclerView2.adapter = adapter2
+        }
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
@@ -176,7 +179,7 @@ class JobDetailFragment(
 
     }
 
-    override fun onFragmentClick() {
+    override fun onFragmentClick(companyNo: Long, jobNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "jobDetailFragment")
         ft.addToBackStack("jobDetailFragment")
@@ -188,5 +191,5 @@ class JobDetailFragment(
 
 interface OnFragmentClickListener {
 
-    fun onFragmentClick()
+    fun onFragmentClick(companyNo: Long, jobNo: Long)
 }
