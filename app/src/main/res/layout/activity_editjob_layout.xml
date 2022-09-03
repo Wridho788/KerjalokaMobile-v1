@@ -114,7 +114,6 @@
                                     app:chipCornerRadius="10dp"
                                     app:chipStrokeColor="@color/danger_500"
                                     app:chipStrokeWidth="1dp">
-
                                 </com.google.android.material.chip.Chip>
 
                                 <com.google.android.material.chip.Chip

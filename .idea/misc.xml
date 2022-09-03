@@ -37,8 +37,11 @@
         <entry key="app/src/main/res/drawable/ic_applicant.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.145" />
         <entry key="app/src/main/res/drawable/ic_bookmark.xml" value="0.145" />
+        <entry key="app/src/main/res/drawable/ic_bookmark_filled.xml" value="0.2435" />
         <entry key="app/src/main/res/drawable/ic_bottom_sheet.xml" value="0.2435" />
         <entry key="app/src/main/res/drawable/ic_button_close.xml" value="0.254" />
+        <entry key="app/src/main/res/drawable/ic_button_close_primary.xml" value="0.2435" />
+        <entry key="app/src/main/res/drawable/ic_button_icon_back_thick.xml" value="0.2435" />
         <entry key="app/src/main/res/drawable/ic_company_tes.xml" value="0.145" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.2855" />
         <entry key="app/src/main/res/drawable/ic_notif_svg.xml" value="0.233" />
@@ -80,7 +83,7 @@
         <entry key="app/src/main/res/layout/activity_modal_edit_ekspektasi_gaji_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_modal_edit_interest_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_modal_edit_job_layout.xml" value="0.375" />
-        <entry key="app/src/main/res/layout/activity_modal_edit_lampiran_profile_page.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_modal_edit_lampiran_profile_page.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_modal_report.xml" value="0.24214792299898683" />
         <entry key="app/src/main/res/layout/activity_modal_report2.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.3046875" />
@@ -90,6 +93,7 @@
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/layout/activity_view_job_detail.xml" value="0.22282608695652173" />
         <entry key="app/src/main/res/layout/activity_view_mytestlist.xml" value="0.22282608695652173" />
+        <entry key="app/src/main/res/layout/bahasa_section.xml" value="0.335" />
         <entry key="app/src/main/res/layout/bottomsheetlayout.xml" value="1.0" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.375" />
         <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.45" />
@@ -107,9 +111,11 @@
         <entry key="app/src/main/res/layout/fragment_company_page.xml" value="0.3046875" />
         <entry key="app/src/main/res/layout/fragment_company_vacancies.xml" value="0.3046875" />
         <entry key="app/src/main/res/layout/fragment_company_want_to_know.xml" value="0.4296875" />
+        <entry key="app/src/main/res/layout/fragment_edit_edit_bahasa.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_edit_interest_layout.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_editlampiran_edit_vaksin.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/fragment_editlampiran_upload_vaksin.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_followed_company.xml" value="0.2994791666666667" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.3546666666666667" />
         <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.30416666666666664" />
@@ -118,7 +124,7 @@
         <entry key="app/src/main/res/layout/fragment_manage_cv_edit_experience_page.xml" value="0.3757421543681086" />
         <entry key="app/src/main/res/layout/fragment_manage_lampiran.xml" value="0.23125" />
         <entry key="app/src/main/res/layout/fragment_manage_preference.xml" value="0.35271483539974346" />
-        <entry key="app/src/main/res/layout/fragment_modal_edit_experience_manage_cv.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/fragment_modal_edit_experience_manage_cv.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_myreviewpage.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_near_me__job.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/layout/fragment_recommended_job.xml" value="0.30416666666666664" />
