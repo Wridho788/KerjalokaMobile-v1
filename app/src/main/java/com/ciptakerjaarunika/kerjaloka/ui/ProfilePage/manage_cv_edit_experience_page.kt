@@ -1,32 +1,32 @@
-package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile
+package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
-
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+
 /**
  * A simple [Fragment] subclass.
- * Use the [ManageProfile.newInstance] factory method to
+ * Use the [manage_cv_edit_experience_page.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ManageProfile : Fragment() {
+class manage_cv_edit_experience_page : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -37,15 +37,9 @@ class ManageProfile : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.jsprofile_basic_info, container, false)
-
-        val editBasic = view?.findViewById<TextView>(R.id.editBasicInfo)
-        editBasic?.setOnClickListener {
-          replaceFragment(EditBasicInfo())
-        }
 
         // Inflate the layout for this fragment
-        return view
+        return inflater.inflate(R.layout.fragment_manage_cv_edit_experience_page, container, false)
     }
 
     companion object {
@@ -55,24 +49,18 @@ class ManageProfile : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ManageProfile.
+         * @return A new instance of fragment manage_cv_edit_experience_page.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ManageProfile().apply {
+            manage_cv_edit_experience_page().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
 
-    private fun replaceFragment(fragment: Fragment){
 
-        val fragmentManager = activity?.supportFragmentManager
-        val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container, fragment)
-        fragmentTransaction?.commit()
     }
 }

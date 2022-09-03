@@ -2,10 +2,14 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityProfilePageBinding
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditBasicInfo
 import com.google.android.material.button.MaterialButton
 
 class profile_page : AppCompatActivity() {
@@ -23,7 +27,6 @@ class profile_page : AppCompatActivity() {
         val btn_mngMyReview= findViewById<MaterialButton>(R.id.myReview)
         val btn_mngMyRecord = findViewById<MaterialButton>(R.id.myRecord)
         val btn_mngSetting = findViewById<MaterialButton>(R.id.setting)
-
 
         val adapter = viewpagerAdapter(supportFragmentManager, lifecycle)
         content.adapter = adapter

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Job_Page
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.SearchActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -50,7 +52,13 @@ class HomePage : Fragment(), OnFragmentClickListener {
         var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
 
         btn_search.setOnClickListener {
-            Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
+            // code here to handle intent to search activity
+            // create intent to search activity
+            val intent = Intent(activity, SearchActivity::class.java)
+            // start activity
+            startActivity(intent)
+
+//            Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
         }
         btn_notif.setOnClickListener {
             Toast.makeText(activity, "Go to Notification Activity", Toast.LENGTH_SHORT).show()

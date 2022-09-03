@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ededed"
+    android:layout_height="match_parent"
+    tools:context=".ui.ProfilePage.manage_cv_edit_experience_page">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mainAppbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.Icon"
+                android:backgroundTint="@color/white"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                app:cornerRadius="100sp"
+                app:icon="@drawable/ic_back"
+                app:iconTint="@color/danger_500"/>
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mainToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleTextColor="@color/black"
+                app:title="Edit Pengalaman"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/posisi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="Posisi"
+                android:textColor="@color/dark_100"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/light_500"
+                android:clickable="false"
+                android:elevation="0dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/pilih_posisi"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/light_300"
+                    android:ems="10"
+                    android:hint="Pilih Posisi"
+                    android:inputType="textMultiLine|text"
+                    android:lines="10"
+                    android:maxLines="10"
+                    android:padding="15dp"
+                    android:textColor="@color/trueGray_300"
+                    android:textSize="10sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/perusahaan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="Perusahaan"
+                android:textColor="@color/dark_100"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/light_500"
+                android:clickable="false"
+                android:elevation="0dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/pilih_perusahaan"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/light_300"
+                    android:ems="10"
+                    android:hint="Masukkan Nama Perusahaan"
+                    android:inputType="textMultiLine|text"
+                    android:lines="10"
+                    android:maxLines="10"
+                    android:padding="15dp"
+                    android:textColor="@color/trueGray_300"
+                    android:textSize="10sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tipe_pekerjaan_tipe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="Tipe Pekerjaan"
+                android:textColor="@color/dark_100"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/light_500"
+                android:clickable="false"
+                android:elevation="0dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/pilih_tipe_pekerjaan"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/light_300"
+                    android:ems="10"
+                    android:hint="Masukkan Tipe Pekerjaan"
+                    android:inputType="textMultiLine|text"
+                    android:lines="10"
+                    android:maxLines="10"
+                    android:padding="15dp"
+                    android:textColor="@color/trueGray_300"
+                    android:textSize="10sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/lokasi_perusahaan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="Lokasi Perusahaan"
+                android:textColor="@color/dark_100"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/light_500"
+                android:clickable="false"
+                android:elevation="0dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/pilih_lokasi_perusahaan"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/light_300"
+                    android:ems="10"
+                    android:hint="Pilih Lokasi Perusahaan"
+                    android:inputType="textMultiLine|text"
+                    android:lines="10"
+                    android:maxLines="10"
+                    android:padding="15dp"
+                    android:textColor="@color/trueGray_300"
+                    android:textSize="10sp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tanggal_mulai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Tanggal Mulai"
+                    android:textColor="@color/dark_100"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+
+                <androidx.percentlayout.widget.PercentRelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_widthPercent="48%">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Bulan"
+                            android:textColor="@color/dark_100"></TextView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:backgroundTint="@color/light_500"
+                            android:clickable="false"
+                            android:elevation="0dp"
+                            app:cardCornerRadius="50dp"
+                            app:cardElevation="0dp">
+
+                            <EditText
+                                android:id="@+id/pilih_bulan_mulai"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@color/light_300"
+                                android:ems="10"
+                                android:hint="Bulan"
+                                android:inputType="textMultiLine|text"
+                                android:lines="10"
+                                android:maxLines="10"
+                                android:paddingLeft="8dp"
+                                android:textColor="@color/trueGray_300"
+                                android:textSize="10sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="vertical"
+                        app:layout_widthPercent="48%">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Tahun"
+                            android:textColor="@color/dark_100">
+
+                        </TextView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:backgroundTint="@color/light_500"
+                            android:clickable="false"
+                            android:elevation="0dp"
+                            app:cardCornerRadius="50dp"
+                            app:cardElevation="0dp">
+
+                            <EditText
+                                android:id="@+id/pilih_tahun_mulai"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@color/light_300"
+                                android:ems="10"
+                                android:hint="Tahun"
+                                android:inputType="textMultiLine|text"
+                                android:lines="10"
+                                android:maxLines="10"
+                                android:paddingLeft="8dp"
+                                android:textColor="@color/trueGray_300"
+                                android:textSize="10sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </androidx.percentlayout.widget.PercentRelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tanggal_berakhir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Tanggal Berakhir"
+                    android:textColor="@color/dark_100"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+
+                <androidx.percentlayout.widget.PercentRelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_widthPercent="48%">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Bulan"
+                            android:textColor="@color/dark_100"></TextView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:backgroundTint="@color/light_500"
+                            android:clickable="false"
+                            android:elevation="0dp"
+                            app:cardCornerRadius="50dp"
+                            app:cardElevation="0dp">
+
+                            <EditText
+                                android:id="@+id/pilih_bulan_berakhir"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@color/light_300"
+                                android:ems="10"
+                                android:hint="Bulan"
+                                android:inputType="textMultiLine|text"
+                                android:lines="10"
+                                android:maxLines="10"
+                                android:paddingLeft="8dp"
+                                android:textColor="@color/trueGray_300"
+                                android:textSize="10sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="vertical"
+                        app:layout_widthPercent="48%">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Tahun"
+                            android:textColor="@color/dark_100">
+
+                        </TextView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:backgroundTint="@color/light_500"
+                            android:clickable="false"
+                            android:elevation="0dp"
+                            app:cardCornerRadius="50dp"
+                            app:cardElevation="0dp">
+
+                            <EditText
+                                android:id="@+id/pilih_tahun_berakhir"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:background="@color/light_300"
+                                android:ems="10"
+                                android:hint="Tahun"
+                                android:inputType="textMultiLine|text"
+                                android:lines="10"
+                                android:maxLines="10"
+                                android:paddingLeft="8dp"
+                                android:textColor="@color/trueGray_300"
+                                android:textSize="10sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </androidx.percentlayout.widget.PercentRelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/jlh_gaji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="Gaji"
+                android:textColor="@color/dark_100"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/light_500"
+                android:clickable="false"
+                android:elevation="0dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/masukkan_jlh_gaji"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/light_300"
+                    android:ems="10"
+                    android:hint="Masukkan Gaji"
+                    android:inputType="textMultiLine|text"
+                    android:lines="10"
+                    android:maxLines="10"
+                    android:padding="15dp"
+                    android:textColor="@color/trueGray_300"
+                    android:textSize="10sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/deskripsi_pekerjaan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="Deskripsi Pekerjaan"
+                android:textColor="@color/dark_100"
+                android:textSize="14sp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/light_500"
+                android:clickable="false"
+                android:elevation="0dp"
+                app:cardCornerRadius="50dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/masukkan_deskr_pekerjaan"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/light_300"
+                    android:ems="10"
+                    android:hint="Masukkan deskripsi pekerjaan (optional)"
+                    android:inputType="textMultiLine|text"
+                    android:lines="10"
+                    android:maxLines="10"
+                    android:padding="15dp"
+                    android:textColor="@color/trueGray_300"
+                    android:textSize="10sp" />
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

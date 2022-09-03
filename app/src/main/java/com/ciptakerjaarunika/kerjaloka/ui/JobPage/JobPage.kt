@@ -17,7 +17,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.OnFragmentClickListener
 import com.google.android.material.button.MaterialButton
 
 
-class Job_Page(val onFragmentClickListener: OnFragmentClickListener) : Fragment() {
+class JobPage(val onFragmentClickListener: OnFragmentClickListener) : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>? = null
 
