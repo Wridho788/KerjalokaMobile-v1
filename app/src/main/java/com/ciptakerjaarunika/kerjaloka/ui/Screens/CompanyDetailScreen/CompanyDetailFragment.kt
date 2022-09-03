@@ -10,31 +10,35 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Adapter.RelatedCompanyJobAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Adapter.RelatedOtherCompanyJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 
-class CompanyDetailFragment(private val CompanyNo: Long) : Fragment() {
+class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmentCompanyDetailListener {
 
+//    private var companyDetailList : List<company_detail_list>? = null
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var layoutManager2: RecyclerView.LayoutManager? = null
-
-    private var adapterRelatedJob: RecyclerView.Adapter<RelatedCompanyJobAdapter.ViewHolder>? = null
-    private var adapterOtherCompanyJob: RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>? =
-        null
+//    private var layoutManager: RecyclerView.LayoutManager? = null
+//    private var layoutManager2: RecyclerView.LayoutManager? = null
+//
+//    private var adapterRelatedJob: RecyclerView.Adapter<RelatedCompanyJobAdapter.ViewHolder>? = null
+//    private var adapterOtherCompanyJob: RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>? =
+//        null
 
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
     }
 
     override fun onCreateView(
@@ -62,6 +66,33 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment() {
         btn_review.setOnClickListener {
             Toast.makeText(activity, "review", Toast.LENGTH_SHORT).show()
         }
+
+        val rv_recommendations_job =
+            view.findViewById<RecyclerView>(R.id.recycler_view_company_recommendation_jobs)
+
+        val Context = this
+        CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
+            if (it != null) {
+               Log.d("response company detail", it.toString())
+                company_name.text = it.data.companyName
+                company_phone.text = it.data.phone
+                Glide.with(this)
+                    .load(config().portAddress + "/photo/Profile/" + it.data.logo)
+                    .fitCenter().into(company_logo)
+                company_about.text = it.data.companyDescription
+                company_location.text = it.data.companyAddress
+                company_workers.text = it.data.size
+                company_type.text = it.data.field
+                txt_rating_company.text = it.data.rating.ratingValue.toString()
+
+                rv_recommendations_job.apply {
+                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = RelatedCompanyJobAdapter(it.data.job)
+                }
+
+            }
+        }
+
         return view
     }
 
@@ -71,22 +102,21 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment() {
         val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share) as ImageView
         Log.d("company No ${CompanyNo}", CompanyNo.toString())
 
-        val rv_recommendations_job =
-            view.findViewById<RecyclerView>(R.id.recycler_view_company_recommendation_jobs)
+
         val rv_related_job =
             view.findViewById<RecyclerView>(R.id.recycler_view_company_other_job)
 
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-        rv_recommendations_job.layoutManager = layoutManager
-        rv_related_job.layoutManager = layoutManager2
-
-        adapterRelatedJob = RelatedCompanyJobAdapter()
-        adapterOtherCompanyJob = RelatedOtherCompanyJobAdapter()
-
-        rv_recommendations_job.adapter = adapterOtherCompanyJob
-        rv_related_job.adapter = adapterRelatedJob
+//        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//        layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//
+//        rv_recommendations_job.layoutManager = layoutManager
+//        rv_related_job.layoutManager = layoutManager2
+//
+//        adapterRelatedJob = RelatedCompanyJobAdapter()
+//        adapterOtherCompanyJob = RelatedOtherCompanyJobAdapter()
+//
+//        rv_recommendations_job.adapter = adapterOtherCompanyJob
+//        rv_related_job.adapter = adapterRelatedJob
 
 
         toolbar.setNavigationOnClickListener {
@@ -101,5 +131,16 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
+    override fun onRelatedJobFragment(CompanyNo: Long){
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, CompanyDetailFragment(CompanyNo), "CompanyDetailFragment")
+        ft.addToBackStack("CompanyDetailFragment")
+        ft.commit()
+    }
+
     companion object
+}
+
+interface OnFragmentCompanyDetailListener {
+    fun onRelatedJobFragment(CompanyNo: Long)
 }

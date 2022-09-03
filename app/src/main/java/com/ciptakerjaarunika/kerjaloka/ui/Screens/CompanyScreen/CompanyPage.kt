@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -45,9 +44,12 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
                 Log.d("response followed api", it.toString())
                 val recyclerViewFollowedCompany =
                     view?.findViewById<RecyclerView>(R.id.rv_followed_company)
-                val btn_see_more_job = view?.findViewById<LinearLayout>(R.id.btn_see_more)
+                val btn_see_more_job = view?.findViewById<LinearLayout>(R.id.btn_see_more_followed)
 
                 if (listFollowedJob?.size == 0) {
+                    btn_see_more_job?.visibility = View.GONE
+                }
+                if (listFollowedJob?.size == 1) {
                     btn_see_more_job?.visibility = View.GONE
                 }
                 recyclerViewFollowedCompany?.apply {
@@ -68,7 +70,7 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
                 Log.d("response browse api", it.toString())
                 val recyclerViewCompanyBrowse =
                     view?.findViewById<RecyclerView>(R.id.rv_browse_company)
-                val btn_see_more = view?.findViewById<Button>(R.id.btn_see_more)
+                val btn_see_more = view?.findViewById<LinearLayout>(R.id.btn_see_more_browse)
                 if (listFollowedJob?.size == 0) {
                     btn_see_more?.visibility = View.GONE
                 }

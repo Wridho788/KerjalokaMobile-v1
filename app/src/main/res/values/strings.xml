@@ -208,4 +208,7 @@
     <string name="pekerjaan">Pekerjaan:</string>
     <string name="lihat_selengkapnya">Lihat Selengkapnya</string>
     <string name="company2">Company:</string>
+    <string name="ikuti">Ikuti</string>
+    <string name="lihat_review">Lihat Review</string>
+    <string name="nomor_telepon">Nomor Telepon</string>
 </resources>

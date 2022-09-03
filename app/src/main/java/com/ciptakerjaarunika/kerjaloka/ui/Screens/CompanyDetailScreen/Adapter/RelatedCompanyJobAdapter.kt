@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Adapter
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,53 +8,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Model.relatedCompanyJobModel
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.job
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.OnFragmentClickListener
 import com.google.android.material.card.MaterialCardView
 
-class RelatedCompanyJobAdapter() :
+class RelatedCompanyJobAdapter(
+    private val companyJobList: List<job>,
+    private val onFragmentClickListener: OnFragmentClickListener
+) :
     RecyclerView.Adapter<RelatedCompanyJobAdapter.ViewHolder>() {
-    private var listItem = listOf<relatedCompanyJobModel>(
-        relatedCompanyJobModel(
-            1,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedCompanyJobModel(
-            2,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedCompanyJobModel(
-            3,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedCompanyJobModel(
-            4,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedCompanyJobModel(
-            5,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-    )
+
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
@@ -78,20 +43,22 @@ class RelatedCompanyJobAdapter() :
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = listItem[position]
+        val currentItem = companyJobList[position]
         holder.relatedjobPosition.text = currentItem.jobPosition
-        holder.relatedjobCompany.text = currentItem.jobCompany
-        holder.relatedjobLocation.text = currentItem.jobLocation
-        holder.relatedJobDate.text = currentItem.timeUploadApplicant
-        Glide.with(holder.itemView.context).load(currentItem.logo).into(holder.relatedlogo)
+        holder.relatedjobCompany.text = currentItem.company.companyName
+        holder.relatedjobLocation.text = currentItem.company.location.city + ", " + currentItem.company.location.province
+        holder.relatedJobDate.text = currentItem.createdOn
+        Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).into(holder.relatedlogo)
 
-//        holder.cardrelatedJob.setOnClickListener {
-//            onFragmentClickListener.onFragmentClick()
-//        }
+        holder.cardrelatedJob.setOnClickListener {
+//            fragment transaction to job detail
+            onFragmentClickListener.onFragmentClick(currentItem.jobNo, currentItem.company.companyNo)
+        }
     }
 
     override fun getItemCount(): Int {
-        return listItem.size
+        return companyJobList.size
     }
 }
