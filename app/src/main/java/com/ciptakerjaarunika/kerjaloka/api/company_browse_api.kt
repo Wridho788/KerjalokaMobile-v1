@@ -14,23 +14,50 @@ class CompanyBrowseAPI {
         @GET("/jobseeker/company/search")
         fun getBrowserJob(): Call<company_browse_job_model>
     }
-    fun CompanyGetBrowserJob(context: Context?, onResult: (company_browse_job_model?) -> Unit){
-        val retrofit = ServiceBuilder(context).GET(CompanyBrowserAPIList::class.java)
 
-        retrofit.getBrowserJob().enqueue(
-            object : Callback<company_browse_job_model>{
-                override fun onResponse(
-                    call: Call<company_browse_job_model>,
-                    response: Response<company_browse_job_model>
-                ) {
-                    onResult(response.body())
-                }
+    interface CompanyBrowserUnauthorizedAPIList {
+        @GET("/company/search/u")
+        fun getBrowserJobUnauthorized(): Call<company_browse_job_model>
+    }
 
-                override fun onFailure(call: Call<company_browse_job_model>, t: Throwable) {
-                    Log.d("error", t.toString())
-                    onResult(null)
+    fun CompanyGetBrowserJob(context: Context?, onResult: (company_browse_job_model?) -> Unit) {
+        if (context !== null) {
+            val retrofitUnauthorized =
+                ServiceBuilder(context).GET(CompanyBrowserUnauthorizedAPIList::class.java)
+            retrofitUnauthorized.getBrowserJobUnauthorized().enqueue(
+                object : Callback<company_browse_job_model> {
+                    override fun onResponse(
+                        call: Call<company_browse_job_model>,
+                        response: Response<company_browse_job_model>
+                    ) {
+                        onResult(response.body())
+                    }
+
+                    override fun onFailure(call: Call<company_browse_job_model>, t: Throwable) {
+                        Log.d("error", t.toString())
+                        onResult(null)
+                    }
                 }
-            }
-        )
+            )
+        } else {
+            val retrofit = ServiceBuilder(context).GET(CompanyBrowserAPIList::class.java)
+            retrofit.getBrowserJob().enqueue(
+                object : Callback<company_browse_job_model> {
+                    override fun onResponse(
+                        call: Call<company_browse_job_model>,
+                        response: Response<company_browse_job_model>
+                    ) {
+                        onResult(response.body())
+                    }
+
+                    override fun onFailure(call: Call<company_browse_job_model>, t: Throwable) {
+                        Log.d("error", t.toString())
+                        onResult(null)
+                    }
+                }
+            )
+        }
+
+
     }
 }

@@ -10,12 +10,12 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.job
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.OnFragmentClickListener
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.OnFragmentCompanyDetailListener
 import com.google.android.material.card.MaterialCardView
 
 class RelatedCompanyJobAdapter(
     private val companyJobList: List<job>,
-    private val onFragmentClickListener: OnFragmentClickListener
+    private val onFragmentClickListener: OnFragmentCompanyDetailListener?
 ) :
     RecyclerView.Adapter<RelatedCompanyJobAdapter.ViewHolder>() {
 
@@ -54,7 +54,7 @@ class RelatedCompanyJobAdapter(
 
         holder.cardrelatedJob.setOnClickListener {
 //            fragment transaction to job detail
-            onFragmentClickListener.onFragmentClick(currentItem.jobNo, currentItem.company.companyNo)
+            onFragmentClickListener?.goToJobDetail(currentItem.jobNo, currentItem.company.companyNo)
         }
     }
 

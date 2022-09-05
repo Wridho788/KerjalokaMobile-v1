@@ -64,6 +64,7 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
 
     private fun getBrowserJobData() {
         CompanyBrowseAPI().CompanyGetBrowserJob(context){
+            Log.d("response", it.toString())
             if(it != null){
                 isLoading = false
                 listSearchJob = it.data

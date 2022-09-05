@@ -21,22 +21,24 @@ class CompanyDetailAPI {
         CompanyNo: Long,
         onResult: (company_detail_model?) -> Unit
     ) {
-        val retrofit = ServiceBuilder(context).GET(CompanyDetailAPIList::class.java)
+        if (context != null) {
+            val retrofit = ServiceBuilder(context).GET(CompanyDetailAPIList::class.java)
 
-        retrofit.getCompanyDetail(CompanyNo).enqueue(
-            object : Callback<company_detail_model> {
-                override fun onResponse(
-                    call: Call<company_detail_model>,
-                    response: Response<company_detail_model>
-                ) {
-                    onResult(response.body())
-                }
+            retrofit.getCompanyDetail(CompanyNo).enqueue(
+                object : Callback<company_detail_model> {
+                    override fun onResponse(
+                        call: Call<company_detail_model>,
+                        response: Response<company_detail_model>
+                    ) {
+                        onResult(response.body())
+                    }
 
-                override fun onFailure(call: Call<company_detail_model>, t: Throwable) {
-                    Log.e("error", t.toString())
-                    onResult(null)
+                    override fun onFailure(call: Call<company_detail_model>, t: Throwable) {
+                        Log.e("error", t.toString())
+                        onResult(null)
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }

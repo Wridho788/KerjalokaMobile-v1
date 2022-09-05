@@ -34,6 +34,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
 //    private var adapterOtherCompanyJob: RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>? =
 //        null
 
+
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,7 +88,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
 
                 rv_recommendations_job.apply {
                     layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = RelatedCompanyJobAdapter(it.data.job)
+                    adapter = RelatedCompanyJobAdapter(it.data.job, Context)
                 }
 
             }
@@ -131,10 +132,16 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    override fun onRelatedJobFragment(CompanyNo: Long){
+    override fun onRelatedCompanyFragment(CompanyNo: Long){
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, CompanyDetailFragment(CompanyNo), "CompanyDetailFragment")
         ft.addToBackStack("CompanyDetailFragment")
+        ft.commit()
+    }
+    override fun goToJobDetail(jobNo: Long,companyNo: Long) {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, JobDetailFragment(jobNo, CompanyNo), "jobDetailFragment")
+        ft.addToBackStack("jobDetailFragment")
         ft.commit()
     }
 
@@ -142,5 +149,6 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
 }
 
 interface OnFragmentCompanyDetailListener {
-    fun onRelatedJobFragment(CompanyNo: Long)
+    fun onRelatedCompanyFragment(CompanyNo: Long)
+    fun goToJobDetail(JobNo:Long, CompanyNo: Long)
 }
