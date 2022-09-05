@@ -31,6 +31,7 @@
         <entry key="app/src/main/res/drawable/button_secondary_white_disabled.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
+        <entry key="app/src/main/res/drawable/camera_icon.xml" value="0.1265" />
         <entry key="app/src/main/res/drawable/header_message.xml" value="0.1015" />
         <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/icon_send.xml" value="0.1145" />

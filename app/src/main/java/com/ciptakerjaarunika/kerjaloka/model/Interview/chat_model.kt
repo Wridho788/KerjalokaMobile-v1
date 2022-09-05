@@ -17,6 +17,7 @@ data class Messages(var message : String,
                     var createdBy: Long,
                     var createdOn: String,
                     var hasRemove: Boolean,
+                    var messageType: Int,
                     var reader : List<Reader>){}
 
 data class Reader(var chatMessageNo : Int,

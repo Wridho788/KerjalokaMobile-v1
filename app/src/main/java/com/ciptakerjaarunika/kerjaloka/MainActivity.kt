@@ -1,25 +1,20 @@
 package com.ciptakerjaarunika.kerjaloka
 
-import android.app.PendingIntent.getActivity
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.PackageManagerCompat.LOG_TAG
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
-import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.microsoft.signalr.Action1
-import com.microsoft.signalr.HubConnection
-import com.microsoft.signalr.HubConnectionBuilder
-import com.microsoft.signalr.HubConnectionState
 import java.util.*
 
 
@@ -86,11 +81,39 @@ class MainActivity : AppCompatActivity() {
 //                    hubConnection.start()
 //                }
 //        }
-
+        private var MY_CAMERA_REQUEST_CODE = 100;
         //WebSocketService().startWebsocket();
+        override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<String>,
+            grantResults: IntArray
+        ) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+            Log.d("Request Code", requestCode.toString())
+            if (requestCode == MY_CAMERA_REQUEST_CODE) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    val intent = Intent("android.media.action.IMAGE_CAPTURE")
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(baseContext, "Perlu akses kamera untuk fitur ini", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("requestCode", requestCode.toString())
+
+        if (requestCode == MY_CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val photo = data?.extras!!["data"] as Bitmap?
+//            imageView.setImageBitmap(photo)
+            Log.d("Photo", photo.toString())
+        }
+    }
 
     private fun replaceFragment(fragment: Fragment) {
         binding.bottomNavigationView.visibility = View.VISIBLE
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)

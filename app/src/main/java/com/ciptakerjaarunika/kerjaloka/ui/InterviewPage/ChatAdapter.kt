@@ -8,12 +8,16 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.anychart.scales.DateTime
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
@@ -44,6 +48,7 @@ class ChatAdapter
     }
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val message: TextView?
+        val photoMessage: ImageView?
         val createdOn: TextView?
         val timeContainer: LinearLayout?
         val header: TextView?
@@ -55,6 +60,7 @@ class ChatAdapter
             timeContainer = view.findViewById(R.id.timeContainer)
             header = view.findViewById(R.id.txt_header)
             headerContainer = view.findViewById(R.id.headerMessage)
+            photoMessage = view.findViewById(R.id.photoMessage)
         }
     }
     /*
@@ -153,8 +159,20 @@ class ChatAdapter
                     viewHolder.headerContainer?.visibility = GONE
                 }
             }
+            if(dataSet!![position].messageType == MessageType.NormalMessage.type.toString().toInt()){
+                viewHolder.message?.visibility = VISIBLE
+                viewHolder.message?.text = dataSet!![position].message
+            }
+            if(dataSet!![position].messageType == MessageType.ImageMessage.type.toString().toInt()){
+                viewHolder.photoMessage?.visibility = VISIBLE
+                if(viewHolder.photoMessage != null) {
+                    Glide.with(context)
+                        .load(config().portAddress + "/photo/Chat/" + dataSet!![position].message)
+                        .centerCrop()
+                        .into(viewHolder.photoMessage)
+                }
+            }
 
-            viewHolder.message?.text = dataSet!![position].message
             viewHolder.createdOn?.text = DateUtils().GetTime(dataSet[position].createdOn)
 //        viewHolder.createdOn.text = dataSet[position].createdOn.dateToString("HH:mm")
 

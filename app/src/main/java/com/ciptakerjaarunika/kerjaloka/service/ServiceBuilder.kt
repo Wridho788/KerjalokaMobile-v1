@@ -61,8 +61,6 @@ class ServiceBuilder(context: Context?) {
         )
     }.build()
 
-
-
     fun<T> GET(service: Class<T>): T{
         Log.d("Builder Access Token : ", access_token)
         val retrofit = Retrofit.Builder()
@@ -77,7 +75,7 @@ class ServiceBuilder(context: Context?) {
         val retrofit = Retrofit.Builder()
             .baseUrl(config().portAddress) // change this IP for testing by your actual machine IP
             .addConverterFactory(GsonConverterFactory.create())
-            .client(OkHttpClient.Builder().build())
+            .client(clientPostFile)
             .build()
         return retrofit.create(service)
     }
@@ -85,7 +83,7 @@ class ServiceBuilder(context: Context?) {
         val retrofit = Retrofit.Builder()
             .baseUrl(config().portAddress) // change this IP for testing by your actual machine IP
             .addConverterFactory(GsonConverterFactory.create())
-            .client(clientPostFile)
+            .client(OkHttpClient.Builder().build())
             .build()
         return retrofit.create(service)
     }

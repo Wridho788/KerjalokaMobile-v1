@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".8"
-            tools:listitem="@layout/message_right1" />
+            tools:listitem="@layout/message_right1"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -113,8 +113,9 @@
                 <ImageButton
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:id="@+id/openCamera"
                     android:layout_marginHorizontal="15dp"
-                    android:background="@drawable/ic_emoji"
+                    android:background="@drawable/camera_icon"
                     />
                 <EditText
                     android:layout_width="0dp"

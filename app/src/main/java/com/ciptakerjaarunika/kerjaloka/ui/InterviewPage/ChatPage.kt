@@ -1,21 +1,28 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
-import android.R
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.addCallback
+import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,12 +31,12 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
@@ -48,9 +55,13 @@ class ChatPage(var sectionName: String,
     private lateinit var recyclerView : RecyclerView;
     private lateinit var hubConnection: HubConnection
     private var onBottom : Boolean = false;
+    private lateinit var binding : ActivityMainBinding
+    private var MY_CAMERA_REQUEST_CODE :Int = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.bottomNavigationView.visibility = View.GONE
 
         hubConnection = HubConnectionBuilder.create(config().portAddress+"/ws/chat").build()
         if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
@@ -64,9 +75,23 @@ class ChatPage(var sectionName: String,
         val titlePage = itemView.findViewById<TextView>(R.id.title)
         titlePage.text = sectionName
         val backButton = itemView.findViewById<ImageButton>(R.id.backButton)
-        val navBottom  = view?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        if(navBottom != null){
-            navBottom.visibility = GONE
+        val cameraButton = itemView.findViewById<ImageButton>(R.id.openCamera)
+        cameraButton.setOnClickListener{
+            Log.d("Camera Permission", ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA).toString())
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED){
+                this.activity?.let { it1 ->
+                    ActivityCompat.requestPermissions(
+                        it1,
+                        listOf(Manifest.permission.CAMERA).toTypedArray(), MY_CAMERA_REQUEST_CODE)
+                };
+
+                Toast.makeText(context, "Tidak memiliki izin akses kamera", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                val intent = Intent("android.media.action.IMAGE_CAPTURE")
+                startActivity(intent)
+            }
         }
 
 
@@ -134,6 +159,14 @@ class ChatPage(var sectionName: String,
 
         //recyclerView.scrollToPosition(section.Messages.size-1)
         recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewChat) as RecyclerView
+//        view?.setOnClickListener {
+//            CLoseKeyboard()
+//        }
+//        recyclerView.isClickable = true;
+//        recyclerView.setOnClickListener{
+//            Log.d("CLick", "recyle")
+//            CLoseKeyboard()
+//        }
         hubConnection.on("connected",
             { res ->
                 Log.d("Websocket Response : ", res.toString())
@@ -150,7 +183,6 @@ class ChatPage(var sectionName: String,
                 Log.d("Message", res.toString())
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
                 activity?.runOnUiThread(Runnable {
-                    Log.d("Scroll X",recyclerView. scrollX.toString())
                     recyclerView.adapter?.notifyDataSetChanged()
                     if(onBottom) {
                          recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
@@ -166,6 +198,7 @@ class ChatPage(var sectionName: String,
             layoutManager = LinearLayoutManager
             adapter = ChatAdapter(context, jobNo, Receiver, thisContext)
         }
+
         recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
 
         var message = itemView.findViewById<EditText>(R.id.txt_message);
@@ -195,18 +228,25 @@ class ChatPage(var sectionName: String,
                                 val message = itemView.findViewById<EditText>(com.ciptakerjaarunika.kerjaloka.R.id.txt_message).text.toString()
 
                                 val receiver = listOf<Long>(Receiver);
-                                hubConnection.send("SendMessage", sectionNo, sender, message, receiver, jobNo, MessageType.NormalMessage.type.toString().toInt())
-//                                val ayout = view.findViewById(R.id.myLinearLayout) as LinearLayout
-//                                val imm =
-//                                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-//                                imm!!.hideSoftInputFromWindow(mainLayout.getWindowToken(), 0)
-                                Timer().schedule(object : TimerTask() {
-                                    override fun run() {
-                                        activity?.runOnUiThread(Runnable {
-                                            recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
-                                        })
-                                    }
-                                }, 500)
+                                if(!message.isNullOrEmpty() && !message.isNullOrBlank() && message != "") {
+                                    hubConnection.send(
+                                        "SendMessage",
+                                        sectionNo,
+                                        sender,
+                                        message,
+                                        receiver,
+                                        jobNo,
+                                        MessageType.NormalMessage.type.toString().toInt()
+                                    )
+                                    Timer().schedule(object : TimerTask() {
+                                        override fun run() {
+                                            activity?.runOnUiThread(Runnable {
+                                                recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
+                                            })
+                                        }
+                                    }, 500)
+                                }
+                                CLoseKeyboard()
 
                                 itemView.findViewById<EditText>(R.id.txt_message).text = null
                                 recyclerView?.adapter?.notifyDataSetChanged()
@@ -219,6 +259,10 @@ class ChatPage(var sectionName: String,
                     }
                 })
     }
+    fun CLoseKeyboard(){
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -229,6 +273,16 @@ class ChatPage(var sectionName: String,
 
     override fun isOnBottom(isOnBottom: Boolean) {
         onBottom = isOnBottom
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("requestCode", requestCode.toString())
+
+        if (requestCode == MY_CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val photo = data?.extras!!["data"] as Bitmap?
+//            imageView.setImageBitmap(photo)
+            Log.d("Photo", photo.toString())
+        }
     }
 }
 interface PositionOnBottom{
