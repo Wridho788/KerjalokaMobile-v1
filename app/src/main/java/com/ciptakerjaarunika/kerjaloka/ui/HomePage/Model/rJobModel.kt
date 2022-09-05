@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model
 
+
 data class rjob_model(
     val code: Int,
     val errorCode: Int,
@@ -39,6 +40,7 @@ data class rJobDetailModel(
     val jobField: jobField?,
     val jobRole: jobRole?,
     val createdOn: String,
+    val job: List<job>
     )
 
 data class jobLocation(
@@ -47,7 +49,27 @@ data class jobLocation(
 data class jobField(val fieldName: String)
 data class jobTitle(val titleName: String)
 data class jobRole(val jobRoleName: String)
+
 data class company(
     val logo: String,
     val companyName: String,
+)
+
+data class job(
+    val jobNo: Long,
+    val jobPosition: String,
+    val createdOn: String,
+    val company: companies
+)
+
+data class companies(
+    val companyNo: Long,
+    val companyName: String,
+    val logo: String,
+    val location: locationCompany
+)
+
+data class locationCompany(
+    val city: String,
+    val province: String,
 )

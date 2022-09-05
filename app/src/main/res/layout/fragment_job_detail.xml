@@ -151,8 +151,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/button_primary"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/lamar_kerja"
+                    android:textSize="14sp"
                     android:textAllCaps="false" />
 
             </LinearLayout>

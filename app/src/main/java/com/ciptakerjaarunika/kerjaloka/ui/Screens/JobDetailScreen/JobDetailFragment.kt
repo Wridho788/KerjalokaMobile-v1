@@ -15,15 +15,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedJobAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedOtherJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ApplyJob
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ReportJob
 import com.google.android.material.appbar.MaterialToolbar
@@ -36,10 +33,10 @@ class JobDetailFragment(
     private val JobNo: Long, private val CompanyNo: Long,
 ) : Fragment(),
     OnFragmentClickListener {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var layoutManager2: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>? = null
-    private var adapter2: RecyclerView.Adapter<RelatedOtherJobAdapter.ViewHolder>? = null
+//    private var layoutManager: RecyclerView.LayoutManager? = null
+//    private var layoutManager2: RecyclerView.LayoutManager? = null
+//    private var adapter: RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>? = null
+//    private var adapter2: RecyclerView.Adapter<RelatedOtherJobAdapter.ViewHolder>? = null
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +72,8 @@ class JobDetailFragment(
         val job_role = view.findViewById<TextView>(R.id.jobRole)
         val createdOn = view.findViewById<TextView>(R.id.jobDate)
         val job_description = view.findViewById<TextView>(R.id.jobRequirement)
-
+        val recyclerView =
+            view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
         val Context = this
 //        val fetch = config().portAddress + "/job/" + CompanyNo + "/" + JobNo + "/visitor"
         JobAPI().getJobDetailAsync(context, CompanyNo, JobNo) {
@@ -121,6 +119,12 @@ class JobDetailFragment(
                 } else {
                     ""
                 }
+//
+//                recyclerView.apply {
+//                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//                    adapter = RelatedJobAdapter(it.data.job, Context)
+//                }
+
             }
         }
 
@@ -144,25 +148,15 @@ class JobDetailFragment(
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar) as MaterialToolbar
         val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark) as ImageView
         val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share) as ImageView
-//        val Context = this
-        val recyclerView =
-            view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs) as RecyclerView
         val recyclerView2 =
             view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs) as RecyclerView
 
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView.layoutManager = layoutManager
-            adapter = RelatedJobAdapter()
-            recyclerView.adapter = adapter
-        }
-
-        recyclerView2.apply {
-            layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView2.layoutManager = layoutManager2
-            adapter2 = RelatedOtherJobAdapter()
-            recyclerView2.adapter = adapter2
-        }
+//        recyclerView2.apply {
+//            layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            recyclerView2.layoutManager = layoutManager2
+//            adapter2 = RelatedOtherJobAdapter()
+//            recyclerView2.adapter = adapter2
+//        }
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()

@@ -25,16 +25,6 @@ import com.google.android.material.button.MaterialButton
 
 class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmentCompanyDetailListener {
 
-//    private var companyDetailList : List<company_detail_list>? = null
-
-//    private var layoutManager: RecyclerView.LayoutManager? = null
-//    private var layoutManager2: RecyclerView.LayoutManager? = null
-//
-//    private var adapterRelatedJob: RecyclerView.Adapter<RelatedCompanyJobAdapter.ViewHolder>? = null
-//    private var adapterOtherCompanyJob: RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>? =
-//        null
-
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +36,9 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_company_detail, container, false)
         val btn_follow = view.findViewById<MaterialButton>(R.id.follow_button)
         val btn_review = view.findViewById<MaterialButton>(R.id.review_button)
-
         val company_logo = view.findViewById<ImageView>(R.id.logo_company)
         val txt_follower = view.findViewById<TextView>(R.id.txt_follower)
         val txt_rating_company = view.findViewById<TextView>(R.id.txt_rating_company)
@@ -101,24 +89,8 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar) as MaterialToolbar
         val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share) as ImageView
-        Log.d("company No ${CompanyNo}", CompanyNo.toString())
-
-
         val rv_related_job =
             view.findViewById<RecyclerView>(R.id.recycler_view_company_other_job)
-
-//        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//
-//        rv_recommendations_job.layoutManager = layoutManager
-//        rv_related_job.layoutManager = layoutManager2
-//
-//        adapterRelatedJob = RelatedCompanyJobAdapter()
-//        adapterOtherCompanyJob = RelatedOtherCompanyJobAdapter()
-//
-//        rv_recommendations_job.adapter = adapterOtherCompanyJob
-//        rv_related_job.adapter = adapterRelatedJob
-
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()

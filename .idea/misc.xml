@@ -70,6 +70,7 @@
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_browse_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_followed_company.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/layout_report_job_modal.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_vacancies_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_want_to_know_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_recommendation_job.xml" value="0.1" />

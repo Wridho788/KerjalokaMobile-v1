@@ -31,7 +31,7 @@
                 android:fontFamily="@font/poppins"
                 android:inputType="text"
                 android:keepScreenOn="true"
-                android:paddingHorizontal="15dp"
+                android:paddingRight="10dp"
                 android:queryHint="@string/search_placeholder"
                 android:searchIcon="@drawable/ic_search"
                 android:textColor="@color/dark_100"
