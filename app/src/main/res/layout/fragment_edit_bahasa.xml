@@ -229,7 +229,7 @@
                         android:id="@+id/languageabl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/card_language"
+                        tools:listitem="@layout/card_language_for_modal"
                         />
                 </LinearLayout>
             </LinearLayout>

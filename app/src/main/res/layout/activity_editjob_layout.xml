@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfilePage.activity_editjob_layout">
+    tools:context=".ui.ProfilePage.Preference.activity_editjob_layout">
 
         <LinearLayout
             android:layout_width="match_parent"

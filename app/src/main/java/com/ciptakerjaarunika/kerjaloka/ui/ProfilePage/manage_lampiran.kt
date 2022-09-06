@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.edit_lampiran_profile_page
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.modal_edit_lampiran_profile_page
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +44,7 @@ class manage_lampiran : Fragment() {
 
 
         btn_EdLamp.setOnClickListener{
-            replaceFragment(modal_edit_lampiran_profile_page())
+            replaceFragment(edit_lampiran_profile_page())
         }
 //        btn_edResume.setOnClickListener{
 //

@@ -1,20 +1,19 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
-import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.ManageProfile
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.add_Info
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.js_profile
 import com.google.android.material.button.MaterialButton
 
 
@@ -35,6 +34,8 @@ class profilepage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var data = js_profile()
+        var addInfo = add_Info()
         val view = inflater.inflate(R.layout.activity_profile_page, container, false)
         val profileLl = view.findViewById<LinearLayout>(R.id.profileLl)
         val content = view.findViewById<ViewPager2>(R.id.profileContent)
@@ -46,7 +47,14 @@ class profilepage : Fragment() {
         val btn_mngMyRecord = view.findViewById<MaterialButton>(R.id.myRecord)
         val btn_mngSetting = view.findViewById<MaterialButton>(R.id.setting)
 
+        val jsName = view.findViewById<TextView>(R.id.jsName1)
+        val jsusrname = view.findViewById<TextView>(R.id.username)
+        val js_AboutMe = view.findViewById<TextView>(R.id.txt_aboutme)
+
         val adapter = viewpagerAdapter(parentFragmentManager, lifecycle)
+        jsName.text = data.jobseekerName
+        js_AboutMe.text = addInfo.jobseekerAbout
+
         content.adapter = adapter
 //        content.layoutParams = ViewGroup.LayoutParams.WRAP_CONTENT
         content.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -67,7 +75,7 @@ class profilepage : Fragment() {
 
                 profileLl.post {
                     val wMeasureSpec = View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
-                    val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(view.height, View.MeasureSpec.UNSPECIFIED)
+                    val hMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
                     view.measure(wMeasureSpec, hMeasureSpec)
 
                     if (content.layoutParams.height != view.measuredHeight) {
@@ -86,10 +94,7 @@ class profilepage : Fragment() {
             content.setCurrentItem(0)
         }
         btn_mngCV.setOnClickListener(){
-//            val adapter = viewpagerAdapter(parentFragmentManager, lifecycle)
-//            content.adapter = adapter
             content.setCurrentItem(1)
-//            content.adapter?.notifyDataSetChanged()
         }
         btn_mngPref.setOnClickListener(){
             content.setCurrentItem(2)

@@ -12,7 +12,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.PapikostickResult
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.ManageProfile
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageProfile
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder

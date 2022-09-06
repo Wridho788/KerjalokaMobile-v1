@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
+package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 
-class item_profile_minat_page : Fragment() {
+class activity_editjob_layout : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -17,6 +17,6 @@ class item_profile_minat_page : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_item_profile_minat_page, container, false)
+        return inflater.inflate(R.layout.activity_editjob_layout, container, false)
     }
 }

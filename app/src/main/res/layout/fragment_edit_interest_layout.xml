@@ -4,13 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.ProfilePage.fragment_edit_interest_layout">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+    tools:context=".ui.ProfilePage.Preference.fragment_edit_interest_layout"
+    android:orientation="vertical">
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/chatToolbar"
@@ -53,10 +48,10 @@
                 </com.google.android.material.appbar.MaterialToolbar>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/listMinat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/light_500"
                     tools:listitem="@layout/interest_section" />
-            </LinearLayout>
+
 </LinearLayout>

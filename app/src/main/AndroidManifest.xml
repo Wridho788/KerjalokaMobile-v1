@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.ProfilePage.modal_edit_ekspektasi_gaji_layout"
+            android:name=".ui.ProfilePage.Preference.modal_edit_ekspektasi_gaji_layout"
             android:exported="false" />
 <!--        <activity-->
 <!--            android:name=".ui.ProfilePage.modal_edit_interest_layout"-->
