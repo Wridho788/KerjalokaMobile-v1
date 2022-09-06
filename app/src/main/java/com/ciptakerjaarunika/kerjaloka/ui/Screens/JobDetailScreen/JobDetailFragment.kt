@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -24,19 +25,16 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ApplyJob
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ReportJob
 import com.google.android.material.appbar.MaterialToolbar
-import org.ocpsoft.prettytime.PrettyTime
-import java.text.ParseException
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class JobDetailFragment(
     private val JobNo: Long, private val CompanyNo: Long,
 ) : Fragment(),
     OnFragmentClickListener {
-//    private var layoutManager: RecyclerView.LayoutManager? = null
-//    private var layoutManager2: RecyclerView.LayoutManager? = null
-//    private var adapter: RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>? = null
-//    private var adapter2: RecyclerView.Adapter<RelatedOtherJobAdapter.ViewHolder>? = null
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,12 +46,9 @@ class JobDetailFragment(
     private fun setContentView(root: ConstraintLayout) {
     }
 
-    var inputDate: Date? = null
-    var outputDate: Date? = null
-    var formattedDateString: String? = null
-    var prettyTimeString: String? = null
-
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
+    @SuppressWarnings("deprecation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,6 +67,10 @@ class JobDetailFragment(
         val job_role = view.findViewById<TextView>(R.id.jobRole)
         val createdOn = view.findViewById<TextView>(R.id.jobDate)
         val job_description = view.findViewById<TextView>(R.id.jobRequirement)
+        val job_salary_min = view.findViewById<TextView>(R.id.jobSalaryMin)
+        val job_salary_max = view.findViewById<TextView>(R.id.jobSalaryMax)
+        val location = view.findViewById<TextView>(R.id.location)
+
         val recyclerView =
             view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
         val Context = this
@@ -92,34 +91,76 @@ class JobDetailFragment(
                 } else {
                     job_experience.text = it.data.jobMinExperience.toString() + " Tahun"
                 }
-                val dateString = it.data.createdOn
-                val convertToDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss")
-                val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa")
-                try {
-                    inputDate = convertToDate.parse(dateString.toString())
-                    formattedDateString = inputDate?.let { it1 -> dateFormat.format(it1) }
-                    outputDate = formattedDateString?.let { it1 -> dateFormat.parse(it1) }
-                } catch (e: ParseException) {
-                    e.printStackTrace()
+
+                val localeID = Locale("in", "ID")
+                val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
+                if (it.data.jobSalaryMin == null) {
+                    job_salary_min.text = "Rp. 0 -"
                 }
-                val prettyTime = PrettyTime()
-                prettyTimeString = prettyTime.format(outputDate)
-                createdOn.text = prettyTimeString
-                Log.d("data", it.data.toString())
+                if (it.data.jobSalaryMax == null) {
+                    job_salary_max.text = "Rp. 0"
+                }
+                if (it.data.jobSalaryMin != null) {
+                    var salary_min = formatRupiah.format(it.data.jobSalaryMin.toBigDecimal())
+                    job_salary_min.text = salary_min?.toString() + " - "
+                }
+                if (it.data.jobSalaryMax != null) {
+                    var salary_max = formatRupiah.format(it.data.jobSalaryMax.toBigDecimal())
+                    job_salary_max.text = salary_max?.toString()
+                }
+
+//                location.text =
+//                    it.data.companyjob.city.cityName + "," + it.data.companyjob.province.provinceName
+
+                val SECOND = 1
+                val MINUTE = 60 * SECOND
+                val HOUR = 60 * MINUTE
+                val DAY = 24 * HOUR
+                val WEEK = 7 * DAY
+
+                var time = it.data.createdOn
+                val now = LocalDateTime.now().toString()
+
+                fun GetDateValue(value: String): Date {
+                    val temp = value.split("T")
+                    val time = temp[1].split(":")
+                    val date = "${temp[0]} ${time[0]}:${time[1]}"
+                    var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+                    return dateFormat.parse(date)
+                }
+
+                fun dateDiff(): String {
+                    val date1 = GetDateValue(time).time
+                    val date2 = GetDateValue(now).time
+
+                    val diff = (date2 - date1) / 1000
+                    return when {
+                        diff < MINUTE -> "Baru Saja"
+                        diff < 2 * MINUTE -> "Beberapa Menit Lalu"
+                        diff < 60 * MINUTE -> "${diff / MINUTE} Menit Lalu"
+                        diff < 2 * HOUR -> "Beberapa Jam Lalu"
+                        diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
+                        diff < 2 * DAY -> "Kemarin"
+                        diff < WEEK -> "${diff / DAY} Hari Lalu"
+                        else -> LocalDateTime.parse(time)
+                            .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                    }
+
+                }
+                createdOn.text = dateDiff()
+
                 job_field.text = if (it.data.jobField != null) it.data.jobField.fieldName else ""
                 job_role.text = if (it.data.jobRole != null) it.data.jobRole.jobRoleName else ""
-                val jobDesc = it.data.jobDescription
-                job_description.text = if (jobDesc != null) {
-                    (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        job_description.text =
-                            Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_COMPACT)
-                    } else {
-                        job_description.text = Html.fromHtml(jobDesc)
-                    }).toString()
+
+                var jobDesc = it.data.jobDescription
+                if (jobDesc == null) {
+                    job_description.text = ""
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                    job_description.text = Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_LEGACY);
                 } else {
-                    ""
+                    job_description.text = Html.fromHtml(jobDesc)
                 }
-//
+
 //                recyclerView.apply {
 //                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //                    adapter = RelatedJobAdapter(it.data.job, Context)

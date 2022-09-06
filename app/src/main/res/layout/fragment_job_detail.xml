@@ -23,7 +23,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+
+                >
 
                 <TextView
                     android:id="@+id/toolbarTitle"
@@ -209,6 +211,41 @@
                     android:text="@string/additional_information"
                     android:textColor="@color/dark_100"
                     android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Gaji"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/jobSalaryMin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/dark_100"
+                            android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/jobSalaryMax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textColor="@color/dark_100"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -229,7 +266,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Bachelor’s Degree, Master, Prof Cert"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -253,7 +289,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Bachelor’s Degree, Master, Prof Cert"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -277,7 +312,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Marketing, Business Development"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -301,7 +335,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="Manager"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Lokasi"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
                 </LinearLayout>

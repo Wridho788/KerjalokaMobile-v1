@@ -63,12 +63,8 @@ class RelatedCompanyJobAdapter(
         val HOUR = 60 * MINUTE
         val DAY = 24 * HOUR
         val WEEK = 7 * DAY
-        val TWO_Week = 14 * DAY
-        val THREE_Week = 21 * DAY
 
         var time = currentItem.createdOn
-        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
         val now = LocalDateTime.now().toString()
 
         fun GetDateValue(value: String): Date {
@@ -96,8 +92,6 @@ class RelatedCompanyJobAdapter(
             }
 
         }
-
-        val diffMinutes = dateDiff().toString()
 
         holder.relatedJobDate.text = dateDiff()
         Glide.with(holder.itemView.context)
