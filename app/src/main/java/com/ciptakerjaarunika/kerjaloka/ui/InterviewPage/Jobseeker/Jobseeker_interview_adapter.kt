@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.model.Interview.jobseeker_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
@@ -28,11 +29,11 @@ import java.util.*
 //
 class jobseeker_interview_adapter
     (
+        private val dataList: List<jobseeker_interview_list>,
         private val context: Context?,
         private val cellClickListener: CellClickListener
     ) :
     RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
-
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val userPhoto: ImageView
@@ -58,7 +59,6 @@ class jobseeker_interview_adapter
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.message_section, viewGroup, false)
-
         return ViewHolder(view)
     }
 
@@ -68,34 +68,54 @@ class jobseeker_interview_adapter
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val dataSet = SessionManager(context).chatData
+        viewHolder.sectionName.text = dataList[position].companyName
 
-        if (dataSet != null) {
-            Log.d("dataSet ", dataSet.toString())
-            Glide.with(viewHolder.itemView.context)
-                .load(config().portAddress + "/photo/Profile/" + dataSet.sections[position].logo).fitCenter()
-                .into(viewHolder.logo)
+        val chatData = SessionManager(context).chatData
+        if(chatData != null) {
 
-            viewHolder.sectionName.text = dataSet.sections[position].sectionName
-            viewHolder.notRead.text = dataSet.sections[position].notRead.toString()
-            viewHolder.notRead.visibility = if(dataSet.sections[position].notRead != 0) View.VISIBLE else View.GONE
+            var currentSection = if (chatData.sections != null) chatData.sections!!.find {
+                it.jobNo == dataList[position].jobNo
+            }
+            else null;
 
-            viewHolder.lastMessageOn.text =
-                DateUtils().GetLastMessageOn(dataSet.sections[position].messages?.last()?.createdOn?: "")
+            if (currentSection != null) {
+                Glide.with(viewHolder.itemView.context)
+                    .load(config().portAddress + "/photo/Profile/" + dataList[position].photo)
+                    .fitCenter()
+                    .into(viewHolder.logo)
 
+                viewHolder.notRead.text = currentSection.notRead.toString()
+                viewHolder.notRead.visibility =
+                    if (currentSection.notRead != 0) View.VISIBLE else View.GONE
 
-            viewHolder.lastMessage.text =
-                dataSet.sections[position].messages.last().message
+                viewHolder.lastMessageOn.text =
+                    DateUtils().GetLastMessageOn(
+                        currentSection.messages?.last()?.createdOn ?: ""
+                    )
 
+                viewHolder.lastMessage.text =
+                    currentSection.messages.last().message
 
-            viewHolder.itemView.setOnClickListener {
-                cellClickListener.goToChatPage(
-                    dataSet.sections[position].sectionName,
-                    dataSet.sections[position].sectionNo,
-                    dataSet.sections[position].jobNo,
-                    dataSet.sections[position].receiver[0],
-                    dataSet.sections[position].logo
-                )
+                viewHolder.itemView.setOnClickListener {
+                    cellClickListener.goToChatPage(
+                        dataList[position].companyName,
+                        currentSection.sectionNo,
+                        dataList[position].jobNo,
+                        dataList[position].companyNo,
+                        dataList[position].photo
+                    )
+                }
+            }
+            else{
+                viewHolder.itemView.setOnClickListener {
+                    cellClickListener.goToChatPage(
+                        dataList[position].companyName,
+                       null ,
+                        dataList[position].jobNo,
+                        dataList[position].companyNo,
+                        dataList[position].photo
+                    )
+                }
             }
         }
     }
@@ -113,9 +133,8 @@ class jobseeker_interview_adapter
 ////        val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
 //        return dateFormatter.format(this)
 //    }
-    val count = if(SessionManager(context).chatData == null) 0 else SessionManager(context).chatData?.sections!!.size
+    //val count = if(SessionManager(context).chatData == null) 0 else SessionManager(context).chatData?.sections!!.size
     // Return the size of your dataset (invoked by the layout manager)
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun getItemCount() = count
+    override fun getItemCount() = dataList.size
 
 }

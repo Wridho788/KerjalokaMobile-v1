@@ -107,9 +107,14 @@ class InterviewPage : Fragment(), CellClickListener{
 
             view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Perusahaan"
 
-            recyclerView?.apply {
-                layoutManager = LinearLayoutManager(activity)
-                adapter = jobseeker_interview_adapter(context, Context)
+            InterviewAPI().JobseekerGetInterviewList(context) {
+                if(it!=null) {
+                    Log.d("Response API", it.data.toString())
+                    recyclerView?.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        adapter = jobseeker_interview_adapter(it.data, context, Context)
+                    }
+                }
             }
         }
     }

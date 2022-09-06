@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
@@ -19,10 +20,17 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.addCallback
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +49,7 @@ import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
+import java.io.File
 import java.util.*
 
 
@@ -57,6 +66,7 @@ class ChatPage(var sectionName: String,
     private var onBottom : Boolean = false;
     private lateinit var binding : ActivityMainBinding
     private var MY_CAMERA_REQUEST_CODE :Int = 100
+    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +79,7 @@ class ChatPage(var sectionName: String,
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
 
@@ -76,21 +87,41 @@ class ChatPage(var sectionName: String,
         titlePage.text = sectionName
         val backButton = itemView.findViewById<ImageButton>(R.id.backButton)
         val cameraButton = itemView.findViewById<ImageButton>(R.id.openCamera)
+
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val photo = it.data?.extras!!["data"] as Bitmap?
+                if (photo != null) {
+
+                    InterviewAPI().UploadChatPhoto(context, photo) { res ->
+                        Log.d("Response Upload", res.toString())
+                    }
+                }
+            }
+        }
+
         cameraButton.setOnClickListener{
+            val intent = Intent("android.media.action.IMAGE_CAPTURE")
+
             Log.d("Camera Permission", ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA).toString())
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_DENIED){
+                == PackageManager.PERMISSION_DENIED
+                ||
+                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_DENIED
+            ){
                 this.activity?.let { it1 ->
                     ActivityCompat.requestPermissions(
                         it1,
-                        listOf(Manifest.permission.CAMERA).toTypedArray(), MY_CAMERA_REQUEST_CODE)
+                        listOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray(), MY_CAMERA_REQUEST_CODE)
                 };
 
                 Toast.makeText(context, "Tidak memiliki izin akses kamera", Toast.LENGTH_SHORT).show()
             }
             else{
-                val intent = Intent("android.media.action.IMAGE_CAPTURE")
-                startActivity(intent)
+                activityResultLauncher.launch(intent)
+//                startActivity(intent)
             }
         }
 
