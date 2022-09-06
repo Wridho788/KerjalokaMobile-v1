@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -22,6 +23,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.jobLocation
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ApplyJob
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ReportJob
 import com.google.android.material.appbar.MaterialToolbar
@@ -70,11 +72,11 @@ class JobDetailFragment(
         val job_salary_min = view.findViewById<TextView>(R.id.jobSalaryMin)
         val job_salary_max = view.findViewById<TextView>(R.id.jobSalaryMax)
         val location = view.findViewById<TextView>(R.id.location)
+        val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share)
 
         val recyclerView =
             view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
         val Context = this
-//        val fetch = config().portAddress + "/job/" + CompanyNo + "/" + JobNo + "/visitor"
         JobAPI().getJobDetailAsync(context, CompanyNo, JobNo) {
             if (it != null) {
                 Log.d("response", it.toString())
@@ -82,7 +84,12 @@ class JobDetailFragment(
                     .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
                     .fitCenter().into(company_logo)
                 job_position.text = it.data.jobPosition
-                job_location.text = it.data.jobLocation[0].label
+                if (it.data.jobLocation.size > 1) {
+                    job_location.text = "Banyak Lokasi"
+                } else {
+                    job_location.text = it.data.jobLocation[0].label
+                }
+
                 company_name.text = it.data.company.companyName
                 job_qualications.text =
                     it.data.jobTitle.joinToString { data -> data.titleName + " " }
@@ -155,17 +162,37 @@ class JobDetailFragment(
                 var jobDesc = it.data.jobDescription
                 if (jobDesc == null) {
                     job_description.text = ""
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                    job_description.text = Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_LEGACY);
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    job_description.text = Html.fromHtml(jobDesc, Html.FROM_HTML_MODE_LEGACY)
                 } else {
                     job_description.text = Html.fromHtml(jobDesc)
                 }
+
+                if (it.data.jobLocation != null ) {
+                    val someArray : Array<List<jobLocation>> =  arrayOf(it.data.jobLocation);
+                    location.text = someArray.toString()
+                }
+//                location.text = it.data.jobLocation[0].label
 
 //                recyclerView.apply {
 //                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 //                    adapter = RelatedJobAdapter(it.data.job, Context)
 //                }
 
+                val titleJob = it.data.jobPosition.toString()
+                val link = it.data.link
+                toolbarShare.setOnClickListener {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TITLE, titleJob)
+                        putExtra(Intent.EXTRA_TEXT, link)
+                        type = "text/plain"
+                    }
+
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    startActivity(shareIntent)
+
+                }
             }
         }
 
@@ -186,11 +213,10 @@ class JobDetailFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar) as MaterialToolbar
-        val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark) as ImageView
-        val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share) as ImageView
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
+        val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark)
         val recyclerView2 =
-            view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs) as RecyclerView
+            view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs)
 
 //        recyclerView2.apply {
 //            layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -205,9 +231,7 @@ class JobDetailFragment(
         toolbarBookmark.setOnClickListener {
             Toast.makeText(context, "Bookmark", Toast.LENGTH_SHORT).show()
         }
-        toolbarShare.setOnClickListener {
-            Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show()
-        }
+
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)

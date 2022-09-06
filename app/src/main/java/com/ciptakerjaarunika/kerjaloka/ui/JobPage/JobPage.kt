@@ -198,7 +198,7 @@ class Job_Page(val onFragmentClickListener: OnFragmentClickListener) : Fragment(
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
         val Context = this
-        adapter = RecommendationJobAdapter(list,  onFragmentClickListener )
+        adapter = RecommendationJobAdapter(requireContext(), list,  onFragmentClickListener )
         recyclerView.adapter = adapter
 
 //        val recyclerView2 = view.findViewById<RecyclerView>(R.id.nearmeJob)

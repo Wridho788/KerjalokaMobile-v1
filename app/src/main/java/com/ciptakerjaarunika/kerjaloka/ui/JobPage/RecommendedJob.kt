@@ -131,7 +131,7 @@ class RecommendedJob(val onFragmentClickListener: OnFragmentClickListener) : Fra
         val recyclerView = view.findViewById<RecyclerView>(R.id.reccomList)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = RecommendationJobAdapter(list,onFragmentClickListener )
+        adapter = context?.let { RecommendationJobAdapter(it,list,onFragmentClickListener ) }
         recyclerView.adapter = adapter
     }
 }

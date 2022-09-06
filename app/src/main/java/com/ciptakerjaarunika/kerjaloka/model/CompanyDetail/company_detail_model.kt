@@ -18,7 +18,8 @@ data class company_detail_list(
     val companyDescription: String,
     val location: location,
     val rating: rating,
-    val job: List<job>
+    val job: List<job>,
+    val link: String,
 )
 
 data class location(

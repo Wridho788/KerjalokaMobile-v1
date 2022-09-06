@@ -1,12 +1,15 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -21,6 +24,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RecommendationJobAdapter(
+    private val context: Context,
     private val rJobList: List<rJobModel>?,
     private val onFragmentClick: OnFragmentClickListener,
 ) :
@@ -108,8 +112,17 @@ class RecommendationJobAdapter(
 
 //            holder.bookmarkedJob.setOnClickListener {
 //            }
-//            holder.shareableJob.setOnClickListener {
-//            }
+            holder.shareableJob.setOnClickListener {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, currentItem.jobPosition)
+                    putExtra(Intent.EXTRA_TEXT, currentItem.link)
+                    type = "text/plain"
+
+                }
+                val shareIntent = Intent.createChooser(sendIntent, currentItem.jobPosition)
+                startActivity(context, shareIntent, null)
+            }
             holder.cardRecommendationJob.setOnClickListener {
                 onFragmentClick.onFragmentClick(currentItem.jobNo, currentItem.companyNo)
             }

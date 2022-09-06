@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,7 +24,8 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragm
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 
-class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmentCompanyDetailListener {
+class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
+    OnFragmentCompanyDetailListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -48,6 +50,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
         val company_about = view.findViewById<TextView>(R.id.company_about)
         val company_workers = view.findViewById<TextView>(R.id.company_worker)
         val company_phone = view.findViewById<TextView>(R.id.company_phone)
+        val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share)
 
         btn_follow.setOnClickListener {
             Toast.makeText(activity, "follow", Toast.LENGTH_SHORT).show()
@@ -62,7 +65,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
         val Context = this
         CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
             if (it != null) {
-               Log.d("response company detail", it.toString())
+                Log.d("response company detail", it.toString())
                 company_name.text = it.data.companyName
                 company_phone.text = it.data.phone
                 Glide.with(this)
@@ -75,9 +78,24 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
                 txt_rating_company.text = it.data.rating.ratingValue.toString()
 
                 rv_recommendations_job.apply {
-                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     adapter = RelatedCompanyJobAdapter(it.data.job, Context)
                 }
+                val title = it.data.companyName
+                val link = it.data.link
+                toolbarShare.setOnClickListener {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TITLE, title)
+//                        putExtra(Intent.EXTRA_TEXT, link)
+                        type = "text/plain"
+                    }
+
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+                    startActivity(shareIntent)
+                }
+
 
             }
         }
@@ -87,8 +105,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar) as MaterialToolbar
-        val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share) as ImageView
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         val rv_related_job =
             view.findViewById<RecyclerView>(R.id.recycler_view_company_other_job)
 
@@ -96,21 +113,19 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
             activity?.onBackPressed()
         }
 
-        toolbarShare.setOnClickListener {
-            Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show()
-        }
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
-    override fun onRelatedCompanyFragment(CompanyNo: Long){
+    override fun onRelatedCompanyFragment(CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, CompanyDetailFragment(CompanyNo), "CompanyDetailFragment")
         ft.addToBackStack("CompanyDetailFragment")
         ft.commit()
     }
-    override fun goToJobDetail(jobNo: Long,companyNo: Long) {
+
+    override fun goToJobDetail(jobNo: Long, companyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, JobDetailFragment(jobNo, CompanyNo), "jobDetailFragment")
         ft.addToBackStack("jobDetailFragment")
@@ -122,5 +137,5 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(), OnFragmen
 
 interface OnFragmentCompanyDetailListener {
     fun onRelatedCompanyFragment(CompanyNo: Long)
-    fun goToJobDetail(JobNo:Long, CompanyNo: Long)
+    fun goToJobDetail(JobNo: Long, CompanyNo: Long)
 }

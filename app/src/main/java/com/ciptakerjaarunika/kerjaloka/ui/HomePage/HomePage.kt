@@ -89,7 +89,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)
                     recyclerView.layoutManager = layoutManager
-                    adapter = RecommendationJobAdapter(listJob,Context)
+                    adapter = RecommendationJobAdapter(context,listJob,Context)
                 }
             }
         }
