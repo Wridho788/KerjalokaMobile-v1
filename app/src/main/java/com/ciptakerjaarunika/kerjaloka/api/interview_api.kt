@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Environment
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.model.Interview.conmpany_interview_list_api
 import com.ciptakerjaarunika.kerjaloka.model.Interview.jobseeker_interview_list_api
 import com.ciptakerjaarunika.kerjaloka.model.Interview.returnUploadChatPhotoApi
@@ -53,7 +54,7 @@ class InterviewAPI {
         @GET("jobseeker/getinterview")
         fun getInterviewList(): Call<jobseeker_interview_list_api>
     }
-    fun JobseekerGetInterviewList(context: Context?, onResult: (jobseeker_interview_list_api?) -> Unit){
+    fun JobseekerGetInterviewList(context: Context?, mainActivity: MainActivity, onResult: (jobseeker_interview_list_api?) -> Unit){
         val retrofit = ServiceBuilder(context).GET(JobseekerGetInterviewList::class.java)
 
         retrofit.getInterviewList().enqueue(
@@ -63,7 +64,12 @@ class InterviewAPI {
                     onResult(null)
                 }
                 override fun onResponse( call: Call<jobseeker_interview_list_api>, response: Response<jobseeker_interview_list_api>) {
-                    onResult(response.body())
+                    Log.d("Response Code : ", response.code().toString())
+                    if(response.code() == 401){
+                        mainActivity.showLogin()
+                    }else {
+                        onResult(response.body())
+                    }
                 }
             }
         )
@@ -71,18 +77,16 @@ class InterviewAPI {
 
 
     interface UploadChatPhoto {
-        @Headers("Content-Type: application/json", "Accept: application/json")
         @Multipart
         @POST("users/chat/uploadPhoto")
-        fun UploadChatPhoto(@Part files : MultipartBody.Part): Call<returnUploadChatPhotoApi>
+        fun UploadChatPhoto(@Part photo : MultipartBody.Part): Call<returnUploadChatPhotoApi>
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    fun UploadChatPhoto(context: Context?, photo : Bitmap, onResult: (returnUploadChatPhotoApi?) -> Unit){
+    fun UploadChatPhoto(context: Context?, photo : MultipartBody.Part, onResult: (returnUploadChatPhotoApi?) -> Unit){
         val retrofit = ServiceBuilder(context).POSTFILE(UploadChatPhoto::class.java)
-
-//        val file = Bitmap.CompressFormat.PNG .compress(Bitmap.CompressFormat.PNG, quality, outStream);
+        /*val file = Bitmap.CompressFormat.PNG .compress(Bitmap.CompressFormat.PNG, quality, outStream);
         if (out.flush() != null) {
-            val file_path = /*Environment.getExternalStorageDirectory().absolutePath +*/
+            val file_path = Environment.getExternalStorageDirectory().absolutePath +
                     "/Kerjaloka/sendImage"
             val dir = File(file_path)
             if (!dir.exists()) {
@@ -103,10 +107,11 @@ class InterviewAPI {
             fOut.close()
 
             val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-//        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(),file)
+//        val requestFile = RequestBody.create("image/x".toMediaTypeOrNull(),file)
             val body = MultipartBody.Part.createFormData("photo", file.name, requestFile)
 
-            retrofit.UploadChatPhoto(body).enqueue(
+        */
+            retrofit.UploadChatPhoto(photo).enqueue(
                 object : Callback<returnUploadChatPhotoApi> {
                     override fun onFailure(call: Call<returnUploadChatPhotoApi>, t: Throwable) {
                         Log.d("error", t.toString())
@@ -121,7 +126,6 @@ class InterviewAPI {
                     }
                 }
             )
-        }
     }
 
 }

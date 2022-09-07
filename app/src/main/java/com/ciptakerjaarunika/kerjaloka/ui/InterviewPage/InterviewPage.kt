@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
@@ -64,11 +65,7 @@ class InterviewPage : Fragment(), CellClickListener{
 //        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
 //        toolbar.setTitle("Lamaran Saya")
         var user = SessionManager(context).user
-        if(user == null){
-            val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(id, Login())
-            fragmentTransaction.commit()
-        }
+
 
         var spinner = view?.findViewById<LinearLayout>(R.id.spinnerInterviw)
         recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewSection);
@@ -80,9 +77,9 @@ class InterviewPage : Fragment(), CellClickListener{
                 hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
             }, String::class.java)
 
-        hubConnection.on<chat_data>(
-            "getMessage",
-            Action1<chat_data> { res: chat_data ->
+        hubConnection.on(
+            "getmessage",
+            { res: chat_data ->
                 Log.d("Chat data : ", res.toString())
                 SessionManager(context).chatData = res
 
@@ -96,26 +93,27 @@ class InterviewPage : Fragment(), CellClickListener{
         )
 
 
-        isCompany = user != null && user.roleNo == 2
-
-        if(isCompany) {
+        if(user != null && (user.roleNo == 2 || user.roleNo > 4)) {
             this.getCompanyData()
         }
-        else if(user!= null){
+        else if(user != null && user.roleNo == 4){
             view?.findViewById<TextView>(R.id.titleToolbar)!!.text = "Interview"
             view?.findViewById<ImageButton>(R.id.backButton)!!.visibility = GONE;
 
             view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Perusahaan"
-
-            InterviewAPI().JobseekerGetInterviewList(context) {
+            val mainActivity = activity as MainActivity
+            InterviewAPI().JobseekerGetInterviewList(context, mainActivity) {
                 if(it!=null) {
-                    Log.d("Response API", it.data.toString())
                     recyclerView?.apply {
                         layoutManager = LinearLayoutManager(activity)
                         adapter = jobseeker_interview_adapter(it.data, context, Context)
                     }
                 }
             }
+        }else if(user == null){
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(id, Login())
+            fragmentTransaction.commit()
         }
     }
 

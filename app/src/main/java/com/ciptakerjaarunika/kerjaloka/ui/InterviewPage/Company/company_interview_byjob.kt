@@ -68,7 +68,7 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
         }
 
         hubConnection.on<chat_data>(
-            "getMessage",
+            "getmessage",
             Action1<chat_data> { res: chat_data ->
                 SessionManager(context).chatData = res
                 activity?.runOnUiThread(Runnable {

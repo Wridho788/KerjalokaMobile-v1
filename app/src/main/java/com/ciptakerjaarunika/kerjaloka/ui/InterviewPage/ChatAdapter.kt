@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.anychart.scales.DateTime
 import com.bumptech.glide.Glide
@@ -49,6 +51,8 @@ class ChatAdapter
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val message: TextView?
         val photoMessage: ImageView?
+        val messageContainer: LinearLayout?
+        val photoContainer: CardView?
         val createdOn: TextView?
         val timeContainer: LinearLayout?
         val header: TextView?
@@ -61,6 +65,8 @@ class ChatAdapter
             header = view.findViewById(R.id.txt_header)
             headerContainer = view.findViewById(R.id.headerMessage)
             photoMessage = view.findViewById(R.id.photoMessage)
+            messageContainer = view.findViewById(R.id.message_container)
+            photoContainer = view.findViewById(R.id.photo_message_container)
         }
     }
     /*
@@ -162,19 +168,26 @@ class ChatAdapter
             if(dataSet!![position].messageType == MessageType.NormalMessage.type.toString().toInt()){
                 viewHolder.message?.visibility = VISIBLE
                 viewHolder.message?.text = dataSet!![position].message
+                viewHolder.photoContainer?.visibility = GONE
+                viewHolder.messageContainer?.setPadding(50,20,50,20)
+                viewHolder.messageContainer?.isEnabled = false
             }
             if(dataSet!![position].messageType == MessageType.ImageMessage.type.toString().toInt()){
-                viewHolder.photoMessage?.visibility = VISIBLE
+                viewHolder.messageContainer?.setOnClickListener{
+                    Toast.makeText(context, "Message has clicked", Toast.LENGTH_SHORT).show()
+                }
+                viewHolder.message?.visibility = GONE
+                viewHolder.messageContainer?.setPadding(10,10,10,10)
+                viewHolder.photoContainer?.visibility = VISIBLE
                 if(viewHolder.photoMessage != null) {
                     Glide.with(context)
                         .load(config().portAddress + "/photo/Chat/" + dataSet!![position].message)
-                        .centerCrop()
+                        .override(650,675)
                         .into(viewHolder.photoMessage)
                 }
             }
 
             viewHolder.createdOn?.text = DateUtils().GetTime(dataSet[position].createdOn)
-//        viewHolder.createdOn.text = dataSet[position].createdOn.dateToString("HH:mm")
 
             val sender : Long? = SessionManager(context).user?.userNo
 

@@ -20,6 +20,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
+import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import java.util.*
 
 
@@ -32,23 +33,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var context= baseContext
-
-        activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val photo = it.data?.extras!!["data"] as Bitmap?
-                if (photo != null) {
-                    Log.d("Photo", photo.toString())
-
-                    InterviewAPI().UploadChatPhoto(context, photo) { res ->
-                        Log.d("Response Upload", res.toString())
-                    }
-                }
-            }
-        }
-
-
                 binding = ActivityMainBinding.inflate(layoutInflater)
                 setContentView(binding.root)
                 replaceFragment(HomePage())
@@ -130,6 +114,11 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.commit()
+    }
+    open fun showLogin(){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, Login())
         fragmentTransaction.commit()
     }
 }

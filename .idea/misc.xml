@@ -36,6 +36,9 @@
         <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/icon_send.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/left_message1.xml" value="0.163" />
+        <entry key="app/src/main/res/drawable/left_message2.xml" value="0.147" />
+        <entry key="app/src/main/res/drawable/right_message1.xml" value="0.147" />
+        <entry key="app/src/main/res/drawable/right_message2.xml" value="0.147" />
         <entry key="app/src/main/res/drawable/text_rounded.xml" value="0.148" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
@@ -59,7 +62,7 @@
         <entry key="app/src/main/res/layout/layout_want_to_know_company.xml" value="0.23300555793073963" />
         <entry key="app/src/main/res/layout/message_left1.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/message_left2.xml" value="0.21633176571184268" />
-        <entry key="app/src/main/res/layout/message_right1.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/message_right1.xml" value="0.14556482183472327" />
         <entry key="app/src/main/res/layout/message_right2.xml" value="0.375" />
         <entry key="app/src/main/res/layout/message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.2419837537409149" />

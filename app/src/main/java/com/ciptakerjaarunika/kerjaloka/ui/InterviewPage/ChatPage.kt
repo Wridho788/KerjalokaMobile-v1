@@ -1,11 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -16,27 +15,22 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.addCallback
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
@@ -44,11 +38,16 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
-import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.util.*
 
@@ -67,6 +66,7 @@ class ChatPage(var sectionName: String,
     private lateinit var binding : ActivityMainBinding
     private var MY_CAMERA_REQUEST_CODE :Int = 100
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
+    private lateinit var defaultImagePicker: BasicImagePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +76,87 @@ class ChatPage(var sectionName: String,
         hubConnection = HubConnectionBuilder.create(config().portAddress+"/ws/chat").build()
         if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
             hubConnection.start()
+        }
+
+        initRxImagePicker()
+    }
+
+    private fun initRxImagePicker() {
+        defaultImagePicker = RxImagePicker.create(BasicImagePicker::class.java)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun pickGallery() {
+        context?.let {
+            defaultImagePicker
+                .openGallery(
+                    it,
+                    DefaultSystemGalleryConfig.instance(
+                        // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
+                        // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
+                        // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
+                        mimesType = DefaultGalleryMimes.customTypes("video/*;image/*") // multiType
+                    )
+                )
+                .subscribe { result -> onPickUriSuccess(result.uri) }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun pickCamera() {
+        context?.let {
+            defaultImagePicker.openCamera(it)
+                .subscribe { result -> onPickUriSuccess(result.uri) }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun onPickUriSuccess(uri: Uri) {
+        Log.d("Hasil ", uri.toString())
+        val pathName = context?.let { getPathFromUri(it, uri) }
+        if(pathName != null) {
+            uploadImage(pathName)
+        }
+//        GlideApp.with(this)
+//            .load(uri)
+//            .into(imageView)
+    }
+    private fun getPathFromUri(context: Context, contentUri: Uri): String {
+        var cursor: Cursor? = null
+        return try {
+            val project = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = context.contentResolver.query(contentUri, project, null, null, null)
+            val columnIndex: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            cursor.getString(columnIndex)
+        } finally {
+            cursor?.close()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun uploadImage(imagePath : String){
+        val file = File(imagePath?:"")
+        val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val body: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestFile)
+        InterviewAPI().UploadChatPhoto(context, body) { res ->
+            if (res != null) {
+                if(res.code == 210){
+                    val sender = SessionManager(context).user!!.userNo.toString()
+                    val receiver = listOf<Long>(Receiver);
+                    hubConnection.send(
+                        "SendMessage",
+                        sectionNo,
+                        sender,
+                        res.data,
+                        receiver,
+                        jobNo,
+                        MessageType.ImageMessage.type.toString().toInt()
+                    )
+                } else{
+                    Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+            Log.d("Response Upload", res.toString())
         }
     }
 
@@ -88,21 +169,22 @@ class ChatPage(var sectionName: String,
         val backButton = itemView.findViewById<ImageButton>(R.id.backButton)
         val cameraButton = itemView.findViewById<ImageButton>(R.id.openCamera)
 
-        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val photo = it.data?.extras!!["data"] as Bitmap?
-                if (photo != null) {
-
-                    InterviewAPI().UploadChatPhoto(context, photo) { res ->
-                        Log.d("Response Upload", res.toString())
-                    }
-                }
-            }
-        }
+//        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
+//        ) {
+//            if (it.resultCode == Activity.RESULT_OK) {
+//                val photo = it.data?.extras!!["data"] as Bitmap?
+//                if (photo != null) {
+//
+//                    InterviewAPI().UploadChatPhoto(context, photo) { res ->
+//                        Log.d("Response Upload", res.toString())
+//                    }
+//                }
+//            }
+//        }
 
         cameraButton.setOnClickListener{
-            val intent = Intent("android.media.action.IMAGE_CAPTURE")
+            pickCamera()
+            /*val intent = Intent("android.media.action.IMAGE_CAPTURE")
 
             Log.d("Camera Permission", ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA).toString())
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
@@ -122,7 +204,7 @@ class ChatPage(var sectionName: String,
             else{
                 activityResultLauncher.launch(intent)
 //                startActivity(intent)
-            }
+            }*/
         }
 
 
@@ -206,10 +288,9 @@ class ChatPage(var sectionName: String,
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
             }, String::class.java)
 
-        hubConnection.on<chat_data>(
-            "getMessage",
-            Action1<chat_data> { res: chat_data ->
-
+        hubConnection.on(
+            "getmessage",
+            { res: chat_data ->
                 SessionManager(context).chatData = res
                 Log.d("Message", res.toString())
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
@@ -244,10 +325,32 @@ class ChatPage(var sectionName: String,
 //                })
 //            }
 //        }, 0, 1000)
+                message.setOnClickListener(){
+                    Timer().schedule(object : TimerTask() {
+                        override fun run() {
+                            activity?.runOnUiThread(Runnable {
+                                recyclerView.adapter?.itemCount?.minus(1)
+                                    ?.let { recyclerView.scrollToPosition(it) };
+                            })
+                        }
+                    }, 300)
+                }
+                message.setOnFocusChangeListener { view, hasFocus ->
+                    if (hasFocus) {
+                        Timer().schedule(object : TimerTask() {
+                            override fun run() {
+                                activity?.runOnUiThread(Runnable {
+                                    recyclerView.adapter?.itemCount?.minus(1)
+                                        ?.let { recyclerView.scrollToPosition(it) };
+                                })
+                            }
+                        }, 300)
+                    }
+                }
                 message.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
 
                     @SuppressLint("NotifyDataSetChanged")
                     override fun afterTextChanged(s: Editable) {
