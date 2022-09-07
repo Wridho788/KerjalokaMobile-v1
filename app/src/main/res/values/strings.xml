@@ -211,4 +211,6 @@
     <string name="ikuti">Ikuti</string>
     <string name="lihat_review">Lihat Review</string>
     <string name="nomor_telepon">Nomor Telepon</string>
+    <string name="cari">Cari</string>
+    <string name="todo">TODO</string>
 </resources>

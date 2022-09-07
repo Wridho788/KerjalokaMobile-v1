@@ -15,16 +15,16 @@ class CompanyBrowseAPI {
         fun getBrowserJob(): Call<company_browse_job_model>
     }
 
-    interface CompanyBrowserUnauthorizedAPIList {
+    interface CompanyBrowserAuthorizedAPIList {
         @GET("/company/search/u")
-        fun getBrowserJobUnauthorized(): Call<company_browse_job_model>
+        fun getBrowserJobAuthorized(): Call<company_browse_job_model>
     }
 
     fun CompanyGetBrowserJob(context: Context?, onResult: (company_browse_job_model?) -> Unit) {
         if (context !== null) {
-            val retrofitUnauthorized =
-                ServiceBuilder(context).GET(CompanyBrowserUnauthorizedAPIList::class.java)
-            retrofitUnauthorized.getBrowserJobUnauthorized().enqueue(
+            val retrofitAuthorized =
+                ServiceBuilder(context).GET(CompanyBrowserAuthorizedAPIList::class.java)
+            retrofitAuthorized.getBrowserJobAuthorized().enqueue(
                 object : Callback<company_browse_job_model> {
                     override fun onResponse(
                         call: Call<company_browse_job_model>,

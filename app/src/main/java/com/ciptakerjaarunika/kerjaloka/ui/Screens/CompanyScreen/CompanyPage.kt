@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,9 +19,10 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_browse_list
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_followed_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.CompanyDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyFollowedAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.CompanySearchActivity
 import com.google.android.material.appbar.MaterialToolbar
 
 class CompanyPage : Fragment(), OnFragmentClickListener{
@@ -100,17 +102,15 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var user = SessionManager(context).user
-        Log.d("response token", user.toString())
-
         val layout_followed_company = view.findViewById<LinearLayout>(R.id.layout_followed_company)
+        val layout_search_company = view.findViewById<LinearLayout>(R.id.search_company_btn)
+        val recyclerViewVacanciesCompany =
+            view.findViewById<RecyclerView>(R.id.rv_vacancies_company)
 
         if (user == null) {
             layout_followed_company.visibility = View.GONE
         }
         isFollowed = user != null && user.roleNo == 4
-//        println(user)
-//        println(isFollowed)
-
         if (isFollowed) {
             getFollowedJobData()
         }
@@ -123,8 +123,12 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
             activity?.onBackPressed()
         }
 
-        val recyclerViewVacanciesCompany =
-            view.findViewById<RecyclerView>(R.id.rv_vacancies_company)
+        layout_search_company.setOnClickListener{
+            val intent = Intent(activity, CompanySearchActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
     }
 

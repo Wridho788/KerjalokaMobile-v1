@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Model
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Model
 
 data class relatedCompanyJobModel(
     val jobNo: Int,

@@ -52,13 +52,8 @@ class HomePage : Fragment(), OnFragmentClickListener {
         var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs) as TextView;
 
         btn_search.setOnClickListener {
-            // code here to handle intent to search activity
-            // create intent to search activity
             val intent = Intent(activity, SearchActivity::class.java)
-            // start activity
             startActivity(intent)
-
-//            Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
         }
         btn_notif.setOnClickListener {
             Toast.makeText(activity, "Go to Notification Activity", Toast.LENGTH_SHORT).show()

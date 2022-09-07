@@ -172,7 +172,6 @@ class JobDetailFragment(
                     val someArray : Array<List<jobLocation>> =  arrayOf(it.data.jobLocation);
                     location.text = someArray.toString()
                 }
-//                location.text = it.data.jobLocation[0].label
 
 //                recyclerView.apply {
 //                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -231,7 +230,6 @@ class JobDetailFragment(
         toolbarBookmark.setOnClickListener {
             Toast.makeText(context, "Bookmark", Toast.LENGTH_SHORT).show()
         }
-
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)

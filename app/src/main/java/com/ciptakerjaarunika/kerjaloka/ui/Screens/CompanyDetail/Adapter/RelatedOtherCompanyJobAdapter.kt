@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Adapter
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter
 
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Model.relatedOtherCompanyJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Model.relatedOtherCompanyJobModel
 import com.google.android.material.card.MaterialCardView
 
 class RelatedOtherCompanyJobAdapter() :

@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,7 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Adapter.RelatedCompanyJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedCompanyJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton

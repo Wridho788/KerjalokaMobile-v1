@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.Adapter
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.job
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetailScreen.OnFragmentCompanyDetailListener
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.OnFragmentCompanyDetailListener
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
