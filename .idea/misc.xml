@@ -32,13 +32,18 @@
         <entry key="app/src/main/res/drawable/button_secondary_white_hover.xml" value="0.112" />
         <entry key="app/src/main/res/drawable/button_style.xml" value="0.118" />
         <entry key="app/src/main/res/drawable/camera_icon.xml" value="0.1265" />
+        <entry key="app/src/main/res/drawable/circle_button.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/header_message.xml" value="0.1015" />
         <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/icon_send.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/left_message1.xml" value="0.163" />
         <entry key="app/src/main/res/drawable/left_message2.xml" value="0.147" />
+        <entry key="app/src/main/res/drawable/muted_icon.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/off_video_icon.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/phone_icon.xml" value="0.1875" />
         <entry key="app/src/main/res/drawable/right_message1.xml" value="0.147" />
         <entry key="app/src/main/res/drawable/right_message2.xml" value="0.147" />
+        <entry key="app/src/main/res/drawable/round_background.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/text_rounded.xml" value="0.148" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
@@ -67,8 +72,10 @@
         <entry key="app/src/main/res/layout/message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.2419837537409149" />
         <entry key="app/src/main/res/layout/onboarding_container.xml" value="0.2419837537409149" />
+        <entry key="app/src/main/res/layout/search_component.xml" value="0.2159042325780248" />
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.2419837537409149" />
+        <entry key="app/src/main/res/layout/video_call_fragment.xml" value="0.165" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/menu/topbar_menu_job_detail.xml" value="0.23001282599401454" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_kerjaloka.xml" value="0.177" />

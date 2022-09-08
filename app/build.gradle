@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.ciptakerjaarunika.kerjaloka"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -88,5 +88,8 @@ dependencies {
 
     //Camera
     implementation "com.github.qingmei2:rximagepicker:2.5.6"
+    implementation 'com.android.support:percent:23.3.0'
+
+    implementation ('org.jitsi.react:jitsi-meet-sdk:+') { transitive = true }
 }
 
