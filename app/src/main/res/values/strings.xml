@@ -213,4 +213,7 @@
     <string name="nomor_telepon">Nomor Telepon</string>
     <string name="cari">Cari</string>
     <string name="todo">TODO</string>
+    <string name="industri">Industri</string>
+    <string name="lokasi">Lokasi</string>
+    <string name="filter_sesuai_kebutuhan">Filter Sesuai Kebutuhan</string>
 </resources>

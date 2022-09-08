@@ -6,19 +6,17 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanySearchAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanySearchBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.CompanySearchAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.FilterCompany
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.search_company_model
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -36,14 +34,10 @@ class CompanySearchActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val thisActivity = this
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        val btn_back = findViewById<ImageView>(R.id.btn_back)
-        val recyclerView = findViewById<RecyclerView>(R.id.searchCompanyJob)
-
         (thisActivity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (thisActivity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        btn_back.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             thisActivity.onBackPressed()
         }
 
@@ -92,6 +86,12 @@ class CompanySearchActivity : AppCompatActivity() {
             binding.latestResultGrup.removeAllViews()
         }
 
+        binding.btnFilter.setOnClickListener{
+//            Toast.makeText(this, "Filter", Toast.LENGTH_SHORT).show()
+            val sheet = FilterCompany()
+            thisActivity.let { it1 -> sheet.show(it1.supportFragmentManager, "FilterCompany") }
+        }
+
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             val context: Context = thisActivity
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -101,7 +101,7 @@ class CompanySearchActivity : AppCompatActivity() {
                         if (it != null) {
                             list = it.data
                             Log.d("response sukses", it.data.toString())
-                            recyclerView.apply {
+                            binding.searchCompanyJob.apply {
                                 layoutManager = LinearLayoutManager(context)
                                 adapter = CompanySearchAdapter(list!!, context)
                             }

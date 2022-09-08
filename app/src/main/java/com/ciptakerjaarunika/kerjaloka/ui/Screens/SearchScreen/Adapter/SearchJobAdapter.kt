@@ -77,7 +77,7 @@ class SearchJobAdapter(
         prettyTimeString = prettyTime.format(outputDate)
         holder.createOn.text = prettyTimeString
         holder.cardJob.setOnClickListener{
-            onFragmentClickListener.onFragmentTransactionListenerClick(currentItem.companyNo, currentItem.jobNo.toLong())
+            onFragmentClickListener.onFragmentTransactionListenerClick(currentItem.companyNo, currentItem.jobNo)
         }
 
     }
