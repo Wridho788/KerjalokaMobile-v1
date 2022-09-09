@@ -35,20 +35,20 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                app:layout_widthPercent="48%"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_height="wrap_content">
+                app:layout_widthPercent="48%">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tertulis :"/>
+                    android:text="Tertulis :" />
+
                 <TextView
                     android:id="@+id/nilai_tertulis"
-                    android:textColor="@color/dark_100"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9"/>
+                    android:text="9" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,15 +62,10 @@
                     android:text="Tertulis :"/>
                 <TextView
                     android:id="@+id/nilai_lisan"
-                    android:textColor="@color/dark_100"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="9"/>
             </LinearLayout>
-
-
-
-
         </androidx.percentlayout.widget.PercentRelativeLayout>
 
     </LinearLayout>
@@ -85,8 +80,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@null"
-            android:src="@drawable/ic_button_close_primary"
-           />
+            android:src="@drawable/ic_button_close_primary"/>
 
     </LinearLayout>
 </LinearLayout>

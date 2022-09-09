@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.Screens.JobDetailScreen.JobDetailFragment">
+    tools:context=".ui.LamaranPage.fragment_withdraw_job">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -29,12 +29,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/detail_pekerjaan"
+                    android:text="Detail Lowongan"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                   />
+                    />
 
                 <ImageView
                     android:id="@+id/toolbar_bookmark"
@@ -61,7 +61,6 @@
                     android:focusable="true" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.MaterialToolbar>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -147,14 +146,13 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/apply_job_button"
+                    android:id="@+id/btn_tarik_lamaran_1"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/button_primary"
                     android:fontFamily="@font/poppins"
-                    android:text="@string/lamar_kerja"
+                    android:text="Tarik Lamaran"
                     android:textAllCaps="false" />
-
             </LinearLayout>
 
             <View
@@ -162,6 +160,50 @@
                 android:layout_height="5dp"
                 android:layout_marginVertical="20dp"
                 android:background="@color/light_500" />
+
+            <!--test section-->
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Test Dikerjakan"
+                android:textColor="@color/dark_100"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    android:id="@+id/test_progress_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/dark_100"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressDrawable="@drawable/custom_progress_bar"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginVertical="20dp"
+                android:background="@color/light_500" />
+
+
 
             <!--requirenment section-->
             <LinearLayout
@@ -179,11 +221,42 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/jobRequirement"
+                    android:id="@+id/jobRequirement_one"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Last year student majoring in Computer Science, Mathematics, or Statistic with minimum GPA 3.00/4.00"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/poppins"
+                    android:textColor="@color/dark_100"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/jobRequirement_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Experience as web application developer or data engineer is a plus"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/dark_100"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/jobRequirement_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Proficiency in programming languages such as Python, C++ and Java (familarity on Ruby on Rails is a plus)"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/dark_100"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/jobRequirement_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Last year student majoring in Computer Science, Mathematics, or Statistic with minimum GPA 3.00/4.00"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -219,12 +292,36 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="@string/kualifikasi"
+                        android:text="Gaji"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/jobQualification"
+                        android:id="@+id/salary_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Rp 6.000.000 - Rp 7.500.000"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Kualifikasi Pendidikan"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/educational_qualification_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
@@ -243,36 +340,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="@string/minimal_pengalaman"
+                        android:text="Minimal Pendidikan"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/jobExperience"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Bachelor’s Degree, Master, Prof Cert"
-                        android:textColor="@color/dark_100"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="@string/job_field"
-                        android:textColor="@color/dark_100"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/jobField"
+                        android:id="@+id/minimum_education_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
@@ -291,12 +364,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="@string/role"
+                        android:text="Bidang Pekerjaan"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/jobRole"
+                        android:id="@+id/field_of_work"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
@@ -304,6 +377,56 @@
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Peran"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/role_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Manager"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Lokasi"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/location_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Kota Jakarta Utara, DKI Jakarta"
+                        android:textColor="@color/dark_100"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:id="@+id/report_job"
@@ -336,7 +459,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_marginVertical="20dp"
-                android:background="@color/light_500"/>
+                android:background="@color/light_500" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_tarik_lamaran_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_primary"
+                    android:fontFamily="@font/poppins"
+                    android:text="Tarik Lamaran"
+                    android:textAllCaps="false"
+                    tools:ignore="MissingConstraints"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
 
 

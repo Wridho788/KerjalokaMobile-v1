@@ -30,7 +30,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:paddingLeft="16dp"
-                    app:cornerRadius="sp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/ic_back"
                     app:iconTint="@color/danger_500"/>
 
