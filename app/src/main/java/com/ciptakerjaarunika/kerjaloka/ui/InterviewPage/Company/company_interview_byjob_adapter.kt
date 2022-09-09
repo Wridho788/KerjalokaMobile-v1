@@ -30,6 +30,7 @@ class company_interview_byjob_adapter
      private val cellClickListener: com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.CellClickListener,
      private val jobNo : Long?,
      private val context : Context,
+     private val jobPosition : String?,
 ) :
     RecyclerView.Adapter<company_interview_byjob_adapter.ViewHolder>() {
 
@@ -96,7 +97,8 @@ class company_interview_byjob_adapter
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
                         currentSection.sectionNo ,jobNo, dataSet.interviewer[position].userNo,
-                        dataSet.interviewer[position].photo
+                        dataSet.interviewer[position].photo,
+                        jobPosition
                     )
                 }
             }
@@ -105,7 +107,8 @@ class company_interview_byjob_adapter
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
                         null,  jobNo, dataSet.interviewer[position].userNo,
-                        dataSet.interviewer[position].photo
+                        dataSet.interviewer[position].photo,
+                        jobPosition
                     )
                 }
             }
@@ -115,7 +118,8 @@ class company_interview_byjob_adapter
                 cellClickListener.goToChatPage(
                     dataSet.interviewer[position].jobseekerName,
                     null, jobNo, dataSet.interviewer[position].userNo,
-                    dataSet.interviewer[position].photo
+                    dataSet.interviewer[position].photo,
+                    jobPosition
                 )
             }
         }

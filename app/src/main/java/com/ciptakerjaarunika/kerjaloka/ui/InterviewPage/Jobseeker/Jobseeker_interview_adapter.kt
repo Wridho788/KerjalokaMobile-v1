@@ -68,9 +68,14 @@ class jobseeker_interview_adapter
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.sectionName.text = dataList[position].companyName
+        viewHolder.sectionName.text = "${dataList[position].jobPosition} - ${dataList[position].companyName}"
 
         val chatData = SessionManager(context).chatData
+        Glide.with(viewHolder.itemView.context)
+            .load(config().portAddress + "/photo/Profile/" + dataList[position].photo)
+            .fitCenter()
+            .into(viewHolder.logo)
+
         if(chatData != null) {
 
             var currentSection = if (chatData.sections != null) chatData.sections!!.find {
@@ -79,10 +84,7 @@ class jobseeker_interview_adapter
             else null;
 
             if (currentSection != null) {
-                Glide.with(viewHolder.itemView.context)
-                    .load(config().portAddress + "/photo/Profile/" + dataList[position].photo)
-                    .fitCenter()
-                    .into(viewHolder.logo)
+
 
                 viewHolder.notRead.text = currentSection.notRead.toString()
                 viewHolder.notRead.visibility =
@@ -102,7 +104,8 @@ class jobseeker_interview_adapter
                         currentSection.sectionNo,
                         dataList[position].jobNo,
                         dataList[position].companyNo,
-                        dataList[position].photo
+                        dataList[position].photo,
+                        dataList[position].jobPosition
                     )
                 }
             }
@@ -113,7 +116,8 @@ class jobseeker_interview_adapter
                        null ,
                         dataList[position].jobNo,
                         dataList[position].companyNo,
-                        dataList[position].photo
+                        dataList[position].photo,
+                        dataList[position].jobPosition
                     )
                 }
             }

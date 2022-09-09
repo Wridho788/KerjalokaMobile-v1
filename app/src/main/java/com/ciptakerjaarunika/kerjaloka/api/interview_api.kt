@@ -84,33 +84,6 @@ class InterviewAPI {
     @RequiresApi(Build.VERSION_CODES.O)
     fun UploadChatPhoto(context: Context?, photo : MultipartBody.Part, onResult: (returnUploadChatPhotoApi?) -> Unit){
         val retrofit = ServiceBuilder(context).POSTFILE(UploadChatPhoto::class.java)
-        /*val file = Bitmap.CompressFormat.PNG .compress(Bitmap.CompressFormat.PNG, quality, outStream);
-        if (out.flush() != null) {
-            val file_path = Environment.getExternalStorageDirectory().absolutePath +
-                    "/Kerjaloka/sendImage"
-            val dir = File(file_path)
-            if (!dir.exists()) {
-                Files.createDirectories(Paths.get(file_path))
-                dir.mkdir()
-            }
-
-            val file = File(file_path + "/"+ "photo" + photo.generationId.toString() + ".png")
-            val fw = FileWriter(file.absoluteFile)
-            val bw = BufferedWriter(fw)
-            bw.write(photo.toString())
-            bw.close()
-
-            val fOut = FileOutputStream(file)
-
-            photo.compress(Bitmap.CompressFormat.PNG, 85, fOut)
-            fOut.flush()
-            fOut.close()
-
-            val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-//        val requestFile = RequestBody.create("image/x".toMediaTypeOrNull(),file)
-            val body = MultipartBody.Part.createFormData("photo", file.name, requestFile)
-
-        */
             retrofit.UploadChatPhoto(photo).enqueue(
                 object : Callback<returnUploadChatPhotoApi> {
                     override fun onFailure(call: Call<returnUploadChatPhotoApi>, t: Throwable) {
@@ -126,6 +99,30 @@ class InterviewAPI {
                     }
                 }
             )
+    }
+
+    interface UploadChatFile {
+        @Multipart
+        @POST("users/chat/uploadFile")
+        fun UploadChatFile(@Part photo : MultipartBody.Part): Call<returnUploadChatPhotoApi>
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun UploadChatFile(context: Context?, photo : MultipartBody.Part, onResult: (returnUploadChatPhotoApi?) -> Unit){
+        val retrofit = ServiceBuilder(context).POSTFILE(UploadChatFile::class.java)
+        retrofit.UploadChatFile(photo).enqueue(
+            object : Callback<returnUploadChatPhotoApi> {
+                override fun onFailure(call: Call<returnUploadChatPhotoApi>, t: Throwable) {
+                    Log.d("error", t.toString())
+                    onResult(null)
+                }
+                override fun onResponse(
+                    call: Call<returnUploadChatPhotoApi>,
+                    response: Response<returnUploadChatPhotoApi>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
     }
 
 }

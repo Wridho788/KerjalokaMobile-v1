@@ -125,10 +125,10 @@ class InterviewPage : Fragment(), CellClickListener{
 //        ft.addToBackStack("interview_perjob")
         ft.commit()
     }
-    override fun goToChatPage(sectionName: String, sectionNo:Int?, jobNo : Long?, receiver : Long, logo:String?) {
+    override fun goToChatPage(sectionName: String, sectionNo:Int?, jobNo : Long?, receiver : Long, logo:String?, jobPosition:String?) {
         hubConnection.stop()
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id,  ChatPage(sectionName, sectionNo, jobNo, receiver, logo), "ChatFragment")
+        ft.replace(id,  ChatPage(sectionName, sectionNo, jobNo, receiver, logo, jobPosition), "ChatFragment")
 //        ft.addToBackStack("SectionMessage")
         ft.commit()
     }
@@ -142,6 +142,6 @@ class InterviewPage : Fragment(), CellClickListener{
     }
 }
 interface CellClickListener {
-    fun goToChatPage(sectionName: String, sectionNo: Int?, jobNo : Long?, receiver : Long, logo : String?)
+    fun goToChatPage(sectionName: String, sectionNo: Int?, jobNo : Long?, receiver : Long, logo : String?, jobPosition: String?)
     fun companyInterviewClick(SectionDetail : company_interview_list, jobNo : Long?)
 }

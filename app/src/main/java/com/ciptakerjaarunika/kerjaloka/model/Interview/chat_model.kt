@@ -18,6 +18,7 @@ data class Messages(var message : String,
                     var createdOn: String,
                     var hasRemove: Boolean,
                     var messageType: Int,
+                    var fileName: String,
                     var reader : List<Reader>){}
 
 data class Reader(var chatMessageNo : Int,

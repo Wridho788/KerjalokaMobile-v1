@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/userPhoto"
-        android:src="@drawable/kerjaloka_logo_small"
         android:scaleType="centerInside"
         />
     </androidx.cardview.widget.CardView>
@@ -33,7 +32,6 @@
             android:layout_height="0dp"
             android:layout_weight=".8"
             android:id="@+id/sectionName"
-            android:text="PT. Cipta Kerja Arunika Nusantara"
             android:textSize="15dp"
             android:gravity="center_vertical"
             android:ellipsize="end"
@@ -46,7 +44,6 @@
             android:layout_width="wrap_content"
             android:id="@+id/lastMessage"
             android:layout_height="wrap_content"
-            android:text="Selamat Pagi, terima kasih telah melamar di kerjaloka"
             android:textSize="12dp"
             android:fontFamily="@font/poppins"
             android:ellipsize="end"
@@ -64,7 +61,6 @@
             android:id="@+id/lastMessageOn"
             android:layout_height="18dp"
             android:layout_marginBottom="5dp"
-            android:text="17:47"
             android:textSize="12dp"
             android:fontFamily="@font/poppins"
             android:textAlignment="textEnd"/>

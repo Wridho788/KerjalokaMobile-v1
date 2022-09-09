@@ -1,26 +1,28 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
+import android.R.attr.data
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.os.FileUtils
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
@@ -44,11 +46,13 @@ import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_intervie
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
+import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.net.URI
 import java.util.*
 
 
@@ -56,7 +60,8 @@ class ChatPage(var sectionName: String,
                var sectionNo : Int?,
                val jobNo : Long?,
                val Receiver : Long,
-               val logo: String?)
+               val logo: String?,
+               val jobPosition : String?)
     :  Fragment(), PositionOnBottom {
 
     private var chatModel : chat_model? = null
@@ -111,8 +116,8 @@ class ChatPage(var sectionName: String,
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onPickUriSuccess(uri: Uri) {
-        Log.d("Hasil ", uri.toString())
         val pathName = context?.let { getPathFromUri(it, uri) }
+        Log.d("Path", pathName.toString())
         if(pathName != null) {
             uploadImage(pathName)
         }
@@ -135,6 +140,7 @@ class ChatPage(var sectionName: String,
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun uploadImage(imagePath : String){
+
         val file = File(imagePath?:"")
         val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
         val body: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestFile)
@@ -147,16 +153,16 @@ class ChatPage(var sectionName: String,
                         "SendMessage",
                         sectionNo,
                         sender,
-                        res.data,
+                        res.data.fileName,
                         receiver,
                         jobNo,
-                        MessageType.ImageMessage.type.toString().toInt()
+                        MessageType.ImageMessage.type.toString().toInt(),
+                        res.data.resultFileName
                     )
                 } else{
                     Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
                 }
             }
-            Log.d("Response Upload", res.toString())
         }
     }
 
@@ -166,21 +172,54 @@ class ChatPage(var sectionName: String,
 
         val titlePage = itemView.findViewById<TextView>(R.id.title)
         titlePage.text = sectionName
+
+            val description = itemView.findViewById<TextView>(R.id.description)
+            description.text = jobPosition
+
         val backButton = itemView.findViewById<ImageButton>(R.id.backButton)
         val cameraButton = itemView.findViewById<ImageButton>(R.id.openCamera)
 
-//        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
-//        ) {
-//            if (it.resultCode == Activity.RESULT_OK) {
+        activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+                val data = it.data
+                val fileUri: Uri? = data?.data
+                val pathName = fileUri?.let { it1 -> context?.let { it2 -> PathUtils.getPath(it2, it1) } }
+
+                val file = File(pathName?:"")
+                val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val body: MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                InterviewAPI().UploadChatFile(context, body) { res ->
+                    if (res != null) {
+                        if(res.code == 210){
+                            val sender = SessionManager(context).user!!.userNo.toString()
+                            val receiver = listOf<Long>(Receiver);
+                            hubConnection.send(
+                                "SendMessage",
+                                sectionNo,
+                                sender,
+                                res.data.fileName,
+                                receiver,
+                                jobNo,
+                                MessageType.FileMessage.type.toString().toInt(),
+                                res.data.resultFileName
+                            )
+                        } else{
+                            Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+
 //                val photo = it.data?.extras!!["data"] as Bitmap?
 //                if (photo != null) {
 //
-//                    InterviewAPI().UploadChatPhoto(context, photo) { res ->
-//                        Log.d("Response Upload", res.toString())
-//                    }
+////                    InterviewAPI().UploadChatPhoto(context, photo) { res ->
+////                        Log.d("Response Upload", res.toString())
+////                    }
 //                }
-//            }
-//        }
+            }
+        }
 
         cameraButton.setOnClickListener{
             pickCamera()
@@ -347,6 +386,14 @@ class ChatPage(var sectionName: String,
                         }, 300)
                     }
                 }
+                btn_send.setOnClickListener{
+                    var intent = Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                    val requestIntent = Intent.createChooser(intent, "Choose a file");
+                    activityResultLauncher.launch(requestIntent)
+                }
                 message.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -370,7 +417,8 @@ class ChatPage(var sectionName: String,
                                         message,
                                         receiver,
                                         jobNo,
-                                        MessageType.NormalMessage.type.toString().toInt()
+                                        MessageType.NormalMessage.type.toString().toInt(),
+                                        null
                                     )
                                     Timer().schedule(object : TimerTask() {
                                         override fun run() {
@@ -407,16 +455,6 @@ class ChatPage(var sectionName: String,
 
     override fun isOnBottom(isOnBottom: Boolean) {
         onBottom = isOnBottom
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.d("requestCode", requestCode.toString())
-
-        if (requestCode == MY_CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val photo = data?.extras!!["data"] as Bitmap?
-//            imageView.setImageBitmap(photo)
-            Log.d("Photo", photo.toString())
-        }
     }
 }
 interface PositionOnBottom{

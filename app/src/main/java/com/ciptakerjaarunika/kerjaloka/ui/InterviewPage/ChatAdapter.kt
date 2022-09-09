@@ -57,6 +57,8 @@ class ChatAdapter
         val timeContainer: LinearLayout?
         val header: TextView?
         val headerContainer : LinearLayout?
+        val fileContainer : LinearLayout?
+        val fileName : TextView?
 
         init {
             message = view.findViewById(R.id.message)
@@ -67,6 +69,8 @@ class ChatAdapter
             photoMessage = view.findViewById(R.id.photoMessage)
             messageContainer = view.findViewById(R.id.message_container)
             photoContainer = view.findViewById(R.id.photo_message_container)
+            fileContainer = view.findViewById(R.id.file_container)
+            fileName = view.findViewById(R.id.fileName)
         }
     }
     /*
@@ -165,26 +169,35 @@ class ChatAdapter
                     viewHolder.headerContainer?.visibility = GONE
                 }
             }
+            viewHolder.message?.visibility = GONE
+            viewHolder.fileContainer?.visibility = GONE
+            viewHolder.photoContainer?.visibility = GONE
+
             if(dataSet!![position].messageType == MessageType.NormalMessage.type.toString().toInt()){
                 viewHolder.message?.visibility = VISIBLE
                 viewHolder.message?.text = dataSet!![position].message
-                viewHolder.photoContainer?.visibility = GONE
                 viewHolder.messageContainer?.setPadding(50,20,50,20)
                 viewHolder.messageContainer?.isEnabled = false
             }
-            if(dataSet!![position].messageType == MessageType.ImageMessage.type.toString().toInt()){
+            else if(dataSet!![position].messageType == MessageType.ImageMessage.type.toString().toInt()){
                 viewHolder.messageContainer?.setOnClickListener{
                     Toast.makeText(context, "Message has clicked", Toast.LENGTH_SHORT).show()
                 }
-                viewHolder.message?.visibility = GONE
                 viewHolder.messageContainer?.setPadding(10,10,10,10)
                 viewHolder.photoContainer?.visibility = VISIBLE
                 if(viewHolder.photoMessage != null) {
                     Glide.with(context)
-                        .load(config().portAddress + "/photo/Chat/" + dataSet!![position].message)
+                        .load(config().portAddress + "/photo/Chat/" + dataSet!![position].fileName)
                         .override(650,675)
                         .into(viewHolder.photoMessage)
                 }
+            }
+            else if(dataSet!![position].messageType == MessageType.FileMessage.type.toString().toInt()){
+                viewHolder.messageContainer?.setOnClickListener{
+                    Toast.makeText(context, "Downloading File...", Toast.LENGTH_SHORT).show()
+                }
+                viewHolder.fileContainer?.visibility = VISIBLE
+                viewHolder.fileName?.text = dataSet!![position].message
             }
 
             viewHolder.createdOn?.text = DateUtils().GetTime(dataSet[position].createdOn)

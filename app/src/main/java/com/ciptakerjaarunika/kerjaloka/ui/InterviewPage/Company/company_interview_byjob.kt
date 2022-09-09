@@ -64,7 +64,7 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
         recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewSection) as RecyclerView;
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = company_interview_byjob_adapter(SectionDetail, Context, jobNo, context)
+            adapter = company_interview_byjob_adapter(SectionDetail, Context, jobNo, context,SectionDetail.jobPosition )
         }
 
         hubConnection.on<chat_data>(
@@ -101,10 +101,10 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
         }
     }
 
-    override fun goToChatPage(sectionName: String, sectionNo:Int?, jobNo : Long?, receiver : Long, logo:String?) {
+    override fun goToChatPage(sectionName: String, sectionNo:Int?, jobNo : Long?, receiver : Long, logo:String?, jobPosition: String?) {
         hubConnection.stop();
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id,  ChatPage(sectionName, sectionNo, jobNo, receiver, logo), "ChatFragment")
+        ft.replace(id,  ChatPage(sectionName, sectionNo, jobNo, receiver, logo, jobPosition), "ChatFragment")
         ft.commit()
     }
 
@@ -116,5 +116,5 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
     }
 }
 interface CellClickListener {
-    fun goToChatPage(sectionName: String, sectionNo: Int?, jobNo : Long?, receiver : Long, logo : String?)
+    fun goToChatPage(sectionName: String, sectionNo: Int?, jobNo : Long?, receiver : Long, logo : String?, jobPosition : String?)
 }
