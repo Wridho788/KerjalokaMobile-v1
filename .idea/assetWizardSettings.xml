@@ -363,8 +363,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_bottom_sheet_1" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/Button Icon.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_button_1" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../../Group 301.svg" />
                           </map>
                         </option>
                       </PersistentState>

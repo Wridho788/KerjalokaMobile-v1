@@ -147,18 +147,18 @@ class JobDetailFragment(
 //        val Context = this
         val recyclerView =
             view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs) as RecyclerView
-        val recyclerView2 =
-            view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs) as RecyclerView
+//        val recyclerView2 =
+//            view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs) as RecyclerView
 
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = layoutManager
-        recyclerView2.layoutManager = layoutManager2
-        adapter = RelatedJobAdapter()
-        adapter2 = RelatedOtherJobAdapter()
-
-        recyclerView.adapter = adapter
-        recyclerView2.adapter = adapter2
+//        recyclerView2.layoutManager = layoutManager2
+//        adapter = RelatedJobAdapter()
+//        adapter2 = RelatedOtherJobAdapter()
+//
+//        recyclerView.adapter = adapter
+//        recyclerView2.adapter = adapter2
 
 
         toolbar.setNavigationOnClickListener {
