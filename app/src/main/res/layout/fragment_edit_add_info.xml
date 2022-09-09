@@ -94,7 +94,7 @@
                             android:background="@color/light_300"
                             android:orientation="horizontal">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/js_EditMarital"
                                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                                 android:layout_width="match_parent"
@@ -183,7 +183,7 @@
                             android:background="@color/light_300"
                             android:orientation="horizontal">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/js_EditReligi"
                                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                                 android:layout_width="match_parent"
@@ -271,8 +271,8 @@
                             android:background="@color/light_300"
                             android:orientation="horizontal">
 
-                            <EditText
-                                android:id="@+id/jsEditCitizen"
+                            <TextView
+                                android:id="@+id/jsEditResident"
                                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

@@ -113,7 +113,7 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
 
-                <EditText
+                <TextView
                     android:id="@+id/pilih_gelar"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -150,7 +150,7 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
 
-                <EditText
+                <TextView
                     android:id="@+id/pilih_bidang_studi"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -257,7 +257,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_bulan_mulai_edukasi"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -301,7 +301,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_tahun_mulai_edukasi"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -375,7 +375,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_bulan_berakhir_edukasi"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -419,7 +419,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_tahun_berakhir_edukasi"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"

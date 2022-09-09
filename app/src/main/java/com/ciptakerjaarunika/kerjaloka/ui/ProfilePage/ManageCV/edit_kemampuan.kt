@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScale
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseSkill
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditMarital
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +38,19 @@ class edit_kemampuan : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_kemampuan, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit_add_info, container, false)
+        val skil = view.findViewById<TextView>(R.id.js_EditSkill)
+        val scale = view.findViewById<TextView>(R.id.js_EditSkillLevel)
+
+        skil.setOnClickListener {
+            val sheet = ChooseSkill()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        scale.setOnClickListener {
+            val sheet = ChooseScale()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        return view
     }
 
     companion object {

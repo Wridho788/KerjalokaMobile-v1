@@ -94,7 +94,7 @@
                             android:background="@color/light_300"
                             android:orientation="horizontal">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/js_EditSkill"
                                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                                 android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                             android:background="@color/light_300"
                             android:orientation="horizontal">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/js_EditSkillLevel"
                                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                                 android:layout_width="match_parent"

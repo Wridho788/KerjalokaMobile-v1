@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.BottomSheetApplicantReport
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditGender
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +39,21 @@ class EditBasicInfo : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_basic_info, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit_basic_info, container, false)
+        val gender = view.findViewById<TextView>(R.id.jsGender)
+        val city = view.findViewById<TextView>(R.id.jsCity)
+
+        gender.setOnClickListener {
+            val sheet = EditGender()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
+        city.setOnClickListener {
+            val sheet = EditCity()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
+        return view
     }
 
     companion object {

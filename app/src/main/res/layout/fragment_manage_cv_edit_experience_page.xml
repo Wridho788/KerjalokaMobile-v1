@@ -150,7 +150,7 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
 
-                <EditText
+                <TextView
                     android:id="@+id/pilih_tipe_pekerjaan"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -188,7 +188,7 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
 
-                <EditText
+                <TextView
                     android:id="@+id/pilih_lokasi_perusahaan"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -256,7 +256,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_bulan_mulai"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -300,7 +300,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_tahun_mulai"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -373,7 +373,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_bulan_berakhir"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -417,7 +417,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_tahun_berakhir"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"

@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +36,40 @@ class fragment_manage_cv_edit_education_page : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manage_cv_edit_education_page, container, false)
+        val view = inflater.inflate(R.layout.fragment_manage_cv_edit_education_page, container, false)
+        val Gelar = view.findViewById<TextView>(R.id.pilih_gelar)
+        val cMajor = view.findViewById<TextView>(R.id.pilih_bidang_studi)
+        val cStartM = view.findViewById<TextView>(R.id.pilih_bulan_mulai_edukasi)
+        val cEndM = view.findViewById<TextView>(R.id.pilih_bulan_berakhir_edukasi)
+        val cStartY = view.findViewById<TextView>(R.id.pilih_tahun_mulai_edukasi)
+        val cEndY = view.findViewById<TextView>(R.id.pilih_tahun_berakhir_edukasi)
+
+
+        Gelar.setOnClickListener {
+            val sheet = ChooseTitle()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        cMajor.setOnClickListener {
+            val sheet = ChooseMajor()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        cStartM.setOnClickListener {
+            val sheet = ChooseMonth()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        cEndM.setOnClickListener {
+            val sheet = ChooseMonth()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        cStartY.setOnClickListener {
+            val sheet = ChooseYear()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        cEndY.setOnClickListener {
+            val sheet = ChooseYear()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        return view
     }
 
     companion object {

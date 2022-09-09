@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditMarital
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditReligion
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditResident
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +39,25 @@ class EditAddInfo : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_add_info, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit_add_info, container, false)
+        val marital = view.findViewById<TextView>(R.id.js_EditMarital)
+        val religi = view.findViewById<TextView>(R.id.js_EditReligi)
+        val resident = view.findViewById<TextView>(R.id.jsEditResident)
+
+        marital.setOnClickListener {
+            val sheet = EditMarital()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        religi.setOnClickListener {
+            val sheet = EditReligion()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        resident.setOnClickListener {
+            val sheet = EditResident()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
+        return view
     }
 
     companion object {

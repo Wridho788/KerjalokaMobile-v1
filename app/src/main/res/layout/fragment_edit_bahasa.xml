@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:title="Edit Kemampuan"
+                app:title="Edit Bahasa"
                 app:titleTextColor="@color/black" />
 
         </LinearLayout>
@@ -93,8 +93,8 @@
                             android:background="@color/light_300"
                             android:orientation="horizontal">
 
-                            <EditText
-                                android:id="@+id/js_EditSkill"
+                            <TextView
+                                android:id="@+id/js_EditLang"
                                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
                             app:cardCornerRadius="@dimen/edittext_radius"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/edit_scorelisan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                             app:cardCornerRadius="@dimen/edittext_radius"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/edit_scoretulisan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditGender
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 
@@ -37,7 +38,7 @@ class viewJobDetail() : Fragment() {
 
         val lapor = view.findViewById<TextView>(R.id.lapor) as TextView
         lapor.setOnClickListener {
-            val sheet = BottomSheetApplicantReport()
+            val sheet = EditGender()
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
         }
 

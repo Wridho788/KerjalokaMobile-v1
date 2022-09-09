@@ -88,6 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,16 +103,14 @@
             android:id="@+id/skillGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
 
             <LinearLayout
                 android:id="@+id/skillLv1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -134,8 +133,7 @@
                 android:id="@+id/skillLv2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -158,8 +156,7 @@
                 android:id="@+id/skillLv3"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -182,8 +179,7 @@
                 android:id="@+id/skillLv4"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -206,8 +202,7 @@
                 android:id="@+id/skillLv5"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -306,12 +301,19 @@
                 android:textColor="@color/danger_500"
                 android:textSize="14dp" />
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/card_experience"
-            tools:itemCount="3"/>
+            android:orientation="vertical">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleExp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            tools:itemCount="3"
+            tools:listitem="@layout/card_experience" />
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -350,11 +352,18 @@
                 android:textSize="14dp" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/card_education"
-            tools:itemCount="1"/>
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleEdu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:itemCount="1"
+                tools:listitem="@layout/card_education" />
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -394,10 +403,11 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/card_language_main"
-            tools:itemCount="1"/>
+            tools:itemCount="1"
+            tools:listitem="@layout/card_language_main" />
 
 
     </LinearLayout>
