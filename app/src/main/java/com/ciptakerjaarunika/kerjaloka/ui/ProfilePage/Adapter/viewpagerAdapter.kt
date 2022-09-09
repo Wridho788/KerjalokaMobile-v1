@@ -4,10 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageProfile
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.cvPage
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_lampiran
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_preference
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.*
 
 class viewpagerAdapter (fragmentManager: FragmentManager, lifecycle: Lifecycle,): FragmentStateAdapter(fragmentManager,lifecycle){
     override fun getItemCount(): Int {
@@ -32,7 +29,7 @@ class viewpagerAdapter (fragmentManager: FragmentManager, lifecycle: Lifecycle,)
                 ManageProfile()
             }
             5->{
-                cvPage()
+                fragment_my_record_page()
             }
             6->{
                 cvPage()

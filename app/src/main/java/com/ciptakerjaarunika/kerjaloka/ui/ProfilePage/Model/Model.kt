@@ -190,3 +190,35 @@ data class languageList(
     val languageSpokenScale: Int,
     val languageWrittenScale: Int
 )
+
+data class record(
+    val description: String = "Ini manusia atau bukan? Gayanya kek alien anjink",
+    val ownerName: String = "TESTING",
+    val recordNo: Int = 1,
+    val statusChangeOn: String = "2022-06-25T09:03:53"
+)
+
+data class review(
+    val approvedByUserNo: Int= 0,
+    val approvedOn: String= "2022-07-18T09:27:36",
+    val canAppeal:Boolean=true,
+    val comment:String="null",
+    val conRating:List<conRat>,
+    val proRating:List<proRat>,
+    val raterPhoto:String="202110271410221246.jpg",
+    val rating:Int=4,
+    val ratingAt:String="2022-07-18T09:27:20",
+    val userFullName: String="TESTING",
+    val userNo: Long=20211027141022,
+    val userRatingNo:Int=3,
+    val userRole:Int=2,
+)
+
+data class conRat(
+    val id: Int=0,
+    val con: String="Kemauan Bekerja",
+)
+data class proRat(
+    val id: Int=0,
+    val con: String="Disiplin",
+)

@@ -20,7 +20,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.LanguageAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.*
 import com.ciptakerjaarunika.kerjaloka.ui.search_job.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.search_job.SearchModel
-import com.ciptakerjaarunika.kerjaloka.view_job_detail
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -45,7 +44,7 @@ class cvPage : Fragment() {
         val view = inflater.inflate(R.layout.jsprofile_cv, container, false)
         val btn_edSkil = view?.findViewById<TextView>(R.id.editSkill)
         val btn_seePapiRes = view?.findViewById<MaterialButton>(R.id.seePapiResult)
-//        val btn_edExp = view?.findViewById<TextView>(R.id.addExp)
+        val btn_edExp = view?.findViewById<TextView>(R.id.addExp)
         val btn_edEdu = view?.findViewById<TextView>(R.id.addEdu)
         val btn_edlang = view?.findViewById<TextView>(R.id.addLang)
 
@@ -191,9 +190,9 @@ class cvPage : Fragment() {
         btn_seePapiRes?.setOnClickListener {
             replaceFragment(PapikostickResult())
         }
-//        btn_edExp?.setOnClickListener {
-//            replaceFragment(manage_cv_edit_experience_page())
-//        }
+        btn_edExp?.setOnClickListener {
+            replaceFragment(manage_cv_edit_experience_page())
+        }
         btn_edEdu?.setOnClickListener {
             replaceFragment(fragment_manage_cv_edit_education_page())
         }
