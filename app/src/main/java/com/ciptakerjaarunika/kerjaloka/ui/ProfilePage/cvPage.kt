@@ -319,7 +319,7 @@ class cvPage : Fragment() {
         layoutManager = LinearLayoutManager(activity)
         recyclerViewLang.layoutManager = layoutManager
         adapterLang = LanguageAdapter(LangList)
-        recyclerViewLang.adapter = adapterEdu
+        recyclerViewLang.adapter = adapterLang
     }
 
     companion object {
