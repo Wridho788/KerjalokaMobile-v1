@@ -1,8 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model
 
-
-data class location_model(
-    var locationNo: Long,
-    var city: String,
+data class size_company_model(
+    var sizeNo: Long,
+    var sizeName: String,
     var checked: Boolean
 )

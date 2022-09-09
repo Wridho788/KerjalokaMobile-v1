@@ -70,10 +70,12 @@
         <entry key="app/src/main/res/layout/item_card_job_other_related.xml" value="0.10885416666666667" />
         <entry key="app/src/main/res/layout/item_card_job_related.xml" value="0.45" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_industri.xml" value="0.11875309252845126" />
         <entry key="app/src/main/res/layout/item_location.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_size_company.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_apply_job_modal.xml" value="0.11533888228299644" />
         <entry key="app/src/main/res/layout/layout_browse_company.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/layout_filter_company.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/layout_filter_company.xml" value="0.10151515151515152" />
         <entry key="app/src/main/res/layout/layout_followed_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_report_job_modal.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_vacancies_company.xml" value="0.1" />

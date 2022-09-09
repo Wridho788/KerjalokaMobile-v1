@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_apply_job_modal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layout_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -38,7 +39,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginVertical="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@color/light_500" />
 
         <HorizontalScrollView
@@ -71,8 +72,7 @@
                         android:textStyle="bold"
                         app:chipCornerRadius="50dp"
                         app:chipStrokeColor="@color/danger_500"
-                        app:chipStrokeWidth="1dp"
-                        />
+                        app:chipStrokeWidth="1dp" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/industri"
@@ -106,26 +106,87 @@
                 </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
         </HorizontalScrollView>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="16dp"
             android:background="@color/light_500" />
-
-        <ListView
-            android:id="@+id/list_location_view"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_filter"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:isScrollContainer="true"/>
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/search_background"
+            android:focusable="true"
+            android:fontFamily="@font/poppins_light"
+            android:inputType="text"
+            android:keepScreenOn="true"
+            android:paddingEnd="10dp"
+            android:queryHint="@string/search_placeholder"
+            android:searchIcon="@drawable/ic_search"
+            android:textColor="@color/dark_100"
+            android:textSize="12sp"
+            android:tooltipText="@string/search_placeholder"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_placeholder"
+            tools:ignore="RtlSymmetry"
+            tools:targetApi="o" />
+        <TextView
+            android:id="@+id/btn_hapus_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hapus Semua"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="end"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/danger_500"
+
+            />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header"
+   >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_location_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".100"
+            android:layout_marginBottom="500dp"
+            android:layout_marginVertical="16dp"
+            tools:listitem="@layout/item_location"
+            android:fitsSystemWindows="true"
+
+            />
+
+        <ListView
+            android:id="@+id/list_industri_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stackFromBottom="true" />
+
+        <ListView
+            android:id="@+id/list_size_company_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stackFromBottom="true" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_konfirmasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:paddingBottom="16dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <View
@@ -135,6 +196,7 @@
             android:background="@color/light_500" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_konfirmasi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
