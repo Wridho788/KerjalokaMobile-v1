@@ -4,13 +4,8 @@ data class search_company_response(
     val code: Int,
     val errorCode: Int?,
     val message: String?,
-    val data: List<search_company_model>
+    val data: List<searchRequest>
 )
-
-//data class company_model(
-//    val companyList: List<search_company_model>
-//)
-
 
 data class search_company_model(
     val companyNo: Long,
@@ -23,4 +18,13 @@ data class search_company_model(
 data class location(
     val city: String,
     val province: String,
+)
+
+data class searchRequest(
+    val query: String,
+    val location: List<location_model>,
+    val industri: List<industri_model>,
+    val sizeCompany: List<size_company_model>,
+    val user: String?,
+
 )

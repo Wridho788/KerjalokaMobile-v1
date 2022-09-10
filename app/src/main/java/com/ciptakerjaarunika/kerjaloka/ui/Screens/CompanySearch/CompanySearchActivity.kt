@@ -16,6 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.api.CompanySearchAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanySearchBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.CompanySearchAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.FilterCompany
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.searchRequest
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.search_company_model
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
@@ -96,7 +97,7 @@ class CompanySearchActivity : AppCompatActivity() {
             val context: Context = thisActivity
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
-                    CompanySearchAPI().CompanyGetSearchCompany(context, query) {
+                    CompanySearchAPI().CompanyGetSearchCompany(context) {
                         Log.d("response search company", it.toString())
                         if (it != null) {
                             list = it.data

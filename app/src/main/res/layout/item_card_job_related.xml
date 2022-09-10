@@ -11,7 +11,7 @@
         android:layout_width="285dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="10dp"
+        android:layout_marginEnd="10dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -90,10 +90,7 @@
                     android:textColor="@color/trueGray_50"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
-
             </LinearLayout>
-
-
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
