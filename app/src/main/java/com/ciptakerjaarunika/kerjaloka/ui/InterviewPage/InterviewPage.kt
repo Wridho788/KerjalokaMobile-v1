@@ -95,7 +95,7 @@ class InterviewPage : Fragment(), CellClickListener{
             "incomingCall",
             { roomId ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,  IncomingCallPage(), "IncomingCall")
+                ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
                 ft.commit()
             },
             String::class.java

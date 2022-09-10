@@ -59,13 +59,12 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
                 Log.d("Websocket Response : ", res.toString())
                 val userNo = SessionManager(context).user!!.userNo.toString()
                 hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
-
             }, String::class.java)
         hubConnection.on(
             "incomingCall",
             { roomId ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,  IncomingCallPage(), "IncomingCall")
+                ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
                 ft.commit()
             },
             String::class.java

@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 "incomingCall",
                 { roomId ->
                     val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    ft.replace(R.id.fragment_container, IncomingCallPage(), "IncomingCall")
+                    ft.replace(R.id.fragment_container, IncomingCallPage(roomId), "IncomingCall")
                     ft.commit()
                 },
                 String::class.java
