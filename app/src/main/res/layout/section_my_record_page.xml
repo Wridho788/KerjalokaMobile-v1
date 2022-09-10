@@ -83,6 +83,7 @@
                             android:fontFamily="@font/poppins"
                             android:textSize="12dp"/>
                     </LinearLayout>
+
                     <com.google.android.material.button.MaterialButton
                         android:layout_marginTop="16dp"
                         android:id="@+id/btn_appeal"
