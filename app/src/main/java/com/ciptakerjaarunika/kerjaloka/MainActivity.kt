@@ -14,13 +14,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
+import com.microsoft.signalr.HubConnection
+import com.microsoft.signalr.HubConnectionBuilder
+import com.microsoft.signalr.HubConnectionState
 import java.util.*
 
 
@@ -28,11 +36,44 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
+    private lateinit var hubConnection: HubConnection
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         var context= baseContext
+
+        hubConnection = HubConnectionBuilder.create(config().portAddress+"/ws/chat").build()
+        if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
+            hubConnection.start()
+
+            hubConnection.on("connected",
+                { res ->
+                    val userNo = SessionManager(context).user!!.userNo.toString()
+                    hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
+                }, String::class.java)
+
+            hubConnection.on(
+                "getmessage",
+                { res: chat_data ->
+                    SessionManager(context).chatData = res
+                },
+                chat_data::class.java
+            )
+            hubConnection.on(
+                "incomingCall",
+                { roomId ->
+                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                    ft.replace(R.id.fragment_container, IncomingCallPage(), "IncomingCall")
+                    ft.commit()
+                },
+                String::class.java
+            )
+        }
+
+
+
                 binding = ActivityMainBinding.inflate(layoutInflater)
                 setContentView(binding.root)
                 replaceFragment(HomePage())

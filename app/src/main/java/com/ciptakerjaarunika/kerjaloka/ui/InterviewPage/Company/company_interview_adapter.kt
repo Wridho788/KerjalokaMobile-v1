@@ -2,31 +2,19 @@ package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.anychart.scales.DateTime
-import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
-import com.microsoft.signalr.Action1
-import com.microsoft.signalr.HubConnection
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.util.*
-import kotlin.math.log
 
 //class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
 //

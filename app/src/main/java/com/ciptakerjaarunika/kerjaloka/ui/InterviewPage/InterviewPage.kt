@@ -91,6 +91,15 @@ class InterviewPage : Fragment(), CellClickListener{
             },
             chat_data::class.java
         )
+        hubConnection.on(
+            "incomingCall",
+            { roomId ->
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(id,  IncomingCallPage(), "IncomingCall")
+                ft.commit()
+            },
+            String::class.java
+        )
 
 
         if(user != null && (user.roleNo == 2 || user.roleNo > 4)) {

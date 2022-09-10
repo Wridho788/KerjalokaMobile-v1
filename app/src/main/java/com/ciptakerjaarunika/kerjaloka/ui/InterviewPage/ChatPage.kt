@@ -3,8 +3,10 @@ package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 import android.R.attr.data
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -27,6 +29,7 @@ import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -51,6 +54,11 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.jitsi.meet.sdk.BroadcastEvent
+import org.jitsi.meet.sdk.BroadcastIntentHelper
+import org.jitsi.meet.sdk.JitsiMeetActivity
+import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import timber.log.Timber
 import java.io.File
 import java.net.URI
 import java.util.*
@@ -61,7 +69,8 @@ class ChatPage(var sectionName: String,
                val jobNo : Long?,
                val Receiver : Long,
                val logo: String?,
-               val jobPosition : String?)
+               val jobPosition : String?
+)
     :  Fragment(), PositionOnBottom {
 
     private var chatModel : chat_model? = null
@@ -73,11 +82,17 @@ class ChatPage(var sectionName: String,
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     private lateinit var defaultImagePicker: BasicImagePicker
 
+    private var broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            onBroadcastReceived(intent)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.bottomNavigationView.visibility = View.GONE
-
         hubConnection = HubConnectionBuilder.create(config().portAddress+"/ws/chat").build()
         if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
             hubConnection.start()
@@ -166,9 +181,47 @@ class ChatPage(var sectionName: String,
         }
     }
 
+    private fun registerForBroadcastMessages() {
+        val intentFilter = IntentFilter()
+
+        /* This registers for every possible event sent from JitsiMeetSDK
+           If only some of the events are needed, the for loop can be replaced
+           with individual statements:
+           ex:  intentFilter.addAction(BroadcastEvent.Type.AUDIO_MUTED_CHANGED.action);
+                intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_TERMINATED.action);
+                ... other events
+         */
+        for (type in BroadcastEvent.Type.values()) {
+            intentFilter.addAction(type.action)
+        }
+
+        context?.let { LocalBroadcastManager.getInstance(it).registerReceiver(broadcastReceiver, intentFilter) }
+    }
+
+    // Example for handling different JitsiMeetSDK events
+    private fun onBroadcastReceived(intent: Intent?) {
+        if (intent != null) {
+            val event = BroadcastEvent(intent)
+            when (event.type) {
+                BroadcastEvent.Type.CONFERENCE_JOINED -> Timber.i("Conference Joined with url%s", event.getData().get("url"))
+                BroadcastEvent.Type.PARTICIPANT_JOINED -> Timber.i("Participant joined%s", event.getData().get("name"))
+                else -> Timber.i("Received event: %s", event.type)
+            }
+        }
+    }
+
+    // Example for sending actions to JitsiMeetSDK
+    private fun hangUp() {
+        val hangupBroadcastIntent: Intent = BroadcastIntentHelper.buildHangUpIntent()
+        context?.applicationContext?.let { LocalBroadcastManager.getInstance(it).sendBroadcast(hangupBroadcastIntent) }
+    }
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
+
+
 
         val titlePage = itemView.findViewById<TextView>(R.id.title)
         titlePage.text = sectionName
@@ -178,6 +231,25 @@ class ChatPage(var sectionName: String,
 
         val backButton = itemView.findViewById<ImageButton>(R.id.backButton)
         val cameraButton = itemView.findViewById<ImageButton>(R.id.openCamera)
+
+        val videoCallButton = itemView.findViewById<ImageButton>(R.id.video_call_btn)
+        videoCallButton?.setOnClickListener{
+            val roomId = SessionManager(context).user?.userNo.toString()+ Receiver.toString()
+            val options = JitsiMeetConferenceOptions.Builder()
+                .setRoom(roomId)
+                // Settings for audio and video
+                //.setAudioMuted(true)
+                //.setVideoMuted(true)
+                .build()
+            // Launch the new activity with the given options. The launch() method takes care
+            // of creating the required Intent and passing the options.
+            JitsiMeetActivity.launch(context, options)
+            hubConnection.send(
+                "SendCall",
+                listOf<Long>(Receiver),
+                roomId
+            )
+        }
 
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -325,7 +397,18 @@ class ChatPage(var sectionName: String,
                 val userNo = SessionManager(context).user!!.userNo.toString()
                 hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
+
             }, String::class.java)
+
+        hubConnection.on(
+            "incomingCall",
+            { roomId ->
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(id,  IncomingCallPage(), "IncomingCall")
+                ft.commit()
+            },
+            String::class.java
+        )
 
         hubConnection.on(
             "getmessage",

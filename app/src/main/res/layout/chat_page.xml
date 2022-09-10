@@ -85,15 +85,17 @@
                         />
                 </androidx.percentlayout.widget.PercentRelativeLayout>
             </LinearLayout>
+<!--            <ImageButton-->
+<!--                android:layout_width="22dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:id="@+id/voice_call_btn"-->
+<!--                android:background="@drawable/phone_icon"-->
+<!--                android:layout_height="22dp"/>-->
             <ImageButton
                 android:layout_width="22dp"
-                android:layout_marginRight="20dp"
                 android:layout_gravity="center"
-                android:background="@drawable/phone_icon"
-                android:layout_height="22dp"/>
-            <ImageButton
-                android:layout_width="22dp"
-                android:layout_gravity="center"
+                android:id="@+id/video_call_btn"
                 android:background="@drawable/video_call_icon"
                 android:layout_marginRight="10dp"
                 android:layout_height="22dp"/>

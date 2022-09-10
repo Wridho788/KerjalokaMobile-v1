@@ -23,6 +23,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker.jobseeker_interview_adapter
 import com.microsoft.signalr.Action1
@@ -58,7 +59,17 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
                 Log.d("Websocket Response : ", res.toString())
                 val userNo = SessionManager(context).user!!.userNo.toString()
                 hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
+
             }, String::class.java)
+        hubConnection.on(
+            "incomingCall",
+            { roomId ->
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(id,  IncomingCallPage(), "IncomingCall")
+                ft.commit()
+            },
+            String::class.java
+        )
 
         var spinner = itemView.findViewById<LinearLayout>(R.id.spinnerInterviewByJob)
         recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewSection) as RecyclerView;

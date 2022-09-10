@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.2598958333333333" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_attach_file.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/approve_call.xml" value="0.1475" />
         <entry key="app/src/main/res/drawable/back_primary_icon.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/back_white_icon.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/btn_circle.xml" value="0.1395" />
@@ -43,6 +44,8 @@
         <entry key="app/src/main/res/drawable/muted_icon.xml" value="0.1875" />
         <entry key="app/src/main/res/drawable/off_video_icon.xml" value="0.1875" />
         <entry key="app/src/main/res/drawable/phone_icon.xml" value="0.1875" />
+        <entry key="app/src/main/res/drawable/phone_white_icon.xml" value="0.1475" />
+        <entry key="app/src/main/res/drawable/reject_call.xml" value="0.1475" />
         <entry key="app/src/main/res/drawable/right_message1.xml" value="0.147" />
         <entry key="app/src/main/res/drawable/right_message2.xml" value="0.147" />
         <entry key="app/src/main/res/drawable/round_background.xml" value="0.1415" />
@@ -65,6 +68,7 @@
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/header_message.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/incoming_call_fragment.xml" value="0.2159042325780248" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/layout_want_to_know_company.xml" value="0.23300555793073963" />
         <entry key="app/src/main/res/layout/message_left1.xml" value="0.21633176571184268" />

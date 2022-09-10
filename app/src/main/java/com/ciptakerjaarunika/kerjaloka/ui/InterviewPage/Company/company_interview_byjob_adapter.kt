@@ -14,9 +14,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
-import com.microsoft.signalr.HubConnection
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
