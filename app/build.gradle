@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.ciptakerjaarunika.kerjaloka"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -38,7 +38,6 @@ android {
 }
 
 dependencies {
-
     implementation 'me.relex:circleindicator:2.1.6'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
@@ -81,6 +80,19 @@ dependencies {
     implementation "com.google.android.material:material:1.4.0"
 
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
+    implementation 'org.slf4j:slf4j-jdk14:1.7.25'
 
     implementation 'com.microsoft.signalr:signalr:3.0.0-preview4-19216-03'
+    implementation platform('com.google.firebase:firebase-bom:30.3.2')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
+
+
+
+    //Camera
+    implementation "com.github.qingmei2:rximagepicker:2.5.6"
+    implementation 'com.android.support:percent:23.3.0'
+
+    implementation ('org.jitsi.react:jitsi-meet-sdk:+') { transitive = true }
 }
+

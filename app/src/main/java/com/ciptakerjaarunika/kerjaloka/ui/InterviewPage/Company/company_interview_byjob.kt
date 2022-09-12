@@ -1,111 +1,130 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company
 
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Jobseeker.jobseeker_interview_adapter
+import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.util.*
+import com.microsoft.signalr.HubConnectionBuilder
+import com.microsoft.signalr.HubConnectionState
 
-//class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
-//
-//
-class company_interview_byjob
+class company_interview_byjob(val SectionDetail : company_interview_list, val jobNo : Long?) : Fragment(), CellClickListener{
+    // TODO: Rename and change types of parameters
+    private var isCompany : Boolean = true
+    private var isLoading : Boolean = true
+    private lateinit var recyclerView : RecyclerView;
+    private var Context = this;
+    private lateinit var hubConnection: HubConnection
 
-    (private val dataSet: company_interview_list,
-     private val cellClickListener: CellClickListener,
-     private val hubConnection: HubConnection,
-     private val jobNo : Long?,
-     private val chatData: chat_data?,
-) :
-    RecyclerView.Adapter<company_interview_byjob.ViewHolder>() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    private lateinit var mListner : onItemClickListner
-    interface onItemClickListner{
-        fun onItemClick(position : Int)
+        hubConnection = HubConnectionBuilder.create(config().portAddress+"/ws/chat").build()
+        if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
+            hubConnection.start()
+        }
+
     }
 
-    fun setOnItemClickListner(listner : onItemClickListner){
-        mListner = listner
-    }
+    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(itemView, savedInstanceState)
+//        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
+//        toolbar.setTitle("Lamaran Saya")
+
+        hubConnection.on("connected",
+            { res ->
+                Log.d("Websocket Response : ", res.toString())
+                val userNo = SessionManager(context).user!!.userNo.toString()
+                hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
+            }, String::class.java)
+        hubConnection.on(
+            "incomingCall",
+            { roomId ->
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
+                ft.commit()
+            },
+            String::class.java
+        )
+
+        var spinner = itemView.findViewById<LinearLayout>(R.id.spinnerInterviewByJob)
+        recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewSection) as RecyclerView;
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = company_interview_byjob_adapter(SectionDetail, Context, jobNo, context,SectionDetail.jobPosition )
+        }
+
+        hubConnection.on<chat_data>(
+            "getmessage",
+            Action1<chat_data> { res: chat_data ->
+                SessionManager(context).chatData = res
+                activity?.runOnUiThread(Runnable {
+                    spinner.visibility = GONE;
+                    recyclerView?.visibility = VISIBLE;
+
+                    recyclerView.adapter?.notifyDataSetChanged()
+                })
+            },
+            chat_data::class.java
+        )
 
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val userPhoto: ImageView
-        val sectionName: TextView
-        val lastMessage: TextView
-        val lastMessageOn : TextView
-        val notRead : TextView
+        view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Pelamar"
+        view?.findViewById<TextView>(R.id.titleToolbar)!!.text = SectionDetail.jobPosition;
+        var backButton = view?.findViewById<ImageButton>(R.id.backButton) as ImageButton;
+        backButton.visibility = VISIBLE;
 
-        init {
-            // Define click listener for the ViewHolder's View.
-            userPhoto = view.findViewById(R.id.userPhoto)
-            sectionName = view.findViewById(R.id.sectionName)
-            lastMessage = view.findViewById(R.id.lastMessage)
-            lastMessageOn = view.findViewById(R.id.lastMessageOn)
-            notRead = view.findViewById(R.id.not_read)
+        backButton.setOnClickListener{
+            hubConnection.stop()
+            val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ft.replace(id,  InterviewPage(), "InterviewPage")
+            ft.commit()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            hubConnection.stop()
+            val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ft.replace(id,  InterviewPage(), "InterviewPage")
+            ft.commit()
         }
     }
 
-    // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.message_section, viewGroup, false)
-
-        return ViewHolder(view)
+    override fun goToChatPage(sectionName: String, sectionNo:Int?, jobNo : Long?, receiver : Long, logo:String?, jobPosition: String?) {
+        hubConnection.stop();
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id,  ChatPage(sectionName, sectionNo, jobNo, receiver, logo, jobPosition), "ChatFragment")
+        ft.commit()
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.sectionName.text = dataSet.interviewer[position].jobseekerName
-        viewHolder.notRead.text = ""
-        viewHolder.lastMessage.text = ""
-        viewHolder.lastMessageOn.text = ""
-
-        val receiver = listOf<Long>(dataSet.interviewer[position].userNo)
-        if(chatData!= null) {
-            val sectionNo = chatData.sections?.find {
-                it.jobNo == jobNo &&
-                        it.receiver.contains(dataSet.interviewer[position].userNo) &&
-                        it.sectionName == dataSet.interviewer[position].jobseekerName
-            }
-
-            viewHolder.itemView.setOnClickListener {
-                cellClickListener.goToChatPage(
-                    dataSet.interviewer[position].jobseekerName,
-                    sectionNo?.sectionNo, hubConnection, jobNo, receiver
-                )
-            }
-        }
-        else{
-            viewHolder.itemView.setOnClickListener {
-                cellClickListener.goToChatPage(
-                    dataSet.interviewer[position].jobseekerName,
-                    null, hubConnection, jobNo, receiver
-                )
-            }
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_company_interview_perjob, container, false)
     }
-    public fun LocalDateTime.dateToString(format: String): String {
-        val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
-        return dateFormatter.format(this)
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.interviewer.size
-
+}
+interface CellClickListener {
+    fun goToChatPage(sectionName: String, sectionNo: Int?, jobNo : Long?, receiver : Long, logo : String?, jobPosition : String?)
 }

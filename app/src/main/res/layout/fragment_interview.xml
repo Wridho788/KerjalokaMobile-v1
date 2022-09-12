@@ -61,12 +61,25 @@
             android:id="@+id/search"
             layout="@layout/search_component"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/spinnerInterviw"
+            android:gravity="center">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="10dp"
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerViewSection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
+
             tools:listitem="@layout/message_section" />
     </LinearLayout>
     </LinearLayout>

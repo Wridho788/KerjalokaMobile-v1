@@ -187,7 +187,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/bc/m6rn5_f544qcf723fbzqfmd00000gn/T/baseline_attach_file_24.xml" />
+                                                <entry key="imagePath" value="/private/var/folders/bc/m6rn5_f544qcf723fbzqfmd00000gn/T/baseline_notifications_24.xml" />
                                                 <entry key="paddingPercent" value="-5" />
                                               </map>
                                             </option>
@@ -199,7 +199,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/attach_file/baseline_attach_file_24.xml" />
+                                                <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/notifications/baseline_notifications_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -242,7 +242,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_attach_file" />
+                                      <entry key="outputName" value="ic_notification" />
                                     </map>
                                   </option>
                                 </PersistentState>

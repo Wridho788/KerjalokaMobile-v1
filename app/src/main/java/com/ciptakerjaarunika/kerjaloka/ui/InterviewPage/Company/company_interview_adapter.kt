@@ -1,23 +1,20 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company
 
 import android.content.Context
-import android.util.Log
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.CellClickListener
-import com.microsoft.signalr.HubConnection
-import java.text.SimpleDateFormat
-import java.util.*
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 
 //class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
 //
@@ -27,20 +24,9 @@ class company_interview_adapter
     (
     private val dataSet: List<company_interview_list>,
     private val cellClickListener: CellClickListener,
-    val hubConnection: HubConnection,
-    val chatData: chat_data?,
     val context: Context
     )
     : RecyclerView.Adapter<company_interview_adapter.ViewHolder>() {
-
-    private lateinit var mListner : onItemClickListner
-    interface onItemClickListner{
-        fun onItemClick(position : Int)
-    }
-
-    fun setOnItemClickListner(listner : onItemClickListner){
-        mListner = listner
-    }
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -68,6 +54,7 @@ class company_interview_adapter
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         // Get element from your dataset at this position and replace the
@@ -75,19 +62,21 @@ class company_interview_adapter
         viewHolder.jobName.text = dataSet[position].jobPosition
         viewHolder.applicantCount.text = dataSet[position].interviewer.count().toString()
 
+        val chatData = SessionManager(context).chatData
         if(chatData != null){
-            var currentSection = if (chatData.sections != null) chatData.sections.find {
+
+            var currentSection = if (chatData.sections != null) chatData.sections!!.find {
                 it.jobNo == dataSet[position].jobNo
             }
             else null;
 
-            Log.d("Current Section", currentSection.toString())
             if (currentSection != null) {
                 viewHolder.notRead.text = currentSection.notRead.toString()
-                viewHolder.notRead.visibility = VISIBLE
+                viewHolder.notRead.visibility = if(currentSection.notRead != 0) VISIBLE else GONE
 
                 viewHolder.lastMessageOn.text =
-                    currentSection.messages.last().createdOn.dateToString("HH:mm")
+                   DateUtils().GetLastMessageOn(currentSection.messages?.last()?.createdOn?: "")
+//                    currentSection.messages?.last()?.createdOn?.dateToString("HH:mm") ?: ""
                 viewHolder.lastMessageOn.visibility = VISIBLE
             }
 
@@ -95,13 +84,11 @@ class company_interview_adapter
 //        viewHolder.lastMessageOn.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].CreatedOn.dateToString("HH:mm")
 
         viewHolder.itemView.setOnClickListener {
-            cellClickListener.companyInterviewClick(dataSet[position], hubConnection, dataSet[position].jobNo)
+            cellClickListener.companyInterviewClick(dataSet[position], dataSet[position].jobNo)
         }
     }
-    public fun Date.dateToString(format: String): String {
-        val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
-        return dateFormatter.format(this)
-    }
+
+
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size

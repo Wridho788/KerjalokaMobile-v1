@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/chat_page"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.InterviewPage.Jobseeker.ChatPage"
+    tools:context=".ui.InterviewPage.ChatPage"
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,29 +47,55 @@
                     android:scaleType="centerInside"
                     />
             </androidx.cardview.widget.CardView>
-            <TextView
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".8"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Reyhan"
-                android:textSize="15dp"
-                android:id="@+id/title"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                />
+                android:orientation="vertical">
+                <androidx.percentlayout.widget.PercentRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                <TextView
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    app:layout_heightPercent="50%"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="User Full Name"
+                    android:textSize="15dp"
+                    android:id="@+id/title"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    />
+                    <TextView
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        app:layout_heightPercent="50%"
+                        android:layout_alignParentBottom="true"
+                        android:fontFamily="@font/poppins"
+                        android:text="Job Position"
+                        android:textSize="14dp"
+                        android:id="@+id/description"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        />
+                </androidx.percentlayout.widget.PercentRelativeLayout>
+            </LinearLayout>
+<!--            <ImageButton-->
+<!--                android:layout_width="22dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:id="@+id/voice_call_btn"-->
+<!--                android:background="@drawable/phone_icon"-->
+<!--                android:layout_height="22dp"/>-->
             <ImageButton
                 android:layout_width="22dp"
-                android:layout_marginRight="20dp"
                 android:layout_gravity="center"
-                android:background="@drawable/phone_icon"
-                android:layout_height="22dp"/>
-            <ImageButton
-                android:layout_width="22dp"
-                android:layout_gravity="center"
+                android:id="@+id/video_call_btn"
                 android:background="@drawable/video_call_icon"
                 android:layout_marginRight="10dp"
                 android:layout_height="22dp"/>
@@ -80,14 +106,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/white">
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="10dp"
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerViewChat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".8"
-            tools:listitem="@layout/message_right1" />
+            tools:listitem="@layout/message_right1"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -113,8 +139,9 @@
                 <ImageButton
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:id="@+id/openCamera"
                     android:layout_marginHorizontal="15dp"
-                    android:background="@drawable/ic_emoji"
+                    android:background="@drawable/camera_icon"
                     />
                 <EditText
                     android:layout_width="0dp"

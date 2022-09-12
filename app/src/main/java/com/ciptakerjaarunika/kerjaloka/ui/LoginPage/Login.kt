@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
@@ -24,8 +25,8 @@ class Login : Fragment() {
         super.onViewCreated(itemView, savedInstanceState)
 
         Log.d("Klik", "Start")
-        val email = itemView.findViewById<TextInputEditText>(R.id.txt_email).text.toString()
-        val password = itemView.findViewById<TextInputEditText>(R.id.txt_password).text.toString()
+        val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
+        val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
         btn_login.setOnClickListener(View.OnClickListener {
             Log.d("Klik", "Clicked")

@@ -3,7 +3,6 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-
     }
 }
 dependencyResolutionManagement {
@@ -12,6 +11,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven {
+            url "https://github.com/ConnectyCube/connectycube-android-sdk-releases/raw/master/"
+        }
+        maven {
+            url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
+        }
     }
 }
 rootProject.name = "Kerjaloka"

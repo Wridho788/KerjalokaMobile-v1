@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.appbar.MaterialToolbar
+import com.microsoft.signalr.HubConnection
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -70,28 +71,6 @@ class LamaranPage : Fragment(),CellClickListener {
         ft.replace(id, viewJobDetail(), "JobDetailFragment")
         ft.addToBackStack(null)
         ft.commit()
-    }
-
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LamaranPage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LamaranPage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
 

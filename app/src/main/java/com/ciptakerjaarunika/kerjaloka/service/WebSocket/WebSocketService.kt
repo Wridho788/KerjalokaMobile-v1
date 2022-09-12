@@ -33,7 +33,7 @@ class WebSocketService : MessageListener {
     }
 
     open fun startWebsocket() {
-       WebSocketManager.init(config().portAddress+"ws/chat", this)
+       WebSocketManager.init(config().portAddress+"/ws/chat", this)
        WebSocketManager.connect()
     }
 
