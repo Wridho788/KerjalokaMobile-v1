@@ -67,10 +67,10 @@ class LamaranPage : Fragment(),CellClickListener {
         }
     }
     override fun onCellClickListener() {
-        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, viewJobDetail(), "JobDetailFragment")
-        ft.addToBackStack(null)
-        ft.commit()
+//        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+//        ft.replace(id, viewJobDetail(), "JobDetailFragment")
+//        ft.addToBackStack(null)
+//        ft.commit()
     }
 }
 

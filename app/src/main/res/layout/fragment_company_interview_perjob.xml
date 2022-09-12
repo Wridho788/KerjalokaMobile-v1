@@ -13,72 +13,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/mainToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:titleTextColor="@color/white"
-        android:background="#FF6666"
-        android:elevation="5dp">
-
-        <LinearLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="2dp"
-            android:orientation="horizontal">
-            <ImageButton
-                android:id="@+id/backButton"
-                android:layout_width="22dp"
-                android:layout_marginRight="10dp"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:background="@drawable/back_white_icon"
-                android:layout_height="22dp"/>
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/white"
+            android:background="#FF6666"
+            android:elevation="5dp">
 
-            <TextView
-                android:layout_gravity="center"
-                android:gravity="center_vertical"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight=".8"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Interview"
-                android:textSize="15dp"
-                android:id="@+id/titleToolbar"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="@color/white"
-                />
-        </LinearLayout>
-    </com.google.android.material.appbar.MaterialToolbar>
+                android:padding="2dp"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/backButton"
+                    android:layout_width="22dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:background="@drawable/back_white_icon"
+                    android:layout_height="22dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="15dp"
-        android:orientation="vertical">
-        <include
-            android:id="@+id/search"
-            layout="@layout/search_component"
-            />
+                <TextView
+                    android:layout_gravity="center"
+                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".8"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Interview"
+                    android:textSize="15dp"
+                    android:id="@+id/titleToolbar"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/spinnerInterviewByJob"
-            android:gravity="center">
-            <ProgressBar
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true" />
+            android:padding="15dp"
+            android:orientation="vertical">
+            <include
+                android:id="@+id/search"
+                layout="@layout/search_component"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/spinnerInterviewByJob"
+                android:gravity="center">
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true" />
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:id="@+id/recyclerViewSection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:listitem="@layout/message_section" />
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="10dp"
-            android:id="@+id/recyclerViewSection"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:listitem="@layout/message_section" />
-    </LinearLayout>
     </LinearLayout>
 </FrameLayout>

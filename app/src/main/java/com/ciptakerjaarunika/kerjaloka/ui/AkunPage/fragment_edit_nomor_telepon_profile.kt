@@ -1,10 +1,11 @@
-package com.ciptakerjaarunika.kerjaloka
+package com.ciptakerjaarunika.kerjaloka.ui.AkunPage
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ciptakerjaarunika.kerjaloka.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -13,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [myreviewpage.newInstance] factory method to
+ * Use the [fragment_edit_nomor_telepon_profile.newInstance] factory method to
  * create an instance of this fragment.
  */
-class myreviewpage : Fragment() {
+class fragment_edit_nomor_telepon_profile : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +35,7 @@ class myreviewpage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_myreviewpage, container, false)
+        return inflater.inflate(R.layout.fragment_edit_nomor_telepon_profile, container, false)
     }
 
     companion object {
@@ -44,12 +45,12 @@ class myreviewpage : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment myreviewpage.
+         * @return A new instance of fragment fragment_edit_nomor_telepon_profile.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            myreviewpage().apply {
+            fragment_edit_nomor_telepon_profile().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

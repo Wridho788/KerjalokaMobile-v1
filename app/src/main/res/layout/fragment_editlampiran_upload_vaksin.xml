@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mainAppbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.Icon"
+                android:backgroundTint="@color/white"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                app:cornerRadius="100sp"
+                app:icon="@drawable/ic_back"
+                app:iconTint="@color/danger_500"/>
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mainToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleTextColor="@color/black"
+                app:title="Edit Lampiran"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/unggah_vaksin_pertama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Vaksin Pertama"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/btn_unggah_vaksin_pertama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:backgroundTint="@color/white"
+                    app:strokeColor="@color/danger_500"
+                    app:strokeWidth="1dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Upload"
+                    android:textColor="@color/danger_500"
+                    android:textAllCaps="false"
+                    android:textSize="14dp"
+                    app:cornerRadius="100dp"
+                    tools:layout_editor_absoluteX="17dp"
+                    tools:layout_editor_absoluteY="346dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/unggah_vaksin_kedua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Vaksin Kedua"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/btn_unggah_vaksin_kedua"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:backgroundTint="@color/white"
+                    app:strokeColor="@color/danger_500"
+                    app:strokeWidth="1dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Upload"
+                    android:textColor="@color/danger_500"
+                    android:textAllCaps="false"
+                    android:textSize="14dp"
+                    app:cornerRadius="100dp"
+                    tools:layout_editor_absoluteX="17dp"
+                    tools:layout_editor_absoluteY="346dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/unggah_vaksin_ketiga"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Vaksin Ketiga"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/btn_unggah_vaksin_ketiga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:backgroundTint="@color/white"
+                    app:strokeColor="@color/danger_500"
+                    app:strokeWidth="1dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Upload"
+                    android:textColor="@color/danger_500"
+                    android:textAllCaps="false"
+                    android:textSize="14dp"
+                    app:cornerRadius="100dp"
+                    tools:layout_editor_absoluteX="17dp"
+                    tools:layout_editor_absoluteY="346dp"/>
+            </LinearLayout>
+        </LinearLayout>
+</LinearLayout>
+
+</FrameLayout>

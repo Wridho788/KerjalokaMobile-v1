@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.ProfilePage.manage_profile.EditBasicInfo">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/mainAppbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.Icon"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/white"
+                android:paddingLeft="16dp"
+                app:cornerRadius="100sp"
+                app:icon="@drawable/ic_back"
+                app:iconTint="@color/danger_500" />
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/mainToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:title="Edit Informasi Dasar"
+                app:titleTextColor="@color/black" />
+
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@id/footer"
+            app:layout_constraintHorizontal_weight=".8"
+            app:layout_constraintTop_toBottomOf="@id/mainAppbar"
+            tools:ignore="NotSibling">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="80dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+                        android:elevation="0dp"
+                        android:padding="8dp"
+                        android:src="@drawable/profile"
+                        app:shapeAppearanceOverlay="@style/Circular"
+                        app:strokeColor="@color/light_500"
+                        app:strokeWidth="1dp"></com.google.android.material.imageview.ShapeableImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Perbarui Foto"
+                        android:textColor="@color/danger_500"
+                        android:textSize="16dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:fontFamily="@font/poppins"
+                        android:text="Nama Lengkap"
+                        android:textColor="@color/dark_100"
+                        android:textSize="14sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7sp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:cardCornerRadius="@dimen/edittext_radius"
+                        app:cardElevation="0dp">
+
+                        <EditText
+                            android:id="@+id/jsName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/light_300"
+                            android:fontFamily="@font/poppins"
+                            android:hint="Jhon Doe"
+                            android:padding="14dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Nomor KTP (Kartu Tanda Penduduk)"
+                        android:textColor="@color/dark_100"
+                        android:textSize="14sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7sp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:cardCornerRadius="@dimen/edittext_radius"
+                        app:cardElevation="0dp">
+
+                        <TextView
+                            android:id="@+id/jsKTP"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/light_300"
+                            android:fontFamily="@font/poppins"
+                            android:hint="1234567890123456"
+                            android:inputType="number"
+                            android:padding="14dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Jenis Kelamin"
+                        android:textColor="@color/dark_100"
+                        android:textSize="14sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7sp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:cardCornerRadius="@dimen/edittext_radius"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/light_300"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/jsGender"
+                                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins"
+                                android:hint="Gender"
+                                android:padding="14dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                app:boxStrokeWidth="0dp"
+                                app:boxStrokeWidthFocused="0dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Alamat"
+                        android:textColor="@color/dark_100"
+                        android:textSize="14sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7sp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:cardCornerRadius="@dimen/edittext_radius"
+                        app:cardElevation="0dp">
+
+                        <EditText
+                            android:id="@+id/jsAddress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/light_300"
+                            android:fontFamily="@font/poppins"
+                            android:hint="Jl. Berdua"
+                            android:padding="14dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            app:boxStrokeWidth="0dp"
+                            app:boxStrokeWidthFocused="0dp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Tanggal Lahir"
+                        android:textColor="@color/dark_100"
+                        android:textSize="14sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7sp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:cardCornerRadius="@dimen/edittext_radius"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/light_300"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/jsEditDob"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins"
+                                android:hint="Jl. Berdua"
+                                android:padding="14dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                app:boxStrokeWidth="0dp"
+                                app:boxStrokeWidthFocused="0dp" />
+
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="15dp"
+                                android:src="@drawable/button_calendar"
+                                android:tint="@color/trueGray_50"
+                                tools:ignore="UseAppTint" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:text="Kota Domisili"
+                        android:textColor="@color/dark_100"
+                        android:textSize="14sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7sp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:cardCornerRadius="@dimen/edittext_radius"
+                        app:cardElevation="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/light_300"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/jsCity"
+                                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins"
+                                android:hint="Pilih Kota"
+                                android:padding="14dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                app:boxStrokeWidth="0dp"
+                                app:boxStrokeWidthFocused="0dp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/light_500" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveBasic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:backgroundTint="@color/danger_500"
+                android:fontFamily="@font/poppins"
+                android:text="@string/konfimasi"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:cornerRadius="100dp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

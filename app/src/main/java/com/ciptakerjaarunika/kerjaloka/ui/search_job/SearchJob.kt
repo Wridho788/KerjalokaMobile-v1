@@ -20,7 +20,7 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
 
-class SearchJob : AppCompatActivity() {
+class  SearchJob : AppCompatActivity() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<SearchJobAdapter.ViewHolder>? = null
 

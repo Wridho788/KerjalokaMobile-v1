@@ -86,6 +86,7 @@
         <entry key="app/src/main/res/layout/layout_vacancies_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_want_to_know_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/list_recommendation_job.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/message_section.xml" value="0.20179563916203505" />
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.375" />

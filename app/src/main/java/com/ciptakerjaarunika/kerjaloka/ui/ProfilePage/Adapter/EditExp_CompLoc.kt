@@ -1,0 +1,39 @@
+package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter
+
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.listCity
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.scale
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.typeJob
+
+class EditExp_CompLoc(private val cityList: List<listCity>):
+    RecyclerView.Adapter<EditExp_CompLoc.ChooseCity>()
+{
+
+    inner class ChooseCity(view: View) : RecyclerView.ViewHolder(view) {
+
+        var item: TextView
+
+        init {
+            item = view.findViewById<TextView>(R.id.item_modal)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseCity {
+        val view = View.inflate(parent.context, R.layout.modal_list, null)
+        return ChooseCity(view)
+    }
+
+    override fun onBindViewHolder(holder: ChooseCity, position: Int) {
+        val currentItem = cityList[position]
+        holder.item.text= currentItem.city
+    }
+
+    override fun getItemCount(): Int {
+        return cityList.size
+    }
+
+}
