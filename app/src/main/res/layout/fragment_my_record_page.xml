@@ -16,4 +16,5 @@
         tools:listitem="@layout/section_my_record_page">
 
     </androidx.recyclerview.widget.RecyclerView>
+
 </FrameLayout>

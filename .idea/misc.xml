@@ -142,7 +142,7 @@
         <entry key="app/src/main/res/layout/fragment_modal_edit_experience_manage_cv.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_my_record_page.xml" value="0.3525641025641026" />
-        <entry key="app/src/main/res/layout/fragment_my_review_page.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/fragment_my_review_page.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_myreviewpage.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_near_me__job.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/layout/fragment_rate_star.xml" value="0.335" />
@@ -155,7 +155,7 @@
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/global_toolbar.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/layout/interest_section.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/item_card_job.xml" value="0.30416666666666664" />
+        <entry key="app/src/main/res/layout/item_card_job.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_card_job_related.xml" value="0.30416666666666664" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.4296875" />
         <entry key="app/src/main/res/layout/layout_apply_job_modal.xml" value="0.375" />
@@ -180,7 +180,8 @@
         <entry key="app/src/main/res/layout/search_component.xml" value="0.375" />
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.375" />
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/section_my_record_page.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/section_my_record_page.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/section_my_review.xml" value="0.45" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.335" />
         <entry key="app/src/main/res/layout/section_recommendation_job.xml" value="0.45" />
         <entry key="app/src/main/res/layout/view_holder_section.xml" value="0.23125" />

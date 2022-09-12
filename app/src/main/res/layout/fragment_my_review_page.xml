@@ -68,16 +68,16 @@
                         <RatingBar
                             android:layout_width="240dp"
                             android:layout_height="wrap_content"
-                            android:numStars="5"
+                            android:numStars="3"
                             android:progressBackgroundTint="@color/trueGray_100"
                             android:progressTint="@color/danger_500"
                             android:rating="2"
-                            android:scaleX="0.75"
-                            android:scaleY="0.75"
-                            android:stepSize="1" />
+                            android:scaleX="0.65"
+                            android:scaleY="0.65"
+                            android:stepSize="1"/>
                         <TextView
                             android:id="@+id/jumlah_review"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins"
@@ -108,6 +108,23 @@
                     tools:layout_editor_absoluteY="346dp"/>
 
             </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginTop="185dp"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/section_my_review">
+            </androidx.recyclerview.widget.RecyclerView>
+            </ScrollView>
 
         </com.google.android.material.card.MaterialCardView>
 
