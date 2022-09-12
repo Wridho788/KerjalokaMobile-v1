@@ -96,9 +96,10 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
         FilterSizeCompanyAPI()
         listIndustri.visibility = View.GONE
         listSizeCompany.visibility = View.GONE
+        search_bar.visibility = View.GONE
 
         chipLocation.setOnClickListener {
-            search_bar.visibility = View.VISIBLE
+            search_bar.visibility = View.GONE
             listView.visibility = View.VISIBLE
             listIndustri.visibility = View.GONE
             listSizeCompany.visibility = View.GONE
@@ -108,7 +109,7 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
             listView.visibility = View.GONE
             listSizeCompany.visibility = View.GONE
             listIndustri.visibility = View.VISIBLE
-            search_bar.visibility = View.VISIBLE
+            search_bar.visibility = View.GONE
         }
 
         chipSizeCompany.setOnClickListener {
@@ -130,12 +131,17 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
 //            }
 //        })
         btnConfirm.setOnClickListener{
-            Log.d("check", list_location.toString())
+            Log.d("check ${list_location}, ${list_industri}, ${list_size_company}", list_location.toString())
         }
 
         btn_hapus.setOnClickListener{
             list_location = listOf()
+            list_industri = listOf()
+            list_size_company = listOf()
+
             listView.adapter?.notifyDataSetChanged()
+            listIndustri.adapter?.notifyDataSetChanged()
+            listSizeCompany.adapter?.notifyDataSetChanged()
         }
 
         return view

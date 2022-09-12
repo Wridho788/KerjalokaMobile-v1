@@ -45,11 +45,11 @@ class LocationAdapter(private var dataSet: List<location_model>, val context: Co
             iUpdate.updateLocation(locations)
         }
     }
-    open fun getListItem(): List<location_model> {
-        return dataSet.filter { item->
-            item.checked
-        }
-    }
+//    open fun getListItem(): List<location_model> {
+//        return dataSet.filter { item->
+//            item.checked
+//        }
+//    }
 
 }
 

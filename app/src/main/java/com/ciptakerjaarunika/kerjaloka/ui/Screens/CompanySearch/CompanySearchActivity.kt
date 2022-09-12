@@ -4,19 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.view.size
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.CompanySearchAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanySearchBinding
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.CompanySearchAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.FilterCompany
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.searchRequest
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.search_company_model
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
@@ -97,17 +92,17 @@ class CompanySearchActivity : AppCompatActivity() {
             val context: Context = thisActivity
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
-                    CompanySearchAPI().CompanyGetSearchCompany(context) {
-                        Log.d("response search company", it.toString())
-                        if (it != null) {
-                            list = it.data
-                            Log.d("response sukses", it.data.toString())
-                            binding.searchCompanyJob.apply {
-                                layoutManager = LinearLayoutManager(context)
-                                adapter = CompanySearchAdapter(list!!, context)
-                            }
-                        }
-                    }
+//                    CompanySearchAPI().CompanyGetSearchCompany(context,) {
+//                        Log.d("response search company", it.toString())
+//                        if (it != null) {
+//                            list = it?.data
+//                            Log.d("response sukses", it.data.toString())
+//                            binding.searchCompanyJob.apply {
+//                                layoutManager = LinearLayoutManager(context)
+//                                adapter = CompanySearchAdapter(list!!, context)
+//                            }
+//                        }
+//                    }
                     newChips(query)
 
                 }
