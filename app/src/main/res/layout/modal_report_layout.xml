@@ -47,12 +47,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Laporkan Lowongan Ini :"
+                    android:text="@string/laporkan_lowongan_ini"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="8dp"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/black"/>
 
@@ -67,7 +67,7 @@
                     android:id="@+id/insertreport"
                     android:height="120dp"
                     android:inputType="text|textMultiLine"
-                    android:gravity="top"
+                    android:gravity="top|start"
                     android:lines="8"
                     android:background="@color/light_300"
                     android:maxLines="10"

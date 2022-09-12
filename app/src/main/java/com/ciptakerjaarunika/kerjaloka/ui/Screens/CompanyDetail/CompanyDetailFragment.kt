@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedCompanyJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.CompanyReviewFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
@@ -55,17 +55,13 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         btn_follow.setOnClickListener {
             Toast.makeText(activity, "follow", Toast.LENGTH_SHORT).show()
         }
-        btn_review.setOnClickListener {
-            Toast.makeText(activity, "review", Toast.LENGTH_SHORT).show()
-        }
-
         val rv_recommendations_job =
             view.findViewById<RecyclerView>(R.id.recycler_view_company_recommendation_jobs)
 
         val Context = this
+
         CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
             if (it != null) {
-                Log.d("response company detail", it.toString())
                 company_name.text = it.data.companyName
                 company_phone.text = it.data.phone
                 Glide.with(this)
@@ -95,9 +91,12 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                     val shareIntent = Intent.createChooser(sendIntent, null)
                     startActivity(shareIntent)
                 }
-
-
             }
+
+        }
+
+        btn_review.setOnClickListener{
+            goToCompanyReview(CompanyNo)
         }
 
         return view
@@ -132,10 +131,18 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         ft.commit()
     }
 
+    override fun goToCompanyReview(CompanyNo: Long) {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, CompanyReviewFragment(CompanyNo), "CompanyReviewFragment")
+        ft.addToBackStack("CompanyReviewFragment")
+        ft.commit()
+    }
+
     companion object
 }
 
 interface OnFragmentCompanyDetailListener {
     fun onRelatedCompanyFragment(CompanyNo: Long)
     fun goToJobDetail(JobNo: Long, CompanyNo: Long)
+    fun goToCompanyReview(CompanyNo: Long)
 }

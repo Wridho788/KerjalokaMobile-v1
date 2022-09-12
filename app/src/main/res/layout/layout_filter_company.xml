@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_apply_job_modal"
+    android:id="@+id/layout_filter_company"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+   >
 
     <LinearLayout
         android:id="@+id/layout_header"
@@ -22,6 +22,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/black"
+            android:clickable="false"
             app:cardCornerRadius="100dp"
             app:cardElevation="0dp" />
 

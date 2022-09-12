@@ -218,4 +218,11 @@
     <string name="filter_sesuai_kebutuhan">Filter Sesuai Kebutuhan</string>
     <string name="pegawai">Pegawai</string>
     <string name="review_perusahaan">Review Perusahaan</string>
+    <string name="beri_review">Beri Review</string>
+    <string name="laporkan_lowongan_ini">Laporkan Lowongan Ini :</string>
+    <string name="berikan_rating">Berikan Rating</string>
+    <string name="masukkan_komentar_rating">Masukkan komentar rating</string>
+    <string name="review">Review</string>
+    <string name="kelebihan">Kelebihan :</string>
+    <string name="tantangan">Tantangan</string>
 </resources>
