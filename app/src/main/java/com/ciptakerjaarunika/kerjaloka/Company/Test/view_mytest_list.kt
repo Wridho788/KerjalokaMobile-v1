@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.CellClickListener
+import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranCellClickListener
 import com.google.android.material.appbar.MaterialToolbar
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,7 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [view_mytest_list.newInstance] factory method to
  * create an instance of this fragment.
  */
-class view_mytest_list : Fragment(),CellClickListener {
+class view_mytest_list : Fragment(),LamaranCellClickListener{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

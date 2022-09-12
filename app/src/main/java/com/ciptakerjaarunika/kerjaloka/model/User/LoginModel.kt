@@ -31,3 +31,6 @@ data class LoginResponseData(
     val status : String,
     val link : String,
 )
+
+data class CheckLoginResponse(
+    val user : Any)

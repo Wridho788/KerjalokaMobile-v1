@@ -1,16 +1,21 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.add_Info
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.js_profile
@@ -52,8 +57,18 @@ class profilepage : Fragment() {
         val js_AboutMe = view.findViewById<TextView>(R.id.txt_aboutme)
 
         val adapter = viewpagerAdapter(parentFragmentManager, lifecycle)
-        jsName.text = data.jobseekerName
-        js_AboutMe.text = addInfo.jobseekerAbout
+        val user = SessionManager(context).user
+
+        Log.d("User", SessionManager(context).user.toString())
+
+            jsName.text = user?.userFullname
+            js_AboutMe.text = user?.jobseekerAdditional?.jobseekerAbout
+            jsusrname.text = user?.username
+
+        Glide.with(view.context)
+            .load(config().portAddress + "/photo/Profile/" + user?.photo).fitCenter()
+            .into(view.findViewById<ImageView>(R.id.userPhoto))
+
 
         content.adapter = adapter
 //        content.layoutParams = ViewGroup.LayoutParams.WRAP_CONTENT

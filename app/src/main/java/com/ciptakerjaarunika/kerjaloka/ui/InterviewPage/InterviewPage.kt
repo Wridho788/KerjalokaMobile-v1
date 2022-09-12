@@ -97,6 +97,7 @@ class InterviewPage : Fragment(), CellClickListener{
             { roomId ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
                 ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
+                ft.addToBackStack("InterviewPage")
                 ft.commit()
             },
             String::class.java

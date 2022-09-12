@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -31,12 +33,17 @@ class viewJobDetail() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val btnWithdraw = view.findViewById<MaterialButton>(R.id.btnWithdraw) as MaterialButton
+
+        view.findViewById<ImageView>(R.id.backButton)?.setOnClickListener{
+            fragmentManager?.popBackStack()
+        }
+
         btnWithdraw.setOnClickListener {
             val sheet = BottomSheetApplicant()
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
         }
 
-        val lapor = view.findViewById<TextView>(R.id.lapor) as TextView
+        val lapor = view.findViewById<LinearLayout>(R.id.report_job) as LinearLayout
         lapor.setOnClickListener {
             val sheet = EditGender()
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }

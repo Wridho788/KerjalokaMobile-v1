@@ -186,9 +186,9 @@ class ChatAdapter
                 viewHolder.messageContainer?.setPadding(10,10,10,10)
                 viewHolder.photoContainer?.visibility = VISIBLE
                 if(viewHolder.photoMessage != null) {
-                    Glide.with(context)
+                   Glide.with(context)
                         .load(config().portAddress + "/photo/Chat/" + dataSet!![position].fileName)
-                        .override(650,675)
+//                        .override(,675)
                         .into(viewHolder.photoMessage)
                 }
             }

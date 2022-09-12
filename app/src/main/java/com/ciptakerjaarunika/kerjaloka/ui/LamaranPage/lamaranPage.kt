@@ -4,12 +4,18 @@ package com.ciptakerjaarunika.kerjaloka.ui.LamaranPage
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.google.android.material.appbar.MaterialToolbar
 import com.microsoft.signalr.HubConnection
 
@@ -24,7 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LamaranPage.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LamaranPage : Fragment(),CellClickListener {
+class LamaranPage : Fragment(), LamaranCellClickListener {
     // TODO: Rename and change types of parameters
 
     private var layoutManager:RecyclerView.LayoutManager?=null
@@ -57,23 +63,37 @@ class LamaranPage : Fragment(),CellClickListener {
 
 
         var Context = this;
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
-        recyclerView.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            layoutManager = LinearLayoutManager(activity)
-            // set the custom adapter to the RecyclerView
-            adapter = Application(Context)
+        if(SessionManager(context).user == null){
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(id, Login())
+            fragmentTransaction.commit()
         }
+        else {
+            JobAPI().GetMyAPplications(context) {
+                if (it != null) {
+                    itemView.findViewById<LinearLayout>(R.id.spinnerLamaran).visibility = GONE
+
+                    val recyclerView =
+                        itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+
+                    recyclerView.visibility = VISIBLE
+                    recyclerView.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        adapter = Application(it.data, context, Context)
+                    }
+                }
+            }
+        }
+
     }
     override fun onCellClickListener() {
-//        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-//        ft.replace(id, viewJobDetail(), "JobDetailFragment")
-//        ft.addToBackStack(null)
-//        ft.commit()
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, viewJobDetail(), "JobDetailFragment")
+        ft.addToBackStack("Lamaran Page")
+        ft.commit()
     }
 }
 
-interface CellClickListener {
+interface LamaranCellClickListener {
     fun onCellClickListener()
 }

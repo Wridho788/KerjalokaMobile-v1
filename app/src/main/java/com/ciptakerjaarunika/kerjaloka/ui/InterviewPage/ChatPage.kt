@@ -412,6 +412,7 @@ class ChatPage(var sectionName: String,
             { roomId ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
                 ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
+                ft.addToBackStack("ChatPage")
                 ft.commit()
             },
             String::class.java

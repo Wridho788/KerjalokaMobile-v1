@@ -8,6 +8,6 @@ data class Jobseeker(
     val userNo : Long?,
     val jobseekerName : String,
     val jobseekerGender : Char,
-    val dateOfBirth : LocalDateTime,
+    val dateOfBirth : String,
     val noExperience : Boolean,
 )

@@ -7,10 +7,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.CellClickListener
-import com.ciptakerjaarunika.kerjaloka.Company.Test.Model
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
-import java.util.*
 
 class mytest_adapter(private val cellClickListener: view_mytest_list):RecyclerView.Adapter<mytest_adapter.ViewHolder>() {
 
