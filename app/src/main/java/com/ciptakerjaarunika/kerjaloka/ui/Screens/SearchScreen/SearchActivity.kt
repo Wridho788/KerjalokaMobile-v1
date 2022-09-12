@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -8,11 +9,13 @@ import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.view.size
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
@@ -22,8 +25,10 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragm
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.general_search_model
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -32,7 +37,7 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
     onFragmentTransactionListCompany {
     private var list: general_search_model? = null
 
-    var list_Latest_search = ArrayList<String>()
+    var list_Latest_search= ArrayList<String>()
     private lateinit var binding: ActivitySearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +51,17 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
         val btn_see_more_job = findViewById<MaterialCardView>(R.id.see_more_job)
         val btn_see_more_company = findViewById<MaterialCardView>(R.id.see_more_company)
         val thisActivity = this
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        val latest_result_grup = findViewById<ChipGroup>(R.id.latest_result_grup)
+        val latest_top_grup = findViewById<ChipGroup>(R.id.chipGroupTopSearch)
 
+        (thisActivity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (thisActivity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        val btn_back = findViewById<ImageView>(R.id.btn_back)
+        btn_back.setOnClickListener {
+            thisActivity.onBackPressed()
+        }
 
         list_Latest_search = getArrayList("SearchJob")
         if (list_Latest_search.isNotEmpty()) {
@@ -60,7 +75,7 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
                     id = int
                     isChipIconVisible = false
                     isCloseIconVisible = false
-                    isClickable = false
+                    isClickable = true
                     isCheckable = false
                     binding.apply {
                         latestResultGrup.addView(chip as View)
@@ -76,9 +91,9 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
                     isCloseIconVisible = false
                     isClickable = true
                     isCheckable = false
-                    binding.apply {
-                        chipGroupTopSearch.addView(chipTop as View)
-                    }
+//                    binding.apply {
+//                        chipGroupTopSearch.addView(chipTop as View)
+//                    }
                 }
                 int++
             }
@@ -117,6 +132,9 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
                         }
                     }
                     newChips(query)
+                    latest_result_grup.setOnClickListener{
+                        Toast.makeText(thisActivity,"search" + query, Toast.LENGTH_SHORT).show()
+                    }
                 }
                 binding.layoutTopSearchResults.isVisible = false
                 binding.layoutResultSearch.isVisible = true
@@ -134,9 +152,7 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
                     binding.layoutLatestSearchResults.isVisible = true
                     binding.layoutTopSearchResults.isVisible = true
                     binding.layoutResultSearch.isVisible = false
-
                 }
-
                 return true
             }
         })
@@ -164,10 +180,8 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
             binding.apply {
                 if (latestResultGrup.size > 7) {
                     latestResultGrup.removeViewAt(0)
-                    latestResultGrup.addView(chip as View)
-                } else {
-                    latestResultGrup.addView(chip as View)
                 }
+                Log.d("keyword", keyword)
             }
         }
 
@@ -182,13 +196,12 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
         editor.apply()
     }
 
+    @SuppressLint("CommitPrefEdits")
     fun removeArrayList(list: ArrayList<String>, key: String?) {
         val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val editor: SharedPreferences.Editor = prefs.edit()
         val gson = Gson()
         val json: String = gson.toJson(list)
-        editor.remove(key)
-        editor.apply()
     }
 
     fun getArrayList(key: String?): ArrayList<String> {
@@ -203,24 +216,24 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
         return gson.fromJson(json, type)
     }
 
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val ft = fragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_job_detail, fragment)
+        ft.commit()
+    }
 //    override fun onFragmentClick(companyNo: Long, jobNo: Long) {
 //
 //    }
 
     override fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long) {
-        val ft = supportFragmentManager.beginTransaction()
-        ft.replace(
-            R.id.fragment_job_detail,
-            JobDetailFragment(companyNo, jobNo),
-            "JobDetailFragment"
-        )
+    replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))
+
 
     }
 
     override fun onFragmentCompanyDetailsClick(companyNo: Long) {
-//        var ft = supportFragmentManager.beginTransaction()
-//        ft.replace()
-        Toast.makeText(baseContext, "companyNo ${companyNo}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(baseContext, "companyNo $companyNo", Toast.LENGTH_SHORT).show()
     }
 
 

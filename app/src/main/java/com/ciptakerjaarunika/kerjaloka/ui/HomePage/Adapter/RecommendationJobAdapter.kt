@@ -1,10 +1,15 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -13,12 +18,13 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.OnFragmentClickListener
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
-import org.ocpsoft.prettytime.PrettyTime
-import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RecommendationJobAdapter(
+    private val context: Context,
     private val rJobList: List<rJobModel>?,
     private val onFragmentClick: OnFragmentClickListener,
 ) :
@@ -55,11 +61,7 @@ class RecommendationJobAdapter(
         return rJobList?.size ?: 0
     }
 
-    var inputDate: Date? = null
-    var outputDate: Date? = null
-    var formattedDateString: String? = null
-    var prettyTimeString: String? = null
-
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (rJobList != null) {
@@ -67,29 +69,62 @@ class RecommendationJobAdapter(
             holder.jobPosition.text = currentItem.jobPosition
             holder.companyName.text = currentItem.companyName
             holder.jobLocation.text = currentItem.jobLocation
-            val dateString = currentItem.createdOn
-            val convertToDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-            val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa");
-            try {
-                inputDate = convertToDate.parse(dateString.toString())
-                formattedDateString = inputDate?.let { it1 -> dateFormat.format(it1) }
-                outputDate = formattedDateString?.let { it1 -> dateFormat.parse(it1) }
-            } catch (e: ParseException) {
-                e.printStackTrace()
+            val SECOND = 1
+            val MINUTE = 60 * SECOND
+            val HOUR = 60 * MINUTE
+            val DAY = 24 * HOUR
+            val WEEK = 7 * DAY
+
+            var time = currentItem.createdOn
+            val now = LocalDateTime.now().toString()
+
+            fun GetDateValue(value: String): Date {
+                val temp = value.split("T")
+                val time = temp[1].split(":")
+                val date = "${temp[0]} ${time[0]}:${time[1]}"
+                var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+                return dateFormat.parse(date)
             }
-            val prettyTime = PrettyTime()
-            prettyTimeString = prettyTime.format(outputDate)
-            holder.CreatedOn.text = prettyTimeString
+
+            fun dateDiff(): String {
+                val date1 = GetDateValue(time).time
+                val date2 = GetDateValue(now).time
+
+                val diff = (date2 - date1) / 1000
+                return when {
+                    diff < MINUTE -> "Baru Saja"
+                    diff < 2 * MINUTE -> "Beberapa Menit Lalu"
+                    diff < 60 * MINUTE -> "${diff / MINUTE} Menit Lalu"
+                    diff < 2 * HOUR -> "Beberapa Jam Lalu"
+                    diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
+                    diff < 2 * DAY -> "Kemarin"
+                    diff < WEEK -> "${diff / DAY} Hari Lalu"
+                    else -> LocalDateTime.parse(time)
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                }
+
+            }
+            holder.CreatedOn.text = dateDiff()
+
             Glide.with(holder.itemView.context)
                 .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
                 .into(holder.logo)
 
 //            holder.bookmarkedJob.setOnClickListener {
 //            }
-//            holder.shareableJob.setOnClickListener {
-//            }
+            holder.shareableJob.setOnClickListener {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, currentItem.jobPosition)
+                    putExtra(Intent.EXTRA_TEXT, currentItem.link)
+                    type = "text/plain"
+
+                }
+                val shareIntent = Intent.createChooser(sendIntent, currentItem.jobPosition)
+                startActivity(context, shareIntent, null)
+            }
             holder.cardRecommendationJob.setOnClickListener {
-              onFragmentClick.onFragmentClick(currentItem.jobNo, currentItem.companyNo)
+                onFragmentClick.onFragmentClick(currentItem.jobNo, currentItem.companyNo)
             }
         }
     }

@@ -1,14 +1,20 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Model
 
 data class relatedJobModel(
-//    val companyNo: Int,
-    val jobNo: Int,
+    val jobNo: Long,
     val jobPosition: String,
-    val jobCompany: String,
-    val jobLocation: String,
-    val timeUploadApplicant: String,
-    val logo: String,
-//    val status: String,
-//    val link: String
+    val createdOn: String,
+    val company: company
 )
 
+data class company(
+    val companyNo: Long,
+    val companyName: String,
+    val logo: String,
+    val location: locationCompany
+)
+
+data class locationCompany(
+    val city: String,
+    val province: String,
+)

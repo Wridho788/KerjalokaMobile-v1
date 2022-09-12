@@ -1,59 +1,30 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Model.relatedJobModel
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.OnFragmentClickListener
 import com.google.android.material.card.MaterialCardView
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
-class RelatedJobAdapter :
+class RelatedJobAdapter(
+    private val jobList: List<job>,
+    private val onFragmentClickListener: OnFragmentClickListener
+) :
     RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>() {
-    private var listItem = listOf<relatedJobModel>(
-        relatedJobModel(
-            1,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedJobModel(
-            2,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedJobModel(
-            3,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedJobModel(
-            4,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedJobModel(
-            5,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-    )
+
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
@@ -78,20 +49,64 @@ class RelatedJobAdapter :
         return ViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = listItem[position]
+        val currentItem = jobList[position]
         holder.relatedjobPosition.text = currentItem.jobPosition
-        holder.relatedjobCompany.text = currentItem.jobCompany
-        holder.relatedjobLocation.text = currentItem.jobLocation
-        holder.relatedJobDate.text = currentItem.timeUploadApplicant
-        Glide.with(holder.itemView.context).load(currentItem.logo).into(holder.relatedlogo)
+        holder.relatedjobCompany.text = currentItem.company.companyName
+        holder.relatedjobLocation.text =
+            currentItem.company.location.city + ", " + currentItem.company.location.province
 
-//        holder.cardrelatedJob.setOnClickListener {
-//            onFragmentClickListener.onFragmentClick()
-//        }
+        val SECOND = 1
+        val MINUTE = 60 * SECOND
+        val HOUR = 60 * MINUTE
+        val DAY = 24 * HOUR
+        val WEEK = 7 * DAY
+
+        var time = currentItem.createdOn
+        val now = LocalDateTime.now().toString()
+
+        @SuppressLint("SimpleDateFormat")
+        fun GetDateValue(value: String): Date {
+            val temp = value.split("T")
+            val time = temp[1].split(":")
+            val date = "${temp[0]} ${time[0]}:${time[1]}"
+            var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            return dateFormat.parse(date)
+        }
+
+        fun dateDiff(): String {
+            val date1 = GetDateValue(time).time
+            val date2 = GetDateValue(now).time
+
+            val diff = (date2 - date1) / 1000
+            return when {
+                diff < MINUTE -> "Baru Saja"
+                diff < 2 * MINUTE -> "Beberapa Menit Lalu"
+                diff < 60 * MINUTE -> "${diff / MINUTE} Menit Lalu"
+                diff < 2 * HOUR -> "Beberapa Jam Lalu"
+                diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
+                diff < 2 * DAY -> "Kemarin"
+                diff < WEEK -> "${diff / DAY} Hari Lalu"
+                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            }
+
+        }
+        holder.relatedJobDate.text = dateDiff()
+        Glide.with(holder.itemView.context)
+            .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo)
+            .into(holder.relatedlogo)
+
+        holder.cardrelatedJob.setOnClickListener {
+            onFragmentClickListener.onFragmentClick(
+                currentItem.jobNo,
+                currentItem.company.companyNo
+            )
+        }
     }
 
     override fun getItemCount(): Int {
-        return listItem.size
+        return jobList.size
     }
 }

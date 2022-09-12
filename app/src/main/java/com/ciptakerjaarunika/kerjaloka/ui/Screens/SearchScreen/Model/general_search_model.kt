@@ -21,7 +21,7 @@ data class jobList(
     val createdOn: String,
     val jobLocations: List<location>,
     val companyNo: Long,
-    val jobNo: String
+    val jobNo: Long
 )
 
 data class location(

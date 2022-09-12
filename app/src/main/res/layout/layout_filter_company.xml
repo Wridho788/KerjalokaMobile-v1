@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_apply_job_modal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="40dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/black"
+            app:cardCornerRadius="100dp"
+            app:cardElevation="0dp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/filter_sesuai_kebutuhan"
+            android:textAlignment="center"
+            android:textColor="@color/dark_100"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/light_500" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            tools:ignore="ScrollViewCount">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="10dp"
+                    app:singleLine="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/lokasi"
+                        style="@style/ShapeAppearanceOverlay.Material3.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/danger_100"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/lokasi"
+                        android:textColor="@color/danger_500"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:chipCornerRadius="50dp"
+                        app:chipStrokeColor="@color/danger_500"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/industri"
+                        style="@style/ShapeAppearanceOverlay.Material3.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/danger_100"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/industri"
+                        android:textColor="@color/danger_500"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:chipCornerRadius="50dp"
+                        app:chipStrokeColor="@color/danger_500"
+                        app:chipStrokeWidth="1dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/size_company"
+                        style="@style/ShapeAppearanceOverlay.Material3.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/danger_100"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/ukuran_perusahaan"
+                        android:textColor="@color/danger_500"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:chipCornerRadius="50dp"
+                        app:chipStrokeColor="@color/danger_500"
+                        app:chipStrokeWidth="1dp" />
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+        </HorizontalScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/light_500" />
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/search_background"
+            android:focusable="true"
+            android:fontFamily="@font/poppins_light"
+            android:inputType="text"
+            android:keepScreenOn="true"
+            android:paddingEnd="10dp"
+            android:queryHint="Cari Lokasi"
+            android:searchIcon="@drawable/ic_search"
+            android:textColor="@color/dark_100"
+            android:textSize="12sp"
+            android:tooltipText="@string/search_placeholder"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_placeholder"
+            tools:ignore="RtlSymmetry"
+            tools:targetApi="o" />
+        <TextView
+            android:id="@+id/btn_hapus_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hapus Semua"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="end"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/danger_500"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:maxHeight="400dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/layout_konfirmasi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_header"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_location_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginVertical="16dp"
+
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_industri_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginVertical="16dp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_size_company_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginVertical="16dp"
+
+
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_konfirmasi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/light_500" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_konfirmasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:backgroundTint="@color/danger_500"
+            android:fontFamily="@font/poppins"
+            android:text="@string/konfimasi"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:cornerRadius="100dp" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
