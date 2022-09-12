@@ -26,6 +26,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                         R.id.home -> replaceFragment((HomePage()))
                         R.id.lamaran -> replaceFragment((LamaranPage()))
                         R.id.interview -> replaceFragment((InterviewPage()))
-                        R.id.akun -> replaceFragment((AkunPage()))
+                        R.id.akun -> replaceFragment((profilepage()))
 
                         else -> {
 
