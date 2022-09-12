@@ -74,6 +74,7 @@ class InterviewPage : Fragment(), CellClickListener{
             { res ->
                 Log.d("Websocket Response : ", res.toString())
                 val userNo = SessionManager(context).user!!.userNo.toString()
+
                 hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
             }, String::class.java)
 

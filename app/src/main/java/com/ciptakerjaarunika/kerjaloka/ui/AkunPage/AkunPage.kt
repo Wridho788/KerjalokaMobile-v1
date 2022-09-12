@@ -29,18 +29,18 @@ class AkunPage : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
 
-        Log.d("Klik", "Start")
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
 
-        btn_login.setOnClickListener(View.OnClickListener {
+        btn_login.setOnClickListener{
+            Log.d("Klik", "Start")
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
             val loginRequest = LoginRequest(email = email, password=password)
             AUTHAPI().Login(context, loginRequest){
+                Log.d("Login Response", it.toString());
                 if(it != null && it.code == 252){
-                    Log.d("Login Response", it.toString());
 
                     SessionManager(context).access_token = it.userToken
 
@@ -74,7 +74,7 @@ class AkunPage : Fragment() {
                     SessionManager(context).user = null
                 }
             }
-        })
+        }
 
         val register = itemView.findViewById<TextView>(R.id.register)
         register.setOnClickListener(View.OnClickListener {

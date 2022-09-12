@@ -17,10 +17,8 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ciptakerjaarunika.kerjaloka.R
-import org.jitsi.meet.sdk.BroadcastEvent
-import org.jitsi.meet.sdk.BroadcastIntentHelper
-import org.jitsi.meet.sdk.JitsiMeetActivity
-import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import org.jitsi.meet.sdk.*
 import timber.log.Timber
 
 
@@ -75,11 +73,21 @@ class IncomingCallPage(val roomId: String) : Fragment(){
 
         view?.findViewById<ImageView>(R.id.reject_btn)?.setOnClickListener{
             playRingtone?.stop()
+            fragmentManager?.popBackStack()
         }
         view?.findViewById<ImageView>(R.id.approve_btn)?.setOnClickListener{
             playRingtone?.stop()
+            val userInfo = JitsiMeetUserInfo();
+            userInfo.email = SessionManager(context).user?.email
+            userInfo.displayName = SessionManager(context).user?.userFullname
+
+            if(SessionManager(context).user?.company != null){
+                userInfo.displayName = SessionManager(context).user?.company?.companyName
+            }
+
             val options = JitsiMeetConferenceOptions.Builder()
                 .setRoom(roomId)
+                .setUserInfo(userInfo)
                 .build()
             JitsiMeetActivity.launch(context, options)
         }

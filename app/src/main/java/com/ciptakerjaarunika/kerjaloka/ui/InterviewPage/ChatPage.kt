@@ -54,10 +54,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.jitsi.meet.sdk.BroadcastEvent
-import org.jitsi.meet.sdk.BroadcastIntentHelper
-import org.jitsi.meet.sdk.JitsiMeetActivity
-import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import org.jitsi.meet.sdk.*
 import timber.log.Timber
 import java.io.File
 import java.net.URI
@@ -235,8 +232,18 @@ class ChatPage(var sectionName: String,
         val videoCallButton = itemView.findViewById<ImageButton>(R.id.video_call_btn)
         videoCallButton?.setOnClickListener{
             val roomId = SessionManager(context).user?.userNo.toString()+ Receiver.toString()
+            val userInfo = JitsiMeetUserInfo();
+            userInfo.email = SessionManager(context).user?.email
+            userInfo.displayName = SessionManager(context).user?.userFullname
+
+            if(SessionManager(context).user?.company != null){
+                userInfo.displayName = SessionManager(context).user?.company?.companyName
+            }
+
+
             val options = JitsiMeetConferenceOptions.Builder()
                 .setRoom(roomId)
+                .setUserInfo(userInfo)
                 // Settings for audio and video
                 //.setAudioMuted(true)
                 //.setVideoMuted(true)

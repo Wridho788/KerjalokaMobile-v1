@@ -91,6 +91,7 @@ dependencies {
 
     //Camera
     implementation "com.github.qingmei2:rximagepicker:2.5.6"
+    //noinspection GradleCompatible
     implementation 'com.android.support:percent:23.3.0'
 
     implementation ('org.jitsi.react:jitsi-meet-sdk:+') { transitive = true }
