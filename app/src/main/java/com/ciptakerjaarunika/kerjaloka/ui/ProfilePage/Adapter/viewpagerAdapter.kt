@@ -32,7 +32,7 @@ class viewpagerAdapter (fragmentManager: FragmentManager, lifecycle: Lifecycle,)
                 fragment_my_record_page()
             }
             6->{
-                cvPage()
+                ManageUserSetting()
             }
             else -> {
                 ManageProfile()

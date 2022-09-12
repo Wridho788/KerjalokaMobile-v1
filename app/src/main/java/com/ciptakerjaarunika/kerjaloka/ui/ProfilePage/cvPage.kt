@@ -18,6 +18,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ExpAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.LanguageAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.ui.search_job.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.search_job.SearchModel
 import com.google.android.material.button.MaterialButton
@@ -187,8 +188,10 @@ class cvPage : Fragment() {
         btn_edSkil?.setOnClickListener {
             replaceFragment(edit_kemampuan())
         }
+
         btn_seePapiRes?.setOnClickListener {
-            replaceFragment(PapikostickResult())
+            val sheet = PapikostickResult()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
         }
         btn_edExp?.setOnClickListener {
             replaceFragment(manage_cv_edit_experience_page())

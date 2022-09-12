@@ -7,6 +7,30 @@ data class minat_model(
     val Preference: String,
 )
 
+data class user(
+    val createdBy: Long = 0,
+    val createdOn: String = "2021-11-02T18:53:01",
+    val deactivated: Boolean = false,
+    val deactivatedAt: String = "null",
+    val email: String = "kevinhutabarat1406@gmail.com",
+    val emailHasVerified: Boolean = true,
+    val emergencyPhone: String = "null",
+    val isDeleted: Boolean = false,
+    val isDiscoverable: Boolean = true,
+    val isNewsletter: Boolean = false,
+    val lastChangeUsername: String = "",
+    val lastLoginIPAddress: String = "null",
+    val password: String = "$2a$11$2w8591uYcsBAL7gwcpXEeuzA4s0a6uRev3z5JToj14zA8jW9//ege",
+    val phone: String = "082363153155",
+    val roleNo: Int = 4,
+    val suspended: Boolean = false,
+    val userFacebookId: String = "null",
+    val userFullname: String = "Kevin Hot Marojahan",
+    val userGoogleId: String = "",
+    val userNo: Long = 20211102115301,
+    val username: String = "Kevin Hot Marojahan"
+)
+
 data class js_profile(
     val userNo: Long = 20211102115301,
     val jsNo: Int = 47,
@@ -199,26 +223,39 @@ data class record(
 )
 
 data class review(
-    val approvedByUserNo: Int= 0,
-    val approvedOn: String= "2022-07-18T09:27:36",
-    val canAppeal:Boolean=true,
-    val comment:String="null",
-    val conRating:List<conRat>,
-    val proRating:List<proRat>,
-    val raterPhoto:String="202110271410221246.jpg",
-    val rating:Int=4,
-    val ratingAt:String="2022-07-18T09:27:20",
-    val userFullName: String="TESTING",
-    val userNo: Long=20211027141022,
-    val userRatingNo:Int=3,
-    val userRole:Int=2,
+    val approvedByUserNo: Int = 0,
+    val approvedOn: String = "2022-07-18T09:27:36",
+    val canAppeal: Boolean = true,
+    val comment: String = "null",
+    val conRating: List<conRat>,
+    val proRating: List<proRat>,
+    val raterPhoto: String = "202110271410221246.jpg",
+    val rating: Int = 4,
+    val ratingAt: String = "2022-07-18T09:27:20",
+    val userFullName: String = "TESTING",
+    val userNo: Long = 20211027141022,
+    val userRatingNo: Int = 3,
+    val userRole: Int = 2,
 )
 
 data class conRat(
-    val id: Int=0,
-    val con: String="Kemauan Bekerja",
+    val id: Int = 0,
+    val con: String = "Kemauan Bekerja",
 )
+
 data class proRat(
-    val id: Int=0,
-    val con: String="Disiplin",
+    val id: Int = 0,
+    val con: String = "Disiplin",
+)
+
+data class field(
+    val fieldName: String,
+    val fieldNo: Int,
+    val jobseekerNo: Long
+)
+
+data class jobtype(
+    val jobTypeName: String,
+    val jobTypeNo: Int,
+    val jobseekerNo: Long
 )

@@ -11,6 +11,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +24,7 @@
         android:paddingHorizontal="16dp"
         tools:ignore="UselessParent">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_username_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +49,6 @@
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/profile_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -70,6 +73,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/profile_username"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="vivi2992"
@@ -95,7 +99,7 @@
         android:paddingHorizontal="16dp"
         tools:ignore="UselessParent">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_profile_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,7 +124,6 @@
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/profile_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -130,7 +133,7 @@
                         android:textSize="14sp"/>
 
                     <TextView
-                        android:id="@+id/edit_profile_setting"
+                        android:id="@+id/edit_email_profile_setting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
@@ -145,6 +148,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/profile_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="vvictoria2991@gmail.com"
@@ -169,7 +173,7 @@
         android:paddingHorizontal="16dp"
         tools:ignore="UselessParent">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_nomor_telepon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -194,7 +198,6 @@
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/profile_nomor_telepon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -219,6 +222,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/profile_nomor_telepon"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="0822 2873 8750"
@@ -242,7 +246,7 @@
         android:paddingHorizontal="16dp"
         tools:ignore="UselessParent">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_kata_sandi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -267,7 +271,6 @@
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/profile_kata_sandi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -292,6 +295,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/profile_kata_sandi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="***********"
@@ -316,7 +320,7 @@
         android:paddingHorizontal="16dp"
         tools:ignore="UselessParent">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_discoverable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -341,7 +345,6 @@
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/profile_discoverable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -366,6 +369,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/profile_discoverable"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Dengan menyalakan switch Discoverable, Profil Kamu akan dapat dilihat oleh semua perusahaan. Hal ini akan membantu Perusahaan untuk menemukan mu."
@@ -389,7 +393,7 @@
         android:paddingHorizontal="16dp"
         tools:ignore="UselessParent">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_kelola_newsletter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -536,6 +540,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

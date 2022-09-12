@@ -35,7 +35,7 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
@@ -43,7 +43,7 @@
 
                     <TextView
                         android:id="@+id/record_page_by"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Oleh: PT. Mantap Indonesia"
                         android:fontFamily="@font/poppins"
@@ -54,7 +54,7 @@
                     <TextView
                         android:id="@+id/record_page_date"
                         android:layout_marginTop="4dp"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="12 Agustus 2022 pada 16:24"
                         android:fontFamily="@font/poppins"

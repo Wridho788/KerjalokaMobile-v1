@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.anychart.APIlib
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
@@ -30,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PapikostickResult.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PapikostickResult : Fragment() {
+class PapikostickResult : SuperBottomSheetFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -48,6 +50,7 @@ class PapikostickResult : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
 
         val view = inflater.inflate(R.layout.fragment_papikostick_result, container, false)
 
@@ -145,4 +148,11 @@ class PapikostickResult : Fragment() {
         xvalues.add("E")
 
     }
+
+    override fun isSheetAlwaysExpanded(): Boolean {
+        return true
+    }
+
+    @SuppressLint("Range")
+    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
 }
