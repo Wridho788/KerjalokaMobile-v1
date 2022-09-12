@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.AkunPage.fragment_edit_email_profile">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/mainAppbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.Material3.Button.Icon"
+                    android:backgroundTint="@color/white"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:paddingLeft="16dp"
+                    app:cornerRadius="100sp"
+                    app:icon="@drawable/ic_back"
+                    app:iconTint="@color/danger_500"/>
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/mainToolbar_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:titleTextColor="@color/black"
+                    app:title="Edit Email"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/insert_new_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Masukkan Email Baru"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/current_user_email_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Email kamu saat ini yaitu : "
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/current_user_email_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="vvictoria2991@gmail.com"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="7dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light_500"
+                    android:clickable="true"
+                    android:elevation="0dp"
+                    app:cardCornerRadius="50dp"
+                    app:cardElevation="0dp">
+
+                    <EditText
+                        android:id="@+id/masukkan_email_baru_edit_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:fontFamily="@font/poppins"
+                        android:background="@color/light_300"
+                        android:ems="10"
+                        android:hint="Masukkan email baru"
+                        android:inputType="textMultiLine|text"
+                        android:lines="10"
+                        android:maxLines="10"
+                        android:padding="8dp"
+                        android:textColor="@color/trueGray_300"
+                        android:textSize="10sp" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/warning_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="OTP akan dikirim ke email yang baru sebagai verifikasi"
+                android:textColor="@color/trueGray_300"
+                android:textSize="10sp"/>
+
+        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_simpan_username"
+            android:layout_marginTop="550dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:backgroundTint="@color/danger_500"
+            android:fontFamily="@font/poppins"
+            android:text="Simpan"
+            android:layout_marginHorizontal="16dp"
+            android:textAllCaps="false"
+            android:layout_marginBottom="16dp"
+            android:textSize="14dp"
+            app:cornerRadius="100dp"
+            tools:layout_editor_absoluteX="17dp"
+            tools:layout_editor_absoluteY="346dp"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>

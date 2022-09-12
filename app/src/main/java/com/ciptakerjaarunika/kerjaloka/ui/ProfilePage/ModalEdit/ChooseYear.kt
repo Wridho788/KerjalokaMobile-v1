@@ -1,0 +1,66 @@
+package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit
+
+import android.annotation.SuppressLint
+import android.os.Build
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Adapter.BookmarkedJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
+import java.time.LocalDate
+import java.time.LocalDateTime
+
+
+class ChooseYear: SuperBottomSheetFragment() {
+
+    private var layoutManager: RecyclerView.LayoutManager? =null
+    private var adapter: RecyclerView.Adapter<ChooseYearAdapter.chooseYr>? = null
+    private lateinit var chooseYearAdapter: ChooseYearAdapter
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        val view = View.inflate(context, R.layout.global_modal_edit, null)
+        val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
+        title.text = "Pilih Tahun"
+
+        return view
+    }
+
+//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val list = ArrayList<year>()
+        val now = LocalDate.now().year.toInt()
+
+        for (i in 1900 until now){
+            val yr1 = year(
+                year = i+1
+            )
+            list.add(yr1)
+        }
+
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
+        layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = layoutManager
+        adapter = ChooseYearAdapter(list)
+        recyclerView.adapter = adapter
+    }
+
+
+    override fun isSheetAlwaysExpanded(): Boolean {
+        return true
+    }
+
+    @SuppressLint("Range")
+    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+}

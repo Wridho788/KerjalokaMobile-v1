@@ -214,15 +214,15 @@ class JobDetailFragment(
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark)
-        val recyclerView2 =
-            view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs)
-
-//        recyclerView2.apply {
-//            layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//            recyclerView2.layoutManager = layoutManager2
-//            adapter2 = RelatedOtherJobAdapter()
-//            recyclerView2.adapter = adapter2
-//        }
+//        val recyclerView2 =
+//            view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs)
+//
+////        recyclerView2.apply {
+////            layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+////            recyclerView2.layoutManager = layoutManager2
+////            adapter2 = RelatedOtherJobAdapter()
+////            recyclerView2.adapter = adapter2
+////        }
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
