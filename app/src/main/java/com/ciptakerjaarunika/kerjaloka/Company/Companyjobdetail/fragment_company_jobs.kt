@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import com.ciptakerjaarunika.kerjaloka.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +37,9 @@ class fragment_company_jobs : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        var fb = view?.findViewById<FloatingActionButton>(R.id.Fb_BlowJob)
+        fb?.visibility = VISIBLE
+        fb?.setImageDrawable(resources.getDrawable(R.drawable.ic_add_button))
         return inflater.inflate(R.layout.fragment_company_jobs, container, false)
     }
 
