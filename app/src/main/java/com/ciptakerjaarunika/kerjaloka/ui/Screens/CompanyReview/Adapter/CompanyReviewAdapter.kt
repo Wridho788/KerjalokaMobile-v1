@@ -3,7 +3,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,24 +20,20 @@ class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : Recycler
         var username: TextView
         var comment: TextView
         var ratingAt: TextView
-        var ratingBar: RatingBar
+//        var ratingBar: RatingBar
 
         init {
             picture = itemView.findViewById(R.id.profile_picture)
             username = itemView.findViewById(R.id.username)
             comment = itemView.findViewById(R.id.text_review)
             ratingAt = itemView.findViewById(R.id.date_review)
-            ratingBar = itemView.findViewById(R.id.rBar)
+//            ratingBar = itemView.findViewById(R.id.rBar)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_review, null)
-        view.layoutParams =
-            RecyclerView.LayoutParams(
-                RecyclerView.LayoutParams.MATCH_PARENT,
-                RecyclerView.LayoutParams.WRAP_CONTENT
-            )
+
         return ViewHolder(view)
     }
 
@@ -46,8 +41,7 @@ class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : Recycler
         val currentItem = reviewList[position]
         holder.username.text = currentItem.userFullName
         holder.comment.text = currentItem.comment
-//        holder.ratingAt.text = currentItem.ratingAt
-//        holder.ratingBar = currentItem.rating.toFloat()
+//        holder.ratingBar.rating = currentItem.rating
         Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile" + currentItem.raterPhoto).fitCenter().into(holder.picture)
         val SECOND = 1
         val MINUTE = 60 * SECOND

@@ -72,7 +72,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                 company_workers.text = it.data.size
                 company_type.text = it.data.field
                 txt_rating_company.text = it.data.rating.ratingValue.toString()
-
+                txt_follower.text = it.data.followers.toString()
                 rv_recommendations_job.apply {
                     layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

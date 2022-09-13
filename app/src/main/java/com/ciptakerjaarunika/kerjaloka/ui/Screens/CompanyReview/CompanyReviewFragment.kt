@@ -52,7 +52,6 @@ class CompanyReviewFragment(private val CompanyNo: Long) : Fragment() {
         )
         rBarReview.layoutParams = layoutParams
         rv_review.layoutParams = layoutParams
-//        rBarReview.stepSize = 1.0.toFloat()
         rBarReview.numStars = 5
         val thisActivity = this
         CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
@@ -63,6 +62,8 @@ class CompanyReviewFragment(private val CompanyNo: Long) : Fragment() {
                     .fitCenter().into(logo)
                 field.text = it.data.field
                 location.text = it.data.companyAddress
+
+
             }
         }
 

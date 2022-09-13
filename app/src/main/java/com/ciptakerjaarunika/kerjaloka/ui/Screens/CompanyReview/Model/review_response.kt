@@ -24,7 +24,7 @@ data class reviewList(
     val userNo :  Long,
     val userRole :  Long,
     val comment: String,
-    val rating: Long,
+    val rating: Float,
     val ratingAt: String,
     val raterPhoto: String,
     val proRating: ArrayList<String>,

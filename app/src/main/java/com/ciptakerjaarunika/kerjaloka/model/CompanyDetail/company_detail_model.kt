@@ -20,6 +20,7 @@ data class company_detail_list(
     val rating: rating,
     val job: List<job>,
     val link: String,
+    val followers: Long,
 )
 
 data class location(
