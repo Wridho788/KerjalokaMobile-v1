@@ -82,6 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -200,16 +201,16 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_company_draft"
+                android:id="@+id/btn_company_publish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/danger_500"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Draft"
+                android:text="Publish"
                 android:textAllCaps="false"
-                android:textColor="@color/danger_500"
+                android:textColor="@color/white"
                 android:textSize="14dp"
                 app:cornerRadius="100dp"
                 app:layout_widthPercent="45%"
