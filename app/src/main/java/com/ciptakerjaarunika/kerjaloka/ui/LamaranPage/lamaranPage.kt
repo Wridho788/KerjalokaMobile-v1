@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.model.Job.ApplicationData
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.google.android.material.appbar.MaterialToolbar
@@ -65,7 +66,7 @@ class LamaranPage : Fragment(), LamaranCellClickListener {
         var Context = this;
         if(SessionManager(context).user == null){
             val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(id, Login())
+            fragmentTransaction.replace(id, Login(this))
             fragmentTransaction.commit()
         }
         else {
@@ -86,14 +87,14 @@ class LamaranPage : Fragment(), LamaranCellClickListener {
         }
 
     }
-    override fun onCellClickListener() {
+    override fun onCellClickListener(jobNo: Long, companyNo: Long, applicationData : ApplicationData?) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, viewJobDetail(), "JobDetailFragment")
+        ft.replace(id, viewJobDetail(jobNo, companyNo, applicationData), "JobDetailFragment")
         ft.addToBackStack("Lamaran Page")
         ft.commit()
     }
 }
 
 interface LamaranCellClickListener {
-    fun onCellClickListener()
+    fun onCellClickListener(jobNo : Long, companyNo : Long, applicationData: ApplicationData?)
 }

@@ -9,7 +9,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Job.ApplicationData
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranCellClickListener
+import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.viewJobDetail
 import com.google.android.material.appbar.MaterialToolbar
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,11 +58,11 @@ class view_mytest_list : Fragment(),LamaranCellClickListener{
             adapter = mytest_adapter (Context)
         }
     }
-    override fun onCellClickListener() {
-//        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-//        ft.replace(id, JobDetailFragment(), "JobDetailFragment")
-//        ft.addToBackStack(null)
-//        ft.commit()
+    override fun onCellClickListener(jobNo: Long, companyNo: Long, applicationData: ApplicationData?) {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, viewJobDetail(jobNo, companyNo, applicationData), "JobDetailFragment")
+        ft.addToBackStack("Lamaran Page")
+        ft.commit()
     }
 
     companion object {

@@ -166,9 +166,9 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
     }
-    open fun showLogin(){
+    open fun showLogin(Goto : Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container, Login())
+        fragmentTransaction.replace(R.id.fragment_container, Login(Goto))
         fragmentTransaction.commit()
     }
 }

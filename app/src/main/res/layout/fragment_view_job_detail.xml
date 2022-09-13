@@ -15,28 +15,65 @@
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@color/white"
         android:background="@color/danger_500">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/backButton"
+            android:layout_centerVertical="true"
             android:src="@drawable/back_white_icon"
             android:layout_marginRight="10dp"/>
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:textSize="20dp"
             android:paddingTop="3dp"
             android:textColor="@color/white"
+            android:layout_toEndOf="@id/backButton"
             android:fontFamily="@font/poppins_semibold"
             android:text="Detail Lowongan"/>
-    </com.google.android.material.appbar.MaterialToolbar>
 
+        <ImageView
+            android:id="@+id/toolbar_bookmark"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_bookmark"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/toolbar_share"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/toolbar_share"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_share"
+            tools:ignore="ContentDescription,MissingConstraints" />
+        </RelativeLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/spinnerDetailPekerjaan"
+        android:gravity="center">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:isScrollContainer="true"
         android:scrollbars="vertical"
+        android:id="@+id/contentPekerjaan"
         tools:ignore="ScrollViewCount"
         app:layout_constraintTop_toBottomOf="@id/mainToolbar"
         >
@@ -125,11 +162,11 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/card_testText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
                                 android:text="Dilamar :"
+                                android:layout_marginRight="5dp"
                                 android:textSize="10dp" />
 
                             <TextView
@@ -145,6 +182,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
                                 android:text="pada"
+                                android:layout_marginHorizontal="5dp"
                                 android:textSize="10dp" />
 
                             <TextView
@@ -184,6 +222,7 @@
             android:background="@color/white"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
+            android:id="@+id/card_progress_container"
             android:paddingBottom="8dp"
             android:paddingTop="8dp">
             <LinearLayout
@@ -280,7 +319,7 @@
                 android:fontFamily="@font/poppins"
                 android:textSize="12dp"
                 android:textColor="@color/black"
-                android:id="@+id/reqDesc"/>
+                android:id="@+id/jobDescription"/>
         </LinearLayout>
 
         <LinearLayout
@@ -444,27 +483,14 @@
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/bullet_list"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="@color/dark_100"
-                        android:textSize="12sp"
-                        app:drawableStartCompat="@drawable/bullet_list" />
-                    <TextView
-                        android:id="@+id/location"
+                       <TextView
+                        android:id="@+id/locations"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
                         android:layout_marginStart="5dp"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
-                </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -496,6 +522,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Tarik Lamaran"
+                android:id="@+id/btnWithdrawBottom"
                 android:textAllCaps="false"
                 android:fontFamily="@font/poppins_semibold"
                 android:textSize="14dp"

@@ -11,18 +11,14 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage
-import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.material.button.MaterialButton
-import com.microsoft.signalr.HubConnection
 
 
 class AkunPage : Fragment() {

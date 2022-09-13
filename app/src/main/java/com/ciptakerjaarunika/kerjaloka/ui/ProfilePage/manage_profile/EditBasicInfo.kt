@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.BottomSheetApplicantReport
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditGender
 

@@ -3,8 +3,10 @@ package com.ciptakerjaarunika.kerjaloka.ui.LamaranPage
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -42,6 +44,7 @@ class Application(private val data : List<ApplicationData>, private val context 
             val TotalTest: TextView
             val TestTaken: TextView
             val CompanyLogo : ImageView
+            val TestContainer : LinearLayout
 //            val Requirment: TextView
 
             init {
@@ -52,6 +55,7 @@ class Application(private val data : List<ApplicationData>, private val context 
                 TotalTest = view.findViewById(R.id.card_totalTest)
                 TestTaken = view.findViewById(R.id.card_testHasTake)
                 CompanyLogo = view.findViewById(R.id.img_company_logo)
+                TestContainer = view.findViewById(R.id.test_container)
 //                Requirment = view.findViewById(R.id.ca)
             }
         }
@@ -79,10 +83,13 @@ class Application(private val data : List<ApplicationData>, private val context 
             viewHolder.CompanyAddress.text = "${data[position].job.company.location.city}, ${data[position].job.company.location.province}"
             viewHolder.TestTaken.text = data[position].tests.filter{ item -> item.testResult != null}.size.toString()
             viewHolder.TotalTest.text = data[position].tests.size.toString()
+            if(data[position].tests.isEmpty()){
+                viewHolder.TestContainer.visibility = GONE
+            }
 //            viewHolder.Requirment.text= data[position].requirentment
 
             viewHolder.itemView.setOnClickListener {
-                cellClickListener.onCellClickListener()
+                cellClickListener.onCellClickListener(data[position].job.jobNo, data[position].job.company.companyNo, data[position])
             }
         }
 

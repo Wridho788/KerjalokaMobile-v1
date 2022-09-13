@@ -13,11 +13,12 @@ import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
+import com.ciptakerjaarunika.kerjaloka.model.User.User
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 
 
-class Login : Fragment() {
+class Login(val Goto :Fragment) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -25,17 +26,32 @@ class Login : Fragment() {
         super.onViewCreated(itemView, savedInstanceState)
 
         Log.d("Klik", "Start")
-        val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
-        val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
+
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
-        btn_login.setOnClickListener(View.OnClickListener {
-            Log.d("Klik", "Clicked")
-            AUTHAPI().Login(context,LoginRequest(email,password)){
-                if(it != null){
-                    Log.d("Login Response", it.toString());
+
+            btn_login.setOnClickListener{
+                val email = view?.findViewById<EditText>(R.id.txt_email)?.text.toString()
+                val password = view?.findViewById<EditText>(R.id.txt_password)?.text.toString()
+                if(!email.isNullOrEmpty() && !email.isNullOrBlank() && !password.isNullOrEmpty() && !password.isNullOrBlank()) {
+
+                    AUTHAPI().Login(context, LoginRequest(email, password)) {
+                        if (it != null) {
+
+                            SessionManager(context).access_token = it.userToken
+                            var User : User? = User(it.userNo, "null", "", "", it.userFullname,
+                            it.userRole, it.photo, it.suspended, it.deactivated, it.dataComplete, it.ownerStatus, null,
+                            it.authorized, it.notice, null, null, null, it.privilege);
+
+                            SessionManager(context).user = User
+
+                            val fragmentTransaction = parentFragmentManager.beginTransaction()
+                            fragmentTransaction.remove(this)
+                            fragmentTransaction.replace(id, Goto)
+                            fragmentTransaction.commit()
+                        }
+                    }
                 }
-            }
-        })
+        }
 
         val register = itemView.findViewById<TextView>(R.id.register)
         register.setOnClickListener(View.OnClickListener {

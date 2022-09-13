@@ -9,14 +9,13 @@ data class myApplicationsResponse(
     val data :  List<ApplicationData>,
 )
 data class ApplicationData(
-//    val companyNo : Long,
+    val application : ApplicationJob,
     val job : com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.job,
     val tests : List<ApplicationTest>,
 )
 data class ApplicationJob(
-    val jobNo : Long,
-    val jobPosition : String,
-    val company : companies
+    val applicationNo : Long,
+    val applyOn : String,
 )
 data class ApplicationTest(
     val test : Any?,

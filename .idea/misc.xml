@@ -56,11 +56,17 @@
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/activity_editjob_layout.xml" value="0.22060709705002138" />
         <entry key="app/src/main/res/layout/activity_item_profile_user_page.xml" value="0.23685335613510047" />
+        <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.2620778110303549" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
+        <entry key="app/src/main/res/layout/activity_manage_lampiran_page_profile.xml" value="0.2620778110303549" />
+        <entry key="app/src/main/res/layout/activity_modal_edit_ekspektasi_gaji_layout.xml" value="0.2620778110303549" />
+        <entry key="app/src/main/res/layout/activity_modal_edit_lampiran_profile_page.xml" value="0.2620778110303549" />
         <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.38563488670371954" />
         <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.20051303976058144" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2620778110303549" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
@@ -71,7 +77,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.3273092369477912" />
-        <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.43302752293577984" />
+        <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.32762312633832974" />
         <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.165" />
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/item_card_job.xml" value="0.125" />
@@ -94,6 +100,8 @@
         <entry key="app/src/main/res/layout/message_right1.xml" value="0.1483539974348012" />
         <entry key="app/src/main/res/layout/message_right2.xml" value="0.1483539974348012" />
         <entry key="app/src/main/res/layout/message_section.xml" value="0.20179563916203505" />
+        <entry key="app/src/main/res/layout/modal_report_layout.xml" value="0.25908507909362977" />
+        <entry key="app/src/main/res/layout/modal_withdraw_layout.xml" value="0.165" />
         <entry key="app/src/main/res/layout/myapplicant_card.xml" value="0.375" />
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.49635416666666665" />

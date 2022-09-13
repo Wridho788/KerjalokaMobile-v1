@@ -75,6 +75,10 @@ class DateUtils {
         var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
         return dateFormat.parse(date)
     }
+    open fun GetDateValueWithFormat(value: String?, format: String) : String{
+        if(value == null) {return "-"}
+        return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern(format))
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     open fun GetTime(value : String): String {
         return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("HH:mm"))

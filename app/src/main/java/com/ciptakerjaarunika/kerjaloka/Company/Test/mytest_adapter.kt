@@ -59,9 +59,9 @@ class mytest_adapter(private val cellClickListener: view_mytest_list):RecyclerVi
             viewHolder.Testcreator.text = data[position].testcreator
 //            viewHolder.Requirment.text= data[position].requirentment
 
-            viewHolder.itemView.setOnClickListener {
-                cellClickListener.onCellClickListener()
-            }
+//            viewHolder.itemView.setOnClickListener {
+//                cellClickListener.onCellClickListener(data[position].)
+//            }
         }
 
         // Return the size of your dataset (invoked by the layout manager)

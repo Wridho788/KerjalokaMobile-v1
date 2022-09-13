@@ -44,7 +44,9 @@ data class rJobDetailModel(
     val job: List<job>,
     val jobSalaryMax: String,
     val jobSalaryMin: String,
-    val companyjob: company
+    val companyjob: company,
+    val bookmarked: Boolean?,
+    val applied: Boolean?,
 )
 
 data class jobLocation(

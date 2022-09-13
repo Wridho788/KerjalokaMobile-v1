@@ -123,7 +123,7 @@ class InterviewPage : Fragment(), CellClickListener{
             }
         }else if(user == null){
             val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(id, Login())
+            fragmentTransaction.replace(id, Login(this))
             fragmentTransaction.commit()
         }
     }
