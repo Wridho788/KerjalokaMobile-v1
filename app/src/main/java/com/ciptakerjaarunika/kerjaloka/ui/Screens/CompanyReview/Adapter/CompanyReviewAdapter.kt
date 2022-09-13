@@ -4,37 +4,45 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
+import com.google.android.material.chip.ChipGroup
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : RecyclerView.Adapter<CompanyReviewAdapter.ViewHolder>() {
+class CompanyReviewAdapter(
+    private val reviewList: List<reviewList>
+) : RecyclerView.Adapter<CompanyReviewAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var picture: ImageView
         var username: TextView
         var comment: TextView
         var ratingAt: TextView
-//        var ratingBar: RatingBar
-
+        var ratingBar: RatingBar
+        var chipProRating: ChipGroup
+        var chipConRating: ChipGroup
         init {
             picture = itemView.findViewById(R.id.profile_picture)
             username = itemView.findViewById(R.id.username)
             comment = itemView.findViewById(R.id.text_review)
             ratingAt = itemView.findViewById(R.id.date_review)
-//            ratingBar = itemView.findViewById(R.id.rBar)
+            ratingBar = itemView.findViewById(R.id.ratingUser)
+            chipProRating = itemView.findViewById(R.id.chipGroupKelebihan)
+            chipConRating = itemView.findViewById(R.id.chipGroupTantangan)
         }
     }
+    var kelebihanList = String()
+    var tantanganList = ArrayList<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_review, null)
-
         return ViewHolder(view)
     }
 
@@ -42,10 +50,12 @@ class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : Recycler
         val currentItem = reviewList[position]
         holder.username.text = currentItem.userFullName
         holder.comment.text = currentItem.comment
-//        holder.ratingBar.rating = currentItem.rating
         Log.d("rating", currentItem.rating.toString())
+        holder.ratingBar.rating = currentItem.rating
+        Glide.with(holder.itemView.context)
+            .load(config().portAddress + "/photo/Profile" + currentItem.raterPhoto).fitCenter()
+            .into(holder.picture)
 
-        Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile" + currentItem.raterPhoto).fitCenter().into(holder.picture)
         val SECOND = 1
         val MINUTE = 60 * SECOND
         val HOUR = 60 * MINUTE
@@ -53,13 +63,14 @@ class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : Recycler
         val WEEK = 7 * DAY
 
         var time = currentItem.ratingAt
+        Log.d("time", time.toString())
         val now = LocalDateTime.now().toString()
 
         fun GetDateValue(value: String): Date? {
             val temp = value.split("T")
             val time = temp[1].split(":")
             val date = "${temp[0]} ${time[0]}:${time[1]}"
-            var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
             return dateFormat.parse(date)
         }
 
@@ -76,10 +87,14 @@ class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : Recycler
                 diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
                 diff < 2 * DAY -> "Kemarin"
                 diff < WEEK -> "${diff / DAY} Hari Lalu"
-                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd MMMM yyyy 'pada' h:mm "))
             }
         }
         holder.ratingAt.text = dateDiff()
+//        holder.chipProRating.apply {
+//
+//        }
+//        holder.chipProRating.resources()
     }
 
     override fun getItemCount(): Int {

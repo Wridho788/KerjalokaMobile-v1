@@ -58,6 +58,7 @@
                 android:background="@color/light_500" />
 
             <LinearLayout
+                android:id="@+id/review_send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -75,7 +76,15 @@
                     android:layout_height="5dp"
                     android:layout_marginVertical="16dp"
                     android:background="@color/light_500" />
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/review_saya"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="16sp"
+                    android:textColor="@color/dark_100"
+                    android:layout_marginStart="16dp"
+                    />
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_item_my_review"
                     android:layout_width="match_parent"

@@ -29,7 +29,8 @@ data class location(
 )
 
 data class rating(
-    val ratingValue: Float
+    val ratingValue: Float,
+    val ratingList: ArrayList<*>
 )
 
 data class job(

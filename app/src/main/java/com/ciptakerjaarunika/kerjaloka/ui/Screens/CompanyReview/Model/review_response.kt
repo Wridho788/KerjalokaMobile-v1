@@ -28,6 +28,41 @@ data class reviewList(
     val ratingAt: String,
     val raterPhoto: String,
     val approvedOn: String,
-    val proRating: ArrayList<String>,
-    val conRating: ArrayList<String>
+    val proRating: List<String>,
+    val conRating: List<String>
+)
+
+data class send_review_response(
+    val code: Int,
+    val errorCode: Int?,
+    val message: String?,
+    val data: send
+)
+
+data class send(
+    val hasSend: Boolean,
+    val canSend: Boolean,
+)
+
+data class send_Request(
+    val userNo: Long,
+    val message: String,
+    val rating: Long,
+    val proRating: ArrayList<proRatingList>,
+    val conRating: ArrayList<conRatingList>
+)
+
+data class proRatingList(
+    val categoryNo: Long,
+)
+
+data class conRatingList(
+    val categoryNo: Long
+)
+
+data class sendResponse(
+    val code: Int,
+    val errorCode: Int,
+    val message: String,
+    val data: String,
 )

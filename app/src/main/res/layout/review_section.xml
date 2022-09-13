@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_send_review"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -17,7 +18,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight=".30"
+            android:layout_weight=".20"
             android:backgroundTint="@color/danger_100"
             android:elevation="0dp"
             app:cardCornerRadius="30dp"
@@ -34,14 +35,13 @@
                     style="@android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="16dp"
                     android:isIndicator="true"
-                    android:stepSize="0.0"
-                    android:rating="2.0"
                     android:max="5"
+                    android:rating="0"
+                    android:stepSize="0"
                     android:scaleX=".4"
                     android:scaleY=".4"
-                    android:transformPivotX="20dp"
+                    android:transformPivotX="10dp"
                     android:transformPivotY="10dp" />
 
                 <TextView
@@ -72,7 +72,7 @@
 
 
     <LinearLayout
-        android:id="@+id/btn_send_review"
+        android:id="@+id/btn_send_review_company"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="15dp"
