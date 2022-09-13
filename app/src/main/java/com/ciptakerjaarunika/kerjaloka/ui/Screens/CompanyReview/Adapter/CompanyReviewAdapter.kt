@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Adapter
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -42,6 +43,8 @@ class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : Recycler
         holder.username.text = currentItem.userFullName
         holder.comment.text = currentItem.comment
 //        holder.ratingBar.rating = currentItem.rating
+        Log.d("rating", currentItem.rating.toString())
+
         Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile" + currentItem.raterPhoto).fitCenter().into(holder.picture)
         val SECOND = 1
         val MINUTE = 60 * SECOND
@@ -52,7 +55,7 @@ class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : Recycler
         var time = currentItem.ratingAt
         val now = LocalDateTime.now().toString()
 
-        fun GetDateValue(value: String): Date {
+        fun GetDateValue(value: String): Date? {
             val temp = value.split("T")
             val time = temp[1].split(":")
             val date = "${temp[0]} ${time[0]}:${time[1]}"
@@ -61,10 +64,10 @@ class CompanyReviewAdapter(private val reviewList: List<reviewList> ) : Recycler
         }
 
         fun dateDiff(): String {
-            val date1 = GetDateValue(time).time
-            val date2 = GetDateValue(now).time
+            val date1 = GetDateValue(time)?.time
+            val date2 = GetDateValue(now)?.time
 
-            val diff = (date2 - date1) / 1000
+            val diff = (date2!! - date1!!) / 1000
             return when {
                 diff < MINUTE -> "Baru Saja"
                 diff < 2 * MINUTE -> "Beberapa Menit Lalu"

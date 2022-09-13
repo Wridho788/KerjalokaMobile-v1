@@ -64,24 +64,43 @@
                 <include layout="@layout/review_section" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_my_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginVertical="16dp"
+                    android:background="@color/light_500" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_item_my_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:paddingHorizontal="16dp"
+                    tools:listitem="@layout/item_card_review" />
+            </LinearLayout>
+
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_marginVertical="16dp"
                 android:background="@color/light_500" />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_item_card"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/trueGray_500"
-                android:weightSum="1">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_item_card"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="16dp"
+                tools:listitem="@layout/item_card_review" />
         </LinearLayout>
 
 

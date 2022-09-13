@@ -39,6 +39,7 @@
         <entry key="app/src/main/res/drawable/download_icon.xml" value="0.196" />
         <entry key="app/src/main/res/drawable/file_icon.xml" value="0.196" />
         <entry key="app/src/main/res/drawable/header_message.xml" value="0.1015" />
+        <entry key="app/src/main/res/drawable/ic_arrow_left_red.xml" value="0.107" />
         <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/icon_send.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/left_message1.xml" value="0.163" />
@@ -56,8 +57,10 @@
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
+        <entry key="app/src/main/res/layout/activity_notification.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/card_company_job.xml" value="0.25" />
@@ -73,16 +76,21 @@
         <entry key="app/src/main/res/layout/fragment_company_review.xml" value="0.2511078286558346" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
+        <entry key="app/src/main/res/layout/fragment_job_bookmark.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.19365079365079366" />
+        <entry key="app/src/main/res/layout/fragment_job_nearme.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_job_page.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_job_recommendation.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_myreviewpage.xml" value="0.17399920729290527" />
         <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.15378517637732858" />
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
+        <entry key="app/src/main/res/layout/global_toolbar.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_card_job.xml" value="0.125" />
         <entry key="app/src/main/res/layout/item_card_job_other_related.xml" value="0.10885416666666667" />
         <entry key="app/src/main/res/layout/item_card_job_related.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/item_card_review.xml" value="0.26356589147286824" />
+        <entry key="app/src/main/res/layout/item_card_review.xml" value="0.2587827808015834" />
         <entry key="app/src/main/res/layout/item_industri.xml" value="0.11875309252845126" />
         <entry key="app/src/main/res/layout/item_location.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_size_company.xml" value="0.2015810276679842" />
@@ -90,7 +98,7 @@
         <entry key="app/src/main/res/layout/layout_browse_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_filter_company.xml" value="0.10151515151515152" />
         <entry key="app/src/main/res/layout/layout_followed_company.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/layout_report_job_modal.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/layout_report_job_modal.xml" value="0.26356589147286824" />
         <entry key="app/src/main/res/layout/layout_send_review.xml" value="0.22958931222167245" />
         <entry key="app/src/main/res/layout/layout_vacancies_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_want_to_know_company.xml" value="0.1" />

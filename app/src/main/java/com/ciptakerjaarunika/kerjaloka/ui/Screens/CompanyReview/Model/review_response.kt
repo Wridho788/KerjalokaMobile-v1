@@ -27,6 +27,7 @@ data class reviewList(
     val rating: Float,
     val ratingAt: String,
     val raterPhoto: String,
+    val approvedOn: String,
     val proRating: ArrayList<String>,
     val conRating: ArrayList<String>
 )

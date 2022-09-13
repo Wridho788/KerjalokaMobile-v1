@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="16dp"
-    android:orientation="vertical">
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_review"
-        android:layout_width="match_parent"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:clickable="false"
         android:elevation="0dp"
@@ -54,6 +54,7 @@
 
                     <RatingBar
                         style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:id="@+id/ratingUser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:max="5" />
