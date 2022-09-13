@@ -47,21 +47,22 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        >
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
+            android:id="@+id/myPackageRecycler"
+            android:layout_width="fill_parent"
             android:padding="16dp"
             android:clipToPadding="false"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white"
-            android:fitsSystemWindows="true"
-            tools:listitem="@layout/comp_package_card"/>
+            tools:listitem="@layout/comp_package_card"
+            android:layout_weight="10"/>
     </LinearLayout>
 
 </LinearLayout>

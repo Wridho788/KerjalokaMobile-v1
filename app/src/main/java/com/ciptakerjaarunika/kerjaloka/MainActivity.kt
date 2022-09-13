@@ -15,6 +15,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.ciptakerjaarunika.kerjaloka.Company.Package.company_package_list
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
@@ -81,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                 binding.bottomNavigationView.setOnItemSelectedListener { item ->
                     when (item.itemId) {
                         R.id.home -> replaceFragment((HomePage()))
-                        R.id.lamaran -> replaceFragment((LamaranPage()))
+                        R.id.lamaran -> replaceFragment((ProfilePage()))
                         R.id.interview -> replaceFragment((InterviewPage()))
                         R.id.akun -> replaceFragment((AkunPage()))
 
