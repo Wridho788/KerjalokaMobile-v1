@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.JobPage.Adapter
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter
 
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +11,8 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
-class BookmarkedJobAdapter(private val rJobList: List<rJobModel>) :
-    RecyclerView.Adapter<BookmarkedJobAdapter.ViewHolder>() {
+class NearMeJobAdapter(private val rJobList: List<rJobModel>) :
+    RecyclerView.Adapter<NearMeJobAdapter.ViewHolder>() {
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

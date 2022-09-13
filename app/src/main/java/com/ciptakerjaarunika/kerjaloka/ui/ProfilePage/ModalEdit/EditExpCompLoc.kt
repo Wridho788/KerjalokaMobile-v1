@@ -10,13 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Adapter.BookmarkedJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditExp_CompLoc
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditExp_TypeJob
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditGenderAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.gender
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.listCity
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.typeJob
 
 
 class EditExpCompLoc: SuperBottomSheetFragment() {

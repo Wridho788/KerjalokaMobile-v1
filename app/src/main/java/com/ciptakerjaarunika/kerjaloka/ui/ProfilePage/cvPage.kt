@@ -12,15 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditCityAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ExpAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.LanguageAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.*
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
-import com.ciptakerjaarunika.kerjaloka.ui.search_job.Adapter.SearchJobAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.search_job.SearchModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
