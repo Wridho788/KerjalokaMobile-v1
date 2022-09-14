@@ -26,7 +26,7 @@ class viewpagerAdapter (fragmentManager: FragmentManager, lifecycle: Lifecycle,)
                 manage_lampiran()
             }
             4->{
-                ManageProfile()
+                fragment_my_review_page()
             }
             5->{
                 fragment_my_record_page()
