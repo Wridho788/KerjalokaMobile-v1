@@ -159,12 +159,14 @@ class MainActivity : AppCompatActivity() {
         }
 
     private fun replaceFragment(fragment: Fragment) {
-        binding.bottomNavigationView.visibility = View.VISIBLE
+        AUTHAPI().CheckLogin(baseContext) {
+            binding.bottomNavigationView.visibility = View.VISIBLE
 
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container, fragment)
-        fragmentTransaction.commit()
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, fragment)
+            fragmentTransaction.commit()
+        }
     }
     open fun showLogin(Goto : Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()

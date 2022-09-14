@@ -44,10 +44,12 @@ class Login(val Goto :Fragment) : Fragment() {
 
                             SessionManager(context).user = User
 
-                            val fragmentTransaction = parentFragmentManager.beginTransaction()
-                            fragmentTransaction.remove(this)
-                            fragmentTransaction.replace(id, Goto)
-                            fragmentTransaction.commit()
+                            AUTHAPI().CheckLogin(context) {
+                                val fragmentTransaction = parentFragmentManager.beginTransaction()
+                                fragmentTransaction.remove(this)
+                                fragmentTransaction.replace(id, Goto)
+                                fragmentTransaction.commit()
+                            }
                         }
                     }
                 }
