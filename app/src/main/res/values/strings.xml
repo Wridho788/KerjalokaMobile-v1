@@ -224,4 +224,11 @@
     <string name="daftar_lowongan">Daftar Lowongan Kamu:</string>
     <string name="dipublikasikan_pada">Dipublikasikan pada</string>
     <string name="status">Status:</string>
+    <string name="daftar_pelamar">Daftar Pelamar</string>
+    <string name="informasi_lowongan">Informasi Lowongan:</string>
+    <string name="jumlah_pelamar">Jumlah Pelamar</string>
+    <string name="pelamar_baru">Pelamar Baru</string>
+    <string name="dalam_tes">Dalam Tes</string>
+    <string name="terpilih">Terpilih</string>
+    <string name="ditolak">Ditolak</string>
 </resources>
