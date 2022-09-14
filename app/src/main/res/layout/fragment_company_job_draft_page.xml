@@ -243,15 +243,20 @@
                 tools:layout_editor_absoluteY="346dp" />
         </androidx.percentlayout.widget.PercentRelativeLayout>
 
-        <!-- Section Requirentments -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginVertical="16dp"
+            android:background="@color/light_500" />
 
+
+        <!-- Section Requirentments -->
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:ignore="UselessParent">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -360,9 +365,14 @@
                             android:fontFamily="@font/poppins"/>
                     </LinearLayout>
 
-
                 </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginVertical="16dp"
+            android:background="@color/light_500" />
 
         <!-- Section Additional Information -->
 
@@ -523,9 +533,15 @@
         </LinearLayout>
 
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginVertical="16dp"
+            android:background="@color/light_500" />
+
         <!-- Section Nama Tes -->
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -776,14 +792,14 @@
                             android:orientation="vertical"
                             android:paddingHorizontal="10dp">
 
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Nama Tes"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="14sp"
-                                android:textColor="@color/black"
-                                android:textStyle="bold"/>
+                                android:textSize="12sp"
+                                android:textColor="@color/dark_100"/>
                         </LinearLayout>
                     </LinearLayout>
 
