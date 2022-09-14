@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Adapter
 
+import android.content.Context
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 class CompanyReviewAdapter(
     private val reviewList: List<reviewList>
@@ -38,19 +40,36 @@ class CompanyReviewAdapter(
             chipConRating = itemView.findViewById(R.id.chipGroupTantangan)
         }
     }
-    var kelebihanList = String()
-    var tantanganList = ArrayList<String>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_review, null)
         return ViewHolder(view)
     }
 
+
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = reviewList[position]
+
+         val context: Context? = null
+         val itemsArrayList: ArrayList<String>? = null
+        val itemsPerRow = currentItem.proRating.size
+
         holder.username.text = currentItem.userFullName
         holder.comment.text = currentItem.comment
-        Log.d("rating", currentItem.rating.toString())
+
+//        val adjustedPosition = position + 1
+//        val rangeEnd = itemsArrayList?.let { Math.min(it.size, adjustedPosition * itemsPerRow) }
+//        val rangeStart = Math.max(position * itemsPerRow + 1, rangeEnd!! - itemsPerRow)
+//        Log.d("range", rangeStart.toString())
+//        for (i in rangeStart..rangeEnd) {
+//            val arrayPositionAdjusted = i - 1
+//            val chip = Chip(context)
+//            chip.text = itemsArrayList[arrayPositionAdjusted]
+//            holder.chipProRating.addView(chip)
+//        }
+
         holder.ratingBar.rating = currentItem.rating
         Glide.with(holder.itemView.context)
             .load(config().portAddress + "/photo/Profile" + currentItem.raterPhoto).fitCenter()
