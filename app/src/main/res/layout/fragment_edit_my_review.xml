@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_apply_job_modal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="50dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+
+    <ImageView
+        android:layout_width="70dp"
+        android:id="@+id/btn_bottom_sheet"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_bottom_sheet_1"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center|top"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/judul_bottom_sheet"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Berikan Rating"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_500"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="16dp"
+            android:text="Berikan Rating"
+            android:textColor="@color/black"/>
+        <RatingBar
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:text="Kelebihan"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"/>
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.chip.Chip
+            android:background="@color/danger_500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disiplin"/>
+        <com.google.android.material.chip.Chip
+            android:background="@color/danger_500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kemauan Bekerja"/>
+        <com.google.android.material.chip.Chip
+            android:background="@color/danger_500"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bekerja Keras"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emosional"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Etika"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bekerja Sama"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kerapian"/>
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:text="Kekurangan"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"/>
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Disiplin"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kemauan Bekerja"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bekerja Keras"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Emosional"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Etika"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bekerja Sama"/>
+            <com.google.android.material.chip.Chip
+                android:background="@color/danger_500"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kerapian"/>
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="14dp"
+            android:textColor="@color/black"
+            android:text="Review"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="5dp"/>
+        <EditText
+            android:id="@+id/review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_300"
+            android:fontFamily="@font/poppins"
+            android:hint="Masukkan komentar rating"
+            android:gravity="top|start"
+            android:padding="14dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            android:lines="6"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_500" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_medium"
+        android:textSize="14dp"
+        android:text="Simpan"
+        android:textAllCaps="false"
+        app:cornerRadius="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="18dp"/>
+
+
+</LinearLayout>

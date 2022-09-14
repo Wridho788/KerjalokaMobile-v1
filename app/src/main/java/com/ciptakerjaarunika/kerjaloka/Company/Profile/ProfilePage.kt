@@ -9,29 +9,15 @@ import android.widget.LinearLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.viewpagerCompAdapter
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
+import com.google.android.material.button.MaterialButton
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfilePage.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfilePage : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -41,6 +27,19 @@ class ProfilePage : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile_page, container, false)
         val content = view.findViewById<ViewPager2>(R.id.Comp_profileContent)
+        val mProfile = view.findViewById<MaterialButton>(R.id.manageProfile)
+        val myRev = view.findViewById<MaterialButton>(R.id.myReview)
+        val accSet = view.findViewById<MaterialButton>(R.id.accSetting)
+
+        mProfile.setOnClickListener(){
+            content.setCurrentItem(0)
+        }
+        myRev.setOnClickListener(){
+            content.setCurrentItem(1)
+        }
+        accSet.setOnClickListener(){
+            content.setCurrentItem(3)
+        }
 
         val adapter = viewpagerCompAdapter(parentFragmentManager, lifecycle)
         content.adapter = adapter
@@ -48,22 +47,6 @@ class ProfilePage : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfilePage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfilePage().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
     }
 }

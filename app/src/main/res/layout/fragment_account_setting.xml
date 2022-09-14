@@ -298,9 +298,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:cardCornerRadius="10dp"
                     app:strokeColor="@color/light_500"
                     app:strokeWidth="1dp">
@@ -430,9 +430,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:cardCornerRadius="10dp"
                     app:strokeColor="@color/light_500"
                     app:strokeWidth="1dp">
@@ -458,14 +458,11 @@
                                 android:textColor="@color/black"
                                 android:textSize="14sp"/>
 
-                            <TextView
-                                android:id="@+id/btn_discoverable"
+                            <Switch
+                                android:id="@+id/switchDiscoverable"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:text="Edit"
-                                android:textColor="@color/danger_500"
-                                android:textSize="14sp" />
+                                />
                         </LinearLayout>
 
                         <LinearLayout
@@ -503,9 +500,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:cardCornerRadius="10dp"
                     app:strokeColor="@color/light_500"
                     app:strokeWidth="1dp">
@@ -532,14 +529,12 @@
                                 android:textColor="@color/black"
                                 android:textSize="14sp"/>
 
-                            <TextView
-                                android:id="@+id/btn_kelola_newsletter"
+
+                            <Switch
+                                android:id="@+id/switchNewsLetter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:text="Edit"
-                                android:textColor="@color/danger_500"
-                                android:textSize="14sp" />
+                                />
                         </LinearLayout>
 
                         <LinearLayout
@@ -577,9 +572,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:focusable="false"
                     app:cardCornerRadius="10dp"
                     app:strokeColor="@color/light_500"
                     app:strokeWidth="1dp">

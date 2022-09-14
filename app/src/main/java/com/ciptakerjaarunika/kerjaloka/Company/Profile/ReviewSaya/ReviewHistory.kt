@@ -1,37 +1,44 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.conRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.proRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.R
-import com.google.android.material.button.MaterialButton
+import com.ciptakerjaarunika.kerjaloka.ui.JobPage.JobPage
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.OnFragmentClickListener
+import com.google.android.material.appbar.MaterialToolbar
 
 private var layoutManager: RecyclerView.LayoutManager? = null
-private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
+private var adapterRec: RecyclerView.Adapter<CompReviewHistoryAdapter.ViewHolder>? = null
 
+class ReviewHistory : Fragment(){
 
-class CompMyReview : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_comp_my_review, container, false)
-
-        val btn_revHistory = view.findViewById<MaterialButton>(R.id.btn_riwayat_review)
+        val view =inflater.inflate(R.layout.fragment_review_history, container, false)
+        val btn_back = view.findViewById<ImageButton>(R.id.btn_back)
 
         val conratList = ArrayList<conRat>()
         val rat1 = conRat(
@@ -76,16 +83,15 @@ class CompMyReview : Fragment() {
         )
         ReviewList.add(rev1)
 
-        btn_revHistory.setOnClickListener{
-            replaceFragment(ReviewHistory())
-        }
-
-        val recyclerCompReview = view.findViewById<RecyclerView>(R.id.revList)
+        val recyclerCompReview = view.findViewById<RecyclerView>(R.id.recycleRevHistory)
         layoutManager = LinearLayoutManager(activity)
         recyclerCompReview.layoutManager = layoutManager
-        adapterRec = CompReviewAdapter(ReviewList)
+        adapterRec = CompReviewHistoryAdapter(ReviewList)
         recyclerCompReview.adapter = adapterRec
 
+        btn_back.setOnClickListener{
+            replaceFragment(ProfilePage())
+        }
 
         return view
     }
@@ -96,8 +102,9 @@ class CompMyReview : Fragment() {
     private fun replaceFragment(fragment: Fragment){
 
         val fragmentManager = activity?.supportFragmentManager
-        val fragmentTransaction = fragmentManager?.beginTransaction()
+        val fragmentTransaction = parentFragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.addToBackStack(null)
         fragmentTransaction?.commit()
     }
 
