@@ -82,6 +82,7 @@
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_3.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_4.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_5.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_company_back_modal.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.19316239316239317" />
         <entry key="app/src/main/res/layout/fragment_company_detail_test.xml" value="0.35085470085470083" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
