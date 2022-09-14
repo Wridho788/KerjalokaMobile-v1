@@ -12,7 +12,6 @@ import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Adapter.BookmarkedJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditGenderAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.gender
 
 
 class EditGender: SuperBottomSheetFragment() {
@@ -33,21 +32,11 @@ class EditGender: SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<gender>()
-        val gender1 = gender(
-            id = 1,
-            gender = "Laki-Laki"
-        )
-        val gender2 = gender(
-            id = 2,
-            gender = "Perempuan"
-        )
-        list.add(gender1)
-        list.add(gender2)
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = EditGenderAdapter(list)
+        adapter = EditGenderAdapter(listOf())
         recyclerView.adapter = adapter
     }
 

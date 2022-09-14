@@ -66,6 +66,10 @@ class AkunPage : Fragment() {
                         notice = it.notice,
                         rolePrivileges = it.privilege,
                         email =  email,
+                        emailHasVerified = null,
+                        isDeleted = null,
+                        isNewsletter = null,
+                        lastChangeUsername = null,
                         username = "",
                         company = null,
                         companyAdditional = null,
@@ -76,7 +80,7 @@ class AkunPage : Fragment() {
                     SessionManager(context).user = user
 
                     val fragmentTransaction = parentFragmentManager.beginTransaction()
-                    fragmentTransaction.replace(id, HomePage())
+                    fragmentTransaction.replace(id, AkunPage())
                     fragmentTransaction.commit()
                 }
                 else{

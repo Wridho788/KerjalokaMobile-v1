@@ -5,9 +5,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducations
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import education
 
-class EduAdapter(private val eduList: List<education>):
+class EduAdapter(private val eduList: List<JobseekerEducations>):
     RecyclerView.Adapter<EduAdapter.edu>()
 {
 
@@ -19,10 +22,10 @@ class EduAdapter(private val eduList: List<education>):
         var gpa: TextView
 
         init {
-            schName = view.findViewById<TextView>(R.id.school)
-            loc = view.findViewById<TextView>(R.id.eduLoc)
-            drt = view.findViewById<TextView>(R.id.eduDuration)
-            gpa = view.findViewById<TextView>(R.id.gpa)
+            schName = view.findViewById(R.id.school)
+            loc = view.findViewById(R.id.eduLoc)
+            drt = view.findViewById(R.id.eduDuration)
+            gpa = view.findViewById(R.id.gpa)
         }
     }
 
@@ -35,7 +38,7 @@ class EduAdapter(private val eduList: List<education>):
         val currentItem = eduList[position]
         holder.schName.text= currentItem.educationMajorName + " - " + currentItem.educationSchool
         holder.loc.text= currentItem.educationCityName + ", " + currentItem.educationCountry
-        holder.drt.text= currentItem.educationBeginAt + " - " + currentItem.educationEndedAt
+        holder.drt.text= DateUtils().GetDateValueWithFormat(currentItem.educationBeginAt, "dd MMM yyyy") + " - " + DateUtils().GetDateValueWithFormat(currentItem.educationEndedAt, "dd MMM yyyy")
         holder.gpa.text= currentItem.gpa.toString()
     }
 

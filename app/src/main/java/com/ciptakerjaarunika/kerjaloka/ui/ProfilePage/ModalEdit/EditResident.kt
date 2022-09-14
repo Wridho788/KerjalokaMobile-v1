@@ -13,8 +13,6 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.JobPage.Adapter.BookmarkedJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditGenderAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditResidentAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.gender
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.residentList
 
 
 class EditResident: SuperBottomSheetFragment() {
@@ -35,31 +33,11 @@ class EditResident: SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<residentList>()
-        val residen1 = residentList(
-            residentNo = 1,
-            residentName = "Warga Negara Asli"
-        )
-        val residen2 = residentList(
-            residentNo = 2,
-            residentName = "Visa Belajar"
-        )
-        val residen3 = residentList(
-            residentNo = 3,
-            residentName = "Visa Kerja"
-        )
-        val residen4 = residentList(
-            residentNo = 4,
-            residentName = "Visa Kunjungan"
-        )
-        list.add(residen1)
-        list.add(residen2)
-        list.add(residen3)
-        list.add(residen4)
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = EditResidentAdapter(list)
+        adapter = EditResidentAdapter(listOf())
         recyclerView.adapter = adapter
     }
 

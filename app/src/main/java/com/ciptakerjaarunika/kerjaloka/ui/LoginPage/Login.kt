@@ -38,9 +38,30 @@ class Login(val Goto :Fragment) : Fragment() {
                         if (it != null) {
 
                             SessionManager(context).access_token = it.userToken
-                            var User : User? = User(it.userNo, "null", "", "", it.userFullname,
-                            it.userRole, it.photo, it.suspended, it.deactivated, it.dataComplete, it.ownerStatus, null,
-                            it.authorized, it.notice, null, null, null, it.privilege);
+                            var User = User(
+                                userNo = it.userNo,
+                                userFullname = it.userFullname,
+                                suspended = it.suspended,
+                                roleNo = it.userRole,
+                                photo = it.photo,
+                                deactivated = it.deactivated,
+                                dataComplete = it.dataComplete,
+                                ownerStatus = it.ownerStatus == true,
+                                authorized = it.ownerStatus == true,
+                                notice = it.notice,
+                                rolePrivileges = it.privilege,
+                                email =  email,
+                                emailHasVerified = null,
+                                isDeleted = null,
+                                isNewsletter = null,
+                                lastChangeUsername = null,
+                                username = "",
+                                company = null,
+                                companyAdditional = null,
+                                jobseekerAdditional = null,
+                                jobseekers = null,
+                                phone = "",
+                            );
 
                             SessionManager(context).user = User
 

@@ -5,8 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.scale
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.typeJob
+import typeJob
 
 class EditExp_TypeJob(private val typeList: List<typeJob>):
     RecyclerView.Adapter<EditExp_TypeJob.ChooseType>()

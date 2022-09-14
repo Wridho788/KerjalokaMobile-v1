@@ -5,9 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.minat_model
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.record
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.review
+import review
 
 class ReviewAdapter (private val reviewList: List<review>):
     RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {

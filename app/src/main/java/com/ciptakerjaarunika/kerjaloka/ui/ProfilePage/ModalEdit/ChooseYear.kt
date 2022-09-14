@@ -38,14 +38,11 @@ class ChooseYear: SuperBottomSheetFragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<year>()
+        val list = ArrayList<Int>()
         val now = LocalDate.now().year.toInt()
 
-        for (i in 1900 until now){
-            val yr1 = year(
-                year = i+1
-            )
-            list.add(yr1)
+        for (i in now..now - 100){
+            list.add(i)
         }
 
 

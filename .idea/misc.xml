@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../../../layout/custom_preview.xml" value="0.2598958333333333" />
+        <entry key="../../../../../../layout/custom_preview.xml" value="0.125" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_attach_file.xml" value="0.1145" />
         <entry key="app/src/main/res/drawable/approve_call.xml" value="0.1475" />
         <entry key="app/src/main/res/drawable/back_primary_icon.xml" value="0.202" />
@@ -67,10 +67,13 @@
         <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.38563488670371954" />
         <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2620778110303549" />
+        <entry key="app/src/main/res/layout/card_education.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/card_language_main.xml" value="0.21376656690893545" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_section.xml" value="0.20051303976058144" />
+        <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.2159406858202039" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perjob.xml" value="0.2231722958529286" />
@@ -78,6 +81,7 @@
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.3273092369477912" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.32762312633832974" />
+        <entry key="app/src/main/res/layout/fragment_manage_profile_setting_layout.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.165" />
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/item_card_job.xml" value="0.125" />
@@ -87,6 +91,8 @@
         <entry key="app/src/main/res/layout/item_industri.xml" value="0.11875309252845126" />
         <entry key="app/src/main/res/layout/item_location.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_size_company.xml" value="0.2015810276679842" />
+        <entry key="app/src/main/res/layout/jsprofile_basic_info.xml" value="0.25951261222744765" />
+        <entry key="app/src/main/res/layout/jsprofile_cv.xml" value="0.21376656690893545" />
         <entry key="app/src/main/res/layout/layout_apply_job_modal.xml" value="0.11533888228299644" />
         <entry key="app/src/main/res/layout/layout_browse_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_filter_company.xml" value="0.10151515151515152" />
@@ -107,6 +113,7 @@
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.49635416666666665" />
         <entry key="app/src/main/res/layout/section_my_test.xml" value="0.375" />
         <entry key="app/src/main/res/layout/section_recommendation_job.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/video_call_fragment.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/layout/viewpager.xml" value="0.2821718683197948" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.25277777777777777" />
         <entry key="app/src/main/res/menu/topbar_menu_job_detail.xml" value="0.23001282599401454" />

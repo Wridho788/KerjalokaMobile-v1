@@ -9,9 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.field
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.jobtype
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skills
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.activity_editjob_layout
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.fragment_edit_interest_layout
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditAboutMe
@@ -66,87 +63,87 @@ class manage_preference : Fragment() {
         val jobTypeView: LinearLayout.LayoutParams =
             jobTypeGroup.getLayoutParams() as LinearLayout.LayoutParams
 
-
-        val list = ArrayList<field>()
-        val field1 = field(
-            "Mining",
-            2,
-            20211102115301,
-        )
-        val field2 = field(
-            "Python",
-            1,
-            20211102115301,
-        )
-        val field3 = field(
-            "Teamwork",
-            7,
-            20211102115301,
-        )
-        list.add(field1)
-        list.add(field2)
-        list.add(field3)
-
-        val jobTypeList = ArrayList<jobtype>()
-        val jt1 = jobtype(
-            "Contract",
-            3,
-            20211102115301,
-        )
-        val jt2 = jobtype(
-            "Full-Time",
-            1,
-            20211102115301,
-        )
-
-        jobTypeList.add(jt1)
-        jobTypeList.add(jt2)
-
-        if (list.isNotEmpty()) {
-            list.forEach {
-                s1View.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                fieldGroup.isVisible = true
-                val fieldChip = Chip(context)
-                fieldChip.setChipBackgroundColorResource(R.color.danger_100)
-                fieldChip.apply {
-                    textSize = 12f
-                    text = it.fieldName
-                    isChipIconVisible = false
-                    isCloseIconVisible = false
-                    isClickable = true
-                    isCheckable = false
-                    view.apply {
-                        chipField.addView(fieldChip as View)
-                    }
-                }
-            }
-        }
-        else {
-            emptyView.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        }
-
-        if (jobTypeList.isNotEmpty()) {
-            jobTypeList.forEach {
-                jobTypeView.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                jobTypeGroup.isVisible = true
-                val jTypeChip = Chip(context)
-                jTypeChip.setChipBackgroundColorResource(R.color.danger_100)
-                jTypeChip.apply {
-                    textSize = 12f
-                    text = it.jobTypeName
-                    isChipIconVisible = false
-                    isCloseIconVisible = false
-                    isClickable = false
-                    isCheckable = false
-                    view.apply {
-                        chipJobType.addView(jTypeChip as View)
-                    }
-                }
-            }
-        }
-        else {
-            emptyView1.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        }
+//
+//        val list = ArrayList<field>()
+//        val field1 = field(
+//            "Mining",
+//            2,
+//            20211102115301,
+//        )
+//        val field2 = field(
+//            "Python",
+//            1,
+//            20211102115301,
+//        )
+//        val field3 = field(
+//            "Teamwork",
+//            7,
+//            20211102115301,
+//        )
+//        list.add(field1)
+//        list.add(field2)
+//        list.add(field3)
+//
+//        val jobTypeList = ArrayList<jobtype>()
+//        val jt1 = jobtype(
+//            "Contract",
+//            3,
+//            20211102115301,
+//        )
+//        val jt2 = jobtype(
+//            "Full-Time",
+//            1,
+//            20211102115301,
+//        )
+//
+//        jobTypeList.add(jt1)
+//        jobTypeList.add(jt2)
+//
+//        if (list.isNotEmpty()) {
+//            list.forEach {
+//                s1View.height = ViewGroup.LayoutParams.WRAP_CONTENT
+//                fieldGroup.isVisible = true
+//                val fieldChip = Chip(context)
+//                fieldChip.setChipBackgroundColorResource(R.color.danger_100)
+//                fieldChip.apply {
+//                    textSize = 12f
+//                    text = it.fieldName
+//                    isChipIconVisible = false
+//                    isCloseIconVisible = false
+//                    isClickable = true
+//                    isCheckable = false
+//                    view.apply {
+//                        chipField.addView(fieldChip as View)
+//                    }
+//                }
+//            }
+//        }
+//        else {
+//            emptyView.height = ViewGroup.LayoutParams.WRAP_CONTENT
+//        }
+//
+//        if (jobTypeList.isNotEmpty()) {
+//            jobTypeList.forEach {
+//                jobTypeView.height = ViewGroup.LayoutParams.WRAP_CONTENT
+//                jobTypeGroup.isVisible = true
+//                val jTypeChip = Chip(context)
+//                jTypeChip.setChipBackgroundColorResource(R.color.danger_100)
+//                jTypeChip.apply {
+//                    textSize = 12f
+//                    text = it.jobTypeName
+//                    isChipIconVisible = false
+//                    isCloseIconVisible = false
+//                    isClickable = false
+//                    isCheckable = false
+//                    view.apply {
+//                        chipJobType.addView(jTypeChip as View)
+//                    }
+//                }
+//            }
+//        }
+//        else {
+//            emptyView1.height = ViewGroup.LayoutParams.WRAP_CONTENT
+//        }
 
 
         btn_EdMinat.setOnClickListener{

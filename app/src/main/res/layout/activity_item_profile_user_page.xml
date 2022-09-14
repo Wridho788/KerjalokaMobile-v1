@@ -82,12 +82,12 @@
     </RelativeLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userPhoto"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:elevation="0dp"
-        android:id="@+id/userPhoto"
         android:padding="8dp"
         android:src="@drawable/ic_img_man"
         app:shapeAppearanceOverlay="@style/Circular"

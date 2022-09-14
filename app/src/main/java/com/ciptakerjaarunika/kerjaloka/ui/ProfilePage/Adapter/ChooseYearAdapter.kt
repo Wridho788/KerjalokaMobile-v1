@@ -16,7 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 import com.ciptakerjaarunika.kerjaloka.ui.WelcomingPage.OnBoarding.OnBoardingItem
 import com.google.android.material.button.MaterialButton
 
-class ChooseYearAdapter(private val yearList: List<year>):
+class ChooseYearAdapter(private val yearList: List<Int>):
     RecyclerView.Adapter<ChooseYearAdapter.chooseYr>()
 {
 
@@ -35,8 +35,7 @@ class ChooseYearAdapter(private val yearList: List<year>):
     }
 
     override fun onBindViewHolder(holder: chooseYr, position: Int) {
-        val currentItem = yearList[position]
-        holder.item.text= currentItem.year.toString()
+        holder.item.text = yearList[position].toString()
     }
 
     override fun getItemCount(): Int {

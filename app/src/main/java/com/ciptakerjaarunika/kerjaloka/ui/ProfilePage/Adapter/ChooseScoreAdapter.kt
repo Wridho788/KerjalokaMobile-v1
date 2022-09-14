@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
-class ChooseScoreAdapter(private val langList: List<score>):
+class ChooseScoreAdapter():
     RecyclerView.Adapter<ChooseScoreAdapter.chooseScore>()
 {
 
@@ -26,12 +26,12 @@ class ChooseScoreAdapter(private val langList: List<score>):
     }
 
     override fun onBindViewHolder(holder: chooseScore, position: Int) {
-        val currentItem = langList[position]
-        holder.item.text= currentItem.score.toString()
+//        val currentItem = langList[position]
+        holder.item.text= position.toString()
     }
 
     override fun getItemCount(): Int {
-        return langList.size
+        return 10
     }
 
 }

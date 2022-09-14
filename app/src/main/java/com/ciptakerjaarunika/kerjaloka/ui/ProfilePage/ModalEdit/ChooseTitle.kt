@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.*
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
@@ -35,49 +36,16 @@ class ChooseTitle : SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<title>()
-        val t1 = title(
-            id = 1,
-            Title = "SMA/SMK"
-        )
-        val t2 = title(
-            id=2,
-            Title = "Diploma1"
-        )
-        val t3 = title(
-            id=3,
-            Title = "Diploma2"
-        )
-        val t4 = title(
-            id=4,
-            Title = "Diploma3"
-        )
-        val t5 = title(
-            id=5,
-            Title = "Sarjana"
-        )
-        val t6 = title(
-            id=6,
-            Title = "Master"
-        )
-        val t7 = title(
-            id=7,
-            Title = "Professor"
-        )
-
-        list.add(t1)
-        list.add(t2)
-        list.add(t3)
-        list.add(t4)
-        list.add(t5)
-        list.add(t6)
-        list.add(t7)
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = ChooseTitleAdapter(list)
-        recyclerView.adapter = adapter
+        DataAPI().GetTitles(context){
+            if(it != null){
+                adapter = ChooseTitleAdapter(it.data)
+                recyclerView.adapter = adapter
+            }
+        }
+
     }
 
 

@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
-class ChooseTitleAdapter(private val titleList: List<title>):
+class ChooseTitleAdapter(private val titleList: List<Title>):
     RecyclerView.Adapter<ChooseTitleAdapter.chooseTitle>()
 {
 
@@ -27,7 +28,7 @@ class ChooseTitleAdapter(private val titleList: List<title>):
 
     override fun onBindViewHolder(holder: chooseTitle, position: Int) {
         val currentItem = titleList[position]
-        holder.item.text= currentItem.Title
+        holder.item.text= currentItem.titleName
     }
 
     override fun getItemCount(): Int {

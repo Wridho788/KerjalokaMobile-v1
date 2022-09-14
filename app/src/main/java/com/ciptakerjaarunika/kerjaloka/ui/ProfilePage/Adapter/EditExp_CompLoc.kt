@@ -5,11 +5,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.listCity
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.scale
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.typeJob
+import com.ciptakerjaarunika.kerjaloka.model.Data.City
 
-class EditExp_CompLoc(private val cityList: List<listCity>):
+class EditExp_CompLoc(private val cityList: List<City>):
     RecyclerView.Adapter<EditExp_CompLoc.ChooseCity>()
 {
 
@@ -29,7 +27,7 @@ class EditExp_CompLoc(private val cityList: List<listCity>):
 
     override fun onBindViewHolder(holder: ChooseCity, position: Int) {
         val currentItem = cityList[position]
-        holder.item.text= currentItem.city
+        holder.item.text= currentItem.cityName
     }
 
     override fun getItemCount(): Int {
