@@ -353,7 +353,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/star/baseline_star_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/keyboard_arrow_down/baseline_keyboard_arrow_down_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -363,10 +363,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_button_close" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/Button Close Icon Small (1).svg" />
+                            <entry key="outputName" value="ic_arrow_down" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/Icon _ Illustration 2/Icon Records Bank-01.svg" />
                           </map>
                         </option>
                       </PersistentState>

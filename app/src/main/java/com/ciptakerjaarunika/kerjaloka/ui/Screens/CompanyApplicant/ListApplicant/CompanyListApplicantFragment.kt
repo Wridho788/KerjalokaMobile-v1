@@ -5,14 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.JobApplicantFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Adapter.ListApplicantAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model.listApplicantJobModel
 
-class CompanyListApplicantFragment : Fragment() {
+class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
 
 
     private lateinit var binding: ActivityMainBinding
@@ -72,7 +74,18 @@ class CompanyListApplicantFragment : Fragment() {
         val rv_applicantJob = view.findViewById<RecyclerView>(R.id.rv_list_applicant_job)
         rv_applicantJob.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ListApplicantAdapter(list)
+            adapter = ListApplicantAdapter(list, this@CompanyListApplicantFragment)
         }
     }
+
+    override fun goToListJobApplicant() {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, JobApplicantFragment(), "CompanyApplicant")
+        ft.addToBackStack("CompanyApplicant")
+        ft.commit()
+    }
+}
+
+interface OnFragmentClickListener {
+    fun goToListJobApplicant()
 }

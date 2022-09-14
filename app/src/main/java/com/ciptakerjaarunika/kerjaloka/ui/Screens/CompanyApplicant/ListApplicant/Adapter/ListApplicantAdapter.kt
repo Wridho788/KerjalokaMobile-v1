@@ -4,13 +4,13 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model.listApplicantJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.OnFragmentClickListener
 import com.google.android.material.card.MaterialCardView
 
-class ListApplicantAdapter(private val listApplicantJobModel: List<listApplicantJobModel>) :
+class ListApplicantAdapter(private val listApplicantJobModel: List<listApplicantJobModel>, private val onFragmentClickListener: OnFragmentClickListener? ) :
     RecyclerView.Adapter<ListApplicantAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobPosition: TextView
@@ -44,33 +44,7 @@ class ListApplicantAdapter(private val listApplicantJobModel: List<listApplicant
             holder.status.setTextColor(Color.RED)
         }
         holder.cardApplicantJob.setOnClickListener {
-            when (currentItem.jobNo) {
-                1 -> Toast.makeText(
-                    holder.itemView.context,
-                    "Job 1 telah di klik",
-                    Toast.LENGTH_SHORT
-                ).show()
-                2 -> Toast.makeText(
-                    holder.itemView.context,
-                    "Job 2 telah di klik",
-                    Toast.LENGTH_SHORT
-                ).show()
-                3 -> Toast.makeText(
-                    holder.itemView.context,
-                    "Job 3 telah di klik",
-                    Toast.LENGTH_SHORT
-                ).show()
-                4 -> Toast.makeText(
-                    holder.itemView.context,
-                    "Job 4 telah di klik",
-                    Toast.LENGTH_SHORT
-                ).show()
-                5 -> Toast.makeText(
-                    holder.itemView.context,
-                    "Job 5 telah di klik",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+           onFragmentClickListener?.goToListJobApplicant()
         }
     }
 
