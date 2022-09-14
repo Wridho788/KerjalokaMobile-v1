@@ -219,4 +219,9 @@
     <string name="pegawai">Pegawai</string>
     <string name="cari_pekerjaan">Cari Pekerjaan</string>
     <string name="notifikasi">Notifikasi</string>
+    <string name="cv_banks">CV Banks</string>
+    <string name="subtitle_daftar_lowongan">Kamu dapat melihat pelamar berdasarkan lowongan perusahaan yang kamu punya.</string>
+    <string name="daftar_lowongan">Daftar Lowongan Kamu:</string>
+    <string name="dipublikasikan_pada">Dipublikasikan pada</string>
+    <string name="status">Status:</string>
 </resources>
