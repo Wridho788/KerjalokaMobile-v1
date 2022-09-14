@@ -226,4 +226,11 @@
     <string name="kelebihan">Kelebihan :</string>
     <string name="tantangan">Tantangan</string>
     <string name="review_saya">Review Saya</string>
+    <string name="gaji_dan_tunjangan">Gaji dan tunjangan</string>
+    <string name="tingkat_stres">Tingkat Stres</string>
+    <string name="jumlah_pekerjaan">Jumlah Pekerjaan</string>
+    <string name="manajemen">Manajemen</string>
+    <string name="lingkungan_kerja">Lingkungan Kerja</string>
+    <string name="flexibilitas_waktu">Flexibilitas Waktu</string>
+    <string name="pengembangan_waktu">Pengembangan Waktu</string>
 </resources>

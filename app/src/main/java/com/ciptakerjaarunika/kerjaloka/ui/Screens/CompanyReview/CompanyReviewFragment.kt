@@ -25,7 +25,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Adapter.CompanyR
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Bottomsheet.SendReview
 import com.google.android.material.appbar.MaterialToolbar
 
-class CompanyReviewFragment(private val CompanyNo: Long) : Fragment() {
+class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -43,7 +43,6 @@ class CompanyReviewFragment(private val CompanyNo: Long) : Fragment() {
         val logo = view.findViewById<ImageView>(R.id.company_logo)
         val field = view.findViewById<TextView>(R.id.company_field)
         val location = view.findViewById<TextView>(R.id.company_location)
-//        val sendReview = view.findViewById<LinearLayout>(R.id.btn_send_review)
         val rv_review = view.findViewById<RecyclerView>(R.id.rv_item_card)
         val rv_my_review = view.findViewById<RecyclerView>(R.id.rv_item_my_review)
         val layout_my_review = view.findViewById<LinearLayout>(R.id.layout_my_review)
@@ -53,7 +52,7 @@ class CompanyReviewFragment(private val CompanyNo: Long) : Fragment() {
         val layout_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review_company)
 
         val thisActivity = this
-        CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
+        CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo!!) {
             if (it != null) {
                 Log.d("company review", it.toString())
                 companyName.text = it.data.companyName
@@ -83,7 +82,7 @@ class CompanyReviewFragment(private val CompanyNo: Long) : Fragment() {
                     if (it.data.canSend == true) {
                         layout_send_review.visibility = View.VISIBLE
                         layout_send_review.setOnClickListener {
-                            val sheet = SendReview()
+                            val sheet = SendReview(UserNo)
                             activity.let { it1 ->
                                 sheet.show(
                                     it1!!.supportFragmentManager,
@@ -92,7 +91,8 @@ class CompanyReviewFragment(private val CompanyNo: Long) : Fragment() {
                             }
                         }
                     } else {
-                        layout_send_review.visibility = View.GONE
+                        layout_send_review.setOnClickListener(null)
+
                     }
                 }
             }

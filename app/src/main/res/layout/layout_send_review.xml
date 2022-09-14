@@ -68,7 +68,149 @@
                 android:gravity="center_horizontal|center_vertical|center"
                 android:numStars="5"
                 android:rating="0"
-                android:stepSize="1"/>
+                android:stepSize="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/kelebihan"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupProRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_gajitunjangan"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gaji_dan_tunjangan" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_tingkatStress"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tingkat_stres" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_jumlahpekerjaan"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/jumlah_pekerjaan" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_manajemen"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/manajemen" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_lingkunganKerja"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lingkungan_kerja" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_FlexibilitasWaktu"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/flexibilitas_waktu" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_PengembanganKarir"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pengembangan_waktu" />
+
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/tantangan"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupConRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_congajitunjangan"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gaji_dan_tunjangan" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_contingkatStress"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tingkat_stres" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_conjumlahpekerjaan"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/jumlah_pekerjaan" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_conmanajemen"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/manajemen" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_conlingkunganKerja"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lingkungan_kerja" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_conFlexibilitasWaktu"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/flexibilitas_waktu" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_conPengembanganKarir"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pengembangan_waktu" />
+
+            </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
 
         <LinearLayout
@@ -84,6 +226,7 @@
                 android:text="@string/review"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
+
 
             <EditText
                 android:id="@+id/insertreview"

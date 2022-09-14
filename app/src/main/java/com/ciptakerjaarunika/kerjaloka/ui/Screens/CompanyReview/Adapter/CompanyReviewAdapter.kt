@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -51,25 +51,40 @@ class CompanyReviewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = reviewList[position]
-
-         val context: Context? = null
-         val itemsArrayList: ArrayList<String>? = null
-        val itemsPerRow = currentItem.proRating.size
-
         holder.username.text = currentItem.userFullName
         holder.comment.text = currentItem.comment
-
-//        val adjustedPosition = position + 1
-//        val rangeEnd = itemsArrayList?.let { Math.min(it.size, adjustedPosition * itemsPerRow) }
-//        val rangeStart = Math.max(position * itemsPerRow + 1, rangeEnd!! - itemsPerRow)
-//        Log.d("range", rangeStart.toString())
-//        for (i in rangeStart..rangeEnd) {
-//            val arrayPositionAdjusted = i - 1
-//            val chip = Chip(context)
-//            chip.text = itemsArrayList[arrayPositionAdjusted]
-//            holder.chipProRating.addView(chip)
-//        }
-
+        val proRating = currentItem.proRating
+        proRating.forEach{
+            val chip = Chip(holder.chipProRating.context)
+            chip.setChipBackgroundColorResource(R.color.danger_100)
+            chip.apply {
+                textSize = 12f
+                text = it
+                isChipIconVisible = false
+                isCloseIconVisible = false
+                isClickable = false
+                isCheckable = false
+                rootView.apply {
+                    holder.chipProRating.addView(chip as View)
+                }
+            }
+        }
+        val conRating = currentItem.conRating
+        conRating.forEach{
+            val chip = Chip(holder.chipConRating.context)
+            chip.setChipBackgroundColorResource(R.color.danger_100)
+            chip.apply {
+                textSize = 12f
+                text = it
+                isChipIconVisible = false
+                isCloseIconVisible = false
+                isClickable = false
+                isCheckable = false
+                rootView.apply {
+                    holder.chipConRating.addView(chip as View)
+                }
+            }
+        }
         holder.ratingBar.rating = currentItem.rating
         Glide.with(holder.itemView.context)
             .load(config().portAddress + "/photo/Profile" + currentItem.raterPhoto).fitCenter()
@@ -110,10 +125,6 @@ class CompanyReviewAdapter(
             }
         }
         holder.ratingAt.text = dateDiff()
-//        holder.chipProRating.apply {
-//
-//        }
-//        holder.chipProRating.resources()
     }
 
     override fun getItemCount(): Int {
