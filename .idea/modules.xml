@@ -7,9 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.unitTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.app.Kerjaloka.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.app.Kerjaloka.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.app.Kerjaloka.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.app.Kerjaloka.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.app.Kerjaloka.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/kerjalokamobile.app.Kerjaloka.app.unitTest.iml" />
