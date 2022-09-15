@@ -12,6 +12,8 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.conRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.proRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.Global.GlobalDeleteModal
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditResident
 import com.google.android.material.button.MaterialButton
 
 private var layoutManager: RecyclerView.LayoutManager? = null

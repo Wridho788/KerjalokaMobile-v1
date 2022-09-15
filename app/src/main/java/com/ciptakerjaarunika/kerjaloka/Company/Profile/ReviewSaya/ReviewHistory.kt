@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.Company.Package.Adapter.myPackageAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Package.Listener.ShowModalHistory
+import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
+import com.ciptakerjaarunika.kerjaloka.Company.Package.pack
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.ShowModal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.conRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.proRat
@@ -86,7 +92,7 @@ class ReviewHistory : Fragment(){
         val recyclerCompReview = view.findViewById<RecyclerView>(R.id.recycleRevHistory)
         layoutManager = LinearLayoutManager(activity)
         recyclerCompReview.layoutManager = layoutManager
-        adapterRec = CompReviewHistoryAdapter(ReviewList)
+        adapterRec = assignAdapter(ReviewList)
         recyclerCompReview.adapter = adapterRec
 
         btn_back.setOnClickListener{
@@ -106,6 +112,21 @@ class ReviewHistory : Fragment(){
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
         fragmentTransaction?.addToBackStack(null)
         fragmentTransaction?.commit()
+    }
+
+    internal fun assignAdapter(list: List<review>): CompReviewHistoryAdapter {
+        return CompReviewHistoryAdapter(requireContext(), list, object : ShowModal {
+            override fun showDetail(pack: review) {
+                val sheet = EditMyReview()
+                Log.d("data", pack.userRatingNo.toString())
+                activity?.let { it1 ->
+                    sheet.show(
+                        it1.supportFragmentManager,
+                        "DemoBottomSheetFragment"
+                    )
+                }
+            }
+        })
     }
 
 }

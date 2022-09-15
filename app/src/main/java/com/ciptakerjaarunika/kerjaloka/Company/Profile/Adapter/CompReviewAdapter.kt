@@ -41,6 +41,8 @@ class CompReviewAdapter (private val reviewList: List<review>):
         holder.Desc.text = currentItem.comment
         holder.ratBar.rating = currentItem.rating.toFloat()
 
+
+
         if (currentItem.conRating.isNotEmpty()){
             currentItem.conRating.forEach {
                 val chip = Chip(holder.conChip.context)
@@ -77,6 +79,8 @@ class CompReviewAdapter (private val reviewList: List<review>):
         }
 
     }
+
+
 
     override fun getItemCount(): Int {
         return reviewList?.size ?:0

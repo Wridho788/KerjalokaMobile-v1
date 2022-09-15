@@ -62,7 +62,9 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Edit"
                                 android:textColor="@color/danger_500"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:paddingRight="4dp"
+                                android:paddingLeft="4dp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -135,7 +137,9 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Edit"
                                 android:textColor="@color/danger_500"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:paddingRight="4dp"
+                                android:paddingLeft="4dp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -207,7 +211,10 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Edit"
                                 android:textColor="@color/danger_500"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
+                                />
                         </LinearLayout>
 
                         <LinearLayout
@@ -332,7 +339,9 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Edit"
                                 android:textColor="@color/danger_500"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:paddingRight="4dp"
+                                android:paddingLeft="4dp"/>
                         </LinearLayout>
 
                         <LinearLayout

@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.Company.Package
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Adapter.historyListAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Package.Adapter.myPackageAdapter
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 
 class history_modal : SuperBottomSheetFragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null

@@ -9,6 +9,9 @@ import android.widget.Switch
 import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScore
+import com.google.android.material.button.MaterialButton
 
 
 class AccountSetting : Fragment() {
@@ -23,6 +26,12 @@ class AccountSetting : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_account_setting, container, false)
+
+        val btn_editUsername = view.findViewById<TextView>(R.id.edit_username_setting)
+        val btn_editPhone = view.findViewById<TextView>(R.id.edit_nomor_telepon_setting)
+        val btn_editEmail = view.findViewById<TextView>(R.id.edit_email_profile_setting)
+        val btn_editPswd = view.findViewById<TextView>(R.id.edit_kata_sandi)
+        val btn_deactived = view.findViewById<MaterialButton>(R.id.btn_nonaktifkan_akun)
 
         val userL = ArrayList<user>()
         val compL = ArrayList<company>()
@@ -154,10 +163,36 @@ class AccountSetting : Fragment() {
         discover.isChecked = userL[0].isDiscoverable
         newsletter.isChecked = userL[0].isNewsletter
 
+        btn_editUsername.setOnClickListener{
+            replaceFragment(CompEditUsername())
+        }
+        btn_editEmail.setOnClickListener{
+            replaceFragment(CompEditEmail())
+        }
+        btn_editPswd.setOnClickListener{
+            replaceFragment(CompEditKataSandi())
+        }
+        btn_editPhone.setOnClickListener{
+            replaceFragment(CompEditPhone())
+        }
+
+        btn_deactived.setOnClickListener {
+            val sheet = ModalDeactivateAccount()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
         return view
     }
 
     companion object {
 
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.commit()
     }
 }

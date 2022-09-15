@@ -89,7 +89,12 @@
         <entry key="app/src/main/res/layout/find_category.xml" value="0.45" />
         <entry key="app/src/main/res/layout/fragment_account_setting.xml" value="0.22359982898674646" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_appeal_review_modal.xml" value="0.15647712697734073" />
         <entry key="app/src/main/res/layout/fragment_bookmark_job.xml" value="0.15647712697734073" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_email.xml" value="0.15647712697734073" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_kata_sandi.xml" value="0.15647712697734073" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_phone.xml" value="0.3711967545638945" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_username.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_comp_my_review.xml" value="0.22359982898674646" />
         <entry key="app/src/main/res/layout/fragment_comp_package_card.xml" value="0.55" />
         <entry key="app/src/main/res/layout/fragment_company_package_list.xml" value="0.335" />
@@ -111,6 +116,7 @@
         <entry key="app/src/main/res/layout/fragment_edit_username_profile.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/fragment_editlampiran_upload_vaksin.xml" value="0.3641025641025641" />
         <entry key="app/src/main/res/layout/fragment_followed_company.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/fragment_global_delete_modal.xml" value="0.15647712697734073" />
         <entry key="app/src/main/res/layout/fragment_history_modal.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
@@ -122,6 +128,7 @@
         <entry key="app/src/main/res/layout/fragment_manage_preference.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/fragment_manage_profile.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/fragment_manage_profile_setting_layout.xml" value="0.34417344173441733" />
+        <entry key="app/src/main/res/layout/fragment_modal_deactivate_account.xml" value="0.15647712697734073" />
         <entry key="app/src/main/res/layout/fragment_modal_edit_experience_manage_cv.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/fragment_my_record_page.xml" value="0.2109375" />
