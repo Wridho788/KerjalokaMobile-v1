@@ -268,4 +268,7 @@
     <string name="tes_papikostik_7">Peran Sibuk</string>
     <string name="tes_papikostik_8">Peran Penuh Semangat</string>
     <string name="social_nature">Social Nature</string>
+    <string name="tambah_komentar">Tambah Komentar</string>
+    <string name="subtitle_komentar">Komentar yang diberikan hanya dapat dilihat oleh perusahaan kamu saja.</string>
+    <string name="send_comment">Kirim</string>
 </resources>
