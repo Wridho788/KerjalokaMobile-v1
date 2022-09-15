@@ -34,7 +34,7 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val btn_result_papikostick =
-            view.findViewById<MaterialCardView>(R.id.btn_lihat_record_applicant)
+            view.findViewById<MaterialCardView>(R.id.btn_lihat_hasil_tes_applicant)
         val btn_lihat_komentar = view.findViewById<MaterialCardView>(R.id.btn_lihat_komentar)
 
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_applicant)

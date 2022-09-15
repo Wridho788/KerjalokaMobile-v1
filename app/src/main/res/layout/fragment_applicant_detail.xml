@@ -52,14 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-                <include layout="@layout/item_header_applicant_detail" />
-            </LinearLayout>
+            <include layout="@layout/item_header_applicant_detail" />
 
             <View
                 android:layout_width="match_parent"
@@ -88,7 +81,8 @@
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/alasan_melamar"
-                    android:textColor="@color/dark_100" />
+                    android:textColor="@color/dark_100"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txt_alasan_melamar"
@@ -143,7 +137,7 @@
                         android:textSize="12sp" />
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/btn_lihat_record_applicant"
+                        android:id="@+id/btn_lihat_hasil_tes_applicant"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
@@ -162,7 +156,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="@string/lihat_records"
+                                android:text="@string/lihat_hasil"
                                 android:textAlignment="center"
                                 android:textColor="@color/danger_500"
                                 android:textSize="14sp"
@@ -395,7 +389,7 @@
                         android:fontFamily="@font/poppins"
                         android:text="@string/menengah"
                         android:textColor="@color/dark_100"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.chip.ChipGroup
@@ -407,6 +401,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/danger_100"
+                            android:clickable="false"
                             android:fontFamily="@font/poppins"
                             android:text="Research" />
 
@@ -414,6 +409,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/danger_100"
+                            android:clickable="false"
                             android:fontFamily="@font/poppins"
                             android:text="Art &amp; Craft" />
 
@@ -422,6 +418,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/danger_100"
+                            android:clickable="false"
                             android:fontFamily="@font/poppins"
                             android:text="Leadership" />
 
@@ -440,7 +437,7 @@
                         android:fontFamily="@font/poppins"
                         android:text="@string/professional"
                         android:textColor="@color/dark_100"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.chip.ChipGroup
@@ -452,6 +449,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/danger_100"
+                            android:clickable="false"
                             android:fontFamily="@font/poppins"
                             android:text="Teamwork" />
 
@@ -459,6 +457,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/danger_100"
+                            android:clickable="false"
                             android:fontFamily="@font/poppins"
                             android:text="Negotiation" />
 
@@ -467,6 +466,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="@color/danger_100"
+                            android:clickable="false"
                             android:fontFamily="@font/poppins"
                             android:text="Theatre" />
 

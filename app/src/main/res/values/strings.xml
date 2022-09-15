@@ -271,4 +271,6 @@
     <string name="tambah_komentar">Tambah Komentar</string>
     <string name="subtitle_komentar">Komentar yang diberikan hanya dapat dilihat oleh perusahaan kamu saja.</string>
     <string name="send_comment">Kirim</string>
+    <string name="lihat_hasil">Lihat Hasil</string>
+    <string name="posisi">Posisi:</string>
 </resources>
