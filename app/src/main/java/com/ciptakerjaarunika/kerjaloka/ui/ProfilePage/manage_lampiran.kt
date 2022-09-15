@@ -1,36 +1,31 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
+import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
+import com.ciptakerjaarunika.kerjaloka.enum.VerifyStatus
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.DocumentAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ExpAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.edit_lampiran_profile_page
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [manage_lampiran.newInstance] factory method to
- * create an instance of this fragment.
- */
 class manage_lampiran : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -39,10 +34,51 @@ class manage_lampiran : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.activity_manage_lampiran_page_profile, container, false)
         val btn_EdLamp = view.findViewById<TextView>(R.id.edit_lampiran_pelamar)
+        val spinnerDoc = view.findViewById<LinearLayout>(R.id.spinnerDoc)
 //        val btn_edResume = view.findViewById<TextView>(R.id.edit_video_resume_pelamar)
         val btn_edVaccine = view.findViewById<TextView>(R.id.edit_status_vaksin_pelamar)
 
+        ProfileAPI().GetJobseekerDocuments(context){ documents ->
+            spinnerDoc.visibility = GONE
+            val recyclerView = view?.findViewById<RecyclerView>(R.id.RecyclerAttachment)
+            recyclerView?.visibility = VISIBLE
+            recyclerView?.layoutManager = LinearLayoutManager(activity)
+            recyclerView?.adapter = documents?.data?.let { DocumentAdapter(it) }
+        }
 
+        ProfileAPI().GetJobseekerResume(context){ resume ->
+            if (resume != null) {
+                val resumeDoc = resume.data
+                view.findViewById<TextView>(R.id.videoResumeName).text = resumeDoc.videoName
+                view.findViewById<ImageView>(R.id.btn_remove_resume).visibility = VISIBLE
+            }
+        }
+        ProfileAPI().GetJobseekerDocumentVaccine(context){vaccine->
+            for (doc in vaccine?.data!!){
+                var vaccineLogo : ImageView = view.findViewById(R.id.vaccine1Status);
+                if(doc.documentType == DocumentType.Vaccine1.value){
+                    vaccineLogo = view.findViewById(R.id.vaccine1Status)
+                }
+                else if(doc.documentType == DocumentType.Vaccine2.value){
+                    vaccineLogo = view.findViewById(R.id.vaccine2Status)
+                }
+                else if(doc.documentType == DocumentType.Vaccine3.value){
+                    vaccineLogo = view.findViewById(R.id.vaccine3Status)
+                }
+
+                when(doc.documentStatus){
+                    VerifyStatus.Accept.value ->{
+                        vaccineLogo.setImageResource(R.drawable.ic_vaccine_approve)
+                    }
+                    VerifyStatus.Reject.value ->{
+                        vaccineLogo.setImageResource(R.drawable.ic_vaccine_reject)
+                    }
+                    VerifyStatus.Pending.value ->{
+                        vaccineLogo.setImageResource(R.drawable.ic_vaccine_pending)
+                    }
+                }
+            }
+        }
         btn_EdLamp.setOnClickListener{
             replaceFragment(edit_lampiran_profile_page())
         }
@@ -55,25 +91,6 @@ class manage_lampiran : Fragment() {
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment manage_lampiran.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            manage_lampiran().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 
     private fun replaceFragment(fragment: Fragment){
 

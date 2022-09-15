@@ -6,8 +6,25 @@
     android:layout_height="match_parent"
     android:layout_marginTop="8dp"
     android:orientation="vertical"
-    tools:context=".ui.ProfilePage.item_profile_minat_page">
+    tools:context=".ui.ProfilePage.manage_preference">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/spinnerPref"
+        android:gravity="center">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/content_pref"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -215,7 +232,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/ekspektasi_gaji"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -233,10 +249,31 @@
                         android:textColor="@color/danger_500"
                         android:textSize="14sp" />
                 </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Ekspektasi : Rp."
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/expectedSalary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
-
+    </LinearLayout>
 </LinearLayout>

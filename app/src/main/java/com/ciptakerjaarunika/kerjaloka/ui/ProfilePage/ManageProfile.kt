@@ -8,12 +8,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditAboutMe
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditAddInfo
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditBasicInfo
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
-import org.w3c.dom.Text
 
 class ManageProfile(val data : JobseekerProfile?) : Fragment() {
     // TODO: Rename and change types of parameters
@@ -52,7 +50,7 @@ class ManageProfile(val data : JobseekerProfile?) : Fragment() {
         val txt_InstaID = view.findViewById<TextView>(R.id.jsInsta)
 
         txt_jsName.text = data?.jobseeker?.jobseekerName
-        txt_phoneNumber.text = data?.additionals?.jobseekerNo.toString()
+        txt_phoneNumber.text = data?.users?.phone
         txt_KTP.text = data?.additionals?.ktp
         if(data?.jobseeker?.jobseekerGender == 'M') txt_gender.text = "Laki-Laki"
         else txt_gender.text = "Perempuan"
@@ -72,13 +70,13 @@ class ManageProfile(val data : JobseekerProfile?) : Fragment() {
 
 
         editBasic?.setOnClickListener {
-          replaceFragment(EditBasicInfo())
+          replaceFragment(EditBasicInfo(data))
         }
         btn_edAboutMe?.setOnClickListener{
-            replaceFragment(EditAboutMe())
+            replaceFragment(EditAboutMe(data))
         }
         btn_edAddInfo?.setOnClickListener{
-            replaceFragment(EditAddInfo())
+            replaceFragment(EditAddInfo(data))
         }
         return view
     }

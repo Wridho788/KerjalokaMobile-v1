@@ -6,8 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperiences
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
-import experience
 
 class ExpAdapter(private val expList: List<JobseekerExperiences>):
     RecyclerView.Adapter<ExpAdapter.exp>()

@@ -20,19 +20,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.google.android.material.appbar.MaterialToolbar
 import com.microsoft.signalr.HubConnection
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LamaranPage.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LamaranPage : Fragment(), LamaranCellClickListener {
-    // TODO: Rename and change types of parameters
 
     private var layoutManager:RecyclerView.LayoutManager?=null
     private var adapter: RecyclerView.Adapter<Application.ViewHolder>? = null
@@ -41,12 +29,6 @@ class LamaranPage : Fragment(), LamaranCellClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(

@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
 class ChooseScoreAdapter():
     RecyclerView.Adapter<ChooseScoreAdapter.chooseScore>()

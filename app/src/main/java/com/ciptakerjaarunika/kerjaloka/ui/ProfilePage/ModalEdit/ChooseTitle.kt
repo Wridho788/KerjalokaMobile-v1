@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.*
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseTitleAdapter
 
 
 class ChooseTitle : SuperBottomSheetFragment() {

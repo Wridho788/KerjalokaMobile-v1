@@ -9,19 +9,16 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditCityAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ExpAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.LanguageAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.*
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
-import com.ciptakerjaarunika.kerjaloka.ui.search_job.Adapter.SearchJobAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.search_job.SearchModel
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.PapikostickResult
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.edit_kemampuan
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.fragment_manage_cv_edit_education_page
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.manage_cv_edit_experience_page
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -170,18 +167,20 @@ class cvPage : Fragment() {
 
     private fun GetData(){
         ProfileAPI().GetJobseekerSkills(context){ skills ->
-            ProfileAPI().GetJobseekerExperiences(context){ experiences ->
+            ProfileAPI().GetJobseekerExperiences(context) { experiences ->
 
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recycleExp)
                 layoutManager = LinearLayoutManager(activity)
                 recyclerView?.layoutManager = layoutManager
                 recyclerView?.adapter = experiences?.data?.let { ExpAdapter(it) }
+            }
 
-                ProfileAPI().GetJobseekerEducations(context){educations ->
+                ProfileAPI().GetJobseekerEducations(context) { educations ->
                     val recyclerView = view?.findViewById<RecyclerView>(R.id.recycleEdu)
                     layoutManager = LinearLayoutManager(activity)
                     recyclerView?.layoutManager = layoutManager
                     recyclerView?.adapter = educations?.data?.let { EduAdapter(it) }
+                }
 
                     ProfileAPI().GetJobseekerLanguages(context){languages ->
                         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycleLang)
@@ -325,8 +324,6 @@ class cvPage : Fragment() {
                         btn_edlang?.setOnClickListener {
                             replaceFragment(EditBahasa())
                         }
-                    }
-                }
             }
         }
     }

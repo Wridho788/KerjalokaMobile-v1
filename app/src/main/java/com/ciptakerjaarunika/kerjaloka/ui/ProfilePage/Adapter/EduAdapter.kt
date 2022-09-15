@@ -6,9 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducations
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
-import education
 
 class EduAdapter(private val eduList: List<JobseekerEducations>):
     RecyclerView.Adapter<EduAdapter.edu>()

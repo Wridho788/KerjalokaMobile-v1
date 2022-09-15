@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
 class ChooseTitleAdapter(private val titleList: List<Title>):
     RecyclerView.Adapter<ChooseTitleAdapter.chooseTitle>()

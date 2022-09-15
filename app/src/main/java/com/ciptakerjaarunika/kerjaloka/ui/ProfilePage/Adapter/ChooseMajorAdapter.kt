@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Major
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
 class ChooseMajorAdapter(private val majorList: List<Major>):
     RecyclerView.Adapter<ChooseMajorAdapter.chooseMajor>()

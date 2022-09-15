@@ -2,6 +2,10 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.model.Data.CheckDocument
+import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
+import com.ciptakerjaarunika.kerjaloka.model.Data.Field
+import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.search_model
@@ -10,6 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.math.BigDecimal
 
 class ProfileAPI {
 
@@ -137,4 +142,178 @@ class ProfileAPI {
             }
         )
     }
+
+    //Jobseeker Get Expected Salary
+    data class JobseekerSalaryExpectedResponse(
+        val code : Int,
+        val data : BigDecimal
+    )
+    interface jobseekerSalaryExpected {
+        @GET("jobseeker/preference/salary")
+        fun getJobseekerSalaryExpected(): Call<JobseekerSalaryExpectedResponse>
+    }
+
+    fun GetJobseekerSalaryExpected(context: Context?,onResult: (JobseekerSalaryExpectedResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerSalaryExpected::class.java)
+
+        retrofit.getJobseekerSalaryExpected().enqueue(
+            object : Callback<JobseekerSalaryExpectedResponse> {
+                override fun onFailure(call: Call<JobseekerSalaryExpectedResponse>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<JobseekerSalaryExpectedResponse>, response: Response<JobseekerSalaryExpectedResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    //Get Jobseeker Job Type
+    data class JobseekerJobTypeResponse(
+        val code : Int,
+        val data : List<JobType>
+    )
+    interface jobseekerJobType {
+        @GET("jobseeker/preference/job-type")
+        fun getJobseekerJobType(): Call<JobseekerJobTypeResponse>
+    }
+
+    fun GetJobseekerJobType(context: Context?,onResult: (JobseekerJobTypeResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerJobType::class.java)
+
+        retrofit.getJobseekerJobType().enqueue(
+            object : Callback<JobseekerJobTypeResponse> {
+                override fun onFailure(call: Call<JobseekerJobTypeResponse>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<JobseekerJobTypeResponse>, response: Response<JobseekerJobTypeResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+    //Get Jobseeker Job Type
+    data class JobseekerFieldResponse(
+        val code : Int,
+        val data : List<Field>
+    )
+    interface jobseekerField {
+        @GET("jobseeker/preference/field")
+        fun getJobseekerField(): Call<JobseekerFieldResponse>
+    }
+
+    fun GetJobseekerField(context: Context?,onResult: (JobseekerFieldResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerField::class.java)
+
+        retrofit.getJobseekerField().enqueue(
+            object : Callback<JobseekerFieldResponse> {
+                override fun onFailure(call: Call<JobseekerFieldResponse>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<JobseekerFieldResponse>, response: Response<JobseekerFieldResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    //Get Jobseeker Documents
+    data class JobseekerDocumentsResponse(
+        val code : Int,
+        val data : List<Documents>
+    )
+    interface jobseekerDocuments {
+        @GET("jobseeker/documents")
+        fun getJobseekerDocuments(): Call<JobseekerDocumentsResponse>
+    }
+
+    fun GetJobseekerDocuments(context: Context?,onResult: (JobseekerDocumentsResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerDocuments::class.java)
+
+        retrofit.getJobseekerDocuments().enqueue(
+            object : Callback<JobseekerDocumentsResponse> {
+                override fun onFailure(call: Call<JobseekerDocumentsResponse>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<JobseekerDocumentsResponse>, response: Response<JobseekerDocumentsResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    //Get Jobseeker Document Vaccine
+    data class JobseekerDocumentVaccineResponse(
+        val code : Int,
+        val data : List<CheckDocument>
+    )
+    interface jobseekerDocumentVaccine {
+        @GET("jobseeker/documents/vaccine")
+        fun getJobseekerDocumentVaccine(): Call<JobseekerDocumentVaccineResponse>
+    }
+
+    fun GetJobseekerDocumentVaccine(context: Context?,onResult: (JobseekerDocumentVaccineResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerDocumentVaccine::class.java)
+
+        retrofit.getJobseekerDocumentVaccine().enqueue(
+            object : Callback<JobseekerDocumentVaccineResponse> {
+                override fun onFailure(call: Call<JobseekerDocumentVaccineResponse>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<JobseekerDocumentVaccineResponse>, response: Response<JobseekerDocumentVaccineResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    //Get Jobseeker Get Resume
+    data class JobseekerResumeResponse(
+        val code : Int,
+        val data : JobseekerVideoResume
+    )
+    interface jobseekerResume {
+        @GET("jobseeker/get/resume")
+        fun getJobseekerDocumentVaccine(): Call<JobseekerResumeResponse>
+    }
+
+    fun GetJobseekerResume(context: Context?,onResult: (JobseekerResumeResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerResume::class.java)
+
+        retrofit.getJobseekerDocumentVaccine().enqueue(
+            object : Callback<JobseekerResumeResponse> {
+                override fun onFailure(call: Call<JobseekerResumeResponse>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<JobseekerResumeResponse>, response: Response<JobseekerResumeResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
 }

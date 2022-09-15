@@ -1,14 +1,13 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditEmail
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditPassword
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditPhone
@@ -26,7 +25,6 @@ class ManageUserSetting : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val user = SessionManager(context).user
         val view = inflater.inflate(R.layout.fragment_manage_profile_setting_layout, container, false)
 
         val username = view.findViewById<TextView>(R.id.profile_username)
@@ -50,6 +48,7 @@ class ManageUserSetting : Fragment() {
         editPassword.setOnClickListener{
             replaceFragment(EditPassword())
         }
+        val user = SessionManager(context).user
 
         username.text = user?.userFullname
         email.text = user?.email
