@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.search_job.Adapter
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.Adapter
 
 import android.view.View
 import android.view.ViewGroup

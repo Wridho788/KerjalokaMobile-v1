@@ -1,30 +1,38 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditEmail
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditPassword
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditPhone
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditUserName
+import com.google.android.material.button.MaterialButton
 
 class ManageUserSetting : Fragment() {
 
-
+    private lateinit var  binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
         val view = inflater.inflate(R.layout.fragment_manage_profile_setting_layout, container, false)
 
         val username = view.findViewById<TextView>(R.id.profile_username)
@@ -47,6 +55,13 @@ class ManageUserSetting : Fragment() {
         }
         editPassword.setOnClickListener{
             replaceFragment(EditPassword())
+        }
+
+        view.findViewById<MaterialButton>(R.id.btn_logout).setOnClickListener{
+            ProfileAPI().Logout(context){
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
         val user = SessionManager(context).user
 

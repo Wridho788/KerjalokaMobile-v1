@@ -217,4 +217,6 @@
     <string name="lokasi">Lokasi</string>
     <string name="filter_sesuai_kebutuhan">Filter Sesuai Kebutuhan</string>
     <string name="pegawai">Pegawai</string>
+    <string name="cari_pekerjaan">Cari Pekerjaan</string>
+    <string name="notifikasi">Notifikasi</string>
 </resources>

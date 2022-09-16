@@ -3,56 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.JobPage.Job_Page">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/home_appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:backgroundTint="@color/danger_500"
-        app:elevation="0dp"
-        app:liftOnScroll="true"
-        tools:ignore="MissingConstraints">
+        android:background="@drawable/header_toolbar"
+        app:elevation="0dp">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_job"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="Pekerjaan" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@null"
-            android:elevation="0dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            app:elevation="5dp">
 
-            app:toolbarId="@+id/general_toolbar">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:background="@drawable/custom_app_bar_background">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <include
-                        android:id="@+id/custom_toolbar"
-                        layout="@layout/global_toolbar" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.appbar.MaterialToolbar
+            <LinearLayout
+                android:id="@+id/search_job_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="pin" />
+                android:background="@drawable/search_bar_background"
+                android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                tools:ignore="UselessParent">
 
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginVertical="2dp"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_search"
+                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cari_pekerjaan"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/poppins_light"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_light"
-                    android:text="Lihat Selengkapnya"
+                    android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"
                     app:cornerRadius="100dp"
                     app:layout_constraintTop_toBottomOf="@id/recommenJob"
@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_light"
-                    android:text="Lihat Selengkapnya"
+                    android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"
                     app:cornerRadius="100dp"
                     app:layout_constraintTop_toBottomOf="@id/nearmeJob"
@@ -188,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_light"
-                    android:text="Lihat Selengkapnya"
+                    android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"
                     app:cornerRadius="100dp"
                     app:layout_constraintTop_toBottomOf="@id/bookmaredJob"

@@ -21,7 +21,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.material.button.MaterialButton
 
 
-class AkunPage : Fragment() {
+class AkunPage() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

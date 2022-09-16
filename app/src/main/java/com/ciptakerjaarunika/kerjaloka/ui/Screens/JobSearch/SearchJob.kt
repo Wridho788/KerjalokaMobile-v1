@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.search_job
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchJobBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
-import com.ciptakerjaarunika.kerjaloka.ui.search_job.Adapter.SearchJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.Adapter.SearchJobAdapter
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

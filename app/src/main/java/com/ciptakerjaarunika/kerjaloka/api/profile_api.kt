@@ -316,4 +316,29 @@ class ProfileAPI {
         )
     }
 
+
+    interface logout {
+        @GET("users/logout")
+        fun logout(): Call<Any>
+    }
+
+    fun Logout(context: Context?,onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(logout::class.java)
+
+        retrofit.logout().enqueue(
+            object : Callback<Any> {
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<Any>, response: Response<Any>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
 }

@@ -3,37 +3,38 @@ package com.ciptakerjaarunika.kerjaloka.ui.NotificationPage
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityNotificationBinding
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.Model
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.item.ItemSectionDecoration
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
 
 class Notification : AppCompatActivity() {
-
-//    private val scrollNotif: SwipeRefreshLayout by lazy{
-//        findViewById(R.id.scrollNotif)
-//    }
-
-    private val notifContainer: RecyclerView by lazy{
-        findViewById(R.id.notifContainer)
-    }
 
     private lateinit var adapter: Adapter
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var itemSectionDecoration: ItemSectionDecoration
+    private lateinit var binding: ActivityNotificationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notification)
+        binding = ActivityNotificationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val thisActivity = this
 
+        (thisActivity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (thisActivity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        binding.btnBackJob.setOnClickListener{
+            thisActivity.onBackPressed()
+        }
         initList()
-
         reload()
+
+
     }
+
+
 
     private fun initList(){
 //        scrollNotif.setOnRefreshListener {
@@ -50,21 +51,21 @@ class Notification : AppCompatActivity() {
             adapter.list
         }
 
-        notifContainer.addItemDecoration(itemSectionDecoration)
-        notifContainer.layoutManager = layoutManager
-        notifContainer.adapter = adapter
+        binding.notifContainer.addItemDecoration(itemSectionDecoration)
+        binding.notifContainer.layoutManager = layoutManager
+        binding.notifContainer.adapter = adapter
     }
 
     private fun reload(){
         val list = dummyData(0,20)
-        notifContainer.post {
+        binding.notifContainer.post {
             adapter.reload(list)
         }
     }
 
     private fun loadMore(){
         val list = dummyData(adapter.itemCount,15)
-        notifContainer.post {
+        binding.notifContainer.post {
             adapter.loadMore(list)
         }
     }

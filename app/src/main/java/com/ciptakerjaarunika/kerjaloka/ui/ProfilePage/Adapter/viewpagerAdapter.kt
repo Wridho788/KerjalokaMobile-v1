@@ -27,7 +27,7 @@ class viewpagerAdapter (val data : JobseekerProfile?, fragmentManager: FragmentM
                 manage_lampiran()
             }
             4->{
-                ManageProfile(data)
+                fragment_my_review_page()
             }
             5->{
                 fragment_my_record_page()
