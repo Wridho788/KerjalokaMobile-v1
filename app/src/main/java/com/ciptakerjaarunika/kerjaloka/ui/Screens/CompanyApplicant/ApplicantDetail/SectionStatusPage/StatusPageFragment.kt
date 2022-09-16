@@ -9,12 +9,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.UbahStatusFragment
 import com.google.android.material.card.MaterialCardView
 
 class StatusPageFragment : Fragment() {
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
     }
 
     override fun onCreateView(
@@ -38,7 +43,8 @@ class StatusPageFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         btn_status.setOnClickListener {
-            Toast.makeText( activity,"status modal", Toast.LENGTH_SHORT).show()
+            val sheet = UbahStatusFragment()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "StatusFragment")}
         }
 
         btn_change_status.setOnClickListener {

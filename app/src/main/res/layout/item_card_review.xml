@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_review"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:elevation="0dp"
+        app:cardCornerRadius="20dp"
+        app:strokeColor="@color/light_500"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!--            section header-->
+            <LinearLayout
+                android:id="@+id/layout_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/kerjaloka_logo_small" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="@color/dark_100"
+                        android:textSize="16sp" />
+
+                    <RatingBar
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:id="@+id/ratingUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:max="5" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--            section kelebihan -->
+            <LinearLayout
+                android:id="@+id/layout_kelebihan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/kelebihan"
+                    android:textColor="@color/dark_100" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupKelebihan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <!--            section tantangan-->
+            <LinearLayout
+                android:id="@+id/layout_tantangan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/tantangan"
+                    android:textColor="@color/dark_100" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupTantangan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+            </LinearLayout>
+            <!--            section review-->
+            <LinearLayout
+                android:id="@+id/layout_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/review"
+                    android:textColor="@color/dark_100" />
+
+                <TextView
+                    android:id="@+id/text_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/dark_100"
+                    android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/date_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/trueGray_50"
+                    android:fontFamily="@font/poppins"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>

@@ -66,6 +66,12 @@ class RecordsFragment : Fragment() {
             "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
         )
 
+        list.add(list1)
+        list.add(list2)
+        list.add(list3)
+        list.add(list4)
+        list.add(list5)
+
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_records)
         toolbar.setOnClickListener {
             activity?.onBackPressed()

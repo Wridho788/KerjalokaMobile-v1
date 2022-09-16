@@ -39,7 +39,8 @@ class HistoryFragment : Fragment() {
             1,
             "Leannon, Ruecker and Hilll",
             "Interview",
-            "12 Agustus 2021 pada 16:57"
+            "12 Agustus 2021 pada 16:57",
+
         )
         val list2 = HistoryModel(
             2,

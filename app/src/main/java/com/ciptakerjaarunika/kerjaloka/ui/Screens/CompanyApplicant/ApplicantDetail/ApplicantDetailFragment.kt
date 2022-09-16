@@ -10,10 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.MoreAction.MoreActionFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.PapikostikResultFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionHistory.HistoryFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.KomentarApplicantFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionRecords.RecordsFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.StatusPageFragment
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
 class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
@@ -40,7 +43,8 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
         val btn_lihat_komentar = view.findViewById<MaterialCardView>(R.id.btn_lihat_komentar)
         val btn_lihat_history = view.findViewById<MaterialCardView>(R.id.btn_lihat_sejarah)
         val btn_lihat_record = view.findViewById<MaterialCardView>(R.id.btn_lihat_record)
-
+        val btn_ganti_status = view.findViewById<MaterialButton>(R.id.btn_change_status)
+        val btn_more = view.findViewById<MaterialCardView>(R.id.btn_more)
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_applicant)
         toolbar.setOnClickListener {
             activity?.onBackPressed()
@@ -54,6 +58,11 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ResultPapikostick") }
         }
 
+        btn_more.setOnClickListener {
+            val sheet = MoreActionFragment()
+            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
+        }
+
         btn_lihat_komentar.setOnClickListener {
             goToCommentApplicant()
         }
@@ -64,6 +73,10 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
 
         btn_lihat_record.setOnClickListener {
             goToRecordApplicant()
+        }
+
+        btn_ganti_status.setOnClickListener {
+            goToChangeStatus()
         }
     }
 
@@ -87,10 +100,18 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
         ft.addToBackStack("RecordApplicant")
         ft.commit()
     }
+
+    override fun goToChangeStatus() {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, StatusPageFragment(), "ChangeStatus")
+        ft.addToBackStack("ChangeStatus")
+        ft.commit()
+    }
 }
 
 interface OnFragmentClickListener {
     fun goToCommentApplicant()
     fun goToHistoryApplicant()
     fun goToRecordApplicant()
+    fun goToChangeStatus()
 }

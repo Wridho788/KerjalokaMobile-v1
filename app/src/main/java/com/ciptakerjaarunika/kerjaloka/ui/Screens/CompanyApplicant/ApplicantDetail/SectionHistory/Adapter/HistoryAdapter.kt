@@ -15,7 +15,7 @@ class HistoryAdapter(private val historyModel: List<HistoryModel>) : RecyclerVie
 
         init {
             field = itemView.findViewById(R.id.txt_posisi)
-            status = itemView.findViewById(R.id.txt_status)
+            status = itemView.findViewById(R.id.text_status_applicant)
             createdOn = itemView.findViewById(R.id.text_date)
         }
     }
