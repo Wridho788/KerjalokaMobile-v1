@@ -12,6 +12,8 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
+import com.ciptakerjaarunika.kerjaloka.model.User.Jobseeker
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.activity_editjob_layout
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.fragment_edit_interest_layout
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditAboutMe
@@ -21,7 +23,7 @@ import java.math.BigDecimal
 
 // TODO: Rename parameter arguments, choose names that match
 
-class manage_preference : Fragment() {
+class manage_preference(val data : JobseekerProfile?) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -126,7 +128,7 @@ class manage_preference : Fragment() {
                         replaceFragment(activity_editjob_layout())
                     }
                     btn_gaji.setOnClickListener{
-                        replaceFragment(EditAboutMe())
+                        replaceFragment(EditAboutMe(data))
                     }
         }
 
