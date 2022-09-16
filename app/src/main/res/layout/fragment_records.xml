@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Screens.CompanyApplicant.ApplicantDetail.SectionHistory.HistoryFragment">
+    tools:context=".ui.Screens.CompanyApplicant.ApplicantDetail.SectionRecords.RecordsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         app:elevation="5dp">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_history"
+            android:id="@+id/toolbar_record"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white">
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/btn_back_history"
+                    android:id="@+id/btn_back_records"
                     android:layout_width="35dp"
                     android:layout_height="match_parent"
                     android:clickable="true"
@@ -34,14 +34,14 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/riwayat"
+                    android:text="Records"
                     android:textAlignment="center"
                     android:textColor="@color/dark_100"
                     android:textSize="16sp" />
             </LinearLayout>
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
-
+    <!-- TODO: Update blank fragment layout -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -53,12 +53,12 @@
             android:layout_marginHorizontal="16dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_history_applicant"
+                android:id="@+id/rv_records_applicant"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_card_history" />
+                android:overScrollMode="always"
+                tools:listitem="@layout/item_card_record" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

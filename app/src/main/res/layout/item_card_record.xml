@@ -50,7 +50,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/comment_date_text"
+                android:id="@+id/record_date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
@@ -60,7 +60,7 @@
                 tools:ignore="SmallSp" />
 
             <TextView
-                android:id="@+id/comment_text"
+                android:id="@+id/record_desc_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

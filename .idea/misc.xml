@@ -123,7 +123,7 @@
         <entry key="app/src/main/res/layout/fragment_company_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_company_review.xml" value="0.10771992818671454" />
         <entry key="app/src/main/res/layout/fragment_company_want_to_know.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.1801088570014844" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.1704653371320038" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_job_applicant.xml" value="0.2930232558139535" />
@@ -139,6 +139,7 @@
         <entry key="app/src/main/res/layout/fragment_papikostick_result.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/fragment_papikostick_result_company_applicant.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/fragment_papikostik_result.xml" value="0.15239980207817913" />
+        <entry key="app/src/main/res/layout/fragment_records.xml" value="0.1426872770511296" />
         <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.15378517637732858" />
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/global_toolbar.xml" value="0.1" />
@@ -150,7 +151,7 @@
         <entry key="app/src/main/res/layout/item_card_job_other_related.xml" value="0.10885416666666667" />
         <entry key="app/src/main/res/layout/item_card_job_related.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/item_card_record.xml" value="0.399592252803262" />
+        <entry key="app/src/main/res/layout/item_card_record.xml" value="0.29209183673469385" />
         <entry key="app/src/main/res/layout/item_card_review.xml" value="0.2587827808015834" />
         <entry key="app/src/main/res/layout/item_content_info_lowongan.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/item_header_applicant_detail.xml" value="0.335" />
