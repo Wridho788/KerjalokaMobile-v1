@@ -274,4 +274,12 @@
     <string name="lihat_hasil">Lihat Hasil</string>
     <string name="posisi">Posisi:</string>
     <string name="riwayat">Riwayat</string>
+    <string name="ubah_status">Ubah Status</string>
+    <string name="change_status">Ubah Status Pelamar Ini:</string>
+    <string name="tanggal_interview">Atur tanggal wawancara</string>
+    <string name="lokasi_interview">Lokasi Interview</string>
+    <string name="masukkan_lokasi_interview_link_meeting">Masukkan lokasi interview / link meeting</string>
+    <string name="masukkan_nama_interviewer">Masukkan nama interviewer</string>
+    <string name="nama_interviewer">Nama Interviewer</string>
+    <string name="use_app">Interview menggunakan fitur interview Kerjaloka Apps</string>
 </resources>
