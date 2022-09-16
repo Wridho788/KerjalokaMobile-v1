@@ -217,4 +217,9 @@
     <string name="lokasi">Lokasi</string>
     <string name="filter_sesuai_kebutuhan">Filter Sesuai Kebutuhan</string>
     <string name="pegawai">Pegawai</string>
+    <string name="title_activity_add_job">AddJobActivity</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="action_settings">Settings</string>
 </resources>

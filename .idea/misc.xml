@@ -58,22 +58,29 @@
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/activity_add_job.xml" value="0.24572649572649571" />
         <entry key="app/src/main/res/layout/activity_company_dashboard.xml" value="0.35085470085470083" />
         <entry key="app/src/main/res/layout/activity_company_notification.xml" value="0.35085470085470083" />
         <entry key="app/src/main/res/layout/activity_company_search.xml" value="0.35085470085470083" />
         <entry key="app/src/main/res/layout/activity_editjob_layout.xml" value="0.19316239316239317" />
         <entry key="app/src/main/res/layout/activity_item_profile_minat_page.xml" value="0.19316239316239317" />
+        <entry key="app/src/main/res/layout/activity_item_profile_user_page.xml" value="0.3641304347826087" />
+        <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.3641304347826087" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.42924976258309594" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
         <entry key="app/src/main/res/layout/activity_modal_edit_ekspektasi_gaji_layout.xml" value="0.625" />
         <entry key="app/src/main/res/layout/activity_modal_edit_lampiran_profile_page.xml" value="0.19316239316239317" />
+        <entry key="app/src/main/res/layout/activity_on_boarding2.xml" value="0.3641304347826087" />
+        <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.3641304347826087" />
         <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.20051303976058144" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.3641304347826087" />
         <entry key="app/src/main/res/layout/card_language_for_modal.xml" value="0.19316239316239317" />
         <entry key="app/src/main/res/layout/card_test.xml" value="0.19316239316239317" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_section.xml" value="0.20051303976058144" />
+        <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.3641304347826087" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.19316239316239317" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_bookmark_job.xml" value="0.19316239316239317" />

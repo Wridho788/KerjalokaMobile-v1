@@ -1,17 +1,18 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.Companyjobs_adapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobCity
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.ResponseJobs
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseLanguageAdapter
 
 
 class fragment_company_jobs : Fragment() {
@@ -28,9 +29,15 @@ class fragment_company_jobs : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_company_jobs, container, false)
+        val addjob = view.findViewById<ImageView>(R.id.idFABAdd)
 
+        addjob.setOnClickListener{
+            val myIntent = Intent(view.context, AddJobActivity::class.java)
+            startActivity(myIntent)
+
+//            replaceFragment(fragment_company_add_jobs_1())
+        }
         val list = ArrayList<ResponseJobs>()
         val citylist = ArrayList<JobCity>()
         val city1 = JobCity(
@@ -75,5 +82,12 @@ class fragment_company_jobs : Fragment() {
 
     companion object {
 
+    }
+    private fun replaceFragment(fragment: Fragment) {
+
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.commit()
     }
 }

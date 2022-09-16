@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_job_active_page
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_jobs
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config

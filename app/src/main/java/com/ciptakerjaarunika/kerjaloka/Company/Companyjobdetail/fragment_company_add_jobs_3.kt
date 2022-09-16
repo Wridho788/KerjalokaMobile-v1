@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ciptakerjaarunika.kerjaloka.R
+import com.google.android.material.button.MaterialButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,20 +35,29 @@ class fragment_company_add_jobs_3 : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_add_jobs_3, container, false)
+        val view =inflater.inflate(R.layout.fragment_company_add_jobs_3, container, false)
+        val btn_kembali_cmpny = view.findViewById<MaterialButton>(R.id.btn_kembali_cmpny)
+        val btn_next = view.findViewById<MaterialButton>(R.id.btn_selanjutnya_cmpny)
+
+        btn_kembali_cmpny.setOnClickListener {
+            replaceFragment(fragment_company_add_jobs_2())
+        }
+
+        btn_next.setOnClickListener {
+            replaceFragment(fragment_company_add_jobs_4())
+        }
+        return view
+    }
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragmentHolder, fragment)
+        fragmentTransaction?.commit()
     }
 
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_company_add_jobs_3.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             fragment_company_add_jobs_3().apply {

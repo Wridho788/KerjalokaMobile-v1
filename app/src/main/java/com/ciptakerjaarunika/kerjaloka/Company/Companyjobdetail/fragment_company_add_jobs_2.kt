@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ciptakerjaarunika.kerjaloka.R
+import com.google.android.material.button.MaterialButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +36,23 @@ class fragment_company_add_jobs_2 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_add_jobs_2, container, false)
+        val view = inflater.inflate(R.layout.fragment_company_add_jobs_2, container, false)
+        val btn_kembali_cmpny = view.findViewById<MaterialButton>(R.id.btn_kembali_cmpny)
+        val btn_next = view.findViewById<MaterialButton>(R.id.btn_selanjutnya_cmpny)
+
+        btn_kembali_cmpny.setOnClickListener {
+            replaceFragment(fragment_company_add_jobs_1())
+        }
+        btn_next.setOnClickListener {
+            replaceFragment(fragment_company_add_jobs_3())
+        }
+        return view
+    }
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.fragmentHolder, fragment)
+        fragmentTransaction?.commit()
     }
 
     companion object {
