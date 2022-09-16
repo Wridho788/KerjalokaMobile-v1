@@ -270,93 +270,15 @@
                             android:textSize="16dp"
                             android:textColor="@color/dark_100"
                             android:fontFamily="@font/poppins_semibold"/>
+
                         <TextView
+                            android:id="@+id/job_req"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="1. Deliveree is a fast-moving, rapidly growing, and very successful logistics technology company that is changing the cargo and trucking industry in Indonesia, Philippines, and Thailand to reduce waste, grow the economy, create jobs, and make the logistics industry more competitive. As Assistant Manager-Finance, you will be responsible for corporate legal compliances, financial reporting requirements, financial planning and analysis, and various other financial processes."
                             android:textColor="@color/dark_100"
                             android:fontFamily="@font/poppins"
                             android:textSize="12dp"/>
-
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="2. Key Result Areas:"
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="12dp"/>
-
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="3. Corporate legal compliances include close coordination with the corporate secretary for passing resolutions, ensuring legal records are kept up to date, etc. "
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="12dp"/>
-
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="4. Corporate financial reporting requirements include preparation of head office accounts, allocation of transfer pricing charges, dealing and co-ordination with the auditors on both standalone and consolidated financials."
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="12dp"/>
-
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="5. Corporate financial reporting requirements include preparation of head office accounts, allocation of transfer pricing charges, dealing and co-ordination with the auditors on both standalone and consolidated financials."
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"
-                            android:textSize="12dp"/>
-
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Benefits"
-                            android:textSize="12dp"
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"/>
-
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Competitive monthly salary"
-                            android:textSize="12dp"
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"/>
-
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="13th-month bonus"
-                            android:textSize="12dp"
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"/>
-
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Corporate Grab account"
-                            android:textSize="12dp"
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"/>
-                        <TextView
-                            android:layout_marginTop="2dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Kost-living sponsorship"
-                            android:textSize="12dp"
-                            android:textColor="@color/dark_100"
-                            android:fontFamily="@font/poppins"/>
                     </LinearLayout>
 
 
@@ -405,6 +327,7 @@
                             android:textColor="@color/dark_100"
                             android:text="Gaji"/>
                         <TextView
+                            android:id="@+id/company_salary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
@@ -426,6 +349,7 @@
                             android:textColor="@color/black"
                             android:text="Kualifikasi Pendidikan"/>
                         <TextView
+                            android:id="@+id/company_qualification"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
@@ -447,6 +371,7 @@
                             android:textColor="@color/black"
                             android:text="Minimal Pendidikan"/>
                         <TextView
+                            android:id="@+id/company_min_ed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
@@ -468,6 +393,7 @@
                             android:textColor="@color/black"
                             android:text="Bidang Pekerjaan"/>
                         <TextView
+                            android:id="@+id/company_type_job"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
@@ -489,6 +415,7 @@
                             android:textColor="@color/black"
                             android:text="Peran"/>
                         <TextView
+                            android:id="@+id/company_role"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
@@ -510,6 +437,7 @@
                             android:textColor="@color/black"
                             android:text="Lokasi"/>
                         <TextView
+                            android:id="@+id/company_loc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
@@ -780,9 +708,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="Nama Tes"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="14sp"
-                                android:textColor="@color/black"
-                                android:textStyle="bold"/>
+                                android:textSize="12sp"
+                                android:textColor="@color/dark_100"/>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -1025,7 +952,7 @@
 
                         <com.google.android.material.card.MaterialCardView
                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/nama_tes_5"
+                            android:id="@+id/nama_tes_6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"

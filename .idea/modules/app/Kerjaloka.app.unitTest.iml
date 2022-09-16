@@ -243,6 +243,7 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/6ab34e2a395d4a44e8771e71229143bf/transformed/jetified-exoplayer-hls-2.17.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/d927afb12dfd73f449156ac05e399bff/transformed/jetified-exoplayer-rtsp-2.17.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/a31b711fe322b919503915ff6a124106/transformed/jetified-exoplayer-smoothstreaming-2.17.1-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/2bb277eaa8f523c9d754bfb72060f0a3/transformed/jetified-klaxon-5.5.jar</arg>
                 <arg>$USER_HOME$/Library/Android/sdk/platforms/android-32/android.jar</arg>
                 <arg>$USER_HOME$/Library/Android/sdk/build-tools/30.0.3/core-lambda-stubs.jar</arg>
               </args>
@@ -346,6 +347,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.brotli:dec:0.1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.5.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.beust:klaxon:5.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.databinding:viewbinding:7.2.2@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: me.relex:circleindicator:2.1.6@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.core:core-ktx:1.8.0@aar" level="project" />

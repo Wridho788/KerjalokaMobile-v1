@@ -1,22 +1,11 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter
 
-import android.content.Context
-import android.content.Intent
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.gender
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.scale
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skill
-import com.ciptakerjaarunika.kerjaloka.ui.WelcomingPage.OnBoarding.OnBoardingItem
-import com.google.android.material.button.MaterialButton
 
 class ChooseScaleAdapter(private val scaleItems: List<scale>):
     RecyclerView.Adapter<ChooseScaleAdapter.chooseScale>()

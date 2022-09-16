@@ -19,7 +19,7 @@ class OnBoarding : AppCompatActivity() {
         val btn_Skip = findViewById<TextView>(R.id.textSkip)
 
         btn_Skip.setOnClickListener{
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         setOnBoardingItems()

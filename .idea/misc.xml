@@ -77,19 +77,19 @@
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.19316239316239317" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_bookmark_job.xml" value="0.19316239316239317" />
-        <entry key="app/src/main/res/layout/fragment_company_add_jobs_1.xml" value="0.625" />
+        <entry key="app/src/main/res/layout/fragment_company_add_jobs_1.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_2.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_3.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_4.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/fragment_company_add_jobs_5.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_company_add_jobs_5.xml" value="0.1991561181434599" />
         <entry key="app/src/main/res/layout/fragment_company_back_modal.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.19316239316239317" />
         <entry key="app/src/main/res/layout/fragment_company_detail_test.xml" value="0.35085470085470083" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perjob.xml" value="0.2231722958529286" />
         <entry key="app/src/main/res/layout/fragment_company_job_active_page.xml" value="0.3108665749656121" />
-        <entry key="app/src/main/res/layout/fragment_company_job_draft_page.xml" value="0.45" />
-        <entry key="app/src/main/res/layout/fragment_company_jobs.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_company_job_draft_page.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_company_jobs.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_package_list.xml" value="0.35085470085470083" />
         <entry key="app/src/main/res/layout/fragment_company_page.xml" value="0.19316239316239317" />
         <entry key="app/src/main/res/layout/fragment_company_vacancies.xml" value="0.3308931185944363" />

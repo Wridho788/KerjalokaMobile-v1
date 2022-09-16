@@ -100,5 +100,8 @@ dependencies {
     implementation 'com.android.support:percent:23.3.0'
 
     implementation ('org.jitsi.react:jitsi-meet-sdk:+') { transitive = true }
+
+    implementation 'com.beust:klaxon:5.5'
+
 }
 

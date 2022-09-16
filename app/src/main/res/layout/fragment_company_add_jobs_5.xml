@@ -90,7 +90,7 @@
 
 
         <LinearLayout
-            android:layout_toEndOf=""
+            android:layout_toEndOf="@+id/actionButton"
             android:id="@+id/compny_rearrange_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -236,12 +236,13 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
+
         <androidx.percentlayout.widget.PercentRelativeLayout
             android:id="@+id/actionButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginHorizontal="16dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="16dp">
 
             <com.google.android.material.button.MaterialButton
