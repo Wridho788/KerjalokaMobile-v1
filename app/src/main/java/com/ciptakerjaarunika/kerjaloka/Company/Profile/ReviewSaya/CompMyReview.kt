@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.AppealModal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.conRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.proRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
@@ -85,7 +87,7 @@ class CompMyReview : Fragment() {
         val recyclerCompReview = view.findViewById<RecyclerView>(R.id.revList)
         layoutManager = LinearLayoutManager(activity)
         recyclerCompReview.layoutManager = layoutManager
-        adapterRec = CompReviewAdapter(ReviewList)
+        adapterRec = assignAdapter(ReviewList)
         recyclerCompReview.adapter = adapterRec
 
 
@@ -101,6 +103,20 @@ class CompMyReview : Fragment() {
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
         fragmentTransaction?.commit()
+    }
+
+    internal fun assignAdapter(list: List<review>): CompReviewAdapter {
+        return CompReviewAdapter(requireContext(), list, object : AppealModal {
+            override fun appealModal(pack: review) {
+                val sheet = AppealReviewModal()
+                activity?.let { it1 ->
+                    sheet.show(
+                        it1.supportFragmentManager,
+                        "DemoBottomSheetFragment"
+                    )
+                }
+            }
+        })
     }
 
 }

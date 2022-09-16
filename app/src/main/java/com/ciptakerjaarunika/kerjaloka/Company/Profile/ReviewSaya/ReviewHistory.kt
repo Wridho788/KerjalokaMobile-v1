@@ -1,22 +1,13 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Package.Adapter.myPackageAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Package.Listener.ShowModalHistory
-import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
-import com.ciptakerjaarunika.kerjaloka.Company.Package.pack
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.ShowModal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
@@ -24,7 +15,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.conRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.proRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.JobPage.JobPage
+import com.ciptakerjaarunika.kerjaloka.ui.Global.GlobalDeleteModal
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.OnFragmentClickListener
 import com.google.android.material.appbar.MaterialToolbar
@@ -118,7 +109,16 @@ class ReviewHistory : Fragment(){
         return CompReviewHistoryAdapter(requireContext(), list, object : ShowModal {
             override fun showDetail(pack: review) {
                 val sheet = EditMyReview()
-                Log.d("data", pack.userRatingNo.toString())
+                activity?.let { it1 ->
+                    sheet.show(
+                        it1.supportFragmentManager,
+                        "DemoBottomSheetFragment"
+                    )
+                }
+            }
+
+            override fun showDelete(review: review) {
+                val sheet = GlobalDeleteModal()
                 activity?.let { it1 ->
                     sheet.show(
                         it1.supportFragmentManager,

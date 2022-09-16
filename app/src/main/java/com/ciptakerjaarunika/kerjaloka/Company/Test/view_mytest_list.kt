@@ -8,53 +8,110 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.company
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.user
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.CellClickListener
 import com.google.android.material.appbar.MaterialToolbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [view_mytest_list.newInstance] factory method to
- * create an instance of this fragment.
- */
 class view_mytest_list : Fragment(),CellClickListener {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapterTest: RecyclerView.Adapter<mytest_adapter.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_mytest_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_view_mytest_list, container, false)
+
+        val testList = ArrayList<Test>()
+        val quesList = ArrayList<Question>()
+
+        val q1 = Question(
+            questionNo = 363,
+            question = "Jawaban benar hanya 1 dan 3",
+            type = 3,
+            maxScore = 20,
+            subQuestion = 0
+        )
+        val q2 = Question(
+            questionNo = 363,
+            question = "OHHH Let it Be",
+            type = 3,
+            maxScore = 20,
+            subQuestion = 0
+        )
+        val q3 = Question(
+            questionNo = 363,
+            question = "Let It Be",
+            type = 3,
+            maxScore = 20,
+            subQuestion = 0
+        )
+        quesList.add(q1)
+        quesList.add(q2)
+        quesList.add(q3)
+
+        val test1 = Test(
+            testNo = 70,
+            testName = "Test Jawaban Ganda",
+            testDuration = 12,
+            testPeriod = 3,
+            maxScore = 230,
+            testEnabled = true,
+            testHint = "",
+            isPublic = false,
+            isSpecial = false,
+            createdBy = "TESTING",
+            createdOn = "2022-05-21T12:02:05",
+            questions = quesList,
+            isTakedown = false,
+            isOwn = true,
+            testLink = null,
+            testMarketNo = null,
+            price = null
+        )
+        val test2 = Test(
+            testNo = 70,
+            testName = "Test Jawaban Ganda",
+            testDuration = 12,
+            testPeriod = 3,
+            maxScore = 230,
+            testEnabled = true,
+            testHint = "",
+            isPublic = false,
+            isSpecial = false,
+            createdBy = "TESTING TESTING TESTING TESTING",
+            createdOn = "2022-05-21T12:02:05",
+            questions = quesList,
+            isTakedown = false,
+            isOwn = true,
+            testLink = null,
+            testMarketNo = null,
+            price = null
+        )
+        testList.add(test1)
+        testList.add(test2)
+        testList.add(test1)
+        testList.add(test1)
+        testList.add(test1)
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = layoutManager
+        adapterTest = mytest_adapter(testList)
+        recyclerView.adapter = adapterTest
+
+        return view
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        val toolbar = itemView.findViewById<MaterialToolbar>(R.id.mainToolbar) as MaterialToolbar
-        toolbar.setTitle("My Test List")
-
-
-        var Context = this;
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
-        recyclerView.apply {
-
-            layoutManager = LinearLayoutManager(activity)
-            adapter = mytest_adapter (Context)
-        }
     }
     override fun onCellClickListener() {
 //        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
@@ -64,22 +121,5 @@ class view_mytest_list : Fragment(),CellClickListener {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment view_mytest_list.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            view_mytest_list().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

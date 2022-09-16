@@ -4,4 +4,9 @@
         <item name="android:background">@color/gray_400</item>
         <item name="exampleColor">@color/light_blue_400</item>
     </style>
+
+    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="backgroundTint">@color/background_color_chip_state_list</item>
+        <item name="strokeColor">@color/stroke_chip</item>
+    </style>
 </resources>

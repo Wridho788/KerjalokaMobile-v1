@@ -365,8 +365,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_button_close" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/Button Close Icon Small (1).svg" />
+                            <entry key="outputName" value="ic_clock_04" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/Clock Illustration SVG-04.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -89,46 +89,88 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp"
                         android:background="@color/danger_500"
                         android:text="Disiplin" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp"
                         android:background="@color/danger_500"
                         android:text="Kemauan Bekerja" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp"
                         android:background="@color/danger_500"
                         android:text="Bekerja Keras" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Emosional" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Emosional"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Etika" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Etika"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Bekerja Sama" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Bekerja Sama"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Kerapian" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Kerapian"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
                 </com.google.android.material.chip.ChipGroup>
 
                 <TextView
@@ -146,46 +188,87 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Disiplin" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Disiplin"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Kemauan Bekerja" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Kemauan Bekerja"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Bekerja Keras" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Bekerja Keras"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Emosional" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Emosional"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Etika" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Etika"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/danger_500"
-                        android:text="Bekerja Sama" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Bekerja Sama"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@color/danger_500"
-                        android:text="Kerapian" />
+                        android:backgroundTint="@color/background_color_chip_state_list"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/poppins"
+                        android:text="Kerapian"
+                        app:chipStrokeColor="@color/stroke_chip"
+                        app:chipStrokeWidth="2dp" />
                 </com.google.android.material.chip.ChipGroup>
 
                 <TextView
@@ -224,9 +307,9 @@
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
                 android:backgroundTint="@color/danger_500"
                 android:fontFamily="@font/poppins_medium"
                 android:text="Simpan"

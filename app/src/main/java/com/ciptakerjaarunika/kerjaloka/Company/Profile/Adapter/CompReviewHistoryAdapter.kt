@@ -17,7 +17,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class CompReviewHistoryAdapter (private val context: Context, private val reviewList: List<review>, private val listener: ShowModal):
+class CompReviewHistoryAdapter(private val context: Context, private val reviewList: List<review>, private val listener: ShowModal):
     RecyclerView.Adapter<CompReviewHistoryAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
@@ -27,6 +27,7 @@ class CompReviewHistoryAdapter (private val context: Context, private val review
         var conChip : ChipGroup
         var ratBar : RatingBar
         var edit : MaterialButton
+        var delete : MaterialButton
 
         init {
             creator = itemView.findViewById(R.id.nama_jobseeker)
@@ -36,6 +37,7 @@ class CompReviewHistoryAdapter (private val context: Context, private val review
             conChip = itemView.findViewById(R.id.chipGroup_kekurangan)
             ratBar = itemView.findViewById(R.id.ratingbar)
             edit = itemView.findViewById(R.id.btn_Edit)
+            delete = itemView.findViewById(R.id.btn_delete)
         }
     }
 
@@ -53,6 +55,10 @@ class CompReviewHistoryAdapter (private val context: Context, private val review
 
         holder.edit.setOnClickListener {
             listener.showDetail(currentItem)
+        }
+
+        holder.delete.setOnClickListener{
+            listener.showDelete(currentItem)
         }
 
         if (currentItem.conRating.isNotEmpty()){

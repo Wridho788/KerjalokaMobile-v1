@@ -25,40 +25,21 @@
                 android:id="@+id/test_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/poppins_semibold"
                 android:text="Test Name"
                 android:textColor="@color/black"
                 android:textSize="14dp"/>
 
-            <TextView
-                android:id="@+id/test_duration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_light"
-                android:text="Test Duration : "
-                android:textColor="@color/trueGray_300"
-                android:textSize="10dp" />
-
-            <TextView
-                android:id="@+id/test_period"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_light"
-                android:textColor="@color/trueGray_300"
-                android:text="Test Period : "
-                android:textSize="10dp"/>
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
-
                 <TextView
                     android:id="@+id/test_creator"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_light"
+                    android:fontFamily="@font/poppins"
                     android:textColor="@color/trueGray_300"
                     android:text="Test Creator Name :"
                     android:textSize="10dp" />

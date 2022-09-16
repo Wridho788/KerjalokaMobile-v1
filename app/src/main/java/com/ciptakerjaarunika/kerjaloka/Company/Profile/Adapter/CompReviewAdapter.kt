@@ -1,15 +1,18 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.AppealModal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.R
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class CompReviewAdapter (private val reviewList: List<review>):
+class CompReviewAdapter (private val context: Context, private val reviewList: List<review>, private val listener: AppealModal):
     RecyclerView.Adapter<CompReviewAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
@@ -18,6 +21,7 @@ class CompReviewAdapter (private val reviewList: List<review>):
         var proChip : ChipGroup
         var conChip : ChipGroup
         var ratBar : RatingBar
+        var appeal : MaterialButton
 
         init {
             creator = itemView.findViewById(R.id.nama_jobseeker)
@@ -26,6 +30,7 @@ class CompReviewAdapter (private val reviewList: List<review>):
             proChip = itemView.findViewById(R.id.chipGroup_kelebihan)
             conChip = itemView.findViewById(R.id.chipGroup_kekurangan)
             ratBar = itemView.findViewById(R.id.ratingbar)
+            appeal = itemView.findViewById(R.id.btn_appeal)
         }
     }
 
@@ -40,6 +45,10 @@ class CompReviewAdapter (private val reviewList: List<review>):
         holder.creator.text = currentItem.userFullName
         holder.Desc.text = currentItem.comment
         holder.ratBar.rating = currentItem.rating.toFloat()
+
+        holder.appeal.setOnClickListener{
+            listener.appealModal(currentItem)
+        }
 
 
 
