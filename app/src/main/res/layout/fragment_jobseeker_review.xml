@@ -85,14 +85,7 @@
                     android:textColor="@color/dark_100"
                     android:layout_marginStart="16dp"
                     />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_item_my_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginBottom="10dp"
-                    android:paddingHorizontal="16dp"
-                    tools:listitem="@layout/item_card_review" />
+               <include layout="@layout/item_card_my_review" />
             </LinearLayout>
 
 

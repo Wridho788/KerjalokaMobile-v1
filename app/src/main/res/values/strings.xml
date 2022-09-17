@@ -297,5 +297,11 @@
     <string name="flexibilitas_waktu">Flexibilitas Waktu</string>
     <string name="pengembangan_waktu">Pengembangan Waktu</string>
     <string name="review_jobseeker">Review Jobseeker</string>
+    <string name="edit">Edit</string>
+    <string name="bandingkan_jobseeker">Bandingkan Jobseeker</string>
+    <string name="ganti_pelamar">Ganti Pelamar</string>
+    <string name="hasil_perbandingan">Hasil Perbandingan</string>
+    <string name="skill">Skill</string>
+    <string name="perbandingan_skill_berdasarkan_jumlah_skill_yang_dimiliki_pelamar">Perbandingan skill berdasarkan jumlah skill yang dimiliki pelamar.</string>
 
 </resources>

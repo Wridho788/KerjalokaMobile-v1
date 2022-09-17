@@ -24,7 +24,12 @@ class MoreActionFragment : SuperBottomSheetFragment() {
         val btn_pin = view.findViewById<TextView>(R.id.txt_pin)
 
         btn_banding.setOnClickListener {
-            Toast.makeText(activity, "banding menu", Toast.LENGTH_SHORT).show()
+            this.dismiss()
+//            val ft: FragmentTransaction = childFragmentManager.beginTransaction()
+//            ft.replace(id,CompanyCompareJobseekerFragment(), "CompanyCompareJobseeker")
+//            ft.addToBackStack("CompanyCompareJobseeker")
+//            ft.commit()
+
         }
 
         btn_pin.setOnClickListener {

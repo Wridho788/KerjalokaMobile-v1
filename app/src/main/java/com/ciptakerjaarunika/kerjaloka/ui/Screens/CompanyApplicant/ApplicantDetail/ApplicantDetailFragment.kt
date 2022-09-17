@@ -16,6 +16,8 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDeta
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.KomentarApplicantFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionRecords.RecordsFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.StatusPageFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyCompareJobseeker.CompanyCompareJobseekerFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.JobseekerReviewFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -45,6 +47,9 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
         val btn_lihat_record = view.findViewById<MaterialCardView>(R.id.btn_lihat_record)
         val btn_ganti_status = view.findViewById<MaterialButton>(R.id.btn_change_status)
         val btn_more = view.findViewById<MaterialCardView>(R.id.btn_more)
+        val btn_lihat_review = view.findViewById<MaterialButton>(R.id.btn_review)
+        val btn_portofolio = view.findViewById<MaterialButton>(R.id.btn_portofolio)
+
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_applicant)
         toolbar.setOnClickListener {
             activity?.onBackPressed()
@@ -78,6 +83,14 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
         btn_ganti_status.setOnClickListener {
             goToChangeStatus()
         }
+
+        btn_lihat_review.setOnClickListener {
+            goToReview()
+        }
+
+        btn_portofolio.setOnClickListener {
+            goToCompareJobseeker()
+        }
     }
 
     override fun goToCommentApplicant() {
@@ -107,6 +120,20 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
         ft.addToBackStack("ChangeStatus")
         ft.commit()
     }
+
+    override fun goToReview() {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, JobseekerReviewFragment(),"JobseekerReview")
+        ft.addToBackStack("JobseekerReview")
+        ft.commit()
+    }
+
+    override fun goToCompareJobseeker() {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, CompanyCompareJobseekerFragment(), "CompanyCompareJobseeker")
+        ft.addToBackStack("CompanyCompareJobseeker")
+        ft.commit()
+    }
 }
 
 interface OnFragmentClickListener {
@@ -114,4 +141,6 @@ interface OnFragmentClickListener {
     fun goToHistoryApplicant()
     fun goToRecordApplicant()
     fun goToChangeStatus()
+    fun goToReview()
+    fun goToCompareJobseeker()
 }
