@@ -20,7 +20,6 @@ data class rJobModel(
     val link: String,
     val companyName: String,
     val createdOn: String,
-
 )
 
 data class rJobDetailResponse(

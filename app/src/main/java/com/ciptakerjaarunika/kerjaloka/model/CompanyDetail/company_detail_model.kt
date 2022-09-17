@@ -50,4 +50,5 @@ data class company(
 data class locationCompany(
     val city: String,
     val province: String,
+    val country : String,
 )

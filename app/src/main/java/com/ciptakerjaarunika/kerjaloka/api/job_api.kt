@@ -2,12 +2,10 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
-import com.ciptakerjaarunika.kerjaloka.model.Job.BookmarkJob
-import com.ciptakerjaarunika.kerjaloka.model.Job.BookmarkResponse
-import com.ciptakerjaarunika.kerjaloka.model.Job.ReportJobRequest
-import com.ciptakerjaarunika.kerjaloka.model.Job.myApplicationsResponse
+import com.ciptakerjaarunika.kerjaloka.model.Job.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailResponse
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rjob_model
 import retrofit2.Call
@@ -185,7 +183,34 @@ class JobAPI {
         }
 
     }
-    //UnBookmark Job
+
+    data class jobRecommendationResponse(
+        val code : Int,
+        val data : List<RecommendationJob>
+    )
+    interface getJobRecommendationAuth {
+        @GET("jobseeker/job/recommendation")
+        fun getData(@Query("getAll") getAll : Boolean) : Call<jobRecommendationResponse>
+    }
+
+    fun getJobRecommendation(getAll : Boolean, context: Context?, onResult: (jobRecommendationResponse?) -> Unit){
+            val retrofit = ServiceBuilder(context).GET(getJobRecommendationAuth::class.java)
+
+            retrofit.getData(getAll).enqueue(
+                object : Callback<jobRecommendationResponse> {
+                    override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
+                        onResult(null)
+                    }
+
+                    override fun onResponse(
+                        call: Call<jobRecommendationResponse>,
+                        response: Response<jobRecommendationResponse>
+                    ) {
+                        onResult(response.body())
+                    }
+                }
+            )
+    }
 
 
 

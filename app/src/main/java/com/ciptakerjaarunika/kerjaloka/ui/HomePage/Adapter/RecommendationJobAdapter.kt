@@ -36,7 +36,7 @@ class RecommendationJobAdapter(
         var companyName: TextView
         var jobLocation: TextView
         var CreatedOn: TextView
-        var bookmarkedJob: MaterialButton
+        var bookmarkedJob: ImageView
         var shareableJob: MaterialButton
         var cardRecommendationJob: MaterialCardView
 
