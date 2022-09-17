@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter
 import android.content.Context
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -54,6 +55,7 @@ class RecommendationJobAdapter(val listAuth : List<RecommendationJob>?,val listU
             Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem?.logo).into(holder.logo)
         }else{
             val currentItem = listAuth?.get(position)
+            holder.bookmark_btn.visibility = VISIBLE
             holder.bookmark_btn.setOnClickListener{
                 bookmarkJob(currentItem!!.jobNo, currentItem!!.bookmarked, holder)
             }
