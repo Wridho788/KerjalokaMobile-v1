@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.OnFragmentClickListener
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.IJobDetail
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -21,7 +21,7 @@ import java.util.*
 
 class RelatedJobAdapter(
     private val jobList: List<job>,
-    private val onFragmentClickListener: OnFragmentClickListener
+    private val onFragmentClickListener: IJobDetail
 ) :
     RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>() {
 

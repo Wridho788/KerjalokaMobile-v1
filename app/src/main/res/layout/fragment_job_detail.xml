@@ -65,8 +65,20 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/spinnerDetailPekerjaan"
+        android:gravity="center">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/job_detail_container"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -152,6 +164,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/button_primary"
+                    app:cornerRadius="50dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/lamar_kerja"
                     android:textAllCaps="false"
@@ -359,14 +372,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/bullet_list"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
-                            android:textColor="@color/dark_100"
-                            android:textSize="12sp"
-                            app:drawableStartCompat="@drawable/bullet_list" />
                         <TextView
                             android:id="@+id/location"
                             android:layout_width="wrap_content"

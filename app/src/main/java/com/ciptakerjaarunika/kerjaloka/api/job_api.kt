@@ -33,30 +33,50 @@ class JobAPI {
             }
         )
     }
+    interface getJobDetailLogin {
+        @GET("/users/jobseeker/job/{CompanyNo}/{JobNo}")
+        fun getJobDetailLogin(@Path("CompanyNo") CompanyNo: Long?, @Path("JobNo") JobNo: Long) : Call<rJobDetailResponse>
+    }
+
     interface getJobDetail {
         @GET("/job/{CompanyNo}/{JobNo}/Visitor")
         fun getJobDetail(@Path("CompanyNo") CompanyNo: Long?, @Path("JobNo") JobNo: Long) : Call<rJobDetailResponse>
     }
 
     fun getJobDetailAsync(context: Context?,CompanyNo:Long, JobNo:Long,onResult: (rJobDetailResponse?) -> Unit){
-        val retrofit = ServiceBuilder(context).GET(getJobDetail::class.java)
+        if(SessionManager(context).user == null) {
+            val retrofit = ServiceBuilder(context).GET(getJobDetail::class.java)
+            retrofit.getJobDetail(CompanyNo, JobNo).enqueue(
+                object : Callback<rJobDetailResponse> {
+                    override fun onFailure(call: Call<rJobDetailResponse>, t: Throwable) {
+                        Log.d("Response API", t.toString())
+                        onResult(null)
+                    }
 
-        retrofit.getJobDetail(CompanyNo, JobNo).enqueue(
-            object : Callback<rJobDetailResponse> {
-                override fun onFailure(call: Call<rJobDetailResponse>, t: Throwable) {
-                    Log.d("Response API", t.toString())
-                    onResult(null)
+                    override fun onResponse(
+                        call: Call<rJobDetailResponse>,
+                        response: Response<rJobDetailResponse>
+                    ) {
+                        onResult(response.body())
+                    }
                 }
-                override fun onResponse( call: Call<rJobDetailResponse>, response: Response<rJobDetailResponse>) {
-                    onResult(response.body())
+            )
+        }
+        else{
+            val retrofit = ServiceBuilder(context).GET(getJobDetailLogin::class.java)
+            retrofit.getJobDetailLogin(CompanyNo, JobNo).enqueue(
+                object : Callback<rJobDetailResponse> {
+                    override fun onFailure(call: Call<rJobDetailResponse>, t: Throwable) {
+                        onResult(null)
+                    }
+                    override fun onResponse( call: Call<rJobDetailResponse>, response: Response<rJobDetailResponse>) {
+                        onResult(response.body())
+                    }
                 }
-            }
-        )
+            )
+        }
     }
-    interface getJobDetailLogin {
-        @GET("/users/jobseeker/job/{CompanyNo}/{JobNo}")
-        fun getJobDetailLogin(@Path("CompanyNo") CompanyNo: Long?, @Path("JobNo") JobNo: Long) : Call<rJobDetailResponse>
-    }
+
 
     fun GetJobDetailLogin(context: Context?,CompanyNo:Long, JobNo:Long,onResult: (rJobDetailResponse?) -> Unit){
         val retrofit = ServiceBuilder(context).GET(getJobDetailLogin::class.java)

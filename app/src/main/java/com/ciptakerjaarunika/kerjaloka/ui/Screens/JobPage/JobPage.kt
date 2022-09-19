@@ -2,8 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage;
 
 import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.content.pm.PackageManager.PERMISSION_DENIED
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,16 +14,16 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
-import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.BookmarkedJobAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.NearMeJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.viewJobDetail
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.SearchJob
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -34,7 +32,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 
 
-class JobPage: Fragment(){
+class JobPage: Fragment(), IJobPage{
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var activityResultLauncher : ActivityResultLauncher<Array<String>>
 
@@ -70,75 +68,6 @@ class JobPage: Fragment(){
 //        }else{
 //
 //        }
-
-        val btn_search = view.findViewById<LinearLayout>(R.id.search_job_btn)
-        val btn_seeBookmarkedJob = view.findViewById<MaterialButton>(R.id.btnSeeBookmarked)
-        val btn_seeNearMeJob = view.findViewById<MaterialButton>(R.id.btnSeeNearMe)
-        val btn_seeRecommendJob = view.findViewById<MaterialButton>(R.id.seeRecommend)
-
-        var rcylRecommendation = view.findViewById<RecyclerView>(R.id.recommenJob)
-        if(SessionManager(context).user != null) {
-            JobAPI().getJobRecommendation(true, context) {
-                recommendationDone()
-                if (it != null) {
-                    if(it.data.size <= 5){
-                        btn_seeRecommendJob.visibility = GONE
-                    }
-                    rcylRecommendation.apply {
-                        adapter = RecommendationJobAdapter(it.data.take(5), null,context)
-                        layoutManager = LinearLayoutManager(activity)
-                    }
-                }
-            }
-
-            var rcylBookmarked = view.findViewById<RecyclerView>(R.id.bookmaredJob)
-            JobAPI().getBookmarkedJob(context){
-                bookmarkedDone()
-                if (it != null) {
-                    if(it.data.size <= 5){
-                        btn_seeBookmarkedJob.visibility = GONE
-                    }
-                    rcylBookmarked.apply {
-                        adapter = BookmarkedJobAdapter(it.data.take(5), context)
-                        layoutManager = LinearLayoutManager(activity)
-                    }
-                }
-            }
-        }
-        else{
-            JobAPI().getJobHomeAsync(context){
-                recommendationDone()
-
-                if(it != null) {
-                    rcylRecommendation.apply {
-                        adapter = RecommendationJobAdapter(null, it.data.take(5),context)
-                        layoutManager = LinearLayoutManager(activity)
-                    }
-                }
-            }
-            view.findViewById<ConstraintLayout>(R.id.bookmark_container).visibility = GONE
-        }
-
-
-        btn_search.setOnClickListener {
-            val intent = Intent(activity, SearchJob::class.java)
-            startActivity(intent)
-        }
-
-        btn_seeBookmarkedJob.setOnClickListener {
-            Toast.makeText(context, "Bookmarker Job Need API", Toast.LENGTH_SHORT).show()
-        }
-
-        btn_seeNearMeJob.setOnClickListener {
-            Toast.makeText(context, "near me Job Need API", Toast.LENGTH_SHORT).show()
-
-        }
-
-        btn_seeRecommendJob.setOnClickListener {
-            Toast.makeText(context, "recommendation Job Need API", Toast.LENGTH_SHORT).show()
-
-        }
-
         return view
     }
 
@@ -147,7 +76,7 @@ class JobPage: Fragment(){
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar_job)
         val layout_search_job = view.findViewById<LinearLayout>(R.id.search_job_btn)
 
-
+        RefreshData()
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
@@ -158,29 +87,119 @@ class JobPage: Fragment(){
         }
 
     }
+    override fun RefreshData(){
+        val btn_search = view?.findViewById<LinearLayout>(R.id.search_job_btn)
+        val btn_seeBookmarkedJob = view?.findViewById<MaterialButton>(R.id.btnSeeBookmarked)
+        val btn_seeNearMeJob = view?.findViewById<MaterialButton>(R.id.btnSeeNearMe)
+        val btn_seeRecommendJob = view?.findViewById<MaterialButton>(R.id.seeRecommend)
+
+        var rcylRecommendation = view?.findViewById<RecyclerView>(R.id.recommenJob)
+
+        view?.findViewById<ConstraintLayout>(R.id.bookmark_container)?.visibility = VISIBLE
+
+        if(SessionManager(context).user != null) {
+            JobAPI().getJobRecommendation(true, context) {
+                recommendationDone()
+                if (it != null) {
+                    btn_seeRecommendJob?.visibility = if(it.data.size <= 5) GONE else VISIBLE
+                    rcylRecommendation?.apply {
+                        adapter = RecommendationJobAdapter(it.data.take(5), null,context, this@JobPage)
+                        layoutManager = LinearLayoutManager(activity)
+                    }
+                    rcylRecommendation?.adapter?.notifyDataSetChanged()
+                }
+            }
+
+            var rcylBookmarked = view?.findViewById<RecyclerView>(R.id.bookmaredJob)
+            JobAPI().getBookmarkedJob(context){
+                bookmarkedDone()
+                if (it != null) {
+                    btn_seeBookmarkedJob?.visibility = if(it.data.size <= 5) GONE else VISIBLE
+                    rcylBookmarked?.apply {
+                        adapter = JobAdapter(it.data.take(5), context, this@JobPage)
+                        layoutManager = LinearLayoutManager(activity)
+                    }
+                    rcylBookmarked?.adapter?.notifyDataSetChanged()
+                }
+            }
+        }
+        else{
+            JobAPI().getJobHomeAsync(context){
+                recommendationDone()
+                btn_seeRecommendJob?.visibility = if(it == null || it.data.size <= 5) GONE else VISIBLE
+
+                if(it != null) {
+                    rcylRecommendation?.apply {
+                        adapter = RecommendationJobAdapter(null, it.data.take(5),context, this@JobPage)
+                        layoutManager = LinearLayoutManager(activity)
+                    }
+                    rcylRecommendation?.adapter?.notifyDataSetChanged()
+                }
+            }
+            view?.findViewById<ConstraintLayout>(R.id.bookmark_container)?.visibility = GONE
+        }
+
+
+        btn_search?.setOnClickListener {
+            val intent = Intent(activity, SearchJob::class.java)
+            startActivity(intent)
+        }
+
+        btn_seeBookmarkedJob?.setOnClickListener {
+            Toast.makeText(context, "Bookmarker Job Need API", Toast.LENGTH_SHORT).show()
+        }
+
+        btn_seeNearMeJob?.setOnClickListener {
+            Toast.makeText(context, "near me Job Need API", Toast.LENGTH_SHORT).show()
+
+        }
+
+        btn_seeRecommendJob?.setOnClickListener {
+            Toast.makeText(context, "recommendation Job Need API", Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+    override fun GoToJobDetail(JobNo: Long, CompanyNo: Long) {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "JobDetailFragment")
+        ft.addToBackStack("Job Page")
+        ft.commit()
+    }
+
     fun getNearJob(){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
-            val latitude =  it.latitude.toString()
-            val longtitude = it.longitude.toString()
-            JobAPI().getNearJob(latitude, longtitude, context){
-                nearJobDone()
-                if(it != null && it.data.size != 0) {
-                    if (it?.data?.size!! <= 5) {
-                        view?.findViewById<LinearLayout>(R.id.btnSeeNearMe)?.visibility = GONE
+            nearJobDone()
+            if(it == null){
+                view?.findViewById<android.widget.TextView>(R.id.empty_near_job)?.visibility =
+                    VISIBLE
+                view?.findViewById<MaterialButton>(R.id.btnSeeNearMe)?.visibility = GONE
+            }
+            else {
+                view?.findViewById<android.widget.TextView>(R.id.empty_near_job)?.visibility = GONE
+
+                val latitude = it.latitude.toString()
+                val longtitude = it.longitude.toString()
+                JobAPI().getNearJob(latitude, longtitude, context) {
+                    if (it != null && it.data.size != 0) {
+                        view?.findViewById<MaterialButton>(R.id.btnSeeNearMe)?.visibility = if(it.data.size <= 5) GONE else VISIBLE
+                        val recyclerView = view?.findViewById<RecyclerView>(R.id.nearmeJob)
+                        recyclerView?.apply {
+                            adapter = JobAdapter(it.data.take(5), context, this@JobPage)
+                            layoutManager = LinearLayoutManager(activity)
+                        }
+                        recyclerView?.adapter?.notifyDataSetChanged()
+                    } else {
+                        view?.findViewById<android.widget.TextView>(R.id.empty_near_job)?.visibility =
+                            VISIBLE
+                        view?.findViewById<MaterialButton>(R.id.btnSeeNearMe)?.visibility = GONE
                     }
-                    val recyclerView = view?.findViewById<RecyclerView>(R.id.nearmeJob)
-                    recyclerView?.apply {
-                        adapter = NearMeJobAdapter(it.data.take(5),context)
-                        layoutManager = LinearLayoutManager(activity)
-                    }
-                }
-                else{
-                    view?.findViewById<LinearLayout>(R.id.empty_near_job)?.visibility = VISIBLE
                 }
             }
         }
     }
+
 
     fun recommendationDone() {
         view?.findViewById<LinearLayout>(R.id.recommendation_job_container)?.visibility = VISIBLE
@@ -194,4 +213,8 @@ class JobPage: Fragment(){
         view?.findViewById<LinearLayout>(R.id.near_job_container)?.visibility = VISIBLE
         view?.findViewById<LinearLayout>(R.id.spinnerNear)?.visibility = GONE
     }
+}
+interface IJobPage{
+    fun RefreshData()
+    fun GoToJobDetail(JobNo : Long, CompanyNo: Long)
 }

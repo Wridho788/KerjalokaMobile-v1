@@ -101,9 +101,9 @@
 
                 <ImageView
                     android:id="@+id/btn_bookmark"
-                    android:layout_width="24dp"
+                    android:layout_width="match_parent"
                     android:layout_height="26dp"
-                    android:background="@drawable/ic_bookmark" />
+                    android:background="@drawable/ic_bookmark_primary" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_share"

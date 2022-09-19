@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -15,10 +16,11 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
-class RecommendationJobAdapter(val listAuth : List<RecommendationJob>?,val listUnAuth : List<rJobModel>?, val context: Context) : RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>() {
+class RecommendationJobAdapter(val listAuth : List<RecommendationJob>?,val listUnAuth : List<rJobModel>?, val context: Context,private val  iJobPage: IJobPage) : RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobPosition: TextView
@@ -27,6 +29,8 @@ class RecommendationJobAdapter(val listAuth : List<RecommendationJob>?,val listU
         var jobLocation: TextView
         var createdOn: TextView
         var bookmark_btn : ImageView
+        var share_btn : MaterialButton
+        var cardRecommendationJob: MaterialCardView
 
         init {
             jobPosition = itemView.findViewById(R.id.jobPosition)
@@ -35,6 +39,8 @@ class RecommendationJobAdapter(val listAuth : List<RecommendationJob>?,val listU
             jobLocation = itemView.findViewById(R.id.jobLocation)
             createdOn = itemView.findViewById(R.id.createdOn)
             bookmark_btn = itemView.findViewById(R.id.btn_bookmark)
+            share_btn = itemView.findViewById(R.id.btn_share)
+            cardRecommendationJob = itemView.findViewById(R.id.card_recommendation_job)
         }
     }
 
@@ -53,6 +59,25 @@ class RecommendationJobAdapter(val listAuth : List<RecommendationJob>?,val listU
             holder.jobLocation.text = currentItem?.jobLocation
             holder.createdOn.text = currentItem?.createdOn
             Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem?.logo).into(holder.logo)
+
+            holder.share_btn.setOnClickListener {
+                val text =
+                    "${currentItem?.companyName}\n" +
+                            "sedang membuka lowongan pekerjaan sebagai '${currentItem?.jobPosition}'.\n" +
+                            "Lihat informasi selengkapnya ${currentItem?.link}"
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, currentItem?.jobPosition)
+                    putExtra(Intent.EXTRA_TEXT, text)
+                    type = "text/plain"
+                }
+
+                context.startActivity(Intent.createChooser(sendIntent, "Bagikan Informasi Pekerjaan"))
+            }
+
+            holder.cardRecommendationJob.setOnClickListener {
+                currentItem?.let { it1 -> iJobPage.GoToJobDetail(it1.jobNo, it1.companyNo) }
+            }
         }else{
             val currentItem = listAuth?.get(position)
             holder.bookmark_btn.visibility = VISIBLE
@@ -64,13 +89,46 @@ class RecommendationJobAdapter(val listAuth : List<RecommendationJob>?,val listU
             holder.jobLocation.text = if(currentItem?.jobLocation!!.size >1) "Banyak lokasi" else currentItem.jobLocation[0].location
             holder.createdOn.text = currentItem?.createdOn
             Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem?.company!!.logo).into(holder.logo)
+            holder.bookmark_btn.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
+
+            holder.bookmark_btn.setOnClickListener {
+                JobAPI().BookmarkJob(currentItem.jobNo, !currentItem.bookmarked, context) {
+                    if(it != null) {
+                        if (it.code == 210) {
+                            iJobPage.RefreshData()
+                        } else {
+                            Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+
+            }
+            holder.share_btn.setOnClickListener {
+                val text =
+                    "${currentItem?.company.companyName}\n" +
+                            "sedang membuka lowongan pekerjaan sebagai '${currentItem.jobPosition}'.\n" +
+                            "Lihat informasi selengkapnya ${currentItem.link}"
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, currentItem.jobPosition)
+                    putExtra(Intent.EXTRA_TEXT, text)
+                    type = "text/plain"
+                }
+
+                context.startActivity(Intent.createChooser(sendIntent, "Bagikan Informasi Pekerjaan"))
+            }
+
+            holder.cardRecommendationJob.setOnClickListener {
+                iJobPage.GoToJobDetail(currentItem.jobNo, currentItem.companyNo)
+            }
         }
+
     }
     fun bookmarkJob(jobNo: Long, jobBookmark : Boolean, holder : ViewHolder){
             JobAPI().BookmarkJob(jobNo, !jobBookmark, context) {
                 if(it != null) {
                     if (it.code == 210) {
-                        holder.bookmark_btn.setImageResource(if (!jobBookmark)  R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark)
+                        iJobPage.RefreshData()
                     } else {
                         Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
                     }
