@@ -3,13 +3,10 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
-import com.ciptakerjaarunika.kerjaloka.model.Interview.conmpany_interview_list_api
 import com.ciptakerjaarunika.kerjaloka.model.User.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.google.gson.Gson
-import com.google.gson.stream.JsonReader
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,12 +14,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
-import java.io.Reader
-import java.util.*
-import java.io.StringReader
-
-
-
 
 class AUTHAPI {
     interface ILogin {

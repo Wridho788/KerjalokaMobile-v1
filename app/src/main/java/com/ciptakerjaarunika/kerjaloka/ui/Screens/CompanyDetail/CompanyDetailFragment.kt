@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -16,15 +17,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anychart.core.annotations.Line
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyBrowseAPI
 import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.company
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedCompanyJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.CompanyReviewFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.OnFragmentClickListener
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
@@ -46,6 +47,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         val btn_review = view.findViewById<MaterialButton>(R.id.review_button)
         val company_logo = view.findViewById<ImageView>(R.id.logo_company)
         val txt_rating_company = view.findViewById<TextView>(R.id.txt_rating_company)
+        val txt_follower = view.findViewById<TextView>(R.id.txt_follower)
         val company_name = view.findViewById<TextView>(R.id.company_name)
         val company_type = view.findViewById<TextView>(R.id.company_type)
         val company_location = view.findViewById<TextView>(R.id.company_location)
@@ -176,4 +178,5 @@ interface OnFragmentCompanyDetailListener {
     fun onRelatedCompanyFragment(CompanyNo: Long)
     fun goToJobDetail(JobNo: Long, CompanyNo: Long)
     fun goToCompanyReview(CompanyNo: Long)
+    fun onCompanyDetailPage(companyNo: Long)
 }

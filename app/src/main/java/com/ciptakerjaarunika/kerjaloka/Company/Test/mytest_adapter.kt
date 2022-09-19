@@ -7,7 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.CellClickListener
+//import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.CellClickListener
 import com.ciptakerjaarunika.kerjaloka.Company.Test.Test
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import java.util.*

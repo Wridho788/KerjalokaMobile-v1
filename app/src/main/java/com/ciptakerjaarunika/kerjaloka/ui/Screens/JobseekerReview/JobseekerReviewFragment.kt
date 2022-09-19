@@ -38,7 +38,7 @@ class JobseekerReviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar_review)
-        val btn_gift_review = view.findViewById<LinearLayout>(R.id.btn_send_review_jobseeker)
+        val btn_gift_review = view.findViewById<LinearLayout>(R.id.btn_send_review_company)
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()

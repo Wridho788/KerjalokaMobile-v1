@@ -1,24 +1,19 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Test
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.company
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.user
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Job.ApplicationData
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranCellClickListener
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.viewJobDetail
-import com.google.android.material.appbar.MaterialToolbar
 
-class view_mytest_list : Fragment(),CellClickListener {
+class view_mytest_list : Fragment(),LamaranCellClickListener {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapterTest: RecyclerView.Adapter<mytest_adapter.ViewHolder>? = null
 

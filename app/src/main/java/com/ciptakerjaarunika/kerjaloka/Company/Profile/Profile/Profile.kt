@@ -1,15 +1,14 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.anychart.scales.DateTime
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.record
+//import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.record
 
 class Profile : Fragment() {
 

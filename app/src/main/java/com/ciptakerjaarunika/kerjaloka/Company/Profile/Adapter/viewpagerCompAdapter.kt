@@ -7,26 +7,27 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Profile.Profile
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.CompMyReview
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting.AccountSetting
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageProfile
 
-class viewpagerCompAdapter (fragmentManager: FragmentManager, lifecycle: Lifecycle,): FragmentStateAdapter(fragmentManager,lifecycle){
+class viewpagerCompAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+    FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
         return 3
     }
 
     override fun createFragment(position: Int): Fragment {
-        return when(position){
-            0->{
+        return when (position) {
+            0 -> {
                 Profile()
             }
-            1->{
+            1 -> {
                 CompMyReview()
             }
-            2->{
+            2 -> {
                 AccountSetting()
             }
             else -> {
-                ManageProfile()
+                ManageProfile(data = null)
             }
         }
     }

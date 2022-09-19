@@ -9,7 +9,6 @@ data class company_detail_model(
 
 data class company_detail_list(
     val logo: String,
-    val followers: Int,
     val companyName: String,
     val companyNo: Long,
     val field: String,
