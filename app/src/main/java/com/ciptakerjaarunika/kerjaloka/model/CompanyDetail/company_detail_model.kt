@@ -21,6 +21,7 @@ data class company_detail_list(
     val rating: rating,
     val job: List<job>,
     val link: String,
+    val followers: Long,
 )
 
 data class location(
@@ -30,7 +31,7 @@ data class location(
 
 data class rating(
     val ratingValue: Float,
-    val ratingList: List<Any>
+    val ratingList: ArrayList<*>
 )
 
 data class job(

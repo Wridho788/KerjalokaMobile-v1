@@ -222,9 +222,6 @@ class SearchActivity : AppCompatActivity(), onFragmentTransactionList,
         ft.replace(R.id.fragment_job_detail, fragment)
         ft.commit()
     }
-//    override fun onFragmentClick(companyNo: Long, jobNo: Long) {
-//
-//    }
 
     override fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long) {
     replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))

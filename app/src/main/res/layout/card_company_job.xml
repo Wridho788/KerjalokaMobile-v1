@@ -7,21 +7,17 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_related_job"
-        android:layout_width="285dp"
+        android:id="@+id/card_company_job"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
         app:cardCornerRadius="10dp"
         android:backgroundTint="@color/light_300"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/trueGray_100"
-        app:strokeWidth="1dp">
+       >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,18 +25,17 @@
             android:orientation="horizontal"
             android:paddingHorizontal="10dp"
             android:paddingVertical="10dp"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/relatedJoblogo"
+                    android:id="@+id/company_logo"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/kerjaloka_logo_small"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
 
@@ -52,42 +47,28 @@
                 android:paddingHorizontal="10dp">
 
                 <TextView
-                    android:id="@+id/relatedjobPosition"
+                    android:id="@+id/company_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="position"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/relatedjobCompany"
+                    android:id="@+id/company_field"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="company"
                     android:textColor="@color/black"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
 
                 <TextView
-                    android:id="@+id/relatedjobLocation"
+                    android:id="@+id/company_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="location"
-                    android:textColor="@color/trueGray_50"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp" />
-
-                <TextView
-                    android:id="@+id/relatedJobDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins"
-                    android:text=""
                     android:textColor="@color/trueGray_50"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
