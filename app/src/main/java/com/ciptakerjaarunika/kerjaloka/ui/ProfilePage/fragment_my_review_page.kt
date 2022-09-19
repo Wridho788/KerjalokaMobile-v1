@@ -1,20 +1,17 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ReviewAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.conRat
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.proRat
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.review
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import conRat
+import proRat
+import review
 
 private var layoutManager: RecyclerView.LayoutManager? = null
 private var adapterRec: RecyclerView.Adapter<ReviewAdapter.ViewHolder>? = null

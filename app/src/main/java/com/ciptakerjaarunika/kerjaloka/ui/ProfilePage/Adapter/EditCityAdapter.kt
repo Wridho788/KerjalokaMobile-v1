@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.listCity
+import com.ciptakerjaarunika.kerjaloka.model.Data.City
 
-class EditCityAdapter(private val listCity: List<listCity>):
+class EditCityAdapter(private val listCity: List<City>):
     RecyclerView.Adapter<EditCityAdapter.EditCity>()
 {
     inner class EditCity(view: View): RecyclerView.ViewHolder(view){
@@ -25,7 +25,7 @@ class EditCityAdapter(private val listCity: List<listCity>):
 
     override fun onBindViewHolder(holder: EditCity, position: Int) {
         val currentItem = listCity[position]
-        holder.item.text= currentItem.city
+        holder.item.text= currentItem.cityName
     }
 
     override fun getItemCount(): Int {

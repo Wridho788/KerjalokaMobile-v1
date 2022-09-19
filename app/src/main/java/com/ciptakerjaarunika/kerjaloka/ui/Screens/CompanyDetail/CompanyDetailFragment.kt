@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,24 +17,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.core.annotations.Line
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.CompanyBrowseAPI
 import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.company
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedCompanyJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.OnFragmentClickListener
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 
 class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
-    OnFragmentCompanyDetailListener {
+    OnFragmentCompanyDetailListener, OnFragmentClickListener {
 
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
@@ -42,7 +47,6 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         val btn_follow = view.findViewById<MaterialButton>(R.id.follow_button)
         val btn_review = view.findViewById<MaterialButton>(R.id.review_button)
         val company_logo = view.findViewById<ImageView>(R.id.logo_company)
-        val txt_follower = view.findViewById<TextView>(R.id.txt_follower)
         val txt_rating_company = view.findViewById<TextView>(R.id.txt_rating_company)
         val company_name = view.findViewById<TextView>(R.id.company_name)
         val company_type = view.findViewById<TextView>(R.id.company_type)
@@ -59,8 +63,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
             Toast.makeText(activity, "review", Toast.LENGTH_SHORT).show()
         }
 
-        val rv_recommendations_job =
-            view.findViewById<RecyclerView>(R.id.recycler_view_company_recommendation_jobs)
+        var rv_recommendations_job = view.findViewById(R.id.recycler_view_company_recommendation_jobs) as RecyclerView
 
         val Context = this
         CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
@@ -75,11 +78,19 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                 company_location.text = it.data.companyAddress
                 company_workers.text = it.data.size
                 company_type.text = it.data.field
-                txt_rating_company.text = it.data.rating.ratingValue.toString()
+                if(it.data.rating.ratingList.size == 0){
+                    view.findViewById<LinearLayout>(R.id.rating_contaier).visibility = GONE
+                    btn_review.visibility = GONE
+                }
+                else{
+                    view.findViewById<LinearLayout>(R.id.rating_contaier).visibility = VISIBLE
+                    btn_review.visibility = VISIBLE
+                }
 
-                rv_recommendations_job.apply {
-                    layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                txt_rating_company.text = it.data.rating.ratingValue.toString()
+                view.findViewById<TextView>(R.id.txt_follower).text = it.data.followers.toString()
+                    rv_recommendations_job.apply {
+                    layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
                     adapter = RelatedCompanyJobAdapter(it.data.job, Context)
                 }
                 val title = it.data.companyName
@@ -106,8 +117,22 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
-        val rv_related_job =
-            view.findViewById<RecyclerView>(R.id.recycler_view_company_other_job)
+        var recyclerView = view.findViewById(R.id.recycler_view_company_other_job) as RecyclerView
+
+
+        CompanyBrowseAPI().CompanyGetBrowserJob(context){
+            Log.d("response 119", it.toString())
+            if(it != null){
+                val companyList = it.data.filter { com -> com.companyNo != CompanyNo }
+                if(companyList.size == 0){
+                    view.findViewById<LinearLayout>(R.id.otherCompanyContainer).visibility = GONE
+                }
+                recyclerView?.apply {
+                    layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+                    adapter = CompanyBrowseAdapter(context, companyList, this@CompanyDetailFragment)
+                }
+            }
+        }
 
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
@@ -129,6 +154,12 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, JobDetailFragment(jobNo, CompanyNo), "jobDetailFragment")
         ft.addToBackStack("jobDetailFragment")
+        ft.commit()
+    }
+    override fun onCompanyDetailPage(CompanyNo: Long){
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, CompanyDetailFragment(CompanyNo), "company detail page")
+        ft.addToBackStack("CompanyPage")
         ft.commit()
     }
 

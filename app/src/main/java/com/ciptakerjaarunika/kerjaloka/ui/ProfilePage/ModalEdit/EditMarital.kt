@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditMaritalAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.maritalStatus
 
 
 class EditMarital: SuperBottomSheetFragment() {
@@ -32,31 +31,11 @@ class EditMarital: SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<maritalStatus>()
-        val status1 = maritalStatus(
-            maritalNo = 1,
-            maritalName = "Sudah Menikah"
-        )
-        val status2 = maritalStatus(
-            maritalNo = 2,
-            maritalName = "Belum Menikah"
-        )
-        val status3 = maritalStatus(
-            maritalNo = 3,
-            maritalName = "Duda"
-        )
-        val status4 = maritalStatus(
-            maritalNo = 4,
-            maritalName = "Janda"
-        )
-        list.add(status1)
-        list.add(status2)
-        list.add(status3)
-        list.add(status4)
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = EditMaritalAdapter(list)
+        adapter = EditMaritalAdapter(listOf())
         recyclerView.adapter = adapter
     }
 

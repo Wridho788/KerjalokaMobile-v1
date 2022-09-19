@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.*
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseLanguageAdapter
 
 
 class ChooseLanguage : SuperBottomSheetFragment() {
@@ -35,27 +34,12 @@ class ChooseLanguage : SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<language>()
-        val lang1 = language(
-            languageNo = 1,
-            languageName = "Bahasa Indonesia"
-        )
-        val lang2 = language(
-            languageNo = 2,
-            languageName = "Chinese"
-        )
-        val lang3 = language(
-            languageNo = 3,
-            languageName = "English"
-        )
-        list.add(lang1)
-        list.add(lang2)
-        list.add(lang3)
+
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = ChooseLanguageAdapter(list)
+        adapter = ChooseLanguageAdapter(listOf())
         recyclerView.adapter = adapter
     }
 

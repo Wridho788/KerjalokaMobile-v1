@@ -65,6 +65,7 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
             { roomId ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
                 ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
+                ft.addToBackStack("CompanyInterviewJob")
                 ft.commit()
             },
             String::class.java

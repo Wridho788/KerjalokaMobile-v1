@@ -12,13 +12,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.gender
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.scale
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skill
-import com.ciptakerjaarunika.kerjaloka.ui.WelcomingPage.OnBoarding.OnBoardingItem
-import com.google.android.material.button.MaterialButton
+import com.ciptakerjaarunika.kerjaloka.enum.Scale
 
-class ChooseScaleAdapter(private val scaleItems: List<scale>):
+class ChooseScaleAdapter():
     RecyclerView.Adapter<ChooseScaleAdapter.chooseScale>()
 {
 
@@ -37,12 +33,12 @@ class ChooseScaleAdapter(private val scaleItems: List<scale>):
     }
 
     override fun onBindViewHolder(holder: chooseScale, position: Int) {
-        val currentItem = scaleItems[position]
-        holder.item.text= currentItem.scaleName
+        val currentItem = Scale.values()
+        holder.item.text= currentItem[position].name
     }
 
     override fun getItemCount(): Int {
-        return scaleItems.size
+        return Scale.values().size
     }
 
 }

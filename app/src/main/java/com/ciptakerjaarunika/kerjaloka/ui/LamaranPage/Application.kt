@@ -1,15 +1,22 @@
 package com.ciptakerjaarunika.kerjaloka.ui.LamaranPage
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.Job.ApplicationData
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.Model.ApplicantModel
 import java.util.*
 
-class Application(private val cellClickListener: LamaranPage):RecyclerView.Adapter<Application.ViewHolder>() {
+class Application(private val data : List<ApplicationData>, private val context : Context, private val cellClickListener: LamaranPage):RecyclerView.Adapter<Application.ViewHolder>() {
 
         /**
          * Provide a reference to the type of views that you are using
@@ -18,17 +25,17 @@ class Application(private val cellClickListener: LamaranPage):RecyclerView.Adapt
 //        private var applicationData = listOf(
 //            "Software Engineer", "PT. Cipta Kerja Indonesia", "Palembang, Sumatera Selatan",
 //        );
-        private var data = listOf<ApplicantModel>(
-            ApplicantModel("Software Engineer","PT. Maju Bersama Aman Inc", "Medan, Indonesia", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-            ApplicantModel("Egi","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-            ApplicantModel("Sisanya","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
-            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-
-        );
+//        private var data = listOf<ApplicantModel>(
+//            ApplicantModel("Software Engineer","PT. Maju Bersama Aman Inc", "Medan, Indonesia", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+//            ApplicantModel("Egi","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+//            ApplicantModel("Sisanya","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+//            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+//            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+//            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+//            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+//            ApplicantModel("Bagusin Tampilan","PT Dunia Terlarang", "Jalan Kesesatan", 3, 2, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+//
+//        );
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val Jobposition: TextView
@@ -36,6 +43,8 @@ class Application(private val cellClickListener: LamaranPage):RecyclerView.Adapt
             val CompanyAddress: TextView
             val TotalTest: TextView
             val TestTaken: TextView
+            val CompanyLogo : ImageView
+            val TestContainer : LinearLayout
 //            val Requirment: TextView
 
             init {
@@ -45,6 +54,8 @@ class Application(private val cellClickListener: LamaranPage):RecyclerView.Adapt
                 CompanyAddress = view.findViewById(R.id.card_location)
                 TotalTest = view.findViewById(R.id.card_totalTest)
                 TestTaken = view.findViewById(R.id.card_testHasTake)
+                CompanyLogo = view.findViewById(R.id.img_company_logo)
+                TestContainer = view.findViewById(R.id.test_container)
 //                Requirment = view.findViewById(R.id.ca)
             }
         }
@@ -63,15 +74,22 @@ class Application(private val cellClickListener: LamaranPage):RecyclerView.Adapt
 
             // Get element from your dataset at this position and replace the
             // contents of the view with that element
-            viewHolder.Jobposition.text = data[position].jobposition
-            viewHolder.CompanyName.text = data[position].companyname
-            viewHolder.CompanyAddress.text = data[position].companyaddress
-            viewHolder.TotalTest.text = data[position].totaltest.toString()
-            viewHolder.TestTaken.text = data[position].taketest.toString()
+            Glide.with(context)
+                .load(config().portAddress + "/photo/Profile/" + data[position].job.company.logo)
+//                        .override(,675)
+                .into(viewHolder.CompanyLogo)
+            viewHolder.Jobposition.text = data[position].job.jobPosition
+            viewHolder.CompanyName.text = data[position].job.company.companyName
+            viewHolder.CompanyAddress.text = "${data[position].job.company.location.city}, ${data[position].job.company.location.province}"
+            viewHolder.TestTaken.text = data[position].tests.filter{ item -> item.testResult != null}.size.toString()
+            viewHolder.TotalTest.text = data[position].tests.size.toString()
+            if(data[position].tests.isEmpty()){
+                viewHolder.TestContainer.visibility = GONE
+            }
 //            viewHolder.Requirment.text= data[position].requirentment
 
             viewHolder.itemView.setOnClickListener {
-                cellClickListener.onCellClickListener()
+                cellClickListener.onCellClickListener(data[position].job.jobNo, data[position].job.company.companyNo, data[position])
             }
         }
 

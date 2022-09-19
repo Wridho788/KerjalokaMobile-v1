@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.*
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseYearAdapter
 import java.time.LocalDate
 
 
@@ -36,14 +35,11 @@ class ChooseYear: SuperBottomSheetFragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<year>()
+        val list = ArrayList<Int>()
         val now = LocalDate.now().year.toInt()
 
-        for (i in 1900 until now){
-            val yr1 = year(
-                year = i+1
-            )
-            list.add(yr1)
+        for (i in now..now - 100){
+            list.add(i)
         }
 
 

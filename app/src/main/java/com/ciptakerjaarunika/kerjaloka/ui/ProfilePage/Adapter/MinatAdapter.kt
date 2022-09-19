@@ -6,9 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.minat_model
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
+import minat_model
 
 
 class MinatAdapter(private val minatList: List<minat_model>):

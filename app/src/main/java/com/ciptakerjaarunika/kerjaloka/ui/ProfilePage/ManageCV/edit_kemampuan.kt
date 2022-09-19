@@ -1,19 +1,15 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScale
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseSkill
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditMarital
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skills
-import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
 // TODO: Rename parameter arguments, choose names that match
@@ -76,28 +72,7 @@ class edit_kemampuan : Fragment() {
         val s5View: LinearLayout.LayoutParams =
             skil5.getLayoutParams() as LinearLayout.LayoutParams
 
-        val list = ArrayList<skills>()
-        val skill1 = skills(
-            20211102115301,
-            2,
-            "Mining",
-            2,
-        )
-        val skill2 = skills(
-            20211102115301,
-            1,
-            "Python",
-            1,
-        )
-        val skill3 = skills(
-            20211102115301,
-            4,
-            "Teamwork",
-            7,
-        )
-        list.add(skill1)
-        list.add(skill2)
-        list.add(skill3)
+        /*
 
         if (list.isNotEmpty()) {
             list.forEach {
@@ -182,6 +157,7 @@ class edit_kemampuan : Fragment() {
         } else {
             emptyView.height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
+        */
 
         skil.setOnClickListener {
             val sheet = ChooseSkill()

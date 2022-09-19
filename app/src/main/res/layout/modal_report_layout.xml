@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
     app:layout_constraintHeight_percent="80"
-
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
 
     <androidx.cardview.widget.CardView
@@ -27,7 +26,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/show_sheet"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:text="Withdraw Job"
         android:textSize="16dp"
         android:paddingTop="8dp"
@@ -59,30 +58,27 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_marginTop="8dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
+                    android:padding="8dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/insertreport"
-                    android:height="120dp"
+                    android:id="@+id/reportMessage"
                     android:inputType="text|textMultiLine"
                     android:gravity="top"
-                    android:lines="8"
+                    android:lines="20"
                     android:background="@color/light_300"
-                    android:maxLines="10"
-                    android:scrollbars="horizontal"
+                    android:maxLines="20"
+                    android:scrollbars="vertical"
                     android:hint="Masukkan alasan melakukan report"
-                    android:textSize="10dp"
+                    android:textSize="14dp"
                     />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnWithdraw"
+        android:id="@+id/reportJobBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/danger_500"
         android:fontFamily="@font/poppins_bold"
@@ -92,6 +88,4 @@
         app:cornerRadius="100dp"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="346dp" />
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

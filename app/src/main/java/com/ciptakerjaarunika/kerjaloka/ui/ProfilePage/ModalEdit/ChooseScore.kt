@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.*
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseScoreAdapter
 
 
 class ChooseScore : SuperBottomSheetFragment() {
@@ -35,18 +34,12 @@ class ChooseScore : SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<score>()
-        for (i in 0..10){
-            val s = score(
-                score = i+1
-            )
-            list.add(s)
-        }
+
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = ChooseScoreAdapter(list)
+        adapter = ChooseScoreAdapter()
         recyclerView.adapter = adapter
     }
 

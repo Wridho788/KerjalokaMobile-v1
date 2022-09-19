@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.*
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
+import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseMajorAdapter
 
 
 class ChooseMajor : SuperBottomSheetFragment() {
@@ -36,28 +36,17 @@ class ChooseMajor : SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<majors>()
-        val major1 = majors(
-            majorName = "Agriculture, General",
-            majorNo = 159
-        )
-        val major2 = majors(
-            majorName = "Agribusiness Operations",
-            majorNo = 160
-        )
-        val major3 = majors(
-            majorName = "Agricultural Business & Management",
-            majorNo = 161
-        )
-        list.add(major1)
-        list.add(major2)
-        list.add(major3)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        adapter = ChooseMajorAdapter(list)
-        recyclerView.adapter = adapter
+        DataAPI().GetMajors(context){
+            if(it != null){
+                adapter = ChooseMajorAdapter(it.data)
+                recyclerView.adapter = adapter
+            }
+        }
+
     }
 
 

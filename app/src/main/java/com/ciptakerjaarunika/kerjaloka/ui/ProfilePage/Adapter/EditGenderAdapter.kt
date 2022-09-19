@@ -12,9 +12,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.gender
-import com.ciptakerjaarunika.kerjaloka.ui.WelcomingPage.OnBoarding.OnBoardingItem
-import com.google.android.material.button.MaterialButton
+import gender
 
 class EditGenderAdapter(private val genderItems: List<gender>):
     RecyclerView.Adapter<EditGenderAdapter.EditGender>()

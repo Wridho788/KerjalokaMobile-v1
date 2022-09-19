@@ -12,6 +12,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.conmpany_interview_list_a
 import com.ciptakerjaarunika.kerjaloka.model.Interview.jobseeker_interview_list_api
 import com.ciptakerjaarunika.kerjaloka.model.Interview.returnUploadChatPhotoApi
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -66,7 +67,7 @@ class InterviewAPI {
                 override fun onResponse( call: Call<jobseeker_interview_list_api>, response: Response<jobseeker_interview_list_api>) {
                     Log.d("Response Code : ", response.code().toString())
                     if(response.code() == 401){
-                        mainActivity.showLogin()
+                        mainActivity.showLogin(InterviewPage())
                     }else {
                         onResult(response.body())
                     }

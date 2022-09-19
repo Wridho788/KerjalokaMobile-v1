@@ -10,30 +10,39 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.MainActivity
+import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
-import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.material.button.MaterialButton
-import com.microsoft.signalr.HubConnection
 
 
-class AkunPage : Fragment() {
+class AkunPage() : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
 
+        if(SessionManager(context).user != null){
+            if(SessionManager(context).user?.roleNo == 4) {
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(
+                    id,
+                    profilepage(),
+                    "ProfileFragment"
+                )
+                ft.commit()
+            }
+        }
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
 
-        btn_login.setOnClickListener{
-            Log.d("Klik", "Start")
+        btn_login?.setOnClickListener{
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
@@ -57,6 +66,10 @@ class AkunPage : Fragment() {
                         notice = it.notice,
                         rolePrivileges = it.privilege,
                         email =  email,
+                        emailHasVerified = null,
+                        isDeleted = null,
+                        isNewsletter = null,
+                        lastChangeUsername = null,
                         username = "",
                         company = null,
                         companyAdditional = null,
@@ -67,7 +80,7 @@ class AkunPage : Fragment() {
                     SessionManager(context).user = user
 
                     val fragmentTransaction = parentFragmentManager.beginTransaction()
-                    fragmentTransaction.replace(id, HomePage())
+                    fragmentTransaction.replace(id, AkunPage())
                     fragmentTransaction.commit()
                 }
                 else{
@@ -77,13 +90,13 @@ class AkunPage : Fragment() {
         }
 
         val register = itemView.findViewById<TextView>(R.id.register)
-        register.setOnClickListener(View.OnClickListener {
+        register?.setOnClickListener(View.OnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kerjaloka.com/register"))
             startActivity(intent)
         })
 
         val forgotPswd = itemView.findViewById<TextView>(R.id.forgotPswd)
-        forgotPswd.setOnClickListener(View.OnClickListener {
+        forgotPswd?.setOnClickListener(View.OnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kerjaloka.com/recovery"))
             startActivity(intent)
         })
@@ -94,6 +107,6 @@ class AkunPage : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_login, container, false)
+            return inflater.inflate(R.layout.activity_login, container, false)
     }
 }

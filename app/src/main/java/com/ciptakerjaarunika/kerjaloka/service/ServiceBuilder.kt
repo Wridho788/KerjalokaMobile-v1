@@ -3,14 +3,10 @@ package com.ciptakerjaarunika.kerjaloka.service
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.model.ResponseResult
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import java.io.IOException
-import java.util.logging.Level.parse
 
 class ServiceBuilder(context: Context?) {
     private lateinit var url : String

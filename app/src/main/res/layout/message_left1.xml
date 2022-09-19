@@ -71,7 +71,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="center"
+                android:scaleType="fitXY"
                 android:id="@+id/photoMessage"
                 android:src="@drawable/ic_account"/>
         </androidx.cardview.widget.CardView>
@@ -87,7 +87,8 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"/>
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="File Name.zip"
                 android:gravity="center_vertical"

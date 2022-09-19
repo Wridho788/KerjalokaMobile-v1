@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:fitsSystemWindows="true"
-    app:layout_constraintHeight_percent="80"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="70dp"
@@ -19,16 +19,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/show_sheet"
             android:layout_width="match_parent"
-            android:layout_height="1000dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_semibold"
             android:orientation="vertical"
             android:paddingTop="8dp"
-            android:text="Withdraw Job"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="16dp">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,10 +40,16 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:layout_marginTop="8dp"
                             android:paddingBottom="16dp"
-                            android:text="Withdraw"
+                            android:text="Tarik Lamaran"
                             android:textAlignment="center"
                             android:textColor="@color/black"
-                            android:textSize="16dp" />
+                            android:textSize="16dp"
+                            />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/light_500" />
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -57,7 +61,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Yakin Ingin Melamar?"
+                            android:text="Yakin Ingin Menarik Lamaran?"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="18dp" />
@@ -69,7 +73,7 @@
                             android:layout_marginRight="36dp"
                             android:fontFamily="@font/poppins"
                             android:paddingTop="6dp"
-                            android:text="Kamu akan melamar ke pekerjaan ini, apa kamu yakin untuk melamar pekerjaan ini?"
+                            android:text="Kamu akan menarik lamaran kamu pada pekerjaan ini, apa kamu yakin untuk menarik lamaran kamu pada pekerjaan ini?"
                             android:textAlignment="center"
                             android:textColor="@color/black"
                             android:textSize="12dp" />
@@ -79,19 +83,18 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnWithdraw"
+            android:id="@+id/confirmWithdraw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:backgroundTint="@color/danger_500"
             android:fontFamily="@font/poppins_bold"
-            android:text="Confirm"
+            android:text="Konfirmasi"
             android:layout_marginHorizontal="16dp"
             android:textAllCaps="false"
             android:textSize="14dp"
             app:cornerRadius="100dp"
             tools:layout_editor_absoluteX="17dp"
             tools:layout_editor_absoluteY="346dp" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

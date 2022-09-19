@@ -82,6 +82,7 @@
     </RelativeLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userPhoto"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
@@ -91,7 +92,6 @@
         android:src="@drawable/ic_img_man"
         app:shapeAppearanceOverlay="@style/Circular"
         app:strokeColor="@color/light_500"
-        app:strokeWidth="1dp">
-    </com.google.android.material.imageview.ShapeableImageView>
+        app:strokeWidth="1dp"></com.google.android.material.imageview.ShapeableImageView>
 
 </RelativeLayout>

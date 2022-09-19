@@ -1,5 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model
 
+import com.ciptakerjaarunika.kerjaloka.model.Data.City
+
 
 data class rjob_model(
     val code: Int,
@@ -18,7 +20,6 @@ data class rJobModel(
     val link: String,
     val companyName: String,
     val createdOn: String,
-
 )
 
 data class rJobDetailResponse(
@@ -44,7 +45,9 @@ data class rJobDetailModel(
     val job: List<job>,
     val jobSalaryMax: String,
     val jobSalaryMin: String,
-    val companyjob: company
+    val companyjob: company,
+    val bookmarked: Boolean?,
+    val applied: Boolean?,
 )
 
 data class jobLocation(
@@ -58,7 +61,7 @@ data class jobRole(val jobRoleName: String)
 data class company(
     val logo: String,
     val companyName: String,
-    val city: city,
+    val city: City,
     val province: province
 )
 
@@ -79,10 +82,6 @@ data class companies(
 data class locationCompany(
     val city: String,
     val province: String,
-)
-
-data class city(
-    val cityName: String
 )
 
 data class province(

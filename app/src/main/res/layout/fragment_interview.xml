@@ -43,7 +43,7 @@
                 android:layout_weight=".8"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Interview"
-                android:textSize="15dp"
+                android:textSize="22dp"
                 android:id="@+id/titleToolbar"
                 android:ellipsize="end"
                 android:singleLine="true"

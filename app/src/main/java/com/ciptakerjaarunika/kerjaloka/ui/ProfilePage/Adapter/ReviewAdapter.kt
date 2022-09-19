@@ -6,9 +6,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.minat_model
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.record
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.review
+import review
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.currentCoroutineContext

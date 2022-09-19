@@ -15,6 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
@@ -43,57 +44,65 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var context= baseContext
+        AUTHAPI().CheckLogin(baseContext) {
 
-        hubConnection = HubConnectionBuilder.create(config().portAddress+"/ws/chat").build()
-        if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
-            hubConnection.start()
+            var context = baseContext
 
-            hubConnection.on("connected",
-                { res ->
-                    val userNo = SessionManager(context).user!!.userNo.toString()
-                    hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
-                }, String::class.java)
+            hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
+            if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
+                hubConnection.start()
 
-            hubConnection.on(
-                "getmessage",
-                { res: chat_data ->
-                    SessionManager(context).chatData = res
-                },
-                chat_data::class.java
-            )
-            hubConnection.on(
-                "incomingCall",
-                { roomId ->
-                    val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-                    ft.replace(R.id.fragment_container, IncomingCallPage(roomId), "IncomingCall")
-                    ft.commit()
-                },
-                String::class.java
-            )
-        }
+                hubConnection.on("connected",
+                    { res ->
+                        val userNo = SessionManager(context).user!!.userNo.toString()
+                        hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
+                    }, String::class.java
+                )
 
-
-
-                binding = ActivityMainBinding.inflate(layoutInflater)
-                setContentView(binding.root)
-                replaceFragment(HomePage())
-
-                binding.bottomNavigationView.setOnItemSelectedListener { item ->
-                    when (item.itemId) {
-                        R.id.home -> replaceFragment((HomePage()))
-                        R.id.lamaran -> replaceFragment((LamaranPage()))
-                        R.id.interview -> replaceFragment((InterviewPage()))
-                        R.id.akun -> replaceFragment((profilepage()))
-
-                        else -> {
-
-                        }
-                    }
-                    true
-                }
+                hubConnection.on(
+                    "getmessage",
+                    { res: chat_data ->
+                        SessionManager(context).chatData = res
+                    },
+                    chat_data::class.java
+                )
+                hubConnection.on(
+                    "incomingCall",
+                    { roomId ->
+                        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                        ft.replace(
+                            R.id.fragment_container,
+                            IncomingCallPage(roomId),
+                            "IncomingCall"
+                        )
+                        ft.addToBackStack("Main");
+                        ft.commit()
+                    },
+                    String::class.java
+                )
             }
 
+
+
+            binding = ActivityMainBinding.inflate(layoutInflater)
+            setContentView(binding.root)
+            replaceFragment(HomePage())
+
+            binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.home -> replaceFragment((HomePage()))
+                    R.id.lamaran -> replaceFragment((LamaranPage()))
+                    R.id.interview -> replaceFragment((InterviewPage()))
+                    R.id.akun -> replaceFragment((AkunPage()))
+
+                    else -> {
+
+                    }
+                }
+                true
+            }
+        }
+    }
 //        hubConnection.on("connected",
 //            {res -> Log.d("Websocket Response : ", res.toString())
 //                val userNo = SessionManager(context).user!!.userNo.toString()
@@ -151,16 +160,18 @@ class MainActivity : AppCompatActivity() {
         }
 
     private fun replaceFragment(fragment: Fragment) {
-        binding.bottomNavigationView.visibility = View.VISIBLE
+        AUTHAPI().CheckLogin(baseContext) {
+            binding.bottomNavigationView.visibility = View.VISIBLE
 
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container, fragment)
-        fragmentTransaction.commit()
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_container, fragment)
+            fragmentTransaction.commit()
+        }
     }
-    open fun showLogin(){
+    open fun showLogin(Goto : Fragment){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container, Login())
+        fragmentTransaction.replace(R.id.fragment_container, Login(Goto))
         fragmentTransaction.commit()
     }
 }

@@ -76,6 +76,7 @@ class IncomingCallPage(val roomId: String) : Fragment(){
             fragmentManager?.popBackStack()
         }
         view?.findViewById<ImageView>(R.id.approve_btn)?.setOnClickListener{
+            fragmentManager?.popBackStack()
             playRingtone?.stop()
             val userInfo = JitsiMeetUserInfo();
             userInfo.email = SessionManager(context).user?.email

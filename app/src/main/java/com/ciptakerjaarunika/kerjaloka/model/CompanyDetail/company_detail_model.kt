@@ -9,6 +9,7 @@ data class company_detail_model(
 
 data class company_detail_list(
     val logo: String,
+    val followers: Int,
     val companyName: String,
     val companyNo: Long,
     val field: String,
@@ -28,7 +29,8 @@ data class location(
 )
 
 data class rating(
-    val ratingValue: Float
+    val ratingValue: Float,
+    val ratingList: List<Any>
 )
 
 data class job(
@@ -48,4 +50,5 @@ data class company(
 data class locationCompany(
     val city: String,
     val province: String,
+    val country : String,
 )

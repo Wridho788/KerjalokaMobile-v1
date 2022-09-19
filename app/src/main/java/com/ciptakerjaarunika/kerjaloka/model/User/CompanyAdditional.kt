@@ -11,7 +11,7 @@ data class CompanyAdditional(
     val companyCountryNo : Int?,
     val companyCeo : String,
     val ktp : String,
-    val foundedAt : LocalDateTime?,
+    val foundedAt : String?,
     val fieldNo : Int?,
     val sizeNo : Byte?,
     val logo : String,
