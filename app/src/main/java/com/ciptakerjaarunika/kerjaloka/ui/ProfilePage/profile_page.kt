@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
 import com.google.android.material.button.MaterialButton

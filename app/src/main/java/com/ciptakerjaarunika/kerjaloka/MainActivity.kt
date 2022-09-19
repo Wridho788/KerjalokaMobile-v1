@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
@@ -23,10 +24,14 @@ import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
+import java.lang.Boolean
+import kotlin.Array
+import kotlin.Int
+import kotlin.IntArray
+import kotlin.String
 
 
 class MainActivity : AppCompatActivity() {
@@ -85,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.home -> replaceFragment((HomePage()))
-                    R.id.lamaran -> replaceFragment((LamaranPage()))
+                    R.id.lamaran -> replaceFragment((ProfilePage()))
                     R.id.interview -> replaceFragment((InterviewPage()))
                     R.id.akun -> replaceFragment((AkunPage()))
 
@@ -96,6 +101,15 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
+
+        val settings = getSharedPreferences("prefs", 0)
+        val editor = settings.edit()
+        editor.putBoolean("firstRun", false)
+        editor.commit()
+
+        val firstRun = settings.getBoolean("firstRun", true)
+        Log.d("TAG1", "firstRun: " + Boolean.valueOf(firstRun).toString())
+
     }
 //        hubConnection.on("connected",
 //            {res -> Log.d("Websocket Response : ", res.toString())
@@ -168,4 +182,6 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.fragment_container, Login(Goto))
         fragmentTransaction.commit()
     }
+
+    override fun onBackPressed() {}
 }

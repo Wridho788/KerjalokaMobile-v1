@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_500"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Company.Profile.ProfilePage"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Company.Profile.ProfilePage">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mainToolbar"
@@ -17,83 +17,102 @@
         app:titleTextColor="@color/white"
         tools:ignore="MissingConstraints" />
 
-    <include
-        android:id="@+id/profile"
-        layout="@layout/comp_profile" />
-
-    <HorizontalScrollView
+    <ScrollView
+        android:id="@+id/profile_content2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@color/white"
-        android:scrollbars="none">
+        android:layout_above="@+id/menuFixo">
 
         <LinearLayout
-            android:id="@+id/navProfile"
+            android:id="@+id/profileLl2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="6dp"
-            android:paddingTop="10dp"
-            android:paddingRight="6dp"
-            android:paddingBottom="10dp"
-            android:gravity="center">
+            android:orientation="vertical">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/manageProfile"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="wrap_content"
+            <include
+                android:id="@+id/profile"
+                layout="@layout/comp_profile" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Kelola Profil"
-                android:textAllCaps="false"
-                android:textColor="@color/danger_500"
-                app:cornerRadius="100dp"
-                app:strokeColor="@color/danger_500"
-                app:strokeWidth="1dp" />
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:scrollbars="none">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/myReview"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/navProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="6dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="6dp"
+                    android:paddingBottom="10dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/manageProfile"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Kelola Profil"
+                        android:textAllCaps="false"
+                        android:textColor="@color/danger_500"
+                        app:cornerRadius="100dp"
+                        app:strokeColor="@color/danger_500"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/myReview"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Review Saya"
+                        android:textAllCaps="false"
+                        android:textColor="@color/danger_500"
+                        app:cornerRadius="100dp"
+                        app:strokeColor="@color/danger_500"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/accSetting"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Pengaturan"
+                        android:textAllCaps="false"
+                        android:textColor="@color/danger_500"
+                        app:cornerRadius="100dp"
+                        app:strokeColor="@color/danger_500"
+                        app:strokeWidth="1dp" />
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/Comp_profileContent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Review Saya"
-                android:textAllCaps="false"
-                android:textColor="@color/danger_500"
-                app:cornerRadius="100dp"
-                app:strokeColor="@color/danger_500"
-                app:strokeWidth="1dp" />
+                android:layout_marginTop="6dp"
+                android:background="@color/white"
+                android:scrollbars="none" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/accSetting"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="wrap_content"
+            <com.ciptakerjaarunika.kerjaloka.ui.Global.CustomPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Pengaturan"
-                android:textAllCaps="false"
-                android:textColor="@color/danger_500"
-                app:cornerRadius="100dp"
-                app:strokeColor="@color/danger_500"
-                app:strokeWidth="1dp" />
-
+                />
         </LinearLayout>
-    </HorizontalScrollView>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/Comp_profileContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@color/white"
-        android:scrollbars="horizontal"
-        />
+    </ScrollView>
 
 </LinearLayout>
