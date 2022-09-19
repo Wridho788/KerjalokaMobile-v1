@@ -5,16 +5,20 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.125" />
         <entry key="app/src/main/res/drawable-anydpi-v24/ic_attach_file.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable-mdpi/back_primary_white_icon.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/approve_call.xml" value="0.1475" />
         <entry key="app/src/main/res/drawable/back_primary_icon.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/back_white_icon.xml" value="0.202" />
         <entry key="app/src/main/res/drawable/btn_circle.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/bullet_list.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button_calendar.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_circle_primary.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/button_circle_primary_white.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_circle_secondary.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_circle_secondary_white.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_enabled_primary.xml" value="0.199" />
+        <entry key="app/src/main/res/drawable/button_flat.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_flat_primary.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/button_primary.xml" value="0.2165" />
         <entry key="app/src/main/res/drawable/button_primary_disabled.xml" value="0.125" />
@@ -37,11 +41,49 @@
         <entry key="app/src/main/res/drawable/card_background.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/card_background_primari.xml" value="0.22" />
         <entry key="app/src/main/res/drawable/circle_button.xml" value="0.1415" />
+        <entry key="app/src/main/res/drawable/custom_app_bar_background.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/custom_progress_bar.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/download_icon.xml" value="0.196" />
         <entry key="app/src/main/res/drawable/file_icon.xml" value="0.196" />
         <entry key="app/src/main/res/drawable/header_message.xml" value="0.1015" />
+        <entry key="app/src/main/res/drawable/header_modal.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/header_toolbar.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_accepted.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_accepted_applicant.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_account.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_applicant.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/ic_arrow_left_red.xml" value="0.107" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_bookmark.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_bookmark_filled.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_button_1.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_button_close.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_button_close_primary.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_button_close_secondary.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_button_edit.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_button_icon_back_thick.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.1145" />
+        <entry key="app/src/main/res/drawable/ic_close.xml" value="0.1635" />
+        <entry key="app/src/main/res/drawable/ic_company_tes.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_diagram.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_download.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_filter.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_help.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_interview.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_more.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_new_applicant.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_notif_svg.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_person.xml" value="0.148" />
+        <entry key="app/src/main/res/drawable/ic_records_bank.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_rejected.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_report.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_selected.xml" value="0.1395" />
+        <entry key="app/src/main/res/drawable/ic_vaccine_green.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/ic_vaccine_green.xml" value="0.149" />
         <entry key="app/src/main/res/drawable/ic_vaccine_red.xml" value="0.149" />
         <entry key="app/src/main/res/drawable/ic_vaccine_yellow.xml" value="0.149" />
@@ -56,11 +98,14 @@
         <entry key="app/src/main/res/drawable/right_message1.xml" value="0.147" />
         <entry key="app/src/main/res/drawable/right_message2.xml" value="0.147" />
         <entry key="app/src/main/res/drawable/round_background.xml" value="0.1415" />
+        <entry key="app/src/main/res/drawable/rounded.xml" value="0.1735" />
         <entry key="app/src/main/res/drawable/text_rounded.xml" value="0.148" />
         <entry key="app/src/main/res/font-v26/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/activity_company_search.xml" value="0.2894606630381" />
+        <entry key="app/src/main/res/layout/activity_item_profile_user_page.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19722222222222222" />
@@ -69,6 +114,7 @@
         <entry key="app/src/main/res/layout/activity_modal_edit_lampiran_profile_page.xml" value="0.2620778110303549" />
         <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.38563488670371954" />
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_profile_page.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/card_company_job.xml" value="0.25" />
@@ -77,6 +123,8 @@
         <entry key="app/src/main/res/layout/card_education.xml" value="0.45" />
         <entry key="app/src/main/res/layout/card_language_main.xml" value="0.21376656690893545" />
         <entry key="app/src/main/res/layout/card_test.xml" value="0.18127404873877725" />
+        <entry key="app/src/main/res/layout/card_jobseeker_review.xml" value="0.190004948045522" />
+        <entry key="app/src/main/res/layout/card_test.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
@@ -84,12 +132,16 @@
         <entry key="app/src/main/res/layout/content_card.xml" value="0.18127404873877725" />
         <entry key="app/src/main/res/layout/custom_toolbar.xml" value="0.2159406858202039" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
-        <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_applicant_detail.xml" value="0.16455696202531644" />
+        <entry key="app/src/main/res/layout/fragment_company_compare_jobseeker.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perjob.xml" value="0.2231722958529286" />
         <entry key="app/src/main/res/layout/fragment_company_list_applicant.xml" value="0.22731356693620844" />
         <entry key="app/src/main/res/layout/fragment_company_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_company_review.xml" value="0.10771992818671454" />
+        <entry key="app/src/main/res/layout/fragment_company_want_to_know.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_history.xml" value="0.1704653371320038" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_job_applicant.xml" value="0.335" />
@@ -98,26 +150,52 @@
         <entry key="app/src/main/res/layout/fragment_job_nearme.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_recommendation.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_jobseeker_review.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_komentar_applicant.xml" value="0.1801088570014844" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_more_action.xml" value="0.190004948045522" />
+        <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_myreviewpage.xml" value="0.17399920729290527" />
+        <entry key="app/src/main/res/layout/fragment_papikostick_result.xml" value="0.15239980207817913" />
+        <entry key="app/src/main/res/layout/fragment_papikostick_result_company_applicant.xml" value="0.15239980207817913" />
+        <entry key="app/src/main/res/layout/fragment_papikostik_result.xml" value="0.15239980207817913" />
+        <entry key="app/src/main/res/layout/fragment_records.xml" value="0.1426872770511296" />
+        <entry key="app/src/main/res/layout/fragment_result_compare.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_status_page.xml" value="0.2511078286558346" />
+        <entry key="app/src/main/res/layout/fragment_tambah_jobseeker.xml" value="0.14794656110836218" />
+        <entry key="app/src/main/res/layout/fragment_ubah_status.xml" value="0.22564935064935066" />
         <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.15378517637732858" />
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/global_toolbar.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_applicant.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_card_applicant.xml" value="0.29098966026587886" />
+        <entry key="app/src/main/res/layout/item_card_comment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_card_history.xml" value="0.23867069486404835" />
         <entry key="app/src/main/res/layout/item_card_applicant.xml" value="0.29098966026587886" />
         <entry key="app/src/main/res/layout/item_card_job.xml" value="0.125" />
         <entry key="app/src/main/res/layout/item_card_job_other_related.xml" value="0.10885416666666667" />
         <entry key="app/src/main/res/layout/item_card_job_related.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_card_my_review.xml" value="0.190004948045522" />
+        <entry key="app/src/main/res/layout/item_card_pelamar.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_card_pelamar_list.xml" value="0.14794656110836218" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/item_card_review.xml" value="0.2587827808015834" />
+        <entry key="app/src/main/res/layout/item_card_record.xml" value="0.2673434856175973" />
+        <entry key="app/src/main/res/layout/item_card_review.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_change_status.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_content_info_lowongan.xml" value="0.15239980207817913" />
+        <entry key="app/src/main/res/layout/item_header_applicant_detail.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_header_job_applicant.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/item_industri.xml" value="0.11875309252845126" />
         <entry key="app/src/main/res/layout/item_location.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_section_record_applicant.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/item_size_company.xml" value="0.2015810276679842" />
         <entry key="app/src/main/res/layout/jsprofile_basic_info.xml" value="0.25951261222744765" />
         <entry key="app/src/main/res/layout/jsprofile_cv.xml" value="0.21376656690893545" />
+        <entry key="app/src/main/res/layout/jsprofile_modal_edit_basic.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/layout_apply_job_modal.xml" value="0.11533888228299644" />
         <entry key="app/src/main/res/layout/layout_browse_company.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/layout_filter_company.xml" value="0.10151515151515152" />
+        <entry key="app/src/main/res/layout/layout_filter_company.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_followed_company.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_report_job_modal.xml" value="0.26356589147286824" />
         <entry key="app/src/main/res/layout/layout_send_review.xml" value="0.25" />

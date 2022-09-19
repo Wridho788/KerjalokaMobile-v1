@@ -29,13 +29,14 @@ import com.google.android.material.card.MaterialCardView
 
 class HomePage : Fragment(), OnFragmentClickListener {
     private lateinit var binding: ActivityMainBinding
-    private var listJob : List<rJobModel>?=null;
+    private var listJob: List<rJobModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
+
     private fun setContentView(root: ConstraintLayout) {
     }
 
@@ -48,7 +49,8 @@ class HomePage : Fragment(), OnFragmentClickListener {
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn)
         val btn_job = view.findViewById<MaterialCardView>(R.id.btn_job)
         val btn_company = view.findViewById<MaterialCardView>(R.id.btn_company)
-        var btn_see_all_recommendation_job = view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs)
+        var btn_see_all_recommendation_job =
+            view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs)
 
         btn_search.setOnClickListener {
             val intent_search = Intent(activity, SearchActivity::class.java)
@@ -74,7 +76,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
 
-        val Context = this;
+        val Context = this
         JobAPI().getJobHomeAsync(context) {
             Log.d("Response API", it.toString())
             if (it != null) {
@@ -82,7 +84,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)
                     recyclerView.layoutManager = layoutManager
-                    adapter = RecommendationJobAdapter(context,listJob,Context)
+                    adapter = RecommendationJobAdapter(context, listJob, Context)
                 }
             }
         }
@@ -118,7 +120,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
 }
 
 interface OnFragmentClickListener {
-    fun onFragmentClick(JobNo:Long, CompanyNo:Long)
+    fun onFragmentClick(JobNo: Long, CompanyNo: Long)
     fun onCompanyPage()
     fun onJobPage()
 }

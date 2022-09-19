@@ -1,16 +1,13 @@
 package com.ciptakerjaarunika.kerjaloka
 
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -25,13 +22,11 @@ import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -56,8 +51,7 @@ class MainActivity : AppCompatActivity() {
                     { res ->
                         val userNo = SessionManager(context).user!!.userNo.toString()
                         hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
-                    }, String::class.java
-                )
+                }, String::class.java)
 
                 hubConnection.on(
                     "getmessage",
