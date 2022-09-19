@@ -1,8 +1,15 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model
 
+data class company_officer_jobs_response(
+    val code: Int,
+    val errorCode: Int,
+    val message: String,
+    val data: List<listApplicantJobModel>
+)
+
 data class listApplicantJobModel(
-    val jobNo: Int,
+    val jobNo: String,
     val jobPosition: String,
-    val uploadedAt: String,
-    var status: Boolean
+    val createdOn: String,
+    var publish: Boolean
 )

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,9 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.OnFragmentClickListener
 import com.google.android.material.card.MaterialCardView
 
-class ListApplicantAdapter(private val listApplicantJobModel: List<listApplicantJobModel>, private val onFragmentClickListener: OnFragmentClickListener? ) :
+class ListApplicantAdapter(
+    private val context: Context,
+    private val listApplicantJobModel: List<listApplicantJobModel>?, private val onFragmentClickListener: OnFragmentClickListener? ) :
     RecyclerView.Adapter<ListApplicantAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobPosition: TextView
@@ -32,10 +35,10 @@ class ListApplicantAdapter(private val listApplicantJobModel: List<listApplicant
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = listApplicantJobModel[position]
-        holder.jobPosition.text = currentItem.jobPosition
-        holder.uploadAt.text = currentItem.uploadedAt
-        val status = currentItem.status
+        val currentItem = listApplicantJobModel?.get(position)
+        holder.jobPosition.text = currentItem?.jobPosition
+        holder.uploadAt.text = currentItem?.createdOn
+        val status = currentItem?.publish
         if (status == true) {
             holder.status.text = "Aktif"
             holder.status.setTextColor(Color.GREEN)
@@ -49,6 +52,6 @@ class ListApplicantAdapter(private val listApplicantJobModel: List<listApplicant
     }
 
     override fun getItemCount(): Int {
-        return listApplicantJobModel.size
+        return listApplicantJobModel?.size ?: 0
     }
 }

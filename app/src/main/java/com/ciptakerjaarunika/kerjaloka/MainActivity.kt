@@ -16,7 +16,6 @@ import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Role
-import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
@@ -25,7 +24,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -42,12 +41,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         AUTHAPI().CheckLogin(baseContext) {
-            if(it?.user?.roleNo == Role.Jobseekers.value){
-                // User Jobseeker
-            }
-            else if(it?.user?.roleNo == Role.Jobseekers.value || SessionManager(baseContext).user?.company != null) {
-                // User Company
-            }
+//            if(it?.user?.roleNo == Role.Jobseekers.value){
+//                // User Jobseeker
+//            }
+//            else if(it?.user?.roleNo == Role.Jobseekers.value || SessionManager(baseContext).user?.company != null) {
+//                // User Company
+//            }
 
             var context = baseContext
             hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
@@ -83,24 +82,43 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-
-
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
             replaceFragment(HomePage())
 
-            binding.bottomNavigationView.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.home -> replaceFragment((HomePage()))
-                    R.id.lamaran -> replaceFragment((LamaranPage()))
-                    R.id.interview -> replaceFragment((InterviewPage()))
-                    R.id.akun -> replaceFragment((AkunPage()))
+            if(it?.user?.roleNo == Role.Jobseekers.value){
+                // User Jobseeker
+                binding.bottomNavigationCompanyView.visibility = View.GONE
+                binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.home -> replaceFragment((HomePage()))
+                        R.id.lamaran -> replaceFragment((LamaranPage()))
+                        R.id.interview -> replaceFragment((InterviewPage()))
+                        R.id.akun -> replaceFragment((AkunPage()))
+                        else -> {
 
-                    else -> {
-
+                        }
                     }
+                    true
                 }
-                true
+            }
+            else if(it?.user?.roleNo == Role.Companies.value || SessionManager(baseContext).user?.company != null) {
+                // User Company
+                Log.d("role no", it?.user.toString())
+                binding.bottomNavigationView.visibility = View.GONE
+                binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.home -> replaceFragment((HomePage()))
+                        R.id.pelamar -> replaceFragment((CompanyListApplicantFragment()))
+                        R.id.interview -> replaceFragment((InterviewPage()))
+                        R.id.akun -> replaceFragment((AkunPage()))
+
+                        else -> {
+
+                        }
+                    }
+                    true
+                }
             }
         }
     }

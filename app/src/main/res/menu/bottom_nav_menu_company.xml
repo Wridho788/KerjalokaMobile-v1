@@ -8,11 +8,11 @@
         android:title="@string/home"
         />
     <item
-        android:id="@+id/lamaran"
+        android:id="@+id/pelamar"
         android:icon="@drawable/ic_applicant"
-        android:title="@string/lamaran"
+        android:title="@string/pelamar"
         />
-
+ 
     <item
         android:id="@+id/interview"
         android:icon="@drawable/ic_chat"

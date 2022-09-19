@@ -78,7 +78,6 @@ class HomePage : Fragment(), OnFragmentClickListener {
 
         val Context = this
         JobAPI().getJobHomeAsync(context) {
-            Log.d("Response API", it.toString())
             if (it != null) {
                 listJob = it.data
                 recyclerView.apply {
@@ -89,13 +88,6 @@ class HomePage : Fragment(), OnFragmentClickListener {
             }
         }
     }
-
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            HomePage().apply {
-//            }
-//    }
 
     override fun onFragmentClick(JobNo: Long, CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
