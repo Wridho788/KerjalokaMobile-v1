@@ -212,6 +212,53 @@ class JobAPI {
             )
     }
 
+    interface getBookmarkedJob {
+        @GET("jobseeker/bookmark")
+        fun getData() : Call<jobRecommendationResponse>
+    }
+
+    fun getBookmarkedJob(context: Context?, onResult: (jobRecommendationResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getBookmarkedJob::class.java)
+
+        retrofit.getData().enqueue(
+            object : Callback<jobRecommendationResponse> {
+                override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<jobRecommendationResponse>,
+                    response: Response<jobRecommendationResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    interface getNearJob {
+        @GET("jobseeker/nearMe")
+        fun getData(@Query("latitude")latitude: String,@Query("longtitude")longtitude: String ) : Call<jobRecommendationResponse>
+    }
+
+    fun getNearJob(latitude : String,longtitude: String, context: Context?, onResult: (jobRecommendationResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getNearJob::class.java)
+
+        retrofit.getData(latitude, longtitude).enqueue(
+            object : Callback<jobRecommendationResponse> {
+                override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<jobRecommendationResponse>,
+                    response: Response<jobRecommendationResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
 
 
 }

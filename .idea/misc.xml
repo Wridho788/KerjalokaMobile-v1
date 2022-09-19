@@ -130,6 +130,7 @@
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.1704653371320038" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
+<<<<<<< HEAD
         <entry key="app/src/main/res/layout/fragment_job_applicant.xml" value="0.2930232558139535" />
         <entry key="app/src/main/res/layout/fragment_job_bookmark.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.19365079365079366" />
@@ -151,6 +152,14 @@
         <entry key="app/src/main/res/layout/fragment_tambah_jobseeker.xml" value="0.14794656110836218" />
         <entry key="app/src/main/res/layout/fragment_ubah_status.xml" value="0.22564935064935066" />
         <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.15378517637732858" />
+=======
+        <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.3273092369477912" />
+        <entry key="app/src/main/res/layout/fragment_job_page.xml" value="0.15519452757588714" />
+        <entry key="app/src/main/res/layout/fragment_job_recommendation.xml" value="0.2552372808892689" />
+        <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.32762312633832974" />
+        <entry key="app/src/main/res/layout/fragment_manage_profile_setting_layout.xml" value="0.2821718683197948" />
+        <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.165" />
+>>>>>>> implement_api
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/global_toolbar.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_applicant.xml" value="0.25" />
