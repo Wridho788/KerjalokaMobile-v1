@@ -2,11 +2,10 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter
 
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import minat_model
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.minat_model
 
 
 class MinatAdapter(private val minatList: List<minat_model>):

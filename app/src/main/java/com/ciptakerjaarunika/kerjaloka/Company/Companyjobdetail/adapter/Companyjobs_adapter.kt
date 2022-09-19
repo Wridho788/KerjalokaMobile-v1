@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.ResponseJobs
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.minat_model
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.record
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.review
+
 
 class Companyjobs_adapter (private val joblist: List<ResponseJobs>):
     RecyclerView.Adapter<Companyjobs_adapter.ViewHolder>() {

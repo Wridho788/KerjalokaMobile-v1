@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import record
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.record
 
 class RecordAdapter (private val recordList: List<record>):
     RecyclerView.Adapter<RecordAdapter.ViewHolder>() {

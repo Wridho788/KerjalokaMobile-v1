@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ReviewAdapter
-import conRat
-import proRat
-import review
+
 
 private var layoutManager: RecyclerView.LayoutManager? = null
 private var adapterRec: RecyclerView.Adapter<ReviewAdapter.ViewHolder>? = null
@@ -34,49 +32,49 @@ class fragment_my_review_page : Fragment() {
 //        val proChip = view.findViewById<ChipGroup>(R.id.chipGroup_kelebihan)
 //        val conChip = view.findViewById<ChipGroup>(R.id.chipGroup_kekurangan)
 
-        val conratList = ArrayList<conRat>()
-        val rat1 = conRat(
-            id = 1,
-            con = "Adi la kinte"
-        )
-        val rat2 = conRat(
-            id = 2,
-            con = "Letto Paya"
-        )
-        conratList.add(rat1)
-        conratList.add(rat2)
+//        val conratList = ArrayList<conRat>()
+//        val rat1 = conRat(
+//            id = 1,
+//            con = "Adi la kinte"
+//        )
+//        val rat2 = conRat(
+//            id = 2,
+//            con = "Letto Paya"
+//        )
+//        conratList.add(rat1)
+//        conratList.add(rat2)
+//
+//        val proratList = ArrayList<proRat>()
+//        val pro1 = proRat(
+//            id = 1,
+//            con = "Adi la kinte"
+//        )
+//        val pro2 = proRat(
+//            id = 2,
+//            con = "Letto Paya"
+//        )
+//        proratList.add(pro1)
+//        proratList.add(pro2)
+//
+//        val ReviewList = ArrayList<review>()
+//        val rev1 = review(
+//            approvedByUserNo = 0,
+//            approvedOn = "2022-07-18T09:27:36",
+//            canAppeal = true,
+//            comment = "null",
+//            conRating = conratList,
+//            ownerInfo = "null",
+//            proRating = proratList,
+//            raterPhoto = "202110271410221246.jpg",
+//            rating = 4,
+//            ratingAt = "2022-07-18T09:27:20",
+//            userFullName = "TESTING",
+//            userNo = 20211027141022,
+//            userRatingNo = 3,
+//            userRole = 2
+//        )
 
-        val proratList = ArrayList<proRat>()
-        val pro1 = proRat(
-            id = 1,
-            con = "Adi la kinte"
-        )
-        val pro2 = proRat(
-            id = 2,
-            con = "Letto Paya"
-        )
-        proratList.add(pro1)
-        proratList.add(pro2)
-
-        val ReviewList = ArrayList<review>()
-        val rev1 = review(
-            approvedByUserNo = 0,
-            approvedOn = "2022-07-18T09:27:36",
-            canAppeal = true,
-            comment = "null",
-            conRating = conratList,
-            ownerInfo = "null",
-            proRating = proratList,
-            raterPhoto = "202110271410221246.jpg",
-            rating = 4,
-            ratingAt = "2022-07-18T09:27:20",
-            userFullName = "TESTING",
-            userNo = 20211027141022,
-            userRatingNo = 3,
-            userRole = 2
-        )
-
-        ReviewList.add(rev1)
+//        ReviewList.add(rev1)
 
 //        if(conratList.isNotEmpty()){
 //            conratList.forEach {
@@ -101,7 +99,7 @@ class fragment_my_review_page : Fragment() {
         val recyclerViewLang = view.findViewById<RecyclerView>(R.id.revList)
         layoutManager = LinearLayoutManager(activity)
         recyclerViewLang.layoutManager = layoutManager
-        adapterRec = ReviewAdapter(ReviewList)
+//        adapterRec = ReviewAdapter(ReviewList)
         recyclerViewLang.adapter = adapterRec
         return view
     }

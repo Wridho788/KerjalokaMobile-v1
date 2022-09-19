@@ -7,15 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skill
 
-class ChooseSkillAdapter(private val skilItems: List<Skill>):
+class ChooseSkillAdapter(private val skilItems: List<skill>):
     RecyclerView.Adapter<ChooseSkillAdapter.chooseSkil>()
 {
 
     inner class chooseSkil(view: View) : RecyclerView.ViewHolder(view) {
 
         var item: TextView
+
         init {
-            item = view.findViewById<TextView>(R.id.item_modal)
+            item = view.findViewById(R.id.item_modal)
         }
     }
 

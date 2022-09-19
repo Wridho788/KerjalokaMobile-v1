@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import maritalStatus
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.maritalStatus
 
 class EditMaritalAdapter(private val listStatus: List<maritalStatus>):
     RecyclerView.Adapter<EditMaritalAdapter.EditMarital>()

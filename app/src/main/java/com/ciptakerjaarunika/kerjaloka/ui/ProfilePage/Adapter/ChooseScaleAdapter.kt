@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.scale
 
-class ChooseScaleAdapter():
+class ChooseScaleAdapter(private val scaleItems: List<scale>):
     RecyclerView.Adapter<ChooseScaleAdapter.chooseScale>()
 {
 
@@ -26,12 +26,12 @@ class ChooseScaleAdapter():
     }
 
     override fun onBindViewHolder(holder: chooseScale, position: Int) {
-        val currentItem = Scale.values()
-        holder.item.text= currentItem[position].name
+        val currentItem = scaleItems[position]
+        holder.item.text= currentItem.scaleName
     }
 
     override fun getItemCount(): Int {
-        return Scale.values().size
+        return scaleItems.size
     }
 
 }

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.residentList
 
-class EditResidentAdapter(private val residentItems: List<Resident>):
+class EditResidentAdapter(private val residentItems: List<residentList>):
     RecyclerView.Adapter<EditResidentAdapter.EditResident>()
 {
 

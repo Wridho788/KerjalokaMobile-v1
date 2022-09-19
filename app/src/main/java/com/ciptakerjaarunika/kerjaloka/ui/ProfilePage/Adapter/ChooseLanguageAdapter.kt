@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Data.Language
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.language
 
-class ChooseLanguageAdapter(private val langList: List<Language>):
+class ChooseLanguageAdapter(private val langList: List<language>):
     RecyclerView.Adapter<ChooseLanguageAdapter.chooseLang>()
 {
 
