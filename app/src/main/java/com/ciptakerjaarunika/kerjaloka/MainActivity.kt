@@ -19,6 +19,8 @@ import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.enum.Role
+import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
@@ -45,9 +47,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         AUTHAPI().CheckLogin(baseContext) {
+            if(it?.user?.roleNo == Role.Jobseekers.value){
+                // User Jobseeker
+            }
+            else if(it?.user?.roleNo == Role.Jobseekers.value || SessionManager(baseContext).user?.company != null) {
+                // User Company
+            }
 
             var context = baseContext
-
             hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
             if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
                 hubConnection.start()

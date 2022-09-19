@@ -1,17 +1,21 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
-class BookmarkedJobAdapter(private val rJobList: List<rJobModel>) :
+class BookmarkedJobAdapter(private val rJobList: List<RecommendationJob>, private val context: Context) :
     RecyclerView.Adapter<BookmarkedJobAdapter.ViewHolder>() {
 
 
@@ -21,7 +25,7 @@ class BookmarkedJobAdapter(private val rJobList: List<rJobModel>) :
         var jobCompany: TextView
         var jobLocation: TextView
         var timeUploadApplicant: TextView
-        var bookmarkedJob: MaterialButton
+        var bookmarkedJob: ImageView
         var shareableJob: MaterialButton
         var cardRecommendationJob: MaterialCardView
 
@@ -51,10 +55,10 @@ class BookmarkedJobAdapter(private val rJobList: List<rJobModel>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = rJobList[position]
         holder.jobPosition.text = currentItem.jobPosition
-        holder.jobCompany.text = currentItem.companyName
-        holder.jobLocation.text = currentItem.jobLocation
+        holder.jobCompany.text = currentItem.company.companyName
+        holder.jobLocation.text = if(currentItem?.jobLocation!!.size >1) "Banyak lokasi" else currentItem.jobLocation[0].location
         holder.timeUploadApplicant.text = currentItem.createdOn
-        Glide.with(holder.itemView.context).load(currentItem.logo).fitCenter().into(holder.logo)
+        Glide.with(holder.itemView.context).load(currentItem.company.logo).fitCenter().into(holder.logo)
 
         holder.bookmarkedJob.setOnClickListener {
 //            when (currentItem.jobNo) {

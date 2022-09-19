@@ -20,7 +20,7 @@ import java.security.AccessController.getContext
 
 
 class SessionManager (context: Context?) : ISessionManager{
-   private val appContext : Context =  context!!.applicationContext
+   private val appContext : Context? =  context?.applicationContext
 
     companion object{
         const val SHARED_PREF_NAME = "com.ciptakerjaarunika.kerjaloka"
@@ -42,7 +42,7 @@ class SessionManager (context: Context?) : ISessionManager{
         set(value) {setData(USER, Gson().toJson(value))}
 
     override var deviceId: String = ""
-        get() = Settings.Secure.getString(appContext.contentResolver,
+        get() = Settings.Secure.getString(appContext?.contentResolver,
             Settings.Secure.ANDROID_ID);
 
     override var chatData: chat_data?
@@ -66,18 +66,18 @@ class SessionManager (context: Context?) : ISessionManager{
         get() = Gson().fromJson(getData(JOBSEEKER_ADDITIONAL), JobseekerAdditional::class.java)
         set(value) {setData(JOBSEEKER_ADDITIONAL, Gson().toJson(value))}
 
-    private fun getSharedPreference(): SharedPreferences {
-        return appContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+    private fun getSharedPreference(): SharedPreferences? {
+        return appContext?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
     }
     private fun getData(key: String) : String?{
-        return getSharedPreference().getString(key, null)
+        return getSharedPreference()?.getString(key, null)
     }
     private fun setData(key : String, value:String?){
-        getSharedPreference().edit().putString(key,value).apply()
+        getSharedPreference()?.edit()?.putString(key,value)?.apply()
     }
 
     override suspend fun clearData() {
-        getSharedPreference().edit().clear().apply()
+        getSharedPreference()?.edit()?.clear()?.apply()
     }
 
     override fun refreshChat(hubConnection: HubConnection) {
