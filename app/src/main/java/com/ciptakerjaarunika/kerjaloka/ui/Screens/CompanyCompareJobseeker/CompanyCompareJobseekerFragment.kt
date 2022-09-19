@@ -5,16 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyCompareJobseeker.ResultCompare.ResultCompareFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyCompareJobseeker.bottomsheet.tambahJobseekerFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
 
-class CompanyCompareJobseekerFragment : Fragment() {
+class CompanyCompareJobseekerFragment : Fragment(), OnFragmentClickListener{
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +46,18 @@ class CompanyCompareJobseekerFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         btn_banding_jobseeker.setOnClickListener {
-            Toast.makeText(activity,"banding", Toast.LENGTH_SHORT).show()
+            goToResult()
+
         }
     }
+    override fun goToResult() {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, ResultCompareFragment(), "ResultCompare")
+        ft.addToBackStack("ResultCompare")
+        ft.commit()
+    }
+}
+
+interface OnFragmentClickListener {
+    fun goToResult()
 }

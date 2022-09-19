@@ -136,7 +136,7 @@
         <entry key="app/src/main/res/layout/fragment_job_nearme.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_recommendation.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_jobseeker_review.xml" value="0.190004948045522" />
+        <entry key="app/src/main/res/layout/fragment_jobseeker_review.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_komentar_applicant.xml" value="0.1801088570014844" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.165" />
@@ -165,7 +165,7 @@
         <entry key="app/src/main/res/layout/item_card_pelamar_list.xml" value="0.14794656110836218" />
         <entry key="app/src/main/res/layout/item_card_recommendation_job.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_card_record.xml" value="0.2673434856175973" />
-        <entry key="app/src/main/res/layout/item_card_review.xml" value="0.2587827808015834" />
+        <entry key="app/src/main/res/layout/item_card_review.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_change_status.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_content_info_lowongan.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/item_header_applicant_detail.xml" value="0.335" />

@@ -54,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/light_300"
+            android:layout_marginVertical="16dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -136,14 +137,27 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <ProgressBar
-
-                        style="@android:style/Widget.ProgressBar.Horizontal"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:progress="25"
+                        android:orientation="horizontal">
 
-                        />
+                        <ProgressBar
+
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".90"
+                            android:progress="25" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".10"
+                            android:textAlignment="textEnd"
+                            android:text="25%"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -153,6 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/light_300"
+            android:layout_marginVertical="16dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -265,6 +280,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/light_300"
+            android:layout_marginVertical="16dp"
+
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">

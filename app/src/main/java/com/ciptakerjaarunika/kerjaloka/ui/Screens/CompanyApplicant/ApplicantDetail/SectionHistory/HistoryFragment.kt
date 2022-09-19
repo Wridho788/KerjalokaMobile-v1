@@ -28,7 +28,9 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_history, container, false)
+        val view = inflater.inflate(R.layout.fragment_history, container, false)
+        return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,6 +83,8 @@ class HistoryFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val rv_history = view.findViewById<RecyclerView>(R.id.rv_history_applicant)
+        rv_history.setHasFixedSize(true)
+
         rv_history.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = HistoryAdapter(list)

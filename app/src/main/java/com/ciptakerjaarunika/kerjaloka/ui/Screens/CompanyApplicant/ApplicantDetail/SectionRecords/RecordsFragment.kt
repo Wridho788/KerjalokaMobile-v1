@@ -81,6 +81,7 @@ class RecordsFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val rv_record = view.findViewById<RecyclerView>(R.id.rv_records_applicant)
+        rv_record.setHasFixedSize(true)
         rv_record.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = RecordsAdapter(list)
