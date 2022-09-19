@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
 class ChooseYearAdapter(private val yearList: List<Int>):
     RecyclerView.Adapter<ChooseYearAdapter.chooseYr>()

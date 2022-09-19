@@ -306,4 +306,9 @@
     <string name="skill">Skill</string>
     <string name="perbandingan_skill_berdasarkan_jumlah_skill_yang_dimiliki_pelamar">Perbandingan skill berdasarkan jumlah skill yang dimiliki pelamar.</string>
 
+    <string name="title_activity_add_job">AddJobActivity</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="action_settings">Settings</string>
 </resources>

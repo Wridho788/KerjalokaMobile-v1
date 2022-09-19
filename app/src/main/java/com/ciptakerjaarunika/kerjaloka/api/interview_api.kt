@@ -2,9 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Build
-import android.os.Environment
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.ciptakerjaarunika.kerjaloka.MainActivity
@@ -15,19 +13,10 @@ import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileOutputStream
-import java.io.FileWriter
-import java.lang.System.out
-
-import java.nio.file.Files
-import java.nio.file.Paths
 
 
 class InterviewAPI {
