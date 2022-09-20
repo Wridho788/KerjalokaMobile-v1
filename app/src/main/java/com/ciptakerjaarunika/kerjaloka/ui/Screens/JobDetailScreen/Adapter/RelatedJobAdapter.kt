@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.IJobDetail
 import com.google.android.material.card.MaterialCardView
@@ -20,7 +21,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RelatedJobAdapter(
-    private val jobList: List<job>,
+    private val jobList: List<RecommendationJob>,
     private val onFragmentClickListener: IJobDetail
 ) :
     RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>() {

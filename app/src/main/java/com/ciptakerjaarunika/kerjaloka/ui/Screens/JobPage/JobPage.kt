@@ -101,6 +101,7 @@ class JobPage: Fragment(), IJobPage{
             JobAPI().getJobRecommendation(true, context) {
                 recommendationDone()
                 if (it != null) {
+                    rcylRecommendation?.visibility = VISIBLE
                     btn_seeRecommendJob?.visibility = if(it.data.size <= 5) GONE else VISIBLE
                     rcylRecommendation?.apply {
                         adapter = RecommendationJobAdapter(it.data.take(5), null,context, this@JobPage)
@@ -114,6 +115,7 @@ class JobPage: Fragment(), IJobPage{
             JobAPI().getBookmarkedJob(context){
                 bookmarkedDone()
                 if (it != null) {
+                    rcylRecommendation?.visibility = VISIBLE
                     btn_seeBookmarkedJob?.visibility = if(it.data.size <= 5) GONE else VISIBLE
                     rcylBookmarked?.apply {
                         adapter = JobAdapter(it.data.take(5), context, this@JobPage)
@@ -160,7 +162,7 @@ class JobPage: Fragment(), IJobPage{
         }
     }
 
-    override fun GoToJobDetail(JobNo: Long, CompanyNo: Long) {
+    override fun GoToJobDetail(JobNo: Long, CompanyNo: Long?) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "JobDetailFragment")
         ft.addToBackStack("Job Page")
@@ -170,8 +172,8 @@ class JobPage: Fragment(), IJobPage{
     fun getNearJob(){
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
-            nearJobDone()
             if(it == null){
+                nearJobDone()
                 view?.findViewById<android.widget.TextView>(R.id.empty_near_job)?.visibility =
                     VISIBLE
                 view?.findViewById<MaterialButton>(R.id.btnSeeNearMe)?.visibility = GONE
@@ -182,6 +184,7 @@ class JobPage: Fragment(), IJobPage{
                 val latitude = it.latitude.toString()
                 val longtitude = it.longitude.toString()
                 JobAPI().getNearJob(latitude, longtitude, context) {
+                    nearJobDone()
                     if (it != null && it.data.size != 0) {
                         view?.findViewById<MaterialButton>(R.id.btnSeeNearMe)?.visibility = if(it.data.size <= 5) GONE else VISIBLE
                         val recyclerView = view?.findViewById<RecyclerView>(R.id.nearmeJob)
@@ -216,5 +219,5 @@ class JobPage: Fragment(), IJobPage{
 }
 interface IJobPage{
     fun RefreshData()
-    fun GoToJobDetail(JobNo : Long, CompanyNo: Long)
+    fun GoToJobDetail(JobNo : Long, CompanyNo: Long?)
 }

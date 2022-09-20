@@ -73,7 +73,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/sectionTitle"
@@ -111,6 +112,7 @@
                     android:id="@+id/recommenJob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_card_recommendation_job" />
@@ -122,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_light"
+                    android:visibility="gone"
                     android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"
                     app:cornerRadius="100dp"
@@ -134,6 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/near_container"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -195,6 +199,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_light"
+                    android:visibility="gone"
                     android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"
                     app:cornerRadius="100dp"
@@ -259,6 +264,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:visibility="gone"
                     android:fontFamily="@font/poppins_light"
                     android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"

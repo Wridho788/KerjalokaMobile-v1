@@ -51,7 +51,9 @@ data class rJobDetailModel(
 )
 
 data class jobLocation(
-    val label: String,
+    val label : String,
+    val cityNo : Int,
+    val cityName : String,
 )
 
 data class jobField(val fieldName: String)

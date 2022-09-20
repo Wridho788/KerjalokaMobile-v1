@@ -91,7 +91,7 @@ class JobAdapter(private val rJobList: List<RecommendationJob>, private val cont
             context.startActivity(Intent.createChooser(sendIntent, "Bagikan Informasi Pekerjaan"))
         }
         holder.cardRecommendationJob.setOnClickListener {
-            iJobPage.GoToJobDetail(currentItem.jobNo, currentItem.companyNo)
+            iJobPage.GoToJobDetail(currentItem.jobNo, currentItem.company.companyNo)
         }
     }
 

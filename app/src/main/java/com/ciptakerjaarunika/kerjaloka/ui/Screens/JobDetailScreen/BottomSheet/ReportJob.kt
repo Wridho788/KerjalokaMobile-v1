@@ -7,14 +7,35 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.google.android.material.button.MaterialButton
 
-class ReportJob : SuperBottomSheetFragment() {
+class ReportJob(val JobNo : Long) : SuperBottomSheetFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.layout_report_job_modal, container, false)
+        view.findViewById<MaterialButton>(R.id.reportJobBtn).setOnClickListener{
+            val message = view.findViewById<EditText>(R.id.reportMessage)?.text.toString()
+
+            if(!message.isNullOrEmpty()) {
+                JobAPI().ReportJob(JobNo, message, context) {
+                    if(it!= null) {
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                        if (it?.code == 210) {
+                            this.dismiss()
+                        }
+                    }
+                }
+            }
+            else{
+                Toast.makeText(activity, "Pesan tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
         return view
     }
 

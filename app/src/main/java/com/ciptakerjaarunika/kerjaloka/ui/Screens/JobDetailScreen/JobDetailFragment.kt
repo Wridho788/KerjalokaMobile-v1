@@ -21,14 +21,21 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.core.annotations.Line
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.jobLocation
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedCompanyJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedOtherCompanyJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ApplyJob
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ReportJob
 import com.google.android.material.appbar.MaterialToolbar
@@ -39,11 +46,12 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class JobDetailFragment(
-    private val JobNo: Long, private val CompanyNo: Long,
+    private val JobNo: Long, private val CompanyNo: Long?,
 ) : Fragment(),
     IJobDetail {
     private lateinit var binding: ActivityMainBinding
     private var jobBookmark = false;
+    private var currentJob : rJobDetailModel? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,18 +125,18 @@ class JobDetailFragment(
             val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share)
             val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark)
 
-            val recyclerView =
-                view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
+
 
             view.findViewById<LinearLayout>(R.id.spinnerDetailPekerjaan).visibility = VISIBLE
             view.findViewById<NestedScrollView>(R.id.job_detail_container).visibility = GONE
             JobAPI().getJobDetailAsync(context, CompanyNo, JobNo) {
                 if (it != null) {
+                    currentJob = it.data
+
                     view.findViewById<LinearLayout>(R.id.spinnerDetailPekerjaan).visibility = GONE
                     view.findViewById<NestedScrollView>(R.id.job_detail_container).visibility = VISIBLE
                     jobBookmark = it.data.bookmarked == true;
 
-                    Log.d("response", it.toString())
                     Glide.with(this)
                         .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
                         .fitCenter().into(company_logo)
@@ -281,16 +289,54 @@ class JobDetailFragment(
             }
 
             report_job.setOnClickListener {
-                val sheet = ReportJob()
+                val sheet = ReportJob(JobNo)
                 activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
 
+            }
+            if(CompanyNo == null){
+                view.findViewById<LinearLayout>(R.id.other_job_container).visibility = GONE
+            }else {
+                CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
+                    if (it != null) {
+                        view.findViewById<LinearLayout>(R.id.spinnerOtherJobCompany).visibility = GONE
+                        val recyclerView =
+                            view.findViewById<RecyclerView>(R.id.recycler_other_job_company)
+                        recyclerView.visibility = VISIBLE
+
+                        recyclerView.apply {
+                            layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                            adapter = RelatedOtherCompanyJobAdapter(
+                                it.data.job.filter { job -> job.jobNo != currentJob?.jobNo },
+                                this@JobDetailFragment
+                            )
+                        }
+                    }
+                }
+            }
+            JobAPI().getRelatedJob(JobNo, context) {
+                if (it != null) {
+                    if(it.data.size == 0)  view.findViewById<LinearLayout>(R.id.related_job_container).visibility = GONE
+
+                    view.findViewById<LinearLayout>(R.id.spinnerRelatedJob).visibility = GONE
+                    val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_related_job)
+                    recyclerView.visibility = VISIBLE
+
+                    recyclerView.apply {
+                        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        adapter = RelatedJobAdapter( it.data,this@JobDetailFragment)
+                    }
+                }
+                else{
+                    view.findViewById<LinearLayout>(R.id.related_job_container).visibility = GONE
+                }
             }
         }
     }
 
     override fun onFragmentClick(companyNo: Long, jobNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "jobDetailFragment")
+        ft.replace(id, JobDetailFragment(jobNo, companyNo), "jobDetailFragment")
         ft.addToBackStack("jobDetailFragment")
         ft.commit()
     }

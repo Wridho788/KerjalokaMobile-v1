@@ -119,7 +119,7 @@ class RecommendationJobAdapter(val listAuth : List<RecommendationJob>?,val listU
             }
 
             holder.cardRecommendationJob.setOnClickListener {
-                iJobPage.GoToJobDetail(currentItem.jobNo, currentItem.companyNo)
+                iJobPage.GoToJobDetail(currentItem.jobNo, currentItem.company.companyNo)
             }
         }
 

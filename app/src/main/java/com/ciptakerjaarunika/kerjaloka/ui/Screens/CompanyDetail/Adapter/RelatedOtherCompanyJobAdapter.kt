@@ -7,54 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.job
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Model.relatedOtherCompanyJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.IJobDetail
 import com.google.android.material.card.MaterialCardView
 
-class RelatedOtherCompanyJobAdapter() :
+class RelatedOtherCompanyJobAdapter(private val listItem : List<job>, private val iJobDetail: IJobDetail) :
     RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>() {
-    private var listItem = listOf<relatedOtherCompanyJobModel>(
-        relatedOtherCompanyJobModel(
-            1,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedOtherCompanyJobModel(
-            2,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedOtherCompanyJobModel(
-            3,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedOtherCompanyJobModel(
-            4,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-        relatedOtherCompanyJobModel(
-            5,
-            "Software Engineer",
-            "PT. KerjaLoka",
-            "Jakarta",
-            "satu jam lalu",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png"
-        ),
-    )
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
         var relatedlogo: ImageView
@@ -81,14 +41,14 @@ class RelatedOtherCompanyJobAdapter() :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = listItem[position]
         holder.relatedjobPosition.text = currentItem.jobPosition
-        holder.relatedjobCompany.text = currentItem.jobCompany
-        holder.relatedjobLocation.text = currentItem.jobLocation
-        holder.relatedJobDate.text = currentItem.timeUploadApplicant
-        Glide.with(holder.itemView.context).load(currentItem.logo).into(holder.relatedlogo)
+        holder.relatedjobCompany.text = currentItem.company.companyName
+        holder.relatedjobLocation.text = if(currentItem.jobLocation.size > 1) "Banyak lokasi" else currentItem.jobLocation[0].location
+        holder.relatedJobDate.text = currentItem.createdOn
+        Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).into(holder.relatedlogo)
 
-//        holder.cardrelatedJob.setOnClickListener {
-//            onFragmentClickListener.onFragmentClick()
-//        }
+        holder.cardrelatedJob.setOnClickListener {
+            iJobDetail.onFragmentClick(currentItem.company.companyNo, currentItem.jobNo)
+        }
     }
 
     override fun getItemCount(): Int {
