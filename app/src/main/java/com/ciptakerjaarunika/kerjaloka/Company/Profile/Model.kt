@@ -1,8 +1,16 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile
 
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
+
+data class CompanyProfileResponse(
+    val code : Int,
+    val data : data,
+    val message : String?
+)
+
 data class user(
-    val company: List<company>,
-    val companyAdditional: List<compAdditional>,
+    val company: company,
+    val companyAdditional: compAdditional,
     val createdBy: Long = 0,
     val createdOn: String = "2021-10-27T21:10:22",
     val deactivated: Boolean = false,
@@ -14,7 +22,7 @@ data class user(
     val jobseekers: Long? = null,
     val phone: String = "082363153151",
     val roleNo: Int = 2,
-    val rolePrevileges: List<role>,
+    val rolePrevileges: role,
     val suspended: Boolean = false,
     val userFullname: String = "reyhan@kerjaloka.com",
     val userGoogleId: String = "113351807463143838932",
@@ -28,7 +36,7 @@ data class company(
     val authorizedUserNo: Long = 0,
     val companyName: String = "TESTING",
     val companyNickName: String? = null,
-    val companyNo: Int = 31,
+    val companyNo: Long = 31,
     val userNo: Long = 20211027141022
 )
 
@@ -54,22 +62,22 @@ data class role(
 )
 
 data class data(
-    val city: List<city>,
-    val companyAddress: String? = null,
-    val companyCeo: String = "KAMI",
-    val companyDescription: String = "Testing",
-    val companyName: String = "TESTING",
-    val country: List<country>,
-    val email: String = "reyhan@kerjaloka.com",
-    val field: List<field>,
-    val foundedAt: String = "1950-01-01T00:00:00",
-    val logo: String = "202110271410221246.jpg",
-    val phone: String = "082363153151",
-    val province: List<province>,
-    val size: List<size>,
-    val userFullname: String = "reyhan@kerjaloka.com",
-    val userNo: Long = 20211027141022,
-    val username: String = "reyhan@kerjaloka.com"
+    val userNo: Long,
+    val email: String,
+    val phone: String?,
+    val username: String,
+    val userFullname: String,
+    val companyName: String,
+    val companyAddress: String?,
+    val foundedAt: String,
+    val city: city,
+    val province: province,
+    val country: country,
+    val companyCeo: String,
+    val field: field,
+    val size: size,
+    val logo: String,
+    val companyDescription: String
 )
 
 data class city(
@@ -90,9 +98,9 @@ data class field(
 )
 
 data class province(
-    val provinceCountryNo: Int = 192,
-    val provinceName: String = "Papua",
-    val provinceNo: Int = 11
+    val provinceCountryNo: Int,
+    val provinceName: String,
+    val provinceNo: Int
 )
 
 data class size(

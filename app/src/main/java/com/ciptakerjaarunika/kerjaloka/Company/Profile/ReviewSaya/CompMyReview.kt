@@ -11,6 +11,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.AppealModal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.conRat
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.proRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.R
@@ -22,7 +23,7 @@ private var layoutManager: RecyclerView.LayoutManager? = null
 private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
 
 
-class CompMyReview : Fragment() {
+class CompMyReview(val data: data?) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
