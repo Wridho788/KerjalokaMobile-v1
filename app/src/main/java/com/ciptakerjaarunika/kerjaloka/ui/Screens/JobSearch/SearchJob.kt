@@ -30,6 +30,10 @@ class  SearchJob : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchJobBinding.inflate(layoutInflater)
+        binding.backBtn.setOnClickListener{
+            fragmentManager.popBackStack()
+        }
+
         setContentView(binding.root)
         list2 = getArrayList("SearchJob")
         if(list2.isNotEmpty()){

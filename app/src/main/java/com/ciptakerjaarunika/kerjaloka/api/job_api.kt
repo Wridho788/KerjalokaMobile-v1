@@ -9,6 +9,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailResponse
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rjob_model
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.experience
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.SearchJob
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -207,7 +208,7 @@ class JobAPI {
 
     data class jobRecommendationResponse(
         val code : Int,
-        val data : List<RecommendationJob>
+        val data : List<SearchJobModel>
     )
     interface getJobRecommendationAuth {
         @GET("jobseeker/job/recommendation")

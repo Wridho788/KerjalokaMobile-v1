@@ -113,6 +113,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
 
     override fun onJobPage() {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.addToBackStack("Home Page")
         fragmentTransaction.replace(id, JobPage(), "JobFragment")
         fragmentTransaction.commit()
     }

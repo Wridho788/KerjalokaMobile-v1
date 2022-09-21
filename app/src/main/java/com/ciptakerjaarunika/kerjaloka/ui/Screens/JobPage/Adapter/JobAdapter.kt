@@ -14,11 +14,12 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
+import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
-class JobAdapter(private val rJobList: List<RecommendationJob>, private val context: Context,private val iJobPage: IJobPage) :
+class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, private val context: Context, private val iJobPage: IJobPage) :
     RecyclerView.Adapter<JobAdapter.ViewHolder>() {
 
 
@@ -59,22 +60,13 @@ class JobAdapter(private val rJobList: List<RecommendationJob>, private val cont
         val currentItem = rJobList[position]
         holder.jobPosition.text = currentItem.jobPosition
         holder.jobCompany.text = currentItem.company.companyName
-        holder.jobLocation.text = if(currentItem?.jobLocation!!.size >1) "Banyak lokasi" else currentItem.jobLocation[0].location
+        holder.jobLocation.text = if(currentItem?.jobLocation!!.size >1) "Banyak lokasi" else currentItem.jobLocation[0].label
         holder.timeUploadApplicant.text = currentItem.createdOn
         Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).fitCenter().into(holder.logo)
         holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 
         holder.bookmarkedJob.setOnClickListener {
-          JobAPI().BookmarkJob(currentItem.jobNo, !currentItem.bookmarked, context) {
-                if(it != null) {
-                    if (it.code == 210) {
-                        iJobPage.RefreshData()
-                    } else {
-                        Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-
+                iJobPage.BookmarkJob(ListType, currentItem!!.jobNo.toLong(), position)
         }
         holder.shareableJob.setOnClickListener {
             val text =
@@ -91,7 +83,7 @@ class JobAdapter(private val rJobList: List<RecommendationJob>, private val cont
             context.startActivity(Intent.createChooser(sendIntent, "Bagikan Informasi Pekerjaan"))
         }
         holder.cardRecommendationJob.setOnClickListener {
-            iJobPage.GoToJobDetail(currentItem.jobNo, currentItem.company.companyNo)
+            iJobPage.GoToJobDetail(currentItem.jobNo.toLong(), currentItem.company.companyNo)
         }
     }
 

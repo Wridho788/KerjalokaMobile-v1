@@ -15,10 +15,9 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.google.android.material.button.MaterialButton
 
 class ReportJob(val JobNo : Long) : SuperBottomSheetFragment() {
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(R.layout.layout_report_job_modal, container, false)
+        val view = inflater.inflate(R.layout.modal_report_layout, container, false)
         view.findViewById<MaterialButton>(R.id.reportJobBtn).setOnClickListener{
             val message = view.findViewById<EditText>(R.id.reportMessage)?.text.toString()
 

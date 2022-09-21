@@ -29,7 +29,7 @@ data class SearchJobModel(
     val createdBy : Long,
     val publish : Boolean,
     val company: Company,
-    val bookmarked : Any?,
+    var bookmarked : Boolean,
     val jobLocation: List<jobLocation>,
     val takedown: Boolean,
     val applied : Any?
