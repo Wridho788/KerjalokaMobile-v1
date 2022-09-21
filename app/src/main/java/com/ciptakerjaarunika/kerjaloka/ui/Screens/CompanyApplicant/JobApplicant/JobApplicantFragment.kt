@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyListApplicantAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobApplicantBinding
 import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.ApplicantDetailFragment
@@ -33,12 +32,12 @@ import java.util.*
 
 class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClickListener {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentJobApplicantBinding
     private var list: List<applicantModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = FragmentJobApplicantBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
@@ -177,14 +176,14 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
         }
     }
 
-    override fun goToApplicantDetail() {
+    override fun goToApplicantDetail(applicantDetail: applicantModel) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, ApplicantDetailFragment(), "company applicant detail")
+        ft.replace(id, ApplicantDetailFragment(applicantDetail), "company applicant detail")
         ft.addToBackStack("CompanyApplicantDetail")
         ft.commit()
     }
 }
 
 interface OnFragmentClickListener {
-    fun goToApplicantDetail()
+    fun goToApplicantDetail(applicantDetail: applicantModel)
 }

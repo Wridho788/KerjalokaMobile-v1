@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,25 +10,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.MoreAction.MoreActionFragment
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.PapikostikResultFragment
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentApplicantDetailBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionHistory.HistoryFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.KomentarApplicantFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionRecords.RecordsFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.StatusPageFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyCompareJobseeker.CompanyCompareJobseekerFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.JobseekerReviewFragment
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
+import java.time.format.DateTimeFormatter
 
-class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
+class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fragment(),
+    OnFragmentClickListener {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentApplicantDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
 
     }
 
@@ -35,21 +34,18 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_applicant_detail, container, false)
+        binding = FragmentApplicantDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        return view;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val btn_result_papikostick =
-            view.findViewById<MaterialCardView>(R.id.btn_lihat_hasil_tes_applicant)
-        val btn_lihat_komentar = view.findViewById<MaterialCardView>(R.id.btn_lihat_komentar)
-        val btn_lihat_history = view.findViewById<MaterialCardView>(R.id.btn_lihat_sejarah)
-        val btn_lihat_record = view.findViewById<MaterialCardView>(R.id.btn_lihat_record)
-        val btn_ganti_status = view.findViewById<MaterialButton>(R.id.btn_change_status)
-        val btn_more = view.findViewById<MaterialCardView>(R.id.btn_more)
-        val btn_lihat_review = view.findViewById<MaterialButton>(R.id.btn_review)
-        val btn_portofolio = view.findViewById<MaterialButton>(R.id.btn_portofolio)
+//        Log.d("tes", applicantDetail.toString())
 
+        val experienceJob = applicantDetail.applicant.experiences
+        Log.d("tes", experienceJob.toString())
+        val dateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_applicant)
         toolbar.setOnClickListener {
             activity?.onBackPressed()
@@ -58,39 +54,45 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        btn_result_papikostick.setOnClickListener {
-            val sheet = PapikostikResultFragment()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ResultPapikostick") }
-        }
+        binding.nameApplicant.text = applicantDetail.applicant.name
+        binding.headerApplicantDetail.applicantName.text = applicantDetail.applicant.name
+        binding.headerApplicantDetail.applicantLocation.text =
+            applicantDetail.applicant.location.city + ", " + applicantDetail.applicant.location.province
+        binding.txtAlasanMelamar.text = applicantDetail.application.message
+//        binding.headerApplicantDetail.profileApplicant.setImageResource(contextapplicantDetail.applicant.photo)
+//        btn_result_papikostick.setOnClickListener {
+//            val sheet = PapikostikResultFragment()
+//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ResultPapikostick") }
+//        }
 
-        btn_more.setOnClickListener {
-            val sheet = MoreActionFragment()
-            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
-        }
+//        btn_more.setOnClickListener {
+//            val sheet = MoreActionFragment()
+//            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
+//        }
 
-        btn_lihat_komentar.setOnClickListener {
-            goToCommentApplicant()
-        }
+//        btn_lihat_komentar.setOnClickListener {
+//            goToCommentApplicant()
+//        }
 
-        btn_lihat_history.setOnClickListener {
-            goToHistoryApplicant()
-        }
+//        btn_lihat_history.setOnClickListener {
+//            goToHistoryApplicant()
+//        }
 
-        btn_lihat_record.setOnClickListener {
-            goToRecordApplicant()
-        }
+//        btn_lihat_record.setOnClickListener {
+//            goToRecordApplicant()
+//        }
 
-        btn_ganti_status.setOnClickListener {
-            goToChangeStatus()
-        }
+//        btn_ganti_status.setOnClickListener {
+//            goToChangeStatus()
+//        }
 
-        btn_lihat_review.setOnClickListener {
-            goToReview()
-        }
+//        btn_lihat_review.setOnClickListener {
+//            goToReview()
+//        }
 
-        btn_portofolio.setOnClickListener {
-            goToCompareJobseeker()
-        }
+//        btn_portofolio.setOnClickListener {
+//            goToCompareJobseeker()
+//        }
     }
 
     override fun goToCommentApplicant() {
@@ -123,7 +125,7 @@ class ApplicantDetailFragment : Fragment(), OnFragmentClickListener {
 
     override fun goToReview() {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, JobseekerReviewFragment(),"JobseekerReview")
+        ft.replace(id, JobseekerReviewFragment(), "JobseekerReview")
         ft.addToBackStack("JobseekerReview")
         ft.commit()
     }

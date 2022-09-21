@@ -35,7 +35,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="John Doe"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
@@ -52,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <include layout="@layout/item_header_applicant_detail" />
+            <include android:id="@+id/headerApplicantDetail" layout="@layout/item_header_applicant_detail" />
 
             <View
                 android:layout_width="match_parent"
@@ -89,7 +88,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
             </LinearLayout>

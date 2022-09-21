@@ -57,7 +57,7 @@ class ApplicantAdapter(
             .into(holder.profileApplicant)
 
         holder.cardApplicant.setOnClickListener {
-            onFragmentClickListener?.goToApplicantDetail()
+            onFragmentClickListener?.goToApplicantDetail(currentItem)
         }
     }
 

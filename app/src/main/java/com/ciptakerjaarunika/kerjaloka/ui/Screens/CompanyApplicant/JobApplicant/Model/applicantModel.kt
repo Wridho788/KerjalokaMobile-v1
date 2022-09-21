@@ -20,7 +20,8 @@ data class application(
     val jobseekerNo: Long,
     val jobNo: Long,
     val applicationStatusNo: Int,
-    val applyOn: String
+    val applyOn: String,
+    val message: String
 )
 
 data class applicant(
@@ -28,6 +29,15 @@ data class applicant(
     val name: String,
     val location: locationApplicant,
     val photo: String,
+    val expectedSalary: Long,
+    val experiences: List<experience>
+)
+
+data class experience(
+    val experiencePosition: String,
+    val experienceCompanyName: String,
+    val experienceEndedAt: String,
+    val experienceBeginAt: String
 )
 
 data class locationApplicant(
