@@ -46,7 +46,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="120 Orang"
                     android:textAlignment="center"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
@@ -87,7 +86,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="20 Orang"
                     android:textAlignment="center"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
@@ -135,7 +133,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="10 Orang"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -175,7 +172,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="10 Orang"
                     android:textAlignment="center"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
@@ -221,7 +217,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="10 Orang"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -261,7 +256,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="10 Orang"
                     android:textAlignment="center"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
@@ -307,7 +301,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="10 Orang"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -347,7 +340,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="10 Orang"
                     android:textAlignment="center"
                     android:textColor="@color/dark_100"
                     android:textSize="12sp" />

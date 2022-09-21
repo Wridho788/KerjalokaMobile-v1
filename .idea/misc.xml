@@ -54,6 +54,8 @@
         <entry key="app/src/main/res/drawable/ic_applicant.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.148" />
         <entry key="app/src/main/res/drawable/ic_arrow_left_red.xml" value="0.107" />
+        <entry key="app/src/main/res/drawable/ic_arrow_left_white.xml" value="0.107" />
+        <entry key="app/src/main/res/drawable/ic_arrow_up.xml" value="0.114" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1395" />
         <entry key="app/src/main/res/drawable/ic_bookmark.xml" value="0.1395" />
@@ -130,7 +132,7 @@
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.1704653371320038" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
-        <entry key="app/src/main/res/layout/fragment_job_applicant.xml" value="0.2930232558139535" />
+        <entry key="app/src/main/res/layout/fragment_job_applicant.xml" value="0.20921985815602837" />
         <entry key="app/src/main/res/layout/fragment_job_bookmark.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.19365079365079366" />
         <entry key="app/src/main/res/layout/fragment_job_nearme.xml" value="0.1" />
@@ -169,7 +171,7 @@
         <entry key="app/src/main/res/layout/item_change_status.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_content_info_lowongan.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/item_header_applicant_detail.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/item_header_job_applicant.xml" value="0.15239980207817913" />
+        <entry key="app/src/main/res/layout/item_header_job_applicant.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_industri.xml" value="0.11875309252845126" />
         <entry key="app/src/main/res/layout/item_location.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_section_record_applicant.xml" value="0.15239980207817913" />

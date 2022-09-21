@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Adapter
 
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,11 +7,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.OnFragmentClickListener
 import com.google.android.material.card.MaterialCardView
 
-class ApplicantAdapter(private val applicantModel: List<applicantModel>, private val onFragmentClickListener: OnFragmentClickListener?) :
+class ApplicantAdapter(
+    private val applicantModel: List<applicantModel>?,
+    private val onFragmentClickListener: OnFragmentClickListener?
+) :
     RecyclerView.Adapter<ApplicantAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var nameApplicant: TextView
@@ -36,18 +39,21 @@ class ApplicantAdapter(private val applicantModel: List<applicantModel>, private
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = applicantModel[position]
-        holder.nameApplicant.text = currentItem.NameApplicant
-        holder.locationApplicant.text = currentItem.LocationApplicant
-        val status = currentItem.status
-        if (status == true) {
-            holder.statusApplicant.text = "Qualified"
-            holder.statusApplicant.setTextColor(R.color.green_300)
-        } else {
-            holder.statusApplicant.text = "Not Qualified"
-            holder.statusApplicant.setTextColor(Color.RED)
-        }
-        Glide.with(holder.itemView.context).load(currentItem.Picture).fitCenter()
+        val currentItem = applicantModel!![position]
+        holder.nameApplicant.text = currentItem.applicant.name
+        holder.locationApplicant.text =
+            currentItem.applicant.location.city + ", " + currentItem.applicant.location.province
+//        val status = currentItem.publish
+//        if (status == true) {
+//            holder.statusApplicant.text = "Qualified"
+//            holder.statusApplicant.setTextColor(R.color.green_300)
+//        } else {
+//            holder.statusApplicant.text = "Not Qualified"
+//            holder.statusApplicant.setTextColor(Color.RED)
+//        }
+        Glide.with(holder.itemView.context)
+            .load(config().portAddress + "/photo/Profile/" + currentItem.applicant.photo)
+            .fitCenter()
             .into(holder.profileApplicant)
 
         holder.cardApplicant.setOnClickListener {
@@ -56,6 +62,6 @@ class ApplicantAdapter(private val applicantModel: List<applicantModel>, private
     }
 
     override fun getItemCount(): Int {
-        return applicantModel.size
+        return applicantModel!!.size
     }
 }

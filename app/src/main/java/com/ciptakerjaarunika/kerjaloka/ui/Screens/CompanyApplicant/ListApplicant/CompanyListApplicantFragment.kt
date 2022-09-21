@@ -54,14 +54,14 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
         }
     }
 
-    override fun goToListJobApplicant() {
+    override fun goToListJobApplicant(JobNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, JobApplicantFragment(), "CompanyApplicant")
+        ft.replace(id, JobApplicantFragment(JobNo), "CompanyApplicant")
         ft.addToBackStack("CompanyApplicant")
         ft.commit()
     }
 }
 
 interface OnFragmentClickListener {
-    fun goToListJobApplicant()
+    fun goToListJobApplicant(JobNo: Long)
 }

@@ -48,6 +48,7 @@ data class rJobDetailModel(
     val companyjob: company,
     val bookmarked: Boolean?,
     val applied: Boolean?,
+    val publish: Boolean,
 )
 
 data class jobLocation(

@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
@@ -32,8 +33,8 @@ import com.microsoft.signalr.HubConnectionState
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var hubConnection: HubConnection
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -57,7 +58,8 @@ class MainActivity : AppCompatActivity() {
                     { res ->
                         val userNo = SessionManager(context).user!!.userNo.toString()
                         hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
-                }, String::class.java)
+                    }, String::class.java
+                )
 
                 hubConnection.on(
                     "getmessage",
@@ -75,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                             IncomingCallPage(roomId),
                             "IncomingCall"
                         )
-                        ft.addToBackStack("Main");
+                        ft.addToBackStack("Main")
                         ft.commit()
                     },
                     String::class.java
@@ -85,10 +87,10 @@ class MainActivity : AppCompatActivity() {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
             replaceFragment(HomePage())
-
-            if(it?.user?.roleNo == Role.Jobseekers.value){
+//
+            if (SessionManager(context).user == null || it?.user?.roleNo == Role.Jobseekers.value) {
+                binding.bottomNavigationView.visibility = VISIBLE
                 // User Jobseeker
-                binding.bottomNavigationCompanyView.visibility = View.GONE
                 binding.bottomNavigationView.setOnItemSelectedListener { item ->
                     when (item.itemId) {
                         R.id.home -> replaceFragment((HomePage()))
@@ -101,11 +103,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
-            }
-            else if(it?.user?.roleNo == Role.Companies.value || SessionManager(baseContext).user?.company != null) {
-                // User Company
-                Log.d("role no", it?.user.toString())
-                binding.bottomNavigationView.visibility = View.GONE
+            } else if (it?.user?.roleNo == Role.Companies.value || SessionManager(baseContext).user?.company != null) {
+                binding.bottomNavigationCompanyView.visibility = VISIBLE
                 binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
                     when (item.itemId) {
                         R.id.home -> replaceFragment((HomePage()))
@@ -159,24 +158,26 @@ class MainActivity : AppCompatActivity() {
 //                }
 //        }
 
-        private var MY_CAMERA_REQUEST_CODE = 100;
-        //WebSocketService().startWebsocket();
-        override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
-        ) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            Log.d("Request Code", requestCode.toString())
-            if (requestCode == MY_CAMERA_REQUEST_CODE) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    val intent = Intent("android.media.action.IMAGE_CAPTURE")
-                    activityResultLauncher.launch(intent)
-                } else {
-                    Toast.makeText(baseContext, "Perlu akses kamera untuk fitur ini", Toast.LENGTH_LONG).show()
-                }
+    private var MY_CAMERA_REQUEST_CODE = 100
+
+    //WebSocketService().startWebsocket();
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.d("Request Code", requestCode.toString())
+        if (requestCode == MY_CAMERA_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val intent = Intent("android.media.action.IMAGE_CAPTURE")
+                activityResultLauncher.launch(intent)
+            } else {
+                Toast.makeText(baseContext, "Perlu akses kamera untuk fitur ini", Toast.LENGTH_LONG)
+                    .show()
             }
         }
+    }
 
     private fun replaceFragment(fragment: Fragment) {
         AUTHAPI().CheckLogin(baseContext) {
@@ -188,7 +189,8 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.commit()
         }
     }
-    open fun showLogin(Goto : Fragment){
+
+    open fun showLogin(Goto: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, Login(Goto))
         fragmentTransaction.commit()

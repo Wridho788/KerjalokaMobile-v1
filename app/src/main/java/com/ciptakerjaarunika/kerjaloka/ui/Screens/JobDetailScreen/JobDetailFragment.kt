@@ -76,7 +76,7 @@ class JobDetailFragment(
 
         val recyclerView =
             view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
-        val Context =
+        val Context = this
 
         JobAPI().getJobDetailAsync(context, CompanyNo, JobNo) {
             if (it != null) {
