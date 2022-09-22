@@ -53,13 +53,20 @@
             android:orientation="vertical">
             <include android:id="@+id/headerApplicantDetail" layout="@layout/item_header_applicant_detail" />
 
-            <View
+            <LinearLayout
+                android:id="@+id/layout_record"
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginVertical="20dp"
-                android:background="@color/light_500" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginVertical="20dp"
+                    android:background="@color/light_500" />
 
-            <include layout="@layout/item_section_record_applicant" />
+                <include android:id="@+id/sectionrecord_layout" layout="@layout/item_section_record_applicant" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -130,7 +137,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="8 November 2021"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp" />
 
@@ -274,30 +280,10 @@
                     android:textColor="@color/dark_100"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Director Of Sales - Kerjaloka"
-                    android:textColor="@color/dark_100"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Kota Medan, Indonesia"
-                    android:textColor="@color/trueGray_50"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Agustus 2019 - Saat Ini (3 tahun)"
-                    android:textColor="@color/dark_100"
-                    android:textSize="12sp" />
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rv_experiences"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content" />
             </LinearLayout>
 
             <View
@@ -320,157 +306,86 @@
                     android:textColor="@color/dark_100"
                     android:textSize="16sp" />
 
-                <TextView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_educations"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="International Business Management - Universitas Pelita Harapan Medan Campus"
-                    android:textColor="@color/dark_100"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Kota Medan, Indonesia"
-                    android:textColor="@color/trueGray_50"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="Agustus 2019 - Saat Ini (3 tahun)"
-                    android:textColor="@color/dark_100"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="GPA: 3.9 dari 4"
-                    android:textColor="@color/dark_100"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginVertical="20dp"
-                android:background="@color/light_500" />
 
             <LinearLayout
+                android:id="@+id/section_kemampuan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:orientation="vertical">
-
-                <TextView
+                android:orientation="vertical"
+                >
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/kemampuan"
-                    android:textColor="@color/dark_100"
-                    android:textSize="16sp" />
+                    android:layout_height="5dp"
+                    android:layout_marginVertical="20dp"
+                    android:background="@color/light_500" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
                     android:orientation="vertical">
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="@string/menengah"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/kemampuan"
                         android:textColor="@color/dark_100"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp" />
 
-                    <com.google.android.material.chip.ChipGroup
+                    <LinearLayout
+                        android:id="@+id/layout_chip_menengah"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:chipSpacing="5dp">
+                        android:orientation="vertical">
 
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/danger_100"
-                            android:clickable="false"
+                            android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins"
-                            android:text="Research" />
+                            android:text="@string/menengah"
+                            android:textColor="@color/dark_100"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroupMenengah"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/danger_100"
-                            android:clickable="false"
-                            android:fontFamily="@font/poppins"
-                            android:text="Art &amp; Craft" />
+                            app:chipSpacing="5dp" />
+                    </LinearLayout>
 
-
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/danger_100"
-                            android:clickable="false"
-                            android:fontFamily="@font/poppins"
-                            android:text="Leadership" />
-
-                    </com.google.android.material.chip.ChipGroup>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/layout_chip_professional"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="@string/professional"
-                        android:textColor="@color/dark_100"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical">
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:chipSpacing="5dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/professional"
+                            android:textColor="@color/dark_100"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
-                        <com.google.android.material.chip.Chip
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroupProfessional"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/danger_100"
-                            android:clickable="false"
-                            android:fontFamily="@font/poppins"
-                            android:text="Teamwork" />
-
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/danger_100"
-                            android:clickable="false"
-                            android:fontFamily="@font/poppins"
-                            android:text="Negotiation" />
-
-
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@color/danger_100"
-                            android:clickable="false"
-                            android:fontFamily="@font/poppins"
-                            android:text="Theatre" />
-
-                    </com.google.android.material.chip.ChipGroup>
+                            app:chipSpacing="5dp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
+
 
             <View
                 android:layout_width="match_parent"
@@ -503,10 +418,10 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/expectedSalary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="IDR 9.000.000"
                     android:textColor="@color/trueGray_50"
                     android:textSize="12sp" />
 
@@ -521,6 +436,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/typeJob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"

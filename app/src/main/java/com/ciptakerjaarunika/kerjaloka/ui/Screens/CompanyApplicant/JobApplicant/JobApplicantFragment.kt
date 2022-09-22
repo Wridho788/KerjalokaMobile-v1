@@ -37,14 +37,15 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = FragmentJobApplicantBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_job_applicant, container, false)
+        binding = FragmentJobApplicantBinding.inflate(layoutInflater)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,7 +117,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
                         diff < 2 * DAY -> "Kemarin"
                         diff < WEEK -> "${diff / DAY} Hari Lalu"
                         else -> LocalDateTime.parse(time)
-                            .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                            .format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm"))
                     }
                 }
                 createdOn_text.text = dateDiff()

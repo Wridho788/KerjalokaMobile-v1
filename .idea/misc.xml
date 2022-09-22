@@ -120,7 +120,7 @@
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_section.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
-        <entry key="app/src/main/res/layout/fragment_applicant_detail.xml" value="0.16455696202531644" />
+        <entry key="app/src/main/res/layout/fragment_applicant_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_company_compare_jobseeker.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
@@ -170,9 +170,11 @@
         <entry key="app/src/main/res/layout/item_card_review.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_change_status.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_content_info_lowongan.xml" value="0.15239980207817913" />
-        <entry key="app/src/main/res/layout/item_header_applicant_detail.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_header_applicant_detail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_header_job_applicant.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_industri.xml" value="0.11875309252845126" />
+        <entry key="app/src/main/res/layout/item_list_educations.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_list_experiences.xml" value="0.14497773379515091" />
         <entry key="app/src/main/res/layout/item_location.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_section_record_applicant.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/item_size_company.xml" value="0.2015810276679842" />
