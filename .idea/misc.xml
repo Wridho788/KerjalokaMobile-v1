@@ -114,11 +114,16 @@
         <entry key="app/src/main/res/layout/card_jobseeker_review.xml" value="0.190004948045522" />
         <entry key="app/src/main/res/layout/card_test.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.19196237708422403" />
+        <entry key="app/src/main/res/layout/comp_profile.xml" value="0.15647712697734073" />
         <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_section.xml" value="0.20051303976058144" />
+        <entry key="app/src/main/res/layout/fragment_account_setting.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_applicant_detail.xml" value="0.16455696202531644" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_email.xml" value="0.30354852501068835" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_phone.xml" value="0.30354852501068835" />
+        <entry key="app/src/main/res/layout/fragment_comp_my_review.xml" value="0.2752548656163114" />
         <entry key="app/src/main/res/layout/fragment_company_compare_jobseeker.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
@@ -139,15 +144,17 @@
         <entry key="app/src/main/res/layout/fragment_jobseeker_review.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_komentar_applicant.xml" value="0.1801088570014844" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/fragment_manage_profile_setting_layout.xml" value="0.30354852501068835" />
         <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_more_action.xml" value="0.190004948045522" />
         <entry key="app/src/main/res/layout/fragment_myreviewpage.xml" value="0.17399920729290527" />
         <entry key="app/src/main/res/layout/fragment_papikostick_result.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/fragment_papikostick_result_company_applicant.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/fragment_papikostik_result.xml" value="0.15239980207817913" />
-        <entry key="app/src/main/res/layout/fragment_profile_page.xml" value="0.15647712697734073" />
+        <entry key="app/src/main/res/layout/fragment_profile_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_records.xml" value="0.1426872770511296" />
         <entry key="app/src/main/res/layout/fragment_result_compare.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_review_history.xml" value="0.16218721037998146" />
         <entry key="app/src/main/res/layout/fragment_status_page.xml" value="0.2511078286558346" />
         <entry key="app/src/main/res/layout/fragment_tambah_jobseeker.xml" value="0.14794656110836218" />
         <entry key="app/src/main/res/layout/fragment_ubah_status.xml" value="0.22564935064935066" />

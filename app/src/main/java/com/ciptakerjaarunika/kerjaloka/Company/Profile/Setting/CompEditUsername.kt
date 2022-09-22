@@ -1,10 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -17,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CompEditUsername.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CompEditUsername : Fragment() {
+class CompEditUsername : SuperBottomSheetFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,6 +36,7 @@ class CompEditUsername : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_comp_edit_username, container, false)
     }
@@ -57,4 +60,6 @@ class CompEditUsername : Fragment() {
                 }
             }
     }
+    @SuppressLint("Range")
+    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
 }

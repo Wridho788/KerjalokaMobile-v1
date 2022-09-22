@@ -5,25 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.AppealModal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.conRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.proRat
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.CompanyReviewAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Global.GlobalDeleteModal
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditResident
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Adapter.CompanyReviewAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.company_reviews
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
 import com.google.android.material.button.MaterialButton
 
 private var layoutManager: RecyclerView.LayoutManager? = null
 private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
 
 
-class CompMyReview(val data: data?) : Fragment() {
+class CompMyReview(val data: data?, private val CompanyNo: Long? = null): Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,59 +42,23 @@ class CompMyReview(val data: data?) : Fragment() {
         val view = inflater.inflate(R.layout.fragment_comp_my_review, container, false)
 
         val btn_revHistory = view.findViewById<MaterialButton>(R.id.btn_riwayat_review)
-
-        val conratList = ArrayList<conRat>()
-        val rat1 = conRat(
-            id = 1,
-            con = "Manajemen"
-        )
-        val rat2 = conRat(
-            id = 2,
-            con = "Lingkungan Pekerjaan"
-        )
-        conratList.add(rat1)
-        conratList.add(rat2)
-
-        val proratList = ArrayList<proRat>()
-        val pro1 = proRat(
-            id = 1,
-            con = "Gaji dan Tunjangan"
-        )
-        val pro2 = proRat(
-            id = 2,
-            con = "Tingkat Stress"
-        )
-        proratList.add(pro1)
-        proratList.add(pro2)
-
-        val ReviewList = ArrayList<review>()
-        val rev1 = review(
-            approvedByUserNo = 0,
-            approvedOn = "2022-07-18T09:27:36",
-            canAppeal = true,
-            comment = "null",
-            conRating = conratList,
-            ownerInfo = "null",
-            proRating = proratList,
-            raterPhoto = "202110271410221246.jpg",
-            rating = 4,
-            ratingAt = "2022-07-18T09:27:20",
-            userFullName = "Kevin Hot Marojahan",
-            userNo = 20211102115301,
-            userRatingNo = 1,
-            userRole = 2
-        )
-        ReviewList.add(rev1)
+        val recyclerCompReview = view.findViewById<RecyclerView>(R.id.revList)
+        val allRating = view.findViewById<RatingBar>(R.id.allRating)
+        val sumRate = view.findViewById<TextView>(R.id.jumlah_review)
 
         btn_revHistory.setOnClickListener{
             replaceFragment(ReviewHistory())
         }
-
-        val recyclerCompReview = view.findViewById<RecyclerView>(R.id.revList)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerCompReview.layoutManager = layoutManager
-        adapterRec = assignAdapter(ReviewList)
-        recyclerCompReview.adapter = adapterRec
+        CompanyReviewAPI().getCompanyReviewAsync(context, data?.userNo) {
+            allRating.rating = it?.data?.userInfo?.rating?.toFloat()!!
+            sumRate.text = "${it?.data?.userInfo?.rating} dari 5"
+            if (it != null) {
+                recyclerCompReview?.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = assignAdapter(it.data.reviewList)
+                }
+            }
+        }
 
 
         return view
@@ -106,9 +75,9 @@ class CompMyReview(val data: data?) : Fragment() {
         fragmentTransaction?.commit()
     }
 
-    internal fun assignAdapter(list: List<review>): CompReviewAdapter {
+    internal fun assignAdapter(list: List<reviewList>): CompReviewAdapter {
         return CompReviewAdapter(requireContext(), list, object : AppealModal {
-            override fun appealModal(pack: review) {
+            override fun appealModal(pack: reviewList) {
                 val sheet = AppealReviewModal()
                 activity?.let { it1 ->
                     sheet.show(

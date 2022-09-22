@@ -8,26 +8,31 @@ data class CompanyProfileResponse(
     val message : String?
 )
 
+data class user_response(
+    val code: Int,
+    val data: user
+)
+
 data class user(
-    val company: company,
-    val companyAdditional: compAdditional,
-    val createdBy: Long = 0,
-    val createdOn: String = "2021-10-27T21:10:22",
-    val deactivated: Boolean = false,
-    val email: String = "reyhan@kerjaloka.com",
-    val emergencyPhone: String? = null,
-    val isDiscoverable: Boolean = false,
-    val isNewsletter: Boolean = true,
-    val jobseekerAdditional: String? = null,
-    val jobseekers: Long? = null,
-    val phone: String = "082363153151",
-    val roleNo: Int = 2,
-    val rolePrevileges: role,
-    val suspended: Boolean = false,
-    val userFullname: String = "reyhan@kerjaloka.com",
-    val userGoogleId: String = "113351807463143838932",
-    val userNo: Long = 20211027141022,
-    val username: String = "reyhan@kerjaloka.com"
+    val company: company?,
+    val companyAdditional: compAdditional?,
+    val createdBy: Long,
+    val createdOn: String,
+    val deactivated: Boolean,
+    val email: String,
+    val emergencyPhone: String?,
+    val isDiscoverable: Boolean,
+    val isNewsletter: Boolean,
+    val jobseekerAdditional: ArrayList<String>?,
+    val jobseekers: ArrayList<String>?,
+    val phone: String,
+    val roleNo: Int,
+    val rolePrevileges: ArrayList<String>?,
+    val suspended: Boolean,
+    val userFullname: String,
+    val userGoogleId: String,
+    val userNo: Long,
+    val username: String
 )
 
 data class company(
@@ -55,10 +60,6 @@ data class compAdditional(
     val ktp: String = "$2a$11\$hMpDzITmZhAMsy2YbYR5yOoMM5R56X4Fr10jK4U1GNp0mCG2Fsruy",
     val logo: String = "202110271410221246.jpg",
     val sizeNo: Int = 6,
-)
-
-data class role(
-    val id: Int
 )
 
 data class data(
@@ -134,3 +135,39 @@ data class proRat(
     val id: Int = 0,
     val con: String = "Disiplin",
 )
+
+data class ratingSended_response (
+    val code: Int,
+    val errorCode: Int,
+    val message: String,
+    val data: ratingData
+)
+
+data class ratingData (
+    val userInfo: userInfo,
+    val reviewList: List<myReview>
+)
+
+data class userInfo(
+    val rating: Int,
+    val email: String,
+    val name: String,
+    val ownerPhoto: String?
+)
+
+data class myReview(
+    val userRatingNo: Long,
+    val rating: Int,
+    val ratingBy: Long,
+    val ratingAt: String,
+    val comment: String? = null,
+    val userNo: Long,
+    val userFullName: String,
+    val raterPhoto: String? = null,
+    val proRating: List<String>,
+    val conRating: List<String>,
+    val approved: Boolean,
+    val approvedOn: String
+)
+
+

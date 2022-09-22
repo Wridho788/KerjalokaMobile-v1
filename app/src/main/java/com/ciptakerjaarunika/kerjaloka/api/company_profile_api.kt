@@ -3,11 +3,15 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.CompanyProfileResponse
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.user
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.user_response
+import com.ciptakerjaarunika.kerjaloka.model.Job.ReportJobRequest
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.GET
+import retrofit2.http.*
 
 class company_profile_api {
 
@@ -37,3 +41,33 @@ class company_profile_api {
         )
     }
 }
+
+class users {
+
+    interface userData{
+        @GET("/users")
+        fun getCompProfileData(): Call<user_response>
+    }
+
+    fun CompanyGetUserData(context: Context?, onResult: (user_response?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(userData::class.java)
+
+        retrofit.getCompProfileData().enqueue(
+            object : Callback<user_response>{
+                override fun onResponse(
+                    call: Call<user_response>,
+                    response: Response<user_response>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<user_response>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+            }
+        )
+    }
+}
+

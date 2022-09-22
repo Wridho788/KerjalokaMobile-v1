@@ -9,6 +9,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.CompMyReview
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting.AccountSetting
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageProfile
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.company_reviews
 
 class viewpagerCompAdapter(val data: data?, fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {

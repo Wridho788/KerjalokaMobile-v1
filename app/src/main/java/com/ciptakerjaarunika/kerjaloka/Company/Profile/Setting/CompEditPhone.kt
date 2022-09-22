@@ -1,13 +1,15 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 
-class CompEditPhone : Fragment() {
+class CompEditPhone : SuperBottomSheetFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -17,10 +19,13 @@ class CompEditPhone : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_comp_edit_phone, container, false)
     }
 
     companion object {
     }
+    @SuppressLint("Range")
+    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
 }

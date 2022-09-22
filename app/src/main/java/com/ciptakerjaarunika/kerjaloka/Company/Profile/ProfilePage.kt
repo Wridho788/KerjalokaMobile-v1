@@ -5,16 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.ScrollView
+import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.anychart.scales.Linear
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.viewpagerCompAdapter
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.CompanyReviewAPI
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.api.users
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.company_reviews
 import com.google.android.material.button.MaterialButton
 
 
@@ -39,6 +43,8 @@ class ProfilePage : Fragment() {
             val mProfile = view.findViewById<MaterialButton>(R.id.manageProfile)
             val myRev = view.findViewById<MaterialButton>(R.id.myReview)
             val accSet = view.findViewById<MaterialButton>(R.id.accSetting)
+            val compName = view.findViewById<TextView>(R.id.jsName1)
+            val username = view.findViewById<TextView>(R.id.username)
 
             mProfile.setOnClickListener() {
                 content.setCurrentItem(0)
@@ -50,10 +56,14 @@ class ProfilePage : Fragment() {
                 content.setCurrentItem(3)
             }
 
-            Log.d("resp", response?.data.toString())
-
             val adapter = viewpagerCompAdapter(response?.data, parentFragmentManager, lifecycle)
+            content.isUserInputEnabled=false
             content.adapter = adapter
+            compName.text = response?.data?.companyName
+            username.text = response?.data?.username
+            Glide.with(view.context)
+                .load(config().portAddress + "/photo/Profile/" + response?.data?.logo).fitCenter()
+                .into(view.findViewById<ImageView>(R.id.compLogo))
 
             content.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 //            override fun onPageScrolled(
