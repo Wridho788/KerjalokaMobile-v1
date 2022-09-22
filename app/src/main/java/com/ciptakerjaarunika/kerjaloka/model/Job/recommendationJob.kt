@@ -26,6 +26,7 @@ data class JobLocation(
 
 data class Company(
     val companyNo : Long,
+    val userNo : Long?,
     val status : String,
     val logo : String,
     val url : String,

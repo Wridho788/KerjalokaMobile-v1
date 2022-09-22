@@ -91,8 +91,7 @@ class JobPage: Fragment(), IJobPage{
         }
 
         layout_search_job.setOnClickListener{
-            val intent = Intent(activity, SearchJob::class.java)
-            startActivity(intent)
+            changeFragment(SearchJob())
         }
 
     }

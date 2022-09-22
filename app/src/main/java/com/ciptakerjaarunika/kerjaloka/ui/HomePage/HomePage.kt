@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentHomeBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Notification
@@ -28,13 +30,12 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
 class HomePage : Fragment(), OnFragmentClickListener {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentHomeBinding
     private var listJob: List<rJobModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = FragmentHomeBinding.inflate(layoutInflater)
     }
 
     private fun setContentView(root: ConstraintLayout) {
@@ -44,7 +45,10 @@ class HomePage : Fragment(), OnFragmentClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val view = binding.root
+        if(SessionManager(context).user != null) {
+            binding.customToolbar.greetingTxt.text = SessionManager(context).user?.userFullname!!.split(" ")[0]
+        }
         val btn_search = view.findViewById<LinearLayout>(R.id.btn_search)
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn)
         val btn_job = view.findViewById<MaterialCardView>(R.id.btn_job)

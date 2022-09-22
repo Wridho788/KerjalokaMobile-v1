@@ -282,6 +282,35 @@ class JobAPI {
         )
     }
 
+    data class topSearchResponse(
+        val code: Int,
+        val message: String,
+        val data: List<topSearchModel>
+    )
+    data class topSearchModel(
+        val keyword : String,
+        val count : Int
+    )
+    interface getTopSearch {
+        @GET("users/job/topsearch")
+        fun getData() : Call<topSearchResponse>
+    }
+
+    fun GetTopSearch(context: Context?, onResult: (topSearchResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getTopSearch::class.java)
+
+        retrofit.getData().enqueue(
+            object : Callback<topSearchResponse> {
+                override fun onFailure(call: Call<topSearchResponse>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<topSearchResponse>, response: Response<topSearchResponse> ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
     interface getRelatedJOb {
         @GET("users/job/related")
         fun getData(@Query("jobNo")jobNo: Long) : Call<jobRecommendationResponse>
@@ -314,8 +343,8 @@ class JobAPI {
     interface searchJobAuth {
         @GET("users/jobseeker/job")
         fun getData(@Query("search")search: String,
-                    @Query("location")location : String,
-                    @Query("jobType")jobType : String,
+                    @Query("location")location : String?,
+                    @Query("jobType")jobType : String?,
                     @Query("skill")skill: Int?,
                     @Query("experience")experience : Int?,
                     @Query("salaryMin")salaryMin : Int?,
@@ -325,8 +354,8 @@ class JobAPI {
     interface searchJobUnAuth {
         @GET("job/list")
         fun getData(@Query("search")search: String,
-                    @Query("location")location : String,
-                    @Query("jobType")jobType : String,
+                    @Query("location")location : String?,
+                    @Query("jobType")jobType : String?,
                     @Query("skill")skill: Int?,
                     @Query("experience")experience : Int?,
                     @Query("salaryMin")salaryMin : Int?,
@@ -335,8 +364,8 @@ class JobAPI {
     }
 
     fun SearchJob(search: String,
-                  location : String,
-                  jobType : String,
+                  location : String?,
+                  jobType : String?,
                   skill: Int?,
                   experience : Int?,
                   salaryMin : Int?,
@@ -378,11 +407,7 @@ class JobAPI {
                         call: Call<jobRecommendationResponse>,
                         response: Response<jobRecommendationResponse>
                     ) {
-                        if (response.body()?.code == 210) {
-                            onResult(response.body())
-                        } else {
-                            onResult(null)
-                        }
+                        onResult(response.body())
                     }
                 }
             )
