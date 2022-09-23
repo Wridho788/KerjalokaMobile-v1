@@ -20,6 +20,7 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSearchJobBinding
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.FilterCompany
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
@@ -56,7 +57,10 @@ class  SearchJob : Fragment(), IJobPage {
         if(SessionManager(context).latestSearchJob == null){
             SessionManager(context).latestSearchJob = listOf()
         }
-
+        binding.btnFilter.setOnClickListener{
+            val sheet = FilterJobModal()
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
+        }
         val latestSearch = SessionManager(context).latestSearchJob?.reversed()
         if(latestSearch?.size != 0){
             binding.latestSearchContainer.visibility = VISIBLE
