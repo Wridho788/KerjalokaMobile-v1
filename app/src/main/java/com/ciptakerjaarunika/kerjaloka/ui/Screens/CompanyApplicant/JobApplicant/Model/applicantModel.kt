@@ -1,5 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model
 
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionHistory.Model.HistoryModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentModel
+
 
 data class listApplicantResponse(
     val code: Int,
@@ -14,7 +17,8 @@ data class applicantModel(
     val jobNo: Long,
     val application: application,
     val applicant: applicant,
-    val ownRating: ownRating
+    val ownRating: ownRating,
+    val papiKostickResult: papiKostickResult_applicant
 )
 
 data class application(
@@ -31,10 +35,55 @@ data class applicant(
     val name: String,
     val location: locationApplicant,
     val photo: String,
+    val preferenceJobType: List<preferenceJobType>,
     val expectedSalary: Int,
     val experiences: List<experience>,
     val record: List<record>,
     val education: List<education>,
+    val documents: List<documents>,
+    val comments: List<CommentModel>,
+    val history: List<HistoryModel>
+)
+
+data class preferenceJobType(
+    val jobTypeNo: Int,
+    val jobTypeName: String,
+)
+
+data class papiKostickResult_applicant(
+    val PAPIKostickResult: PAPIKostickResult,
+    val createdOn: String
+)
+
+data class documents(
+    val documentNo: Long,
+    val documentName: String,
+    val documentFileName : String,
+    val documentTypeNo: Int
+)
+
+data class PAPIKostickResult(
+    val name: String,
+    val needToFinishTask: String,
+    val hardIntenseWorked: String,
+    val needToAchieve: String,
+    val leadership: String,
+    val needToControlOthers: String,
+    val easeInDecisionMaking: String,
+    val pace: String,
+    val vigorousType: String,
+    val needForClosenessAndAffection: String,
+    val needToBelongToGroups: String,
+    val socialExtension: String,
+    val needToBeNoticed: String,
+    val organizedType: String,
+    val interestInWorkingWithDetails: String,
+    val theoreticalType: String,
+    val needForChange: String,
+    val emotionalResistant: String,
+    val needToBeForceful: String,
+    val needToSupportAuthority: String,
+    val needForRulesAndSupervision: String,
 )
 
 data class ownRating(
@@ -56,6 +105,7 @@ data class education(
 )
 
 data class record(
+    val recordNo: Int,
     val name: String,
 )
 

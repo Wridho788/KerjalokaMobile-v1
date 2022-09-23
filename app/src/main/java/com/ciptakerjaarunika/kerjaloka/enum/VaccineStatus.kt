@@ -1,6 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.enum
 
-enum class DocumentType(val value: Int, name : String ) {
+enum class DocumentType(val value: Int, name: String) {
     CV(1, "CV"),
     Recovery(2, "Recovery"),
     CompanyRegister(3, "Company Register"),
