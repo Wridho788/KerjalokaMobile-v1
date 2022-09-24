@@ -150,6 +150,8 @@
         <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_more_action.xml" value="0.190004948045522" />
         <entry key="app/src/main/res/layout/fragment_myreviewpage.xml" value="0.17399920729290527" />
+        <entry key="app/src/main/res/layout/fragment_otp_page.xml" value="0.15647712697734073" />
+        <entry key="app/src/main/res/layout/fragment_otp_verification.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_papikostick_result.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/fragment_papikostick_result_company_applicant.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/fragment_papikostik_result.xml" value="0.15239980207817913" />

@@ -114,6 +114,31 @@ class company_profile_api {
             }
         )
     }
+
+    data class phoneVerificationResponse(val token: String?, val code: String?)
+    interface changeVerification{
+        @GET("users/change/phoneVerification")
+        fun changeVerification(@Query("token")token: String?, @Query("code")code: String?):Call<phoneVerificationResponse>
+    }
+    fun ChangeVerification(token: String?, code: String?, context: Context?, onResult:(phoneVerificationResponse?)->Unit){
+        val retrofit = ServiceBuilder(context).GET(changeVerification::class.java)
+
+        retrofit.changeVerification(token, code).enqueue(
+            object : Callback<phoneVerificationResponse>{
+                override fun onResponse(
+                    call: Call<phoneVerificationResponse>,
+                    response: Response<phoneVerificationResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<phoneVerificationResponse>, t: Throwable) {
+                    onResult(null)
+                }
+
+            }
+        )
+    }
 }
 
 class users {
