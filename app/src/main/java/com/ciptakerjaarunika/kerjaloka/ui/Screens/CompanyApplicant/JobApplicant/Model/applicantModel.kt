@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model
 
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionHistory.Model.HistoryModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentModel
 
 
@@ -18,6 +17,8 @@ data class applicantModel(
     val application: application,
     val applicant: applicant,
     val ownRating: ownRating,
+    val comment: List<CommentModel>,
+    val jobApplicationHistory: List<List<jobApplicantHistory>>,
     val papiKostickResult: papiKostickResult_applicant
 )
 
@@ -41,13 +42,19 @@ data class applicant(
     val record: List<record>,
     val education: List<education>,
     val documents: List<documents>,
-    val comments: List<CommentModel>,
-    val history: List<HistoryModel>
 )
 
 data class preferenceJobType(
     val jobTypeNo: Int,
     val jobTypeName: String,
+)
+
+data class jobApplicantHistory(
+    val applicationStatusHistory: Int,
+    val jobPosition: String,
+    val jobSeekerNo: Long,
+    val applicationNo: Long,
+    val lastUpdated: String
 )
 
 data class papiKostickResult_applicant(
@@ -58,7 +65,7 @@ data class papiKostickResult_applicant(
 data class documents(
     val documentNo: Long,
     val documentName: String,
-    val documentFileName : String,
+    val documentFileName: String,
     val documentTypeNo: Int
 )
 

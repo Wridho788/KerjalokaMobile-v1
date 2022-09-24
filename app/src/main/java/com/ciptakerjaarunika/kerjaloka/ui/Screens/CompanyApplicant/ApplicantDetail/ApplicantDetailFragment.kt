@@ -22,6 +22,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDeta
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionRecords.RecordsFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.StatusPageFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.jobApplicantHistory
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyCompareJobseeker.CompanyCompareJobseekerFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.JobseekerReviewFragment
 import com.google.android.material.chip.Chip
@@ -94,10 +95,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
                 "Jobseeker ini belum melakukan vaksinasi atau belum melengkapi status vaksinasi"
         }
 
-
-
         if (applicantDetail.applicant.record != null) {
-
             val recordlist = applicantDetail.applicant.record.map { it.name }
             Log.d("record", recordlist.toString())
         } else {
@@ -121,21 +119,17 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
             applicantDetail.applicant.location.city + ", " + applicantDetail.applicant.location.province
         binding.txtAlasanMelamar.text = applicantDetail.application.message
 
-        val time = beginat[0].experienceBeginAt
-        val beginYear = LocalDateTime.parse(time)
+        val beginYear = LocalDateTime.parse(beginat[0].experienceBeginAt)
             .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
-        val timeNow = endingAt[0].experienceEndedAt
         val beginEndYear =
-            LocalDateTime.parse(timeNow).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+            LocalDateTime.parse(endingAt[0].experienceEndedAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
-        val convertTimeBegin = educationBegin[0].educationBeginAt
         val beginYearEducation =
-            LocalDateTime.parse(convertTimeBegin).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+            LocalDateTime.parse(educationBegin[0].educationBeginAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
-        val convertTimeEnded = educationEnded[0].educationEndedAt
         val endedYearEducation =
-            LocalDateTime.parse(convertTimeEnded).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+            LocalDateTime.parse(educationEnded[0].educationEndedAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
         binding.headerApplicantDetail.experienceYearText.text =
             "$beginYear - $beginEndYear"
@@ -218,10 +212,15 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 
         binding.typeJob.text = preferencesJob.toString()
 
-        val comment = applicantDetail.applicant.comments
-        Log.d("comment", comment.toString())
         binding.btnLihatKomentar.setOnClickListener {
-            goToCommentApplicant(applicantDetail.applicant.comments)
+            goToCommentApplicant(applicantDetail.comment)
+        }
+
+
+        Log.d("job application", applicantDetail.jobApplicationHistory.toString())
+
+        binding.btnLihatSejarah.setOnClickListener {
+            goToHistoryApplicant(applicantDetail.jobApplicationHistory)
         }
 
 //        val record = applicantDetail.applicant.record.isEmpty()
@@ -233,7 +232,6 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 //        } else {
 //            binding.layoutRecord.visibility = View.GONE
 //        }
-//        binding.headerApplicantDetail.profileApplicant.setImageResource(contextapplicantDetail.applicant.photo)
 //        btn_result_papikostick.setOnClickListener {
 //            val sheet = PapikostikResultFragment()
 //            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ResultPapikostick") }
@@ -244,10 +242,6 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 //            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
 //        }
 
-//        btn_lihat_komentar.setOnClickListener {
-//            goToCommentApplicant()
-//        }
-
 //        btn_lihat_history.setOnClickListener {
 //            goToHistoryApplicant()
 //        }
@@ -256,9 +250,9 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 //            goToRecordApplicant()
 //        }
 
-//        btn_ganti_status.setOnClickListener {
-//            goToChangeStatus()
-//        }
+        binding.headerApplicantDetail.btnChangeStatus.setOnClickListener {
+            goToChangeStatus()
+        }
 
 //        btn_lihat_review.setOnClickListener {
 //            goToReview()
@@ -276,9 +270,9 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         ft.commit()
     }
 
-    override fun goToHistoryApplicant() {
+    override fun goToHistoryApplicant(jobApplicantHistory: List<List<jobApplicantHistory>>) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, HistoryFragment(), "HistoryApplicant")
+        ft.replace(id, HistoryFragment(jobApplicantHistory), "HistoryApplicant")
         ft.addToBackStack("HistoryApplicant")
         ft.commit()
     }
@@ -314,7 +308,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 
 interface OnFragmentClickListener {
     fun goToCommentApplicant(commentList: List<CommentModel>)
-    fun goToHistoryApplicant()
+    fun goToHistoryApplicant(jobApplicantHistory: List<List<jobApplicantHistory>>)
     fun goToRecordApplicant()
     fun goToChangeStatus()
     fun goToReview()

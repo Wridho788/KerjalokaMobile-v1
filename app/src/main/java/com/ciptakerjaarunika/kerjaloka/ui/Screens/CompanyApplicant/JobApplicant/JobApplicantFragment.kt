@@ -35,14 +35,10 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
     private lateinit var binding: FragmentJobApplicantBinding
     private var list: List<applicantModel>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentJobApplicantBinding.inflate(layoutInflater)
         val view = binding.root
         return view
