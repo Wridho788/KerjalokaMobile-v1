@@ -90,7 +90,7 @@ class company_profile_api {
         )
     }
 
-    data class  changePhoneResponse(val code :Int, val message : String, val Token : String)
+    data class  changePhoneResponse(val code :Int, val message : String, val token : String?)
     interface getPhoneNumber{
         @GET("users/change/phone")
         fun getPhoneNumber(@Query("phone")phone: String): Call<changePhoneResponse>

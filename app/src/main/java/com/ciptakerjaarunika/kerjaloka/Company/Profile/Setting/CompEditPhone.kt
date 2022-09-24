@@ -12,6 +12,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.delay
 
 class CompEditPhone : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +32,15 @@ class CompEditPhone : Fragment() {
         btnSave.setOnClickListener{
             val phone = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
             company_profile_api().checkPhone(phone, context){
-                company_profile_api().ChangeNumber(phone, context){
-                    replaceFragment(otpVerification(), it?.Token)
+                company_profile_api().ChangeNumber(phone, context){ it1 ->
+                    if (it1?.code == 210){
+                        replaceFragment(otpVerification(), it1?.token)
+                    }
                 }
+                if (it?.exists == false){
+
+                }
+
             }
         }
 
@@ -46,7 +53,7 @@ class CompEditPhone : Fragment() {
     private fun replaceFragment(fragment: Fragment, token: String?) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
-        mBundle.putString(otpVerification.EXTRA_DESCRIPTION, "Lifestyle")
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
 
         val description = "Kategori ini akan berisi produk-produk lifestyle"
         otpVerificationFragment.arguments = mBundle

@@ -110,6 +110,7 @@
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:boxStrokeWidth="0dp"
+                            android:text="123123123"
                             app:boxStrokeWidthFocused="0dp" />
                     </androidx.cardview.widget.CardView>
                     <TextView

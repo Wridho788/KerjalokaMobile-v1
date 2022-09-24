@@ -41,9 +41,13 @@ class otpVerification() : Fragment() {
 
         }
 
-        if (savedInstanceState != null) {
-            val descFromBundle = savedInstanceState.getString(EXTRA_DESCRIPTION)
+        if (arguments != null){
+            val descFromBundle = arguments?.getString(EXTRA_DESCRIPTION)
             description = descFromBundle
+
+        }
+
+        if (savedInstanceState != null) {
         }
 
         btnSend.setOnClickListener{
