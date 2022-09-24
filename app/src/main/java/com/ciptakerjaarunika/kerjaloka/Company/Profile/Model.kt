@@ -170,4 +170,16 @@ data class myReview(
     val approvedOn: String
 )
 
+data class ChangeUsernameRequest(
+    val username: String
+)
+
+data class CheckPhoneRequest(
+    val phone: String
+)
+
+data class CheckPhoneResponse(
+    val exists: Boolean
+)
+
 

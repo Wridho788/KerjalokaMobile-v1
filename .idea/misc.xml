@@ -121,8 +121,10 @@
         <entry key="app/src/main/res/layout/fragment_account_setting.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_applicant_detail.xml" value="0.16455696202531644" />
-        <entry key="app/src/main/res/layout/fragment_comp_edit_email.xml" value="0.30354852501068835" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_email.xml" value="0.25165562913907286" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_kata_sandi.xml" value="0.15989739204788372" />
         <entry key="app/src/main/res/layout/fragment_comp_edit_phone.xml" value="0.30354852501068835" />
+        <entry key="app/src/main/res/layout/fragment_comp_edit_username.xml" value="0.15647712697734073" />
         <entry key="app/src/main/res/layout/fragment_comp_my_review.xml" value="0.2752548656163114" />
         <entry key="app/src/main/res/layout/fragment_company_compare_jobseeker.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.25" />

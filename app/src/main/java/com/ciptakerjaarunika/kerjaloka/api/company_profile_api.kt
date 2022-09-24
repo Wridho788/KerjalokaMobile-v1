@@ -2,9 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.CompanyProfileResponse
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.user
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.user_response
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.model.Job.ReportJobRequest
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -34,6 +32,82 @@ class company_profile_api {
 
                 override fun onFailure(call: Call<CompanyProfileResponse>, t: Throwable) {
                     Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+            }
+        )
+    }
+
+    data class  changeUsernameResponse(val code :Int, val message : String)
+    interface changeUsername {
+        @Headers("Content-Type: application/json", "Accept: application/json")
+        @POST("users/change/username")
+        fun changeUsername(@Body changeUsernameRequest: ChangeUsernameRequest) : Call<changeUsernameResponse>
+    }
+
+    fun ChangeUsername(username: String, context: Context?, onResult: (changeUsernameResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(changeUsername::class.java)
+
+        retrofit.changeUsername(ChangeUsernameRequest(username)).enqueue(
+            object : Callback<changeUsernameResponse>{
+                override fun onResponse(
+                    call: Call<changeUsernameResponse>,
+                    response: Response<changeUsernameResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<changeUsernameResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface checkPhoneNumber{
+        @GET("users/checkPhone/{phone}")
+        fun checkNumber(@Path("phone") phone: String): Call<CheckPhoneResponse>
+    }
+
+    fun checkPhone(phone: String, context: Context?, onResult: (CheckPhoneResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(checkPhoneNumber::class.java)
+
+        retrofit.checkNumber(phone).enqueue(
+            object : Callback<CheckPhoneResponse>{
+                override fun onResponse(
+                    call: Call<CheckPhoneResponse>,
+                    response: Response<CheckPhoneResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<CheckPhoneResponse>, t: Throwable) {
+                    onResult(null)
+                }
+
+            }
+        )
+    }
+
+    data class  changePhoneResponse(val code :Int, val message : String, val Token : String)
+    interface getPhoneNumber{
+        @GET("users/change/phone")
+        fun getPhoneNumber(@Query("phone")phone: String): Call<changePhoneResponse>
+    }
+    fun ChangeNumber(phone: String, context: Context?, onResult: (changePhoneResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getPhoneNumber::class.java)
+
+        retrofit.getPhoneNumber(phone).enqueue(
+            object : Callback<changePhoneResponse>{
+                override fun onResponse(
+                    call: Call<changePhoneResponse>,
+                    response: Response<changePhoneResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<changePhoneResponse>, t: Throwable) {
                     onResult(null)
                 }
 

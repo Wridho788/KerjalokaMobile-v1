@@ -100,7 +100,7 @@
                         app:cardElevation="0dp">
 
                         <EditText
-                            android:id="@+id/js_EditusrPhone"
+                            android:id="@+id/comp_EditusrPhone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
@@ -134,7 +134,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSaveBasic"
+                android:id="@+id/btnSaveNewPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"

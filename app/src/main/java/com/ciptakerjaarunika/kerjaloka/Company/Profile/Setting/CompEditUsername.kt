@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.google.android.material.button.MaterialButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,7 +23,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CompEditUsername.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CompEditUsername : SuperBottomSheetFragment() {
+class CompEditUsername : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -37,8 +41,21 @@ class CompEditUsername : SuperBottomSheetFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comp_edit_username, container, false)
+        val view =inflater.inflate(R.layout.fragment_comp_edit_username, container, false)
+
+        val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveUsername)
+
+        btnSave.setOnClickListener{
+            val username = view.findViewById<EditText>(R.id.js_EditusrName)?.text.toString()
+            if (!username.isNullOrEmpty()){
+                company_profile_api().ChangeUsername(username, context){}
+            }
+            else{
+                Toast.makeText(activity, "Username boleh kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return view
     }
 
     companion object {
@@ -60,6 +77,4 @@ class CompEditUsername : SuperBottomSheetFragment() {
                 }
             }
     }
-    @SuppressLint("Range")
-    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
 }

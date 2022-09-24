@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 
-class CompEditEmail : SuperBottomSheetFragment() {
+class CompEditEmail : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +26,4 @@ class CompEditEmail : SuperBottomSheetFragment() {
 
     companion object {
     }
-    @SuppressLint("Range")
-    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
 }

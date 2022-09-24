@@ -53,7 +53,7 @@ class AccountSetting(val data: data?) : Fragment() {
         users().CompanyGetUserData(context) {
             discover.isChecked = it?.data?.isDiscoverable!!
             newsletter.isChecked = it?.data?.isNewsletter!!
-            if (it?.data?.userGoogleId!!.isEmpty()){
+            if (it?.data?.userGoogleId.isNullOrEmpty()){
                 btn_connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FF6666"))
                 btn_connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FF6666")))
                 btn_connect.text="Hubungkan"
@@ -68,40 +68,16 @@ class AccountSetting(val data: data?) : Fragment() {
 
 
         btn_editUsername.setOnClickListener {
-            val sheet = CompEditUsername()
-            activity?.let { it1 ->
-                sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
-                )
-            }
+            replaceFragment(CompEditUsername())
         }
         btn_editEmail.setOnClickListener {
-            val sheet = CompEditEmail()
-            activity?.let { it1 ->
-                sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
-                )
-            }
+            replaceFragment(CompEditEmail())
         }
         btn_editPswd.setOnClickListener {
-            val sheet = CompEditKataSandi()
-            activity?.let { it1 ->
-                sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
-                )
-            }
+            replaceFragment(CompEditKataSandi())
         }
         btn_editPhone.setOnClickListener {
-            val sheet = CompEditPhone()
-            activity?.let { it1 ->
-                sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
-                )
-            }
+            replaceFragment(CompEditPhone())
         }
 
         btn_deactived.setOnClickListener {
