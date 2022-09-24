@@ -28,9 +28,18 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.Adapter.SearchJobAda
 import com.google.android.material.chip.Chip
 
 
-class  SearchJob : Fragment(), IJobPage {
+class  SearchJob : Fragment(), IJobPage, iSearchJob {
     private var page = 0;
     private var listData : List<SearchJobModel> = listOf()
+
+    private var locationSelected : List<Int> = listOf()
+    private var skillSelected : List<Int> = listOf()
+    private var jobTypeSelected : List<Int> = listOf()
+    private var experienceLevelSelected : List<Int> = listOf()
+    private var salaryMin : Int? = null
+    private var salaryMax : Int? = null
+    private var keyword : String? = ""
+
 
     var list = ArrayList<SearchModel>()
     private lateinit var binding: FragmentSearchJobBinding
@@ -58,7 +67,7 @@ class  SearchJob : Fragment(), IJobPage {
             SessionManager(context).latestSearchJob = listOf()
         }
         binding.btnFilter.setOnClickListener{
-            val sheet = FilterJobModal()
+            val sheet = FilterJobModal(this)
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
         }
         val latestSearch = SessionManager(context).latestSearchJob?.reversed()
@@ -124,6 +133,8 @@ class  SearchJob : Fragment(), IJobPage {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                keyword = newText
+
                 if (newText!!.isBlank()){
                     binding.searchResult.isVisible=false
                     binding.history.isVisible=true
@@ -171,17 +182,9 @@ class  SearchJob : Fragment(), IJobPage {
         binding.searchResult.isVisible=true
         binding.history.isVisible=false
         binding.query.text=keyword
+        this.keyword = keyword
 
-        val appContext = this
-        JobAPI().SearchJob(if (keyword.isNullOrEmpty()) "" else keyword, null,null,null,null,null, null, page, context){ res ->
-            if(res != null) {
-                listData = res.data
-                binding.recycleJobs.apply {
-                    layoutManager = LinearLayoutManager(context)
-                    adapter = JobAdapter(1, listData, context, appContext)
-                }
-            }
-        }
+        SearchJob()
     }
     private fun newChips(name: String) {
         binding.historyChips.isVisible=true
@@ -241,4 +244,48 @@ class  SearchJob : Fragment(), IJobPage {
         }
     }
 
+    override fun SearchJob() {
+        JobAPI().SearchJob(
+            JobAPI.searchJobRequest(keyword!! ,
+                locationSelected,
+                jobTypeSelected,
+                skillSelected,
+                experienceLevelSelected,
+                salaryMin,
+                salaryMax,
+                page)
+            , context){ res ->
+            if(res != null) {
+                listData = res.data
+                val appContext = this
+                binding.recycleJobs.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = JobAdapter(1, listData, context, appContext)
+                }
+            }
+        }
+    }
+
+    override fun updateLocationSelected(data: List<Int>) {
+        this.locationSelected = data
+    }
+
+    override fun updateJobTypeSelected(data: List<Int>) {
+        this.jobTypeSelected = data
+    }
+
+    override fun updateSkillSelected(data: List<Int>) {
+        this.skillSelected = data
+    }
+
+    override fun updateExperienceSelected(data: List<Int>) {
+        this.experienceLevelSelected = data
+    }
+}
+interface iSearchJob{
+    fun SearchJob()
+    fun updateLocationSelected(data : List<Int>)
+    fun updateJobTypeSelected(data : List<Int>)
+    fun updateSkillSelected(data : List<Int>)
+    fun updateExperienceSelected(data : List<Int>)
 }

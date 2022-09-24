@@ -7,5 +7,5 @@ data class JobType(
 data class JobTypeFilter(
     val jobTypeName : String,
     val jobTypeNo : Int,
-    val checked : Boolean?
+    var checked : Boolean?
 )

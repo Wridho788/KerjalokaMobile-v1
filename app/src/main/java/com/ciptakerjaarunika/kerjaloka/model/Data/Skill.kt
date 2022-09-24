@@ -8,5 +8,5 @@ data class Skill(
 data class SkillFilter(
     val skillName : String,
     val skillNo : Int,
-    val checked : Boolean?
+    var checked : Boolean?
 )
