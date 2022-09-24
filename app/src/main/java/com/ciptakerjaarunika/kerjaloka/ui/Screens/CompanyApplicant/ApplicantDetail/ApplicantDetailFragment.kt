@@ -33,7 +33,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
     OnFragmentClickListener {
 
     private lateinit var binding: FragmentApplicantDetailBinding
-
+    private lateinit var application: applicantModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -212,8 +212,10 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 
         binding.typeJob.text = preferencesJob.toString()
 
+        Log.d("comment", applicantDetail.comment.toString())
+
         binding.btnLihatKomentar.setOnClickListener {
-            goToCommentApplicant(applicantDetail.comment)
+            goToCommentApplicant(applicantDetail.comment, applicantDetail.applicant.jobseekerNo)
         }
 
 
@@ -263,9 +265,9 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 //        }
     }
 
-    override fun goToCommentApplicant(commentList: List<CommentModel>) {
+    override fun goToCommentApplicant(commentList: List<CommentModel>, jobseekerNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, KomentarApplicantFragment(commentList), "CommentApplicant")
+        ft.replace(id, KomentarApplicantFragment(commentList, jobseekerNo), "CommentApplicant")
         ft.addToBackStack("CommentApplicant")
         ft.commit()
     }
@@ -307,7 +309,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 }
 
 interface OnFragmentClickListener {
-    fun goToCommentApplicant(commentList: List<CommentModel>)
+    fun goToCommentApplicant(commentList: List<CommentModel>, jobseekerNo: Long)
     fun goToHistoryApplicant(jobApplicantHistory: List<List<jobApplicantHistory>>)
     fun goToRecordApplicant()
     fun goToChangeStatus()

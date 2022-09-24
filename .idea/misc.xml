@@ -103,6 +103,7 @@
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/activity_company_notification.xml" value="0.24653190646056283" />
         <entry key="app/src/main/res/layout/activity_company_search.xml" value="0.2894606630381" />
         <entry key="app/src/main/res/layout/activity_item_profile_user_page.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.1" />

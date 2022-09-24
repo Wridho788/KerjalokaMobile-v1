@@ -26,9 +26,9 @@ class KomentarAdapter(private val commentModel: List<CommentModel>) : RecyclerVi
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = commentModel[position]
-        holder.companyName.text = currentItem.companyName
-        holder.comment.text = currentItem.message
-        holder.createdOn.text = currentItem.craetedOn
+//        holder.companyName.text = SessionManager(context).user?.company.toString()
+        holder.comment.text = currentItem.comment
+//        holder.createdOn.text = currentItem.commentAt.toString()
     }
 
     override fun getItemCount(): Int {
