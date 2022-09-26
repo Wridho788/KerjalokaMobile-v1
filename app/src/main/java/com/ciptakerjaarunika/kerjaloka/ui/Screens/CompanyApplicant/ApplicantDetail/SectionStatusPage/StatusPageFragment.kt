@@ -1,19 +1,20 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.*
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentStatusPageBinding
+import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.UbahStatusFragment
-import com.google.android.material.card.MaterialCardView
 import java.util.*
 
-class StatusPageFragment : Fragment() {
+class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPage {
     private lateinit var binding: FragmentStatusPageBinding
     lateinit var datePicker: DatePickerHelper
 
@@ -29,8 +30,6 @@ class StatusPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         datePicker = DatePickerHelper(context!!)
-        val btn_status = view.findViewById<MaterialCardView>(R.id.btn_status)
-        val btn_change_status = view.findViewById<MaterialCardView>(R.id.btn_change_status)
         binding.btnBackStatus.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -38,18 +37,10 @@ class StatusPageFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        btn_status.setOnClickListener {
-            val sheet = UbahStatusFragment()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "StatusFragment")}
+        binding.btnStatus.setOnClickListener {
+            ubahStatusModal()
         }
 
-        btn_change_status.setOnClickListener {
-            Toast.makeText( activity,"change status", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.btnDatePicker.setOnClickListener {
-            showDatePickerDialog()
-        }
     }
 
     private fun showDatePickerDialog() {
@@ -67,4 +58,93 @@ class StatusPageFragment : Fragment() {
         })
     }
 
+    fun ubahStatusModal(){
+        val sheet = UbahStatusFragment(this@StatusPageFragment)
+        activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "StatusFragment")}
+    }
+
+    override fun changeStatus(status: Int) {
+        if (status == ApplicanStatusType.ShortList.value) {
+            binding.statusChange.text = "Terpilih"
+            binding.sectionInterview.visibility = View.GONE
+            binding.btnChangeStatus.setOnClickListener {
+                ShortlistStatus(context,applicantNo){
+                    if(it != null){
+                        if (it.code == 210) {
+                             Log.d("response", it.toString())
+                        }
+                    }
+                }
+            }
+        } else if (status == ApplicanStatusType.Test.value) {
+            binding.statusChange.text = "Dalam Test"
+            binding.sectionInterview.visibility = View.GONE
+            binding.btnChangeStatus.setOnClickListener {
+                TestStatus(context, applicantNo){
+                    if(it != null){
+                        if (it.code == 210) {
+                            Log.d("response", it.toString())
+                        }
+                    }
+                }
+            }
+        } else if (status == ApplicanStatusType.Interview.value) {
+            binding.statusChange.text = "Interview"
+            binding.sectionInterview.visibility = View.VISIBLE
+            val locationInterview = binding.txtInputLocation.text.toString()
+            val nameInterview = binding.txtInputInterviewer.text.toString()
+            binding.btnChangeStatus.setOnClickListener {
+                Toast.makeText(context, "Interview", Toast.LENGTH_SHORT).show()
+            }
+        } else if (status == ApplicanStatusType.Accepted.value) {
+            binding.statusChange.text = "Diterima"
+            binding.sectionInterview.visibility = View.GONE
+            binding.btnChangeStatus.setOnClickListener {
+                AcceptedStatus(context, applicantNo){
+                    if(it != null){
+                        if (it.code == 210) {
+                            Log.d("response", it.toString())
+                        }
+                    }
+                }
+            }
+        } else if (status == ApplicanStatusType.Rejected.value) {
+            binding.statusChange.text = "Ditolak"
+            binding.sectionInterview.visibility = View.GONE
+            binding.btnChangeStatus.setOnClickListener {
+                RejectedStatus(context, applicantNo){
+                    if(it != null){
+                        if (it.code == 210) {
+                            Log.d("response", it.toString())
+                        }
+                    }
+                }
+            }
+        } else if (status == ApplicanStatusType.CVBank.value) {
+            binding.statusChange.text = "CV Bank"
+            binding.sectionInterview.visibility = View.GONE
+            binding.btnChangeStatus.setOnClickListener {
+                CvbankStatus(context, applicantNo){
+                    if(it != null){
+                        if (it.code == 210) {
+                            Log.d("response", it.toString())
+                        }
+                    }
+                }
+            }
+        } else {
+            status
+        }
+
+
+
+        binding.btnDatePicker.setOnClickListener {
+            showDatePickerDialog()
+        }
+    }
+
+
+}
+interface iStatusPage{
+   fun changeStatus(status: Int)
 }

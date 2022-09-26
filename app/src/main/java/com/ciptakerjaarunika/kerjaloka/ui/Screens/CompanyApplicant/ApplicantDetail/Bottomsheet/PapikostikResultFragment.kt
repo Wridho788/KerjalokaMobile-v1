@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,14 +28,25 @@ class PapikostikResultFragment :  SuperBottomSheetFragment() {
         return inflater.inflate(R.layout.fragment_papikostick_result_company_applicant, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
 
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
     }
 
+    override fun getCornerRadius() = 20f
+
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
-        return 1700
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
     }
+
 
 }

@@ -87,8 +87,9 @@ class MainActivity : AppCompatActivity() {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
             replaceFragment(HomePage())
+
 //
-            if (SessionManager(context).user == null || it?.user?.roleNo == Role.Jobseekers.value) {
+            if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
                 binding.bottomNavigationView.visibility = VISIBLE
                 // User Jobseeker
                 binding.bottomNavigationView.setOnItemSelectedListener { item ->
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
-            } else if (it?.user?.roleNo == Role.Companies.value || SessionManager(baseContext).user?.company != null) {
+            } else if (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null) {
                 binding.bottomNavigationCompanyView.visibility = VISIBLE
                 binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
                     when (item.itemId) {

@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
-import android.R.attr.data
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
@@ -11,8 +10,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.os.FileUtils
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -57,7 +54,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import org.jitsi.meet.sdk.*
 import timber.log.Timber
 import java.io.File
-import java.net.URI
 import java.util.*
 
 
@@ -217,7 +213,6 @@ class ChatPage(var sectionName: String,
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-
 
 
         val titlePage = itemView.findViewById<TextView>(R.id.title)

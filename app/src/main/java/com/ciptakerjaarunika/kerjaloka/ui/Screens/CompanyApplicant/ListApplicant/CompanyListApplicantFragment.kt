@@ -41,6 +41,7 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
 
         val rv_applicantJob = view.findViewById<RecyclerView>(R.id.rv_list_applicant_job)
         val txt_total_cv_banks = view.findViewById<TextView>(R.id.totalCVbanksText)
+
         CompanyOfficerJobsApi().CompanyOfficerJob(context){
             Log.d("response", it.toString())
             if(it != null) {

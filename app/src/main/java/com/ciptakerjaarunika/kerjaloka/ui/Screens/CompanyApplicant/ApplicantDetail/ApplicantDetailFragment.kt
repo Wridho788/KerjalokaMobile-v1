@@ -1,6 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail
 
+import android.app.DownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +16,10 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentApplicantDetailBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.PapikostikResultFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionEducations.EducationsAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionExperiences.ExperiencesAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionHistory.HistoryFragment
@@ -29,11 +35,16 @@ import com.google.android.material.chip.Chip
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+
 class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fragment(),
     OnFragmentClickListener {
 
     private lateinit var binding: FragmentApplicantDetailBinding
     private lateinit var application: applicantModel
+    private var downloadManager: DownloadManager? = null
+    private var fileName: String? = null
+    private var downLoadId: Long = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,11 +76,10 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
             it.jobTypeName
         }
 
-        val vaccinated = applicantDetail.applicant.documents.filter {
-            item ->
+        val vaccinated = applicantDetail.applicant.documents.filter { item ->
             item.documentTypeNo == DocumentType.Vaccine3.value ||
-            item.documentTypeNo == DocumentType.Vaccine2.value ||
-            item.documentTypeNo == DocumentType.Vaccine1.value
+                    item.documentTypeNo == DocumentType.Vaccine2.value ||
+                    item.documentTypeNo == DocumentType.Vaccine1.value
         }
 
         if (vaccinated != null) {
@@ -101,16 +111,22 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         } else {
             binding.layoutRecord.visibility = View.GONE
         }
-
-        if (applicantDetail.papiKostickResult != null) {
-            Log.d("papikostik", "papikostick_result")
-        } else {
-            binding.txtDescPapiKostick.text = "Jobseeker ini belum menyelesaikan tes PAPI Kostick"
-            binding.dateResultPapokostick.visibility = View.GONE
-            binding.btnLihatHasilTesApplicant.visibility = View.GONE
+        binding.btnLihatHasilTesApplicant.setOnClickListener {
+            goToPapikostikModal()
         }
+//        if (applicantDetail.papiKostickResult != null) {
+//            Log.d("papikostik", "papikostick_result")
+//            binding.btnLihatHasilTesApplicant.setOnClickListener {
+//                goToPapikostikModal()
+//            }
+//        } else {
+//            binding.txtDescPapiKostick.text = "Jobseeker ini belum menyelesaikan tes PAPI Kostick"
+//            binding.dateResultPapokostick.visibility = View.GONE
+//            binding.btnLihatHasilTesApplicant.visibility = View.GONE
+//        }
+
         Glide.with(this)
-            .load(applicantDetail.applicant.photo)
+            .load(config().portAddress + "/photo/Profile/" + applicantDetail.applicant.photo)
             .fitCenter().into(binding.headerApplicantDetail.profileApplicant)
 
         binding.nameApplicant.text = applicantDetail.applicant.name
@@ -123,13 +139,16 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
             .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
         val beginEndYear =
-            LocalDateTime.parse(endingAt[0].experienceEndedAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+            LocalDateTime.parse(endingAt[0].experienceEndedAt)
+                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
         val beginYearEducation =
-            LocalDateTime.parse(educationBegin[0].educationBeginAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+            LocalDateTime.parse(educationBegin[0].educationBeginAt)
+                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
         val endedYearEducation =
-            LocalDateTime.parse(educationEnded[0].educationEndedAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+            LocalDateTime.parse(educationEnded[0].educationEndedAt)
+                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
 
         binding.headerApplicantDetail.experienceYearText.text =
             "$beginYear - $beginEndYear"
@@ -154,7 +173,6 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         }
 
         binding.expectedSalary.text = "IDR ${applicantDetail.applicant.expectedSalary}"
-
 
         binding.headerApplicantDetail.txtRatingApplicant.text =
             if (applicantDetail.ownRating.ownRating == null) ({
@@ -211,63 +229,94 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         }
 
         binding.typeJob.text = preferencesJob.toString()
-
-        Log.d("comment", applicantDetail.comment.toString())
-
         binding.btnLihatKomentar.setOnClickListener {
-            goToCommentApplicant(applicantDetail.comment, applicantDetail.applicant.jobseekerNo)
+            goToCommentApplicant(
+                applicantDetail.comment,
+                applicantDetail.applicant.jobseekerNo,
+                applicantDetail.application.jobNo
+            )
         }
-
-
-        Log.d("job application", applicantDetail.jobApplicationHistory.toString())
-
         binding.btnLihatSejarah.setOnClickListener {
             goToHistoryApplicant(applicantDetail.jobApplicationHistory)
         }
 
-//        val record = applicantDetail.applicant.record.isEmpty()
-//        if (record) {
-//            binding.sectionrecordLayout.descRecords.text = "Pelamar ini memiliki records, cek terlebih dahulu."
-//            binding.sectionrecordLayout.btnLihatRecord.setOnClickListener {
-//                goToRecordApplicant()
-//            }
-//        } else {
-//            binding.layoutRecord.visibility = View.GONE
-//        }
-//        btn_result_papikostick.setOnClickListener {
-//            val sheet = PapikostikResultFragment()
-//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ResultPapikostick") }
-//        }
+        initializeDownloadManager()
+        binding.btnCv.setOnClickListener {
+            downloadCV()
+        }
+        binding.btnPortofolio.setOnClickListener {
+            downloadCV()
+        }
+
 
 //        btn_more.setOnClickListener {
 //            val sheet = MoreActionFragment()
 //            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
 //        }
 
-//        btn_lihat_history.setOnClickListener {
-//            goToHistoryApplicant()
-//        }
-
-//        btn_lihat_record.setOnClickListener {
-//            goToRecordApplicant()
-//        }
-
         binding.headerApplicantDetail.btnChangeStatus.setOnClickListener {
             goToChangeStatus()
         }
-
-//        btn_lihat_review.setOnClickListener {
-//            goToReview()
-//        }
-
-//        btn_portofolio.setOnClickListener {
-//            goToCompareJobseeker()
-//        }
     }
 
-    override fun goToCommentApplicant(commentList: List<CommentModel>, jobseekerNo: Long) {
+    private fun initializeDownloadManager() {
+        downloadManager = activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
+        fileName = "documents"
+    }
+
+    fun downloadCV() {
+        val request =
+            DownloadManager.Request(
+                Uri.parse(
+                    "${config().portAddress}/document/download?fileName=${applicantDetail.applicant.documents[0].documentFileName}&documentName=${applicantDetail.applicant.documents[0].documentName}"
+                )
+            )
+        request.setTitle("CV")
+            .setDescription("File is downloading...")
+            .setDestinationInExternalFilesDir(
+                context,
+                Environment.DIRECTORY_DOWNLOADS, fileName
+            )
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+
+        downLoadId = downloadManager!!.enqueue(request)
+    }
+
+    fun downloadPortofolio(){
+        val request =
+            DownloadManager.Request(
+                Uri.parse(
+                    "${config().portAddress}/document/download?fileName=${applicantDetail.applicant.documents[0].documentFileName}&documentName=${applicantDetail.applicant.documents[0].documentName}"
+                )
+            )
+        request.setTitle("Portofolio")
+            .setDescription("File is downloading...")
+            .setDestinationInExternalFilesDir(
+                context,
+                Environment.DIRECTORY_DOWNLOADS, fileName
+            )
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+
+        downLoadId = downloadManager!!.enqueue(request)
+    }
+
+
+    override fun goToCommentApplicant(
+        commentList: List<CommentModel>,
+        jobseekerNo: Long,
+        jobNo: Long
+    ) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, KomentarApplicantFragment(commentList, jobseekerNo), "CommentApplicant")
+        ft.replace(
+            id,
+            KomentarApplicantFragment(
+                commentList,
+                applicantDetail.application.applicationNo,
+                jobseekerNo,
+                jobNo
+            ),
+            "CommentApplicant"
+        )
         ft.addToBackStack("CommentApplicant")
         ft.commit()
     }
@@ -288,7 +337,11 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 
     override fun goToChangeStatus() {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, StatusPageFragment(), "ChangeStatus")
+        ft.replace(
+            id,
+            StatusPageFragment(applicantDetail.application.applicationNo),
+            "ChangeStatus"
+        )
         ft.addToBackStack("ChangeStatus")
         ft.commit()
     }
@@ -306,13 +359,19 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         ft.addToBackStack("CompanyCompareJobseeker")
         ft.commit()
     }
+
+    override fun goToPapikostikModal() {
+        val sheet = PapikostikResultFragment()
+        activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ResultPapikostick") }
+    }
 }
 
 interface OnFragmentClickListener {
-    fun goToCommentApplicant(commentList: List<CommentModel>, jobseekerNo: Long)
+    fun goToCommentApplicant(commentList: List<CommentModel>, jobseekerNo: Long, jobNo: Long)
     fun goToHistoryApplicant(jobApplicantHistory: List<List<jobApplicantHistory>>)
     fun goToRecordApplicant()
     fun goToChangeStatus()
     fun goToReview()
     fun goToCompareJobseeker()
+    fun goToPapikostikModal()
 }

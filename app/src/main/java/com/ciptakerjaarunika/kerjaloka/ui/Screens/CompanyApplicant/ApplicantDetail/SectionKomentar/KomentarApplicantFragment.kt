@@ -11,14 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CommentAPI
+import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyListApplicantAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentKomentarApplicantBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Adapter.KomentarAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.send_comment
 
 class KomentarApplicantFragment(
     private val comment: List<CommentModel>,
-    private val jobseekerNo: Long
+    private val applicantNo : Long,
+    private val jobseekerNo: Long,
+    private val jobNo: Long,
 ) : Fragment() {
     private lateinit var binding: FragmentKomentarApplicantBinding
 
@@ -41,9 +45,8 @@ class KomentarApplicantFragment(
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-
-
-        val jobseekerNo = 20211026084704
+        val companyNo = SessionManager(context).user!!.userNo
+        Log.d("tes", companyNo.toString())
 
         binding.btnSendComment.setOnClickListener {
             CommentAPI().SendCommentPost(
@@ -52,7 +55,19 @@ class KomentarApplicantFragment(
                 send_comment(jobseekerNo, binding.etReportJob.text.toString())
             ) {
                 if (it != null) {
-                    Log.d("comment", it.toString())
+                    CompanyListApplicantAPI().GetListApplicantPost(context, jobNo) {
+                        res ->
+                        if(res?.data != null){
+                            val currentData = res.data.find {
+                                data-> data.application.applicationNo == applicantNo
+                            }
+                            binding.rvCommentApplicant.apply {
+                                layoutManager = LinearLayoutManager(activity)
+                                adapter = KomentarAdapter(context, currentData!!.comment)
+                            }
+                            binding.rvCommentApplicant.adapter?.notifyDataSetChanged()
+                        }
+                    }
                 }
             }
         }
@@ -60,7 +75,7 @@ class KomentarApplicantFragment(
 
         binding.rvCommentApplicant.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = KomentarAdapter(comment)
+            adapter = KomentarAdapter(context, comment)
         }
 
     }

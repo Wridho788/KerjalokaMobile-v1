@@ -13,7 +13,7 @@ data class CommentModel(
     val companyNo: Long,
     val commentByUserNo: Long,
     val comment: String,
-//    val commentAt: String
+    val commentAt: String?
 )
 
 data class send_comment(

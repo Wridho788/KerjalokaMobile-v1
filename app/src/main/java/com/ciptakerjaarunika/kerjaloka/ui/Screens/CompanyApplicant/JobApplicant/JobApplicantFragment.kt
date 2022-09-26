@@ -70,7 +70,6 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
         }
 
         val companyNo = SessionManager(context).user!!.userNo
-
         JobAPI().getJobDetailAsync(context, companyNo, JobNo) {
             if (it != null) {
                 title_job.text = it.data.jobPosition
@@ -142,22 +141,28 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Applied.value }.size
                 pelamarBaruText.text = newApplicant.toString() + " Orang"
 
-                val shortList = list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.ShortList.value}.size
+                val shortList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.ShortList.value }.size
                 totalPelamarTerpilih.text = shortList.toString() + " Orang"
 
-                val testList = list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Test.value}.size
+                val testList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Test.value }.size
                 totalTestingText.text = testList.toString() + " Orang"
 
-                val interviewList = list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Interview.value}.size
+                val interviewList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Interview.value }.size
                 totalInterviewText.text = interviewList.toString() + " Orang"
 
-                val totalAcceptedList = list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Accepted.value}.size
+                val totalAcceptedList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Accepted.value }.size
                 totalDiterimaText.text = totalAcceptedList.toString() + " Orang"
 
-                val totalRejectedList = list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Rejected.value}.size
+                val totalRejectedList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Rejected.value }.size
                 totalRejectedText.text = totalRejectedList.toString() + " Orang"
 
-                val cvBanksList = list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.CVBank.value}.size
+                val cvBanksList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.CVBank.value }.size
                 totalCVbanksText.text = cvBanksList.toString() + " Orang"
             }
         }
@@ -175,7 +180,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
 
     override fun goToApplicantDetail(applicantDetail: applicantModel) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, ApplicantDetailFragment(applicantDetail), "company applicant detail")
+        ft.replace(id, ApplicantDetailFragment ( applicantDetail), "company applicant detail")
         ft.addToBackStack("CompanyApplicantDetail")
         ft.commit()
     }

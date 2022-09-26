@@ -54,14 +54,12 @@ class AUTHAPI {
                 override fun onResponse( call: Call<CheckLoginDataResponse>, response: Response<CheckLoginDataResponse>) {
                     val data = response.body()
                     if(data != null) {
-
                         if (data.user == null) {
                             SessionManager(context).user = null
                             SessionManager(context).access_token = null
                             SessionManager(context).chatData = null
                         } else {
                             SessionManager(context).user = data.user
-                            Log.d("Check Response", data.account.toString())
 
                             val account = Gson().toJson(data.account)
                             val additional = Gson().toJson(data.userAdditional)
@@ -80,6 +78,7 @@ class AUTHAPI {
                                     Gson().fromJson(additional, CompanyAdditional::class.java)
                             }
                         }
+
                     }
                     return onResult(response.body())
                 }

@@ -9,5 +9,5 @@ enum class ApplicanStatusType(val value: Int, name : String ) {
     Rejected(6, "Rejected"),
     CVBank(7, "CV Bank"),
     Withdrawn(8, "Withdrawn")
-    ;
+
 }
