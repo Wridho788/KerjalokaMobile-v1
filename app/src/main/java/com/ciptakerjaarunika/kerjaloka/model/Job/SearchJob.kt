@@ -26,10 +26,10 @@ data class SearchJobModel(
     val jobSkill : List<JobSkill>,
     val jobTitle : List<JobTitle>,
     val createdOn : String,
-    val createdBy : Long,
+    val createdBy : String,
     val publish : Boolean,
     val company: Company,
-    val bookmarked : Any?,
+    var bookmarked : Boolean,
     val jobLocation: List<jobLocation>,
     val takedown: Boolean,
     val applied : Any?

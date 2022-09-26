@@ -30,6 +30,7 @@ import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobDetailBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.jobLocation
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailModel
@@ -49,17 +50,12 @@ class JobDetailFragment(
     private val JobNo: Long, private val CompanyNo: Long?,
 ) : Fragment(),
     IJobDetail {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: FragmentJobDetailBinding
     private var jobBookmark = false;
     private var currentJob : rJobDetailModel? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
-
-    private fun setContentView(root: ConstraintLayout) {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -69,7 +65,8 @@ class JobDetailFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_job_detail, container, false)
+        binding = FragmentJobDetailBinding.inflate(layoutInflater)
+        val view = binding.root
         return view
     }
 
@@ -80,17 +77,9 @@ class JobDetailFragment(
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark)
         RefreshData()
-
-//        val recyclerView2 =
-//            view.findViewById<RecyclerView>(R.id.recycler_view_related_jobs)
-//
-////        recyclerView2.apply {
-////            layoutManager2 = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-////            recyclerView2.layoutManager = layoutManager2
-////            adapter2 = RelatedOtherJobAdapter()
-////            recyclerView2.adapter = adapter2
-////        }
-
+        binding.backButton.setOnClickListener{
+            fragmentManager?.popBackStack()
+        }
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }

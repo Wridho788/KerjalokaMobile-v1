@@ -9,6 +9,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailResponse
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rjob_model
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.experience
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.SearchJob
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -207,7 +208,7 @@ class JobAPI {
 
     data class jobRecommendationResponse(
         val code : Int,
-        val data : List<RecommendationJob>
+        val data : List<SearchJobModel>
     )
     interface getJobRecommendationAuth {
         @GET("jobseeker/job/recommendation")
@@ -281,6 +282,35 @@ class JobAPI {
         )
     }
 
+    data class topSearchResponse(
+        val code: Int,
+        val message: String,
+        val data: List<topSearchModel>
+    )
+    data class topSearchModel(
+        val keyword : String,
+        val count : Int
+    )
+    interface getTopSearch {
+        @GET("users/job/topsearch")
+        fun getData() : Call<topSearchResponse>
+    }
+
+    fun GetTopSearch(context: Context?, onResult: (topSearchResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getTopSearch::class.java)
+
+        retrofit.getData().enqueue(
+            object : Callback<topSearchResponse> {
+                override fun onFailure(call: Call<topSearchResponse>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<topSearchResponse>, response: Response<topSearchResponse> ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
     interface getRelatedJOb {
         @GET("users/job/related")
         fun getData(@Query("jobNo")jobNo: Long) : Call<jobRecommendationResponse>
@@ -310,43 +340,26 @@ class JobAPI {
         )
     }
 
-    interface searchJobAuth {
-        @GET("users/jobseeker/job")
-        fun getData(@Query("search")search: String,
-                    @Query("location")location : String,
-                    @Query("jobType")jobType : String,
-                    @Query("skill")skill: Int?,
-                    @Query("experience")experience : Int?,
-                    @Query("salaryMin")salaryMin : Int?,
-                    @Query("salaryMax")salaryMax : Int?,
-                    @Query("page")page: Int) : Call<jobRecommendationResponse>
-    }
-    interface searchJobUnAuth {
-        @GET("job/list")
-        fun getData(@Query("search")search: String,
-                    @Query("location")location : String,
-                    @Query("jobType")jobType : String,
-                    @Query("skill")skill: Int?,
-                    @Query("experience")experience : Int?,
-                    @Query("salaryMin")salaryMin : Int?,
-                    @Query("salaryMax")salaryMax : Int?,
-                    @Query("page")page: Int) : Call<jobRecommendationResponse>
+    data class searchJobRequest(
+        var keyword: String?,
+        var locations : List<Int>,
+        var jobtypes : List<Int>,
+        var skills : List<Int>,
+        var experienceLevel : List<Int>,
+        var salaryMin : Int?,
+        var salaryMax : Int?,
+        var page : Int,
+    )
+    interface searchJob {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("users/mobile/search_job")
+        fun getData(@Body search : searchJobRequest) : Call<jobRecommendationResponse>
     }
 
-    fun SearchJob(search: String,
-                  location : String,
-                  jobType : String,
-                  skill: Int?,
-                  experience : Int?,
-                  salaryMin : Int?,
-                  salaryMax : Int?,
-                  page: Int,
-        context: Context?, onResult: (jobRecommendationResponse?) -> Unit) {
+    fun SearchJob(search : searchJobRequest, context: Context?, onResult: (jobRecommendationResponse?) -> Unit) {
+            val retrofit = ServiceBuilder(context).POST(searchJob::class.java)
 
-        if (SessionManager(context).user == null) {
-            val retrofit = ServiceBuilder(context).GET(searchJobUnAuth::class.java)
-
-            retrofit.getData(search,location,jobType,skill, experience,salaryMin,salaryMax,page).enqueue(
+            retrofit.getData(search).enqueue(
                 object : Callback<jobRecommendationResponse> {
                     override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
                         onResult(null)
@@ -364,27 +377,5 @@ class JobAPI {
                     }
                 }
             )
-        } else {
-            val retrofit = ServiceBuilder(context).GET(searchJobAuth::class.java)
-
-            retrofit.getData(search,location,jobType,skill, experience,salaryMin,salaryMax,page).enqueue(
-                object : Callback<jobRecommendationResponse> {
-                    override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
-                        onResult(null)
-                    }
-
-                    override fun onResponse(
-                        call: Call<jobRecommendationResponse>,
-                        response: Response<jobRecommendationResponse>
-                    ) {
-                        if (response.body()?.code == 210) {
-                            onResult(response.body())
-                        } else {
-                            onResult(null)
-                        }
-                    }
-                }
-            )
-        }
     }
 }

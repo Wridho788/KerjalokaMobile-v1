@@ -1,220 +1,291 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
-import androidx.core.view.size
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchJobBinding
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSearchJobBinding
+import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.FilterCompany
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.JobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.Adapter.SearchJobAdapter
 import com.google.android.material.chip.Chip
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 
 
-class  SearchJob : AppCompatActivity() {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<SearchJobAdapter.ViewHolder>? = null
+class  SearchJob : Fragment(), IJobPage, iSearchJob {
+    private var page = 0;
+    private var listData : List<SearchJobModel> = listOf()
+
+    private var locationSelected : List<Int> = listOf()
+    private var skillSelected : List<Int> = listOf()
+    private var jobTypeSelected : List<Int> = listOf()
+    private var experienceLevelSelected : List<Int> = listOf()
+    private var salaryMin : Int? = null
+    private var salaryMax : Int? = null
+    private var keyword : String? = ""
+
 
     var list = ArrayList<SearchModel>()
-    var list2 = ArrayList<String>()
-    private lateinit var binding: ActivitySearchJobBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySearchJobBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        list2 = getArrayList("SearchJob")
-        if(list2.isNotEmpty()){
-            var int = 0
-            list2.forEach {
-                val chip = Chip(this)
+    private lateinit var binding: FragmentSearchJobBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentSearchJobBinding.inflate(layoutInflater)
+        binding.backBtn.setOnClickListener{
+            fragmentManager?.popBackStack()
+        }
+        val view = binding.root
+        return  view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.topSearchContainer.visibility= GONE
+        binding.latestSearchContainer.visibility= GONE
+        if(binding.searchJob.isNotEmpty()){
+            Log.d("text",binding.searchJob.query.toString())
+        }
+        if(SessionManager(context).latestSearchJob == null){
+            SessionManager(context).latestSearchJob = listOf()
+        }
+        binding.btnFilter.setOnClickListener{
+            val sheet = FilterJobModal(this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
+        }
+        val latestSearch = SessionManager(context).latestSearchJob?.reversed()
+        if(latestSearch?.size != 0){
+            binding.latestSearchContainer.visibility = VISIBLE
+            binding.chipGroup.removeAllViews()
+
+            latestSearch?.forEach { data ->
+                val chip = Chip(context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it
-                    id = int
+                    text = data.toString()
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = true
+                    setOnClickListener{
+                        SearchJob(data.toString())
+                        binding.searchJob.setQuery(data.toString(), true)
+                    }
                     isCheckable = false
                     binding.apply {
                         chipGroup.addView(chip as View)
                     }
                 }
-                val chipTop = Chip(this)
-                chipTop.setChipBackgroundColorResource(R.color.danger_100)
-                chipTop.apply {
-                    textSize = 12f
-                    text = it
-                    id = int
-                    isChipIconVisible = false
-                    isCloseIconVisible = false
-                    isClickable = true
-                    isCheckable = false
-                    binding.apply {
-                        chipGroupTopSearch.addView(chipTop as View)
-                    }
-                }
-                int++
             }
         }
-        else{
-            binding.historyChips.isVisible=false
+
+
+        JobAPI().GetTopSearch(context){ res ->
+            if(res != null){
+                if(res.data.size != 0){
+                    binding.topSearchContainer.visibility= VISIBLE
+                    binding.chipGroupTopSearch.removeAllViews()
+                    res.data.forEach { data ->
+                        val chipTop = Chip(context)
+                        chipTop.setChipBackgroundColorResource(R.color.danger_100)
+                        chipTop.apply {
+                            textSize = 12f
+                            text = data.keyword
+                            isChipIconVisible = false
+                            isCloseIconVisible = false
+                            isClickable = true
+                            setOnClickListener{
+                                SearchJob(data.keyword.toString())
+                                binding.searchJob.setQuery(data.keyword.toString(), true)
+                            }
+                            isCheckable = false
+                            binding.apply {
+                                chipGroupTopSearch.addView(chipTop as View)
+                            }
+                        }
+                    }
+                }
+            }
         }
+
+
         binding.searchJob.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query?.isNotEmpty() == true) {
-                    newChips(query)
-                }
-                binding.searchResult.isVisible=true
-                binding.history.isVisible=false
-                binding.query.text=query
+                SearchJob(query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                keyword = newText
+
                 if (newText!!.isBlank()){
                     binding.searchResult.isVisible=false
                     binding.history.isVisible=true
+
+                    JobAPI().GetTopSearch(context){ res ->
+                        if(res != null){
+                            if(res.data.size != 0){
+                                binding.topSearchContainer.visibility= VISIBLE
+                                binding.chipGroupTopSearch.removeAllViews()
+                                res.data.forEach { data ->
+                                    val chipTop = Chip(context)
+                                    chipTop.setChipBackgroundColorResource(R.color.danger_100)
+                                    chipTop.apply {
+                                        textSize = 12f
+                                        text = data.keyword
+                                        isChipIconVisible = false
+                                        isCloseIconVisible = false
+                                        isClickable = true
+                                        setOnClickListener{SearchJob(data.keyword)}
+                                        isCheckable = false
+                                        binding.apply {
+                                            chipGroupTopSearch.addView(chipTop as View)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 return true
             }
         })
 
         binding.removeHistory.setOnClickListener(){
-            removeArrayList(list2,"SearchJob")
+            SessionManager(context).latestSearchJob = listOf()
             binding.chipGroup.removeAllViews()
         }
 
-        val list = ArrayList<rJobModel>()
-        val rJob1 = rJobModel(
-            1,
-            1,
-            "Software Engineer",
-            "Medan",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Kerjaloka",
-            "satu jam lalu"
-        )
-        val rJob2 = rJobModel(
-            1,
-            1,
-            "Software Engineer",
-            "Medan",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Kerjaloka",
-            "satu jam lalu"
-        )
-        val rJob3 = rJobModel(
-            1,
-            1,
-            "Software Engineer",
-            "Medan",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Kerjaloka",
-            "satu jam lalu"
-        )
-        val rJob4 = rJobModel(
-            1,
-            1,
-            "Software Engineer",
-            "Medan",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Kerjaloka",
-            "satu jam lalu"
-        )
-        val rJob5 = rJobModel(
-            1,
-            1,
-            "Software Engineer",
-            "Medan",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Jakarta",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            "Kerjaloka",
-            "satu jam lalu"
-        )
 
-        list.add(rJob1)
-        list.add(rJob2)
-        list.add(rJob3)
-        list.add(rJob4)
-        list.add(rJob5)
-        layoutManager = LinearLayoutManager(this)
-        binding.jobs.layoutManager = layoutManager
-        adapter = SearchJobAdapter(list)
-        binding.jobs.adapter = adapter
     }
+    fun SearchJob(keyword : String?){
+        if (keyword?.isNotEmpty() == true) {
+            newChips(keyword)
+        }
+        binding.searchResult.isVisible=true
+        binding.history.isVisible=false
+        binding.query.text=keyword
+        this.keyword = keyword
 
+        SearchJob()
+    }
     private fun newChips(name: String) {
         binding.historyChips.isVisible=true
-        list2.add(name)
-        saveArrayList(list2, "SearchJob")
-        val chip = Chip(this)
-        chip.setChipBackgroundColorResource(R.color.danger_100)
-        chip.apply {
-            textSize=12f
-            text=name
-            isChipIconVisible=false
-            isCloseIconVisible=false
-            isClickable=true
-            isCheckable=false
-            binding.apply {
-                if (chipGroup.size > 7){
-                    chipGroup.removeViewAt(0)
-                    chipGroup.addView(chip as View)
-                }
-                else {
-                    chipGroup.addView(chip as View)
+        if(SessionManager(context).latestSearchJob?.size == 0 ||  SessionManager(context).latestSearchJob?.last() != name) {
+            SessionManager(context).latestSearchJob = SessionManager(context).latestSearchJob?.plus(
+                name
+            )
+        }
+        if(SessionManager(context).latestSearchJob!!.size > 10){
+            SessionManager(context).latestSearchJob = SessionManager(context).latestSearchJob?.takeLast((10))
+        }
+        val latestSearch = SessionManager(context).latestSearchJob?.reversed()
+        if(latestSearch?.size != 0){
+            binding.latestSearchContainer.visibility = VISIBLE
+            binding.chipGroup.removeAllViews()
+
+            latestSearch?.forEach { data ->
+                val chip = Chip(context)
+                chip.setChipBackgroundColorResource(R.color.danger_100)
+                chip.apply {
+                    textSize = 12f
+                    text = data.toString()
+                    isChipIconVisible = false
+                    isCloseIconVisible = false
+                    isClickable = true
+                    setOnClickListener{SearchJob(data.toString())}
+                    isCheckable = false
+                    binding.apply {
+                        chipGroup.addView(chip as View)
+                    }
                 }
             }
         }
     }
 
-    fun saveArrayList(list: ArrayList<String>, key: String?) {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-        editor.putString(key, json)
-        editor.apply()
+    override fun RefreshData() {
+
     }
 
-    fun getArrayList(key: String?): ArrayList<String> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val gson = Gson()
-        val json: String? = prefs.getString(key, null)
-        val type: Type = object : TypeToken<ArrayList<String?>?>() {}.getType()
-        var listnull = ArrayList<String>()
-        if(json == null)
-        {
-            return listnull
+    override fun GoToJobDetail(JobNo: Long, CompanyNo: Long?) {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "JobDetailFragment")
+        ft.addToBackStack("Job Page")
+        ft.commit()
+    }
+
+    override fun BookmarkJob(ListNo : Int, JobNo: Long, Index: Int) {
+        JobAPI().BookmarkJob(JobNo, !listData[Index].bookmarked, context) {
+            if(it != null) {
+                if (it.code == 210) {
+                    listData[Index].bookmarked = !listData[Index].bookmarked
+                    binding.recycleJobs.adapter?.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
-        return gson.fromJson(json, type)
     }
 
-    fun removeArrayList(list: ArrayList<String>, key: String?) {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-        editor.remove(key)
-        editor.apply()
+    override fun SearchJob() {
+        JobAPI().SearchJob(
+            JobAPI.searchJobRequest(keyword!! ,
+                locationSelected,
+                jobTypeSelected,
+                skillSelected,
+                experienceLevelSelected,
+                salaryMin,
+                salaryMax,
+                page)
+            , context){ res ->
+            if(res != null) {
+                listData = res.data
+                val appContext = this
+                binding.recycleJobs.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = JobAdapter(1, listData, context, appContext)
+                }
+            }
+        }
     }
+
+    override fun updateLocationSelected(data: List<Int>) {
+        this.locationSelected = data
+    }
+
+    override fun updateJobTypeSelected(data: List<Int>) {
+        this.jobTypeSelected = data
+    }
+
+    override fun updateSkillSelected(data: List<Int>) {
+        this.skillSelected = data
+    }
+
+    override fun updateExperienceSelected(data: List<Int>) {
+        this.experienceLevelSelected = data
+    }
+}
+interface iSearchJob{
+    fun SearchJob()
+    fun updateLocationSelected(data : List<Int>)
+    fun updateJobTypeSelected(data : List<Int>)
+    fun updateSkillSelected(data : List<Int>)
+    fun updateExperienceSelected(data : List<Int>)
 }
