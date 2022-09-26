@@ -1,6 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model
 
 import com.ciptakerjaarunika.kerjaloka.model.Data.City
+import com.ciptakerjaarunika.kerjaloka.model.Test.ShortQuestions
+import com.ciptakerjaarunika.kerjaloka.model.Test.Tests
 
 
 data class rjob_model(
@@ -48,6 +50,9 @@ data class rJobDetailModel(
     val companyjob: company,
     val bookmarked: Boolean?,
     val applied: Boolean?,
+
+    val jobShortQuestion : List<ShortQuestions>,
+    val jobTests: List<Tests>,
 )
 
 data class jobLocation(

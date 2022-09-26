@@ -6,13 +6,10 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.iUpdate
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.iUpdateValue
 
-class FilterLocationAdapter(private var dataSet: List<LocationFilter>, val context: Context, val iUpdateValue: iUpdateValue) :
+class FilterLocationAdapter(private var dataSet: List<LocationFilter>, val context: Context) :
     RecyclerView.Adapter<FilterLocationAdapter.ViewHolder?>(){
 
         inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -37,10 +34,10 @@ class FilterLocationAdapter(private var dataSet: List<LocationFilter>, val conte
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataSet[position]
         holder.filterText.text = "${currentItem.city}, ${currentItem.province}"
+        holder.checked.isChecked = currentItem.checked == true
         holder.checked.setOnClickListener{
             currentItem.checked = holder.checked.isChecked
             dataSet[position].checked = holder.checked.isChecked
-                iUpdateValue.updateLocations(currentItem)
         }
 
     }

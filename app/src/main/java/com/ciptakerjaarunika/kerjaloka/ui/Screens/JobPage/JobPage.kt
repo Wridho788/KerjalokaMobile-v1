@@ -97,26 +97,25 @@ class JobPage: Fragment(), IJobPage{
     }
     override fun RefreshData(){
         binding.bookmarkContainer.visibility = VISIBLE
-
-        if(SessionManager(context).user != null) {
-            JobAPI().getJobRecommendation(true, context) {
-                recommendationDone()
-                if (it != null) {
-                    binding.recommenJob?.visibility = VISIBLE
-                    listRecommendation = it.data.take(5)
-                    binding.seeRecommend?.visibility = if(it.data.size <= 5) GONE else VISIBLE
-                    binding.recommenJob?.apply {
-                        adapter = JobAdapter(1, listRecommendation ,context, this@JobPage)
-                        layoutManager = LinearLayoutManager(activity)
-                    }
+        JobAPI().getJobRecommendation(true, context) {
+            recommendationDone()
+            if (it != null) {
+                binding.recommenJob?.visibility = VISIBLE
+                listRecommendation = it.data.take(5)
+                binding.seeRecommend?.visibility = if(it.data.size <= 5) GONE else VISIBLE
+                binding.recommenJob?.apply {
+                    adapter = JobAdapter(1, listRecommendation ,context, this@JobPage)
+                    layoutManager = LinearLayoutManager(activity)
                 }
             }
+        }
 
-            JobAPI().getBookmarkedJob(context){
-                bookmarkedDone()
-                if (it != null) {
+        if(SessionManager(context).user != null) {
+            JobAPI().getBookmarkedJob(context) {
+                    bookmarkedDone()
+                if (it?.data != null) {
                     listBookmark = it.data.take(5)
-                    binding.btnSeeBookmarked?.visibility = if(it.data.size <= 5) GONE else VISIBLE
+                    binding.btnSeeBookmarked?.visibility = if (it.data.size <= 5) GONE else VISIBLE
                     binding.bookmaredJob?.apply {
                         adapter = JobAdapter(3, listBookmark, context, this@JobPage)
                         layoutManager = LinearLayoutManager(activity)
@@ -170,7 +169,7 @@ class JobPage: Fragment(), IJobPage{
                 val longtitude = it.longitude.toString()
                 JobAPI().getNearJob(latitude, longtitude, context) {
                     nearJobDone()
-                    if (it != null && it.data.size != 0) {
+                    if (it != null && it.data != null && it.data.size != 0) {
                         binding.btnSeeNearMe.visibility = if(it.data.size <= 5) GONE else VISIBLE
                         val recyclerView = binding.nearmeJob
 

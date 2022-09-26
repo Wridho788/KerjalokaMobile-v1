@@ -6,14 +6,10 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
-import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.iUpdate
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.iUpdateValue
 
-class JobTypeAdapter(private var dataSet: List<JobTypeFilter>, val context: Context, val iUpdateValue: iUpdateValue) :
+class JobTypeAdapter(private var dataSet: List<JobTypeFilter>, val context: Context) :
     RecyclerView.Adapter<JobTypeAdapter.ViewHolder?>(){
 
         inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -38,10 +34,11 @@ class JobTypeAdapter(private var dataSet: List<JobTypeFilter>, val context: Cont
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataSet[position]
         holder.filterText.text = currentItem.jobTypeName
+        holder.checked.isChecked = currentItem.checked == true
+
         holder.checked.setOnClickListener{
             currentItem.checked = holder.checked.isChecked
             dataSet[position].checked = holder.checked.isChecked
-                iUpdateValue.updateJobTypes(currentItem)
         }
 
     }

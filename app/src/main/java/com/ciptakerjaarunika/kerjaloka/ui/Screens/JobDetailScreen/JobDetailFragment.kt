@@ -114,8 +114,6 @@ class JobDetailFragment(
             val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share)
             val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark)
 
-
-
             view.findViewById<LinearLayout>(R.id.spinnerDetailPekerjaan).visibility = VISIBLE
             view.findViewById<NestedScrollView>(R.id.job_detail_container).visibility = GONE
             JobAPI().getJobDetailAsync(context, CompanyNo, JobNo) {
@@ -270,8 +268,28 @@ class JobDetailFragment(
                         }
 
                         btn_applyJob.setOnClickListener {
-                            val sheet = ApplyJob(job.jobNo, this)
-                            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ApplyJob") }
+                            if(currentJob?.jobShortQuestion!!.any()){
+                               JobAPI().GetJobShortQuestion(job?.jobNo!!, context){
+                                  if (it != null) {
+                                      val sheet = ApplyJob(currentJob, it.data,this)
+                                      activity?.let { it1 ->
+                                          sheet.show(
+                                              it1.supportFragmentManager,
+                                              "ApplyJob"
+                                          )
+                                      }
+                                  }
+                               }
+                            }
+                            else {
+                                val sheet = ApplyJob(currentJob, listOf(),this)
+                                activity?.let { it1 ->
+                                    sheet.show(
+                                        it1.supportFragmentManager,
+                                        "ApplyJob"
+                                    )
+                                }
+                            }
                         }
                     }
                 }

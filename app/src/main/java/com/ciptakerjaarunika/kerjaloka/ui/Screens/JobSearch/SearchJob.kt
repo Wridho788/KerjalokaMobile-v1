@@ -10,21 +10,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isNotEmpty
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSearchJobBinding
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.FilterCompany
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.Adapter.SearchJobAdapter
 import com.google.android.material.chip.Chip
 
 
@@ -39,6 +35,7 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
     private var salaryMin : Int? = null
     private var salaryMax : Int? = null
     private var keyword : String? = ""
+    private var hasSearch : Boolean = false;
 
 
     var list = ArrayList<SearchModel>()
@@ -67,7 +64,14 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
             SessionManager(context).latestSearchJob = listOf()
         }
         binding.btnFilter.setOnClickListener{
-            val sheet = FilterJobModal(this)
+            val sheet = FilterJobModal(this@SearchJob,
+                locationSelected,
+                jobTypeSelected,
+                skillSelected,
+                experienceLevelSelected,
+                this.salaryMin,
+                this.salaryMax
+            )
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
         }
         val latestSearch = SessionManager(context).latestSearchJob?.reversed()
@@ -125,7 +129,6 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
             }
         }
 
-
         binding.searchJob.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 SearchJob(query)
@@ -135,9 +138,9 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
             override fun onQueryTextChange(newText: String?): Boolean {
                 keyword = newText
 
-                if (newText!!.isBlank()){
-                    binding.searchResult.isVisible=false
-                    binding.history.isVisible=true
+                if (newText!!.isBlank() && !hasSearch){
+                    binding.searchResult.visibility = GONE
+                    binding.history.visibility = VISIBLE
 
                     JobAPI().GetTopSearch(context){ res ->
                         if(res != null){
@@ -179,15 +182,12 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
         if (keyword?.isNotEmpty() == true) {
             newChips(keyword)
         }
-        binding.searchResult.isVisible=true
-        binding.history.isVisible=false
         binding.query.text=keyword
         this.keyword = keyword
 
         SearchJob()
     }
     private fun newChips(name: String) {
-        binding.historyChips.isVisible=true
         if(SessionManager(context).latestSearchJob?.size == 0 ||  SessionManager(context).latestSearchJob?.last() != name) {
             SessionManager(context).latestSearchJob = SessionManager(context).latestSearchJob?.plus(
                 name
@@ -245,6 +245,10 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
     }
 
     override fun SearchJob() {
+        this.hasSearch = true
+        binding.searchResult.visibility = VISIBLE
+        binding.history.visibility = GONE
+
         JobAPI().SearchJob(
             JobAPI.searchJobRequest(keyword!! ,
                 locationSelected,
@@ -258,10 +262,12 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
             if(res != null) {
                 listData = res.data
                 val appContext = this
+                binding.recycleJobs.visibility = VISIBLE
                 binding.recycleJobs.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = JobAdapter(1, listData, context, appContext)
                 }
+                binding.recycleJobs.adapter?.notifyDataSetChanged()
             }
         }
     }
@@ -281,6 +287,12 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
     override fun updateExperienceSelected(data: List<Int>) {
         this.experienceLevelSelected = data
     }
+    override fun updateSalaryMin(data: Int?) {
+        this.salaryMin = data
+    }
+    override fun updateSalaryMax(data: Int?) {
+        this.salaryMax = data
+    }
 }
 interface iSearchJob{
     fun SearchJob()
@@ -288,4 +300,6 @@ interface iSearchJob{
     fun updateJobTypeSelected(data : List<Int>)
     fun updateSkillSelected(data : List<Int>)
     fun updateExperienceSelected(data : List<Int>)
+    fun updateSalaryMin(data : Int?)
+    fun updateSalaryMax(data : Int?)
 }
