@@ -60,8 +60,6 @@ class otpVerification() : Fragment() {
             val code = "${otp1+otp2+otp3+otp4+otp5+otp6}"
             company_profile_api().ChangeVerification(description, code, context){}
         }
-
-//        return view
     }
 
     override fun onCreateView(
@@ -69,44 +67,13 @@ class otpVerification() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_otp_verification, container, false)
-//        super.onViewCreated(view,savedInstanceState)
-//
-//        val btnSend = view.findViewById<MaterialButton>(R.id.sendOTP)
-//        val ticker = view.findViewById<TextView>(R.id.time)
-//
-//        timer = object : CountDownTimer(60000, 1000){
-//            override fun onTick(p0: Long) {
-//                ticker.text = (p0 / 1000).toString()
-//            }
-//
-//            override fun onFinish() {
-//                TODO("Not yet implemented")
-//            }
-//
-//        }
-//
-//        if (savedInstanceState != null) {
-//            val descFromBundle = savedInstanceState.getString(EXTRA_DESCRIPTION)
-//            description = descFromBundle
-//        }
-//
-//        btnSend.setOnClickListener{
-//            val otp1 = view.findViewById<EditText>(R.id.otp1)?.text.toString()
-//            val otp2 = view.findViewById<EditText>(R.id.otp2)?.text.toString()
-//            val otp3 = view.findViewById<EditText>(R.id.otp3)?.text.toString()
-//            val otp4 = view.findViewById<EditText>(R.id.otp4)?.text.toString()
-//            val otp5 = view.findViewById<EditText>(R.id.otp5)?.text.toString()
-//            val otp6 = view.findViewById<EditText>(R.id.otp6)?.text.toString()
-//            val code = "${otp1+otp2+otp3+otp4+otp5+otp6}"
-//            company_profile_api().ChangeVerification(description, code, context){}
-//        }
 
         return view
     }
 
     override fun onStart() {
         super.onStart()
-//        timer.start()
+        timer.start()
     }
 
     companion object {

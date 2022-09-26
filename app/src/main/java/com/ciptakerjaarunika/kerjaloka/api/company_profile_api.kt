@@ -3,9 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
-import com.ciptakerjaarunika.kerjaloka.model.Job.ReportJobRequest
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -139,6 +137,156 @@ class company_profile_api {
             }
         )
     }
+
+    interface checkEmail{
+        @GET("users/check/email")
+        fun checkEmail(@Query("keyword") keyword: String): Call<CheckEmailResponse>
+    }
+
+    fun checkNewEmail(keyword: String, context: Context?, onResult: (CheckEmailResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(checkEmail::class.java)
+
+        retrofit.checkEmail(keyword).enqueue(
+            object : Callback<CheckEmailResponse>{
+                override fun onResponse(
+                    call: Call<CheckEmailResponse>,
+                    response: Response<CheckEmailResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<CheckEmailResponse>, t: Throwable) {
+                    onResult(null)
+                }
+
+            }
+        )
+    }
+
+    data class  changeEmailResponse(val code :Int, val message : String, val token : String?)
+    interface getNewEmail{
+        @Headers("Content-Type: application/json", "Accept: application/json")
+        @POST("users/change/email")
+        fun getEmail(@Body changeEmailRequest: ChangeEmailRequest): Call<changeEmailResponse>
+    }
+    fun ChangeEmail(email: String, context: Context?, onResult: (changeEmailResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(getNewEmail::class.java)
+
+        retrofit.getEmail(ChangeEmailRequest(email)).enqueue(
+            object : Callback<changeEmailResponse>{
+                override fun onResponse(
+                    call: Call<changeEmailResponse>,
+                    response: Response<changeEmailResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<changeEmailResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    data class  changePasswordResponse(val code :Int, val message : String)
+    interface getNewPassword{
+        @Headers("Content-Type: application/json", "Accept: application/json")
+        @POST("users/change/password")
+        fun getPassword(@Body changePasswordRequest: ChangePasswordRequest): Call<changePasswordResponse>
+    }
+    fun ChangePassword(password: String, newpassword:String, context: Context?, onResult: (changePasswordResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(getNewPassword::class.java)
+
+        retrofit.getPassword(ChangePasswordRequest(password, newpassword)).enqueue(
+            object : Callback<changePasswordResponse>{
+                override fun onResponse(
+                    call: Call<changePasswordResponse>,
+                    response: Response<changePasswordResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<changePasswordResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+
+    data class discoverResponse(val code: Int?, val message: String?)
+    interface Undiscoverable{
+        @GET("users/undiscoverable")
+        fun setUndiscover(): Call<discoverResponse>
+    }
+
+    fun undiscoverable(context: Context?, onResult: (discoverResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(Undiscoverable::class.java)
+
+        retrofit.setUndiscover().enqueue(
+            object : Callback<discoverResponse>{
+                override fun onResponse(
+                    call: Call<discoverResponse>,
+                    response: Response<discoverResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<discoverResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface Discoverable{
+        @GET("users/discoverable")
+        fun setDiscover(): Call<discoverResponse>
+    }
+
+    fun discoverable(context: Context?, onResult: (discoverResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(Discoverable::class.java)
+
+        retrofit.setDiscover().enqueue(
+            object : Callback<discoverResponse>{
+                override fun onResponse(
+                    call: Call<discoverResponse>,
+                    response: Response<discoverResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<discoverResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface Newsletter{
+        @GET("users/newsletter")
+        fun setNewsletter(@Query("newsletter") newsletter: Boolean): Call<discoverResponse>
+    }
+
+    fun newsletter(newsletter: Boolean, context: Context?, onResult: (discoverResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(Newsletter::class.java)
+
+        retrofit.setNewsletter(newsletter).enqueue(
+            object : Callback<discoverResponse>{
+                override fun onResponse(
+                    call: Call<discoverResponse>,
+                    response: Response<discoverResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<discoverResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
 }
 
 class users {
@@ -159,12 +307,10 @@ class users {
                 ) {
                     onResult(response.body())
                 }
-
                 override fun onFailure(call: Call<user_response>, t: Throwable) {
                     Log.d("Response Failure", t.toString())
                     onResult(null)
                 }
-
             }
         )
     }

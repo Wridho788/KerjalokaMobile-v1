@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.core.view.isVisible
 import com.airbnb.lottie.parser.ColorParser
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.api.users
 import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScore
@@ -52,6 +54,7 @@ class AccountSetting(val data: data?) : Fragment() {
         txt_addrees.text = data?.companyAddress
         users().CompanyGetUserData(context) {
             discover.isChecked = it?.data?.isDiscoverable!!
+            Log.d("onCreateView: ", it?.data?.isDiscoverable.toString())
             newsletter.isChecked = it?.data?.isNewsletter!!
             if (it?.data?.userGoogleId.isNullOrEmpty()){
                 btn_connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FF6666"))
@@ -63,6 +66,20 @@ class AccountSetting(val data: data?) : Fragment() {
                 btn_connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFDEDE")))
                 btn_connect.isClickable=false
                 btn_connect.text="Terkoneksi"
+            }
+            discover.setOnClickListener{
+                if (discover.isChecked==true){
+                    company_profile_api().discoverable(context){}
+                }
+                else{
+                    company_profile_api().undiscoverable(context){}
+                }
+            }
+
+            newsletter.setOnClickListener {
+                val setNL = newsletter.isChecked
+                Log.d("asd", setNL.toString())
+                company_profile_api().newsletter(setNL, context){}
             }
         }
 

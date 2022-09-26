@@ -174,12 +174,22 @@ data class ChangeUsernameRequest(
     val username: String
 )
 
-data class CheckPhoneRequest(
-    val phone: String
-)
-
 data class CheckPhoneResponse(
     val exists: Boolean
 )
+
+data class CheckEmailResponse(
+    val exists: Boolean
+)
+
+data class ChangeEmailRequest(
+    val email: String
+)
+
+data class ChangePasswordRequest(
+    val password: String,
+    val newPassword: String
+)
+
 
 

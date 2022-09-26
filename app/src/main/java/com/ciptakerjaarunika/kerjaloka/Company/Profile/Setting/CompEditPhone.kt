@@ -30,9 +30,9 @@ class CompEditPhone : Fragment() {
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveNewPhone)
 
         btnSave.setOnClickListener{
-            val phone = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
-            company_profile_api().checkPhone(phone, context){
-                company_profile_api().ChangeNumber(phone, context){ it1 ->
+            val keyword = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
+            company_profile_api().checkPhone(keyword, context){
+                company_profile_api().ChangeNumber(keyword, context){ it1 ->
                     if (it1?.code == 210){
                         replaceFragment(otpVerification(), it1?.token)
                     }
@@ -55,7 +55,6 @@ class CompEditPhone : Fragment() {
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
 
-        val description = "Kategori ini akan berisi produk-produk lifestyle"
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = token
         val mFragmentManager = parentFragmentManager
