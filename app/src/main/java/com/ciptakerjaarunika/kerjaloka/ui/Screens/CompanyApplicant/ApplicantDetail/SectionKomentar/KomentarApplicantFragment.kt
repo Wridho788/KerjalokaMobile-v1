@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CommentAPI
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyListApplicantAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentKomentarApplicantBinding
-import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Adapter.KomentarAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.send_comment
@@ -45,8 +43,6 @@ class KomentarApplicantFragment(
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-        val companyNo = SessionManager(context).user!!.userNo
-        Log.d("tes", companyNo.toString())
 
         binding.btnSendComment.setOnClickListener {
             CommentAPI().SendCommentPost(

@@ -63,7 +63,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
                 ratingBar.rating = it.data.rating.ratingValue
                 txtRating.text =
                     it.data.rating.ratingList.size.toString() + " dari " + it.data.rating.ratingList.size.toString()
-                totalReview.text = "0 Reviews"
+                totalReview.text = it.data.rating.ratingList.size.toString()
             }
         }
         var UserNo = 20211027141022
@@ -73,7 +73,6 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
         if (user != null) {
             CanSendReview().getSendReviewAsync(context, UserNo) {
                 if (it != null) {
-                    Log.d("send", it.toString())
                     if (it.data.hasSend == true) {
                         layout_my_review.visibility = View.GONE
                     } else {

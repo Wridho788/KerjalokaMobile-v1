@@ -3,10 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.review_response
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.sendResponse
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.send_Request
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.send_review_response
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -70,6 +67,57 @@ class CanSendReview {
                 }
             )
         }
+    }
+}
+
+class MyReview {
+    interface MyReviewResponse {
+        @GET("/company/rating/myReview")
+        fun getMyReview(@Query("sortByNewest") sortByNewest: Boolean = true): Call<send_review_response>
+    }
+    fun getMyReview(context: Context?, sortByNewest: Boolean = true, onResult: (send_review_response?) -> Unit){
+        if (context != null) {
+            val retrofit = ServiceBuilder(context).GET(MyReviewResponse::class.java)
+
+            retrofit.getMyReview(sortByNewest).enqueue(
+                object : Callback<send_review_response> {
+                    override fun onResponse(
+                        call: Call<send_review_response>,
+                        response: Response<send_review_response>
+                    ) {
+                        onResult(response.body())
+                    }
+
+                    override fun onFailure(call: Call<send_review_response>, t: Throwable) {
+                        onResult(null)
+                    }
+                }
+            )
+        }
+    }
+}
+
+class DeleteReviewResponse{
+    interface DeleteMyReview{
+        @GET("/users/rating/delete")
+        fun getDeleteMyReview(@Query("userRatingNo") userRatingNo: Int): Call<delete_review_response>
+    }
+    fun getDeleteMyReview(  context: Context?, userRatingNo: Int, onResult: (delete_review_response?) -> Unit){
+            val retrofit = ServiceBuilder(context).GET(DeleteMyReview::class.java)
+            retrofit.getDeleteMyReview(userRatingNo).enqueue(
+                object : Callback<delete_review_response>{
+                    override fun onResponse(
+                        call: Call<delete_review_response>,
+                        response: Response<delete_review_response>
+                    ) {
+                        onResult(response.body())
+                    }
+
+                    override fun onFailure(call: Call<delete_review_response>, t: Throwable) {
+                        onResult(null)
+                    }
+                }
+            )
     }
 }
 

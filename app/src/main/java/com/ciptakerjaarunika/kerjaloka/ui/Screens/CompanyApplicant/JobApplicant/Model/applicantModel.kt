@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model
 
+import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.rating
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentModel
 
 
@@ -18,7 +19,8 @@ data class applicantModel(
     val ownRating: ownRating,
     val comment: List<CommentModel>,
     val jobApplicationHistory: List<List<jobApplicantHistory>>,
-    val papiKostickResult: papiKostickResult_applicant
+    val papiKostickResult: papiKostickResult_applicant,
+    val qualified: List<qualified>
 )
 
 data class application(
@@ -46,6 +48,12 @@ data class applicant(
 data class preferenceJobType(
     val jobTypeNo: Int,
     val jobTypeName: String,
+)
+
+data class qualified(
+    val shortQuestionNo: Long,
+    val mustHave: Boolean,
+    val Qualified: Boolean
 )
 
 data class jobApplicantHistory(
@@ -96,7 +104,8 @@ data class ownRating(
     val ownUserRatingNo: Int,
     val ownRating: Int,
     val proRating: List<String>,
-    val conRating: List<String>
+    val conRating: List<String>,
+    val rating: rating,
 )
 
 data class education(

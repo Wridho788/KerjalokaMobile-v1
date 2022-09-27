@@ -19,6 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentApplicantDetailBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.PapikostikResultFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionEducations.EducationsAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionExperiences.ExperiencesAdapter
@@ -65,12 +66,47 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val experienceJob = applicantDetail.applicant.experiences
-        val beginat = experienceJob.sortedByDescending { item -> item.experienceBeginAt }
-        val endingAt = experienceJob.sortedByDescending { item -> item.experienceEndedAt }
+        if (experienceJob != null) {
+            val beginat = experienceJob.sortedByDescending { item -> item.experienceBeginAt }
+            val endingAt = experienceJob.sortedByDescending { item -> item.experienceEndedAt }
+
+            val beginYear = LocalDateTime.parse(beginat[0]?.experienceBeginAt)
+                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+            val beginEndYear =
+                LocalDateTime.parse(endingAt[0]?.experienceEndedAt)
+                    .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+
+            binding.headerApplicantDetail.experienceYearText.text =
+                "$beginYear - $beginEndYear"
+
+            binding.headerApplicantDetail.experienceJobText.text =
+                beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
+        } else {
+            binding.headerApplicantDetail.sectionExperience.visibility = View.GONE
+        }
 
         val education = applicantDetail.applicant.education
-        val educationBegin = education.sortedByDescending { item -> item.educationBeginAt }
-        val educationEnded = education.sortedByDescending { item -> item.educationEndedAt }
+        if (education != null) {
+            val educationBegin = education.sortedByDescending { item -> item.educationBeginAt }
+            val educationEnded = education.sortedByDescending { item -> item.educationEndedAt }
+
+            val beginYearEducation =
+                LocalDateTime.parse(educationBegin[0].educationBeginAt)
+                    .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+
+            val endedYearEducation =
+                LocalDateTime.parse(educationEnded[0].educationEndedAt)
+                    .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+
+            binding.headerApplicantDetail.educationYearText.text =
+                "$beginYearEducation - $endedYearEducation"
+
+            binding.headerApplicantDetail.educationNameText.text =
+                educationBegin[0].educationMajorName + " - " + educationBegin[0].educationSchool
+        } else {
+            binding.headerApplicantDetail.sectionEducation.visibility = View.GONE
+        }
+
 
         val preferencesJob = applicantDetail.applicant.preferenceJobType.map {
             it.jobTypeName
@@ -135,33 +171,6 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         binding.headerApplicantDetail.applicantLocation.text =
             applicantDetail.applicant.location.city + ", " + applicantDetail.applicant.location.province
         binding.txtAlasanMelamar.text = applicantDetail.application.message
-
-        val beginYear = LocalDateTime.parse(beginat[0].experienceBeginAt)
-            .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-
-        val beginEndYear =
-            LocalDateTime.parse(endingAt[0].experienceEndedAt)
-                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-
-        val beginYearEducation =
-            LocalDateTime.parse(educationBegin[0].educationBeginAt)
-                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-
-        val endedYearEducation =
-            LocalDateTime.parse(educationEnded[0].educationEndedAt)
-                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-
-        binding.headerApplicantDetail.experienceYearText.text =
-            "$beginYear - $beginEndYear"
-
-        binding.headerApplicantDetail.experienceJobText.text =
-            beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
-
-        binding.headerApplicantDetail.educationYearText.text =
-            "$beginYearEducation - $endedYearEducation"
-
-        binding.headerApplicantDetail.educationNameText.text =
-            educationBegin[0].educationMajorName + " - " + educationBegin[0].educationSchool
 
         binding.rvExperiences.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -265,8 +274,9 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
                 chip.setOnClickListener { downloadCV(data.documentFileName, data.documentName) }
             }
         }
+        val companyNo = SessionManager(context).user!!.userNo
         binding.headerApplicantDetail.btnReview.setOnClickListener {
-            goToReview()
+            goToReview(companyNo, applicantDetail)
         }
 
 
@@ -282,7 +292,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 
     private fun initializeDownloadManager() {
         downloadManager = activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
-        fileName = "documents"
+        fileName = "Document"
     }
 
     fun downloadCV(fileName: String, documentName: String) {
@@ -348,9 +358,9 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         ft.commit()
     }
 
-    override fun goToReview() {
+    override fun goToReview(companyNo: Long, applicantDetail: applicantModel) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, JobseekerReviewFragment(), "JobseekerReview")
+        ft.replace(id, JobseekerReviewFragment(companyNo, applicantDetail), "JobseekerReview")
         ft.addToBackStack("JobseekerReview")
         ft.commit()
     }
@@ -373,7 +383,7 @@ interface OnFragmentClickListener {
     fun goToHistoryApplicant(jobApplicantHistory: List<List<jobApplicantHistory>>)
     fun goToRecordApplicant()
     fun goToChangeStatus()
-    fun goToReview()
+    fun goToReview(companyNo: Long, applicantDetail: applicantModel)
     fun goToCompareJobseeker()
     fun goToPapikostikModal()
 }

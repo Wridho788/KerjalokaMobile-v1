@@ -39,6 +39,17 @@ data class send_review_response(
     val data: send
 )
 
+data class delete_review_response(
+    val code: Int,
+    val errorCode: Int?,
+    val message: String?,
+    val data: delete?
+)
+data class delete(
+    val tes: String,
+)
+
+
 data class send(
     val hasSend: Boolean,
     val canSend: Boolean,

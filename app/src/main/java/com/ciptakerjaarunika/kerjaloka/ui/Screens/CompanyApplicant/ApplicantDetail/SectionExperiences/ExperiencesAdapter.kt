@@ -38,9 +38,15 @@ class ExperiencesAdapter(private val experiences: List<experience>) : RecyclerVi
         val item = experiences[position]
         holder.expPosition.text = item.experiencePosition + " - " + item.experienceCompanyName
         holder.expCityName.text = item.experienceCityName + " - " + item.experienceCountry
-        holder.expBeginAt.text =
-            LocalDateTime.parse(item.experienceBeginAt).format(DateTimeFormatter.ofPattern("MMMM yyyy")) + " - " +
-                    LocalDateTime.parse(item.experienceEndedAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+        if (item.experienceBeginAt != null) {
+
+        val yearExp =  LocalDateTime.parse(item.experienceBeginAt).format(DateTimeFormatter.ofPattern("MMMM yyyy")) + " - " +
+                LocalDateTime.parse(item.experienceEndedAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+        holder.expBeginAt.text = yearExp.toString()
+        } else {
+            holder.expBeginAt.text = ""
+        }
+
     }
 
     override fun getItemCount(): Int {

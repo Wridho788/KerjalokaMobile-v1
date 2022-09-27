@@ -72,6 +72,7 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
                     if(it != null){
                         if (it.code == 210) {
                              Log.d("response", it.toString())
+                            activity?.onBackPressed()
                         }
                     }
                 }
@@ -84,6 +85,7 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
                     if(it != null){
                         if (it.code == 210) {
                             Log.d("response", it.toString())
+                            activity?.onBackPressed()
                         }
                     }
                 }
@@ -104,6 +106,7 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
                     if(it != null){
                         if (it.code == 210) {
                             Log.d("response", it.toString())
+                            activity?.onBackPressed()
                         }
                     }
                 }
@@ -116,6 +119,7 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
                     if(it != null){
                         if (it.code == 210) {
                             Log.d("response", it.toString())
+                            activity?.onBackPressed()
                         }
                     }
                 }
@@ -128,6 +132,7 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
                     if(it != null){
                         if (it.code == 210) {
                             Log.d("response", it.toString())
+                            activity?.onBackPressed()
                         }
                     }
                 }

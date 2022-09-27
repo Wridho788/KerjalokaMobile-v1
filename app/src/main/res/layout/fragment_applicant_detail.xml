@@ -51,20 +51,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <include android:id="@+id/headerApplicantDetail" layout="@layout/item_header_applicant_detail" />
+
+            <include
+                android:id="@+id/headerApplicantDetail"
+                layout="@layout/item_header_applicant_detail" />
 
             <LinearLayout
                 android:id="@+id/layout_record"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
                     android:layout_marginVertical="20dp"
                     android:background="@color/light_500" />
 
-                <include android:id="@+id/sectionrecord_layout" layout="@layout/item_section_record_applicant" />
+                <include
+                    android:id="@+id/sectionrecord_layout"
+                    layout="@layout/item_section_record_applicant" />
 
             </LinearLayout>
 
@@ -201,8 +207,7 @@
                     <ImageView
                         android:id="@+id/icon_vaccine"
                         android:layout_width="30dp"
-                        android:layout_height="30dp"
-                      />
+                        android:layout_height="30dp" />
 
                     <TextView
                         android:id="@+id/vaccineStatus"
@@ -217,7 +222,9 @@
 
             <LinearLayout
                 android:id="@+id/documentlayout"
-                android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
@@ -243,29 +250,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
                         <com.google.android.material.chip.ChipGroup
                             android:id="@+id/chipDocument"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:chipSpacing="5dp" />
-
-                        <!--                    <com.google.android.material.button.MaterialButton-->
-                        <!--                        android:id="@+id/btn_portofolio"-->
-                        <!--                        android:layout_width="wrap_content"-->
-                        <!--                        android:layout_height="wrap_content"-->
-                        <!--                        android:fontFamily="@font/poppins"-->
-                        <!--                        android:text="@string/portofolio"-->
-                        <!--                        android:textAllCaps="false"-->
-                        <!--                        app:cornerRadius="50dp" />-->
-
-                        <!--                    <com.google.android.material.button.MaterialButton-->
-                        <!--                        android:id="@+id/btn_cv"-->
-                        <!--                        android:layout_width="wrap_content"-->
-                        <!--                        android:layout_height="50dp"-->
-                        <!--                        android:layout_marginStart="10dp"-->
-                        <!--                        android:fontFamily="@font/poppins"-->
-                        <!--                        android:text="@string/cv"-->
-                        <!--                        app:cornerRadius="50dp" />-->
+                            app:chipSpacing="5dp"
+                            app:singleSelection="true"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -290,10 +281,10 @@
                     android:textColor="@color/dark_100"
                     android:textSize="16sp" />
 
-               <androidx.recyclerview.widget.RecyclerView
-                   android:id="@+id/rv_experiences"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_experiences"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <View
@@ -326,8 +317,8 @@
                 android:id="@+id/section_kemampuan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
@@ -339,6 +330,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -394,7 +386,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
 
 
             <View
