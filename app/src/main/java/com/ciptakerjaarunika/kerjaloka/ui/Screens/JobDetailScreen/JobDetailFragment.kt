@@ -309,14 +309,14 @@ class JobDetailFragment(
                         val recyclerView =
                             view.findViewById<RecyclerView>(R.id.recycler_other_job_company)
                         recyclerView.visibility = VISIBLE
-
-                        recyclerView.apply {
-                            layoutManager =
-                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                            adapter = RelatedOtherCompanyJobAdapter(
-                                it.data.job.filter { job -> job.jobNo != currentJob?.jobNo },
-                                this@JobDetailFragment
-                            )
+                        val otherJob = it.data.job.filter { job -> job.jobNo != currentJob?.jobNo }
+                        if(otherJob.isNotEmpty()){
+                            recyclerView.apply {
+                                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                                adapter = RelatedOtherCompanyJobAdapter(otherJob,this@JobDetailFragment)
+                            }
+                        }else{
+                            view.findViewById<LinearLayout>(R.id.other_job_container).visibility = GONE
                         }
                     }
                 }

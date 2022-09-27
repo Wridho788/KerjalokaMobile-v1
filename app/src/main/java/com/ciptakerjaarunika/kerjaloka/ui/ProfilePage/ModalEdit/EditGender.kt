@@ -11,18 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditGenderAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 
+data class GenderModel(
+    val value : Char,
+    val Description : String,
+)
 
-class EditGender: SuperBottomSheetFragment() {
+class EditGender(val value : Char?, private val iEditBasic: iEditBasic) : SuperBottomSheetFragment(), iGender {
 
-    private var layoutManager: RecyclerView.LayoutManager? =null
-    private var adapter: RecyclerView.Adapter<EditGenderAdapter.EditGender>? = null
-    private lateinit var editGenderAdapter: EditGenderAdapter
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
-        title.text = "Pilih Gender"
+        title.text = "Pilih Jenis Kelamin"
 
         return view
     }
@@ -33,10 +35,16 @@ class EditGender: SuperBottomSheetFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapter = EditGenderAdapter(listOf())
-        recyclerView.adapter = adapter
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = EditGenderAdapter(
+                value,
+                listOf(
+                    GenderModel('M', "Laki-laki"),
+                    GenderModel('W', "Perempuan")
+                ), iEditBasic,this@EditGender
+            )
+        }
     }
 
 
@@ -46,4 +54,12 @@ class EditGender: SuperBottomSheetFragment() {
 
     @SuppressLint("Range")
     override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+
+    override fun close() {
+        this.dismiss()
+    }
+
+}
+interface iGender{
+    fun close()
 }

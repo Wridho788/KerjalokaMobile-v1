@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.*
 
-class viewpagerAdapter (val data : JobseekerProfile?, fragmentManager: FragmentManager, lifecycle: Lifecycle,): FragmentStateAdapter(fragmentManager,lifecycle){
+class viewpagerAdapter (var data : JobseekerProfile?, fragmentManager: FragmentManager, lifecycle: Lifecycle,): FragmentStateAdapter(fragmentManager,lifecycle){
     override fun getItemCount(): Int {
         return 7
     }

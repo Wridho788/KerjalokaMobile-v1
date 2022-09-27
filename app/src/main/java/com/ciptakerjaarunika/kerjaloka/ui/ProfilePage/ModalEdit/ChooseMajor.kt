@@ -42,11 +42,10 @@ class ChooseMajor : SuperBottomSheetFragment() {
         recyclerView.layoutManager = layoutManager
         DataAPI().GetMajors(context){
             if(it != null){
-                adapter = ChooseMajorAdapter(it.data)
+                adapter = ChooseMajorAdapter(it)
                 recyclerView.adapter = adapter
             }
         }
-
     }
 
 

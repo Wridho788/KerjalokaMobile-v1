@@ -49,31 +49,117 @@ class DataAPI {
     }
 
     //Get Major
-    data class majorResponse(
-        val code : Int,
-        val data : List <Major>
-    )
     interface major {
         @GET("data/majors")
-        fun getData(): Call<majorResponse>
+        fun getData(): Call<List <Major>?>
     }
 
     fun GetMajors(
         context: Context?,
-        onResult: (majorResponse?) -> Unit
+        onResult: (List <Major>?) -> Unit
     ) {
         if (context != null) {
             val retrofit = ServiceBuilder(context).GET(major::class.java)
 
             retrofit.getData().enqueue(
-                object : Callback<majorResponse> {
+                object : Callback<List<Major>?> {
                     override fun onResponse(
-                        call: Call<majorResponse>,
-                        response: Response<majorResponse>
+                        call: Call<List<Major>?>,
+                        response: Response<List<Major>?>
                     ) {
                         onResult(response.body())
                     }
-                    override fun onFailure(call: Call<majorResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<List<Major>?>, t: Throwable) {
+                        Log.e("error", t.toString())
+                        onResult(null)
+                    }
+                }
+            )
+        }
+    }
+
+    //Get Maritals
+    interface marital {
+        @GET("data/maritals")
+        fun getData(): Call<List<Marital>?>
+    }
+
+    fun GetMaritals(
+        context: Context?,
+        onResult: (List<Marital>?) -> Unit
+    ) {
+        if (context != null) {
+            val retrofit = ServiceBuilder(context).GET(marital::class.java)
+
+            retrofit.getData().enqueue(
+                object : Callback<List<Marital>?> {
+                    override fun onResponse(
+                        call: Call<List<Marital>?>,
+                        response: Response<List<Marital>?>
+                    ) {
+                        onResult(response.body())
+                    }
+                    override fun onFailure(call: Call<List<Marital>?>, t: Throwable) {
+                        Log.e("error", t.toString())
+                        onResult(null)
+                    }
+                }
+            )
+        }
+    }
+
+    //Get Religions
+    interface religion {
+        @GET("data/religions")
+        fun getData(): Call<List<Religion>?>
+    }
+
+    fun GetReligions(
+        context: Context?,
+        onResult: (List<Religion>?) -> Unit
+    ) {
+        if (context != null) {
+            val retrofit = ServiceBuilder(context).GET(religion::class.java)
+
+            retrofit.getData().enqueue(
+                object : Callback<List<Religion>?> {
+                    override fun onResponse(
+                        call: Call<List<Religion>?>,
+                        response: Response<List<Religion>?>
+                    ) {
+                        onResult(response.body())
+                    }
+                    override fun onFailure(call: Call<List<Religion>?>, t: Throwable) {
+                        Log.e("error", t.toString())
+                        onResult(null)
+                    }
+                }
+            )
+        }
+    }
+
+    //Get Residents
+    interface residents {
+        @GET("data/residents")
+        fun getData(): Call<List<Resident>?>
+    }
+
+    fun GetResidents(
+        context: Context?,
+        onResult: (List<Resident>?) -> Unit
+    ) {
+        if (context != null) {
+            val retrofit = ServiceBuilder(context).GET(residents::class.java)
+
+            retrofit.getData().enqueue(
+                object : Callback<List<Resident>?> {
+                    override fun onResponse(
+                        call: Call<List<Resident>?>,
+                        response: Response<List<Resident>?>
+                    ) {
+                        onResult(response.body())
+                    }
+                    override fun onFailure(call: Call<List<Resident>?>, t: Throwable) {
                         Log.e("error", t.toString())
                         onResult(null)
                     }

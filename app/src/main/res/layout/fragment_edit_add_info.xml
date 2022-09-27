@@ -30,7 +30,8 @@
                 android:backgroundTint="@color/white"
                 android:paddingLeft="16dp"
                 app:cornerRadius="100sp"
-                app:icon="@drawable/ic_back"
+                android:id="@+id/back_btn"
+                app:icon="@drawable/ic_arrow_left_red"
                 app:iconTint="@color/danger_500" />
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -100,6 +101,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:editable="false"
                                 android:fontFamily="@font/poppins"
                                 android:hint="Pilih Status Pernikahan"
                                 android:padding="14dp"
@@ -226,7 +228,7 @@
                         app:cardElevation="0dp">
 
                         <EditText
-                            android:id="@+id/js_pob"
+                            android:id="@+id/birhtday_place"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
@@ -314,7 +316,7 @@
                         app:cardElevation="0dp">
 
                         <EditText
-                            android:id="@+id/js_editPostalCode"
+                            android:id="@+id/postal_code"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
@@ -354,7 +356,7 @@
                         app:cardElevation="0dp">
 
                         <EditText
-                            android:id="@+id/js_editTeleID"
+                            android:id="@+id/telegram"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
@@ -394,7 +396,7 @@
                         app:cardElevation="0dp">
 
                         <EditText
-                            android:id="@+id/js_editInstaID"
+                            android:id="@+id/instagram"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
@@ -422,14 +424,15 @@
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="5dp"
                 android:background="@color/light_500" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSaveBasic"
+                android:id="@+id/save_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
                 android:backgroundTint="@color/danger_500"
                 android:fontFamily="@font/poppins"
                 android:text="Simpan"

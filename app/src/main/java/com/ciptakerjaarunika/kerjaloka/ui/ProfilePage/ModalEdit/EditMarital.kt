@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.model.Data.Marital
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditMaritalAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iUpdateAdditional
 
 
-class EditMarital: SuperBottomSheetFragment() {
-
+class EditMarital(private val maritalNo : Int?, val listMarital : List<Marital>,val iUpdateAdditional: iUpdateAdditional): SuperBottomSheetFragment(), iMarital {
     private var layoutManager: RecyclerView.LayoutManager? =null
     private var adapter: RecyclerView.Adapter<EditMaritalAdapter.EditMarital>? = null
     private lateinit var editMaritalAdapter: EditMaritalAdapter
@@ -32,12 +34,13 @@ class EditMarital: SuperBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapter = EditMaritalAdapter(listOf())
-        recyclerView.adapter = adapter
+            val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = listMarital?.let { it1 -> EditMaritalAdapter(maritalNo, it1, iUpdateAdditional, this@EditMarital) }
+            }
     }
+
 
 
     override fun isSheetAlwaysExpanded(): Boolean {
@@ -46,4 +49,11 @@ class EditMarital: SuperBottomSheetFragment() {
 
     @SuppressLint("Range")
     override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+
+    override fun close() {
+        this.dismiss()
+    }
+}
+interface iMarital{
+    fun close()
 }

@@ -1,43 +1,67 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ciptakerjaarunika.kerjaloka.R
+import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditAboutMeBinding
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EditAboutMe.newInstance] factory method to
- * create an instance of this fragment.
- */
-class EditAboutMe(val data : JobseekerProfile?) : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+class EditAboutMe(var data : JobseekerProfile?) : Fragment() {
+    private lateinit var binding : FragmentEditAboutMeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentEditAboutMeBinding.inflate(layoutInflater)
+        val view = binding.root
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_about_me, container, false)
+        return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.backBtn.setOnClickListener{
+            back()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            back()
+        }
+
+        if(!data?.additionals?.jobseekerAbout.isNullOrEmpty()){
+            binding.aboutTxt.setText(data?.additionals?.jobseekerAbout)
+        }
+        binding.saveBtn.setOnClickListener{
+            if(binding.aboutTxt.text.toString().isNullOrEmpty()){
+                Toast.makeText(activity, "Input text tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                ManageProfileAPI().EditAboutMe(binding.aboutTxt.text.toString(), context){
+                    if(it != null) {
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                        back()
+                    }
+                    else{
+                        Toast.makeText(activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+    private fun back(){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction?.replace(id, profilepage(), "Profile Page")
+        fragmentTransaction?.commit()
+    }
 
 }

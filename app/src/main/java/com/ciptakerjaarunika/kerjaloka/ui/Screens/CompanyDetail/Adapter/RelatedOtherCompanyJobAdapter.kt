@@ -13,7 +13,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Model.relatedOth
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.IJobDetail
 import com.google.android.material.card.MaterialCardView
 
-class RelatedOtherCompanyJobAdapter(private val listItem : List<job>, private val iJobDetail: IJobDetail) :
+class RelatedOtherCompanyJobAdapter(private val listItem : List<job>?, private val iJobDetail: IJobDetail) :
     RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
@@ -39,19 +39,19 @@ class RelatedOtherCompanyJobAdapter(private val listItem : List<job>, private va
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = listItem[position]
-        holder.relatedjobPosition.text = currentItem.jobPosition
-        holder.relatedjobCompany.text = currentItem.company.companyName
-        holder.relatedjobLocation.text = if(currentItem.jobLocation.size > 1) "Banyak lokasi" else currentItem.jobLocation[0].location
-        holder.relatedJobDate.text = currentItem.createdOn
+        val currentItem = listItem?.get(position)
+        holder.relatedjobPosition.text = currentItem?.jobPosition
+        holder.relatedjobCompany.text = currentItem?.company?.companyName
+        holder.relatedjobLocation.text = if(currentItem?.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem?.jobLocation?.get(0)?.location
+        holder.relatedJobDate.text = currentItem?.createdOn
         Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).into(holder.relatedlogo)
 
         holder.cardrelatedJob.setOnClickListener {
-            iJobDetail.onFragmentClick(currentItem.company.companyNo, currentItem.jobNo)
+            currentItem?.company?.companyNo?.let { it1 -> iJobDetail.onFragmentClick(it1, currentItem.jobNo) }
         }
     }
 
     override fun getItemCount(): Int {
-        return listItem.size
+        return if(listItem == null) 0 else listItem.size
     }
 }
