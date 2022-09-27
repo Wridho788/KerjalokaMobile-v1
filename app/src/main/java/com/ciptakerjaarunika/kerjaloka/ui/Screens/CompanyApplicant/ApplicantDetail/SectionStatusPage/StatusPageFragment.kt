@@ -135,9 +135,6 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
         } else {
             status
         }
-
-
-
         binding.btnDatePicker.setOnClickListener {
             showDatePickerDialog()
         }

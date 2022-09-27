@@ -111,6 +111,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         } else {
             binding.layoutRecord.visibility = View.GONE
         }
+
         binding.btnLihatHasilTesApplicant.setOnClickListener {
             goToPapikostikModal()
         }
@@ -185,6 +186,10 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
             binding.sectionKemampuan.visibility = View.GONE
         }
 
+        if (applicantDetail.applicant.documents == null) {
+            binding.documentlayout.visibility = View.GONE
+        }
+
         if (applicantDetail.ownRating.conRating != null) {
             applicantDetail.ownRating.conRating.forEach {
                 val chip = Chip(context)
@@ -241,11 +246,27 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         }
 
         initializeDownloadManager()
-        binding.btnCv.setOnClickListener {
-            downloadCV()
+        if (applicantDetail.applicant.documents != null) {
+            applicantDetail.applicant.documents.forEach { data ->
+                val chip = Chip(context)
+                chip.setChipBackgroundColorResource(R.color.danger_500)
+                chip.setTextAppearanceResource(R.color.white)
+                chip.apply {
+                    textSize = 12f
+                    text = data.documentName
+                    isChipIconVisible = false
+                    isCloseIconVisible = false
+                    isClickable = true
+                    isFocusable = true
+                    rootView.apply {
+                        binding.chipDocument.addView(chip as View)
+                    }
+                }
+                chip.setOnClickListener { downloadCV(data.documentFileName, data.documentName) }
+            }
         }
-        binding.btnPortofolio.setOnClickListener {
-            downloadCV()
+        binding.headerApplicantDetail.btnReview.setOnClickListener {
+            goToReview()
         }
 
 
@@ -264,14 +285,14 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         fileName = "documents"
     }
 
-    fun downloadCV() {
+    fun downloadCV(fileName: String, documentName: String) {
         val request =
             DownloadManager.Request(
                 Uri.parse(
-                    "${config().portAddress}/document/download?fileName=${applicantDetail.applicant.documents[0].documentFileName}&documentName=${applicantDetail.applicant.documents[0].documentName}"
+                    "${config().portAddress}/document/download?fileName=${fileName}&documentName=${documentName}"
                 )
             )
-        request.setTitle("CV")
+        request.setTitle(documentName)
             .setDescription("File is downloading...")
             .setDestinationInExternalFilesDir(
                 context,
@@ -281,25 +302,6 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 
         downLoadId = downloadManager!!.enqueue(request)
     }
-
-    fun downloadPortofolio(){
-        val request =
-            DownloadManager.Request(
-                Uri.parse(
-                    "${config().portAddress}/document/download?fileName=${applicantDetail.applicant.documents[0].documentFileName}&documentName=${applicantDetail.applicant.documents[0].documentName}"
-                )
-            )
-        request.setTitle("Portofolio")
-            .setDescription("File is downloading...")
-            .setDestinationInExternalFilesDir(
-                context,
-                Environment.DIRECTORY_DOWNLOADS, fileName
-            )
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-
-        downLoadId = downloadManager!!.enqueue(request)
-    }
-
 
     override fun goToCommentApplicant(
         commentList: List<CommentModel>,
