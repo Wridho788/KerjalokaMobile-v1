@@ -65,6 +65,7 @@
             android:id="@+id/recyle_company_jobs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
             tools:listitem="@layout/section_company_jobs"></androidx.recyclerview.widget.RecyclerView>
 
         <ImageView

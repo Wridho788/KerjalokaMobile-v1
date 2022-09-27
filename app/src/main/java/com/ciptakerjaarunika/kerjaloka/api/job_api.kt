@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobResponses
 import com.ciptakerjaarunika.kerjaloka.model.Job.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -212,6 +213,34 @@ class JobAPI {
             )
     }
 
+
+    // Get All Company Job
+    interface getCompanyJob {
+        @GET("company/officer/jobs")
+        fun getData() : Call<JobResponses>
+    }
+
+    fun getJob(context: Context?, onResult: (JobResponses?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getCompanyJob::class.java)
+
+        retrofit.getData().enqueue(
+            object : Callback<JobResponses> {
+                override fun onFailure(call: Call<JobResponses>, t: Throwable) {
+                    onResult(null)
+                    Log.e("Response Failed Job Officer : ", t.toString())
+
+                }
+
+                override fun onResponse(
+                    call: Call<JobResponses>,
+                    response: Response<JobResponses>
+                ) {
+                    Log.d("Response Job Officer : ", response.body().toString())
+                    onResult(response.body())
+                }
+            }
+        )
+    }
 
 
 }

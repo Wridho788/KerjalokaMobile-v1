@@ -67,6 +67,7 @@ class ServiceBuilder(context: Context?) {
             .addConverterFactory(GsonConverterFactory.create())
             .client(clientGet)
             .build()
+//        Log.d("Builder Client Get : ", clientGet.toString())
 
         return retrofit.create(service)
     }
