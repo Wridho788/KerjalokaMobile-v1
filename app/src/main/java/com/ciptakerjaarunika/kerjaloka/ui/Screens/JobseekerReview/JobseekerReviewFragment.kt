@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,70 +64,72 @@ class JobseekerReviewFragment(
 
 //        section send review
         var company = SessionManager(context).user?.company
-        Log.d("company", company.toString())
-        Log.d("company no", companyNo.toString())
-        binding.sectionItemReview.visibility = View.GONE
-        binding.reviewList.btnSendReviewCompany.visibility = View.GONE
-        Log.d("rating no", applicantDetail.ownRating.toString())
-
         if (company != null) {
             CanSendReview().getSendReviewAsync(context, companyNo) {
                 if (it != null) {
                     if (it.data.hasSend == true) {
                         binding.sectionItemReview.visibility = View.GONE
-                    } else {
-                        binding.sectionItemReview.visibility = View.VISIBLE
-                        binding.cardMyReview.btnHapusReview.setOnClickListener {
-                            if (applicantDetail.ownRating.ownUserRatingNo != null) {
-                                    DeleteReviewResponse().getDeleteMyReview(
-                                        context,
-                                       8
-                                    ) {
-                                        binding.sectionItemReview.visibility = View.GONE
-                                    }
-                            } else {
-                                binding.layoutReviewParent.visibility = View.GONE
-                            }
-                        }
-//                        MyReview().getMyReview(context, true){
-//
-//                        }
-                    }
-                    if (it.data.canSend == true) {
+                    } else if (it.data.canSend == true) {
                         binding.reviewList.btnSendReviewCompany.visibility = View.VISIBLE
                         binding.reviewList.btnSendReviewCompany.setOnClickListener {
-                            val sheet =
-                                SendReview(
-                                    companyNo
-                                )
-                            activity.let { it1 ->
-                                sheet.show(
-                                    it1!!.supportFragmentManager,
-                                    "SendReview"
-                                )
-                            }
+                            sendReviewModal(companyNo)
                         }
                     } else {
                         binding.reviewList.btnSendReviewCompany.setOnClickListener(null)
-
                     }
                 }
             }
         }
-        CompanyReviewAPI().getCompanyReviewAsync(context, applicantDetail.applicant.jobseekerNo) {
+        val companyUserNo = SessionManager(context).user?.company?.userNo
+        // my review
+        CompanyReviewAPI().getCompanyReviewAsync(context, companyUserNo!!) {
+            val my_review = it!!.data.reviewList.filter { item ->
+                item.userNo == companyUserNo
+            }
+            if (my_review != null) {
+                binding.layoutReviewParent.visibility = View.VISIBLE
+                binding.cardMyReview.btnHapusReview.setOnClickListener {
+                    if (applicantDetail.ownRating.ownUserRatingNo != null) {
+                        DeleteReviewResponse().getDeleteMyReview(
+                            context,
+                            applicantDetail.ownRating.ownUserRatingNo
+                        ) {
+                            binding.sectionItemReview.visibility = View.GONE
+                        }
+                    } else {
+                        binding.layoutReviewParent.visibility = View.GONE
+                    }
+                }
+                binding.cardMyReview.btnEditReview.setOnClickListener {
+                    sendReviewModal(companyNo)
+                }
+            } else {
+                binding.layoutReviewParent.visibility = View.GONE
+            }
+        }
+
+        // other review
+        val jobSeekerUserNo = applicantDetail.applicant.jobseekerNo
+        CompanyReviewAPI().getCompanyReviewAsync(context, jobSeekerUserNo) {
             if (it != null) {
-                Log.d("response", it.toString())
                 binding.rvItemCard.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = JobseekerReviewAdapter(it.data.reviewList)
                 }
             }
         }
+    }
 
-
-//        binding.reviewSend.btnSendReviewCompany.setOnClickListener {
-//            val sheet = SendReview()
-//            sheet.let { it1 -> sheet.show(childFragmentManager, "sendreview") }
-//        }
+    fun sendReviewModal(companyNo: Long) {
+        val sheet =
+            SendReview(
+                companyNo, id, JobseekerReviewFragment(companyNo, applicantDetail)
+            )
+        activity.let { it1 ->
+            sheet.show(
+                it1!!.supportFragmentManager,
+                "SendReview"
+            )
+        }
     }
 }

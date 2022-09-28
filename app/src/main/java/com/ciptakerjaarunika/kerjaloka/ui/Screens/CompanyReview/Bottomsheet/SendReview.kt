@@ -10,16 +10,17 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.RatingBar.OnRatingBarChangeListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.SendReviewAPI
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.CompanyReviewFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.conRatingList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRatingList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.send_Request
 
-class SendReview(private val CompanyNo: Long) : SuperBottomSheetFragment(), OnFragmentClickListener {
+class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fragment) :
+    SuperBottomSheetFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +33,7 @@ class SendReview(private val CompanyNo: Long) : SuperBottomSheetFragment(), OnFr
         val btn_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review)
         val textReview = view.findViewById<EditText>(R.id.insertreview)
         ratingBar.onRatingBarChangeListener =
-            OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating}
+            OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating }
 
         val proRatingList = ArrayList<proRatingList>()
         val category1 = proRatingList(
@@ -44,10 +45,21 @@ class SendReview(private val CompanyNo: Long) : SuperBottomSheetFragment(), OnFr
         proRatingList.add(category1)
         Log.d("rating list", proRatingList.toString())
         btn_send_review.setOnClickListener {
-            SendReviewAPI().SendReviewPost(context, send_Request(CompanyNo,textReview.text.toString(), ratingBar.rating.toLong(), proRatingList, conRatingList )){
-                if (it != null){
-                    Log.d("Send Response", it.toString())
-//                    onCompanyReview()
+            SendReviewAPI().SendReviewPost(
+                context,
+                send_Request(
+                    CompanyNo,
+                    textReview.text.toString(),
+                    ratingBar.rating.toLong(),
+                    proRatingList,
+                    conRatingList
+                )
+            ) {
+                if (it != null) {
+                    this.dismiss()
+                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                    ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
+                    ft.commit()
                 }
             }
         }
@@ -63,14 +75,4 @@ class SendReview(private val CompanyNo: Long) : SuperBottomSheetFragment(), OnFr
         return true
     }
 
-    override fun onCompanyReview(){
-        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, CompanyReviewFragment(), "CompanyReviewFragment")
-        ft.addToBackStack("CompanyReviewFragment")
-        ft.commit()
-    }
-}
-
-interface OnFragmentClickListener {
-    fun onCompanyReview()
 }

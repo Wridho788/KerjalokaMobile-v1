@@ -9,7 +9,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 
-
 class CompanyReviewAPI {
     interface CompanyReviewAPIList {
         @GET("/users/rating/get")
@@ -72,23 +71,23 @@ class CanSendReview {
 
 class MyReview {
     interface MyReviewResponse {
-        @GET("/company/rating/myReview")
-        fun getMyReview(@Query("sortByNewest") sortByNewest: Boolean = true): Call<send_review_response>
+        @GET("company/rating/myReview")
+        fun getMyReview(@Query("userNo") userNo: Long): Call<my_review_response>
     }
-    fun getMyReview(context: Context?, sortByNewest: Boolean = true, onResult: (send_review_response?) -> Unit){
+    fun getMyReview(context: Context?, userNo: Long, onResult: (my_review_response?) -> Unit){
         if (context != null) {
             val retrofit = ServiceBuilder(context).GET(MyReviewResponse::class.java)
 
-            retrofit.getMyReview(sortByNewest).enqueue(
-                object : Callback<send_review_response> {
+            retrofit.getMyReview(userNo).enqueue(
+                object : Callback<my_review_response> {
                     override fun onResponse(
-                        call: Call<send_review_response>,
-                        response: Response<send_review_response>
+                        call: Call<my_review_response>,
+                        response: Response<my_review_response>
                     ) {
                         onResult(response.body())
                     }
 
-                    override fun onFailure(call: Call<send_review_response>, t: Throwable) {
+                    override fun onFailure(call: Call<my_review_response>, t: Throwable) {
                         onResult(null)
                     }
                 }

@@ -139,7 +139,7 @@
         <entry key="app/src/main/res/layout/fragment_job_nearme.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_recommendation.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_jobseeker_review.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_jobseeker_review.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_komentar_applicant.xml" value="0.1801088570014844" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.165" />
