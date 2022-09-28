@@ -112,9 +112,10 @@
         <entry key="app/src/main/res/layout/activity_search_job.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/card_company_job.xml" value="0.25" />
         <entry key="app/src/main/res/layout/card_jobseeker_review.xml" value="0.190004948045522" />
+        <entry key="app/src/main/res/layout/card_question.xml" value="0.23169601482854496" />
         <entry key="app/src/main/res/layout/card_test.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/chat_page.xml" value="0.19196237708422403" />
-        <entry key="app/src/main/res/layout/comp_package_card.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/comp_package_card.xml" value="0.375" />
         <entry key="app/src/main/res/layout/comp_profile.xml" value="0.15647712697734073" />
         <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
@@ -130,6 +131,7 @@
         <entry key="app/src/main/res/layout/fragment_comp_my_review.xml" value="0.2752548656163114" />
         <entry key="app/src/main/res/layout/fragment_company_compare_jobseeker.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_company_detail_test.xml" value="0.17443351859769132" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perJob.xml" value="0.21633176571184268" />
         <entry key="app/src/main/res/layout/fragment_company_interview_perjob.xml" value="0.2231722958529286" />
         <entry key="app/src/main/res/layout/fragment_company_job_active_page.xml" value="0.165" />
@@ -140,11 +142,12 @@
         <entry key="app/src/main/res/layout/fragment_company_review.xml" value="0.10771992818671454" />
         <entry key="app/src/main/res/layout/fragment_company_want_to_know.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.1704653371320038" />
+        <entry key="app/src/main/res/layout/fragment_history_modal.xml" value="0.17443351859769132" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_interview.xml" value="0.22777777777777777" />
         <entry key="app/src/main/res/layout/fragment_job_applicant.xml" value="0.2930232558139535" />
         <entry key="app/src/main/res/layout/fragment_job_bookmark.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.19365079365079366" />
+        <entry key="app/src/main/res/layout/fragment_job_detail.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_job_nearme.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_recommendation.xml" value="0.1" />
@@ -168,9 +171,10 @@
         <entry key="app/src/main/res/layout/fragment_review_history.xml" value="0.16218721037998146" />
         <entry key="app/src/main/res/layout/fragment_status_page.xml" value="0.2511078286558346" />
         <entry key="app/src/main/res/layout/fragment_tambah_jobseeker.xml" value="0.14794656110836218" />
+        <entry key="app/src/main/res/layout/fragment_test_detail.xml" value="0.23169601482854496" />
         <entry key="app/src/main/res/layout/fragment_ubah_status.xml" value="0.22564935064935066" />
         <entry key="app/src/main/res/layout/fragment_view_job_detail.xml" value="0.15378517637732858" />
-        <entry key="app/src/main/res/layout/fragment_view_mytest_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_view_mytest_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/general_toolbar.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/global_toolbar.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_applicant.xml" value="0.25" />

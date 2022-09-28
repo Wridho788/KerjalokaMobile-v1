@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateUtils
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.Companyjobs_adapter
@@ -15,7 +17,9 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.JobTestL
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobTitle
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
+import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,6 +55,9 @@ class fragment_company_job_active_page : Fragment() {
         val jobLoc = view.findViewById<TextView>(R.id.company_loc)
         val testRecycle = view.findViewById<RecyclerView>(R.id.recycleTest)
         val sqRecycle = view.findViewById<RecyclerView>(R.id.questionRecycle)
+        val shareJob = view.findViewById<MaterialButton>(R.id.btn_job_share)
+        val draftJob = view.findViewById<MaterialButton>(R.id.btn_job_draft)
+        val publishJob = view.findViewById<MaterialButton>(R.id.btn_job_publish)
 
         if (arguments != null){
             val descFromBundle = arguments?.getString(fragment_company_job_active_page.EXTRA_DETAIL_JOB)
@@ -92,6 +99,35 @@ class fragment_company_job_active_page : Fragment() {
             sqRecycle.layoutManager = layoutManager1
             sqadapter = sqList?.let { JobSQListAdapter(it) }
             sqRecycle.adapter = sqadapter
+
+            val titleJob = jobData?.jobPosition
+            val link = jobData?.link
+            shareJob.setOnClickListener {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, titleJob)
+                    putExtra(Intent.EXTRA_TEXT, link)
+                    type = "text/plain"
+                }
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
+            }
+
+            if (jobData?.publish==true){
+                draftJob.isVisible=true
+            }
+            else{
+                publishJob.isVisible=true
+            }
+
+            val jobNo = jobData?.jobNo
+            draftJob.setOnClickListener{
+                jobNo?.let { it1 -> JobAPI().DraftJob(context, it1){} }
+            }
+            publishJob.setOnClickListener{
+                jobNo?.let { it1 -> JobAPI().PublishJob(context, it1){} }
+            }
+
         }
 
     }
@@ -102,54 +138,6 @@ class fragment_company_job_active_page : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view =inflater.inflate(R.layout.fragment_company_job_active_page, container, false)
-
-
-
-
-//        val listitem = ArrayList<item>()
-//        val list = ArrayList<ResponseJobs>()
-//        val citylist = ArrayList<JobCity>()
-//        val city1 = JobCity(
-//            id=0,
-//            cityname = "Kota Medan"
-//        )
-//        citylist.add(city1)
-//        val job1 = ResponseJobs(
-//            createdBy ="reyhan@kerjaloka.com",
-//            createdOn ="2022-08-03T10:56:24",
-//            expired ="2022-09-02T00:00:00",
-//            jobAdditionalDescription =null,
-//            jobCity =citylist,
-//            jobDescription ="<ul><li>Crosscheck cashflow, GL Accounting, and balance sheet</li><li>Financial overview per month</li><li>Manage Petty Cash</li><li>Prepare required document of daily banking transaction</li><li>Monitoring &amp; report export proceeds and import payment through SiMoDIS</li><li>Reconcile all of bank account every day</li><li>Update payment in SAP</li></ul><p><br></p>",
-//            jobExperienceLevel =null,
-//            jobField =null,
-//            jobMinExperience =12,
-//            jobNo ="4120220803105624",
-//            jobPosition ="Testing Baru",
-//            jobRole =null,
-//            jobSalaryMax =null,
-//            jobSalaryMin =1223333,
-//            jobShortQuestion =null,
-//            jobSkills =null,
-//            jobTests =null,
-//            jobTitle =null,
-//            jobType =null,
-//            link ="https://advance.kerjaloka.com/job/TESTING/4120220803105624",
-//            packageName =null,
-//            publish =false,
-//            takedown =false
-//        )
-//        list.add(job1)
-//
-//        val listanalytic = ArrayList<analytic>()
-//        val anl1 = analytic(
-//            clickCount= 21,
-//        totalDuration = 0,
-//        averageDuration = 0
-//        )
-//        listanalytic.add(anl1)
-//
-
         return view
     }
 

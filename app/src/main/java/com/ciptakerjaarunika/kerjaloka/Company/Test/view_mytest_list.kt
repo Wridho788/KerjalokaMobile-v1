@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Listener.JobDetail
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.Companyjobs_adapter
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_job_active_page
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
+import com.ciptakerjaarunika.kerjaloka.Company.Test.Listener.TestDetailListener
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Job.ApplicationData
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranCellClickListener
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.viewJobDetail
+import com.google.gson.Gson
 
-class view_mytest_list : Fragment(),LamaranCellClickListener {
+class view_mytest_list : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapterTest: RecyclerView.Adapter<mytest_adapter.ViewHolder>? = null
 
@@ -27,96 +31,48 @@ class view_mytest_list : Fragment(),LamaranCellClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_view_mytest_list, container, false)
 
-        val testList = ArrayList<Test>()
-        val quesList = ArrayList<Question>()
-
-        val q1 = Question(
-            questionNo = 363,
-            question = "Jawaban benar hanya 1 dan 3",
-            type = 3,
-            maxScore = 20,
-            subQuestion = 0
-        )
-        val q2 = Question(
-            questionNo = 363,
-            question = "OHHH Let it Be",
-            type = 3,
-            maxScore = 20,
-            subQuestion = 0
-        )
-        val q3 = Question(
-            questionNo = 363,
-            question = "Let It Be",
-            type = 3,
-            maxScore = 20,
-            subQuestion = 0
-        )
-        quesList.add(q1)
-        quesList.add(q2)
-        quesList.add(q3)
-
-        val test1 = Test(
-            testNo = 70,
-            testName = "Test Jawaban Ganda",
-            testDuration = 12,
-            testPeriod = 3,
-            maxScore = 230,
-            testEnabled = true,
-            testHint = "",
-            isPublic = false,
-            isSpecial = false,
-            createdBy = "TESTING",
-            createdOn = "2022-05-21T12:02:05",
-            questions = quesList,
-            isTakedown = false,
-            isOwn = true,
-            testLink = null,
-            testMarketNo = null,
-            price = null
-        )
-        val test2 = Test(
-            testNo = 70,
-            testName = "Test Jawaban Ganda",
-            testDuration = 12,
-            testPeriod = 3,
-            maxScore = 230,
-            testEnabled = true,
-            testHint = "",
-            isPublic = false,
-            isSpecial = false,
-            createdBy = "TESTING TESTING TESTING TESTING",
-            createdOn = "2022-05-21T12:02:05",
-            questions = quesList,
-            isTakedown = false,
-            isOwn = true,
-            testLink = null,
-            testMarketNo = null,
-            price = null
-        )
-        testList.add(test1)
-        testList.add(test2)
-        testList.add(test1)
-        testList.add(test1)
-        testList.add(test1)
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
-        layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView.layoutManager = layoutManager
-        adapterTest = mytest_adapter(testList)
-        recyclerView.adapter = adapterTest
+        company_profile_api().MyTest(context){
+            val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            recyclerView.layoutManager = layoutManager
+            adapterTest = it?.let { it1 -> assignAdapter(it1.data) }
+            recyclerView.adapter = adapterTest
+        }
 
         return view
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
     }
-    override fun onCellClickListener(jobNo: Long, companyNo: Long, applicationData: ApplicationData?) {
-        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, viewJobDetail(jobNo, companyNo, applicationData), "JobDetailFragment")
-        ft.addToBackStack("Lamaran Page")
-        ft.commit()
+
+    internal fun assignAdapter(list: List<Test>): mytest_adapter {
+        return mytest_adapter(list, object : TestDetailListener {
+            override fun detail(testDetail: Test) {
+                replaceFragment(testDetail)
+            }
+        })
+    }
+
+    private fun replaceFragment(test: Test?) {
+        val testDetailFragment = TestDetail()
+        val mBundle = Bundle()
+        val testData = Gson().toJson(test)
+        mBundle.putString(TestDetail.EXTRA_DETAIL_TEST, testData)
+        testDetailFragment.arguments = mBundle
+        val mFragmentManager = parentFragmentManager
+        mFragmentManager?.beginTransaction()?.apply {
+            replace(
+                R.id.fragment_container,
+                testDetailFragment,
+                TestDetail::class.java.simpleName
+            )
+            addToBackStack(null)
+            commit()
+
+        }
     }
 
     companion object {
+
     }
 }

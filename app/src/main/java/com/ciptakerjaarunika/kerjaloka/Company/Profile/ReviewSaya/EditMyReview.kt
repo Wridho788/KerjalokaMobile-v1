@@ -2,13 +2,13 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Adapter.myPackageAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Listener.ShowModalHistory
+import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.Data
 import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
 import com.ciptakerjaarunika.kerjaloka.Company.Package.pack
 import com.ciptakerjaarunika.kerjaloka.R
@@ -33,9 +33,9 @@ class EditMyReview : SuperBottomSheetFragment() {
 
     }
 
-    internal fun assignAdapter(list: List<pack>): myPackageAdapter {
+    internal fun assignAdapter(list: List<Data>): myPackageAdapter {
         return myPackageAdapter(requireContext(), list, object : ShowModalHistory {
-            override fun showDetail(pack: pack) {
+            override fun showDetail(pack: Data) {
                 val sheet = history_modal()
                 Log.d("data", pack.orderNo.toString())
                 activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }

@@ -2,7 +2,10 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.MyPackagesResponse
+import com.ciptakerjaarunika.kerjaloka.Company.Package.getHistoryResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
+import com.ciptakerjaarunika.kerjaloka.Company.Test.testResponse
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -83,7 +86,6 @@ class company_profile_api {
                 override fun onFailure(call: Call<CheckPhoneResponse>, t: Throwable) {
                     onResult(null)
                 }
-
             }
         )
     }
@@ -281,6 +283,76 @@ class company_profile_api {
                 }
 
                 override fun onFailure(call: Call<discoverResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface companyGetMyPackage{
+        @GET("company/officer/mypackage")
+        fun getPackageData(): Call<MyPackagesResponse>
+    }
+
+    fun CompanyGetPackageData(context: Context?, onResult: (MyPackagesResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(companyGetMyPackage::class.java)
+
+        retrofit.getPackageData().enqueue(
+            object : Callback<MyPackagesResponse>{
+                override fun onResponse(
+                    call: Call<MyPackagesResponse>,
+                    response: Response<MyPackagesResponse>
+                ) {
+                    onResult(response.body())
+                }
+                override fun onFailure(call: Call<MyPackagesResponse>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface getHistoryPackage{
+        @GET("company/officer/package/{packageNo}/{userPackageNo}/history")
+        fun historyPackage(@Path("packageNo") packageNo: Int, @Path("userPackageNo") userPackageNo: Int): Call<getHistoryResponse>
+    }
+
+    fun HistoryPackage(packageNo: Int, userPackageNo: Int, context: Context?, onResult: (getHistoryResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getHistoryPackage::class.java)
+
+        retrofit.historyPackage(packageNo, userPackageNo).enqueue(
+            object : Callback<getHistoryResponse>{
+                override fun onResponse(
+                    call: Call<getHistoryResponse>,
+                    response: Response<getHistoryResponse>
+                ) {
+                    onResult(response.body())
+                }
+                override fun onFailure(call: Call<getHistoryResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface getTest{
+        @GET("company/officer/tests")
+        fun myTest(): Call<testResponse>
+    }
+
+    fun MyTest(context: Context?, onResult: (testResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getTest::class.java)
+
+        retrofit.myTest().enqueue(
+            object : Callback<testResponse>{
+                override fun onResponse(
+                    call: Call<testResponse>,
+                    response: Response<testResponse>
+                ) {
+                    onResult(response.body())
+                }
+                override fun onFailure(call: Call<testResponse>, t: Throwable) {
                     onResult(null)
                 }
             }

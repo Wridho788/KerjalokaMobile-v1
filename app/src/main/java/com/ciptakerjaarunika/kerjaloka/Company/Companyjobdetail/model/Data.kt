@@ -24,7 +24,7 @@ data class Data(
     @SerializedName("jobMinExperience")
     val jobMinExperience: Int?,
     @SerializedName("jobNo")
-    val jobNo: String,
+    val jobNo: Long,
     @SerializedName("jobPosition")
     val jobPosition: String,
     @SerializedName("jobRole")
