@@ -80,6 +80,7 @@
                         android:padding="8dp"
                         android:id="@+id/profile_img"
                         android:src="@drawable/profile"
+                        android:scaleType="centerCrop"
                         app:shapeAppearanceOverlay="@style/Circular"
                         app:strokeColor="@color/light_500"
                         app:strokeWidth="1dp"></com.google.android.material.imageview.ShapeableImageView>
@@ -87,6 +88,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/change_photo_txt"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Perbarui Foto"
@@ -164,20 +166,24 @@
                         app:boxStrokeWidthFocused="0dp"
                         app:cardCornerRadius="@dimen/edittext_radius"
                         app:cardElevation="0dp">
-
-                        <TextView
-                            android:id="@+id/jsKTP"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/light_300"
-                            android:fontFamily="@font/poppins"
-                            android:hint="1234567890123456"
-                            android:inputType="number"
-                            android:padding="14dp"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            app:boxStrokeWidth="0dp"
-                            app:boxStrokeWidthFocused="0dp" />
+                            android:background="@color/light_300">
+
+                            <EditText
+                                android:id="@+id/jsKTP"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:hint="Input nomor KTP"
+                                android:background="@null"
+                                android:padding="14dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                app:boxStrokeWidth="0dp"
+                                app:boxStrokeWidthFocused="0dp" />
+                        </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
