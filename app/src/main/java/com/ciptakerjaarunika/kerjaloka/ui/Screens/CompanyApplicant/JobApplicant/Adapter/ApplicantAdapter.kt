@@ -9,12 +9,12 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.OnFragmentClickListener
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.iJobApplicant
 import com.google.android.material.card.MaterialCardView
 
 class ApplicantAdapter(
     private val applicantModel: List<applicantModel>?,
-    private val onFragmentClickListener: OnFragmentClickListener?
+    private val onFragmentClickListener: iJobApplicant?
 ) :
     RecyclerView.Adapter<ApplicantAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -22,6 +22,7 @@ class ApplicantAdapter(
         var locationApplicant: TextView
         var statusApplicant: TextView
         var profileApplicant: ImageView
+        var pinImage: ImageView
         var cardApplicant: MaterialCardView
 
         init {
@@ -29,12 +30,18 @@ class ApplicantAdapter(
             locationApplicant = itemView.findViewById(R.id.location_applicant)
             statusApplicant = itemView.findViewById(R.id.status_applicant_text)
             profileApplicant = itemView.findViewById(R.id.logo_applicant)
+            pinImage = itemView.findViewById(R.id.img_pin)
             cardApplicant = itemView.findViewById(R.id.card_applicant)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_applicant, null)
+        val lp = RecyclerView.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        view.setLayoutParams(lp)
         return ViewHolder(view)
     }
 
@@ -55,6 +62,10 @@ class ApplicantAdapter(
             .load(config().portAddress + "/photo/Profile/" + currentItem.applicant.photo)
             .fitCenter()
             .into(holder.profileApplicant)
+        if (currentItem.bookmarked == true) {
+            holder.pinImage.setImageResource(R.drawable.ic_pin)
+        }
+
 
         holder.cardApplicant.setOnClickListener {
             onFragmentClickListener?.goToApplicantDetail(currentItem)

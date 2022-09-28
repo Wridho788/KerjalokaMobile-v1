@@ -17,6 +17,7 @@ data class applicantModel(
     val application: application,
     val applicant: applicant,
     val ownRating: ownRating,
+    val bookmarked: Boolean,
     val comment: List<CommentModel>,
     val jobApplicationHistory: List<List<jobApplicantHistory>>,
     val papiKostickResult: papiKostickResult_applicant,

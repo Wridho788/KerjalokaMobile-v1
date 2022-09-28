@@ -30,7 +30,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClickListener {
+class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant {
 
     private lateinit var binding: FragmentJobApplicantBinding
     private var list: List<applicantModel>? = null
@@ -50,19 +50,11 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
         val location_job = view.findViewById<TextView>(R.id.job_location_applicant)
         val createdOn_text = view.findViewById<TextView>(R.id.txt_uploadAt)
         val status_job = view.findViewById<TextView>(R.id.status_applicant_text)
-        val rv_applicant = view.findViewById<RecyclerView>(R.id.rv_list_applicant)
         val btn_arrow = view.findViewById<ImageView>(R.id.ic_arrow)
         val btn_expand = view.findViewById<ConstraintLayout>(R.id.layout_info_lowongan)
         val layout_content_info = view.findViewById<LinearLayout>(R.id.layout_content_info)
 
-        val totalApplicantText = view.findViewById<TextView>(R.id.totalPelamarText)
-        val pelamarBaruText = view.findViewById<TextView>(R.id.totalPelamarBaruText)
-        val totalPelamarTerpilih = view.findViewById<TextView>(R.id.totalTerpilihText)
-        val totalTestingText = view.findViewById<TextView>(R.id.totalTestingText)
-        val totalInterviewText = view.findViewById<TextView>(R.id.totalInterviewText)
-        val totalDiterimaText = view.findViewById<TextView>(R.id.totalDiterimaText)
-        val totalRejectedText = view.findViewById<TextView>(R.id.totalRejectedText)
-        val totalCVbanksText = view.findViewById<TextView>(R.id.totalCVbanksText)
+
 
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_job)
         toolbar.setOnClickListener {
@@ -126,46 +118,9 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
                 }
             }
         }
+        getRefreshData()
 
-        CompanyListApplicantAPI().GetListApplicantPost(context, JobNo) {
-            if (it != null) {
-                list = it.data
-                rv_applicant.apply {
-                    layoutManager = LinearLayoutManager(activity)
-                    adapter = ApplicantAdapter(list!!, this@JobApplicantFragment)
-                }
-                val totalApplicant = list!!.size
-                totalApplicantText.text = totalApplicant.toString() + " Orang"
 
-                val newApplicant =
-                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Applied.value }.size
-                pelamarBaruText.text = newApplicant.toString() + " Orang"
-
-                val shortList =
-                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.ShortList.value }.size
-                totalPelamarTerpilih.text = shortList.toString() + " Orang"
-
-                val testList =
-                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Test.value }.size
-                totalTestingText.text = testList.toString() + " Orang"
-
-                val interviewList =
-                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Interview.value }.size
-                totalInterviewText.text = interviewList.toString() + " Orang"
-
-                val totalAcceptedList =
-                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Accepted.value }.size
-                totalDiterimaText.text = totalAcceptedList.toString() + " Orang"
-
-                val totalRejectedList =
-                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Rejected.value }.size
-                totalRejectedText.text = totalRejectedList.toString() + " Orang"
-
-                val cvBanksList =
-                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.CVBank.value }.size
-                totalCVbanksText.text = cvBanksList.toString() + " Orang"
-            }
-        }
         btn_expand.setOnClickListener {
             if (layout_content_info.isVisible == isVisible) {
                 layout_content_info.visibility = View.GONE
@@ -178,14 +133,68 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), OnFragmentClic
         }
     }
 
+    override fun getRefreshData() {
+        val rv_applicant = view?.findViewById<RecyclerView>(R.id.rv_list_applicant)
+        val totalApplicantText = view?.findViewById<TextView>(R.id.totalPelamarText)
+        val pelamarBaruText = view?.findViewById<TextView>(R.id.totalPelamarBaruText)
+        val totalPelamarTerpilih = view?.findViewById<TextView>(R.id.totalTerpilihText)
+        val totalTestingText = view?.findViewById<TextView>(R.id.totalTestingText)
+        val totalInterviewText = view?.findViewById<TextView>(R.id.totalInterviewText)
+        val totalDiterimaText = view?.findViewById<TextView>(R.id.totalDiterimaText)
+        val totalRejectedText = view?.findViewById<TextView>(R.id.totalRejectedText)
+        val totalCVbanksText = view?.findViewById<TextView>(R.id.totalCVbanksText)
+
+        CompanyListApplicantAPI().GetListApplicantPost(context, JobNo) {
+            if (it != null) {
+                list = it.data
+                rv_applicant?.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = ApplicantAdapter(list!!, this@JobApplicantFragment)
+                }
+                val totalApplicant = list!!.size
+                totalApplicantText?.text = totalApplicant.toString() + " Orang"
+
+                val newApplicant =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Applied.value }.size
+                pelamarBaruText?.text = newApplicant.toString() + " Orang"
+
+                val shortList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.ShortList.value }.size
+                totalPelamarTerpilih?.text = shortList.toString() + " Orang"
+
+                val testList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Test.value }.size
+                totalTestingText?.text = testList.toString() + " Orang"
+
+                val interviewList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Interview.value }.size
+                totalInterviewText?.text = interviewList.toString() + " Orang"
+
+                val totalAcceptedList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Accepted.value }.size
+                totalDiterimaText?.text = totalAcceptedList.toString() + " Orang"
+
+                val totalRejectedList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Rejected.value }.size
+                totalRejectedText?.text = totalRejectedList.toString() + " Orang"
+
+                val cvBanksList =
+                    list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.CVBank.value }.size
+                totalCVbanksText?.text = cvBanksList.toString() + " Orang"
+            }
+        }
+    }
+
+
     override fun goToApplicantDetail(applicantDetail: applicantModel) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, ApplicantDetailFragment ( applicantDetail), "company applicant detail")
+        ft.replace(id, ApplicantDetailFragment ( applicantDetail, this), "company applicant detail")
         ft.addToBackStack("CompanyApplicantDetail")
         ft.commit()
     }
 }
 
-interface OnFragmentClickListener {
+interface iJobApplicant {
     fun goToApplicantDetail(applicantDetail: applicantModel)
+    fun getRefreshData()
 }

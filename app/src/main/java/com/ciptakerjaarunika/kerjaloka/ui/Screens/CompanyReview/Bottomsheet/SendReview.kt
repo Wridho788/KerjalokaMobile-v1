@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Bottomsheet
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -68,9 +70,17 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
 
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
-        return 2000
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
     }
 
+
+    override fun isSheetAlwaysExpanded(): Boolean {
+        return true
+    }
     override fun isSheetCancelableOnTouchOutside(): Boolean {
         return true
     }

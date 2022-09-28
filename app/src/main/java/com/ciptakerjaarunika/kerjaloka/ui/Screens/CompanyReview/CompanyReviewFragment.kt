@@ -81,13 +81,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
                     if (it.data.canSend == true) {
                         layout_send_review.visibility = View.VISIBLE
                         layout_send_review.setOnClickListener {
-                            val sheet = SendReview(UserNo)
-                            activity.let { it1 ->
-                                sheet.show(
-                                    it1!!.supportFragmentManager,
-                                    "SendReview"
-                                )
-                            }
+                          sendReviewModal(UserNo)
                         }
                     } else {
                         layout_send_review.setOnClickListener(null)
@@ -117,5 +111,15 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    fun sendReviewModal(UserNo: Long){
+        val sheet = SendReview(UserNo, id, CompanyReviewFragment())
+        activity.let { it1 ->
+            sheet.show(
+                it1!!.supportFragmentManager,
+                "SendReview"
+            )
+        }
     }
 }

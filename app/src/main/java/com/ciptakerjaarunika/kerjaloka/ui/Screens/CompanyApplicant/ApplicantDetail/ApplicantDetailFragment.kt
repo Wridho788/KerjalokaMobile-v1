@@ -20,6 +20,7 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentApplicantDetailBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.MoreAction.MoreActionFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.PapikostikResultFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionEducations.EducationsAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionExperiences.ExperiencesAdapter
@@ -30,6 +31,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDeta
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.StatusPageFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.jobApplicantHistory
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.iJobApplicant
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyCompareJobseeker.CompanyCompareJobseekerFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.JobseekerReviewFragment
 import com.google.android.material.chip.Chip
@@ -37,7 +39,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fragment(),
+class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJobApplicant: iJobApplicant) : Fragment(),
     OnFragmentClickListener {
 
     private lateinit var binding: FragmentApplicantDetailBinding
@@ -67,47 +69,63 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
 
         val experienceJob = applicantDetail.applicant.experiences
         if (experienceJob != null) {
-            val beginat = experienceJob.sortedByDescending { item -> item.experienceBeginAt }
-            val endingAt = experienceJob.sortedByDescending { item -> item.experienceEndedAt }
+            if (experienceJob.isEmpty() == true) {
+                binding.headerApplicantDetail.sectionExperience.visibility = View.GONE
+            } else if (experienceJob.isEmpty() != true) {
+                val beginat = experienceJob.sortedByDescending { item -> item.experienceBeginAt }
+                val endingAt = experienceJob.sortedByDescending { item -> item.experienceEndedAt }
 
-            val beginYear = LocalDateTime.parse(beginat[0]?.experienceBeginAt)
-                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-            val beginEndYear =
-                LocalDateTime.parse(endingAt[0]?.experienceEndedAt)
+                val beginYear = LocalDateTime.parse(beginat[0].experienceBeginAt)
                     .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-
-            binding.headerApplicantDetail.experienceYearText.text =
-                "$beginYear - $beginEndYear"
-
-            binding.headerApplicantDetail.experienceJobText.text =
-                beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
+                if (endingAt != null) {
+                    val beginEndYear =
+                        LocalDateTime.parse(endingAt[0].experienceEndedAt)
+                            .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                    binding.headerApplicantDetail.experienceJobText.text =
+                        beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
+                    binding.headerApplicantDetail.experienceYearText.text =
+                        "$beginYear - $beginEndYear"
+                } else {
+                    binding.headerApplicantDetail.experienceJobText.text =
+                        beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
+                    binding.headerApplicantDetail.experienceYearText.text =
+                        "$beginYear - Sekarang"
+                }
+            }
         } else {
             binding.headerApplicantDetail.sectionExperience.visibility = View.GONE
         }
 
         val education = applicantDetail.applicant.education
         if (education != null) {
-            val educationBegin = education.sortedByDescending { item -> item.educationBeginAt }
-            val educationEnded = education.sortedByDescending { item -> item.educationEndedAt }
+            if (education.isEmpty() == true) {
+                binding.headerApplicantDetail.sectionEducation.visibility = View.GONE
+            } else if (education.isNotEmpty() == true) {
+                val educationBegin = education.sortedByDescending { item -> item.educationBeginAt }
+                val educationEnded = education.sortedByDescending { item -> item.educationEndedAt }
 
-            val beginYearEducation =
-                LocalDateTime.parse(educationBegin[0].educationBeginAt)
-                    .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                val beginYearEducation =
+                    LocalDateTime.parse(educationBegin[0].educationBeginAt)
+                        .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                if (educationEnded != null){
+                    val endedYearEducation =
+                        LocalDateTime.parse(educationEnded[0].educationEndedAt)
+                            .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                    binding.headerApplicantDetail.educationYearText.text =
+                        "$beginYearEducation - $endedYearEducation"
 
-            val endedYearEducation =
-                LocalDateTime.parse(educationEnded[0].educationEndedAt)
-                    .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-
-            binding.headerApplicantDetail.educationYearText.text =
-                "$beginYearEducation - $endedYearEducation"
-
-            binding.headerApplicantDetail.educationNameText.text =
-                educationBegin[0].educationMajorName + " - " + educationBegin[0].educationSchool
+                    binding.headerApplicantDetail.educationNameText.text =
+                        educationBegin[0].educationMajorName + " - " + educationBegin[0].educationSchool
+                } else {
+                    binding.headerApplicantDetail.educationNameText.text =
+                        educationBegin[0].educationMajorName + " - " + educationBegin[0].educationSchool
+                    binding.headerApplicantDetail.educationYearText.text =
+                        "$beginYearEducation - Sekarang"
+                }
+            }
         } else {
             binding.headerApplicantDetail.sectionEducation.visibility = View.GONE
         }
-
-
         val preferencesJob = applicantDetail.applicant.preferenceJobType.map {
             it.jobTypeName
         }
@@ -148,19 +166,16 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
             binding.layoutRecord.visibility = View.GONE
         }
 
-        binding.btnLihatHasilTesApplicant.setOnClickListener {
-            goToPapikostikModal()
+        if (applicantDetail.papiKostickResult != null) {
+            Log.d("papikostik", "papikostick_result")
+            binding.btnLihatHasilTesApplicant.setOnClickListener {
+                goToPapikostikModal()
+            }
+        } else {
+            binding.txtDescPapiKostick.text = "Jobseeker ini belum menyelesaikan tes PAPI Kostick"
+            binding.dateResultPapokostick.visibility = View.GONE
+            binding.btnLihatHasilTesApplicant.visibility = View.GONE
         }
-//        if (applicantDetail.papiKostickResult != null) {
-//            Log.d("papikostik", "papikostick_result")
-//            binding.btnLihatHasilTesApplicant.setOnClickListener {
-//                goToPapikostikModal()
-//            }
-//        } else {
-//            binding.txtDescPapiKostick.text = "Jobseeker ini belum menyelesaikan tes PAPI Kostick"
-//            binding.dateResultPapokostick.visibility = View.GONE
-//            binding.btnLihatHasilTesApplicant.visibility = View.GONE
-//        }
 
         Glide.with(this)
             .load(config().portAddress + "/photo/Profile/" + applicantDetail.applicant.photo)
@@ -219,7 +234,6 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
             binding.chipGroupMenengah.visibility = View.GONE
             binding.layoutChipMenengah.visibility = View.GONE
         }
-
 
         if (applicantDetail.ownRating.proRating != null) {
             applicantDetail.ownRating.proRating.forEach {
@@ -280,10 +294,10 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel) : Fra
         }
 
 
-//        btn_more.setOnClickListener {
-//            val sheet = MoreActionFragment()
-//            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
-//        }
+        binding.headerApplicantDetail.btnMore.setOnClickListener {
+            val sheet = MoreActionFragment( applicantDetail.applicant.jobseekerNo, applicantDetail.application.jobNo, applicantDetail.bookmarked, iJobApplicant)
+            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
+        }
 
         binding.headerApplicantDetail.btnChangeStatus.setOnClickListener {
             goToChangeStatus()

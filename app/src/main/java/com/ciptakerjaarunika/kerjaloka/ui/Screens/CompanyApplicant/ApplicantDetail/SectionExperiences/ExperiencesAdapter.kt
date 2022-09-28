@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionExperiences
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,9 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class ExperiencesAdapter(private val experiences: List<experience>) : RecyclerView.Adapter<ExperiencesAdapter.ViewHolder>() {
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+class ExperiencesAdapter(private val experiences: List<experience>) :
+    RecyclerView.Adapter<ExperiencesAdapter.ViewHolder>() {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var expPosition: TextView
         var expCityName: TextView
         var expBeginAt: TextView
@@ -29,20 +31,26 @@ class ExperiencesAdapter(private val experiences: List<experience>) : RecyclerVi
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        view.setLayoutParams(lp)
+        view.layoutParams = lp
 
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = experiences[position]
         holder.expPosition.text = item.experiencePosition + " - " + item.experienceCompanyName
         holder.expCityName.text = item.experienceCityName + " - " + item.experienceCountry
         if (item.experienceBeginAt != null) {
-
-        val yearExp =  LocalDateTime.parse(item.experienceBeginAt).format(DateTimeFormatter.ofPattern("MMMM yyyy")) + " - " +
-                LocalDateTime.parse(item.experienceEndedAt).format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-        holder.expBeginAt.text = yearExp.toString()
+            if (item.experienceEndedAt != null) {
+                val yearExp = LocalDateTime.parse(item.experienceBeginAt)
+                    .format(DateTimeFormatter.ofPattern("MMMM yyyy")) + " - " +
+                        LocalDateTime.parse(item.experienceEndedAt)
+                            .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                holder.expBeginAt.text = yearExp
+            }
+            holder.expBeginAt.text = LocalDateTime.parse(item.experienceBeginAt)
+                .format(DateTimeFormatter.ofPattern("MMMM yyyy")) + " - Sekarang"
         } else {
             holder.expBeginAt.text = ""
         }
