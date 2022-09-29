@@ -28,13 +28,7 @@ data class ResponseJobs(
     val takedown: Boolean,
     val jobAdditionalDescription: Any? = null,
     val packageName: Any? = null
-) {
-    public fun toJson() = klaxon.toJsonString(this)
-
-    companion object {
-        public fun fromJson(json: String) = klaxon.parse<ResponseJobs>(json)
-    }
-}
+)
 
 data class JobExperienceLevel (
     val experienceLevelNo: Long,

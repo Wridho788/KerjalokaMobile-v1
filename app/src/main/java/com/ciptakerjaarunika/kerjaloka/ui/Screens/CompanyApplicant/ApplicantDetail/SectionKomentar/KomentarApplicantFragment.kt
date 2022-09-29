@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CommentAPI
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyListApplicantAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentKomentarApplicantBinding
@@ -35,9 +33,7 @@ class KomentarApplicantFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val toolbar = view.findViewById<ImageView>(R.id.btn_back)
-        toolbar.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             activity?.onBackPressed()
         }
 
@@ -67,7 +63,6 @@ class KomentarApplicantFragment(
                 }
             }
         }
-
 
         binding.rvCommentApplicant.apply {
             layoutManager = LinearLayoutManager(activity)

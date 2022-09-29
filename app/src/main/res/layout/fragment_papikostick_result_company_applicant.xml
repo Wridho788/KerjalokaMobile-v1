@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     app:layout_constraintHeight_percent="80"
-    tools:context=".ui.ProfilePage.ManageCV.PapikostickResult">
+    tools:context=".ui.ProfilePage.ManageCV.PapikostickResult"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <LinearLayout
+
+<LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

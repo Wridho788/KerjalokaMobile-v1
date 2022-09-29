@@ -51,14 +51,12 @@ class BookmarkAPI {
                     ) {
                         onResult(response.body())
                     }
-
                     override fun onFailure(call: Call<BookmarkResponse>, t: Throwable) {
                         onResult(null)
                     }
                 }
             )
         } else {
-
             val retrofit = ServiceBuilder(context).POST(BookmarkAPI::class.java)
             retrofit.getBookmarkApplicant(sendBookmark, jobNo, jobseekerNo).enqueue(
                 object : Callback<BookmarkResponse> {

@@ -13,9 +13,10 @@ import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.BookmarkAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.MoreAction.Model.send_bookmark
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.iJobApplicant
 
-class MoreActionFragment(val jobseekerNo: Long, val jobNo: Long, val bookmark: Boolean, val iJobApplicant: iJobApplicant) :
+class MoreActionFragment(val jobseekerNo: Long, val jobNo: Long,var applicantModel: applicantModel, val iJobApplicant: iJobApplicant) :
     SuperBottomSheetFragment() {
 
     override fun onCreateView(
@@ -28,18 +29,17 @@ class MoreActionFragment(val jobseekerNo: Long, val jobNo: Long, val bookmark: B
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        val btn_banding = view.findViewById<TextView>(R.id.txt_banding)
-        val btn_pin = view.findViewById<TextView>(R.id.txt_pin)
-        iJobApplicant.getRefreshData()
-        if (bookmark == true) {
-            btn_pin.text = "UNPIN"
 
-        } else if (bookmark == false) {
-            btn_pin.text = "PIN"
-        }
+        val btn_pin = view.findViewById<TextView>(R.id.txt_pin)
+        updateText()
 
         btn_pin.setOnClickListener {
-            BookmarkAPI().BookmarkJob(context, send_bookmark(jobNo, jobseekerNo), jobNo, jobseekerNo, bookmark){
+            BookmarkAPI().BookmarkJob(context, send_bookmark(jobNo, jobseekerNo), jobNo, jobseekerNo, applicantModel.bookmarked){
                 if (it != null) {
+                    applicantModel.bookmarked = !applicantModel.bookmarked
+                    iJobApplicant.getRefreshData()
+                    updateText()
+
                     this.dismiss()
                     Log.d("bookmarked", it.toString())
                 }
@@ -48,7 +48,16 @@ class MoreActionFragment(val jobseekerNo: Long, val jobNo: Long, val bookmark: B
 
 
     }
+    fun updateText(){
+        val btn_pin = view?.findViewById<TextView>(R.id.txt_pin)
 
+        if (applicantModel.bookmarked == true) {
+            btn_pin?.text = "UNPIN"
+
+        } else if (applicantModel.bookmarked == false) {
+            btn_pin?.text = "PIN"
+        }
+    }
     override fun getCornerRadius() = 20f
 
     @SuppressLint("Range")

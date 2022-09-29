@@ -31,9 +31,6 @@ class KomentarAdapter(private val context: Context?, private val commentModel: L
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         view.setLayoutParams(lp)
-
-
-
         return ViewHolder(view)
     }
 

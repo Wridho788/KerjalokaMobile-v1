@@ -295,7 +295,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
 
 
         binding.headerApplicantDetail.btnMore.setOnClickListener {
-            val sheet = MoreActionFragment( applicantDetail.applicant.jobseekerNo, applicantDetail.application.jobNo, applicantDetail.bookmarked, iJobApplicant)
+            val sheet = MoreActionFragment( applicantDetail.applicant.jobseekerNo, applicantDetail.application.jobNo, applicantDetail, iJobApplicant)
             activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
         }
 
