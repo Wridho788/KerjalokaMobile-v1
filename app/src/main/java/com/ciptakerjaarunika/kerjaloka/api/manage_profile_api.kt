@@ -141,4 +141,53 @@ class ManageProfileAPI {
             }
         )
     }
+
+
+    interface JobseekerEditLanguage {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/languages/manage")
+        fun SendData(@Body jobseekerLanguages : List<JobseekerLanguages>?): Call<Any?>
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun JobseekerEditLanguages(jobseekerLanguages: List<JobseekerLanguages>?, context: Context?, onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(JobseekerEditLanguage::class.java)
+        retrofit.SendData(jobseekerLanguages).enqueue(
+            object : Callback<Any?> {
+                override fun onFailure(call: Call<Any?>, t: Throwable) {
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<Any?>,
+                    response: Response<Any?>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    interface JobseekerEditSkills {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/skills/manage")
+        fun SendData(@Body jobseekerLanguages : List<JobseekerSkills>?): Call<Any?>
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun JobseekerEditSkills(jobseekerSkills: List<JobseekerSkills>?, context: Context?, onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(JobseekerEditSkills::class.java)
+        retrofit.SendData(jobseekerSkills).enqueue(
+            object : Callback<Any?> {
+                override fun onFailure(call: Call<Any?>, t: Throwable) {
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<Any?>,
+                    response: Response<Any?>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
 }

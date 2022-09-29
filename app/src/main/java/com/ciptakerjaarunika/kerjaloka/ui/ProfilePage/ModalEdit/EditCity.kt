@@ -32,10 +32,11 @@ class EditCity(private val cityNo : Int?,private val locations : List<LocationFi
 
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
+
+
         var searchInput = view.findViewById<SearchView>(R.id.search_filter)
         searchInput.visibility = VISIBLE
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
 
         searchInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {

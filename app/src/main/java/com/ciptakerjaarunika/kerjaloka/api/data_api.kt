@@ -291,4 +291,26 @@ class DataAPI {
             }
         )
     }
+
+    interface GetLanguages {
+        @GET("data/language")
+        fun GetData(): Call<List<Language>?>
+    }
+
+    fun GetLanguages(context: Context?, onResult: (List<Language>?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(GetLanguages::class.java)
+
+        retrofit.GetData().enqueue(
+            object : Callback<List<Language>?> {
+                override fun onResponse(call: Call<List<Language>?>, response: Response<List<Language>?>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<List<Language>?>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
 }

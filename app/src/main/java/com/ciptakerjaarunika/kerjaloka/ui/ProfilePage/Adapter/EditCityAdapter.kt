@@ -21,7 +21,7 @@ class EditCityAdapter(private val cityNo: Int?, private val locations: List<Loca
 
         init {
             item = view.findViewById(R.id.item_modal)
-            container = view.findViewById(R.id.marital_container)
+            container = view.findViewById(R.id.container)
         }
     }
 

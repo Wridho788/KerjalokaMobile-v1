@@ -23,7 +23,7 @@ class EditGenderAdapter(val value :Char?, private val genderItems: List<GenderMo
 
         init {
             item = view.findViewById(R.id.item_modal)
-            container = view.findViewById(R.id.marital_container)
+            container = view.findViewById(R.id.container)
         }
     }
 

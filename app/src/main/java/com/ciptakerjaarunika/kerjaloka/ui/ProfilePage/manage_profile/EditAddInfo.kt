@@ -84,8 +84,6 @@ class EditAddInfo(val data : JobseekerProfile?) : Fragment(), iUpdateAdditional 
         binding.telegram.setText(data?.additionals?.telegramId)
         binding.instagram.setText(data?.additionals?.instagramId)
 
-
-
         binding.saveBtn.setOnClickListener{
             ManageProfileAPI().EditAdditional(
                 ManageProfileAPI.editAdditionalRequest(

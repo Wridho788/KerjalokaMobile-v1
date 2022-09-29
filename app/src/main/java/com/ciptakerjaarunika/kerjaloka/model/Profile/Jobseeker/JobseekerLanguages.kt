@@ -12,7 +12,7 @@ data class JobseekerLanguagesResponse(
 data class JobseekerLanguages(
     val jobseekerNo: Long,
     val languageName : String,
-    val language : Int,
+    val languageNo : Int,
     val languageSpokenScale : Int,
     val languageWrittenScale : Int
 )

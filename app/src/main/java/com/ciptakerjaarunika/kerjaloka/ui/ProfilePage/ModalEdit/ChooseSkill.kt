@@ -1,20 +1,26 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseLanguageAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseSkillAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iEditKemampuan
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skill
 
 
-class ChooseSkill: SuperBottomSheetFragment() {
+class ChooseSkill(val value: SkillFilter?, val skills : List<SkillFilter>, val iEditKemampuan: iEditKemampuan): SuperBottomSheetFragment(), iChooseSkill {
 
     private var layoutManager: RecyclerView.LayoutManager? =null
     private var adapter: RecyclerView.Adapter<ChooseSkillAdapter.chooseSkil>? = null
@@ -32,27 +38,44 @@ class ChooseSkill: SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<skill>()
-        val skill1 = skill(
-            skillName = "Phyton",
-            skillNo = 1
-        )
-        val skill2 = skill(
-            skillName = "Mining",
-            skillNo = 2
-        )
-        val skill3 = skill(
-            skillName = "Digital Literacy",
-            skillNo = 3
-        )
-        list.add(skill1)
-        list.add(skill2)
-        list.add(skill3)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapter = ChooseSkillAdapter(list)
-        recyclerView.adapter = adapter
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ChooseSkillAdapter(value, skills, iEditKemampuan, this@ChooseSkill)
+        }
+
+        var searchInput = view.findViewById<SearchView>(R.id.search_filter)
+        searchInput.visibility = View.VISIBLE
+
+        searchInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val keyword = newText.toString().toLowerCase()
+                if (keyword.isNullOrEmpty()) {
+                    recyclerView.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        adapter =
+                            ChooseSkillAdapter(value, skills, iEditKemampuan, this@ChooseSkill)
+                    }
+                    recyclerView.adapter?.notifyDataSetChanged()
+                } else {
+                    var temp = skills?.filter { data ->
+                        data.skillName.toLowerCase().contains(keyword)
+                    }
+                    recyclerView.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        adapter =
+                            ChooseSkillAdapter(value, temp!!, iEditKemampuan, this@ChooseSkill)
+                    }
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+                return true;
+            }
+        })
+
     }
 
 
@@ -61,5 +84,20 @@ class ChooseSkill: SuperBottomSheetFragment() {
     }
 
     @SuppressLint("Range")
-    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+    override fun getExpandedHeight(): Int {
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
+    }
+
+    override fun close() {
+        this.dismiss()
+    }
+
+
+}
+interface iChooseSkill{
+    fun close()
 }

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:id="@+id/marital_container"
+    android:id="@+id/container"
     android:gravity="center"
     android:paddingHorizontal="20dp"
     android:paddingVertical="5dp"

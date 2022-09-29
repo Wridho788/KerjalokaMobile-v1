@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ExpAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.LanguageAdapter
@@ -45,124 +46,6 @@ class cvPage : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         GetData()
-
-/*
-        val ExpList = ArrayList<experience>()
-        val exp1 = experience(
-            experienceBeginAt = "2019-01-01T00:00:00",
-            experienceCityName = "Kota Medan",
-            experienceCityNo = 479,
-            experienceCompanyName = "Kerjaloka",
-            experienceCompanyNo = 1,
-            experienceCountry = "Indonesia",
-            experienceDescription = "asdasd",
-            experienceEndedAt = "2021-02-01T00:00:00",
-            experienceJobTypeName = "Full-time",
-            experienceJobTypeNo = 1,
-            experienceNo = 508,
-            experiencePosition = "Developer",
-            experienceProvinceName = "Sumatera Utara",
-            experienceSalary = 12000000,
-            jobseekerNo = 20211102115301,
-        )
-        val exp2 = experience(
-            experienceBeginAt = "2019-01-01T00:00:00",
-            experienceCityName = "Kota Medan",
-            experienceCityNo = 479,
-            experienceCompanyName = "MPS",
-            experienceCompanyNo = 1,
-            experienceCountry = "Indonesia",
-            experienceDescription = "asdasd",
-            experienceEndedAt = "2021-02-01T00:00:00",
-            experienceJobTypeName = "Full-time",
-            experienceJobTypeNo = 1,
-            experienceNo = 508,
-            experiencePosition = "HACKER",
-            experienceProvinceName = "Sumatera Utara",
-            experienceSalary = 12000000,
-            jobseekerNo = 20211102115301,
-        )
-        val exp3 = experience(
-            experienceBeginAt = "2019-01-01T00:00:00",
-            experienceCityName = "Kota Medan",
-            experienceCityNo = 479,
-            experienceCompanyName = "Gojek",
-            experienceCompanyNo = 1,
-            experienceCountry = "Indonesia",
-            experienceDescription = "asdasd",
-            experienceEndedAt = "2021-02-01T00:00:00",
-            experienceJobTypeName = "Full-time",
-            experienceJobTypeNo = 1,
-            experienceNo = 508,
-            experiencePosition = "Driver",
-            experienceProvinceName = "Sumatera Utara",
-            experienceSalary = 12000000,
-            jobseekerNo = 20211102115301,
-        )
-        ExpList.add(exp1)
-        ExpList.add(exp2)
-        ExpList.add(exp3)
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycleExp)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapterExp = ExpAdapter(ExpList)
-        recyclerView.adapter = adapterExp
-
-        //======= EDUCATION =========
-        val EduList = ArrayList<education>()
-        val edu1 = education(
-            educationBeginAt = "2019-02-01T00:00:00",
-            educationCityName = "Kota Langsa",
-            educationCityNo = 2,
-            educationCountry = "Indonesia",
-            educationDescription = "",
-            educationEndedAt = "2021-01-01T00:00:00",
-            educationMajorName = "Agribusiness Operations",
-            educationMajorNo = 160,
-            educationProvinceName = "Aceh",
-            educationSchool = "asd",
-            educationTitleName = "SMA/SMK",
-            educationTitleNo = 1,
-            gpa = 89,
-            jobseekerEducationNo = 252,
-            jobseekerNo = 20211102115301,
-        )
-
-        EduList.add(edu1)
-
-        val recyclerViewEdu = view.findViewById<RecyclerView>(R.id.recycleEdu)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerViewEdu.layoutManager = layoutManager
-        adapterEdu = EduAdapter(EduList)
-        recyclerViewEdu.adapter = adapterEdu
-
-        //======== Language =========
-        val LangList = ArrayList<languageList>()
-        val lang1 = languageList(
-            jobseekerNo = 20211102115301,
-            languageName = "Javanese",
-            languageNo = 237,
-            languageSpokenScale = 8,
-            languageWrittenScale = 8
-        )
-        val lang2 = languageList(
-            jobseekerNo = 20211102115301,
-            languageName = "Indonesian",
-            languageNo = 229,
-            languageSpokenScale = 10,
-            languageWrittenScale = 10
-        )
-
-        LangList.add(lang1)
-        LangList.add(lang2)
-
-        val recyclerViewLang = view.findViewById<RecyclerView>(R.id.recycleLang)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerViewLang.layoutManager = layoutManager
-        adapterLang = LanguageAdapter(LangList)
-        recyclerViewLang.adapter = adapterLang
-        */
     }
 
     private fun GetData(){
@@ -186,7 +69,7 @@ class cvPage : Fragment() {
                         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycleLang)
                         layoutManager = LinearLayoutManager(activity)
                         recyclerView?.layoutManager = layoutManager
-                        recyclerView?.adapter = languages?.data?.let { LanguageAdapter(it) }
+                        recyclerView?.adapter = languages?.data?.let { LanguageAdapter(false, it, null) }
 
                         val btn_edSkil = view?.findViewById<TextView>(R.id.editSkill)
                         val btn_seePapiRes = view?.findViewById<MaterialButton>(R.id.seePapiResult)
@@ -308,7 +191,7 @@ class cvPage : Fragment() {
                         }
 
                         btn_edSkil?.setOnClickListener {
-                            replaceFragment(edit_kemampuan())
+                            replaceFragment(edit_kemampuan(skills.data))
                         }
 
                         btn_seePapiRes?.setOnClickListener {
@@ -322,7 +205,7 @@ class cvPage : Fragment() {
                             replaceFragment(fragment_manage_cv_edit_education_page())
                         }
                         btn_edlang?.setOnClickListener {
-                            replaceFragment(EditBahasa())
+                            replaceFragment(EditBahasa(SessionManager(context).user!!.userNo, languages?.data))
                         }
             }
         }

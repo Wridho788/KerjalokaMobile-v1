@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseScaleAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iEditKemampuan
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.scale
 
 
-class ChooseScale: SuperBottomSheetFragment() {
+class ChooseScale(val value : Int?, val iEditKemampuan: iEditKemampuan) : SuperBottomSheetFragment(), iChooseScale {
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<ChooseScaleAdapter.chooseScale>? = null
-    private lateinit var chooseScaleAdapter: ChooseScaleAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,41 +31,16 @@ class ChooseScale: SuperBottomSheetFragment() {
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val list = ArrayList<scale>()
-        val skill1 = scale(
-            scaleName = "Amateur",
-            scaleNo = 1
-        )
-        val skill2 = scale(
-            scaleName = "Beginner",
-            scaleNo = 2
-        )
-        val skill3 = scale(
-            scaleName = "Intermediate",
-            scaleNo = 3
-        )
-        val skill4 = scale(
-            scaleName = "Advance",
-            scaleNo = 4
-        )
-        val skill5 = scale(
-            scaleName = "Professional",
-            scaleNo = 5
-        )
-        list.add(skill1)
-        list.add(skill2)
-        list.add(skill3)
-        list.add(skill4)
-        list.add(skill5)
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapter = ChooseScaleAdapter(list)
-        recyclerView.adapter = adapter
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ChooseScaleAdapter(value, this@ChooseScale, iEditKemampuan)
+        }
     }
 
 
@@ -74,5 +49,18 @@ class ChooseScale: SuperBottomSheetFragment() {
     }
 
     @SuppressLint("Range")
-    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+    override fun getExpandedHeight(): Int {
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
+    }
+
+    override fun close() {
+        this.dismiss()
+    }
+}
+interface iChooseScale{
+    fun close()
 }
