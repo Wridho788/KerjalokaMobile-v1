@@ -16,11 +16,13 @@ import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyDashboardBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.*
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
@@ -60,6 +62,32 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         val img_btn_calendar2 = view.findViewById<LinearLayout>(R.id.set_calendar2) as LinearLayout
         val plg_tgl2 = view.findViewById<TextView>(R.id.plg_tgl2) as TextView
         val plg_tgl1 = view.findViewById<TextView>(R.id.plg_tgl1) as TextView
+        val jlhApplicant = view.findViewById<TextView>(R.id.jlh_applicant)
+        val btnSeeApp = view.findViewById<TextView>(R.id.seeApplicant)
+        val jlhInterview = view.findViewById<TextView>(R.id.jlhInterview)
+        val btnSeeInterview = view.findViewById<TextView>(R.id.seeInterview)
+        val jlhFollower = view.findViewById<TextView>(R.id.jlh_org_pengikut)
+        val btnSeeFollower = view.findViewById<TextView>(R.id.seeFollower)
+
+        company_profile_api().MyFollowerAmount(context){
+            jlhFollower.text = it?.data.toString() + " Orang"
+        }
+
+        company_profile_api().InterviewAmount(context){
+            jlhInterview.text = it?.data.toString()+ " Orang"
+        }
+
+        company_profile_api().MyJob(context){
+            var count = 0
+            it?.data?.forEach {
+                if(it.publish==true){
+                    count++
+                }
+            }
+            jlhApplicant.text = count.toString()+" Pekerjaan"
+        }
+
+
 
 //        var card_test_section =
 //            view.findViewById<MaterialCardView>(R.id.card_test) as MaterialCardView

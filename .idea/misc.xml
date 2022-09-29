@@ -101,6 +101,8 @@
         <entry key="app/src/main/res/font/font_default.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_light.xml" value="0.2074074074074074" />
         <entry key="app/src/main/res/font/poppins_regular.xml" value="0.2074074074074074" />
+        <entry key="app/src/main/res/layout/activity_company_dashboard.xml" value="0.23899102180418982" />
+        <entry key="app/src/main/res/layout/activity_company_notification.xml" value="0.15818725951261223" />
         <entry key="app/src/main/res/layout/activity_company_search.xml" value="0.2894606630381" />
         <entry key="app/src/main/res/layout/activity_item_profile_user_page.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/activity_job_page.xml" value="0.1" />
@@ -120,6 +122,7 @@
         <entry key="app/src/main/res/layout/company_custom_toolbar.xml" value="0.20051303976058144" />
         <entry key="app/src/main/res/layout/company_message_section.xml" value="0.19196237708422403" />
         <entry key="app/src/main/res/layout/company_section.xml" value="0.20051303976058144" />
+        <entry key="app/src/main/res/layout/company_section_find_category.xml" value="0.23899102180418982" />
         <entry key="app/src/main/res/layout/company_test_list_job.xml" value="0.17229585292860197" />
         <entry key="app/src/main/res/layout/fragment_account_setting.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_akun.xml" value="0.4973958333333333" />
@@ -129,6 +132,7 @@
         <entry key="app/src/main/res/layout/fragment_comp_edit_phone.xml" value="0.30354852501068835" />
         <entry key="app/src/main/res/layout/fragment_comp_edit_username.xml" value="0.15647712697734073" />
         <entry key="app/src/main/res/layout/fragment_comp_my_review.xml" value="0.2752548656163114" />
+        <entry key="app/src/main/res/layout/fragment_company_add_jobs_1.xml" value="0.17443351859769132" />
         <entry key="app/src/main/res/layout/fragment_company_compare_jobseeker.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_detail_test.xml" value="0.17443351859769132" />

@@ -19,6 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.CompanyDashboard
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
@@ -84,11 +85,11 @@ class MainActivity : AppCompatActivity() {
 
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
-            replaceFragment(HomePage())
+            replaceFragment(CompanyDashboard())
 
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.home -> replaceFragment((HomePage()))
+                    R.id.home -> replaceFragment((CompanyDashboard()))
                     R.id.lamaran -> replaceFragment((view_mytest_list()))
                     R.id.interview -> replaceFragment((InterviewPage()))
                     R.id.akun -> replaceFragment((AkunPage()))

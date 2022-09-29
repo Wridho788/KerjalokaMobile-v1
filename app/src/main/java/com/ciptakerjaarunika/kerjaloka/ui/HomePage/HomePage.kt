@@ -19,6 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
+import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.CompanyNotification
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Notification
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment

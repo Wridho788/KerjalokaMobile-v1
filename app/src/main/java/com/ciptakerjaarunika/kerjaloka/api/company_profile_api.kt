@@ -2,6 +2,8 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobCountResponses
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobResponses
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.MyPackagesResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Package.getHistoryResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
@@ -353,6 +355,78 @@ class company_profile_api {
                     onResult(response.body())
                 }
                 override fun onFailure(call: Call<testResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    data class followerAmountResponse(val code: Int, val data: Int)
+    interface getFollowerAmount{
+        @GET("company/follower")
+        fun followerAmount(): Call<followerAmountResponse>
+    }
+
+    fun MyFollowerAmount(context: Context?, onResult: (followerAmountResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getFollowerAmount::class.java)
+
+        retrofit.followerAmount().enqueue(
+            object : Callback<followerAmountResponse>{
+                override fun onResponse(
+                    call: Call<followerAmountResponse>,
+                    response: Response<followerAmountResponse>
+                ) {
+                    onResult(response.body())
+                }
+                override fun onFailure(call: Call<followerAmountResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface getInterviewAmount{
+        @GET("company/officer/totalInterview")
+        fun interviewAmount(): Call<followerAmountResponse>
+    }
+
+    fun InterviewAmount(context: Context?, onResult: (followerAmountResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getInterviewAmount::class.java)
+
+        retrofit.interviewAmount().enqueue(
+            object : Callback<followerAmountResponse>{
+                override fun onResponse(
+                    call: Call<followerAmountResponse>,
+                    response: Response<followerAmountResponse>
+                ) {
+                    onResult(response.body())
+                }
+                override fun onFailure(call: Call<followerAmountResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+
+    interface getMyJob{
+        @GET("company/officer/jobs/own")
+        fun myJob(): Call<JobCountResponses>
+    }
+
+    fun MyJob(context: Context?, onResult: (JobCountResponses?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getMyJob::class.java)
+
+        retrofit.myJob().enqueue(
+            object : Callback<JobCountResponses>{
+                override fun onResponse(
+                    call: Call<JobCountResponses>,
+                    response: Response<JobCountResponses>
+                ) {
+                    onResult(response.body())
+                }
+                override fun onFailure(call: Call<JobCountResponses>, t: Throwable) {
+                    Log.e("error", t.toString())
                     onResult(null)
                 }
             }

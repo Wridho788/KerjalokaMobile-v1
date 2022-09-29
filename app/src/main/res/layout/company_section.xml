@@ -252,18 +252,17 @@
                             android:layout_gravity="center">
 
                             <TextView
-                                android:id="@+id/jlh_org_pekerjaan1"
+                                android:id="@+id/jlh_applicant"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
                                 android:textAlignment="center"
-                                android:text="18 Orang"
                                 android:textColor="@color/black"
                                 android:textSize="18dp"
                                 android:layout_marginTop="8dp"/>
 
                             <TextView
-                                android:id="@+id/jlh_org_pekerjaan2"
+                                android:id="@+id/seeApplicant"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
@@ -342,18 +341,17 @@
                             android:layout_gravity="center">
 
                             <TextView
-                                android:id="@+id/jlh_org_interview1"
+                                android:id="@+id/jlhInterview"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
                                 android:textAlignment="center"
-                                android:text="18 Orang"
                                 android:textColor="@color/black"
                                 android:textSize="18dp"
                                 android:layout_marginTop="8dp"/>
 
                             <TextView
-                                android:id="@+id/jlh_org_interview2"
+                                android:id="@+id/seeInterview"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
@@ -428,18 +426,17 @@
                             android:layout_gravity="center">
 
                             <TextView
-                                android:id="@+id/jlh_org_pengikut1"
+                                android:id="@+id/jlh_org_pengikut"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
                                 android:textAlignment="center"
-                                android:text="18 Orang"
                                 android:textColor="@color/black"
                                 android:textSize="18dp"
                                 android:layout_marginTop="8dp"/>
 
                             <TextView
-                                android:id="@+id/jlh_org_pengikut2"
+                                android:id="@+id/seeFollower"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
