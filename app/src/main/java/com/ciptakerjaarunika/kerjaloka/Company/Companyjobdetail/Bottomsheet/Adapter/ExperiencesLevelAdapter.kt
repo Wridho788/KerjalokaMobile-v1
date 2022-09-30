@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.iChooseExperienceLevel
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.ExperienceLevelFilter
 
-class ExperiencesLevelAdapter(private var dataset: List<ExperienceLevelFilter>?, val iChooseExperienceLevel: iChooseExperienceLevel): RecyclerView.Adapter<ExperiencesLevelAdapter.ViewHolder?>() {
+class ExperiencesLevelAdapter(private var dataset: List<ExperienceLevelFilter>?, val iChooseExperienceLevel: iChooseExperienceLevel, val iUpdatePage2: iUpdatePage2): RecyclerView.Adapter<ExperiencesLevelAdapter.ViewHolder?>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val txtExperienceLevel: TextView
         init {
@@ -28,7 +29,8 @@ class ExperiencesLevelAdapter(private var dataset: List<ExperienceLevelFilter>?,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataset!![position]
         holder.txtExperienceLevel.text = item.experienceLevelName
-        holder.txtExperienceLevel.setOnClickListener { iChooseExperienceLevel.close(item.experienceLevelName) }
+        holder.txtExperienceLevel.setOnClickListener { iChooseExperienceLevel.close()
+        iUpdatePage2.updateExperience(item.experienceLevelName)}
     }
 
 }

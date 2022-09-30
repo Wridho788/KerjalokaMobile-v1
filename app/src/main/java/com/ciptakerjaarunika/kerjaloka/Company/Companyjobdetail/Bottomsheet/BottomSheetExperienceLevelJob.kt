@@ -13,11 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.ExperiencesLevelAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.ExperieceLevels
 import com.ciptakerjaarunika.kerjaloka.model.Data.ExperienceLevelFilter
 
-class BottomSheetExperienceLevelJob : SuperBottomSheetFragment(), iChooseExperienceLevel {
+class BottomSheetExperienceLevelJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(), iChooseExperienceLevel {
     private var list: List<ExperienceLevelFilter>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +42,7 @@ class BottomSheetExperienceLevelJob : SuperBottomSheetFragment(), iChooseExperie
             res -> list
             rv_experience.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = ExperiencesLevelAdapter(res, this@BottomSheetExperienceLevelJob)
+                adapter = ExperiencesLevelAdapter(res, this@BottomSheetExperienceLevelJob, iUpdatePage2)
             }
         }
         return view
@@ -57,13 +58,12 @@ class BottomSheetExperienceLevelJob : SuperBottomSheetFragment(), iChooseExperie
             .getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt();
     }
-    override fun close(experienceLevelName: String) {
-        Log.d(experienceLevelName, "experienceLevelName")
+    override fun close() {
         this.dismiss()
 
     }
 }
 
 interface iChooseExperienceLevel{
-    fun close(experienceLevelName: String)
+    fun close()
 }

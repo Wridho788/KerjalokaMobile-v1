@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.FieldsAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.JobFields
 import com.ciptakerjaarunika.kerjaloka.model.Data.Field
 
-class BottomSheetFieldsJob : SuperBottomSheetFragment(), iChooseFields {
+class BottomSheetFieldsJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(), iChooseFields {
     private var list: List<Field>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,7 @@ class BottomSheetFieldsJob : SuperBottomSheetFragment(), iChooseFields {
             res -> list
             rv_field.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = FieldsAdapter(res, this@BottomSheetFieldsJob)
+                adapter = FieldsAdapter(res, this@BottomSheetFieldsJob, iUpdatePage2)
             }
         }
         return view
@@ -57,13 +57,12 @@ class BottomSheetFieldsJob : SuperBottomSheetFragment(), iChooseFields {
             .getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt();
     }
-    override fun close(fieldName: String) {
-        Log.d(fieldName, "experienceLevelName")
+    override fun close() {
         this.dismiss()
 
     }
 }
 
 interface iChooseFields{
-    fun close(fieldName: String)
+    fun close()
 }

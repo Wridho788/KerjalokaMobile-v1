@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.JobRoleAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.JobRole
 import com.ciptakerjaarunika.kerjaloka.model.Data.Roles
 
-class BottomSheetJobRole : SuperBottomSheetFragment(), iChooseJobRole {
+class BottomSheetJobRole(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(), iChooseJobRole {
     private var list: List<Roles>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,7 @@ class BottomSheetJobRole : SuperBottomSheetFragment(), iChooseJobRole {
             res -> list
             rv_role.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = JobRoleAdapter(res, this@BottomSheetJobRole)
+                adapter = JobRoleAdapter(res, this@BottomSheetJobRole, iUpdatePage2)
             }
         }
         return view
@@ -57,13 +57,12 @@ class BottomSheetJobRole : SuperBottomSheetFragment(), iChooseJobRole {
             .getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt();
     }
-    override fun close(jobRoleName: String) {
-        Log.d(jobRoleName, "jobRoleName")
+    override fun close() {
         this.dismiss()
 
     }
 }
 
 interface iChooseJobRole{
-    fun close(jobRoleName: String)
+    fun close()
 }

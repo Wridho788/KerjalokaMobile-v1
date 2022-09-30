@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.MajorAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
 import com.ciptakerjaarunika.kerjaloka.model.Data.Major
 
-class BottomSheetMajorJob : SuperBottomSheetFragment(), iChooseMajor {
+class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(), iChooseMajor {
     private var list: List<Major>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +41,7 @@ class BottomSheetMajorJob : SuperBottomSheetFragment(), iChooseMajor {
             res -> list
             rv_majors.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = MajorAdapter(res, this@BottomSheetMajorJob)
+                adapter = MajorAdapter(res, this@BottomSheetMajorJob, iUpdatePage2)
             }
         }
         return view
@@ -57,13 +57,12 @@ class BottomSheetMajorJob : SuperBottomSheetFragment(), iChooseMajor {
             .getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt();
     }
-    override fun close(skill: String) {
-        Log.d(skill, "skill")
+    override fun close() {
         this.dismiss()
 
     }
 }
 
 interface iChooseMajor{
-    fun close(majorName: String)
+    fun close()
 }

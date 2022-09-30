@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.*
-import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyAddJobs2Binding
 
 class fragment_company_add_jobs_2 : Fragment(), iUpdatePage2 {
@@ -83,35 +81,54 @@ class fragment_company_add_jobs_2 : Fragment(), iUpdatePage2 {
     }
 
     fun majorModal() {
-        val sheet = BottomSheetMajorJob()
+        val sheet = BottomSheetMajorJob(this)
         activity?.let { it ->
             sheet.show(it.supportFragmentManager, "majorModal")
         }
     }
 
     fun experienceLevelModal() {
-        val sheet = BottomSheetExperienceLevelJob()
+        val sheet = BottomSheetExperienceLevelJob(this)
         activity?.let { it ->
             sheet.show(it.supportFragmentManager, "experienceLevelModal")
         }
     }
 
     fun fieldModal() {
-        val sheet = BottomSheetFieldsJob()
+        val sheet = BottomSheetFieldsJob(this)
         activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "fieldModal") }
     }
 
     fun roleModal() {
-        val sheet = BottomSheetJobRole()
+        val sheet = BottomSheetJobRole(this)
         activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "rolemodal") }
     }
 
     override fun updateSkill(skill: String) {
-        val skill_job = view?.findViewById<TextView>(R.id.compny_skill)
-        skill_job?.text = skill
+        binding.compnySkill.text = skill
+    }
+
+    override fun updateMajor(major: String) {
+        binding.compnyMajor.text = major
+    }
+
+    override fun updateExperience(experience: String) {
+        binding.compnyExperience.text =experience
+    }
+
+    override fun updateField(field: String) {
+        binding.compnyJobField.text = field
+    }
+
+    override fun updateRole(role: String) {
+      binding.compnyJobPosition.text = role
     }
 }
 
 interface iUpdatePage2 {
     fun updateSkill(skill: String)
+    fun updateMajor(major: String)
+    fun updateExperience(experience: String)
+    fun updateField(field: String)
+    fun updateRole(role: String)
 }
