@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.ShowModal
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.CompanyMyReviewAPI
+import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Global.GlobalDeleteModal
 
 private var layoutManager: RecyclerView.LayoutManager? = null
@@ -34,12 +35,11 @@ class ReviewHistory : Fragment(){
 
         val recyclerCompReview = view.findViewById<RecyclerView>(R.id.recycleRevHistory)
 
-        CompanyMyReviewAPI().getCompanyReviewAsync(context){
-            if(it != null){
+
+        UsersAPI().CompSendedReview(SortByNewest = false, context){
                 recyclerCompReview?.apply{
                     layoutManager = LinearLayoutManager(context)
-                    adapter = assignAdapter(it.data)
-                }
+                    adapter = it?.let { it1 -> assignAdapter(it1.data) }
             }
         }
 
@@ -62,10 +62,10 @@ class ReviewHistory : Fragment(){
         fragmentTransaction?.commit()
     }
 
-    internal fun assignAdapter(list: ratingData): CompReviewHistoryAdapter {
+    internal fun assignAdapter(list: List<DataX>): CompReviewHistoryAdapter {
         return CompReviewHistoryAdapter(requireContext(), list, object : ShowModal {
 
-            override fun showDetail(review: myReview) {
+            override fun showDetail(review: DataX) {
                 val sheet = EditMyReview()
                 activity?.let { it1 ->
                     sheet.show(
@@ -75,7 +75,7 @@ class ReviewHistory : Fragment(){
                 }
             }
 
-            override fun showDelete(review: myReview) {
+            override fun showDelete(review: DataX) {
                 val sheet = GlobalDeleteModal()
                 activity?.let { it1 ->
                     sheet.show(

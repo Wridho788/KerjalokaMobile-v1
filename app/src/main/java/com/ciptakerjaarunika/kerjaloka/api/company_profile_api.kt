@@ -7,6 +7,8 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobRespons
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.MyPackagesResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Package.getHistoryResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.CompMyReview
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Test.testResponse
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import retrofit2.Call
@@ -429,6 +431,30 @@ class company_profile_api {
                     Log.e("error", t.toString())
                     onResult(null)
                 }
+            }
+        )
+    }
+
+    interface compGetMyReview{
+        @GET("company/rating/myReview")
+        fun compMyReview(@Query("sortByNewest")sortByNewest: Boolean): Call<ReviewResponse>
+    }
+    fun CompMyReview(sortByNewest: Boolean, context: Context?, onResult: (ReviewResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(compGetMyReview::class.java)
+
+        retrofit.compMyReview(sortByNewest).enqueue(
+            object : Callback<ReviewResponse>{
+                override fun onResponse(
+                    call: Call<ReviewResponse>,
+                    response: Response<ReviewResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
+                    onResult(null)
+                }
+
             }
         )
     }

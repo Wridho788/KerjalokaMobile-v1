@@ -6,14 +6,13 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.AppealModal
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class CompReviewAdapter (private val context: Context, private val reviewList: List<reviewList>, private val listener: AppealModal):
+class CompReviewAdapter(private val context: Context, private val reviewList: List<Review>, private val listener: AppealModal):
     RecyclerView.Adapter<CompReviewAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView

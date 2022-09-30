@@ -11,17 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.AppealModal
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.conRat
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.proRat
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.CompanyReviewAPI
-import com.ciptakerjaarunika.kerjaloka.ui.Global.GlobalDeleteModal
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditResident
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Adapter.CompanyReviewAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.company_reviews
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.google.android.material.button.MaterialButton
 
 private var layoutManager: RecyclerView.LayoutManager? = null
@@ -49,7 +42,8 @@ class CompMyReview(val data: data?, private val CompanyNo: Long? = null): Fragme
         btn_revHistory.setOnClickListener{
             replaceFragment(ReviewHistory())
         }
-        CompanyReviewAPI().getCompanyReviewAsync(context, data?.userNo) {
+
+        company_profile_api().CompMyReview(sortByNewest = false, context){
             allRating.rating = it?.data?.userInfo?.rating?.toFloat()!!
             sumRate.text = "${it?.data?.userInfo?.rating} dari 5"
             if (it != null) {
@@ -75,9 +69,9 @@ class CompMyReview(val data: data?, private val CompanyNo: Long? = null): Fragme
         fragmentTransaction?.commit()
     }
 
-    internal fun assignAdapter(list: List<reviewList>): CompReviewAdapter {
+    internal fun assignAdapter(list: List<Review>): CompReviewAdapter {
         return CompReviewAdapter(requireContext(), list, object : AppealModal {
-            override fun appealModal(pack: reviewList) {
+            override fun appealModal(pack: Review) {
                 val sheet = AppealReviewModal()
                 activity?.let { it1 ->
                     sheet.show(

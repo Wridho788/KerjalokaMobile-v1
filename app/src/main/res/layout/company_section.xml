@@ -96,6 +96,11 @@
                     android:id="@+id/chart1"
                     android:layout_height="200dp"/>
 
+                <com.github.mikephil.charting.charts.BarChart
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/mpChartApplicant"/>
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

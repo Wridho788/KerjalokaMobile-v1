@@ -1,10 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage
+
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -18,14 +20,21 @@ import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyDashboardBinding
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.BarLineChartBase
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.*
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,7 +51,11 @@ private const val ARG_PARAM2 = "param2"
 
 class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
+    lateinit var barList: ArrayList<BarEntry>
+    lateinit var barDataSet: BarDataSet
+    lateinit var barData: BarData
     private val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    var label: String?= null
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -68,6 +81,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         val btnSeeInterview = view.findViewById<TextView>(R.id.seeInterview)
         val jlhFollower = view.findViewById<TextView>(R.id.jlh_org_pengikut)
         val btnSeeFollower = view.findViewById<TextView>(R.id.seeFollower)
+
 
         company_profile_api().MyFollowerAmount(context){
             jlhFollower.text = it?.data.toString() + " Orang"
@@ -141,11 +155,16 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             datePicker.addOnPositiveButtonClickListener {
                 val startDate = sdf.format(it.first)
                 val endDate = sdf.format(it.second)
+                val msDiff: Long = (it.second - it.first).toLong()
+                val daysDiff: Long = TimeUnit.MILLISECONDS.toDays(msDiff)
                 plg_tgl2.setText(startDate + " - " +endDate)
             }
         }
 
         img_btn_calendar1.setOnClickListener {
+            val anyChartView = view.findViewById(R.id.chart1) as AnyChartView
+            APIlib.getInstance().setActiveAnyChartView(anyChartView);
+            val pie = AnyChart.column()
             val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker
                 .Builder
                 .dateRangePicker()
@@ -158,6 +177,22 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
                 val startDate = sdf.format(it.first)
                 val endDate = sdf.format(it.second)
                 plg_tgl1.setText(startDate + " - " +endDate)
+                label = startDate
+
+                anyChartView.clear()
+                val newData: MutableList<DataEntry> = ArrayList()
+                newData.add(ValueDataEntry("Andi", 10000))
+                newData.add(ValueDataEntry("Entah", 12000))
+//                newData.add(ValueDataEntry("Peter", 18000))
+                //        pie.data (data)
+                val series = pie.column(newData)
+
+                series.fill("#FF6666")
+                series.stroke("FF6666")
+
+                //        pie.title("");
+
+                anyChartView.setChart(pie)
             }
         }
         val anyChartView2 = view.findViewById(R.id.chart2) as AnyChartView
@@ -181,12 +216,13 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         val anyChartView = view.findViewById(R.id.chart1) as AnyChartView
         APIlib.getInstance().setActiveAnyChartView(anyChartView);
         val pie = AnyChart.column()
-
+//        anyChartView.clear()
         val data: MutableList<DataEntry> = ArrayList()
-        data.add(ValueDataEntry("John", 10000))
-        data.add(ValueDataEntry("Jake", 12000))
-        data.add(ValueDataEntry("Peter", 18000))
+        data.add(ValueDataEntry("kevin", 10000))
+        data.add(ValueDataEntry("sean", 12000))
+        data.add(ValueDataEntry("egi", 18000))
 //        pie.data (data)
+        Log.d("tag", data.toString());
         val series = pie.column(data)
         series.fill("#FF6666")
         series.stroke("FF6666")
@@ -194,6 +230,8 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 //        pie.title("");
 
         anyChartView.setChart(pie)
+
+        setBarChart(view)
 
 //        card_test_section.setOnClickListener {  // code here to handle intent to Selection List activity
 //            Toast.makeText(activity, "Seleksi Saya!", Toast.LENGTH_SHORT).show()
@@ -242,6 +280,44 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         return CalendarConstraints.Builder()
             .setValidator(validators)
             .build()
+    }
+
+    private fun setBarChart(view: View) {
+        val Chart = view.findViewById<BarChart>(R.id.mpChartApplicant)
+        val xLabel: ArrayList<String> = ArrayList()
+        xLabel.add("9")
+        xLabel.add("15")
+        xLabel.add("21")
+        xLabel.add("27")
+        xLabel.add("33")
+
+        val xAxisFormatter: ValueFormatter = DayAxisValueFormatter(Chart)
+        val xAxis: XAxis = Chart.getXAxis()
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setLabelCount(7);
+        xAxis.valueFormatter
+        xAxis.setValueFormatter(xAxisFormatter);
+
+        barList = ArrayList()
+        barList.add(BarEntry(1f, 500f))
+        barList.add(BarEntry(2f, 500f))
+        barList.add(BarEntry(3f, 500f))
+        barList.add(BarEntry(4f, 500f))
+        barList.add(BarEntry(5f, 500f))
+        barDataSet = BarDataSet(barList, "Tangal")
+        barData= BarData(barDataSet)
+        Chart.data = barData
+        barDataSet.setColor(Color.parseColor("#ff6666"))
+        barDataSet.valueTextColor=Color.BLACK
+        barDataSet.valueTextSize=15f
+    }
+
+    class DayAxisValueFormatter(private val chart: BarLineChartBase<*>) : ValueFormatter() {
+        override fun getFormattedValue(value: Float): String {
+            return "your text $value"
+        }
     }
 
     fun getLongAsDate(year: Int, month: Int, date: Int): Long {

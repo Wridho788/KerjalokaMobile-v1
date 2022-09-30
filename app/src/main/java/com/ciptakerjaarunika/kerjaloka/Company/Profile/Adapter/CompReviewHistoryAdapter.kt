@@ -6,14 +6,13 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.ShowModal
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ratingData
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class CompReviewHistoryAdapter(private val context: Context, private val ratingData: ratingData, private val listener: ShowModal):
+class CompReviewHistoryAdapter(private val context: Context, private val ratingData: List<DataX>, private val listener: ShowModal):
     RecyclerView.Adapter<CompReviewHistoryAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
@@ -44,7 +43,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = ratingData.reviewList[position]
+        val currentItem = ratingData[position]
         holder.creator.text = currentItem.userFullName
         holder.Desc.text = currentItem.comment
         holder.ratBar.rating = currentItem.rating.toFloat()
@@ -95,7 +94,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
     }
 
     override fun getItemCount(): Int {
-        return ratingData.reviewList.size
+        return ratingData.size
     }
 
 

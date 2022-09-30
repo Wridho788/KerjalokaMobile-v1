@@ -76,10 +76,11 @@ class AccountSetting(val data: data?) : Fragment() {
                 }
             }
 
-            newsletter.setOnClickListener {
-                val setNL = newsletter.isChecked
-                Log.d("asd", setNL.toString())
-                company_profile_api().newsletter(setNL, context){}
+
+            newsletter.setOnClickListener { it1 ->
+                val setNl = it?.data.isNewsletter
+                Log.d("asd", setNl.toString())
+                company_profile_api().newsletter(setNl, context){}
             }
         }
 

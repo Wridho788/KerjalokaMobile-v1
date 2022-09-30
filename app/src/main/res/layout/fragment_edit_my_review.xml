@@ -65,6 +65,7 @@
                     android:textSize="16dp" />
 
                 <RatingBar
+                    android:id="@+id/ratingBar"
                     style="@style/Theme.Kerjaloka"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -282,7 +283,7 @@
                     android:textSize="14dp" />
 
                 <EditText
-                    android:id="@+id/review"
+                    android:id="@+id/txt_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/light_300"
@@ -304,6 +305,7 @@
                 android:background="@color/light_500" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/sendReview"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
