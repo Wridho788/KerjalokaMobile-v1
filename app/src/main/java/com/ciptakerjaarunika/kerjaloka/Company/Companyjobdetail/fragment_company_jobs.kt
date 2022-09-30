@@ -47,7 +47,6 @@ class fragment_company_jobs : Fragment() {
         addjob.setOnClickListener{
             val myIntent = Intent(view.context, AddJobActivity::class.java)
             startActivity(myIntent)
-
         }
         var list = ArrayList<Data>()
 
@@ -77,6 +76,17 @@ class fragment_company_jobs : Fragment() {
         return Companyjobs_adapter(list, object : JobDetail {
             override fun jobDetail(jobDetail: Data) {
                 replaceFragment(jobDetail)
+            }
+
+            override fun shareJob(shareJob: Data) {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, shareJob.jobPosition)
+                    putExtra(Intent.EXTRA_TEXT, shareJob.link)
+                    type = "text/plain"
+                }
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
             }
         })
     }

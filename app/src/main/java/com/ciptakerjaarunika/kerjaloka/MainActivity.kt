@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_jobs
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
 import com.ciptakerjaarunika.kerjaloka.Company.Test.view_mytest_list
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.home -> replaceFragment((CompanyDashboard()))
-                    R.id.lamaran -> replaceFragment((ProfilePage()))
+                    R.id.lamaran -> replaceFragment((fragment_company_jobs()))
                     R.id.interview -> replaceFragment((InterviewPage()))
                     R.id.akun -> replaceFragment((AkunPage()))
 

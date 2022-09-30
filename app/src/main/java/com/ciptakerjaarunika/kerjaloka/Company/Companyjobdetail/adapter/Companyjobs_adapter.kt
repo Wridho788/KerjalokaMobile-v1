@@ -10,6 +10,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
+import com.google.android.material.button.MaterialButton
 
 
 class Companyjobs_adapter (private val joblist: List<Data>, private val listener: JobDetail):
@@ -21,6 +22,7 @@ class Companyjobs_adapter (private val joblist: List<Data>, private val listener
         var jobExpired: TextView
         var jobAuthor: TextView
         var card: RelativeLayout
+        var shareJob: MaterialButton
 
         init {
             jobTitle = itemView.findViewById(R.id.company_job_title)
@@ -29,7 +31,7 @@ class Companyjobs_adapter (private val joblist: List<Data>, private val listener
             jobStatus = itemView.findViewById(R.id.company_job_status)
             jobAuthor = itemView.findViewById(R.id.company_job_author)
             card = itemView.findViewById(R.id.cardJob)
-
+            shareJob = itemView.findViewById(R.id.btn_share)
         }
     }
 
@@ -52,6 +54,9 @@ class Companyjobs_adapter (private val joblist: List<Data>, private val listener
         holder.jobAuthor.text=currentItem.createdBy
         holder.card.setOnClickListener{
             listener.jobDetail(currentItem)
+        }
+        holder.shareJob.setOnClickListener{
+            listener.shareJob(currentItem)
         }
     }
 
