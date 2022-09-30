@@ -313,4 +313,25 @@ class DataAPI {
             }
         )
     }
+    interface GetFields {
+        @GET("data/fields")
+        fun GetData(): Call<List<FieldFilter>?>
+    }
+
+    fun GetFields(context: Context?, onResult: (List<FieldFilter>?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(GetFields::class.java)
+
+        retrofit.GetData().enqueue(
+            object : Callback<List<FieldFilter>?> {
+                override fun onResponse(call: Call<List<FieldFilter>?>, response: Response<List<FieldFilter>?>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<List<FieldFilter>?>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
 }

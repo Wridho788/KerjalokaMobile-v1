@@ -41,7 +41,6 @@
                 android:layout_gravity="center"
                 app:title="Edit Tentang Saya"
                 app:titleTextColor="@color/black" />
-
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

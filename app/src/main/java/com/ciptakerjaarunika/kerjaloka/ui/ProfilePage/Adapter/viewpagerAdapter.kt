@@ -21,7 +21,7 @@ class viewpagerAdapter (var data : JobseekerProfile?, fragmentManager: FragmentM
                 cvPage()
             }
             2->{
-                manage_preference(data)
+                ManagePreferenceFragment(data)
             }
             3->{
                 manage_lampiran()

@@ -11,7 +11,7 @@ import android.provider.MediaStore
 import java.util.*
 
 
-class PathUtils {
+open class PathUtil {
     fun getPath(context: Context, uri: Uri): String? {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // DocumentProvider

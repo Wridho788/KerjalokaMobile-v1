@@ -4,9 +4,12 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
 import com.ciptakerjaarunika.kerjaloka.model.Interview.returnUploadChatPhotoApi
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.user
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.FragmentSalaryExpectation
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -167,6 +170,31 @@ class ManageProfileAPI {
         )
     }
 
+
+    interface JobseekerEditFields {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/preference/field/manage")
+        fun SendData(@Body jobseekerFields : List<JobseekerFields>?): Call<Any?>
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun JobseekerEditFields(jobseekerFields: List<JobseekerFields>?, context: Context?, onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(JobseekerEditFields::class.java)
+        retrofit.SendData(jobseekerFields).enqueue(
+            object : Callback<Any?> {
+                override fun onFailure(call: Call<Any?>, t: Throwable) {
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<Any?>,
+                    response: Response<Any?>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
     interface JobseekerEditSkills {
         @Headers("Content-Type: application/json","Accept: application/json")
         @POST("jobseeker/skills/manage")
@@ -190,4 +218,134 @@ class ManageProfileAPI {
             }
         )
     }
+
+    interface JobseekerEditJobTypes {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/preference/job-type/manage")
+        fun SendData(@Body jobseekerJobType: List<JobseekerJobTypes>?): Call<Any?>
+    }
+    fun JobseekerEditJobTypes(jobseekerJobType: List<JobseekerJobTypes>?, context: Context?, onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(JobseekerEditJobTypes::class.java)
+        retrofit.SendData(jobseekerJobType).enqueue(
+            object : Callback<Any?> {
+                override fun onFailure(call: Call<Any?>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    data class SalaryExpectationRequest(
+        val expectedSalary : Int?
+    )
+    interface EditSalaryExpectation {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/preference/salary/manage")
+        fun SendData(@Body salaryExpectation: SalaryExpectationRequest?): Call<Any?>
+    }
+    fun EditSalaryExpectation(salary : Int?, context: Context?, onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(EditSalaryExpectation::class.java)
+        retrofit.SendData(SalaryExpectationRequest(salary)).enqueue(
+            object : Callback<Any?> {
+                override fun onFailure(call: Call<Any?>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    data class UploadDocumentResponse(
+        val code : Int,
+        val message:String,
+        val documentName: String?
+    )
+    interface UploadDocument {
+        @Multipart
+        @POST("users/mobile/uploadDocument")
+        fun SendData(@Part document : MultipartBody.Part): Call<UploadDocumentResponse>
+    }
+
+    fun JobseekerUploadDocument(context: Context?, document : MultipartBody.Part, onResult: (UploadDocumentResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POSTFILE(UploadDocument::class.java)
+        retrofit.SendData(document).enqueue(
+            object : Callback<UploadDocumentResponse> {
+                override fun onFailure(call: Call<UploadDocumentResponse>, t: Throwable) {
+                    Log.d("error", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<UploadDocumentResponse>,
+                    response: Response<UploadDocumentResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+    interface JobseekerEditLampiran {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/documents")
+        fun SendData(@Body documents: List<Documents>?): Call<Any?>
+    }
+    fun JobseekerEditLampiran(docs: List<Documents>?, context: Context?, onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(JobseekerEditLampiran::class.java)
+        retrofit.SendData(docs).enqueue(
+            object : Callback<Any?> {
+                override fun onFailure(call: Call<Any?>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    data class changeUsername(
+        val username:String
+    )
+    interface JobseekerChangeUsername {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("users/change/username")
+        fun SendData(@Body newUsername: changeUsername): Call<Any?>
+    }
+    fun JobseekerChnageUsername(username : String, context: Context?, onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(JobseekerChangeUsername::class.java)
+        retrofit.SendData(changeUsername(username)).enqueue(
+            object : Callback<Any?> {
+                override fun onFailure(call: Call<Any?>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+
+//    interface GetMyReview {
+//        @Get("jobseeker/rating/myReview")
+//        fun GetData(): Call<Any?>
+//    }
+//    fun JobseekerChnageUsername(username : String, context: Context?, onResult: (Any?) -> Unit){
+//        val retrofit = ServiceBuilder(context).POST(JobseekerChangeUsername::class.java)
+//        retrofit.SendData(changeUsername(username)).enqueue(
+//            object : Callback<Any?> {
+//                override fun onFailure(call: Call<Any?>, t: Throwable) {
+//                    onResult(null)
+//                }
+//                override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+//                    onResult(response.body())
+//                }
+//            }
+//        )
+//    }
 }
