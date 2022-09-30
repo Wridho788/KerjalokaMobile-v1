@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.LocationAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iLocationPage
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage1
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Locations
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.locationModel
+import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 
-class BottomSheetEditJob( iLocationPage: iLocationPage) : SuperBottomSheetFragment(), iChooseLocation{
-    private var list: List<locationModel>? = null
+class BottomSheetEditJob(val iUpdatePage1: iUpdatePage1) : SuperBottomSheetFragment(), iChooseLocation{
+    private var list: List<LocationFilter>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,18 +36,16 @@ class BottomSheetEditJob( iLocationPage: iLocationPage) : SuperBottomSheetFragme
             res -> list
             rv_location.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = LocationAdapter(res, this@BottomSheetEditJob )
+                adapter = LocationAdapter(res, this@BottomSheetEditJob, iUpdatePage1 )
             }
         }
         return view
     }
-    override fun close(locationName: String) {
-        Log.d(locationName, "location")
+    override fun close() {
         this.dismiss()
-
     }
 }
 
 interface iChooseLocation{
-    fun close(locationName: String)
+    fun close()
 }

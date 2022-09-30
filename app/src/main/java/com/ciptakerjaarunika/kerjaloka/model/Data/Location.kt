@@ -15,3 +15,5 @@ data class LocationFilter(
     var checked : Boolean?
 )
 
+
+

@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,9 +34,9 @@ class fragment_company_jobs : Fragment() {
         val addjob = view.findViewById<ImageView>(R.id.idFABAdd)
 
         addjob.setOnClickListener{
-            val myIntent = Intent(view.context, AddJobActivity::class.java)
-            startActivity(myIntent)
-//            replaceFragment(fragment_company_add_jobs_1())
+//            val myIntent = Intent(view.context, AddJobActivity::class.java)
+//            startActivity(myIntent)
+            replaceFragment(fragment_company_add_jobs_1())
         }
         //        val recyclerView = view.findViewById<RecyclerView>(R.id.recyle_company_jobs)
 
