@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.view.WindowInsets.Type.ime
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -46,6 +47,11 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.bottomNavigationView.visibility = GONE
+        binding.bottomNavigationCompanyView.visibility = GONE
 
         AUTHAPI().CheckLogin(baseContext) {
 //            if(it?.user?.roleNo == Role.Jobseekers.value){
@@ -90,8 +96,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-            binding = ActivityMainBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+
 
             window.decorView.setOnApplyWindowInsetsListener { view, insets ->
                 val insetsCompat = toWindowInsetsCompat(insets, view)
@@ -111,6 +116,7 @@ class MainActivity : AppCompatActivity() {
 //
             if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
                 binding.bottomNavigationView.visibility = VISIBLE
+
                 // User Jobseeker
                 binding.bottomNavigationView.setOnItemSelectedListener { item ->
                     when (item.itemId) {

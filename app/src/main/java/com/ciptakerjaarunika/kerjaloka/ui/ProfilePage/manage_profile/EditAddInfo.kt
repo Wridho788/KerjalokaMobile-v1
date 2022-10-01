@@ -136,7 +136,7 @@ class EditAddInfo(val data : JobseekerProfile?) : Fragment(), iUpdateAdditional 
     }
     private fun back(){
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(), "Profile Page")
+        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
         fragmentTransaction?.commit()
     }
     private fun checkLoading(){

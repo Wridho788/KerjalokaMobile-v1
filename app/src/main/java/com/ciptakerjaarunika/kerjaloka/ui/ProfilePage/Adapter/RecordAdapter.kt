@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerRecord
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.record
 
-class RecordAdapter (private val recordList: List<record>):
+class RecordAdapter (private val recordList: List<JobseekerRecord>?):
     RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
@@ -28,10 +29,10 @@ class RecordAdapter (private val recordList: List<record>):
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = recordList[position]
-        holder.creator.text = currentItem.ownerName
-        holder.recordTime.text = currentItem.statusChangeOn
-        holder.Desc.text = currentItem.description
+        val currentItem = recordList?.get(position)
+        holder.creator.text = currentItem?.ownerName
+        holder.recordTime.text = currentItem?.statusChangeOn
+        holder.Desc.text = currentItem?.description
     }
 
     override fun getItemCount(): Int {

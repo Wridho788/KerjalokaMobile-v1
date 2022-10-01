@@ -53,19 +53,26 @@ class CompanyNotification : AppCompatActivity() {
         notifContainer.adapter = adapter
     }
 
-    private fun reload(){
-        val list = dummyData(0,20)
-        notifContainer.post {
-            adapter.reload(list)
-        }
+    private fun reload() {
+//        UsersAPI().GetNotification(this) {
+//            val list = it?.data?.sortedByDescending { it.createdOn }
+////            val list = dummyData(0, 20)
+//            notifContainer.post {
+//                adapter.reload(list as MutableList<CompanyNotificationModel>)
+//            }
+//        }
     }
 
-    private fun loadMore(){
-        val list = dummyData(adapter.itemCount,15)
-        notifContainer.post {
-            adapter.loadMore(list)
-        }
+    private fun loadMore() {
+//        UsersAPI().GetNotification(this) {
+//            val list = it?.data?.sortedByDescending { it.createdOn }
+////            val list = dummyData(adapter.itemCount, 15)
+//            notifContainer.post {
+//                adapter.loadMore(list as MutableList<CompanyNotificationModel>)
+//            }
+//        }
     }
+
 
     private fun dummyData(offset: Int, limit: Int): MutableList<CompanyNotificationModel>{
         val notifList = mutableListOf<CompanyNotificationModel>()

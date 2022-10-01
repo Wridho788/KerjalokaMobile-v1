@@ -8,6 +8,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.Field
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.review_response
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.search_model
 import retrofit2.Call
 import retrofit2.Callback
@@ -310,6 +311,75 @@ class ProfileAPI {
                 override fun onResponse(
                     call: Call<JobseekerResumeResponse>, response: Response<JobseekerResumeResponse>
                 ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    interface jobseekerDeleteResume {
+        @GET("jobseeker/delete/resume")
+        fun request(): Call<Any?>
+    }
+
+    fun DeleteJobseekerResume(context: Context?,onResult: (Any?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerDeleteResume::class.java)
+
+        retrofit.request().enqueue(
+            object : Callback<Any?> {
+                override fun onFailure(call: Call<Any?>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    data class recordResponse(
+        val data : List<JobseekerRecord>
+    )
+    interface jobseekerGetRecord {
+        @GET("jobseeker/record/get")
+        fun request(): Call<recordResponse?>
+    }
+
+    fun JobseekerGetRecord(context: Context?,onResult: (recordResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerGetRecord::class.java)
+
+        retrofit.request().enqueue(
+            object : Callback<recordResponse?> {
+                override fun onFailure(call: Call<recordResponse?>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(call: Call<recordResponse?>, response: Response<recordResponse?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    interface jobseekerGetMyReview {
+        @GET("jobseeker/rating/myReview")
+        fun request(): Call<review_response?>
+    }
+
+    fun JobseekerGetMyReview(context: Context?,onResult: (review_response?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(jobseekerGetMyReview::class.java)
+
+        retrofit.request().enqueue(
+            object : Callback<review_response?> {
+                override fun onFailure(call: Call<review_response?>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(call: Call<review_response?>, response: Response<review_response?>) {
                     onResult(response.body())
                 }
             }

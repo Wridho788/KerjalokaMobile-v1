@@ -26,6 +26,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Notification
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.JobPage
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobRecommendation.JobRecommendationFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.SearchActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -80,7 +81,10 @@ class HomePage : Fragment(), OnFragmentClickListener {
             onCompanyPage()
         }
         btn_see_all_recommendation_job.setOnClickListener {
-            Toast.makeText(activity, "see all!", Toast.LENGTH_SHORT).show()
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+            fragmentTransaction.addToBackStack("Job Page")
+            fragmentTransaction.replace(R.id.fragment_container, JobRecommendationFragment())
+            fragmentTransaction.commit()
         }
         return view
     }

@@ -51,7 +51,7 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?) : Fragment() {
     }
     private fun back(){
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(), "Profile Page")
+        fragmentTransaction?.replace(id, profilepage(2), "Profile Page")
         fragmentTransaction?.commit()
     }
 

@@ -564,6 +564,7 @@
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
 
 
@@ -648,6 +649,54 @@
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:checkable="false"
+                    android:clickable="false"
+                    android:focusable="false"
+                    app:cardCornerRadius="10dp"
+                    app:strokeColor="@color/light_500"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Logout"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:layout_marginTop="10dp"
+                            android:backgroundTint="@color/white"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Logout Account"
+                            android:textAllCaps="false"
+                            android:textColor="@color/danger_500"
+                            android:textSize="14dp"
+                            app:cornerRadius="100dp"
+                            app:strokeColor="@color/danger_500"
+                            app:strokeWidth="1dp"
+                            tools:layout_editor_absoluteX="17dp"
+                            tools:layout_editor_absoluteY="346dp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AkunPage.fragment_edit_username_profile">
+    tools:context=".ui.ProfilePage.UserSetting.EditUserName">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,8 @@
                     android:layout_gravity="center"
                     android:paddingLeft="16dp"
                     app:cornerRadius="100sp"
-                    app:icon="@drawable/ic_back"
+                    android:id="@+id/back_btn"
+                    app:icon="@drawable/ic_arrow_left_red"
                     app:iconTint="@color/danger_500"/>
 
                 <com.google.android.material.appbar.MaterialToolbar
@@ -46,12 +47,15 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="8dp"
+            android:layout_alignParentTop="true"
             android:paddingHorizontal="16dp"
             android:paddingVertical="16dp">
 
@@ -86,7 +90,7 @@
                     app:cardElevation="0dp">
 
                     <EditText
-                        android:id="@+id/masukkan_email_baru"
+                        android:id="@+id/input_txt"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:fontFamily="@font/poppins"
@@ -97,9 +101,19 @@
                         android:lines="10"
                         android:maxLines="10"
                         android:padding="8dp"
-                        android:textColor="@color/trueGray_300"
+                        android:textColor="@color/black"
                         android:textSize="10sp" />
+
                 </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="@color/danger_500"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/errorMessage"
+                    android:visibility="gone"
+                    android:text="Username tidak boleh kosong"/>
             </LinearLayout>
 
             <TextView
@@ -113,22 +127,29 @@
                 android:textSize="10sp"/>
 
         </LinearLayout>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_simpan_username"
-            android:layout_marginTop="550dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:backgroundTint="@color/danger_500"
-            android:fontFamily="@font/poppins"
-            android:text="Simpan"
-            android:layout_marginHorizontal="16dp"
-            android:textAllCaps="false"
-            android:layout_marginBottom="16dp"
-            android:textSize="14dp"
-            app:cornerRadius="100dp"
-            tools:layout_editor_absoluteX="17dp"
-            tools:layout_editor_absoluteY="346dp"/>
+            <LinearLayout
+                android:id="@+id/footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/danger_500"
+                    android:fontFamily="@font/poppins"
+                    android:text="Simpan"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    app:cornerRadius="100dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
 
     </LinearLayout>
 

@@ -166,7 +166,7 @@ class EditBahasa(var jobseekerNo : Long, var data : List<JobseekerLanguages>?) :
     }
     private fun back(){
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(), "Profile Page")
+        fragmentTransaction?.replace(id, profilepage(1), "Profile Page")
         fragmentTransaction?.commit()
     }
 }

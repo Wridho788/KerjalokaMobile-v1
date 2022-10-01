@@ -86,25 +86,25 @@
                             android:textSize="12dp"/>
                     </LinearLayout>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_marginTop="16dp"
-                        android:id="@+id/btn_appeal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:backgroundTint="@color/white"
-                        app:strokeColor="@color/danger_500"
-                        app:strokeWidth="1dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="Appeal"
-                        android:textColor="@color/danger_500"
-                        android:textAllCaps="false"
-                        android:textSize="14dp"
-                        app:cornerRadius="100dp"
-                        tools:layout_editor_absoluteX="17dp"
-                        tools:layout_editor_absoluteY="346dp"/>
+<!--                    <com.google.android.material.button.MaterialButton-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:id="@+id/btn_appeal"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="top"-->
+<!--                        android:backgroundTint="@color/white"-->
+<!--                        app:strokeColor="@color/danger_500"-->
+<!--                        app:strokeWidth="1dp"-->
+<!--                        android:layout_marginRight="8dp"-->
+<!--                        android:layout_marginLeft="8dp"-->
+<!--                        android:fontFamily="@font/poppins_semibold"-->
+<!--                        android:text="Appeal"-->
+<!--                        android:textColor="@color/danger_500"-->
+<!--                        android:textAllCaps="false"-->
+<!--                        android:textSize="14dp"-->
+<!--                        app:cornerRadius="100dp"-->
+<!--                        tools:layout_editor_absoluteX="17dp"-->
+<!--                        tools:layout_editor_absoluteY="346dp"/>-->
 
                 </LinearLayout>
 

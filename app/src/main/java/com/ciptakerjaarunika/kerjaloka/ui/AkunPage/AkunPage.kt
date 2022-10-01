@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
@@ -31,11 +32,12 @@ class AkunPage() : Fragment() {
         if(SessionManager(context).user != null){
             if(SessionManager(context).user?.roleNo == 4) {
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(
-                    id,
-                    profilepage(),
-                    "ProfileFragment"
-                )
+                ft.replace(id,profilepage(0),"ProfileFragment")
+                ft.commit()
+            }
+            else{
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(id, ProfilePage(),"ProfileFragment")
                 ft.commit()
             }
         }

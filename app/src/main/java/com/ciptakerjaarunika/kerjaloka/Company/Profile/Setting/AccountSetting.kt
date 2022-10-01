@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScore
 import com.google.android.material.button.MaterialButton
@@ -163,6 +166,12 @@ class AccountSetting : Fragment() {
         discover.isChecked = userL[0].isDiscoverable
         newsletter.isChecked = userL[0].isNewsletter
 
+        view.findViewById<MaterialButton>(R.id.btn_logout).setOnClickListener{
+            ProfileAPI().Logout(context){
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
         btn_editUsername.setOnClickListener{
             replaceFragment(CompEditUsername())
         }

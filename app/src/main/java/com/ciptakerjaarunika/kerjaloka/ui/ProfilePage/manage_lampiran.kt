@@ -1,5 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,17 +14,29 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.enum.VerifyStatus
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.DocumentAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.FragmentEditLampiran
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin
+import com.qingmei2.rximagepicker_extension.utils.PathUtils
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class manage_lampiran : Fragment() {
+    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
+    private var oldestFile : String? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +51,30 @@ class manage_lampiran : Fragment() {
         val spinnerDoc = view.findViewById<LinearLayout>(R.id.spinnerDoc)
 //        val btn_edResume = view.findViewById<TextView>(R.id.edit_video_resume_pelamar)
         val btn_edVaccine = view.findViewById<TextView>(R.id.edit_status_vaksin_pelamar)
+        val btnResume = view.findViewById<TextView>(R.id.videoResumeName)
+
+        activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+                val data = it.data
+                val fileUri: Uri? = data?.data
+                val pathName =
+                    fileUri?.let { it1 -> context?.let { it2 -> PathUtils.getPath(it2, it1) } }
+
+                val file = File(pathName ?: "")
+                val requestFile: RequestBody =
+                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val photo = MultipartBody.Part.createFormData("photo", file.name, requestFile)
+
+                ManageProfileAPI().JobseekerUploadResume(photo, oldestFile, context){res->
+                    if(res?.data != null){
+                        btnResume.text = res.data.videoName
+                    }
+                }
+
+            }
+        }
 
         ProfileAPI().GetJobseekerDocuments(context){ documents ->
             btn_EdLamp.setOnClickListener{
@@ -48,13 +88,32 @@ class manage_lampiran : Fragment() {
             recyclerView?.adapter = documents?.data?.let { DocumentAdapter(it) }
         }
 
+
+
         ProfileAPI().GetJobseekerResume(context){ resume ->
-            if (resume != null) {
+            btnResume.setOnClickListener {
+                var intent = Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("video/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                val requestIntent = Intent.createChooser(intent, "Choose a Video");
+                activityResultLauncher.launch(requestIntent)
+            }
+            if (resume?.data != null) {
                 val resumeDoc = resume.data
-                view.findViewById<TextView>(R.id.videoResumeName).text = resumeDoc.videoName
-                view.findViewById<ImageView>(R.id.btn_remove_resume).visibility = VISIBLE
+                oldestFile = resumeDoc.videoName;
+                btnResume.text = resumeDoc.videoName
+                val btnRemove = view.findViewById<ImageView>(R.id.btn_remove_resume)
+                btnRemove.visibility = VISIBLE
+                btnRemove.setOnClickListener {
+                    ProfileAPI().DeleteJobseekerResume(context){
+                        Toast.makeText(context, "Berhasil menghapus video resume", Toast.LENGTH_SHORT).show()
+                        btnResume.text = "Upload Video Resume"
+                    }
+                }
             }
         }
+
         ProfileAPI().GetJobseekerDocumentVaccine(context){vaccine->
             if(vaccine != null && vaccine.data.size != 0) {
                 for (doc in vaccine.data) {

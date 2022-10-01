@@ -83,7 +83,8 @@
                     <LinearLayout
                         android:id="@+id/nullField"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:orientation="vertical">
 
                         <TextView
@@ -99,7 +100,7 @@
                     <LinearLayout
                         android:id="@+id/fieldGroup"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <com.google.android.material.chip.ChipGroup
@@ -180,7 +181,8 @@
                     <LinearLayout
                         android:id="@+id/nullJobType"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:visibility="gone"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical">
 
                         <TextView
