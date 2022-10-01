@@ -10,6 +10,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.CompMyReview
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Test.testResponse
+import com.ciptakerjaarunika.kerjaloka.Company.dashboard.Model.TotalApplicantResponses
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import retrofit2.Call
 import retrofit2.Callback
@@ -455,6 +456,54 @@ class company_profile_api {
                     onResult(null)
                 }
 
+            }
+        )
+    }
+
+    interface getApplicantAmount{
+        @GET("company/officer/totalApplicants/mobile")
+        fun checkApplicant( @Query("startDate") startDate: String, @Query("endDate") endDate: String): Call<TotalApplicantResponses>
+    }
+
+    fun CheckApplicant(startDate: String, endDate: String, context: Context?, onResult: (TotalApplicantResponses?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getApplicantAmount::class.java)
+
+        retrofit.checkApplicant(startDate, endDate).enqueue(
+            object : Callback<TotalApplicantResponses>{
+                override fun onResponse(
+                    call: Call<TotalApplicantResponses>,
+                    response: Response<TotalApplicantResponses>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<TotalApplicantResponses>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface getAcceptedAmount{
+        @GET("company/officer/totalApplicants/accepted/mobile")
+        fun checkAccepted( @Query("startDate") startDate: String, @Query("endDate") endDate: String): Call<TotalApplicantResponses>
+    }
+
+    fun CheckAccepted(startDate: String, endDate: String, context: Context?, onResult: (TotalApplicantResponses?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getAcceptedAmount::class.java)
+
+        retrofit.checkAccepted(startDate, endDate).enqueue(
+            object : Callback<TotalApplicantResponses>{
+                override fun onResponse(
+                    call: Call<TotalApplicantResponses>,
+                    response: Response<TotalApplicantResponses>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<TotalApplicantResponses>, t: Throwable) {
+                    onResult(null)
+                }
             }
         )
     }

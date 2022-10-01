@@ -2,6 +2,8 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model
 
 
 import com.google.gson.annotations.SerializedName
+import okhttp3.MultipartBody
+import java.io.File
 
 data class RatingSendedResponse(
     @SerializedName("code")
@@ -21,6 +23,13 @@ data class editReviewRequest(
     var ProRating: List<CategoryList>,
     var ConRating: List<CategoryList>
 )
+
+data class appealReviewRequest(
+    var RatingBy: Long,
+    var Message: String,
+    var File: MultipartBody.Part
+)
+
 data class CategoryList (
     val categoryNo : Int
         )

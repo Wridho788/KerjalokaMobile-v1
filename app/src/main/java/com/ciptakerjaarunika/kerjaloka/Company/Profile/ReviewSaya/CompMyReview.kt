@@ -16,6 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.google.android.material.button.MaterialButton
+import com.google.gson.Gson
 
 private var layoutManager: RecyclerView.LayoutManager? = null
 private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
@@ -73,6 +74,10 @@ class CompMyReview(val data: data?, private val CompanyNo: Long? = null): Fragme
         return CompReviewAdapter(requireContext(), list, object : AppealModal {
             override fun appealModal(pack: Review) {
                 val sheet = AppealReviewModal()
+                val mBundle = Bundle()
+                val reviewData = Gson().toJson(pack)
+                mBundle.putString(AppealReviewModal.EXTRA_APPEAL_REVIEW, reviewData)
+                sheet.arguments = mBundle
                 activity?.let { it1 ->
                     sheet.show(
                         it1.supportFragmentManager,
