@@ -35,7 +35,9 @@ class TestAdapter(private var dataset: List<TestJob>?, val iChooseTest: iChooseT
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataset!![position]
         holder.titleTest.text = item.testName
-//        holder.itemTest.text = item.questions[0]!!.question
+        holder.cardTest.setOnClickListener {
+
+        }
 
     }
 

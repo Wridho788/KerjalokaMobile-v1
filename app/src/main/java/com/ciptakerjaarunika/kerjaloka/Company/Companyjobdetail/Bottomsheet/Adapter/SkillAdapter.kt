@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Ada
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.iChooseSkill
@@ -9,16 +10,22 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
 
-class SkillAdapter(private var dataset: List<SkillFilter>?, val iChooseSkill: iChooseSkill, val iUpdatePage2: iUpdatePage2): RecyclerView.Adapter<SkillAdapter.ViewHolder?>() {
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+class SkillAdapter(
+    private var dataset: List<SkillFilter>?,
+    val iChooseSkill: iChooseSkill,
+    val iUpdatePage2: iUpdatePage2
+) : RecyclerView.Adapter<SkillAdapter.ViewHolder?>() {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtSkill: TextView
+        val checkBox: CheckBox
         init {
             txtSkill = itemView.findViewById(R.id.txt_location)
+            checkBox = itemView.findViewById(R.id.check_location)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.item_location_job,null)
+        val view = View.inflate(parent.context, R.layout.item_location, null)
         return ViewHolder(view)
     }
 
@@ -29,9 +36,16 @@ class SkillAdapter(private var dataset: List<SkillFilter>?, val iChooseSkill: iC
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = dataset!![position]
         holder.txtSkill.text = item.skillName
-        holder.txtSkill.setOnClickListener {
-        iUpdatePage2.updateSkill(item.skillName)
-            iChooseSkill.close(item.skillName) }
+        holder.checkBox.setOnClickListener {
+            dataset!![position].checked = holder.checkBox.isChecked
+            val skills = dataset!!.filter { item -> item.checked == true }
+            iUpdatePage2.updateSkill(skills)
+            iChooseSkill.close()
+        }
+//        holder.txtSkill.setOnClickListener {
+//            iUpdatePage2.updateSkill(item.skillName)
+//            iChooseSkill.close(item.skillName)
+//        }
     }
 
 }

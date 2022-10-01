@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyAddJobs5Binding
 
-class fragment_company_add_jobs_5 : Fragment() {
+class fragment_company_add_jobs_5(val iAddJob: iAddJob) : Fragment() {
 
     private lateinit var binding: FragmentCompanyAddJobs5Binding
     override fun onCreateView(
@@ -18,12 +17,11 @@ class fragment_company_add_jobs_5 : Fragment() {
         binding = FragmentCompanyAddJobs5Binding.inflate(layoutInflater)
         val view = binding.root
 
+
         binding.btnKembaliCmpny.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_4())
+            replaceFragment(fragment_company_add_jobs_4(this.iAddJob))
         }
-        binding.btnPostingPekerjaan.setOnClickListener {
-            Toast.makeText(context, "Posting Pekerjaan", Toast.LENGTH_SHORT).show()
-        }
+
         return view
     }
     private fun replaceFragment(fragment: Fragment) {

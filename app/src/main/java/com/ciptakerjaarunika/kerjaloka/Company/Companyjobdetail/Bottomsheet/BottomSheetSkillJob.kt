@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,14 +57,13 @@ class BottomSheetSkillJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFrag
             .getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt();
     }
-    override fun close(skill: String) {
-        Log.d(skill, "skill")
+    override fun close() {
         this.dismiss()
 
     }
 }
 
 interface iChooseSkill{
-    fun close(locationName: String)
+    fun close()
 
 }

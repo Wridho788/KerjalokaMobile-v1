@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyAddJobs3Binding
 
-class fragment_company_add_jobs_3 : Fragment() {
+class fragment_company_add_jobs_3(val iAddJob: iAddJob) : Fragment() {
     private lateinit var binding: FragmentCompanyAddJobs3Binding
 
     override fun onCreateView(
@@ -18,27 +17,17 @@ class fragment_company_add_jobs_3 : Fragment() {
     ): View {
         binding = FragmentCompanyAddJobs3Binding.inflate(layoutInflater)
         val view = binding.root
-
-        binding.backButton.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_2())
-        }
-
-        binding.btnPostingPekerjaan.setOnClickListener {
-            Toast.makeText(context, "Posting Pekerjaan", Toast.LENGTH_SHORT).show()
-        }
-
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         binding.btnKembaliCmpny.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_2())
+            replaceFragment(fragment_company_add_jobs_2(this.iAddJob))
         }
+        iAddJob.addJobPage3(binding.compnyInsertDes.text.toString())
 
         binding.btnSelanjutnyaCmpny.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_4())
+            replaceFragment(fragment_company_add_jobs_4(this.iAddJob))
         }
-
-        binding.compnyInsertDes.text.toString()
 
         return view
     }

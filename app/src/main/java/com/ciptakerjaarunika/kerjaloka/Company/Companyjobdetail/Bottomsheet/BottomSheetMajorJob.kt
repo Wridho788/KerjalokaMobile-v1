@@ -15,18 +15,20 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adap
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
-import com.ciptakerjaarunika.kerjaloka.model.Data.Major
+import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 
-class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(), iChooseMajor {
-    private var list: List<Major>? = null
+class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(),
+    iChooseMajor {
+    private var list: List<Title>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         super.onCreateView(inflater, container, savedInstanceState)
+        super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(
-            R.layout.layout_bottomsheet_edit_job, container, false)
+            R.layout.layout_bottomsheet_edit_job, container, false
+        )
 
         view.layoutParams = RecyclerView.LayoutParams(
             RecyclerView.LayoutParams.MATCH_PARENT,
@@ -37,8 +39,8 @@ class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFrag
         val rv_majors = view.findViewById<RecyclerView>(R.id.list_location_view)
 
         title.text = "Pendidikan"
-        Majors().GetMajors(context){
-            res -> list
+        Majors().GetMajors(context) { res ->
+            list
             rv_majors.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = MajorAdapter(res, this@BottomSheetMajorJob, iUpdatePage2)
@@ -55,14 +57,15 @@ class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFrag
         (context as Activity?)!!.windowManager
             .defaultDisplay
             .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
+
     override fun close() {
         this.dismiss()
 
     }
 }
 
-interface iChooseMajor{
+interface iChooseMajor {
     fun close()
 }
