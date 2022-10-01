@@ -4,34 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="8dp"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/cardJob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_recommendation_job"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp"
-            android:checkable="true"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="10dp"
-            app:strokeColor="@color/light_500"
-            app:strokeWidth="1dp">
+        android:padding="8dp"
+        android:background="@drawable/card_background">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="10dp"
                 android:weightSum="1">
 
                 <LinearLayout
@@ -78,12 +65,12 @@
                             android:id="@+id/company_job_input"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:fontFamily="@font/poppins"
                             android:text="22 Agustus 2022"
                             android:textColor="@color/trueGray_50"
                             android:textSize="10sp"
-                            tools:ignore="SmallSp"
-                            android:layout_weight="1"/>
+                            tools:ignore="SmallSp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -91,14 +78,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Kadaluarsa :"
-                        android:textColor="@color/trueGray_50"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Kadaluarsa :"
+                            android:textColor="@color/trueGray_50"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
 
                         <TextView
                             android:id="@+id/company_job_expired"
@@ -116,15 +103,40 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:text="Status :"
+                            android:textColor="@color/trueGray_50"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
+
+                        <TextView
+                            android:id="@+id/company_job_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="September 2022"
+                            android:textColor="@color/trueGray_50"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins"
-                        android:text="Oleh :"
-                        android:textColor="@color/trueGray_50"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Oleh :"
+                            android:textColor="@color/trueGray_50"
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
 
                         <TextView
                             android:id="@+id/company_job_author"
@@ -152,7 +164,5 @@
                         android:background="@drawable/ic_share" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

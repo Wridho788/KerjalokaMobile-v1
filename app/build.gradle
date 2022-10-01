@@ -85,6 +85,7 @@ dependencies {
     implementation "org.ocpsoft.prettytime:prettytime:4.0.4.Final"
 
     implementation "com.microsoft.signalr:signalr:3.0.0-preview4-19216-03"
+    //noinspection GradleCompatible
     implementation 'com.android.support:percent:23.3.0'
     implementation 'org.slf4j:slf4j-jdk14:1.7.25'
 
@@ -105,5 +106,7 @@ dependencies {
 
     implementation 'com.beust:klaxon:5.5'
 
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }
 

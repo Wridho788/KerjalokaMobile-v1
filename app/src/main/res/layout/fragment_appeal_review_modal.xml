@@ -50,7 +50,7 @@
         android:textSize="14dp" />
 
     <EditText
-        android:id="@+id/review"
+        android:id="@+id/appealReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -78,6 +78,7 @@
         android:layout_marginTop="15dp"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/uploadAppealFile"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,6 +100,7 @@
         android:layout_marginTop="50dp"/>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSend"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

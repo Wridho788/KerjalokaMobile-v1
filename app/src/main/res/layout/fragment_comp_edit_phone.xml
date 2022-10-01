@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.ProfilePage.manage_profile.EditAddInfo"
     android:orientation="vertical">
@@ -49,20 +49,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toTopOf="@id/footer"
-            app:layout_constraintHorizontal_weight=".8"
-            app:layout_constraintTop_toBottomOf="@id/mainAppbar"
-            tools:ignore="NotSibling">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="80dp">
+                android:paddingBottom="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/footer"
+                tools:ignore="NotSibling">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -106,7 +100,7 @@
                         app:cardElevation="0dp">
 
                         <EditText
-                            android:id="@+id/js_EditusrPhone"
+                            android:id="@+id/comp_EditusrPhone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
@@ -116,6 +110,7 @@
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:boxStrokeWidth="0dp"
+                            android:text="123123123"
                             app:boxStrokeWidthFocused="0dp" />
                     </androidx.cardview.widget.CardView>
                     <TextView
@@ -129,7 +124,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
 
         <LinearLayout
             android:id="@+id/footer"
@@ -141,7 +135,7 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSaveBasic"
+                android:id="@+id/btnSaveNewPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"

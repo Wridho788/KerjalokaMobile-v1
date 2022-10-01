@@ -7,6 +7,7 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.CompanyNotificationModel
@@ -30,6 +31,7 @@ class CompanyItemSectionDecoration(
         dipToPx(context,50f)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
@@ -60,26 +62,28 @@ class CompanyItemSectionDecoration(
 
         val currentModel = getItemList()[position]
         val previousModel = getItemList()[position-1]
+        val dt1 = LocalDateTime.parse(currentModel.createdOn)
+        val dt2 = LocalDateTime.parse(previousModel.createdOn)
 
-        if(currentModel.time.dayOfYear == LocalDateTime.now().dayOfYear){
+        if(dt1.dayOfYear == LocalDateTime.now().dayOfYear){
             outRect.top = dividerHeight
         }
-        else if(LocalDateTime.now().dayOfYear - currentModel.time.dayOfYear <= 7){
-            if(previousModel.time.dayOfYear == LocalDateTime.now().dayOfYear){
+        else if(LocalDateTime.now().dayOfYear - dt1.dayOfYear <= 7){
+            if(dt2.dayOfYear == LocalDateTime.now().dayOfYear){
                 outRect.top = sectionItemHeight
             }else{
                 outRect.top = dividerHeight
             }
         }
-        else if(LocalDateTime.now().month == currentModel.time.month){
-            if(LocalDateTime.now().dayOfYear - previousModel.time.dayOfYear <= 7){
+        else if(LocalDateTime.now().month == dt1.month){
+            if(LocalDateTime.now().dayOfYear - dt2.dayOfYear <= 7){
                 outRect.top = sectionItemHeight
             }else{
                 outRect.top = dividerHeight
             }
         }
         else{
-            if(LocalDateTime.now().month == previousModel.time.month){
+            if(LocalDateTime.now().month == dt2.month){
                 outRect.top = sectionItemHeight
             }else{
                 outRect.top = dividerHeight
@@ -88,27 +92,27 @@ class CompanyItemSectionDecoration(
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDraw(c, parent, state)
-
         val childCount = parent.childCount
-        var temp = 0
 
         for (i in 0 until childCount){
             val childView: View=parent.getChildAt(i)
             val position: Int = parent.getChildAdapterPosition(childView)
             val itemModel = getItemList()[position]
+            val dt = LocalDateTime.parse(itemModel.createdOn)
 
-            if(itemModel.time.dayOfYear == LocalDateTime.now().dayOfYear){
+            if(dt.dayOfYear == LocalDateTime.now().dayOfYear){
                     val top = childView.top - sectionItemHeight
                     drawSectionView(c, "Hari Ini", top, "Tandai semua telah dibaca")
 
             }
-            else if(LocalDateTime.now().dayOfYear - itemModel.time.dayOfYear <= 7){
+            else if(LocalDateTime.now().dayOfYear - dt.dayOfYear <= 7){
                     val top = childView.top - sectionItemHeight
                     drawSectionView(c, "Minggu Ini", top, "")
             }
-            else if(LocalDateTime.now().month == itemModel.time.month){
+            else if(LocalDateTime.now().month == dt.month){
                     val top = childView.top - sectionItemHeight
                     drawSectionView(c, "Bulan Ini", top, "")
             }

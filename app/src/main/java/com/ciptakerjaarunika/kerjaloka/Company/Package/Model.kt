@@ -2,6 +2,12 @@ package com.ciptakerjaarunika.kerjaloka.Company.Package
 
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 
+data class getHistoryResponse(
+    val code: Int,
+    val data: List<pckHistory>,
+    val message: String
+)
+
 data class pack(
     val activatedOn: String = "2022-05-21T09:52:02",
     val companyNo: Long = 20211027141022,

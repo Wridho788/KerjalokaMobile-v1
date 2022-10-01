@@ -45,6 +45,9 @@
             android:name=".ui.NotificationPage.Notification"
             android:exported="true" />
         <activity
+            android:name=".ui.NotificationPage.CompanyNotification"
+            android:exported="true" />
+        <activity
             android:name=".ui.Screens.SearchScreen.SearchActivity"
             android:exported="true" />
         <activity android:name=".ui.Screens.JobSearch.SearchJob" android:exported="true"/>

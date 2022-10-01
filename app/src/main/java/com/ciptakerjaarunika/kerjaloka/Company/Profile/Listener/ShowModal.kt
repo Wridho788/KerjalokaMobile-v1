@@ -1,10 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener
 
-import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
-import com.ciptakerjaarunika.kerjaloka.Company.Package.pack
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.myReview
 
 interface ShowModal {
-    fun showDetail(review: review)
-    fun showDelete(review: review)
+    fun showDetail(review: DataX)
+    fun showDelete(review: DataX)
 }

@@ -20,6 +20,9 @@ import androidx.core.view.WindowInsetsCompat.toWindowInsetsCompat
 import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_jobs
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
+import com.ciptakerjaarunika.kerjaloka.Company.Test.view_mytest_list
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
@@ -27,6 +30,7 @@ import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.CompanyDashboard
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
@@ -36,6 +40,11 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
+import java.lang.Boolean
+import kotlin.Array
+import kotlin.Int
+import kotlin.IntArray
+import kotlin.String
 
 
 class MainActivity : AppCompatActivity() {
@@ -111,10 +120,11 @@ class MainActivity : AppCompatActivity() {
                     0 // or HIDE_IMPLICIT_ONLY
                 )
             }
-            replaceFragment(HomePage())
+            
 
 //
             if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
+                replaceFragment(HomePage())
                 binding.bottomNavigationView.visibility = VISIBLE
 
                 // User Jobseeker
@@ -131,6 +141,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
             } else if (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null) {
+                replaceFragment(CompanyDashboard())
                 binding.bottomNavigationCompanyView.visibility = VISIBLE
                 binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
                     when (item.itemId) {
@@ -147,6 +158,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        val settings = getSharedPreferences("prefs", 0)
+        val editor = settings.edit()
+        editor.putBoolean("firstRun", false)
+        editor.commit()
+
+        val firstRun = settings.getBoolean("firstRun", true)
+        Log.d("TAG1", "firstRun: " + Boolean.valueOf(firstRun).toString())
+
     }
 //        hubConnection.on("connected",
 //            {res -> Log.d("Websocket Response : ", res.toString())
@@ -222,4 +242,6 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.fragment_container, Login(Goto))
         fragmentTransaction.commit()
     }
+
+    override fun onBackPressed() {}
 }

@@ -76,7 +76,7 @@ class profilepage(var Page : Int) : Fragment() {
             Glide.with(view.context)
                 .load(config().portAddress + "/photo/Profile/" + user?.photo).fitCenter()
                 .into(view.findViewById<ImageView>(R.id.userPhoto))
-
+            content.isUserInputEnabled=false
             content.adapter = adapter
             updatePage()
 

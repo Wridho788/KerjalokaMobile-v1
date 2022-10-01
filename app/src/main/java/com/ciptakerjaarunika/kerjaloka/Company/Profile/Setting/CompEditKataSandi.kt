@@ -1,11 +1,16 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.google.android.material.button.MaterialButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,8 +39,22 @@ class CompEditKataSandi : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comp_edit_kata_sandi, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_comp_edit_kata_sandi, container, false)
+
+        val oldPass = view.findViewById<EditText>(R.id.oldPass)
+        val newPass = view.findViewById<EditText>(R.id.newPass)
+        val confPass = view.findViewById<EditText>(R.id.confPass)
+        val btnSimpan = view.findViewById<MaterialButton>(R.id.btn_simpan_kata_sandi)
+
+        btnSimpan.setOnClickListener{
+            val password = oldPass.text.toString()
+            val newpassword = newPass.text.toString()
+            company_profile_api().ChangePassword(password, newpassword, context){}
+        }
+
+
+        return view
     }
 
     companion object {

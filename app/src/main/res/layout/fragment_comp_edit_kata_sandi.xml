@@ -93,7 +93,7 @@
                         android:background="@color/light_300"
                         android:ems="10"
                         android:hint="Masukkan kata sandi lama"
-                        android:inputType="textMultiLine|text"
+                        android:inputType="textPassword"
                         android:lines="10"
                         android:maxLines="10"
                         android:padding="8dp"
@@ -141,7 +141,7 @@
                         android:background="@color/light_300"
                         android:ems="10"
                         android:hint="Masukkan kata sandi baru"
-                        android:inputType="textMultiLine|text"
+                        android:inputType="textPassword"
                         android:lines="10"
                         android:maxLines="10"
                         android:padding="8dp"
@@ -219,7 +219,7 @@
                         android:background="@color/light_300"
                         android:ems="10"
                         android:hint="Konfirmasi kata sandi baru"
-                        android:inputType="textMultiLine|text"
+                        android:inputType="textPassword"
                         android:lines="10"
                         android:maxLines="10"
                         android:padding="8dp"
@@ -227,12 +227,11 @@
                         android:textSize="10sp" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_simpan_kata_sandi"
-        android:layout_marginTop="550dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -246,4 +245,5 @@
         app:cornerRadius="100dp"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="346dp"/>
+
 </FrameLayout>

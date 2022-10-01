@@ -1,23 +1,18 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Package.Adapter.myPackageAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Package.Listener.ShowModalHistory
-import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
-import com.ciptakerjaarunika.kerjaloka.Company.Package.pack
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.ShowModal
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class CompReviewHistoryAdapter(private val context: Context, private val reviewList: List<review>, private val listener: ShowModal):
+class CompReviewHistoryAdapter(private val context: Context, private val ratingData: List<DataX>, private val listener: ShowModal):
     RecyclerView.Adapter<CompReviewHistoryAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
@@ -48,7 +43,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val reviewL
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = reviewList[position]
+        val currentItem = ratingData[position]
         holder.creator.text = currentItem.userFullName
         holder.Desc.text = currentItem.comment
         holder.ratBar.rating = currentItem.rating.toFloat()
@@ -67,7 +62,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val reviewL
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it.con
+                    text = it
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = false
@@ -84,7 +79,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val reviewL
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it.con
+                    text = it
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = false
@@ -99,9 +94,6 @@ class CompReviewHistoryAdapter(private val context: Context, private val reviewL
     }
 
     override fun getItemCount(): Int {
-        return reviewList?.size ?:0
+        return ratingData.size
     }
-
-
-
 }

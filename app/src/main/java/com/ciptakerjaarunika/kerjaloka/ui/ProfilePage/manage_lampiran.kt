@@ -91,6 +91,7 @@ class manage_lampiran : Fragment() {
 
 
         ProfileAPI().GetJobseekerResume(context){ resume ->
+<<<<<<< HEAD
             btnResume.setOnClickListener {
                 var intent = Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("video/*");
@@ -99,6 +100,8 @@ class manage_lampiran : Fragment() {
                 val requestIntent = Intent.createChooser(intent, "Choose a Video");
                 activityResultLauncher.launch(requestIntent)
             }
+=======
+>>>>>>> 9908e33047bf278ccebcf8485d23451f458cc60b
             if (resume?.data != null) {
                 val resumeDoc = resume.data
                 oldestFile = resumeDoc.videoName;
