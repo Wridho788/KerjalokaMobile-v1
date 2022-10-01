@@ -311,19 +311,51 @@ class ManageProfileAPI {
     data class changeUsername(
         val username:String
     )
+    data class responseGeneral(
+        val code : Any,
+        val message: String,
+        val data: Any?
+    )
     interface JobseekerChangeUsername {
         @Headers("Content-Type: application/json","Accept: application/json")
         @POST("users/change/username")
-        fun SendData(@Body newUsername: changeUsername): Call<Any?>
+        fun SendData(@Body newUsername: changeUsername): Call<responseGeneral?>
     }
-    fun JobseekerChnageUsername(username : String, context: Context?, onResult: (Any?) -> Unit){
+    fun JobseekerChangeUsername(username : String, context: Context?, onResult: (responseGeneral?) -> Unit){
         val retrofit = ServiceBuilder(context).POST(JobseekerChangeUsername::class.java)
         retrofit.SendData(changeUsername(username)).enqueue(
-            object : Callback<Any?> {
-                override fun onFailure(call: Call<Any?>, t: Throwable) {
+            object : Callback<responseGeneral?> {
+                override fun onFailure(call: Call<responseGeneral?>, t: Throwable) {
                     onResult(null)
                 }
-                override fun onResponse(call: Call<Any?>, response: Response<Any?>) {
+                override fun onResponse(call: Call<responseGeneral?>, response: Response<responseGeneral?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    data class fileResume(
+        val photo : MultipartBody.Part,
+        val fileOldest : String?
+    )
+    data class uploadVideoResponse(
+        val code : Int,
+        val data : JobseekerVideoResume
+    )
+    interface JobseekerUploadResume {
+        @Multipart
+        @POST("jobseeker/upload/resume/video")
+        fun SendData(@Part files: fileResume): Call<uploadVideoResponse?>
+    }
+    fun JobseekerUploadResume(photo : MultipartBody.Part, oldestFile : String?, context: Context?, onResult: (uploadVideoResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POSTFILE(JobseekerUploadResume::class.java)
+        retrofit.SendData(fileResume(photo, oldestFile)).enqueue(
+            object : Callback<uploadVideoResponse?> {
+                override fun onFailure(call: Call<uploadVideoResponse?>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<uploadVideoResponse?>, response: Response<uploadVideoResponse?>) {
                     onResult(response.body())
                 }
             }

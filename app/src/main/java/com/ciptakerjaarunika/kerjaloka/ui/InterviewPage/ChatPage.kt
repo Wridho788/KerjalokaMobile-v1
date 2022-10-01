@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -390,9 +391,12 @@ class ChatPage(var sectionName: String,
 
         var LinearLayoutManager = LinearLayoutManager(activity)
         val thisContext = this
+        val downloadManager = activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
+
         recyclerView?.apply {
             layoutManager = LinearLayoutManager
-            adapter = ChatAdapter(context, jobNo, Receiver, thisContext)
+            adapter = ChatAdapter( downloadManager!!,
+                context, jobNo, Receiver, thisContext)
         }
 
         recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};

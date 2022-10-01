@@ -16,14 +16,17 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobseekerProfilePageBinding
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfilePageBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
 import com.google.android.material.button.MaterialButton
 
 
-class profilepage : Fragment() {
-
+class profilepage(var Page : Int) : Fragment() {
+    private lateinit var binding : FragmentJobseekerProfilePageBinding
     private var loading :Int = 0;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,12 @@ class profilepage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_profile_page, container, false)
+        binding = FragmentJobseekerProfilePageBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         ProfileAPI().JobseekerGetProfileData(context) { response ->
             if(response?.data != null) {
@@ -70,6 +78,7 @@ class profilepage : Fragment() {
                 .into(view.findViewById<ImageView>(R.id.userPhoto))
             content.isUserInputEnabled=false
             content.adapter = adapter
+            updatePage()
 
 //        content.layoutParams = ViewGroup.LayoutParams.WRAP_CONTENT
             content.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -108,79 +117,62 @@ class profilepage : Fragment() {
             })
 
             btn_mngProfile.setOnClickListener() {
-                btn_mngProfile.setBackgroundTintList(getResources().getColorStateList(R.color.danger_300));
-                btn_mngCV.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngPref.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngAttach.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyReview.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyRecord.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngSetting.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                content.currentItem = 0
+                Page = 0
+                content.currentItem = Page
+                updatePage()
             }
             btn_mngCV.setOnClickListener() {
-                btn_mngProfile.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngCV.setBackgroundTintList(getResources().getColorStateList(R.color.danger_300));
-                btn_mngPref.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngAttach.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyReview.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyRecord.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngSetting.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                content.currentItem = 1
+                Page = 1
+                content.currentItem = Page
+                updatePage()
             }
             btn_mngPref.setOnClickListener() {
-                btn_mngProfile.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngCV.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngPref.setBackgroundTintList(getResources().getColorStateList(R.color.danger_300));
-                btn_mngAttach.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyReview.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyRecord.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngSetting.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                content.currentItem = 2
+                Page = 2
+                content.currentItem = Page
+                updatePage()
             }
             btn_mngAttach.setOnClickListener() {
-                btn_mngProfile.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngCV.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngPref.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngAttach.setBackgroundTintList(getResources().getColorStateList(R.color.danger_300));
-                btn_mngMyReview.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyRecord.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngSetting.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                content.currentItem = 3
+                Page = 3
+                content.currentItem = Page
+                updatePage()
             }
             btn_mngMyReview.setOnClickListener() {
-                btn_mngProfile.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngCV.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngPref.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngAttach.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyReview.setBackgroundTintList(getResources().getColorStateList(R.color.danger_300));
-                btn_mngMyRecord.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngSetting.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                content.currentItem = 4
+                Page = 4
+                content.currentItem = Page
+                updatePage()
             }
             btn_mngMyRecord.setOnClickListener() {
-                btn_mngProfile.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngCV.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngPref.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngAttach.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyReview.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyRecord.setBackgroundTintList(getResources().getColorStateList(R.color.danger_300));
-                btn_mngSetting.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                content.currentItem = 5
+                Page = 5
+                content.currentItem = Page
+                updatePage()
             }
             btn_mngSetting.setOnClickListener() {
-                btn_mngProfile.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngCV.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngPref.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngAttach.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyReview.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngMyRecord.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                btn_mngSetting.setBackgroundTintList(getResources().getColorStateList(R.color.danger_300));
-                content.currentItem = 6
+                Page = 6
+                content.currentItem = Page
+                updatePage()
             }
         }
 
-
-        return view
     }
+    fun updatePage(){
+        val content = view?.findViewById<ViewPager2>(R.id.profileContent)
 
+        view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList = resources.getColorStateList(R.color.white);
+        view?.findViewById<MaterialButton>(R.id.CV)?.backgroundTintList = resources.getColorStateList(R.color.white);
+        view?.findViewById<MaterialButton>(R.id.Preference)?.backgroundTintList = resources.getColorStateList(R.color.white);
+        view?.findViewById<MaterialButton>(R.id.attachment)?.backgroundTintList = resources.getColorStateList(R.color.white);
+        view?.findViewById<MaterialButton>(R.id.myReview)?.backgroundTintList = resources.getColorStateList(R.color.white);
+        view?.findViewById<MaterialButton>(R.id.myRecord)?.backgroundTintList = resources.getColorStateList(R.color.white);
+        view?.findViewById<MaterialButton>(R.id.setting)?.backgroundTintList = resources.getColorStateList(R.color.white);
+        when (Page){
+            0 ->   view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
+            1 ->   view?.findViewById<MaterialButton>(R.id.CV)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
+            2 ->   view?.findViewById<MaterialButton>(R.id.Preference)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
+            3 ->   view?.findViewById<MaterialButton>(R.id.attachment)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
+            4 ->   view?.findViewById<MaterialButton>(R.id.myReview)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
+            5 ->   view?.findViewById<MaterialButton>(R.id.myRecord)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
+            6 ->   view?.findViewById<MaterialButton>(R.id.setting)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
+        }
+
+    }
 }

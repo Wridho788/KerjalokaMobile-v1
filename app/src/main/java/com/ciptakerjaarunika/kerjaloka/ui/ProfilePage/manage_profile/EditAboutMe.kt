@@ -60,7 +60,7 @@ class EditAboutMe(var data : JobseekerProfile?) : Fragment() {
     }
     private fun back(){
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(), "Profile Page")
+        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
         fragmentTransaction?.commit()
     }
 

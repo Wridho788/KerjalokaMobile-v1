@@ -68,7 +68,6 @@ class ManageProfile(val data : JobseekerProfile?) : Fragment() {
         txt_TeleID.text = if(data?.additionals?.telegramId.isNullOrEmpty()) "-" else data?.additionals?.telegramId
         txt_InstaID.text = if(data?.additionals?.instagramId.isNullOrEmpty()) "-" else data?.additionals?.instagramId
 
-
         editBasic?.setOnClickListener {
           replaceFragment(EditBasicInfo(data))
         }

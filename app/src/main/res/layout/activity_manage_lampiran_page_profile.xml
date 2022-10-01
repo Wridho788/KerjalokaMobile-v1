@@ -121,7 +121,7 @@
         android:paddingRight="16dp"
         tools:ignore="UselessParent">
 
-        <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_video_resume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,30 +173,33 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="20dp"
-                            android:paddingHorizontal="20dp"
                             app:strokeWidth="2dp"
-                            app:strokeColor="@color/danger_500"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="14dp"
-                                android:id="@+id/videoResumeName"
-                                android:text="Upload Video Resume"
-                                android:textColor="@color/danger_500"
-                                android:layout_centerInParent="true"
+                            app:strokeColor="@color/danger_500">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
                                 android:paddingVertical="8dp"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:layout_gravity="center"/>
+                                android:paddingHorizontal="15dp"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/videoResumeName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Upload Video Resume"
+                                    android:textColor="@color/danger_500"
+                                    android:textSize="14dp" />
                             <ImageView
-                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_width="20dp"
                                 android:id="@+id/btn_remove_resume"
                                 android:visibility="gone"
-                                android:src="@drawable/gph_ic_close"
-                                android:layout_height="15dp"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/ic_close"
+                                android:layout_height="wrap_content"
                                 app:tint="@color/danger_500" />
+                            </RelativeLayout>
                         </com.google.android.material.card.MaterialCardView>
 
 <!--                    <com.google.android.material.button.MaterialButton-->

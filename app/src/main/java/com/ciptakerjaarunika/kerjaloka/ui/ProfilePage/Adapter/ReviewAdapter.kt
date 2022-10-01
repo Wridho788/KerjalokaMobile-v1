@@ -6,11 +6,11 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.review
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class ReviewAdapter (private val reviewList: List<review>):
+class ReviewAdapter (private val reviewList: List<reviewList>):
     RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
@@ -48,7 +48,7 @@ class ReviewAdapter (private val reviewList: List<review>):
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it.con
+                    text = it
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = false
@@ -65,7 +65,7 @@ class ReviewAdapter (private val reviewList: List<review>):
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it.con
+                    text = it
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = false

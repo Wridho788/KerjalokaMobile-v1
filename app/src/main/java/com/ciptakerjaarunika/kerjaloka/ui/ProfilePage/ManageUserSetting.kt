@@ -22,7 +22,6 @@ import com.google.android.material.button.MaterialButton
 
 class ManageUserSetting : Fragment() {
 
-    private lateinit var  binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,8 +30,6 @@ class ManageUserSetting : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = ActivityMainBinding.inflate(layoutInflater)
-
         val view = inflater.inflate(R.layout.fragment_manage_profile_setting_layout, container, false)
 
         val username = view.findViewById<TextView>(R.id.profile_username)
@@ -65,7 +62,7 @@ class ManageUserSetting : Fragment() {
         }
         val user = SessionManager(context).user
 
-        username.text = user?.userFullname
+        username.text = user?.username
         email.text = user?.email
         phone.text = user?.phone
 

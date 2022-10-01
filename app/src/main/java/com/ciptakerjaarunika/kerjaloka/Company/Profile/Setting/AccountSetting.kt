@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -13,7 +14,9 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import com.airbnb.lottie.parser.ColorParser
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.api.users
 import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
@@ -85,7 +88,13 @@ class AccountSetting(val data: data?) : Fragment() {
         }
 
 
-        btn_editUsername.setOnClickListener {
+        view.findViewById<MaterialButton>(R.id.btn_logout).setOnClickListener{
+            ProfileAPI().Logout(context){
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        btn_editUsername.setOnClickListener{
             replaceFragment(CompEditUsername())
         }
         btn_editEmail.setOnClickListener {

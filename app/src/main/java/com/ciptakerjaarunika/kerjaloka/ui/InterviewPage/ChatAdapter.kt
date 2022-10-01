@@ -1,7 +1,11 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
+import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
+import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +18,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.anychart.scales.DateTime
 import com.bumptech.glide.Glide
@@ -31,7 +37,7 @@ import java.util.*
 //
 //
 class ChatAdapter
-    (private val context: Context, private val jobNo : Long?, private val receiver : Long, val positionOnBottom : PositionOnBottom) :
+    (private var downloadManager: DownloadManager, private val context: Context, private val jobNo : Long?, private val receiver : Long, val positionOnBottom : PositionOnBottom) :
     RecyclerView.Adapter<ChatAdapter.ViewHolder>(){
     private val Right1 = 1
     private val Right2 = 2
@@ -195,6 +201,21 @@ class ChatAdapter
             else if(dataSet!![position].messageType == MessageType.FileMessage.type.toString().toInt()){
                 viewHolder.messageContainer?.setOnClickListener{
                     Toast.makeText(context, "Downloading File...", Toast.LENGTH_SHORT).show()
+
+                    val request =
+                        DownloadManager.Request(
+                            Uri.parse(
+                                "${config().portAddress}/chat/file/download?chatMessageNo=${dataSet!![position].fileName}&fileName=${dataSet!![position].fileName}"
+                            )
+                        )
+                    request.setTitle(dataSet!![position].fileName)
+                        .setDescription("File is downloading...")
+                        .setDestinationInExternalFilesDir(
+                            context,
+                            Environment.DIRECTORY_DOWNLOADS, dataSet!![position].fileName
+                        )
+                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    downloadManager!!.enqueue(request)
                 }
                 viewHolder.fileContainer?.visibility = VISIBLE
                 viewHolder.fileName?.text = dataSet!![position].message
@@ -221,6 +242,7 @@ class ChatAdapter
 
         }
     }
+
 
     private fun DateTime.dateToString(format: String): String {
         val dateFormatter = SimpleDateFormat(format, Locale.getDefault())

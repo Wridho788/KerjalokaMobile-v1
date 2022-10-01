@@ -1,60 +1,76 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.addCallback
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditUsernameProfileBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EditUserName.newInstance] factory method to
- * create an instance of this fragment.
- */
-class EditUserName : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+class EditUserName() : Fragment() {
+    private lateinit var binding : FragmentEditUsernameProfileBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_username_profile, container, false)
+        binding = FragmentEditUsernameProfileBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditUserName.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditUserName().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.inputTxt.setText(SessionManager(context).user?.username)
+        binding.backBtn.setOnClickListener{
+            back()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            back()
+        }
+        binding.saveBtn.setOnClickListener {
+            if(binding.inputTxt.text.isNullOrEmpty()){
+                binding.errorMessage.visibility = View.VISIBLE
+            }
+            else{
+                ManageProfileAPI().JobseekerChangeUsername(binding.inputTxt.text.toString(), context){
+                    if (it!= null && it.code.toString() == "210"){
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                        back()
+                    }
+                    else{
+                        Toast.makeText(activity, it?.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+        }
+        binding.inputTxt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun afterTextChanged(s: Editable) {
+                if (!binding.inputTxt.text.toString()
+                        .isNullOrEmpty() && !binding.inputTxt.text.toString()
+                        .isNullOrBlank() && binding.inputTxt.text.toString() != ""
+                ) {
+                    binding.errorMessage.visibility = View.GONE
+                }
+            }
+        })
+
+
+    }
+    private fun back(){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction?.replace(id, profilepage(6), "Profile Page")
+        fragmentTransaction?.commit()
     }
 }

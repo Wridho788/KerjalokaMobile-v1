@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +19,7 @@ class item_profile_user_page : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.activity_profile_page, container, false)
+        val view = inflater.inflate(R.layout.fragment_jobseeker_profile_page, container, false)
         val jsName= view.findViewById<TextView>(R.id.jsName1)
 //        jsName.text="Bambang"
         return view

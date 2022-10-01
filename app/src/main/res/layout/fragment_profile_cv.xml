@@ -88,7 +88,8 @@
         <LinearLayout
             android:id="@+id/nullSkill"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <TextView
@@ -111,7 +112,8 @@
             <LinearLayout
                 android:id="@+id/skillLv1"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -134,7 +136,8 @@
             <LinearLayout
                 android:id="@+id/skillLv2"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -157,7 +160,8 @@
             <LinearLayout
                 android:id="@+id/skillLv3"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -180,7 +184,8 @@
             <LinearLayout
                 android:id="@+id/skillLv4"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -203,7 +208,8 @@
             <LinearLayout
                 android:id="@+id/skillLv5"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -298,7 +304,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Edit"
+                android:text="Add New"
                 android:textAlignment="textEnd"
                 android:textColor="@color/danger_500"
                 android:textSize="14dp" />
@@ -348,7 +354,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Edit"
+                android:text="Add New"
                 android:textAlignment="textEnd"
                 android:textColor="@color/danger_500"
                 android:textSize="14dp" />
