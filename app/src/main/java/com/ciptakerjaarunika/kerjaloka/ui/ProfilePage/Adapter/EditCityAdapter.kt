@@ -1,20 +1,27 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter
 
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.City
+import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.iCity
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 
-class EditCityAdapter(private val listCity: List<City>):
+class EditCityAdapter(private val cityNo: Int?, private val locations: List<LocationFilter>,private val iEditBasic: iEditBasic,private val iCity: iCity):
     RecyclerView.Adapter<EditCityAdapter.EditCity>()
 {
     inner class EditCity(view: View): RecyclerView.ViewHolder(view){
         var item: TextView
+        var container : LinearLayout
 
         init {
-            item = view.findViewById<TextView>(R.id.item_modal)
+            item = view.findViewById(R.id.item_modal)
+            container = view.findViewById(R.id.container)
         }
     }
 
@@ -24,11 +31,19 @@ class EditCityAdapter(private val listCity: List<City>):
     }
 
     override fun onBindViewHolder(holder: EditCity, position: Int) {
-        val currentItem = listCity[position]
-        holder.item.text= currentItem.cityName
+        val currentItem = locations[position]
+        holder.item.text= "${currentItem.city}, ${currentItem.province}"
+
+        if(currentItem.locationsNo == cityNo){
+            holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
+        }
+        holder.container.setOnClickListener {
+            iEditBasic.updateCity(currentItem.locationsNo)
+            iCity.close()
+        }
     }
 
     override fun getItemCount(): Int {
-        return listCity.size
+        return locations.size
     }
 }

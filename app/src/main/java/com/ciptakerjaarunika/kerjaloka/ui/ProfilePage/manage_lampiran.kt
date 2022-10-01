@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +17,7 @@ import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.enum.VerifyStatus
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.DocumentAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ExpAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.edit_lampiran_profile_page
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.FragmentEditLampiran
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin
 
 class manage_lampiran : Fragment() {
@@ -39,6 +37,10 @@ class manage_lampiran : Fragment() {
         val btn_edVaccine = view.findViewById<TextView>(R.id.edit_status_vaksin_pelamar)
 
         ProfileAPI().GetJobseekerDocuments(context){ documents ->
+            btn_EdLamp.setOnClickListener{
+                replaceFragment(FragmentEditLampiran(documents?.data))
+            }
+
             spinnerDoc.visibility = GONE
             val recyclerView = view?.findViewById<RecyclerView>(R.id.RecyclerAttachment)
             recyclerView?.visibility = VISIBLE
@@ -47,41 +49,39 @@ class manage_lampiran : Fragment() {
         }
 
         ProfileAPI().GetJobseekerResume(context){ resume ->
-            if (resume != null) {
+            if (resume?.data != null) {
                 val resumeDoc = resume.data
                 view.findViewById<TextView>(R.id.videoResumeName).text = resumeDoc.videoName
                 view.findViewById<ImageView>(R.id.btn_remove_resume).visibility = VISIBLE
             }
         }
         ProfileAPI().GetJobseekerDocumentVaccine(context){vaccine->
-            for (doc in vaccine?.data!!){
-                var vaccineLogo : ImageView = view.findViewById(R.id.vaccine1Status);
-                if(doc.documentType == DocumentType.Vaccine1.value){
-                    vaccineLogo = view.findViewById(R.id.vaccine1Status)
-                }
-                else if(doc.documentType == DocumentType.Vaccine2.value){
-                    vaccineLogo = view.findViewById(R.id.vaccine2Status)
-                }
-                else if(doc.documentType == DocumentType.Vaccine3.value){
-                    vaccineLogo = view.findViewById(R.id.vaccine3Status)
-                }
+            if(vaccine != null && vaccine.data.size != 0) {
+                for (doc in vaccine.data) {
+                    var vaccineLogo: ImageView = view.findViewById(R.id.vaccine1Status);
+                    if (doc.documentType == DocumentType.Vaccine1.value) {
+                        vaccineLogo = view.findViewById(R.id.vaccine1Status)
+                    } else if (doc.documentType == DocumentType.Vaccine2.value) {
+                        vaccineLogo = view.findViewById(R.id.vaccine2Status)
+                    } else if (doc.documentType == DocumentType.Vaccine3.value) {
+                        vaccineLogo = view.findViewById(R.id.vaccine3Status)
+                    }
 
-                when(doc.documentStatus){
-                    VerifyStatus.Accept.value ->{
-                        vaccineLogo.setImageResource(R.drawable.ic_vaccine_approve)
-                    }
-                    VerifyStatus.Reject.value ->{
-                        vaccineLogo.setImageResource(R.drawable.ic_vaccine_reject)
-                    }
-                    VerifyStatus.Pending.value ->{
-                        vaccineLogo.setImageResource(R.drawable.ic_vaccine_pending)
+                    when (doc.documentStatus) {
+                        VerifyStatus.Accept.value -> {
+                            vaccineLogo.setImageResource(R.drawable.ic_vaccine_approve)
+                        }
+                        VerifyStatus.Reject.value -> {
+                            vaccineLogo.setImageResource(R.drawable.ic_vaccine_reject)
+                        }
+                        VerifyStatus.Pending.value -> {
+                            vaccineLogo.setImageResource(R.drawable.ic_vaccine_pending)
+                        }
                     }
                 }
             }
         }
-        btn_EdLamp.setOnClickListener{
-            replaceFragment(edit_lampiran_profile_page())
-        }
+
 //        btn_edResume.setOnClickListener{
 //
 //        }

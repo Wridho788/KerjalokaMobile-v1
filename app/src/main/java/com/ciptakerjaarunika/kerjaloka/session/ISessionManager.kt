@@ -21,6 +21,7 @@ interface ISessionManager{
     var jobseekerAdditional: JobseekerAdditional?
     var chatData : chat_data?
     var deviceId : String
+    var latestSearchJob : List<Any>?
 
     suspend fun clearData()
     fun refreshChat(hubConnection: HubConnection)

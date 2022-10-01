@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Data.Religion
+import com.ciptakerjaarunika.kerjaloka.model.Data.Resident
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditReligionAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditResidentAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iUpdateAdditional
 
 
-class EditResident: SuperBottomSheetFragment() {
-
-    private var layoutManager: RecyclerView.LayoutManager? =null
-    private var adapter: RecyclerView.Adapter<EditResidentAdapter.EditResident>? = null
-    private lateinit var editGenderAdapter: EditResidentAdapter
+class EditResident(private val residentNo : Int?, val residentList : List<Resident>, val iUpdateAdditional: iUpdateAdditional): SuperBottomSheetFragment(), iResident {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
@@ -31,12 +31,11 @@ class EditResident: SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapter = EditResidentAdapter(listOf())
-        recyclerView.adapter = adapter
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = residentList?.let { it1 -> EditResidentAdapter(residentNo, it1, iUpdateAdditional, this@EditResident) }
+        }
     }
 
 
@@ -46,4 +45,10 @@ class EditResident: SuperBottomSheetFragment() {
 
     @SuppressLint("Range")
     override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+    override fun close() {
+        this.dismiss()
+    }
+}
+interface iResident{
+    fun close()
 }

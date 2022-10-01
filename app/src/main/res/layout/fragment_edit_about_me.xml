@@ -25,12 +25,13 @@
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.Material3.Button.Icon"
                 android:layout_width="50dp"
+                android:id="@+id/back_btn"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/white"
                 android:paddingLeft="16dp"
                 app:cornerRadius="100sp"
-                app:icon="@drawable/ic_back"
+                app:icon="@drawable/ic_arrow_left_red"
                 app:iconTint="@color/danger_500" />
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -40,7 +41,6 @@
                 android:layout_gravity="center"
                 app:title="Edit Tentang Saya"
                 app:titleTextColor="@color/black" />
-
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -90,7 +90,7 @@
                         app:cardElevation="0dp">
 
                         <EditText
-                            android:id="@+id/js_EditEthnic"
+                            android:id="@+id/about_txt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
@@ -126,7 +126,7 @@
                 android:background="@color/light_500" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSaveBasic"
+                android:id="@+id/save_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"

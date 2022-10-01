@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -17,8 +18,34 @@
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_back"
-            app:title="Pekerjaan" />
+            android:elevation="0dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:id="@+id/backButton"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_arrow_left_white"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="3dp"
+                    android:textColor="@color/white"
+                    android:layout_toEndOf="@id/backButton"
+                    android:text="Pekerjaan"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="20dp"
+                    />
+            </RelativeLayout>
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +100,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/sectionTitle"
@@ -111,6 +139,7 @@
                     android:id="@+id/recommenJob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:itemCount="5"
                     tools:listitem="@layout/item_card_recommendation_job" />
@@ -122,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_light"
+                    android:visibility="gone"
                     android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"
                     app:cornerRadius="100dp"
@@ -133,6 +163,8 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/near_container"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -160,6 +192,16 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true" />
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="15dp"
+                    android:layout_marginLeft="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/section1Title"
+                    android:id="@+id/empty_near_job"
+                    android:visibility="gone"
+                    android:fontFamily="@font/poppins"
+                    android:text="Tidak ada pekerjaan terdekat..."/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -184,6 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_light"
+                    android:visibility="gone"
                     android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"
                     app:cornerRadius="100dp"
@@ -195,6 +238,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/bookmark_container"
                 android:orientation="vertical">
 
                 <TextView
@@ -247,6 +291,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:visibility="gone"
                     android:fontFamily="@font/poppins_light"
                     android:text="@string/lihat_selengkapnya"
                     android:textAllCaps="false"

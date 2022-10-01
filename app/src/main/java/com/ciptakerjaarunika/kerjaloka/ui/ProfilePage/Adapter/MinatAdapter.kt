@@ -2,19 +2,24 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Data.Field
+import com.ciptakerjaarunika.kerjaloka.model.Data.FieldFilter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.minat_model
 
 
-class MinatAdapter(private val minatList: List<minat_model>):
+class MinatAdapter(var dataList: List<FieldFilter>):
     RecyclerView.Adapter<MinatAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var preference: TextView
+        var fielName: TextView
+        var checkBox: CheckBox
 
         init {
-            preference = itemView.findViewById(R.id.prefName)
+            fielName = itemView.findViewById(R.id.field_txt)
+            checkBox = itemView.findViewById(R.id.checkbox)
         }
     }
 
@@ -24,11 +29,16 @@ class MinatAdapter(private val minatList: List<minat_model>):
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = minatList[position]
-        holder.preference.text = currentItem.Preference
+        val currentItem = dataList[position]
+        holder.fielName.text = currentItem.fieldName
+        holder.checkBox.isChecked = currentItem.checked == true
+        holder.checkBox.setOnClickListener{
+            currentItem.checked = holder.checkBox.isChecked
+            dataList[position].checked = holder.checkBox.isChecked
+        }
     }
 
     override fun getItemCount(): Int {
-        return minatList?.size ?:0
+        return dataList.size
     }
 }

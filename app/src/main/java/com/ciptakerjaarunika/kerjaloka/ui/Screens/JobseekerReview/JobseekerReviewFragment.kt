@@ -1,109 +1,135 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.bumptech.glide.Glide
+import com.ciptakerjaarunika.kerjaloka.api.CanSendReview
+import com.ciptakerjaarunika.kerjaloka.api.CompanyReviewAPI
+import com.ciptakerjaarunika.kerjaloka.api.DeleteReviewResponse
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobseekerReviewBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Bottomsheet.SendReview
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.Adapter.JobseekerReviewAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.Bottomsheet.SendReview
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.Model.review_response
-import com.google.android.material.appbar.MaterialToolbar
 
 
-class JobseekerReviewFragment : Fragment() {
-    private lateinit var binding: ActivityMainBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-
-    }
+class JobseekerReviewFragment(
+    private val companyNo: Long,
+    private val applicantDetail: applicantModel
+) : Fragment() {
+    private lateinit var binding: FragmentJobseekerReviewBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_jobseeker_review, container, false)
+    ): View {
+        binding = FragmentJobseekerReviewBinding.inflate(layoutInflater)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar_review)
-        val btn_gift_review = view.findViewById<LinearLayout>(R.id.btn_send_review_company)
-
-        toolbar.setNavigationOnClickListener {
+        binding.toolbarReview.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        val list = ArrayList<review_response>()
-        val list1 = review_response(
-            1,
-            "Binford Ltd.",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            2f,
-            "11 Agustus 2022 pada 13:32",
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-            )
-        val list2 = review_response(
-            2,
-            "Binford Ltd.",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            2f,
-            "11 Agustus 2022 pada 13:32",
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-        )
-        val list3 = review_response(
-            3,
-            "Binford Ltd.",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            2f,
-            "11 Agustus 2022 pada 13:32",
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-        )
-        val list4= review_response(
-            4,
-            "Binford Ltd.",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            2f,
-            "11 Agustus 2022 pada 13:32",
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-        )
-        val list5 = review_response(
-            5,
-            "Binford Ltd.",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Google_logo_%282013-2015%29.svg/2560px-Google_logo_%282013-2015%29.svg.png",
-            2f,
-            "11 Agustus 2022 pada 13:32",
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
-        )
+        binding.applicantDetailSection.jobseekerAddress.text =
+            applicantDetail.applicant.location.city + ", " + applicantDetail.applicant.location.province
+        Glide.with(this)
+            .load(config().portAddress + "/photo/Profile/" + applicantDetail.applicant.photo)
+            .fitCenter().into(binding.applicantDetailSection.jobseekerPicture)
+        binding.applicantDetailSection.jobseekerName.text = applicantDetail.applicant.name
+        val qualified = applicantDetail.qualified
+        if (qualified.isEmpty()) {
+            binding.applicantDetailSection.jobseekerStatus.text = "Qualified"
+            binding.applicantDetailSection.jobseekerStatus.setTextColor(Color.parseColor("#27AE60"))
+        }
+        binding.reviewList.rBar.rating = applicantDetail.ownRating.rating.ratingValue
+        binding.reviewList.ratingtext.text =
+            applicantDetail.ownRating.rating.ratingList.size.toString() + " dari " + applicantDetail.ownRating.rating.ratingList.size.toString()
+        binding.reviewList.totalReviewText.text =
+            applicantDetail.ownRating.rating.ratingList.size.toString() + " reviews"
 
-        list.add(list1)
-        list.add(list2)
-        list.add(list3)
-        list.add(list4)
-        list.add(list5)
-
-        val rv_listReview = view.findViewById<RecyclerView>(R.id.rv_item_card)
-        rv_listReview.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = JobseekerReviewAdapter(list)
+//        section send review
+        var company = SessionManager(context).user?.company
+        if (company != null) {
+            CanSendReview().getSendReviewAsync(context, companyNo) {
+                if (it != null) {
+                    if (it.data.hasSend == true) {
+                        binding.sectionItemReview.visibility = View.GONE
+                    } else if (it.data.canSend == true) {
+                        binding.reviewList.btnSendReviewCompany.visibility = View.VISIBLE
+                        binding.reviewList.btnSendReviewCompany.setOnClickListener {
+                            sendReviewModal(companyNo)
+                        }
+                    } else {
+                        binding.reviewList.btnSendReviewCompany.setOnClickListener(null)
+                    }
+                }
+            }
+        }
+        val companyUserNo = SessionManager(context).user?.company?.userNo
+        // my review
+        CompanyReviewAPI().getCompanyReviewAsync(context, companyUserNo!!) {
+            val my_review = it!!.data.reviewList.filter { item ->
+                item.userNo == companyUserNo
+            }
+            if (my_review != null) {
+                binding.layoutReviewParent.visibility = View.VISIBLE
+                binding.cardMyReview.btnHapusReview.setOnClickListener {
+                    if (applicantDetail.ownRating.ownUserRatingNo != null) {
+                        DeleteReviewResponse().getDeleteMyReview(
+                            context,
+                            applicantDetail.ownRating.ownUserRatingNo
+                        ) {
+                            binding.sectionItemReview.visibility = View.GONE
+                        }
+                    } else {
+                        binding.layoutReviewParent.visibility = View.GONE
+                    }
+                }
+                binding.cardMyReview.btnEditReview.setOnClickListener {
+                    sendReviewModal(companyNo)
+                }
+            } else {
+                binding.layoutReviewParent.visibility = View.GONE
+            }
         }
 
-        btn_gift_review.setOnClickListener {
-            val sheet = SendReview()
-            sheet.let { it1 -> sheet.show(childFragmentManager,"sendreview") }
+        // other review
+        val jobSeekerUserNo = applicantDetail.applicant.jobseekerNo
+        CompanyReviewAPI().getCompanyReviewAsync(context, jobSeekerUserNo) {
+            if (it != null) {
+                binding.rvItemCard.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = JobseekerReviewAdapter(it.data.reviewList)
+                }
             }
+        }
+    }
+
+    fun sendReviewModal(companyNo: Long) {
+        val sheet =
+            SendReview(
+                companyNo, id, JobseekerReviewFragment(companyNo, applicantDetail)
+            )
+        activity.let { it1 ->
+            sheet.show(
+                it1!!.supportFragmentManager,
+                "SendReview"
+            )
+        }
     }
 }

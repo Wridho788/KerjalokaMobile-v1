@@ -1,0 +1,51 @@
+package com.ciptakerjaarunika.kerjaloka.api.companyApplicant
+
+import android.content.Context
+import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.listApplicantResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.Headers
+import retrofit2.http.POST
+
+class CompanyListApplicantAPI {
+    data class getApplicantRequest(
+        val jobNo: Long,
+        val answer: List<String>
+    )
+
+    interface CompanyListApplicantAPI {
+        @Headers(
+            "Content-Type: application/json",
+            "Accept: application/json"
+        )
+        @POST("/company/officer/job/{JobNo}/application")
+        fun getListApplicant(@Body filter: getApplicantRequest): Call<listApplicantResponse>
+    }
+
+    fun GetListApplicantPost(
+        context: Context?,
+        JobNo: Long,
+        onResult: (listApplicantResponse?) -> Unit
+    ) {
+        val retrofit = ServiceBuilder(context).POST(CompanyListApplicantAPI::class.java)
+        retrofit.getListApplicant(getApplicantRequest(JobNo, listOf())).enqueue(
+            object : Callback<listApplicantResponse> {
+                override fun onResponse(
+                    call: Call<listApplicantResponse>,
+                    response: Response<listApplicantResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<listApplicantResponse>, t: Throwable) {
+                    Log.d("error", t.toString())
+                    onResult(null)
+                }
+            }
+        )
+    }
+}

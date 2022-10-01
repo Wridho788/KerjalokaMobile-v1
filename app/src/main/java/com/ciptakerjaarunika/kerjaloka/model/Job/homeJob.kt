@@ -1,7 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.model.Job
 
-import java.util.*
-
 data class homejob_model(
     val code : Int,
     val errorCode : Int,

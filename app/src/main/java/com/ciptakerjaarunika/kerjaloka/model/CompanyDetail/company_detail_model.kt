@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.model.CompanyDetail
 
+
 data class company_detail_model(
     val code: Int,
     val errorCode: Int?,
@@ -32,10 +33,14 @@ data class rating(
     val ratingValue: Float,
     val ratingList: ArrayList<*>
 )
-
+data class jobLocation(
+    val cityNo : Int,
+    val location : String
+)
 data class job(
     val jobNo: Long,
     val jobPosition: String,
+    val jobLocation: List<jobLocation>,
     val createdOn: String,
     val company: company
 )

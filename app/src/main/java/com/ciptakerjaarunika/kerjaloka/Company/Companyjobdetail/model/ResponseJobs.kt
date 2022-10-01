@@ -1,57 +1,50 @@
 //package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model
 //
-//import java.text.DecimalFormat
+//import com.beust.klaxon.Klaxon
 //
-//data class RequestJob(
-//    val userno: Long?
-//)
+//private val klaxon = Klaxon()
 //
 //data class ResponseJobs(
-//    val code : Int?,
-//    val data : ArrayList<Job>
-//)
-//
-//data class Job(
 //    val jobNo: String,
-//    val jobPosition: String?,
-//    val jobDescription: String?,
-//    val link: String?,
+//    val jobPosition: String,
+//    val jobDescription: String,
+//    val link: String,
 //    val jobType: JobType?,
 //    val jobExperienceLevel: JobExperienceLevel?,
-////    val jobCity: List<JobCity>?,
-//    val jobSalaryMax: Int?,
-//    val jobSalaryMin: Int?,
+//    val jobCity: List<JobCity>,
+//    val jobSalaryMax: Any? = null,
+//    val jobSalaryMin: Long,
 //    val jobField: JobField?,
 //    val jobRole: JobRole?,
-//    val jobMinExperience: Int?,
+//    val jobMinExperience: Long,
 //    val jobSkills: List<JobSkill>?,
 //    val jobTitle: List<JobTitle>?,
-//    val createdOn: String?,
-//    val createdBy: String?,
-//    val publish: Boolean?,
+//    val createdOn: String,
+//    val createdBy: String,
+//    val publish: Boolean,
 //    val jobShortQuestion: List<JobShortQuestion>?,
 //    val jobTests: List<JobTest>?,
-//    val expired: String?,
-//    val takedown: Boolean?,
-//    val jobAdditionalDescription: String?,
-//    val packageName: String? = null
+//    val expired: String,
+//    val takedown: Boolean,
+//    val jobAdditionalDescription: Any? = null,
+//    val packageName: Any? = null
 //)
 //
 //data class JobExperienceLevel (
-//    val experienceLevelNo: Long?,
-//    val experienceLevelName: String?
+//    val experienceLevelNo: Long,
+//    val experienceLevelName: String
 //)
 //
 //data class JobField (
-//    val fieldNo: Long?,
-//    val fieldName: String?,
-//    val fieldParentNo: Int? = null
+//    val fieldNo: Long,
+//    val fieldName: String,
+//    val fieldParentNo: Any? = null
 //)
 //
 //data class JobRole (
-//    val jobRoleNo: Int?,
-//    val jobRoleName: String?,
-//    val fieldNo: Int?
+//    val jobRoleNo: Long,
+//    val jobRoleName: String,
+//    val fieldNo: Long
 //)
 //
 //data class JobShortQuestion (

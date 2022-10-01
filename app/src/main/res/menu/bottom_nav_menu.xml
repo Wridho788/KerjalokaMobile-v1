@@ -12,6 +12,7 @@
         android:icon="@drawable/ic_applicant"
         android:title="@string/lamaran"
         />
+
     <item
         android:id="@+id/interview"
         android:icon="@drawable/ic_chat"

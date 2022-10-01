@@ -16,7 +16,7 @@ data class RecommendationJob(
     val jobLocation : List<JobLocation>,
     val createdOn : String,
     val link : String,
-    val bookmarked : Boolean,
+    var bookmarked : Boolean,
     val company: Company,
 )
 data class JobLocation(
@@ -25,6 +25,8 @@ data class JobLocation(
 )
 
 data class Company(
+    val companyNo : Long,
+    val userNo : Long?,
     val status : String,
     val logo : String,
     val url : String,

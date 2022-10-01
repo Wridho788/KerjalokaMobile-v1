@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseScoreAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.iEditBahasa
 
 
-class ChooseScore : SuperBottomSheetFragment() {
+class ChooseScore(val type : String,val value : Int?, val iEditBahasa: iEditBahasa) : SuperBottomSheetFragment(), iChooseScore {
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<ChooseScoreAdapter.chooseScore>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,7 +26,7 @@ class ChooseScore : SuperBottomSheetFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
-        title.text = "Tingkat Kemampuan Bahasa"
+        title.text = if(type == "written") "Tingkat Kemampuan Tulisan" else "Tingkat Kemampuan Lisan"
 
         return view
     }
@@ -37,10 +38,10 @@ class ChooseScore : SuperBottomSheetFragment() {
 
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapter = ChooseScoreAdapter()
-        recyclerView.adapter = adapter
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ChooseScoreAdapter(type, value, iEditBahasa, this@ChooseScore)
+        }
     }
 
 
@@ -49,5 +50,19 @@ class ChooseScore : SuperBottomSheetFragment() {
     }
 
     @SuppressLint("Range")
-    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+    override fun getExpandedHeight(): Int {
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
+    }
+
+    override fun close() {
+        this.dismiss()
+    }
+}
+
+interface iChooseScore{
+    fun close()
 }

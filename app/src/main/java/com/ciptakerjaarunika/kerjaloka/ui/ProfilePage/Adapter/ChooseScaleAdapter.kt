@@ -1,22 +1,27 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter
 
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.scale
+import com.ciptakerjaarunika.kerjaloka.enum.SkillScale
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iEditKemampuan
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.iChooseScale
 
-class ChooseScaleAdapter(private val scaleItems: List<scale>):
+class ChooseScaleAdapter(val value : Int?, val iChooseSkill: iChooseScale, val iEditKemampuan: iEditKemampuan):
     RecyclerView.Adapter<ChooseScaleAdapter.chooseScale>()
 {
-
     inner class chooseScale(view: View) : RecyclerView.ViewHolder(view) {
 
         var item: TextView
+        var container : LinearLayout
 
         init {
-            item = view.findViewById<TextView>(R.id.item_modal)
+            item = view.findViewById(R.id.item_modal)
+            container = view.findViewById(R.id.container)
         }
     }
 
@@ -26,12 +31,18 @@ class ChooseScaleAdapter(private val scaleItems: List<scale>):
     }
 
     override fun onBindViewHolder(holder: chooseScale, position: Int) {
-        val currentItem = scaleItems[position]
-        holder.item.text= currentItem.scaleName
+        holder.item.text = SkillScale.values().find { scale-> scale.value == position+1 }?.description
+
+        if(value == position+1){
+            holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
+        }
+        holder.item.setOnClickListener{
+            iEditKemampuan.updateScale(position +1)
+            iChooseSkill.close()
+        }
     }
 
     override fun getItemCount(): Int {
-        return scaleItems.size
+        return SkillScale.values().size
     }
-
 }

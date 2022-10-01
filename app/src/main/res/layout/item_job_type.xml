@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+            <TextView
+                android:id="@+id/left_item"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:layout_widthPercent="48%"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Full-Time"
+                android:gravity="center"
+                android:textColor="@color/danger_500"
+                android:textSize="14dp">
+            </TextView>
+            <TextView
+                android:id="@+id/right_item"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:layout_widthPercent="48%"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Full-Time"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/danger_500"
+                android:textSize="14dp">
+            </TextView>
+    </androidx.percentlayout.widget.PercentRelativeLayout>

@@ -1,18 +1,19 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.TextView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.Adapter.StatusAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.Model.statusModel
+import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.iStatusPage
 
-class UbahStatusFragment : SuperBottomSheetFragment() {
-
+class UbahStatusFragment(val iStatusPage: iStatusPage) : SuperBottomSheetFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,22 +24,57 @@ class UbahStatusFragment : SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<statusModel>()
-        val list1 = statusModel(
-            1, "Dalam Tes"
-        )
-        val list2 = statusModel(
-            2, "interview"
-        )
-        list.add(list1)
-        list.add(list2)
+        val statusTerpilih = view.findViewById<TextView>(R.id.txt_shortlist)
+        val statusTest = view.findViewById<TextView>(R.id.txt_test)
+        val statusInterview = view.findViewById<TextView>(R.id.txt_interview)
+        val statusDiterima = view.findViewById<TextView>(R.id.txt_accepted)
+        val statusDitolak = view.findViewById<TextView>(R.id.txt_rejected)
+        val statusCVbank = view.findViewById<TextView>(R.id.txt_cv_bank)
 
-        val rv_status_list = view.findViewById<RecyclerView>(R.id.list_status_change)
-        rv_status_list.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = StatusAdapter(list)
+        statusTerpilih.text = "Terpilih"
+        statusTest.text = "Dalam Test"
+        statusInterview.text = "Interview"
+        statusDiterima.text = "Diterima"
+        statusDitolak.text = "Ditolak"
+        statusCVbank.text = "CV Bank"
+
+        statusTerpilih.setOnClickListener {
+            this.dismiss()
+            iStatusPage.changeStatus(ApplicanStatusType.ShortList.value)
         }
+        statusTest.setOnClickListener {
+            this.dismiss()
+            iStatusPage.changeStatus(ApplicanStatusType.Test.value)
+        }
+        statusInterview.setOnClickListener {
+            this.dismiss()
+            iStatusPage.changeStatus(ApplicanStatusType.Interview.value)
+        }
+        statusDiterima.setOnClickListener {
+            this.dismiss()
+            iStatusPage.changeStatus(ApplicanStatusType.Accepted.value)
+        }
+        statusDitolak.setOnClickListener {
+            this.dismiss()
+            iStatusPage.changeStatus(ApplicanStatusType.Rejected.value)
+        }
+        statusCVbank.setOnClickListener {
+            this.dismiss()
+            iStatusPage.changeStatus(ApplicanStatusType.CVBank.value)
+        }
+
+
     }
-    override fun getCornerRadius() = 16f
+    override fun getCornerRadius() = 20f
+
+    @SuppressLint("Range")
+    override fun getExpandedHeight(): Int {
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
+    }
+
 
 }

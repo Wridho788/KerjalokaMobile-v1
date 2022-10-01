@@ -1,18 +1,13 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
-import android.R.attr.data
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.os.FileUtils
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -29,7 +24,6 @@ import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -54,10 +48,10 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.jitsi.meet.sdk.*
-import timber.log.Timber
+import org.jitsi.meet.sdk.JitsiMeetActivity
+import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import org.jitsi.meet.sdk.JitsiMeetUserInfo
 import java.io.File
-import java.net.URI
 import java.util.*
 
 
@@ -79,11 +73,6 @@ class ChatPage(var sectionName: String,
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     private lateinit var defaultImagePicker: BasicImagePicker
 
-    private var broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            onBroadcastReceived(intent)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -178,46 +167,10 @@ class ChatPage(var sectionName: String,
         }
     }
 
-    private fun registerForBroadcastMessages() {
-        val intentFilter = IntentFilter()
-
-        /* This registers for every possible event sent from JitsiMeetSDK
-           If only some of the events are needed, the for loop can be replaced
-           with individual statements:
-           ex:  intentFilter.addAction(BroadcastEvent.Type.AUDIO_MUTED_CHANGED.action);
-                intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_TERMINATED.action);
-                ... other events
-         */
-        for (type in BroadcastEvent.Type.values()) {
-            intentFilter.addAction(type.action)
-        }
-
-        context?.let { LocalBroadcastManager.getInstance(it).registerReceiver(broadcastReceiver, intentFilter) }
-    }
-
-    // Example for handling different JitsiMeetSDK events
-    private fun onBroadcastReceived(intent: Intent?) {
-        if (intent != null) {
-            val event = BroadcastEvent(intent)
-            when (event.type) {
-                BroadcastEvent.Type.CONFERENCE_JOINED -> Timber.i("Conference Joined with url%s", event.getData().get("url"))
-                BroadcastEvent.Type.PARTICIPANT_JOINED -> Timber.i("Participant joined%s", event.getData().get("name"))
-                else -> Timber.i("Received event: %s", event.type)
-            }
-        }
-    }
-
-    // Example for sending actions to JitsiMeetSDK
-    private fun hangUp() {
-        val hangupBroadcastIntent: Intent = BroadcastIntentHelper.buildHangUpIntent()
-        context?.applicationContext?.let { LocalBroadcastManager.getInstance(it).sendBroadcast(hangupBroadcastIntent) }
-    }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-
 
 
         val titlePage = itemView.findViewById<TextView>(R.id.title)
@@ -233,6 +186,7 @@ class ChatPage(var sectionName: String,
         videoCallButton?.setOnClickListener{
             val roomId = SessionManager(context).user?.userNo.toString()+ Receiver.toString()
             val userInfo = JitsiMeetUserInfo();
+
             userInfo.email = SessionManager(context).user?.email
             userInfo.displayName = SessionManager(context).user?.userFullname
 

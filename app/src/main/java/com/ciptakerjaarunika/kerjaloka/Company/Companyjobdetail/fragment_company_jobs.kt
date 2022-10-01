@@ -25,12 +25,12 @@ import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
 import com.google.gson.Gson
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyJobsBinding
 
 
 class fragment_company_jobs : Fragment() {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<Companyjobs_adapter.ViewHolder>? = null
 
+    private lateinit var binding: FragmentCompanyJobsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +40,15 @@ class fragment_company_jobs : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_company_jobs, container, false)
+    ): View {
+        binding = FragmentCompanyJobsBinding.inflate(layoutInflater)
+        val view = binding.root
+        return view
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val addjob = view.findViewById<ImageView>(R.id.idFABAdd)
 
         addjob.setOnClickListener{
@@ -53,17 +60,50 @@ class fragment_company_jobs : Fragment() {
         JobAPI().getJob(context){
             list = it?.data as ArrayList<Data>
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyle_company_jobs)
-            layoutManager = LinearLayoutManager(activity)
-            recyclerView.layoutManager = layoutManager
-            adapter = it?.data?.let { it1 -> assignAdapter(it1) }
-            recyclerView.adapter = adapter
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = it?.data?.let { it1 -> assignAdapter(it1) }
+            }
         }
-        return view
     }
 
     companion object {
 
+//        val list = ArrayList<ResponseJobs>()
+//        val citylist = ArrayList<JobCity>()
+//        val city1 = JobCity(
+//            id=0,
+//            cityname = "Kota Medan"
+//        )
+//        citylist.add(city1)
+//        val job1 = ResponseJobs(
+//            createdBy ="reyhan@kerjaloka.com",
+//            createdOn ="2022-08-03T10:56:24",
+//            expired ="2022-09-02T00:00:00",
+//            jobAdditionalDescription =null,
+//            jobCity =citylist,
+//            jobDescription ="<ul><li>Crosscheck cashflow, GL Accounting, and balance sheet</li><li>Financial overview per month</li><li>Manage Petty Cash</li><li>Prepare required document of daily banking transaction</li><li>Monitoring &amp; report export proceeds and import payment through SiMoDIS</li><li>Reconcile all of bank account every day</li><li>Update payment in SAP</li></ul><p><br></p>",
+//            jobExperienceLevel =null,
+//            jobField =null,
+//            jobMinExperience =12,
+//            jobNo ="4120220803105624",
+//            jobPosition ="Testing Baru",
+//            jobRole =null,
+//            jobSalaryMax =null,
+//            jobSalaryMin =1223333,
+//            jobShortQuestion =null,
+//            jobSkills =null,
+//            jobTests =null,
+//            jobTitle =null,
+//            jobType =null,
+//            link ="https://advance.kerjaloka.com/job/TESTING/4120220803105624",
+//            packageName =null,
+//            publish =false,
+//            takedown =false
+//        )
+//        list.add(job1)
     }
+
     private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = activity?.supportFragmentManager

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_apply_job_modal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="50dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="50dp">
         <ImageView
             android:layout_width="70dp"
             android:id="@+id/btn_bottom_sheet"
@@ -18,14 +20,10 @@
             android:scaleType="centerCrop"
             android:layout_gravity="center|top"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
             <TextView
                 android:id="@+id/judul_bottom_sheet"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
@@ -33,21 +31,36 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_filter"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/search_background"
+                android:focusable="true"
+                android:fontFamily="@font/poppins_light"
+                android:inputType="text"
+                android:keepScreenOn="true"
+                android:paddingEnd="10dp"
+                android:queryHint="Cari Lokasi"
+                android:searchIcon="@drawable/ic_search"
+                android:textColor="@color/dark_100"
+                android:textSize="12dp"
+                android:tooltipText="Cari di sini..."
+                app:iconifiedByDefault="false"
+                app:queryHint="Cari di sini..."
+                tools:ignore="RtlSymmetry"
+                tools:targetApi="o" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleEdit"
                 android:layout_width="match_parent"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/modal_list"
                 />
-
-        </LinearLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

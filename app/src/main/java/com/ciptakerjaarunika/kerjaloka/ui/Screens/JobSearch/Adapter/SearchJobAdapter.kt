@@ -21,7 +21,7 @@ class SearchJobAdapter(private val rJobList: List<rJobModel>) :
         var jobCompany: TextView
         var jobLocation: TextView
         var timeUploadApplicant: TextView
-        var bookmarkedJob: MaterialButton
+        var bookmarkedJob: ImageView
         var shareableJob: MaterialButton
         var cardRecommendationJob: MaterialCardView
 

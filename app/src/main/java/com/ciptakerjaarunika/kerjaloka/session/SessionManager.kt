@@ -16,11 +16,14 @@ import com.microsoft.signalr.HubConnectionState
 import okhttp3.*
 import okio.ByteString
 import okio.ByteString.Companion.decodeHex
+import java.io.Serializable
 import java.security.AccessController.getContext
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SessionManager (context: Context?) : ISessionManager{
-   private val appContext : Context =  context!!.applicationContext
+   private val appContext : Context? =  context?.applicationContext
 
     companion object{
         const val SHARED_PREF_NAME = "com.ciptakerjaarunika.kerjaloka"
@@ -31,6 +34,7 @@ class SessionManager (context: Context?) : ISessionManager{
         const val COMPANY= "company"
         const val COMPANY_ADDITIONAL= "ocmpanyadditional"
         const val JOBSEEKER_ADDITIONAL = "jobseekeradditionl"
+        const val LATESTSEARCHJOB = "latest_search_job"
     }
 
     override var access_token: String?
@@ -41,8 +45,12 @@ class SessionManager (context: Context?) : ISessionManager{
         get() = Gson().fromJson(getData(USER), User::class.java)
         set(value) {setData(USER, Gson().toJson(value))}
 
+    override var latestSearchJob: List<Any>?
+        get() = (Gson().fromJson(getData(LATESTSEARCHJOB), ArrayList::class.java))
+        set(value) {setData(LATESTSEARCHJOB, Gson().toJson(value))}
+
     override var deviceId: String = ""
-        get() = Settings.Secure.getString(appContext.contentResolver,
+        get() = Settings.Secure.getString(appContext?.contentResolver,
             Settings.Secure.ANDROID_ID);
 
     override var chatData: chat_data?
@@ -66,18 +74,18 @@ class SessionManager (context: Context?) : ISessionManager{
         get() = Gson().fromJson(getData(JOBSEEKER_ADDITIONAL), JobseekerAdditional::class.java)
         set(value) {setData(JOBSEEKER_ADDITIONAL, Gson().toJson(value))}
 
-    private fun getSharedPreference(): SharedPreferences {
-        return appContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+    private fun getSharedPreference(): SharedPreferences? {
+        return appContext?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
     }
     private fun getData(key: String) : String?{
-        return getSharedPreference().getString(key, null)
+        return getSharedPreference()?.getString(key, null)
     }
     private fun setData(key : String, value:String?){
-        getSharedPreference().edit().putString(key,value).apply()
+        getSharedPreference()?.edit()?.putString(key,value)?.apply()
     }
 
     override suspend fun clearData() {
-        getSharedPreference().edit().clear().apply()
+        getSharedPreference()?.edit()?.clear()?.apply()
     }
 
     override fun refreshChat(hubConnection: HubConnection) {
