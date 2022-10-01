@@ -1,11 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 
-<<<<<<< HEAD
 import android.content.Intent
-=======
 import android.content.res.ColorStateList
 import android.graphics.Color
->>>>>>> 9908e33047bf278ccebcf8485d23451f458cc60b
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -19,12 +16,9 @@ import com.airbnb.lottie.parser.ColorParser
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
-<<<<<<< HEAD
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
-=======
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.api.users
->>>>>>> 9908e33047bf278ccebcf8485d23451f458cc60b
 import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScore
 import com.google.android.material.button.MaterialButton
@@ -94,7 +88,6 @@ class AccountSetting(val data: data?) : Fragment() {
         }
 
 
-<<<<<<< HEAD
         view.findViewById<MaterialButton>(R.id.btn_logout).setOnClickListener{
             ProfileAPI().Logout(context){
                 val intent = Intent(context, MainActivity::class.java)
@@ -102,9 +95,6 @@ class AccountSetting(val data: data?) : Fragment() {
             }
         }
         btn_editUsername.setOnClickListener{
-=======
-        btn_editUsername.setOnClickListener {
->>>>>>> 9908e33047bf278ccebcf8485d23451f458cc60b
             replaceFragment(CompEditUsername())
         }
         btn_editEmail.setOnClickListener {
