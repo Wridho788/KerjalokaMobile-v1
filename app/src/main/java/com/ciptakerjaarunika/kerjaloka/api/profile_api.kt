@@ -410,6 +410,35 @@ class ProfileAPI {
             }
         )
     }
+    data class papiKostickResponse(
+        val code : Int,
+        val message : String,
+        val data : PapiKostickResult
+    )
+    interface GetPapiKostick {
+        @GET("jobseeker/profile/papi/result")
+        fun getData(): Call<papiKostickResponse>
+    }
+
+    fun GetPapiKostick(context: Context?,onResult: (papiKostickResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(GetPapiKostick::class.java)
+
+        retrofit.getData().enqueue(
+            object : Callback<papiKostickResponse> {
+                override fun onFailure(call: Call<papiKostickResponse>, t: Throwable) {
+                    Log.d("Response Failure", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<papiKostickResponse>, response: Response<papiKostickResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
 
 
 

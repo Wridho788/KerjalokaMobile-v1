@@ -3,18 +3,18 @@ package com.ciptakerjaarunika.kerjaloka.ui.NotificationPage
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityNotificationBinding
-import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.Model
-import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.item.ItemSectionDecoration
-import java.time.LocalDateTime
+import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.CompanyNotificationModel
+import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.item.CompanyItemSectionDecoration
 
 class Notification : AppCompatActivity() {
 
-    private lateinit var adapter: Adapter
+    private lateinit var adapter: NotifAdapter
     private lateinit var layoutManager: LinearLayoutManager
-    private lateinit var itemSectionDecoration: ItemSectionDecoration
+    private lateinit var itemSectionDecoration: CompanyItemSectionDecoration
     private lateinit var binding: ActivityNotificationBinding
+    private var notificationsList : List<CompanyNotificationModel> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,65 +35,44 @@ class Notification : AppCompatActivity() {
     }
 
 
-
-    private fun initList(){
+    private fun initList() {
 //        scrollNotif.setOnRefreshListener {
 //            scrollNotif.isRefreshing=false
 //            reload()
 //        }
 
-        layoutManager= LinearLayoutManager(this)
-        adapter = Adapter {
+        layoutManager = LinearLayoutManager(this)
+        adapter = NotifAdapter {
             loadMore()
         }
 
-        itemSectionDecoration = ItemSectionDecoration(this){
+        itemSectionDecoration = CompanyItemSectionDecoration(this) {
             adapter.list
         }
 
         binding.notifContainer.addItemDecoration(itemSectionDecoration)
+
         binding.notifContainer.layoutManager = layoutManager
         binding.notifContainer.adapter = adapter
     }
 
-    private fun reload(){
-        val list = dummyData(0,20)
-        binding.notifContainer.post {
-            adapter.reload(list)
+    private fun reload() {
+        UsersAPI().GetNotification(this) {
+            val list = it?.data?.sortedByDescending { it.createdOn }
+//            val list = dummyData(0, 20)
+            binding.notifContainer.post {
+                adapter.reload(list as MutableList<CompanyNotificationModel>)
+            }
         }
     }
 
-    private fun loadMore(){
-        val list = dummyData(adapter.itemCount,15)
-        binding.notifContainer.post {
-            adapter.loadMore(list)
+    private fun loadMore() {
+        UsersAPI().GetNotification(this) {
+            val list = it?.data?.sortedByDescending { it.createdOn }
+//            val list = dummyData(adapter.itemCount, 15)
+            binding.notifContainer.post {
+                adapter.loadMore(list as MutableList<CompanyNotificationModel>)
+            }
         }
-    }
-
-    private fun dummyData(offset: Int, limit: Int): MutableList<Model>{
-        val notifList = mutableListOf<Model>()
-
-
-        notifList.add(Model(0,"Lamaran Anda diTerima", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru", LocalDateTime.of(2022, 8,14,20,20), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(0, "Lowongan Kerja Terbaru", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru",  LocalDateTime.of(2022, 8,15,20,20), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(0, "Event Pembagian Sembako", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru",  LocalDateTime.of(2022, 8,2,20,20), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(1, "Egi Fernandes Bangun", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru", LocalDateTime.now(), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(1, "Gelap Mata", "Lucu sekali dunia tipu tipu", LocalDateTime.now(), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(0,"Lamaran Anda diTerima", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru", LocalDateTime.of(2022, 8,17,20,20), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(0, "Lowongan Kerja Terbaru", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru",  LocalDateTime.of(2022, 8,15,20,20), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(0, "Event Pembagian Sembako", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru",  LocalDateTime.of(2022, 8,1,20,20), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(1, "Egi Fernandes Bangun", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru", LocalDateTime.now(), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(1, "Gelap Mata", "Lucu sekali dunia tipu tipu", LocalDateTime.now(), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(0,"Lamaran Anda diTerima JUni", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru", LocalDateTime.of(2022, 6,22,20,20), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(0, "Lowongan Kerja Terbaru", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru",  LocalDateTime.of(2022, 8,15,20,20), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(0, "Event Pembagian Sembako", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru",  LocalDateTime.of(2022, 8,22, 15,30, 15, 98), R.drawable.kerjaloka_logo_small ))
-
-        notifList.add(Model(0, "Event Pembagian Sembako", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru",  LocalDateTime.of(2022, 8,22, 15,30, 2, 98), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(1, "Egi Fernandes Bangun", "Perusahaan yang anda ikuti baru saja mengunggah sebuah lowongan pekerjaan baru", LocalDateTime.now(), R.drawable.kerjaloka_logo_small ))
-        notifList.add(Model(1, "Gelap Mata", "Lucu sekali dunia tipu tipu", LocalDateTime.now(), R.drawable.kerjaloka_logo_small ))
-
-        notifList.sortByDescending { it.time }
-
-        return notifList
     }
 }
