@@ -1,5 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model
 
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
+
 data class review_response(
     val code: Int,
     val errorCode: Int?,
@@ -21,8 +23,8 @@ data class userInfo(
 
 data class reviewList(
     val userFullName: String,
-    val userNo :  Long,
-    val userRole :  Long,
+    val userNo: Long,
+    val userRole: Long,
     val comment: String,
     val rating: Float,
     val ratingAt: String,
@@ -38,6 +40,30 @@ data class send_review_response(
     val message: String?,
     val data: send
 )
+
+data class my_review_response(
+    val code: Int,
+    val errorCode: Int,
+    val message: String,
+    val data: my_review
+)
+
+data class my_review(
+    val userInfo: userInfo,
+    val reviewList: List<review>
+)
+
+data class delete_review_response(
+    val code: Int,
+    val errorCode: Int?,
+    val message: String?,
+    val data: delete?
+)
+
+data class delete(
+    val tes: String,
+)
+
 
 data class send(
     val hasSend: Boolean,

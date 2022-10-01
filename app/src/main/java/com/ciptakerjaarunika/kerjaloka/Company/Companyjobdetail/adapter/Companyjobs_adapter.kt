@@ -1,12 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.ResponseJobs
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
 
 
 class Companyjobs_adapter (private val joblist: List<ResponseJobs>):
@@ -27,7 +27,12 @@ class Companyjobs_adapter (private val joblist: List<ResponseJobs>):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.section_company_jobs, null)
+        val view =LayoutInflater.from(parent.context).inflate( R.layout.section_company_jobs, null)
+        val lp = RecyclerView.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        view.setLayoutParams(lp)
         return ViewHolder(view)
     }
 

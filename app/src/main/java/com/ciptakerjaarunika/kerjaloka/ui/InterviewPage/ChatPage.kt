@@ -173,7 +173,6 @@ class ChatPage(var sectionName: String,
         super.onViewCreated(itemView, savedInstanceState)
 
 
-
         val titlePage = itemView.findViewById<TextView>(R.id.title)
         titlePage.text = sectionName
 

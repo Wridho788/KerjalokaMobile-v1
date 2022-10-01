@@ -40,14 +40,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
-
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_marginEnd="10dp"
                         android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:src="@drawable/ic_button_back_icon_thick_pink" />
+                            android:src="@drawable/ic_arrow_left_white"/>
                     </LinearLayout>
 
                     <TextView
@@ -131,8 +132,7 @@
                         android:id="@+id/compny_insert_des"
                         android:hint="Masukkan alasan melakukan appeal"
                         android:background="@null"
-                        android:clickable="true"
-                        android:paddingLeft="8dp"
+                        android:paddingStart="8dp"
                         android:padding="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -141,7 +141,8 @@
                         android:fontFamily="@font/poppins"
                         android:textAlignment="textStart"
                         android:textColor="@color/dark_100"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>

@@ -92,8 +92,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:text="Baru"
                             android:fontFamily="@font/poppins"
-                            android:text="Dalam Test"
                             android:textColor="@color/trueGray_500"
                             android:textSize="12sp" />
 
@@ -111,7 +111,8 @@
                 android:id="@+id/section_interview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"

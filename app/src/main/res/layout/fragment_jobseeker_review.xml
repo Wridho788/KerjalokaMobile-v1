@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-  >
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/danger_500"
-            app:navigationIcon="@drawable/ic_back">
+            app:navigationIcon="@drawable/ic_arrow_left_white">
 
             <TextView
                 android:id="@+id/toolbarTitle"
@@ -47,26 +46,13 @@
                 android:orientation="vertical"
                 android:paddingHorizontal="16dp">
 
-                <include layout="@layout/card_jobseeker_review" />
+                <include
+                    android:id="@+id/applicant_detail_section"
+                    layout="@layout/card_jobseeker_review" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginVertical="16dp"
-                android:background="@color/light_500" />
-
             <LinearLayout
-                android:id="@+id/review_send"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <include layout="@layout/review_section" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_my_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -76,16 +62,43 @@
                     android:layout_height="5dp"
                     android:layout_marginVertical="16dp"
                     android:background="@color/light_500" />
+
+                <include
+                    android:id="@+id/review_list"
+                    layout="@layout/review_section" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/layout_review_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginVertical="16dp"
+                    android:background="@color/light_500" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/review_saya"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textSize="16sp"
-                    android:textColor="@color/dark_100"
                     android:layout_marginStart="16dp"
-                    />
-               <include layout="@layout/item_card_my_review" />
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/review_saya"
+                    android:textColor="@color/dark_100"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/section_item_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <include
+                        android:id="@+id/card_my_review"
+                        layout="@layout/item_card_my_review" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <View

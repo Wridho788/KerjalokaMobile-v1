@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.Adapter
 
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -23,6 +24,10 @@ class StatusAdapter(private val statusModel: List<statusModel>) : RecyclerView.A
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = statusModel[position]
         holder.statusName.text = item.statusName
+        holder.statusName.setOnClickListener {
+            item.statusNo
+            Log.d("status",  item.statusNo.toString())
+        }
     }
 
     override fun getItemCount(): Int {

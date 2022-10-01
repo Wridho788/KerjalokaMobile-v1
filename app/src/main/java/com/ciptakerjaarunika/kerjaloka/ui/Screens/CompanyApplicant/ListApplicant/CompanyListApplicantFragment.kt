@@ -1,14 +1,17 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyOfficerJobsApi
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.JobApplicantFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Adapter.ListApplicantAdapter
@@ -18,6 +21,7 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
 
 
     private lateinit var binding: ActivityMainBinding
+    private var listJob: List<listApplicantJobModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,59 +37,32 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val list = ArrayList<listApplicantJobModel>()
-        val listJob1 = listApplicantJobModel(
-            1,
-            "Business Development Representative",
-        "26 Mei 2022 pada 15:23",
-            true,
-        )
-        val listJob2 = listApplicantJobModel(
-            2,
-            "Territory Manager",
-            "26 Mei 2022 pada 15:23",
-            true,
-        )
-        val listJob3 = listApplicantJobModel(
-            3,
-            "Industry Representative",
-            "26 Mei 2022 pada 15:23",
-            true,
-        )
-        val listJob4 = listApplicantJobModel(
-            4,
-            "Executive Vice President of Sales",
-            "26 Mei 2022 pada 15:23",
-            true,
-        )
-        val listJob5 = listApplicantJobModel(
-            5,
-            "Director of National Sales",
-            "26 Mei 2022 pada 15:23",
-            false,
-        )
-        list.add(listJob1)
-        list.add(listJob2)
-        list.add(listJob3)
-        list.add(listJob4)
-        list.add(listJob5)
+        val Context = this
 
         val rv_applicantJob = view.findViewById<RecyclerView>(R.id.rv_list_applicant_job)
-        rv_applicantJob.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = ListApplicantAdapter(list, this@CompanyListApplicantFragment)
+        val txt_total_cv_banks = view.findViewById<TextView>(R.id.totalCVbanksText)
+
+        CompanyOfficerJobsApi().CompanyOfficerJob(context){
+            Log.d("response", it.toString())
+            if(it != null) {
+                listJob = it.data
+                txt_total_cv_banks.text = listJob!!.size.toString()
+                rv_applicantJob.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = ListApplicantAdapter(context, listJob, this@CompanyListApplicantFragment)
+                }
+            }
         }
     }
 
-    override fun goToListJobApplicant() {
+    override fun goToListJobApplicant(JobNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, JobApplicantFragment(), "CompanyApplicant")
+        ft.replace(id, JobApplicantFragment(JobNo), "CompanyApplicant")
         ft.addToBackStack("CompanyApplicant")
         ft.commit()
     }
 }
 
 interface OnFragmentClickListener {
-    fun goToListJobApplicant()
+    fun goToListJobApplicant(JobNo: Long)
 }

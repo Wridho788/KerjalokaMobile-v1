@@ -63,7 +63,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
                 ratingBar.rating = it.data.rating.ratingValue
                 txtRating.text =
                     it.data.rating.ratingList.size.toString() + " dari " + it.data.rating.ratingList.size.toString()
-                totalReview.text = "0 Reviews"
+                totalReview.text = it.data.rating.ratingList.size.toString()
             }
         }
         var UserNo = 20211027141022
@@ -73,7 +73,6 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
         if (user != null) {
             CanSendReview().getSendReviewAsync(context, UserNo) {
                 if (it != null) {
-                    Log.d("send", it.toString())
                     if (it.data.hasSend == true) {
                         layout_my_review.visibility = View.GONE
                     } else {
@@ -82,13 +81,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
                     if (it.data.canSend == true) {
                         layout_send_review.visibility = View.VISIBLE
                         layout_send_review.setOnClickListener {
-                            val sheet = SendReview(UserNo)
-                            activity.let { it1 ->
-                                sheet.show(
-                                    it1!!.supportFragmentManager,
-                                    "SendReview"
-                                )
-                            }
+                          sendReviewModal(UserNo)
                         }
                     } else {
                         layout_send_review.setOnClickListener(null)
@@ -118,5 +111,15 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    fun sendReviewModal(UserNo: Long){
+        val sheet = SendReview(UserNo, id, CompanyReviewFragment())
+        activity.let { it1 ->
+            sheet.show(
+                it1!!.supportFragmentManager,
+                "SendReview"
+            )
+        }
     }
 }

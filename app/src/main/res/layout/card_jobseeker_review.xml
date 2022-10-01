@@ -35,7 +35,6 @@
                     android:id="@+id/jobseeker_picture"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/kerjaloka_logo_small"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
 
@@ -51,7 +50,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Jhon Doe"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -61,8 +59,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Qualified"
-                    android:textColor="@color/green_300"
                     android:textSize="10sp"
                     android:textStyle="bold"
                     tools:ignore="SmallSp" />
@@ -72,7 +68,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
-                    android:text="Palembang, Sumatera Selatan"
                     android:textColor="@color/trueGray_50"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />

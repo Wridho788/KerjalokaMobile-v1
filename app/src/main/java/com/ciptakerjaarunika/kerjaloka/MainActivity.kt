@@ -10,6 +10,7 @@ import android.view.View
 import android.view.WindowInsets.Type.ime
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
@@ -22,7 +23,6 @@ import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Role
-import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
@@ -31,7 +31,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -39,8 +39,8 @@ import com.microsoft.signalr.HubConnectionState
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityMainBinding
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var hubConnection: HubConnection
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -48,14 +48,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         AUTHAPI().CheckLogin(baseContext) {
-
-
-            if(it?.user?.roleNo == Role.Jobseekers.value){
-                // User Jobseeker
-            }
-            else if(it?.user?.roleNo == Role.Jobseekers.value || SessionManager(baseContext).user?.company != null) {
-                // User Company
-            }
+//            if(it?.user?.roleNo == Role.Jobseekers.value){
+//                // User Jobseeker
+//            }
+//            else if(it?.user?.roleNo == Role.Jobseekers.value || SessionManager(baseContext).user?.company != null) {
+//                // User Company
+//            }
 
             var context = baseContext
             hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
@@ -66,7 +64,8 @@ class MainActivity : AppCompatActivity() {
                     { res ->
                         val userNo = SessionManager(context).user!!.userNo.toString()
                         hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
-                }, String::class.java)
+                    }, String::class.java
+                )
 
                 hubConnection.on(
                     "getmessage",
@@ -84,14 +83,12 @@ class MainActivity : AppCompatActivity() {
                             IncomingCallPage(roomId),
                             "IncomingCall"
                         )
-                        ft.addToBackStack("Main");
+                        ft.addToBackStack("Main")
                         ft.commit()
                     },
                     String::class.java
                 )
             }
-
-
 
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
@@ -111,18 +108,37 @@ class MainActivity : AppCompatActivity() {
             }
             replaceFragment(HomePage())
 
-            binding.bottomNavigationView.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.home -> replaceFragment((HomePage()))
-                    R.id.lamaran -> replaceFragment((LamaranPage()))
-                    R.id.interview -> replaceFragment((InterviewPage()))
-                    R.id.akun -> replaceFragment((AkunPage()))
+//
+            if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
+                binding.bottomNavigationView.visibility = VISIBLE
+                // User Jobseeker
+                binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.home -> replaceFragment((HomePage()))
+                        R.id.lamaran -> replaceFragment((LamaranPage()))
+                        R.id.interview -> replaceFragment((InterviewPage()))
+                        R.id.akun -> replaceFragment((AkunPage()))
+                        else -> {
 
-                    else -> {
-
+                        }
                     }
+                    true
                 }
-                true
+            } else if (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null) {
+                binding.bottomNavigationCompanyView.visibility = VISIBLE
+                binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
+                    when (item.itemId) {
+                        R.id.home -> replaceFragment((HomePage()))
+                        R.id.pelamar -> replaceFragment((CompanyListApplicantFragment()))
+                        R.id.interview -> replaceFragment((InterviewPage()))
+                        R.id.akun -> replaceFragment((AkunPage()))
+
+                        else -> {
+
+                        }
+                    }
+                    true
+                }
             }
         }
     }
@@ -163,24 +179,26 @@ class MainActivity : AppCompatActivity() {
 //                }
 //        }
 
-        private var MY_CAMERA_REQUEST_CODE = 100;
-        //WebSocketService().startWebsocket();
-        override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<String>,
-            grantResults: IntArray
-        ) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            Log.d("Request Code", requestCode.toString())
-            if (requestCode == MY_CAMERA_REQUEST_CODE) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    val intent = Intent("android.media.action.IMAGE_CAPTURE")
-                    activityResultLauncher.launch(intent)
-                } else {
-                    Toast.makeText(baseContext, "Perlu akses kamera untuk fitur ini", Toast.LENGTH_LONG).show()
-                }
+    private var MY_CAMERA_REQUEST_CODE = 100
+
+    //WebSocketService().startWebsocket();
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.d("Request Code", requestCode.toString())
+        if (requestCode == MY_CAMERA_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val intent = Intent("android.media.action.IMAGE_CAPTURE")
+                activityResultLauncher.launch(intent)
+            } else {
+                Toast.makeText(baseContext, "Perlu akses kamera untuk fitur ini", Toast.LENGTH_LONG)
+                    .show()
             }
         }
+    }
 
     private fun replaceFragment(fragment: Fragment) {
         AUTHAPI().CheckLogin(baseContext) {
@@ -192,7 +210,8 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.commit()
         }
     }
-    open fun showLogin(Goto : Fragment){
+
+    open fun showLogin(Goto: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, Login(Goto))
         fragmentTransaction.commit()

@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.HomePage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_jobs
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentHomeBinding
+import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
@@ -64,9 +65,17 @@ class HomePage : Fragment(), OnFragmentClickListener {
             val intent = Intent(activity, Notification::class.java)
             startActivity(intent)
         }
-        btn_job.setOnClickListener {
-            onJobPage()
+
+        if (SessionManager(context).user?.roleNo == Role.Jobseekers.value){
+            btn_job.setOnClickListener {
+                onJobPage()
+            }
+        }  else {
+            btn_job.setOnClickListener {
+                onCompanyJobPage()
+            }
         }
+
         btn_company.setOnClickListener {
             onCompanyPage()
         }
@@ -82,7 +91,6 @@ class HomePage : Fragment(), OnFragmentClickListener {
 
         val Context = this
         JobAPI().getJobHomeAsync(context) {
-            Log.d("Response API", it.toString())
             if (it != null) {
                 listJob = it.data
                 recyclerView.apply {
@@ -93,13 +101,6 @@ class HomePage : Fragment(), OnFragmentClickListener {
             }
         }
     }
-
-//    companion object {
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            HomePage().apply {
-//            }
-//    }
 
     override fun onFragmentClick(JobNo: Long, CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
@@ -122,10 +123,17 @@ class HomePage : Fragment(), OnFragmentClickListener {
         fragmentTransaction.commit()
     }
 
+    override fun onCompanyJobPage() {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(id, fragment_company_jobs(), "companyjob")
+        fragmentTransaction.commit()
+    }
+
 }
 
 interface OnFragmentClickListener {
     fun onFragmentClick(JobNo: Long, CompanyNo: Long)
     fun onCompanyPage()
     fun onJobPage()
+    fun onCompanyJobPage()
 }

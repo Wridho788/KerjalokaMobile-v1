@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionHistory.Adapter.HistoryAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionHistory.Model.HistoryModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.jobApplicantHistory
 
-class HistoryFragment : Fragment() {
+class HistoryFragment(private val jobApplicationHistory: List<List<jobApplicantHistory>>) : Fragment() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -36,44 +36,6 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val list = ArrayList<HistoryModel>()
-        val list1 = HistoryModel(
-            1,
-            "Leannon, Ruecker and Hilll",
-            "Interview",
-            "12 Agustus 2021 pada 16:57",
-
-        )
-        val list2 = HistoryModel(
-            2,
-            "Leannon, Ruecker and Hilll",
-            "dalam tes",
-            "12 Agustus 2021 pada 16:57"
-        )
-        val list3 = HistoryModel(
-            3,
-            "Leannon, Ruecker and Hilll",
-            "Interview",
-            "12 Agustus 2021 pada 16:57"
-        )
-        val list4 = HistoryModel(
-            4,
-            "Leannon, Ruecker and Hilll",
-            "Interview",
-            "12 Agustus 2021 pada 16:57"
-        )
-        val list5 = HistoryModel(
-            5,
-            "Leannon, Ruecker and Hilll",
-            "Interview",
-            "12 Agustus 2021 pada 16:57"
-        )
-
-        list.add(list1)
-        list.add(list2)
-        list.add(list3)
-        list.add(list4)
-        list.add(list5)
 
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_history)
         toolbar.setOnClickListener {
@@ -87,7 +49,7 @@ class HistoryFragment : Fragment() {
 
         rv_history.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = HistoryAdapter(list)
+            adapter = HistoryAdapter(jobApplicationHistory)
         }
     }
 }

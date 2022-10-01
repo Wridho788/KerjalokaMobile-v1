@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
-                    android:text="26 Mei 2022 pada 15:23"
+                    android:layout_marginStart="5dp"
                     android:textColor="@color/trueGray_50"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />

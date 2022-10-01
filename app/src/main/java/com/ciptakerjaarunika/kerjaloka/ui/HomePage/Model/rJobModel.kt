@@ -53,6 +53,7 @@ data class rJobDetailModel(
 
     val jobShortQuestion : List<ShortQuestions>,
     val jobTests: List<Tests>,
+    val publish: Boolean,
 )
 
 data class jobLocation(
