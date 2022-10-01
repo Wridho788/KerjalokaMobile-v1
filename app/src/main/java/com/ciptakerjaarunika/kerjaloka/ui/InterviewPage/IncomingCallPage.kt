@@ -1,10 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Vibrator
@@ -13,13 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import org.jitsi.meet.sdk.*
-import timber.log.Timber
+import org.jitsi.meet.sdk.BroadcastIntentHelper
+import org.jitsi.meet.sdk.JitsiMeetActivity
+import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
+import org.jitsi.meet.sdk.JitsiMeetUserInfo
 
 
 class IncomingCallPage(val roomId: String) : Fragment(){
@@ -27,32 +24,32 @@ class IncomingCallPage(val roomId: String) : Fragment(){
     private var mp: MediaPlayer? = null
     private var playRingtone : MediaPlayer? = null;
 
-    private var broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            onBroadcastReceived(intent)
-        }
-    }
-    private fun registerForBroadcastMessages() {
-        val intentFilter = IntentFilter()
-
-        for (type in BroadcastEvent.Type.values()) {
-            intentFilter.addAction(type.action)
-        }
-
-        context?.let { LocalBroadcastManager.getInstance(it).registerReceiver(broadcastReceiver, intentFilter) }
-    }
-
-    // Example for handling different JitsiMeetSDK events
-    private fun onBroadcastReceived(intent: Intent?) {
-        if (intent != null) {
-            val event = BroadcastEvent(intent)
-            when (event.type) {
-                BroadcastEvent.Type.CONFERENCE_JOINED -> Timber.i("Conference Joined with url%s", event.getData().get("url"))
-                BroadcastEvent.Type.PARTICIPANT_JOINED -> Timber.i("Participant joined%s", event.getData().get("name"))
-                else -> Timber.i("Received event: %s", event.type)
-            }
-        }
-    }
+//    private var broadcastReceiver = object : BroadcastReceiver() {
+//        override fun onReceive(context: Context?, intent: Intent?) {
+//            onBroadcastReceived(intent)
+//        }
+//    }
+//    private fun registerForBroadcastMessages() {
+//        val intentFilter = IntentFilter()
+//
+//        for (type in BroadcastEvent.Type.values()) {
+//            intentFilter.addAction(type.action)
+//        }
+//
+//        context?.let { LocalBroadcastManager.getInstance(it).registerReceiver(broadcastReceiver, intentFilter) }
+//    }
+//
+//    // Example for handling different JitsiMeetSDK events
+//    private fun onBroadcastReceived(intent: Intent?) {
+//        if (intent != null) {
+//            val event = BroadcastEvent(intent)
+//            when (event.type) {
+//                BroadcastEvent.Type.CONFERENCE_JOINED -> Timber.i("Conference Joined with url%s", event.getData().get("url"))
+//                BroadcastEvent.Type.PARTICIPANT_JOINED -> Timber.i("Participant joined%s", event.getData().get("name"))
+//                else -> Timber.i("Received event: %s", event.type)
+//            }
+//        }
+//    }
 
     // Example for sending actions to JitsiMeetSDK
     private fun hangUp() {
@@ -90,7 +87,7 @@ class IncomingCallPage(val roomId: String) : Fragment(){
                 .setRoom(roomId)
                 .setUserInfo(userInfo)
                 .build()
-            JitsiMeetActivity.launch(context, options)
+            context?.let { it1 -> JitsiMeetActivity.launch(it1, options) }
         }
 
     }

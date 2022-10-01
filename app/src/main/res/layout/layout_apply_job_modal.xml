@@ -41,57 +41,117 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:layout_marginTop="8dp"
                 android:paddingBottom="16dp"
-                android:text="@string/melamar"
+                android:text="Alasan Melamar"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="16dp"
+                android:textSize="20dp"
                 />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
                 android:layout_marginBottom="10dp"
                 android:background="@color/light_500" />
-
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/withdrawicon_salaman" />
-
+                android:id="@+id/reason_container"
+                android:orientation="vertical">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:text="Mengapa tertarik dengan pekerjaan ini"
+                android:paddingHorizontal="16dp"
+                android:textSize="14sp"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="@string/title_melamar"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textColor="@color/black"/>
 
-            <TextView
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:padding="8dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/reason_apply_txt"
+                android:inputType="text|textMultiLine"
+                android:gravity="top|start"
+                android:lines="8"
+                android:background="@color/light_300"
+                android:maxLines="20"
+                android:scrollbars="vertical"
+                android:fontFamily="@font/poppins"
+                android:hint="Masukkan alasan Anda melamar"
+                android:textSize="14dp"
+                />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/short_question_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="36dp"
-                android:layout_marginRight="36dp"
-                android:fontFamily="@font/poppins"
-                android:paddingTop="6dp"
-                android:text="@string/subtitle_melamar"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="12dp" />
+                android:paddingHorizontal="16dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/quesion_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pertanyaan {n}"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/black"
+                    android:layout_marginVertical="10dp"/>
+                <TextView
+                    android:id="@+id/choice_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Soal Pertanyaan"
+                    android:textSize="14dp"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginVertical="5dp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jawaban Kamu :"
+                    android:textSize="16dp"
+                    android:layout_marginVertical="10dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/black"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycle_choice_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_choices"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:padding="8dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/essay_answer"
+                    android:inputType="text|textMultiLine"
+                    android:gravity="top|start"
+                    android:lines="8"
+                    android:background="@color/light_300"
+                    android:maxLines="20"
+                    android:fontFamily="@font/poppins"
+                    android:scrollbars="vertical"
+                    android:hint="Masukkan alasan Anda melamar"
+                    android:textSize="14dp"
+                    />
+            </LinearLayout>
         </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/confirmWithdraw"
+        android:id="@+id/action_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/danger_500"
         android:fontFamily="@font/poppins_bold"
-        android:text="Konfirmasi"
+        android:text="Lamar"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="15dp"
         android:textAllCaps="false"
         android:textSize="14dp"
         app:cornerRadius="100dp"

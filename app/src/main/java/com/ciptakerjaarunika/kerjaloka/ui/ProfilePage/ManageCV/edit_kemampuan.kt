@@ -3,190 +3,154 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditKemampuanBinding
+import com.ciptakerjaarunika.kerjaloka.enum.SkillScale
+import com.ciptakerjaarunika.kerjaloka.model.Data.Skill
+import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerSkills
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.SkillAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScale
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseSkill
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.material.chip.ChipGroup
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [edit_kemampuan.newInstance] factory method to
- * create an instance of this fragment.
- */
-class edit_kemampuan : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class edit_kemampuan(var dataList: List<JobseekerSkills>?) : Fragment(), iEditKemampuan {
+    private lateinit var binding : FragmentEditKemampuanBinding
+    private var initialSkills : List<SkillFilter> = listOf()
+    private var skills : List<SkillFilter> = listOf()
+    private var skill: SkillFilter? = null
+    private var scale : Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_edit_kemampuan, container, false)
-        val skil = view.findViewById<TextView>(R.id.js_EditSkill)
-        val scale = view.findViewById<TextView>(R.id.js_EditSkillLevel)
-
-        val chipLv1 = view.findViewById<ChipGroup>(R.id.chipGroup1)
-        val chipLv2 = view.findViewById<ChipGroup>(R.id.chipGroup2)
-        val chipLv3 = view.findViewById<ChipGroup>(R.id.chipGroup3)
-        val chipLv4 = view.findViewById<ChipGroup>(R.id.chipGroup4)
-        val chipLv5 = view.findViewById<ChipGroup>(R.id.chipGroup5)
-        val skil1 = view.findViewById<LinearLayout>(R.id.skillLv1)
-        val skil2 = view.findViewById<LinearLayout>(R.id.skillLv2)
-        val skil3 = view.findViewById<LinearLayout>(R.id.skillLv3)
-        val skil4 = view.findViewById<LinearLayout>(R.id.skillLv4)
-        val skil5 = view.findViewById<LinearLayout>(R.id.skillLv5)
-        val nullskill = view.findViewById<LinearLayout>(R.id.nullSkill)
-        val expPos = view.findViewById<TextView>(R.id.txt_Position)
-        val expLoc = view.findViewById<TextView>(R.id.txt_loc)
-        val expDrt = view.findViewById<TextView>(R.id.txt_duration)
-
-
-        val emptyView: LinearLayout.LayoutParams =
-            nullskill.getLayoutParams() as LinearLayout.LayoutParams
-        val s1View: LinearLayout.LayoutParams =
-            skil1.getLayoutParams() as LinearLayout.LayoutParams
-        val s2View: LinearLayout.LayoutParams =
-            skil2.getLayoutParams() as LinearLayout.LayoutParams
-        val s3View: LinearLayout.LayoutParams =
-            skil3.getLayoutParams() as LinearLayout.LayoutParams
-        val s4View: LinearLayout.LayoutParams =
-            skil4.getLayoutParams() as LinearLayout.LayoutParams
-        val s5View: LinearLayout.LayoutParams =
-            skil5.getLayoutParams() as LinearLayout.LayoutParams
-
-        /*
-
-        if (list.isNotEmpty()) {
-            list.forEach {
-                if (it.scale == 1) {
-                    s1View.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    skil1.isVisible = true
-                    val skil1Chip = Chip(context)
-                    skil1Chip.setChipBackgroundColorResource(R.color.danger_100)
-                    skil1Chip.apply {
-                        textSize = 12f
-                        text = it.skillName
-                        isChipIconVisible = false
-                        isCloseIconVisible = false
-                        isClickable = true
-                        isCheckable = false
-                        view.apply {
-                            chipLv1.addView(skil1Chip as View)
-                        }
-                    }
-                } else if (it.scale == 2) {
-                    s2View.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    val skil2Chip = Chip(context)
-                    skil2Chip.setChipBackgroundColorResource(R.color.danger_100)
-                    skil2Chip.apply {
-                        textSize = 12f
-                        text = it.skillName
-                        isChipIconVisible = false
-                        isCloseIconVisible = false
-                        isClickable = true
-                        isCheckable = false
-                        view.apply {
-                            chipLv2.addView(skil2Chip as View)
-                        }
-                    }
-                } else if (it.scale == 3) {
-                    s3View.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    val skil3Chip = Chip(context)
-                    skil3Chip.setChipBackgroundColorResource(R.color.danger_100)
-                    skil3Chip.apply {
-                        textSize = 12f
-                        text = it.skillName
-                        isChipIconVisible = false
-                        isCloseIconVisible = false
-                        isClickable = true
-                        isCheckable = false
-                        view.apply {
-                            chipLv3.addView(skil3Chip as View)
-                        }
-                    }
-                } else if (it.scale == 4) {
-                    s4View.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    val skil4Chip = Chip(context)
-                    skil4Chip.setChipBackgroundColorResource(R.color.danger_100)
-                    skil4Chip.apply {
-                        textSize = 12f
-                        text = it.skillName
-                        isChipIconVisible = false
-                        isCloseIconVisible = false
-                        isClickable = true
-                        isCheckable = false
-                        view.apply {
-                            chipLv4.addView(skil4Chip as View)
-                        }
-                    }
-                } else if (it.scale == 5) {
-                    s5View.height = ViewGroup.LayoutParams.WRAP_CONTENT
-                    val skil5Chip = Chip(context)
-                    skil5Chip.setChipBackgroundColorResource(R.color.danger_100)
-                    skil5Chip.apply {
-                        textSize = 12f
-                        text = it.skillName
-                        isChipIconVisible = false
-                        isCloseIconVisible = false
-                        isClickable = true
-                        isCheckable = false
-                        view.apply {
-                            chipLv5.addView(skil5Chip as View)
-                        }
-                    }
-                }
-            }
-        } else {
-            emptyView.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        }
-        */
-
-        skil.setOnClickListener {
-            val sheet = ChooseSkill()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        scale.setOnClickListener {
-            val sheet = ChooseScale()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
+        binding = FragmentEditKemampuanBinding.inflate(layoutInflater)
+        val view = binding.root
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment edit_kemampuan.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            edit_kemampuan().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.backBtn.setOnClickListener{
+            back()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            back()
+        }
+
+        binding.jsEditSkillLevel.setOnClickListener {
+            val sheet = ChooseScale(scale, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        DataAPI().GetSkill(context){
+            if (it != null) {
+                skills = it
+                initialSkills = it
+
+                refreshSkill()
+                binding.recycleView.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = dataList?.let { it1 -> SkillAdapter(it1, context, this@edit_kemampuan) }
                 }
             }
+        }
+        binding.btnAddSkill.setOnClickListener {
+            binding.errorTxt.visibility = VISIBLE
+
+            if(skill == null){
+                binding.errorTxt.text = "Silahkan Pilih Skill"
+            }
+            else if(scale == null)  {
+                binding.errorTxt.text = "Skill Level tidak boleh kosong"
+            }
+            else {
+                binding.errorTxt.visibility = GONE
+                dataList = dataList?.plus(
+                    JobseekerSkills(
+                        jobseekerNo = SessionManager(context).user!!.userNo,
+                        scale = scale!!,
+                        skillName =  skill!!.skillName,
+                        skillNo = skill!!.skillNo
+                    )
+                )
+                binding.recycleView.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = dataList?.let { it1 -> SkillAdapter(it1, context, this@edit_kemampuan) }
+                }
+                binding.recycleView.adapter?.notifyDataSetChanged()
+                skill = null
+                scale = null
+                binding.jsEditSkill.text = null
+                binding.jsEditSkillLevel.text = null
+                refreshSkill()
+            }
+        }
+
+        binding.saveBtn.setOnClickListener {
+            ManageProfileAPI().JobseekerEditSkills(dataList, context){
+                if(it != null) {
+                    Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                    back()
+                }
+                else{
+                    Toast.makeText(activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
+    private fun back(){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction?.replace(id, profilepage(), "Profile Page")
+        fragmentTransaction?.commit()
+    }
+
+    override fun updateSkill(value: SkillFilter) {
+        skill = value
+        binding.jsEditSkill.text = value.skillName
+    }
+
+    override fun updateScale(value: Int) {
+        scale = value
+        binding.jsEditSkillLevel.text = SkillScale.values().find{scale -> scale.value == value}?.description
+    }
+
+    override fun removeSkill(value: JobseekerSkills) {
+        dataList = dataList?.toMutableList()?.apply {
+            remove(value)
+        }
+        binding.recycleView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = dataList?.let { it1 -> SkillAdapter(it1, context, this@edit_kemampuan) }
+        }
+        binding.recycleView.adapter?.notifyDataSetChanged()
+        refreshSkill()
+    }
+
+    fun refreshSkill(){
+        skills = initialSkills.filter {filt -> !dataList!!.any { data-> data.skillNo == filt.skillNo} }
+        binding.jsEditSkill.setOnClickListener {
+            val sheet = ChooseSkill(skill, skills, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+    }
+}
+interface iEditKemampuan{
+    fun updateSkill(value : SkillFilter)
+    fun updateScale(value : Int)
+    fun removeSkill(value : JobseekerSkills)
 }

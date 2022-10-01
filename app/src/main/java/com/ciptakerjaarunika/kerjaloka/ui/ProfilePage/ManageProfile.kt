@@ -85,7 +85,6 @@ class ManageProfile(val data : JobseekerProfile?) : Fragment() {
 
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.addToBackStack("Profile Page")
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
         fragmentTransaction?.commit()
     }

@@ -1,6 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.enum
 
-enum class Month(val value: Int, name : String ) {
+enum class Month(val value: Int, val description : String ) {
     January(1, "Januari"),
     February(2, "Februari"),
     March(3, "Maret"),

@@ -1,15 +1,21 @@
 package com.ciptakerjaarunika.kerjaloka
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsets.Type.ime
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat.toWindowInsetsCompat
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
@@ -42,6 +48,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         AUTHAPI().CheckLogin(baseContext) {
+
+
             if(it?.user?.roleNo == Role.Jobseekers.value){
                 // User Jobseeker
             }
@@ -87,6 +95,20 @@ class MainActivity : AppCompatActivity() {
 
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
+
+            window.decorView.setOnApplyWindowInsetsListener { view, insets ->
+                val insetsCompat = toWindowInsetsCompat(insets, view)
+                binding.bottomNavigationView.isGone = insetsCompat.isVisible(ime())
+                view.onApplyWindowInsets(insets)
+            }
+            window.decorView.viewTreeObserver.addOnGlobalFocusChangeListener { oldView, newView ->
+                val imm = baseContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                if (newView !is EditText) imm.hideSoftInputFromWindow(
+                    (oldView ?: newView)?.windowToken
+                        ?: window.attributes.token,
+                    0 // or HIDE_IMPLICIT_ONLY
+                )
+            }
             replaceFragment(HomePage())
 
             binding.bottomNavigationView.setOnItemSelectedListener { item ->

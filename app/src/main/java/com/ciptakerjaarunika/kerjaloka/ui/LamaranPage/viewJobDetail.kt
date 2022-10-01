@@ -171,7 +171,7 @@ class viewJobDetail(val JobNo: Long,val CompanyNo: Long,val applicationData: App
 
     }
     fun withdrawLamaranModal(jobNo : Long){
-        val sheet = WithdrawJob(jobNo,id, LamaranPage())
+        val sheet = WithdrawJob(jobNo, id, LamaranPage())
         activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
     }
 

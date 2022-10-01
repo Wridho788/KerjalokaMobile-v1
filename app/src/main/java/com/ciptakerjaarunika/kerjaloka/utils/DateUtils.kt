@@ -68,13 +68,14 @@ class DateUtils {
             return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
         }
     }
-    private fun GetDateValue(value: String) : Date{
+    open fun GetDateValue(value: String) : Date{
         val temp = value.split("T")
         val time = temp[1].split(":")
         val date = "${temp[0]} ${time[0]}:${time[1]}"
         var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
         return dateFormat.parse(date)
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     open fun GetDateValueWithFormat(value: String?, format: String) : String{
         if(value == null) {return "-"}
         return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern(format))

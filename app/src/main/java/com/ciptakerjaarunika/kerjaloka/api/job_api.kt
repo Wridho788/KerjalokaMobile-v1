@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.model.Job.*
+import com.ciptakerjaarunika.kerjaloka.model.Test.JobShortQuestions
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
@@ -369,13 +370,68 @@ class JobAPI {
                         call: Call<jobRecommendationResponse>,
                         response: Response<jobRecommendationResponse>
                     ) {
-                        if (response.body()?.code == 210) {
                             onResult(response.body())
-                        } else {
-                            onResult(null)
-                        }
                     }
                 }
             )
+    }
+
+
+    data class ApplyJobResponse(
+        val code: String,
+        val message: String
+    )
+    interface applyJob {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/apply/{jobNo}")
+        fun getData(@Path("jobNo")jobNo: Long, @Body apply : ApplyJobRequest) : Call<ApplyJobResponse>
+    }
+
+    fun ApplyJob(jobNo: Long,ApplyJobRequest : ApplyJobRequest , context: Context?, onResult: (ApplyJobResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).POST(applyJob::class.java)
+
+        retrofit.getData(jobNo, ApplyJobRequest).enqueue(
+            object : Callback<ApplyJobResponse> {
+                override fun onFailure(call: Call<ApplyJobResponse>, t: Throwable) {
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<ApplyJobResponse>,
+                    response: Response<ApplyJobResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    data class jobShortQuestionResponse(
+        val code: Int,
+        val message: String,
+        val data: List<JobShortQuestions>
+    )
+    interface GetJobShortQuestion {
+        @GET("jobseeker/job/jobshortquestions")
+        fun getData(@Query("jobNo")jobNo: Long) : Call<jobShortQuestionResponse>
+    }
+
+    fun GetJobShortQuestion(jobNo: Long, context: Context?, onResult: (jobShortQuestionResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).POST(GetJobShortQuestion::class.java)
+
+        retrofit.getData(jobNo).enqueue(
+            object : Callback<jobShortQuestionResponse> {
+                override fun onFailure(call: Call<jobShortQuestionResponse>, t: Throwable) {
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<jobShortQuestionResponse>,
+                    response: Response<jobShortQuestionResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
     }
 }

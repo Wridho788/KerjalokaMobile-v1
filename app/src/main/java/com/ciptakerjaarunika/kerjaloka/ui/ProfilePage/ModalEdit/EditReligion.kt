@@ -10,15 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Data.Religion
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditGenderAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditMaritalAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditReligionAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iUpdateAdditional
 
 
-class EditReligion: SuperBottomSheetFragment() {
-
-    private var layoutManager: RecyclerView.LayoutManager? =null
-    private var adapter: RecyclerView.Adapter<EditReligionAdapter.EditReligion>? = null
-    private lateinit var editreligiAdapter: EditReligionAdapter
+class EditReligion(private val religionNo : Int?, val religionList : List<Religion>, val iUpdateAdditional: iUpdateAdditional): SuperBottomSheetFragment(), iReligion {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
@@ -32,12 +31,11 @@ class EditReligion: SuperBottomSheetFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapter = EditReligionAdapter(listOf())
-        recyclerView.adapter = adapter
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = religionList?.let { it1 -> EditReligionAdapter(religionNo, it1, iUpdateAdditional, this@EditReligion) }
+        }
     }
 
 
@@ -47,4 +45,11 @@ class EditReligion: SuperBottomSheetFragment() {
 
     @SuppressLint("Range")
     override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+
+    override fun close() {
+        this.dismiss()
+    }
+}
+interface iReligion{
+    fun close()
 }
