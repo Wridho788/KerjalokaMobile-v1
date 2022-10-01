@@ -7,9 +7,11 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Profile.Profile
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.CompMyReview
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting.AccountSetting
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageProfile
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.company_reviews
 
-class viewpagerCompAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class viewpagerCompAdapter(val data: data?, fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
         return 3
@@ -18,13 +20,13 @@ class viewpagerCompAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                Profile()
+                Profile(data)
             }
             1 -> {
-                CompMyReview()
+                CompMyReview(data)
             }
             2 -> {
-                AccountSetting()
+                AccountSetting(data)
             }
             else -> {
                 ManageProfile(data = null)

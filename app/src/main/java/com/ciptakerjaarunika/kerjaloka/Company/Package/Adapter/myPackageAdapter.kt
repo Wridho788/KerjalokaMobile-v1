@@ -11,14 +11,17 @@ import androidx.annotation.Nullable
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Listener.ShowModalHistory
+import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.Data
+import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.Package
 import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
 import com.ciptakerjaarunika.kerjaloka.Company.Package.pack
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 
 
-class myPackageAdapter (private val context : Context,private val PackageList: List<pack>, private val listener: ShowModalHistory
+class myPackageAdapter(private val context: Context, private val PackageList: List<Data>, private val listener: ShowModalHistory
 ):
     RecyclerView.Adapter<myPackageAdapter.myPackage>()
 {
@@ -51,9 +54,9 @@ class myPackageAdapter (private val context : Context,private val PackageList: L
 
     override fun onBindViewHolder(holder: myPackage, position: Int) {
         val currentItem = PackageList[position]
-        holder.pckName.text= currentItem.packages[position].packageName
-        holder.pckType.text=currentItem.packages[position].packageTypeNo.toString()
-        holder.credit.text=currentItem.credit.toString()
+        holder.pckName.text= currentItem.packageX.packageName
+        holder.pckType.text=currentItem.packageX.packageTypeNo.toString()
+        holder.credit.text=currentItem.packageX.packageCredit.toString()
         holder.startOn.text=currentItem.startOn
         holder.exp.text=currentItem.expiredOn
 

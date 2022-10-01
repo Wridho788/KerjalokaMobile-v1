@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.Global.otpVerification">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="153dp"
+            android:src="@drawable/nonaktif_akun" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="OTP VERIFICATION"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Kami sudah mengirimkan kode OTP ke Nomor Telepon kamu"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/phone_verif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="+62 822 4444 0000"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="yang sudah terdaftar sebelumnya, masukkan kode yang sudah kami kirimkan untuk konfirmasi:"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="00 : 00"
+            android:textColor="@color/danger_500"
+            android:textSize="24dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otp1"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox.Dense"
+                android:layout_width="34dp"
+                android:layout_height="37dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/light_500"
+                android:maxLength="1"
+                android:maxLines="1" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otp2"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox.Dense"
+                android:layout_width="34dp"
+                android:layout_height="37dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/light_500"
+                android:maxLength="1"
+                android:maxLines="1" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otp3"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox.Dense"
+                android:layout_width="34dp"
+                android:layout_height="37dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/light_500"
+                android:maxLength="1"
+                android:maxLines="1" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otp4"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox.Dense"
+                android:layout_width="34dp"
+                android:layout_height="37dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/light_500"
+                android:maxLength="1"
+                android:maxLines="1" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otp5"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox.Dense"
+                android:layout_width="34dp"
+                android:layout_height="37dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/light_500"
+                android:maxLength="1"
+                android:maxLines="1" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otp6"
+                style="@style/ThemeOverlay.Material3.TextInputEditText.FilledBox.Dense"
+                android:layout_width="34dp"
+                android:layout_height="37dp"
+                android:background="@color/light_500"
+                android:maxLength="1"
+                android:maxLines="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Belum menerima OTP? "
+                android:textColor="@color/trueGray_50"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/halo_kerjaloka"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Kirim ulang"
+                android:textColor="@color/danger_500"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sendOTP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:padding="10dp"
+        android:text="Kirim"
+        android:textAllCaps="false"
+        android:textSize="14dp"
+        app:cornerRadius="100dp" />
+
+
+</LinearLayout>

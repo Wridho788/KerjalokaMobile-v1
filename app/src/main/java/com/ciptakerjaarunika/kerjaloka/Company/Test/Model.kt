@@ -2,6 +2,11 @@ package com.ciptakerjaarunika.kerjaloka.Company.Test
 
 import com.google.gson.annotations.SerializedName
 
+data class testResponse(
+    val code: Int,
+    val data: List<Test>
+)
+
 data class Test (
     val testNo: Long,
     val testName: String,

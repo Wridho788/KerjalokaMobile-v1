@@ -49,7 +49,7 @@ class manage_lampiran : Fragment() {
         }
 
         ProfileAPI().GetJobseekerResume(context){ resume ->
-            if (resume != null) {
+            if (resume?.data != null) {
                 val resumeDoc = resume.data
                 view.findViewById<TextView>(R.id.videoResumeName).text = resumeDoc.videoName
                 view.findViewById<ImageView>(R.id.btn_remove_resume).visibility = VISIBLE

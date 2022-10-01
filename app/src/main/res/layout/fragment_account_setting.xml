@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Company.Profile.Setting.AccountSetting">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,6 +47,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -53,18 +55,18 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Username"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/edit_username_setting"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
                                 android:text="Edit"
                                 android:textColor="@color/danger_500"
-                                android:textSize="14sp"
-                                android:paddingRight="4dp"
-                                android:paddingLeft="4dp"/>
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -76,12 +78,11 @@
                                 android:id="@+id/profile_username"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="vivi2992"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="12dp"
+                                android:text="vivi2992"
                                 android:textColor="@color/dark_100"
-                                android:layout_marginTop="10dp">
-                            </TextView>
+                                android:textSize="12dp"></TextView>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -121,6 +122,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -128,18 +130,18 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Nomor Telepon"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/edit_nomor_telepon_setting"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
                                 android:text="Edit"
                                 android:textColor="@color/danger_500"
-                                android:textSize="14sp"
-                                android:paddingRight="4dp"
-                                android:paddingLeft="4dp"/>
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -151,12 +153,11 @@
                                 android:id="@+id/profile_nomor_telepon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="0822 2873 8750"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="12dp"
+                                android:text="0822 2873 8750"
                                 android:textColor="@color/dark_100"
-                                android:layout_marginTop="10dp">
-                            </TextView>
+                                android:textSize="12dp"></TextView>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -195,6 +196,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -202,19 +204,18 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Email"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/edit_email_profile_setting"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
-                                android:text="Edit"
-                                android:textColor="@color/danger_500"
-                                android:textSize="14sp"
                                 android:paddingLeft="4dp"
                                 android:paddingRight="4dp"
-                                />
+                                android:text="Edit"
+                                android:textColor="@color/danger_500"
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -226,12 +227,11 @@
                                 android:id="@+id/profile_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="vvictoria2991@gmail.com"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="12dp"
+                                android:text="vvictoria2991@gmail.com"
                                 android:textColor="@color/dark_100"
-                                android:layout_marginTop="10dp">
-                            </TextView>
+                                android:textSize="12dp"></TextView>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -267,25 +267,24 @@
                         android:paddingVertical="16dp">
 
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:text="Alamat"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Alamat"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
 
-                            <TextView
-                                android:id="@+id/comp_profile_address"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Jl. Kaki Terus Sampai Capek"
-                                android:fontFamily="@font/poppins"
-                                android:textSize="12dp"
-                                android:textColor="@color/dark_100"
-                                android:layout_marginTop="10dp">
-                            </TextView>
+                        <TextView
+                            android:id="@+id/comp_profile_address"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="Jl. Kaki Terus Sampai Capek"
+                            android:textColor="@color/dark_100"
+                            android:textSize="12dp"></TextView>
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -323,6 +322,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -330,18 +330,18 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Kata Sandi"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
                             <TextView
                                 android:id="@+id/edit_kata_sandi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
+                                android:paddingLeft="4dp"
+                                android:paddingRight="4dp"
                                 android:text="Edit"
                                 android:textColor="@color/danger_500"
-                                android:textSize="14sp"
-                                android:paddingRight="4dp"
-                                android:paddingLeft="4dp"/>
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -353,12 +353,11 @@
                                 android:id="@+id/profile_kata_sandi"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="***********"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="12dp"
+                                android:text="***********"
                                 android:textColor="@color/dark_100"
-                                android:layout_marginTop="10dp">
-                            </TextView>
+                                android:textSize="12dp"></TextView>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -400,26 +399,34 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Koneksi Sosial Media"
                             android:textColor="@color/black"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Google"
+                            android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins"
-                            android:textSize="12dp"
+                            android:text="Google"
                             android:textColor="@color/dark_100"
-                            android:layout_marginTop="10dp"/>
-                        <com.google.android.material.button.MaterialButton
+                            android:textSize="12dp" />
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_medium"
-                            android:textSize="14dp"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            app:strokeColor="@color/danger_500"
-                            app:cornerRadius="100dp"
-                            android:text="Hubungkan"
-                            android:textAllCaps="false"/>
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/connect"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="Hubungkan"
+                                android:textAllCaps="false"
+                                android:textSize="14dp"
+                                app:cornerRadius="100dp"
+                                app:strokeColor="@color/danger_500" />
+
+                        </RelativeLayout>
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -458,6 +465,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -465,13 +473,12 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Discoverable"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
                             <Switch
                                 android:id="@+id/switchDiscoverable"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                />
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -483,12 +490,11 @@
                                 android:id="@+id/profile_discoverable"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Dengan menyalakan switch Discoverable, Profil Kamu akan dapat dilihat oleh semua perusahaan. Hal ini akan membantu Perusahaan untuk menemukan mu."
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="12dp"
+                                android:text="Dengan menyalakan switch Discoverable, Profil Kamu akan dapat dilihat oleh semua perusahaan. Hal ini akan membantu Perusahaan untuk menemukan mu."
                                 android:textColor="@color/dark_100"
-                                android:layout_marginTop="10dp">
-                            </TextView>
+                                android:textSize="12dp"></TextView>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -528,6 +534,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/profile_kelola_newsletter"
                                 android:layout_width="wrap_content"
@@ -536,14 +543,13 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Kelola Newsletter"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
 
 
                             <Switch
                                 android:id="@+id/switchNewsLetter"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                />
+                                android:layout_height="wrap_content" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -554,12 +560,11 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
                                 android:text="Manage Newsletter berfungsi untuk menghentikan pengiriman newsletter secara berkala ke email kamu."
-                                android:textSize="12dp"
                                 android:textColor="@color/dark_100"
-                                android:layout_marginTop="10dp">
-                            </TextView>
+                                android:textSize="12dp"></TextView>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -609,7 +614,7 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Deactivate Account"
                                 android:textColor="@color/black"
-                                android:textSize="14sp"/>
+                                android:textSize="14sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -620,12 +625,11 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
-                                android:textSize="12dp"
                                 android:text="Jika akun di non-aktifkan seluruh aktivitas akan dihapus termasuk namun tidak terbatas pada lamaran, komen, dan parsitipasi acara."
                                 android:textColor="@color/dark_100"
-                                android:layout_marginTop="10dp">
-                            </TextView>
+                                android:textSize="12dp"></TextView>
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btn_nonaktifkan_akun"

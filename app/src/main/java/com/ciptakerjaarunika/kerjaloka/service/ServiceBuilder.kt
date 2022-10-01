@@ -7,6 +7,7 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ServiceBuilder(context: Context?) {
     private lateinit var url : String
@@ -31,7 +32,10 @@ class ServiceBuilder(context: Context?) {
                 return@Interceptor chain.proceed(builder.build())
             }
         )
-    }.build()
+    }
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .build()
     private fun clientPost(body : RequestBody): OkHttpClient {
         return OkHttpClient.Builder().apply {
             addInterceptor(
@@ -63,6 +67,7 @@ class ServiceBuilder(context: Context?) {
             .addConverterFactory(GsonConverterFactory.create())
             .client(clientGet)
             .build()
+//        Log.d("Builder Client Get : ", clientGet.toString())
 
         return retrofit.create(service)
     }

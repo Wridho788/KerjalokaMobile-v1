@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ratingSended_response
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.*
 import retrofit2.Call
@@ -12,11 +13,11 @@ import retrofit2.http.*
 class CompanyReviewAPI {
     interface CompanyReviewAPIList {
         @GET("/users/rating/get")
-        fun getCompanyReview(@Query("userNo") userNo: Long): Call<review_response>
+        fun getCompanyReview(@Query("userNo") userNo: Long?): Call<review_response>
     }
 
     fun getCompanyReviewAsync(
-        context: Context?, userNo: Long, onResult: (review_response?)->Unit
+        context: Context?, userNo: Long?, onResult: (review_response?)->Unit
     ) {
         if (context != null) {
             val retrofit = ServiceBuilder(context).GET(CompanyReviewAPIList::class.java)
@@ -31,6 +32,37 @@ class CompanyReviewAPI {
                     }
 
                     override fun onFailure(call: Call<review_response>, t: Throwable) {
+                        Log.d("error",t.toString())
+                        onResult(null)
+                    }
+                }
+            )
+        }
+    }
+}
+
+class CompanyMyReviewAPI {
+    interface CompanyReviewAPIList {
+        @GET("/company/rating/myReview")
+        fun getCompanyReview(): Call<ratingSended_response>
+    }
+
+    fun getCompanyReviewAsync(
+        context: Context?, onResult: (ratingSended_response?)->Unit
+    ) {
+        if (context != null) {
+            val retrofit = ServiceBuilder(context).GET(CompanyReviewAPIList::class.java)
+
+            retrofit.getCompanyReview().enqueue(
+                object : Callback<ratingSended_response> {
+                    override fun onResponse(
+                        call: Call<ratingSended_response>,
+                        response: Response<ratingSended_response>
+                    ) {
+                        onResult(response.body())
+                    }
+
+                    override fun onFailure(call: Call<ratingSended_response>, t: Throwable) {
                         Log.d("error",t.toString())
                         onResult(null)
                     }

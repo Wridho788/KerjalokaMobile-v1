@@ -1,25 +1,38 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile
 
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
+
+data class CompanyProfileResponse(
+    val code : Int,
+    val data : data,
+    val message : String?
+)
+
+data class user_response(
+    val code: Int,
+    val data: user
+)
+
 data class user(
-    val company: List<company>,
-    val companyAdditional: List<compAdditional>,
-    val createdBy: Long = 0,
-    val createdOn: String = "2021-10-27T21:10:22",
-    val deactivated: Boolean = false,
-    val email: String = "reyhan@kerjaloka.com",
-    val emergencyPhone: String? = null,
-    val isDiscoverable: Boolean = false,
-    val isNewsletter: Boolean = true,
-    val jobseekerAdditional: String? = null,
-    val jobseekers: Long? = null,
-    val phone: String = "082363153151",
-    val roleNo: Int = 2,
-    val rolePrevileges: List<role>,
-    val suspended: Boolean = false,
-    val userFullname: String = "reyhan@kerjaloka.com",
-    val userGoogleId: String = "113351807463143838932",
-    val userNo: Long = 20211027141022,
-    val username: String = "reyhan@kerjaloka.com"
+    val company: company?,
+    val companyAdditional: compAdditional?,
+    val createdBy: Long,
+    val createdOn: String,
+    val deactivated: Boolean,
+    val email: String,
+    val emergencyPhone: String?,
+    val isDiscoverable: Boolean,
+    val isNewsletter: Boolean,
+    val jobseekerAdditional: ArrayList<String>?,
+    val jobseekers: ArrayList<String>?,
+    val phone: String,
+    val roleNo: Int,
+    val rolePrevileges: ArrayList<String>?,
+    val suspended: Boolean,
+    val userFullname: String,
+    val userGoogleId: String,
+    val userNo: Long,
+    val username: String
 )
 
 data class company(
@@ -28,7 +41,7 @@ data class company(
     val authorizedUserNo: Long = 0,
     val companyName: String = "TESTING",
     val companyNickName: String? = null,
-    val companyNo: Int = 31,
+    val companyNo: Long = 31,
     val userNo: Long = 20211027141022
 )
 
@@ -49,27 +62,23 @@ data class compAdditional(
     val sizeNo: Int = 6,
 )
 
-data class role(
-    val id: Int
-)
-
 data class data(
-    val city: List<city>,
-    val companyAddress: String? = null,
-    val companyCeo: String = "KAMI",
-    val companyDescription: String = "Testing",
-    val companyName: String = "TESTING",
-    val country: List<country>,
-    val email: String = "reyhan@kerjaloka.com",
-    val field: List<field>,
-    val foundedAt: String = "1950-01-01T00:00:00",
-    val logo: String = "202110271410221246.jpg",
-    val phone: String = "082363153151",
-    val province: List<province>,
-    val size: List<size>,
-    val userFullname: String = "reyhan@kerjaloka.com",
-    val userNo: Long = 20211027141022,
-    val username: String = "reyhan@kerjaloka.com"
+    val userNo: Long,
+    val email: String,
+    val phone: String?,
+    val username: String,
+    val userFullname: String,
+    val companyName: String,
+    val companyAddress: String?,
+    val foundedAt: String,
+    val city: city,
+    val province: province,
+    val country: country,
+    val companyCeo: String,
+    val field: field,
+    val size: size,
+    val logo: String,
+    val companyDescription: String
 )
 
 data class city(
@@ -90,9 +99,9 @@ data class field(
 )
 
 data class province(
-    val provinceCountryNo: Int = 192,
-    val provinceName: String = "Papua",
-    val provinceNo: Int = 11
+    val provinceCountryNo: Int,
+    val provinceName: String,
+    val provinceNo: Int
 )
 
 data class size(
@@ -126,3 +135,61 @@ data class proRat(
     val id: Int = 0,
     val con: String = "Disiplin",
 )
+
+data class ratingSended_response (
+    val code: Int,
+    val errorCode: Int,
+    val message: String,
+    val data: ratingData
+)
+
+data class ratingData (
+    val userInfo: userInfo,
+    val reviewList: List<myReview>
+)
+
+data class userInfo(
+    val rating: Int,
+    val email: String,
+    val name: String,
+    val ownerPhoto: String?
+)
+
+data class myReview(
+    val userRatingNo: Long,
+    val rating: Int,
+    val ratingBy: Long,
+    val ratingAt: String,
+    val comment: String? = null,
+    val userNo: Long,
+    val userFullName: String,
+    val raterPhoto: String? = null,
+    val proRating: List<String>,
+    val conRating: List<String>,
+    val approved: Boolean,
+    val approvedOn: String
+)
+
+data class ChangeUsernameRequest(
+    val username: String
+)
+
+data class CheckPhoneResponse(
+    val exists: Boolean
+)
+
+data class CheckEmailResponse(
+    val exists: Boolean
+)
+
+data class ChangeEmailRequest(
+    val email: String
+)
+
+data class ChangePasswordRequest(
+    val password: String,
+    val newPassword: String
+)
+
+
+

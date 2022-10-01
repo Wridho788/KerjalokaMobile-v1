@@ -8,14 +8,16 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.CompanyNotificationModel
 import java.lang.ref.WeakReference
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
 import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("ResourceAsColor")
-class itemViewHolderCompany(itemView: View): RecyclerView.ViewHolder(itemView) {
+class itemViewHolderCompany(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val view = WeakReference(itemView)
     private lateinit var card: RelativeLayout
@@ -37,25 +39,27 @@ class itemViewHolderCompany(itemView: View): RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    fun updateView(){
-        Title?.text = itemModel?.title
-        Desc?.text = itemModel?.desc
+    fun updateView() {
+        Title?.text = itemModel?.message
+        Desc?.text = itemModel?.message
 
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"))
-            val time: Long = sdf.parse(itemModel?.time.toString()).getTime()
-            val now = System.currentTimeMillis()
-            val ago = DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
+        val time: Long = sdf.parse(itemModel?.createdOn).getTime()
+        val now = System.currentTimeMillis()
+        val ago = DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
 
 
         Time?.text = ago
-        itemModel?.img?.let { Image?.setImageResource(it)
-            if(itemModel?.read == 1){
-                card.setBackgroundColor(Color.parseColor("#fff1f1"))
-            }
-            else if(itemModel?.read == 0){
-                card.setBackgroundColor(Color.parseColor("#ffffff"))
-            }
+        Image?.let {
+            Glide.with(it.context)
+                .load(config().portAddress + "/photo/Profile/" + itemModel?.photo).fitCenter()
+                .into(Image!!)
+        }
+        if (itemModel?.read == true) {
+            card.setBackgroundColor(Color.parseColor("#fff1f1"))
+        } else if (itemModel?.read == false) {
+            card.setBackgroundColor(Color.parseColor("#ffffff"))
         }
     }
 }

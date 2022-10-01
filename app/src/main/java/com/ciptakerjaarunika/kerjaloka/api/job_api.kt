@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobResponses
 import com.ciptakerjaarunika.kerjaloka.model.Job.*
 import com.ciptakerjaarunika.kerjaloka.model.Test.JobShortQuestions
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
@@ -120,7 +121,7 @@ class JobAPI {
     }
 
     // Withdraw Job
-    data class  withdrawResponse(val code :Int, val Messgae : String)
+    data class  withdrawResponse(val code :Int, val Message : String)
     interface withdrawJob {
         @GET("jobseeker/withdraw/{JobNo}")
         fun withdrawJob(@Path("JobNo") JobNo: Long) : Call<withdrawResponse>
@@ -295,6 +296,76 @@ class JobAPI {
     interface getTopSearch {
         @GET("users/job/topsearch")
         fun getData() : Call<topSearchResponse>
+    }
+
+    // Get All Company Job
+    interface getCompanyJob {
+        @GET("company/officer/jobs")
+        fun getData() : Call<JobResponses>
+    }
+
+    fun getJob(context: Context?, onResult: (JobResponses?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getCompanyJob::class.java)
+
+        retrofit.getData().enqueue(
+            object : Callback<JobResponses> {
+                override fun onFailure(call: Call<JobResponses>, t: Throwable) {
+                    onResult(null)
+                    Log.e("Response Failed Job Officer : ", t.toString())
+
+                }
+
+                override fun onResponse(
+                    call: Call<JobResponses>,
+                    response: Response<JobResponses>
+                ) {
+                    Log.d("Response Job Officer : ", response.body().toString())
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    //Draft Job
+    interface draftJob {
+        @GET("company/officer/job/{jobNo}/unpublish")
+        fun draftJob(@Path("jobNo") jobNo: Long) : Call<withdrawResponse>
+    }
+
+    fun DraftJob(context: Context?, jobNo:Long,onResult: (withdrawResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(draftJob::class.java)
+
+        retrofit.draftJob(jobNo).enqueue(
+            object : Callback<withdrawResponse> {
+                override fun onFailure(call: Call<withdrawResponse>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse( call: Call<withdrawResponse>, response: Response<withdrawResponse>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    //Publish Job
+    interface publishJob {
+        @GET("company/officer/job/{jobNo}/publish")
+        fun publishJob(@Path("jobNo") jobNo: Long) : Call<withdrawResponse>
+    }
+
+    fun PublishJob(context: Context?, jobNo:Long,onResult: (withdrawResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(publishJob::class.java)
+
+        retrofit.publishJob(jobNo).enqueue(
+            object : Callback<withdrawResponse> {
+                override fun onFailure(call: Call<withdrawResponse>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse( call: Call<withdrawResponse>, response: Response<withdrawResponse>) {
+                    onResult(response.body())
+                }
+            }
+        )
     }
 
     fun GetTopSearch(context: Context?, onResult: (topSearchResponse?) -> Unit){

@@ -1,10 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage
+
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -16,14 +18,23 @@ import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyDashboardBinding
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.BarLineChartBase
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.*
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +51,9 @@ private const val ARG_PARAM2 = "param2"
 
 class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
-    private val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    private val sdf = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
+    var label: String?= null
+    var startDate: String? =null
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -60,6 +73,35 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         val img_btn_calendar2 = view.findViewById<LinearLayout>(R.id.set_calendar2) as LinearLayout
         val plg_tgl2 = view.findViewById<TextView>(R.id.plg_tgl2) as TextView
         val plg_tgl1 = view.findViewById<TextView>(R.id.plg_tgl1) as TextView
+        val jlhAppl = view.findViewById<TextView>(R.id.jlhApplicant)
+        val jlhAccepted = view.findViewById<TextView>(R.id.jlhAccepted)
+        val jlhApplicant = view.findViewById<TextView>(R.id.jlh_applicant)
+        val btnSeeApp = view.findViewById<TextView>(R.id.seeApplicant)
+        val jlhInterview = view.findViewById<TextView>(R.id.jlhInterview)
+        val btnSeeInterview = view.findViewById<TextView>(R.id.seeInterview)
+        val jlhFollower = view.findViewById<TextView>(R.id.jlh_org_pengikut)
+        val btnSeeFollower = view.findViewById<TextView>(R.id.seeFollower)
+
+
+        company_profile_api().MyFollowerAmount(context){
+            jlhFollower.text = it?.data.toString() + " Orang"
+        }
+
+        company_profile_api().InterviewAmount(context){
+            jlhInterview.text = it?.data.toString()+ " Orang"
+        }
+
+        company_profile_api().MyJob(context){
+            var count = 0
+            it?.data?.forEach {
+                if(it.publish==true){
+                    count++
+                }
+            }
+            jlhApplicant.text = count.toString()+" Pekerjaan"
+        }
+
+
 
 //        var card_test_section =
 //            view.findViewById<MaterialCardView>(R.id.card_test) as MaterialCardView
@@ -91,32 +133,6 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             Toast.makeText(activity, "Paket di Klik!", Toast.LENGTH_SHORT).show()
         }
 
-//        val now = Calendar.getInstance()
-//        val dpd = DatePickerDialog.newInstance(
-//            dateSetListener,
-//            now[Calendar.YEAR],  // Initial year selection
-//            now[Calendar.MONTH],  // Initial month selection
-//            now[Calendar.DAY_OF_MONTH] // Inital day selection
-//        )
-//// If you're calling this from a support Fragment
-//// If you're calling this from a support Fragment
-//        dpd.show(requireActivity().supportFragmentManager, "Datepickerdialog")
-        img_btn_calendar2.setOnClickListener {
-            val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker
-                .Builder
-                .dateRangePicker()
-                .setTitleText("Select a date")
-                .setCalendarConstraints(calendarConstraints())
-            val datePicker = datePickerBuilder.build()
-            datePicker.show(requireActivity().supportFragmentManager, "DATE_PICKER_RANGE")
-
-            datePicker.addOnPositiveButtonClickListener {
-                val startDate = sdf.format(it.first)
-                val endDate = sdf.format(it.second)
-                plg_tgl2.setText(startDate + " - " +endDate)
-            }
-        }
-
         img_btn_calendar1.setOnClickListener {
             val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker
                 .Builder
@@ -129,43 +145,37 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             datePicker.addOnPositiveButtonClickListener {
                 val startDate = sdf.format(it.first)
                 val endDate = sdf.format(it.second)
-                plg_tgl1.setText(startDate + " - " +endDate)
+                val msDiff: Long = (it.second - it.first).toLong()
+                val daysDiff: Long = TimeUnit.MILLISECONDS.toDays(msDiff)
+                company_profile_api().CheckApplicant(startDate, endDate, context){
+                    plg_tgl1.setText(startDate + " - " +endDate)
+                    jlhAppl.text=it?.data.toString() + " Orang"
+                }
             }
         }
-        val anyChartView2 = view.findViewById(R.id.chart2) as AnyChartView
-        APIlib.getInstance().setActiveAnyChartView(anyChartView2);
-        val pie2 = AnyChart.column()
-
-        val data2: MutableList<DataEntry> = ArrayList()
-        data2.add(ValueDataEntry("Bambang", 10000))
-        data2.add(ValueDataEntry("Jake", 12000))
-        data2.add(ValueDataEntry("Peter", 18000))
-//        pie2.data(data)
-        val series2 = pie2.column(data2)
-        series2.fill("#FF6666")
-        series2.stroke("FF6666")
-
-//        pie2.title("First chart2");
-
-        anyChartView2.setChart(pie2)
 
 
-        val anyChartView = view.findViewById(R.id.chart1) as AnyChartView
-        APIlib.getInstance().setActiveAnyChartView(anyChartView);
-        val pie = AnyChart.column()
+        img_btn_calendar2.setOnClickListener {
+            val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker
+                .Builder
+                .dateRangePicker()
+                .setTitleText("Select a date")
+                .setCalendarConstraints(calendarConstraints())
+            val datePicker = datePickerBuilder.build()
+            datePicker.show(requireActivity().supportFragmentManager, "DATE_PICKER_RANGE")
 
-        val data: MutableList<DataEntry> = ArrayList()
-        data.add(ValueDataEntry("John", 10000))
-        data.add(ValueDataEntry("Jake", 12000))
-        data.add(ValueDataEntry("Peter", 18000))
-//        pie.data (data)
-        val series = pie.column(data)
-        series.fill("#FF6666")
-        series.stroke("FF6666")
+            datePicker.addOnPositiveButtonClickListener {
+                val startDate = sdf.format(it.first)
+                val endDate = sdf.format(it.second)
+                val msDiff: Long = (it.second - it.first).toLong()
+                val daysDiff: Long = TimeUnit.MILLISECONDS.toDays(msDiff)
+                plg_tgl2.setText(startDate + " - " +endDate)
+                company_profile_api().CheckAccepted(startDate, endDate, context){
+                    jlhAccepted.text=it?.data.toString() + " Orang"
+                }
+            }
+        }
 
-//        pie.title("");
-
-        anyChartView.setChart(pie)
 
 //        card_test_section.setOnClickListener {  // code here to handle intent to Selection List activity
 //            Toast.makeText(activity, "Seleksi Saya!", Toast.LENGTH_SHORT).show()
@@ -214,6 +224,12 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         return CalendarConstraints.Builder()
             .setValidator(validators)
             .build()
+    }
+
+    class DayAxisValueFormatter(private val chart: BarLineChartBase<*>) : ValueFormatter() {
+        override fun getFormattedValue(value: Float): String {
+            return "your text $value"
+        }
     }
 
     fun getLongAsDate(year: Int, month: Int, date: Int): Long {
