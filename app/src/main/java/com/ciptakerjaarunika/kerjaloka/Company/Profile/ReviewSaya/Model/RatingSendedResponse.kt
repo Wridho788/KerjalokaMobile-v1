@@ -18,6 +18,9 @@ data class editReviewRequest(
     var UserNo: Long,
     var Message: String,
     var Rating: Int,
-    var ProRating: List<Int>,
-    var ConRating: List<Int>
+    var ProRating: List<CategoryList>,
+    var ConRating: List<CategoryList>
 )
+data class CategoryList (
+    val categoryNo : Int
+        )

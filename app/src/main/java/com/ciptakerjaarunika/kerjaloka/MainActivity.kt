@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.home -> replaceFragment((CompanyDashboard()))
-                    R.id.lamaran -> replaceFragment((fragment_company_jobs()))
+                    R.id.lamaran -> replaceFragment((ProfilePage()))
                     R.id.interview -> replaceFragment((InterviewPage()))
                     R.id.akun -> replaceFragment((AkunPage()))
 

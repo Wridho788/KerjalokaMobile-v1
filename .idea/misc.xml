@@ -145,7 +145,8 @@
         <entry key="app/src/main/res/layout/fragment_company_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_company_review.xml" value="0.10771992818671454" />
         <entry key="app/src/main/res/layout/fragment_company_want_to_know.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_edit_my_review.xml" value="0.22530996152201796" />
+        <entry key="app/src/main/res/layout/fragment_edit_my_review.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_global_delete_modal.xml" value="0.17145505097312327" />
         <entry key="app/src/main/res/layout/fragment_history.xml" value="0.1704653371320038" />
         <entry key="app/src/main/res/layout/fragment_history_modal.xml" value="0.17443351859769132" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.375" />

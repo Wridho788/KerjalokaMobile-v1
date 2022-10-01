@@ -96,7 +96,4 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
     override fun getItemCount(): Int {
         return ratingData.size
     }
-
-
-
 }

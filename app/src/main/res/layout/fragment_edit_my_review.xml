@@ -90,6 +90,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/pro1"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -102,6 +103,7 @@
                         android:text="Disiplin" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/pro2"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -114,6 +116,7 @@
                         android:text="Kemauan Bekerja" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/pro3"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -126,6 +129,7 @@
                         android:text="Bekerja Keras" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/pro4"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -138,6 +142,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/pro5"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -150,6 +155,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/pro6"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -162,6 +168,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/pro7"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -189,6 +196,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/con1"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -201,6 +209,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/con2"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -213,6 +222,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/con3"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -225,6 +235,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/con4"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -237,6 +248,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/con5"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -249,6 +261,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/con6"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -261,6 +274,7 @@
                         app:chipStrokeWidth="2dp" />
 
                     <com.google.android.material.chip.Chip
+                        android:id="@+id/con7"
                         style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

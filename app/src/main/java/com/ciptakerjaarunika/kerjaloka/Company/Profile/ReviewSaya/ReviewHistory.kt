@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_job_active_page
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.ShowModal
@@ -15,6 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Global.GlobalDeleteModal
+import com.google.gson.Gson
 
 private var layoutManager: RecyclerView.LayoutManager? = null
 private var adapterRec: RecyclerView.Adapter<CompReviewHistoryAdapter.ViewHolder>? = null
@@ -67,6 +69,10 @@ class ReviewHistory : Fragment(){
 
             override fun showDetail(review: DataX) {
                 val sheet = EditMyReview()
+                val mBundle = Bundle()
+                val reviewData = Gson().toJson(review)
+                mBundle.putString(EditMyReview.EXTRA_EDIT_REVIEW, reviewData)
+                sheet.arguments = mBundle
                 activity?.let { it1 ->
                     sheet.show(
                         it1.supportFragmentManager,
@@ -76,7 +82,11 @@ class ReviewHistory : Fragment(){
             }
 
             override fun showDelete(review: DataX) {
-                val sheet = GlobalDeleteModal()
+                val sheet = DeleteReviewModal()
+                val mBundle = Bundle()
+                val reviewData = Gson().toJson(review)
+                mBundle.putString(DeleteReviewModal.EXTRA_DELETE_REVIEW, reviewData)
+                sheet.arguments = mBundle
                 activity?.let { it1 ->
                     sheet.show(
                         it1.supportFragmentManager,
