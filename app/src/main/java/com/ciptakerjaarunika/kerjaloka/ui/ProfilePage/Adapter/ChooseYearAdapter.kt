@@ -1,23 +1,28 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter
 
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iManageExp
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.iCloseModal
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
-class ChooseYearAdapter(val type: String,private val yearList: List<Int>, val iManageExp: iManageExp):
+class ChooseYearAdapter(val type: String, val value : Int?, private val yearList: List<Int>, val iManageExp: iManageExp, val iCloseModal: iCloseModal):
     RecyclerView.Adapter<ChooseYearAdapter.chooseYr>()
 {
 
     inner class chooseYr(view: View) : RecyclerView.ViewHolder(view) {
 
         var item: TextView
+        var container : LinearLayout
 
         init {
-            item = view.findViewById<TextView>(R.id.item_modal)
+            item = view.findViewById(R.id.item_modal)
+            container = view.findViewById(R.id.container)
         }
     }
 
@@ -28,8 +33,13 @@ class ChooseYearAdapter(val type: String,private val yearList: List<Int>, val iM
 
     override fun onBindViewHolder(holder: chooseYr, position: Int) {
         holder.item.text = yearList[position].toString()
-        holder.item.setOnClickListener{
+        if(yearList[position] == value){
+            holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
+        }
+
+        holder.container.setOnClickListener{
             iManageExp.updateYear(yearList[position], type)
+            iCloseModal.close()
         }
     }
 

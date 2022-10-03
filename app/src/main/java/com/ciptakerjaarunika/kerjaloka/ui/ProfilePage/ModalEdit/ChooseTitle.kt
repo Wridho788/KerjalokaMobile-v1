@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseTitleAdapter
 
 
-class ChooseTitle : SuperBottomSheetFragment() {
+class ChooseTitle(val value: Int?, val iUpdateTitle: iUpdateTitle) : SuperBottomSheetFragment(), iTitle {
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<ChooseTitleAdapter.chooseTitle>? = null
@@ -31,7 +34,6 @@ class ChooseTitle : SuperBottomSheetFragment() {
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,7 +42,7 @@ class ChooseTitle : SuperBottomSheetFragment() {
         recyclerView.layoutManager = layoutManager
         DataAPI().GetTitles(context){
             if(it != null){
-                adapter = ChooseTitleAdapter(it.data)
+                adapter = ChooseTitleAdapter(value, it.data,iUpdateTitle, this)
                 recyclerView.adapter = adapter
             }
         }
@@ -53,5 +55,19 @@ class ChooseTitle : SuperBottomSheetFragment() {
     }
 
     @SuppressLint("Range")
-    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+    override fun getExpandedHeight(): Int {
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
+    }
+
+    override fun close() {
+       this.dismiss()
+    }
+}
+
+interface iTitle{
+    fun close()
 }

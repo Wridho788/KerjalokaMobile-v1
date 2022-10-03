@@ -30,8 +30,9 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:paddingLeft="16dp"
+                    android:id="@+id/back_btn"
                     app:cornerRadius="100sp"
-                    app:icon="@drawable/ic_back"
+                    app:icon="@drawable/ic_arrow_left_red"
                     app:iconTint="@color/danger_500"/>
 
                 <com.google.android.material.appbar.MaterialToolbar
@@ -43,9 +44,17 @@
                     android:layout_gravity="center"/>
             </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="50dp"
+            >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,13 +95,12 @@
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/gelar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
@@ -117,15 +125,15 @@
                     android:id="@+id/pilih_gelar"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@color/light_300"
                     android:ems="10"
                     android:hint="Pilih Gelar"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -154,15 +162,15 @@
                     android:id="@+id/pilih_bidang_studi"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@color/light_300"
                     android:ems="10"
                     android:hint="Pilih bidang studi"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"/>
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -188,19 +196,19 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
 
-                <EditText
+                <TextView
                     android:id="@+id/pilih_lokasi_sekolah"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@color/light_300"
                     android:ems="10"
                     android:hint="Masukkan lokasi sekolah"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -258,18 +266,18 @@
                             app:cardElevation="0dp">
 
                             <TextView
-                                android:id="@+id/pilih_bulan_mulai_edukasi"
+                                android:id="@+id/pilih_bulan_mulai"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:background="@color/light_300"
                                 android:ems="10"
                                 android:hint="Bulan"
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
                                 android:maxLines="10"
-                                android:paddingLeft="8dp"
-                                android:textColor="@color/trueGray_300"
-                                android:textSize="10sp" />
+                                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                                android:paddingHorizontal="15dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"/>
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -302,18 +310,18 @@
                             app:cardElevation="0dp">
 
                             <TextView
-                                android:id="@+id/pilih_tahun_mulai_edukasi"
+                                android:id="@+id/pilih_tahun_mulai"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:background="@color/light_300"
                                 android:ems="10"
                                 android:hint="Tahun"
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
                                 android:maxLines="10"
-                                android:paddingLeft="8dp"
-                                android:textColor="@color/trueGray_300"
-                                android:textSize="10sp" />
+                                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                                android:paddingHorizontal="15dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -376,18 +384,18 @@
                             app:cardElevation="0dp">
 
                             <TextView
-                                android:id="@+id/pilih_bulan_berakhir_edukasi"
+                                android:id="@+id/pilih_bulan_berakhir"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:background="@color/light_300"
                                 android:ems="10"
                                 android:hint="Bulan"
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
                                 android:maxLines="10"
-                                android:paddingLeft="8dp"
-                                android:textColor="@color/trueGray_300"
-                                android:textSize="10sp" />
+                                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                                android:paddingHorizontal="15dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -420,18 +428,18 @@
                             app:cardElevation="0dp">
 
                             <TextView
-                                android:id="@+id/pilih_tahun_berakhir_edukasi"
+                                android:id="@+id/pilih_tahun_berakhir"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:background="@color/light_300"
                                 android:ems="10"
                                 android:hint="Tahun"
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
                                 android:maxLines="10"
-                                android:paddingLeft="8dp"
-                                android:textColor="@color/trueGray_300"
-                                android:textSize="10sp" />
+                                style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
+                                android:paddingHorizontal="15dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"/>
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -467,12 +475,12 @@
                     android:background="@color/light_300"
                     android:ems="10"
                     android:hint="Masukkan skor GPA kamu"
-                    android:inputType="textMultiLine|text"
+                    android:inputType="number"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"/>
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -507,14 +515,34 @@
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:paddingHorizontal="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-
         </ScrollView>
+            <LinearLayout
+                android:id="@+id/footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/danger_500"
+                    android:fontFamily="@font/poppins"
+                    android:text="Simpan"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    app:cornerRadius="100dp" />
+            </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

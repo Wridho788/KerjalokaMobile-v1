@@ -361,18 +361,38 @@ class ManageProfileAPI {
             }
         )
     }
+
+
+    interface JobseekerDeleteExperience {
+        @GET("jobseeker/experience/{experienceNo}/delete")
+        fun SendData(@Path("experienceNo") experienceNo: Long): Call<responseGeneral?>
+    }
+    fun JobseekerDeleteExperience(experienceNo: Long, context: Context?, onResult: (responseGeneral?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(JobseekerDeleteExperience::class.java)
+        retrofit.SendData(experienceNo).enqueue(
+            object : Callback<responseGeneral?> {
+                override fun onFailure(call: Call<responseGeneral?>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<responseGeneral?>, response: Response<responseGeneral?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
     interface JobseekerAddExperience {
         @Headers("Content-Type: application/json","Accept: application/json")
         @POST("jobseeker/experience/add")
-        fun SendData(@Body files: JobseekerExperiences): Call<responseGeneral?>
+        fun SendData(@Body files: JobseekerExperienceRequest): Call<responseGeneral?>
     }
     interface JobseekerEditExperience {
         @Headers("Content-Type: application/json","Accept: application/json")
         @POST("jobseeker/experience/{experienceNo}/edit")
-        fun SendData(@Body files: JobseekerExperiences, @Path("experienceNo") experienceNos : Long): Call<responseGeneral?>
+        fun SendData(@Body files: JobseekerExperienceRequest, @Path("experienceNo") experienceNos : Long): Call<responseGeneral?>
     }
-    fun JobseekerManageExperience(experiences: JobseekerExperiences, context: Context?, onResult: (responseGeneral?) -> Unit){
-        if(experiences.jobseekerExperienceNo != null){
+    fun JobseekerManageExperience(experiences: JobseekerExperienceRequest, context: Context?, onResult: (responseGeneral?) -> Unit){
+        if(experiences.jobseekerExperienceNo != null && experiences.jobseekerExperienceNo != 0L){
             val retrofit = ServiceBuilder(context).POST(JobseekerEditExperience::class.java)
             retrofit.SendData(experiences, experiences.jobseekerExperienceNo).enqueue(
                 object : Callback<responseGeneral?> {

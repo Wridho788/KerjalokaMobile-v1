@@ -24,3 +24,16 @@ data class JobseekerEducations(
     val jobseekerNo : Long
 )
 
+data class JobseekerEducationsRequest(
+    val jobseekerEducationNo: Long ?,
+    val jobseekerNo : Long?,
+    val educationSchool : String?,
+    val educationBeginAt : String?,
+    val educationEndedAt : String?,
+    var educationMajorNo : Int?,
+    var educationTitleNo : Int?,
+    var educationCityNo : Int?,
+    val gpa:Int?,
+    val educationDescription : String?,
+)
+

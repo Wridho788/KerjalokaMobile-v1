@@ -3,28 +3,24 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.anychart.APIlib
-import com.anychart.AnyChart
-import com.anychart.AnyChartView
-import com.anychart.chart.common.dataentry.DataEntry
-import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
+import com.ciptakerjaarunika.kerjaloka.model.Profile.PapiKostickResult
 import com.github.mikephil.charting.charts.RadarChart
-import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.RadarData
 import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 
 
-class PapikostickResult : SuperBottomSheetFragment() {
+class PapikostickResult(val item: PapiKostickResult) : SuperBottomSheetFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,35 +35,56 @@ class PapikostickResult : SuperBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ProfileAPI().GetPapiKostick(context){ res->
-            if(res?.data != null){
-                val radarchart = view?.findViewById<RadarChart>(R.id.papi_result)
+        var radarchart = view?.findViewById<RadarChart>(R.id.papi_result)
+
+            if(item != null){
+                view?.findViewById<TextView>(R.id.Nscore)?.text = item.n.toString()
+                view?.findViewById<TextView>(R.id.Gscore)?.text = item.g.toString()
+                view?.findViewById<TextView>(R.id.Ascore)?.text = item.a.toString()
+                view?.findViewById<TextView>(R.id.Lscore)?.text = item.l.toString()
+                view?.findViewById<TextView>(R.id.Pscore)?.text = item.p.toString()
+                view?.findViewById<TextView>(R.id.Iscore)?.text = item.i.toString()
+                view?.findViewById<TextView>(R.id.Tscore)?.text = item.t.toString()
+                view?.findViewById<TextView>(R.id.Vscore)?.text = item.v.toString()
+                view?.findViewById<TextView>(R.id.Xscore)?.text = item.x.toString()
+                view?.findViewById<TextView>(R.id.Sscore)?.text = item.s.toString()
+                view?.findViewById<TextView>(R.id.Bscore)?.text = item.b.toString()
+                view?.findViewById<TextView>(R.id.Oscore)?.text = item.o.toString()
+                view?.findViewById<TextView>(R.id.Rscore)?.text = item.r.toString()
+                view?.findViewById<TextView>(R.id.Dscore)?.text = item.d.toString()
+                view?.findViewById<TextView>(R.id.Cscore)?.text = item.c.toString()
+                view?.findViewById<TextView>(R.id.Zscore)?.text = item.z.toString()
+                view?.findViewById<TextView>(R.id.Escore)?.text = item.e.toString()
+                view?.findViewById<TextView>(R.id.Kscore)?.text = item.k.toString()
+                view?.findViewById<TextView>(R.id.Fscore)?.text = item.f.toString()
+                view?.findViewById<TextView>(R.id.Wscore)?.text = item.w.toString()
+
                 val radarEntry = ArrayList<RadarEntry>()
-                val item = res.data
-                radarEntry.add(RadarEntry(item.n.toFloat()));
-                radarEntry.add(RadarEntry(item.g.toFloat()));
-                radarEntry.add(RadarEntry(item.a.toFloat()));
-                radarEntry.add(RadarEntry(item.l.toFloat()));
-                radarEntry.add(RadarEntry(item.p.toFloat()));
-                radarEntry.add(RadarEntry(item.i.toFloat()));
-                radarEntry.add(RadarEntry(item.t.toFloat()));
-                radarEntry.add(RadarEntry(item.v.toFloat()));
-                radarEntry.add(RadarEntry(item.x.toFloat()));
-                radarEntry.add(RadarEntry(item.s.toFloat()));
-                radarEntry.add(RadarEntry(item.b.toFloat()));
-                radarEntry.add(RadarEntry(item.o.toFloat()));
-                radarEntry.add(RadarEntry(item.r.toFloat()));
-                radarEntry.add(RadarEntry(item.d.toFloat()));
-                radarEntry.add(RadarEntry(item.c.toFloat()));
-                radarEntry.add(RadarEntry(item.z.toFloat()));
-                radarEntry.add(RadarEntry(item.e.toFloat()));
-                radarEntry.add(RadarEntry(item.k.toFloat()));
-                radarEntry.add(RadarEntry(item.f.toFloat()));
-                radarEntry.add(RadarEntry(item.w.toFloat()));
+
+                radarEntry.add(RadarEntry(item.n.toFloat(), ));
+                radarEntry.add(RadarEntry(item.g.toFloat(), ));
+                radarEntry.add(RadarEntry(item.a.toFloat(), ));
+                radarEntry.add(RadarEntry(item.l.toFloat(), ));
+                radarEntry.add(RadarEntry(item.p.toFloat(), ));
+                radarEntry.add(RadarEntry(item.i.toFloat(), ));
+                radarEntry.add(RadarEntry(item.t.toFloat(), ));
+                radarEntry.add(RadarEntry(item.v.toFloat(), ));
+                radarEntry.add(RadarEntry(item.x.toFloat(), ));
+                radarEntry.add(RadarEntry(item.s.toFloat(), ));
+                radarEntry.add(RadarEntry(item.b.toFloat(), ));
+                radarEntry.add(RadarEntry(item.o.toFloat(), ));
+                radarEntry.add(RadarEntry(item.r.toFloat(), ));
+                radarEntry.add(RadarEntry(item.d.toFloat(), ));
+                radarEntry.add(RadarEntry(item.c.toFloat(), ));
+                radarEntry.add(RadarEntry(item.z.toFloat(), ));
+                radarEntry.add(RadarEntry(item.e.toFloat(), ));
+                radarEntry.add(RadarEntry(item.k.toFloat(), ));
+                radarEntry.add(RadarEntry(item.f.toFloat(), ));
+                radarEntry.add(RadarEntry(item.w.toFloat(), ));
 
                 val color = context?.let { ContextCompat.getColor(context!!, R.color.danger_500) };
 
-                val radarDataSet = RadarDataSet(radarEntry, null)
+                val radarDataSet = RadarDataSet(radarEntry, "Hasil Test Papi Kostick")
                 radarDataSet.lineWidth = 2f
                 radarDataSet.valueTextSize = 14f
                 color?.let {color-> radarDataSet.color = color }
@@ -102,7 +119,7 @@ class PapikostickResult : SuperBottomSheetFragment() {
                 val xY = radarchart?.yAxis
                 xY?.setStartAtZero(true)
                 radarchart?.data = radarData
-            }
+
         }
     }
 

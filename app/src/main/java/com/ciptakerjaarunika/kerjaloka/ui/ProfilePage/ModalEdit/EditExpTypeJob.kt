@@ -14,9 +14,10 @@ import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditExp_TypeJob
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.JobTypeAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iManageExp
 
 
-class EditExpTypeJob(val value: Int?): SuperBottomSheetFragment() {
+class EditExpTypeJob(val value: Int?, val data : List<JobTypeFilter>,val iManageExp: iManageExp): SuperBottomSheetFragment(), iCloseModal {
 
     private var layoutManager: RecyclerView.LayoutManager? =null
     private var adapter: RecyclerView.Adapter<EditExp_TypeJob.ChooseType>? = null
@@ -36,17 +37,19 @@ class EditExpTypeJob(val value: Int?): SuperBottomSheetFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        DataAPI().GetJobTypes(context){ data->
-            if (data != null) {
+
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter = EditExp_TypeJob(
-                        data.map { item -> JobTypeFilter(item.jobTypeName, item.jobTypeNo,value == item.jobTypeNo
-                        ) }
+                    adapter = EditExp_TypeJob(value,
+                        data.map { item ->
+                            JobTypeFilter(
+                                item.jobTypeName, item.jobTypeNo, value == item.jobTypeNo,
+                            )
+                        },
+                        iManageExp,
+                        this@EditExpTypeJob
                     )
                 }
-            }
-        }
 
     }
 
@@ -57,4 +60,7 @@ class EditExpTypeJob(val value: Int?): SuperBottomSheetFragment() {
 
     @SuppressLint("Range")
     override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+    override fun close() {
+        this.dismiss()
+    }
 }

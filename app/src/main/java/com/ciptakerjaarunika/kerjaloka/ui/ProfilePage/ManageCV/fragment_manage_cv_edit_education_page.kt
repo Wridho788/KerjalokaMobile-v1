@@ -6,29 +6,59 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.activity.addCallback
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetMajorJob
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
+import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
+import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditEducationPageBinding
+import com.ciptakerjaarunika.kerjaloka.enum.Month
+import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
+import com.ciptakerjaarunika.kerjaloka.model.Data.Major
+import com.ciptakerjaarunika.kerjaloka.model.Data.Title
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducations
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducationsRequest
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [fragment_manage_cv_edit_education_page.newInstance] factory method to
- * create an instance of this fragment.
- */
-class fragment_manage_cv_edit_education_page : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsRequest?) : Fragment(), iEditBasic, iManageExp,
+    iUpdateMajor, iUpdateTitle {
+    private lateinit var binding : FragmentManageCvEditEducationPageBinding
+    private var beginMonth : Int? = data?.educationBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt() }
+    private var endedMonth : Int? = data?.educationEndedAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt()}
+    private var beginYear : Int? = data?.educationBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "yyyy").toInt()}
+    private var endedYear : Int? = data?.educationEndedAt?.let { DateUtils().GetDateValueWithFormat(it, "yyyy").toInt()}
+    private var locations : List<LocationFilter> = listOf()
+    private var majors : List<Major> = listOf()
+    private var titles : List<Title> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        if(data == null){
+            data = JobseekerEducationsRequest(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null)
+        }
+
+        DataAPI().GetLocations(context) { res ->
+            if (res != null) {
+                locations = res
+                updateCity(data?.educationCityNo)
+            }
         }
     }
 
@@ -36,59 +66,130 @@ class fragment_manage_cv_edit_education_page : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_manage_cv_edit_education_page, container, false)
-        val Gelar = view.findViewById<TextView>(R.id.pilih_gelar)
-        val cMajor = view.findViewById<TextView>(R.id.pilih_bidang_studi)
-        val cStartM = view.findViewById<TextView>(R.id.pilih_bulan_mulai_edukasi)
-        val cEndM = view.findViewById<TextView>(R.id.pilih_bulan_berakhir_edukasi)
-        val cStartY = view.findViewById<TextView>(R.id.pilih_tahun_mulai_edukasi)
-        val cEndY = view.findViewById<TextView>(R.id.pilih_tahun_berakhir_edukasi)
-
-
-        Gelar.setOnClickListener {
-            val sheet = ChooseTitle()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cMajor.setOnClickListener {
-            val sheet = ChooseMajor()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-//        cStartM.setOnClickListener {
-//            val sheet = ChooseMonth()
-//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-//        }
-//        cEndM.setOnClickListener {
-//            val sheet = ChooseMonth()
-//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-//        }
-//        cStartY.setOnClickListener {
-//            val sheet = ChooseYear()
-//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-//        }
-//        cEndY.setOnClickListener {
-//            val sheet = ChooseYear()
-//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-//        }
-        return view
+        binding = FragmentManageCvEditEducationPageBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment fragment_manage_cv_edit_education_page.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            fragment_manage_cv_edit_education_page().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if(data == null) {
+            binding.mainToolbar.title = "Tambah Pendidikan"
+        }
+        binding.backBtn.setOnClickListener{
+            back()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            back()
+        }
+        binding.pilihBulanMulai.text = Month.values().find { month -> month.value == beginMonth  }?.description
+        binding.pilihBulanBerakhir.text = Month.values().find { month -> month.value == endedMonth  }?.description
+        binding.pilihTahunMulai.text = beginYear.toString()
+        binding.pilihTahunBerakhir.text = if(endedYear!= null) endedYear.toString() else null
+
+        binding.pilihGelar.setOnClickListener {
+            val sheet = ChooseTitle(data?.educationTitleNo, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
+        DataAPI().GetMajors(context) {
+            if (it != null) {
+                majors = it
+                binding.pilihBidangStudi.setOnClickListener {
+                    val sheet = ChooseMajor(data?.educationMajorNo,majors, this)
+                    activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
                 }
             }
+        }
+
+        binding.pilihLokasiSekolah.setOnClickListener {
+            val sheet = EditCity(data?.educationCityNo, locations, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
+        binding.pilihBulanMulai.setOnClickListener {
+            val sheet = ChooseMonth(if(beginMonth != null) beginMonth else null, "begin", this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        binding.pilihBulanBerakhir.setOnClickListener {
+            val sheet = ChooseMonth(if(endedMonth != null) endedMonth else null, "ended", this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+
+        binding.pilihTahunMulai.setOnClickListener {
+            val sheet = ChooseYear("begin", if(beginYear != null) beginYear else null, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        binding.pilihTahunBerakhir.setOnClickListener {
+            val sheet = ChooseYear("ended",if(endedYear != null) endedYear else null, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+    }
+    override fun updateGender(value: Char) {
+    }
+    private fun back(){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
+        fragmentTransaction?.commit()
+    }
+
+    override fun updateCity(cityNo: Int?) {
+        if (cityNo != null) {
+            this.data?.educationCityNo = cityNo
+        }
+        var currentLocation = locations.find { loc-> loc.locationsNo == cityNo }
+        if(currentLocation != null){
+            binding.pilihLokasiSekolah.setText("${currentLocation.city}, ${currentLocation.province}")
+        }
+    }
+
+    override fun updateMonth(value: Int, type: String) {
+        val monthTxt = Month.values().find { month-> month.value == value }?.description
+        when (type){
+            "begin" ->{
+                beginMonth = value
+                binding.pilihBulanMulai.text = monthTxt
+            }
+            "ended"->{
+                endedMonth = value
+                binding.pilihBulanBerakhir.text = monthTxt
+            }
+        }
+    }
+
+    override fun updateYear(value: Int, type: String) {
+        when (type){
+            "begin" ->{
+                beginYear = value
+                binding.pilihTahunMulai.text = value.toString()
+            }
+            "ended"->{
+                endedYear = value
+                binding.pilihTahunBerakhir.text = value.toString()
+            }
+        }
+    }
+
+    override fun updateJobType(value: Int) {}
+
+
+    override fun updateMajor(value: Int?) {
+        if (value != null) {
+            this.data?.educationMajorNo = value
+        }
+        var currentItem = majors.find { item -> item.majorNo == value }
+        if(currentItem != null){
+            binding.pilihBidangStudi.text = currentItem.majorName
+        }
+    }
+
+    override fun updateTitle(value: Int?) {
+        if (value != null) {
+            this.data?.educationTitleNo = value
+        }
+        var currentItem = titles.find { item -> item.titleNo == value }
+        if(currentItem != null){
+            binding.pilihGelar.text = currentItem.titleName
+        }
     }
 }

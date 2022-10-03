@@ -7,50 +7,23 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:background="@drawable/card_background"-->
-<!--        android:backgroundTint="@color/danger_100"-->
-<!--        android:orientation="vertical"-->
-<!--        android:padding="10dp">-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight=".8"-->
-<!--            android:fontFamily="@font/poppins_semibold"-->
-<!--            android:text="Simpan profile sebagai CV"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="14dp" />-->
-
-
-
-<!--                <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:fontFamily="@font/poppins"-->
-<!--                    android:text="Kamu bisa menyimpan data profil menjadi CV dengan otomatis menggunakan data yang sudah kamu masukkan sebelumnya di Profile kamu"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="10sp" />-->
-
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--            android:id="@+id/btn_downloadCV"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-<!--            app:strokeColor="@color/danger_500"-->
-<!--            app:backgroundTint="@color/white"-->
-<!--            android:fontFamily="@font/poppins"-->
-<!--            android:textAllCaps="false"-->
-<!--            android:text="Download CV"-->
-<!--            android:textFontWeight="1000"-->
-<!--            app:cornerRadius="100dp"/>-->
-
-<!--    </LinearLayout>-->
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:gravity="center">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/content_container"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -416,8 +389,6 @@
             android:layout_height="wrap_content"
             tools:itemCount="1"
             tools:listitem="@layout/card_language_main" />
-
-
     </LinearLayout>
-
+    </LinearLayout>
 </LinearLayout>
