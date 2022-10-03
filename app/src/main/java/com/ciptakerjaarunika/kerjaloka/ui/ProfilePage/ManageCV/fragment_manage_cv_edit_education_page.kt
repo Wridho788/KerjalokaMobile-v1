@@ -53,22 +53,22 @@ class fragment_manage_cv_edit_education_page : Fragment() {
             val sheet = ChooseMajor()
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
         }
-        cStartM.setOnClickListener {
-            val sheet = ChooseMonth()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cEndM.setOnClickListener {
-            val sheet = ChooseMonth()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cStartY.setOnClickListener {
-            val sheet = ChooseYear()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cEndY.setOnClickListener {
-            val sheet = ChooseYear()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
+//        cStartM.setOnClickListener {
+//            val sheet = ChooseMonth()
+//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+//        }
+//        cEndM.setOnClickListener {
+//            val sheet = ChooseMonth()
+//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+//        }
+//        cStartY.setOnClickListener {
+//            val sheet = ChooseYear()
+//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+//        }
+//        cEndY.setOnClickListener {
+//            val sheet = ChooseYear()
+//            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+//        }
         return view
     }
 
