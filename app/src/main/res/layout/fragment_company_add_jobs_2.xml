@@ -433,11 +433,11 @@
             android:fontFamily="@font/poppins"
             android:text="Kembali"
             android:textAllCaps="false"
-            android:textColor="@color/danger_300"
+            android:textColor="@color/danger_500"
             android:textSize="14sp"
             app:cornerRadius="100dp"
             app:layout_widthPercent="45%"
-            app:strokeColor="@color/danger_300"
+            app:strokeColor="@color/danger_500"
             app:strokeWidth="1dp"
             tools:layout_editor_absoluteX="17dp"
             tools:layout_editor_absoluteY="346dp" />

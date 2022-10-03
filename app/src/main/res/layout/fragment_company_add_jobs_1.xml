@@ -252,9 +252,10 @@
                         android:background="@null"
                         android:fontFamily="@font/poppins"
                         android:hint="Masukkan Nominal Gaji"
-                        android:inputType="text"
+                        android:inputType="numberDecimal"
                         android:padding="14dp"
                         android:textSize="10sp"
+                        android:digits="1234567890"
                         tools:ignore="Autofill,SmallSp" />
 
                 </androidx.cardview.widget.CardView>
@@ -282,6 +283,7 @@
             android:backgroundTint="@color/white"
             android:fontFamily="@font/poppins"
             android:text="Kembali"
+            android:allowClickWhenDisabled="true"
             android:textAllCaps="false"
             android:textColor="@color/danger_300"
             android:textSize="14sp"
@@ -290,7 +292,8 @@
             app:strokeColor="@color/danger_300"
             app:strokeWidth="1dp"
             tools:layout_editor_absoluteX="17dp"
-            tools:layout_editor_absoluteY="346dp" />
+            tools:layout_editor_absoluteY="346dp"
+            tools:targetApi="s" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_selanjutnya_cmpny"

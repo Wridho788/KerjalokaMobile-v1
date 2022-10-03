@@ -1,6 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,11 +59,41 @@ class fragment_company_add_jobs_2(val iAddJob: iAddJob) : Fragment(), iUpdatePag
         binding.btnKembaliCmpny.setOnClickListener {
             replaceFragment(fragment_company_add_jobs_1(iAddJob))
         }
-        iAddJob.addJobPage2(
-            getSkills!!, getMajors!!, getField!!, getExperienceLevels!!, getRoles!!, binding.compnyMinExperience.text.toString(),
-        )
-        binding.btnSelanjutnyaCmpny.setOnClickListener {
+        binding.compnyMinExperience.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (!binding.compnyMinExperience.text.toString()
+                        .isNullOrEmpty() && !binding.compnyMinExperience.text.toString()
+                        .isNullOrBlank() && binding.compnyMinExperience.text.toString() != ""
+                ) {
+                    iAddJob.addMinExperience(binding.compnyMinExperience.text.toString())
+                }
+            }
+        })
+        if (!getSkills!!.isEmpty() && !getSkills!!.isNullOrEmpty() &&
+            !getField!!.toString().isEmpty() && !getField!!.toString().isNullOrEmpty() &&
+            !getMajors!!.toString().isEmpty() && !getMajors!!.toString().isNullOrEmpty() &&
+            !getExperienceLevels!!.toString().isEmpty() && !getExperienceLevels!!.toString()
+                .isNullOrEmpty() &&
+            !getRoles!!.toString().isEmpty() && !getRoles!!.toString().isNullOrEmpty()
+        ) {
+            iAddJob.addJobPage2(
+                getSkills!!,
+                getMajors!!,
+                getField!!,
+                getExperienceLevels!!,
+                getRoles!!,
+
+                )
+        }
+
+        binding.btnSelanjutnyaCmpny.setOnClickListener {
             replaceFragment(fragment_company_add_jobs_3(this.iAddJob))
         }
         return view

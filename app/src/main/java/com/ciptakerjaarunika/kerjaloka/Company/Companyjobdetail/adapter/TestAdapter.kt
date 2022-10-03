@@ -3,10 +3,12 @@ package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iChooseTest
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.TestJob
+import com.giphy.sdk.analytics.GiphyPingbacks.context
 import com.google.android.material.card.MaterialCardView
 
 class TestAdapter(private var dataset: List<TestJob>?, val iChooseTest: iChooseTest): RecyclerView.Adapter<TestAdapter.ViewHolder?>() {
@@ -36,7 +38,7 @@ class TestAdapter(private var dataset: List<TestJob>?, val iChooseTest: iChooseT
         val item = dataset!![position]
         holder.titleTest.text = item.testName
         holder.cardTest.setOnClickListener {
-
+            Toast.makeText(context, "${item.testNo} test", Toast.LENGTH_SHORT).show()
         }
 
     }

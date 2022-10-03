@@ -1,10 +1,13 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.*
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.AddJobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityAddJobBinding
@@ -12,66 +15,37 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 import com.ciptakerjaarunika.kerjaloka.model.Job.JobLocation
+import java.math.BigDecimal
 
 class AddJobActivity : AppCompatActivity(), iAddJob {
 
     private lateinit var binding: ActivityAddJobBinding
-    var getposition: String? = ""
-    var getlocation: List<LocationFilter>? = listOf()
+    var getPosition: String? = ""
+    var getLocation: List<LocationFilter>? = listOf()
     var getjobType: Int? = 0
-    var getminSalary: String? = ""
-    var getmaxSalary: String? = ""
+    var getminSalary: BigDecimal? = null
+    var getmaxSalary: BigDecimal? = null
     var getjobSkills: List<SkillFilter>? = listOf()
     var getjobTitle: List<Title>? = listOf()
     var getjobField: Int? = 0
     var getjobRole: Int? = 0
-    var getminExperience: String? = ""
+    var getminExperience: Int? = 0
     var getjobExperienceLevelNo: Int? = 0
     var getjobDescription: String? = ""
     var getjobTests: List<JobTest>? = listOf()
     var getjobShortQuestion: List<JobShortQuestionDto>? = listOf()
     var getautoReject: Boolean? = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.backButton.setOnClickListener {
-            this.onBackPressed()
+            val intentToMain = Intent(baseContext, MainActivity::class.java)
+            startActivity(intentToMain)
         }
-        Log.d("addJob",getposition.toString())
-        Log.d("addJob",getlocation.toString())
-        Log.d("addJob",getjobDescription.toString())
-        Log.d("addJob",getmaxSalary.toString())
-        Log.d("addJob",getminSalary.toString())
-        Log.d("addJob",getjobTests.toString())
-        Log.d("addJob",getjobShortQuestion.toString())
-        Log.d("addJob",getautoReject.toString())
 
         binding.btnPostingPekerjaan.setOnClickListener {
-        AddJobAPI().AddJob(baseContext, addJobRequest(
-                position = getposition!!,
-                location = getlocation!!.map {item-> JobLocation(item.locationsNo, item.city) } ,
-                jobType = getjobType!!,
-                minSalary = getminSalary!!.toBigDecimal(),
-                maxSalary = getmaxSalary!!.toBigDecimal(),
-                jobSkills = getjobSkills!!.map {item -> JobSkillRequest(0, 0, item.skillNo.toLong()) },
-                jobTitle = getjobTitle!!.map{item -> JobTitleRequest(0, 0,  item.titleNo.toLong()) },
-                jobField = getjobField!!,
-                jobRole = getjobRole!!,
-                minExperience = getminExperience!!.toInt(),
-                jobExperienceLevelNo = getjobExperienceLevelNo!!,
-                jobDescription = getjobDescription!!,
-                jobTests = getjobTests!!,
-                jobShortQuestion = getjobShortQuestion!!,
-                autoReject = false
-            )
-        ){
-                Log.d("add job response", it.toString())
-                if(it != null && it.code == "210"){
-                    Log.d("add job sukses", it.toString())
-                }
-            }
+            SendAddJob()
         }
         replaceFragment(fragment_company_add_jobs_1(this@AddJobActivity))
     }
@@ -83,95 +57,139 @@ class AddJobActivity : AppCompatActivity(), iAddJob {
         fragmentTransaction.commit()
     }
 
-    override fun addJobPage1(
-        position: String,
-        location: List<LocationFilter>,
-        jobType: Int,
-        minSalary: String
-    ) {
-        Log.d("addJob",position)
-        Log.d("addJob",location.toString())
-        Log.d("addJob",jobType.toString())
-        Log.d("addJob",minSalary)
-        if (position != null) {
-            getposition = position
+
+    fun SendAddJob() {
+        try {
+            if (getPosition != null) {
+                Log.d("addJob position", getPosition!!)
+            } else {
+                Toast.makeText(baseContext, "Posisi lowongan harus diisi", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            if (getLocation!!.isEmpty()) {
+                listOf(getLocation)
+            } else {
+                Log.d("addJob location", getLocation.toString())
+            }
+            if (getjobType != null) {
+                Log.d("addJob type", getjobType.toString())
+            } else {
+                getjobType = 0
+            }
+            if (getjobSkills != null) {
+                Log.d("addJob skills", getjobSkills.toString())
+            }
+
+            AddJobAPI().AddJob(
+                baseContext,
+                addJobRequest(
+                    Position = getPosition!!,
+                    Location = getLocation!!.map { item ->
+                        JobLocation(
+                            item.locationsNo,
+                            item.city
+                        )
+                    },
+                    JobType = getjobType!!,
+                    MinSalary = getminSalary,
+                    MaxSalary = getmaxSalary,
+                    JobSkills = getjobSkills!!.map { item ->
+                        JobSkillRequest(
+                            0,
+                            0,
+                            item.skillNo.toLong()
+                        )
+                    },
+                    JobTitles = getjobTitle!!.map { item ->
+                        JobTitleRequest(
+                            0,
+                            0,
+                            item.titleNo.toLong()
+                        )
+                    },
+                    JobField = getjobField!!,
+                    JobRole = getjobRole!!,
+                    MinExperience = getminExperience!!.toInt(),
+                    JobExperienceLevelNo = getjobExperienceLevelNo!!,
+                    JobDescription = getjobDescription!!,
+                    JobTest = getjobTests!!,
+                    JobShortQuestion = getjobShortQuestion!!,
+                    AutoReject = getautoReject,
+                )
+            ) {
+                Log.d("addJob response", it.toString())
+            }
+
+        } catch (e: IllegalStateException) {
+            Log.d("addJobErr", e.toString())
         }
 
-        if (location != null) {
-            getlocation = location
-        }
-
-        if (jobType != null) {
-            getjobType = jobType
-        }
-
-        if (minSalary != null) {
-            getminSalary = minSalary
-            getmaxSalary = minSalary
-        }
     }
+
+    override fun addPosition(position: String?) {
+        getPosition = position!!
+    }
+
+    override fun addSalary(minSalary: String?) {
+        var salary = BigDecimal.valueOf(minSalary!!.toDouble())
+        getminSalary = salary
+        getmaxSalary = salary
+    }
+
+    override fun addJobPage1(
+        location: List<LocationFilter>?,
+        jobType: Int?,
+    ) {
+        getLocation = location!!
+        getjobType = jobType!!
+    }
+
 
     override fun addJobPage2(
-        jobSkills: List<SkillFilter>,
-        jobTitles: List<Title>,
-        jobField: Int,
-        jobExperienceLevelNo: Int,
-        jobRole: Int,
-        minExperience: String
+        jobSkills: List<SkillFilter>?,
+        jobTitles: List<Title>?,
+        jobField: Int?,
+        jobExperienceLevelNo: Int?,
+        jobRole: Int?,
     ) {
-        Log.d("addJob",jobSkills.toString())
-        Log.d("addJob",jobTitles.toString())
-        Log.d("addJob",jobField.toString())
-        Log.d("addJob",jobExperienceLevelNo.toString())
-        Log.d("addJob",jobRole.toString())
-        Log.d("addJob",minExperience)
-
-        if (jobSkills != null) {
-            getjobSkills = jobSkills
-        }
-        if (jobTitles != null) {
-            getjobTitle = jobTitles
-        } else { getjobTitle = null}
-        if (jobField != null) {
-            getjobField = jobField
-        } else { getjobField = 0}
-        if (jobExperienceLevelNo != 0) {
-            getjobExperienceLevelNo = jobExperienceLevelNo
-        } else { getjobExperienceLevelNo = 0}
-        if (jobRole != null) {
-            getjobRole = jobRole
-        } else { getjobRole = 0}
-        if (minExperience != null) {
-            getminExperience = minExperience
-        } else { getminExperience = ""}
+        getjobSkills = jobSkills!!
+        getjobTitle = jobTitles!!
+        getjobField = jobField!!
+        getjobExperienceLevelNo = jobExperienceLevelNo!!
+        getjobRole = jobRole!!
     }
 
-    override fun addJobPage3(jobDescription: String) {
-        Log.d("addJob",jobDescription)
-        if (jobDescription != null) {
-        getjobDescription = jobDescription
-        } else { getjobDescription = null}
+    override fun addMinExperience(minExperience: String?) {
+        getminExperience = minExperience!!.toInt()
+    }
+
+    override fun addJobPage3(jobDescription: String?) {
+        getjobDescription = jobDescription!!
     }
 }
 
 interface iAddJob {
+    fun addPosition(position: String?)
+    fun addSalary(minSalary: String?)
     fun addJobPage1(
-        position: String,
-        location: List<LocationFilter>,
-        jobType: Int,
-        minSalary: String
+        location: List<LocationFilter>?,
+        jobType: Int?,
     )
 
     fun addJobPage2(
-        jobSkills: List<SkillFilter>,
-        jobTitles: List<Title>,
-        jobField: Int,
-        jobExperienceLevelNo: Int,
-        jobRole: Int,
-        minExperience: String
+        jobSkills: List<SkillFilter>?,
+        jobTitles: List<Title>?,
+        jobField: Int?,
+        jobExperienceLevelNo: Int?,
+        jobRole: Int?,
+    )
+
+    fun addMinExperience(
+        minExperience: String?
     )
 
     fun addJobPage3(
-        jobDescription: String
+        jobDescription: String?
     )
 }

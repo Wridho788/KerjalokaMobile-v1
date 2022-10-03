@@ -76,7 +76,7 @@
                         android:textAlignment="textStart"
                         android:textColor="@color/dark_100"
                         android:textSize="12sp"
-                        />
+                        tools:ignore="RtlSymmetry" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -103,7 +103,7 @@
             android:text="Kembali"
             android:textAllCaps="false"
             android:textColor="@color/danger_500"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:cornerRadius="100dp"
             app:layout_widthPercent="45%"
             app:strokeColor="@color/danger_500"
@@ -115,7 +115,7 @@
             android:id="@+id/btn_selanjutnya_cmpny"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/poppins"
@@ -123,7 +123,7 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/danger_500"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:cornerRadius="100dp"
             app:iconTint="@color/danger_500"
             app:layout_widthPercent="45%"

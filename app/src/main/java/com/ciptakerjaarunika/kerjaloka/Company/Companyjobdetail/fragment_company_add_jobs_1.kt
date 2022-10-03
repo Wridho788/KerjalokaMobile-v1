@@ -1,10 +1,13 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetEditJob
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetTypeJob
@@ -12,6 +15,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyAddJobs1Bindin
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 
 class fragment_company_add_jobs_1(val iAddJob: iAddJob) : Fragment(), iUpdatePage1 {
+
     private lateinit var binding: FragmentCompanyAddJobs1Binding
     var getLocation: List<LocationFilter>? = listOf()
     var getTypeJobs: Int? = null
@@ -19,7 +23,7 @@ class fragment_company_add_jobs_1(val iAddJob: iAddJob) : Fragment(), iUpdatePag
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): ConstraintLayout {
         binding = FragmentCompanyAddJobs1Binding.inflate(layoutInflater)
         val view = binding.root
 
@@ -32,22 +36,54 @@ class fragment_company_add_jobs_1(val iAddJob: iAddJob) : Fragment(), iUpdatePag
         binding.btnChooseJobType.setOnClickListener {
             jobTypeModal()
         }
+        binding.editPositionJob.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (!binding.editPositionJob.text.toString()
+                        .isNullOrEmpty() && !binding.editPositionJob.text.toString()
+                        .isNullOrBlank() && binding.editPositionJob.text.toString() != ""
+                ) {
+                    iAddJob.addPosition(binding.editPositionJob.text.toString())
+                }
+            }
+        })
+        binding.editSalaryJob.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (!binding.editSalaryJob.text.toString()
+                        .isNullOrEmpty() && !binding.editSalaryJob.text.toString()
+                        .isNullOrBlank() && binding.editSalaryJob.text.toString() != ""
+                ) {
+                    iAddJob.addSalary(binding.editSalaryJob.text.toString())
+                }
+
+            }
+        })
+        if (!getLocation!!.isEmpty() &&
+            !getLocation!!.isNullOrEmpty() &&
+            getTypeJobs!! == null) {
+            iAddJob.addJobPage1(getLocation!!, 0)
+        } else Log.d("getlocation", getLocation!!.toString())
 
         binding.btnSelanjutnyaCmpny.setOnClickListener {
-            iAddJob.addJobPage1(
-                binding.editPositionJob.text.toString(),
-                getLocation!!,
-                getTypeJobs!!,
-                binding.editSalaryJob.text.toString()
+            replaceFragment(
+                fragment_company_add_jobs_2(this.iAddJob)
             )
-                replaceFragment(
-                    fragment_company_add_jobs_2(this.iAddJob)
-                )
         }
 
         return view
     }
-
 
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity?.supportFragmentManager
@@ -66,20 +102,20 @@ class fragment_company_add_jobs_1(val iAddJob: iAddJob) : Fragment(), iUpdatePag
         activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
     }
 
-    override fun updatePage1(locations: List<LocationFilter>) {
-        locations.map { location ->
+    override fun updatePage1(locations: List<LocationFilter>?) {
+        locations!!.map { location ->
             binding.compnyLokasi.text = location.city + "," + location.province
         }
         getLocation = locations
     }
 
-    override fun updatePageType(typeNo: Int, type: String) {
+    override fun updatePageType(typeNo: Int?, type: String?) {
         binding.compnyJobType.text = type
         getTypeJobs = typeNo
     }
 }
 
 interface iUpdatePage1 {
-    fun updatePage1(locatins: List<LocationFilter>)
-    fun updatePageType(typeNo: Int, type: String)
+    fun updatePage1(locations: List<LocationFilter>? = null)
+    fun updatePageType(typeNo: Int?, type: String?)
 }
