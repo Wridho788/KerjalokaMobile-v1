@@ -56,7 +56,7 @@ class InterviewAPI {
                 override fun onResponse( call: Call<jobseeker_interview_list_api>, response: Response<jobseeker_interview_list_api>) {
                     Log.d("Response Code : ", response.code().toString())
                     if(response.code() == 401){
-                        mainActivity.showLogin(InterviewPage())
+                        mainActivity.showLogin(InterviewPage(), "interview")
                     }else {
                         onResult(response.body())
                     }

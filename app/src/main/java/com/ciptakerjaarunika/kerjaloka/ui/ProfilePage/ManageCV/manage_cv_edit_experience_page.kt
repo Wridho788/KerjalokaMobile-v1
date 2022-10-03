@@ -7,96 +7,134 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditExperiencePageBinding
+import com.ciptakerjaarunika.kerjaloka.enum.Month
+import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperiences
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditExp_TypeJob
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [manage_cv_edit_experience_page.newInstance] factory method to
- * create an instance of this fragment.
- */
-class manage_cv_edit_experience_page : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class manage_cv_edit_experience_page(var data : JobseekerExperiences?) : Fragment(), iEditBasic, iManageExp {
+        private  lateinit var binding : FragmentManageCvEditExperiencePageBinding
+        private var locations : List<LocationFilter> = listOf()
+        private var beginMonth : Int? = data?.experienceBeginAt?.let { DateUtils().GetDateValue(it).month }
+        private var endedMonth : Int? = data?.experienceEndedAt?.let { DateUtils().GetDateValue(it).month }
+        private var beginYear : Int? = data?.experienceBeginAt?.let { DateUtils().GetDateValue(it).year }
+        private var endedYear : Int? = data?.experienceEndedAt?.let { DateUtils().GetDateValue(it).year }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_manage_cv_edit_experience_page, container, false)
-        val cType = view.findViewById<TextView>(R.id.pilih_tipe_pekerjaan)
-        val cLoc = view.findViewById<TextView>(R.id.pilih_lokasi_perusahaan)
-        val cStartM = view.findViewById<TextView>(R.id.pilih_bulan_mulai)
-        val cEndM = view.findViewById<TextView>(R.id.pilih_bulan_berakhir)
-        val cStartY = view.findViewById<TextView>(R.id.pilih_tahun_mulai)
-        val cEndY = view.findViewById<TextView>(R.id.pilih_tahun_berakhir)
-
-        cType.setOnClickListener {
-            val sheet = EditExpTypeJob()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cLoc.setOnClickListener {
-            val sheet = EditExpCompLoc()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cStartM.setOnClickListener {
-            val sheet = ChooseMonth()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cEndM.setOnClickListener {
-            val sheet = ChooseMonth()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cStartY.setOnClickListener {
-            val sheet = ChooseYear()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-        cEndY.setOnClickListener {
-            val sheet = ChooseYear()
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
-        }
-
-        return view
+        binding= FragmentManageCvEditExperiencePageBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment manage_cv_edit_experience_page.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            manage_cv_edit_experience_page().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.backBtn.setOnClickListener{
+            back()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            back()
+        }
+
+        binding.pilihTipePekerjaan.setOnClickListener {
+            val sheet = EditExpTypeJob(data?.experienceJobTypeNo)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        DataAPI().GetLocations(context) { res ->
+            if (res != null) {
+                locations = res
+                updateCity(data?.experienceCityNo)
             }
+        }
+        binding.pilihLokasiPerusahaan.setOnClickListener {
+            val sheet = EditCity(data?.experienceCityNo, locations, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        binding.pilihBulanBerakhir.setOnClickListener {
+            val sheet = ChooseMonth(if(endedMonth != null) endedMonth else null)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        binding.pilihBulanMulai.setOnClickListener {
+            val sheet = ChooseMonth(if(beginMonth != null) beginMonth else null)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        binding.pilihTahunMulai.setOnClickListener {
+            val sheet = ChooseYear("begin", if(beginYear != null) beginYear else null, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+        binding.pilihTahunBerakhir.setOnClickListener {
+            val sheet = ChooseYear("ended",if(endedYear != null) endedYear else null, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        }
+    }
 
+    override fun updateGender(value: Char) {
+    }
+    private fun back(){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
+        fragmentTransaction?.commit()
+    }
 
+    override fun updateCity(cityNo: Int?) {
+        if (cityNo != null) {
+            this.data?.experienceCityNo = cityNo
+        }
+        var currentLocation = locations.find { loc-> loc.locationsNo == cityNo }
+        if(currentLocation != null){
+            binding.pilihLokasiPerusahaan.setText("${currentLocation.city}, ${currentLocation.province}")
+        }
+    }
+
+    override fun updateJobTypeNo(value: Int) {
+        this.data?.experienceJobTypeNo = value
+    }
+
+    override fun updateMonth(value: Int, type: String) {
+        when (type){
+            "begin" ->{
+                beginMonth = value
+                binding.pilihBulanMulai.text = (value as Month).description
+            }
+            "ended"->{
+                endedMonth = value
+                binding.pilihBulanBerakhir.text = (value as Month).description
+            }
+        }
+    }
+
+    override fun updateYear(value: Int, type: String) {
+        when (type){
+            "begin" ->{
+                beginYear = value
+                binding.pilihTahunMulai.text = value.toString()
+            }
+            "ended"->{
+                endedYear = value
+                binding.pilihTahunBerakhir.text = value.toString()
+            }
+        }
     }
 }
+
+interface iManageExp{
+    fun updateJobTypeNo(value : Int)
+    fun updateMonth(value : Int, type : String)
+    fun updateYear(value : Int, type : String)
+}
+

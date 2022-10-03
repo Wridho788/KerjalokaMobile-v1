@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iManageExp
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
-class ChooseYearAdapter(private val yearList: List<Int>):
+class ChooseYearAdapter(val type: String,private val yearList: List<Int>, val iManageExp: iManageExp):
     RecyclerView.Adapter<ChooseYearAdapter.chooseYr>()
 {
 
@@ -27,6 +28,9 @@ class ChooseYearAdapter(private val yearList: List<Int>):
 
     override fun onBindViewHolder(holder: chooseYr, position: Int) {
         holder.item.text = yearList[position].toString()
+        holder.item.setOnClickListener{
+            iManageExp.updateYear(yearList[position], type)
+        }
     }
 
     override fun getItemCount(): Int {
