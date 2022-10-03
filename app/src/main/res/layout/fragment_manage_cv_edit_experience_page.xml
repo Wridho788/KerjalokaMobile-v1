@@ -32,7 +32,8 @@
                 android:layout_gravity="center"
                 android:paddingLeft="16dp"
                 app:cornerRadius="100sp"
-                app:icon="@drawable/ic_back"
+                android:id="@+id/back_btn"
+                app:icon="@drawable/ic_arrow_left_red"
                 app:iconTint="@color/danger_500"/>
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -47,6 +48,9 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -86,9 +90,9 @@
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -123,9 +127,9 @@
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:textColor="@color/black"
+                    android:paddingHorizontal="10dp"
+                    android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -150,7 +154,7 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
 
-                <TextView
+                <EditText
                     android:id="@+id/pilih_tipe_pekerjaan"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -160,9 +164,9 @@
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -188,7 +192,7 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
 
-                <TextView
+                <EditText
                     android:id="@+id/pilih_lokasi_perusahaan"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -198,9 +202,9 @@
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:textColor="@color/black"
+                    android:paddingHorizontal="10dp"
+                    android:textSize="12sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -256,7 +260,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/pilih_bulan_mulai"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -266,9 +270,9 @@
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
                                 android:maxLines="10"
-                                android:paddingLeft="8dp"
-                                android:textColor="@color/trueGray_300"
-                                android:textSize="10sp" />
+                                android:paddingHorizontal="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -279,7 +283,6 @@
                         android:layout_alignParentEnd="true"
                         android:orientation="vertical"
                         app:layout_widthPercent="48%">
-
 
                         <TextView
                             android:layout_width="match_parent"
@@ -300,7 +303,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/pilih_tahun_mulai"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -310,9 +313,9 @@
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
                                 android:maxLines="10"
-                                android:paddingLeft="8dp"
-                                android:textColor="@color/trueGray_300"
-                                android:textSize="10sp" />
+                                android:paddingHorizontal="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -373,7 +376,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/pilih_bulan_berakhir"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -383,9 +386,9 @@
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
                                 android:maxLines="10"
-                                android:paddingLeft="8dp"
-                                android:textColor="@color/trueGray_300"
-                                android:textSize="10sp" />
+                                android:paddingHorizontal="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -417,7 +420,7 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/pilih_tahun_berakhir"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -427,9 +430,9 @@
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
                                 android:maxLines="10"
-                                android:paddingLeft="8dp"
-                                android:textColor="@color/trueGray_300"
-                                android:textSize="10sp" />
+                                android:paddingHorizontal="10dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -468,9 +471,9 @@
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -498,19 +501,38 @@
                 <EditText
                     android:id="@+id/masukkan_deskr_pekerjaan"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/light_300"
                     android:ems="10"
                     android:hint="Masukkan deskripsi pekerjaan (optional)"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
-                    android:padding="15dp"
-                    android:textColor="@color/trueGray_300"
-                    android:textSize="10sp" />
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/danger_500"
+                    android:fontFamily="@font/poppins"
+                    android:text="Simpan"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    app:cornerRadius="100dp" />
+            </LinearLayout>
         </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 

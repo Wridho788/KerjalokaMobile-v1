@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.HomePage
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +21,9 @@ import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyDashboardBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.CompanyNotification
+import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Notification
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.components.AxisBase
@@ -120,9 +124,12 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             // code here to handle intent to search activity
             Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
         }
-        btn_notif.setOnClickListener {
-            // code here to handle intent to notification  activity
-            Toast.makeText(activity, "Go to Notification Activity", Toast.LENGTH_SHORT).show()
+        if(SessionManager(context).user != null){
+            btn_notif.visibility = View.VISIBLE
+            btn_notif.setOnClickListener {
+                val intent = Intent(activity, CompanyNotification::class.java)
+                startActivity(intent)
+            }
         }
         btn_job.setOnClickListener {
             // code here to handle intent to job activity

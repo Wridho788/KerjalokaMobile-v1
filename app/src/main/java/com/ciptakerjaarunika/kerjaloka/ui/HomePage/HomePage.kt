@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -22,7 +23,6 @@ import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
-import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.CompanyNotification
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Notification
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
@@ -63,10 +63,14 @@ class HomePage : Fragment(), OnFragmentClickListener {
             val intent_search = Intent(activity, SearchActivity::class.java)
             startActivity(intent_search)
         }
-        btn_notif.setOnClickListener {
-            val intent = Intent(activity, Notification::class.java)
-            startActivity(intent)
+        if(SessionManager(context).user != null){
+            btn_notif.visibility = VISIBLE
+            btn_notif.setOnClickListener {
+                val intent = Intent(activity, Notification::class.java)
+                startActivity(intent)
+            }
         }
+
 
         if (SessionManager(context).user?.roleNo == Role.Jobseekers.value){
             btn_job.setOnClickListener {

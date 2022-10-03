@@ -58,10 +58,12 @@ class Notification : AppCompatActivity() {
 
     private fun reload() {
         UsersAPI().GetNotification(this) {
-            val list = it?.data?.sortedByDescending { it.createdOn }
+            if(it?.data != null) {
+                val list = it?.data?.sortedByDescending { it.createdOn }
 //            val list = dummyData(0, 20)
-            binding.notifContainer.post {
-                adapter.reload(list as MutableList<CompanyNotificationModel>)
+                binding.notifContainer.post {
+                    adapter.reload(list as MutableList<CompanyNotificationModel>)
+                }
             }
         }
     }

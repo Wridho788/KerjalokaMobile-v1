@@ -11,6 +11,7 @@ data class JobseekerExperiencesResponse(
     val data : List<JobseekerExperiences>,
 )
 data class JobseekerExperiences(
+    val jobseekerExperienceNo: Long?,
     val experienceBeginAt: String,
     val experienceCityName : String,
     val experienceCityNo : Int,

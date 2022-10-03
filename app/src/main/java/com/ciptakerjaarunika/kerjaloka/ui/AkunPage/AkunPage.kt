@@ -1,6 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.ui.AkunPage
 
+import android.app.Activity
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -12,13 +14,16 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 
 
@@ -28,6 +33,7 @@ class AkunPage() : Fragment() {
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
+
 
         if(SessionManager(context).user != null){
             if(SessionManager(context).user?.roleNo == 4) {
@@ -80,10 +86,8 @@ class AkunPage() : Fragment() {
                         phone = "",
                     );
                     SessionManager(context).user = user
-
-                    val fragmentTransaction = parentFragmentManager.beginTransaction()
-                    fragmentTransaction.replace(id, AkunPage())
-                    fragmentTransaction.commit()
+                    val mainActivity = activity as MainActivity
+                    mainActivity.replaceFragment(AkunPage(), "akun")
                 }
                 else{
                     SessionManager(context).user = null
@@ -108,6 +112,7 @@ class AkunPage() : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
             return inflater.inflate(R.layout.activity_login, container, false)
     }
