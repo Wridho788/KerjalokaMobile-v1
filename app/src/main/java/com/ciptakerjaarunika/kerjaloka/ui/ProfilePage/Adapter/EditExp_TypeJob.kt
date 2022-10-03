@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.typeJob
 
-class EditExp_TypeJob(private val typeList: List<typeJob>):
+class EditExp_TypeJob(private val typeList: List<JobTypeFilter>):
     RecyclerView.Adapter<EditExp_TypeJob.ChooseType>()
 {
 
@@ -27,7 +28,7 @@ class EditExp_TypeJob(private val typeList: List<typeJob>):
 
     override fun onBindViewHolder(holder: ChooseType, position: Int) {
         val currentItem = typeList[position]
-        holder.item.text= currentItem.typeJob
+        holder.item.text= currentItem.jobTypeName
     }
 
     override fun getItemCount(): Int {

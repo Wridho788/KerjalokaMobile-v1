@@ -57,7 +57,6 @@ class AccountSetting(val data: data?) : Fragment() {
         txt_addrees.text = data?.companyAddress
         users().CompanyGetUserData(context) {
             discover.isChecked = it?.data?.isDiscoverable!!
-            Log.d("onCreateView: ", it?.data?.isDiscoverable.toString())
             newsletter.isChecked = it?.data?.isNewsletter!!
             if (it?.data?.userGoogleId.isNullOrEmpty()){
                 btn_connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FF6666"))
@@ -82,7 +81,6 @@ class AccountSetting(val data: data?) : Fragment() {
 
             newsletter.setOnClickListener { it1 ->
                 val setNl = it?.data.isNewsletter
-                Log.d("asd", setNl.toString())
                 company_profile_api().newsletter(setNl, context){}
             }
         }

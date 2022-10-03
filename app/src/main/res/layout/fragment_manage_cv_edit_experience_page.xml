@@ -85,8 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
+                    android:hint="Masukkan Posisi Pekerjaan"
                     android:ems="10"
-                    android:hint="Pilih Posisi"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
                     android:maxLines="10"
@@ -153,20 +153,20 @@
                 android:elevation="0dp"
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
-
-                <EditText
+                <TextView
                     android:id="@+id/pilih_tipe_pekerjaan"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/light_300"
-                    android:ems="10"
-                    android:hint="Masukkan Tipe Pekerjaan"
-                    android:inputType="textMultiLine|text"
-                    android:lines="10"
-                    android:maxLines="10"
-                    android:paddingHorizontal="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Pilih Tipe Pekerjaan"
+                    android:padding="14dp"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp" />
+
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -191,20 +191,19 @@
                 android:elevation="0dp"
                 app:cardCornerRadius="50dp"
                 app:cardElevation="0dp">
-
-                <EditText
+                <TextView
                     android:id="@+id/pilih_lokasi_perusahaan"
+                    style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/light_300"
-                    android:ems="10"
-                    android:hint="Pilih Lokasi Perusahaan"
-                    android:inputType="textMultiLine|text"
-                    android:lines="10"
-                    android:maxLines="10"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Pilih Tipe Pekerjaan"
+                    android:padding="14dp"
                     android:textColor="@color/black"
-                    android:paddingHorizontal="10dp"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -252,7 +251,7 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:layout_marginBottom="8dp"
                             android:backgroundTint="@color/light_500"
                             android:clickable="false"
@@ -260,10 +259,11 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_bulan_mulai"
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
                                 android:background="@color/light_300"
                                 android:ems="10"
                                 android:hint="Bulan"
@@ -303,12 +303,13 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_tahun_mulai"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/light_300"
                                 android:ems="10"
+                                android:gravity="center_vertical"
                                 android:hint="Tahun"
                                 android:inputType="textMultiLine|text"
                                 android:lines="10"
@@ -376,10 +377,11 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/pilih_bulan_berakhir"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
+                                android:gravity="center_vertical"
                                 android:background="@color/light_300"
                                 android:ems="10"
                                 android:hint="Bulan"
@@ -420,7 +422,8 @@
                             app:cardCornerRadius="50dp"
                             app:cardElevation="0dp">
 
-                            <EditText
+                            <TextView
+                                android:gravity="center_vertical"
                                 android:id="@+id/pilih_tahun_berakhir"
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
@@ -495,7 +498,7 @@
                 android:backgroundTint="@color/light_500"
                 android:clickable="false"
                 android:elevation="0dp"
-                app:cardCornerRadius="50dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="0dp">
 
                 <EditText

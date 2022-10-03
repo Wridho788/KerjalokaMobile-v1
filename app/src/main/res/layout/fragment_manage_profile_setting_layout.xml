@@ -353,14 +353,10 @@
                         android:textColor="@color/black"
                         android:textSize="14sp"/>
 
-                    <TextView
-                        android:id="@+id/btn_discoverable"
+                    <Switch
+                        android:id="@+id/switchDiscoverable"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="Edit"
-                        android:textColor="@color/danger_500"
-                        android:textSize="14sp" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -427,14 +423,10 @@
                         android:textColor="@color/black"
                         android:textSize="14sp"/>
 
-                    <TextView
-                        android:id="@+id/btn_kelola_newsletter"
+                    <Switch
+                        android:id="@+id/switchNewsLetter"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="Edit"
-                        android:textColor="@color/danger_500"
-                        android:textSize="14sp" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout

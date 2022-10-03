@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.google.android.material.button.MaterialButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +38,21 @@ class EditPassword : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_kata_sandi_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_edit_kata_sandi_profile, container, false)
+        val oldPass = view.findViewById<EditText>(R.id.masukkan_kata_sandi_lama)
+        val newPass = view.findViewById<EditText>(R.id.masukkan_kata_sandi_baru)
+        val confPass = view.findViewById<EditText>(R.id.konfirmasi_kata_sandi_baru)
+        val btnSimpan = view.findViewById<MaterialButton>(R.id.btn_simpan_kata_sandi)
+
+        btnSimpan.setOnClickListener{
+            val password = oldPass.text.toString()
+            val newpassword = newPass.text.toString()
+            company_profile_api().ChangePassword(password, newpassword, context){}
+        }
+
+
+
+        return view
     }
 
     companion object {

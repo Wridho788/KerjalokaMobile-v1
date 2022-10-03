@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EditExp_TypeJob
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.JobTypeAdapter
 
 
-class EditExpTypeJob: SuperBottomSheetFragment() {
+class EditExpTypeJob(val value: Int?): SuperBottomSheetFragment() {
 
     private var layoutManager: RecyclerView.LayoutManager? =null
     private var adapter: RecyclerView.Adapter<EditExp_TypeJob.ChooseType>? = null
@@ -22,7 +25,7 @@ class EditExpTypeJob: SuperBottomSheetFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
-        title.text = "Pilih Type Job"
+        title.text = "Pilih Tipe Pekerjaan"
 
         return view
     }
@@ -33,10 +36,18 @@ class EditExpTypeJob: SuperBottomSheetFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        adapter = EditExp_TypeJob(listOf())
-        recyclerView.adapter = adapter
+        DataAPI().GetJobTypes(context){ data->
+            if (data != null) {
+                recyclerView.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = EditExp_TypeJob(
+                        data.map { item -> JobTypeFilter(item.jobTypeName, item.jobTypeNo,value == item.jobTypeNo
+                        ) }
+                    )
+                }
+            }
+        }
+
     }
 
 

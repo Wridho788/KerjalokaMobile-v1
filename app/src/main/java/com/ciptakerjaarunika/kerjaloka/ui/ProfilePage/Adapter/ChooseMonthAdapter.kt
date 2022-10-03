@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.enum.Month
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.month
 
-class ChooseMonthAdapter(private val monthList: List<month>) :
+class ChooseMonthAdapter(val value : Int?) :
     RecyclerView.Adapter<ChooseMonthAdapter.chooseMonth>() {
 
     inner class chooseMonth(view: View) : RecyclerView.ViewHolder(view) {
@@ -25,12 +26,12 @@ class ChooseMonthAdapter(private val monthList: List<month>) :
     }
 
     override fun onBindViewHolder(holder: chooseMonth, position: Int) {
-        val currentItem = monthList[position]
-        holder.item.text = currentItem.month
+        val currentItem = Month.values().find { month-> month.value == position +1}
+        holder.item.text = currentItem?.description
     }
 
     override fun getItemCount(): Int {
-        return monthList.size
+        return Month.values().size
     }
 
 }

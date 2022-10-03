@@ -177,7 +177,7 @@ class cvPage : Fragment() {
                         }
                     }
                     binding.addExp.setOnClickListener {
-                        replaceFragment(manage_cv_edit_experience_page())
+                        replaceFragment(manage_cv_edit_experience_page(null))
                     }
                     binding.addEdu.setOnClickListener {
                         replaceFragment(fragment_manage_cv_edit_education_page())
