@@ -15,6 +15,7 @@ import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.github.mikephil.charting.charts.RadarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.RadarData
@@ -22,122 +23,89 @@ import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PapikostickResult.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PapikostickResult : SuperBottomSheetFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
         val view = inflater.inflate(R.layout.fragment_papikostick_result, container, false)
-
-        val score = 1
-        val radarchart = view?.findViewById<RadarChart>(R.id.papi_result)
-        val radarEntry = ArrayList<RadarEntry>()
-        radarEntry.add(RadarEntry(score.toFloat()));
-        radarEntry.add(RadarEntry(3F));
-        radarEntry.add(RadarEntry(4F));
-        radarEntry.add(RadarEntry(2F));
-        radarEntry.add(RadarEntry(1F));
-        radarEntry.add(RadarEntry(score.toFloat()));
-        radarEntry.add(RadarEntry(3F));
-        radarEntry.add(RadarEntry(4F));
-        radarEntry.add(RadarEntry(2F));
-        radarEntry.add(RadarEntry(1F));
-        radarEntry.add(RadarEntry(score.toFloat()));
-        radarEntry.add(RadarEntry(3F));
-        radarEntry.add(RadarEntry(4F));
-        radarEntry.add(RadarEntry(2F));
-        radarEntry.add(RadarEntry(1F));
-        radarEntry.add(RadarEntry(score.toFloat()));
-        radarEntry.add(RadarEntry(3F));
-        radarEntry.add(RadarEntry(4F));
-        radarEntry.add(RadarEntry(2F));
-        radarEntry.add(RadarEntry(1F));
-
-        val color = context?.let { ContextCompat.getColor(it, R.color.danger_500) };
-
-        val radarDataSet = RadarDataSet(radarEntry, null)
-        radarDataSet.lineWidth = 2f
-        radarDataSet.valueTextSize = 14f
-        color?.let { radarDataSet.setColor(it) }
-
-        val radarData = RadarData()
-        radarData.addDataSet(radarDataSet)
-
-        val label = ArrayList<String>()
-        label.add("N")
-        label.add("G")
-        label.add("A")
-        label.add("L")
-        label.add("P")
-        label.add("I")
-        label.add("T")
-        label.add("V")
-        label.add("X")
-        label.add("S")
-        label.add("B")
-        label.add("O")
-        label.add("R")
-        label.add("D")
-        label.add("C")
-        label.add("Z")
-        label.add("E")
-        label.add("K")
-        label.add("F")
-        label.add("W")
-
-        val xA = radarchart?.xAxis
-        xA?.valueFormatter = IndexAxisValueFormatter(label)
-        val xY = radarchart?.yAxis
-        xY?.setStartAtZero(true)
-        radarchart?.data = radarData
 
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PapikostickResult.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PapikostickResult().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        ProfileAPI().GetPapiKostick(context){ res->
+            if(res?.data != null){
+                val radarchart = view?.findViewById<RadarChart>(R.id.papi_result)
+                val radarEntry = ArrayList<RadarEntry>()
+                val item = res.data
+                radarEntry.add(RadarEntry(item.n.toFloat()));
+                radarEntry.add(RadarEntry(item.g.toFloat()));
+                radarEntry.add(RadarEntry(item.a.toFloat()));
+                radarEntry.add(RadarEntry(item.l.toFloat()));
+                radarEntry.add(RadarEntry(item.p.toFloat()));
+                radarEntry.add(RadarEntry(item.i.toFloat()));
+                radarEntry.add(RadarEntry(item.t.toFloat()));
+                radarEntry.add(RadarEntry(item.v.toFloat()));
+                radarEntry.add(RadarEntry(item.x.toFloat()));
+                radarEntry.add(RadarEntry(item.s.toFloat()));
+                radarEntry.add(RadarEntry(item.b.toFloat()));
+                radarEntry.add(RadarEntry(item.o.toFloat()));
+                radarEntry.add(RadarEntry(item.r.toFloat()));
+                radarEntry.add(RadarEntry(item.d.toFloat()));
+                radarEntry.add(RadarEntry(item.c.toFloat()));
+                radarEntry.add(RadarEntry(item.z.toFloat()));
+                radarEntry.add(RadarEntry(item.e.toFloat()));
+                radarEntry.add(RadarEntry(item.k.toFloat()));
+                radarEntry.add(RadarEntry(item.f.toFloat()));
+                radarEntry.add(RadarEntry(item.w.toFloat()));
+
+                val color = context?.let { ContextCompat.getColor(context!!, R.color.danger_500) };
+
+                val radarDataSet = RadarDataSet(radarEntry, null)
+                radarDataSet.lineWidth = 2f
+                radarDataSet.valueTextSize = 14f
+                color?.let {color-> radarDataSet.color = color }
+
+                val radarData = RadarData()
+                radarData.addDataSet(radarDataSet)
+
+                val label = ArrayList<String>()
+                label.add("N")
+                label.add("G")
+                label.add("A")
+                label.add("L")
+                label.add("P")
+                label.add("I")
+                label.add("T")
+                label.add("V")
+                label.add("X")
+                label.add("S")
+                label.add("B")
+                label.add("O")
+                label.add("R")
+                label.add("D")
+                label.add("C")
+                label.add("Z")
+                label.add("E")
+                label.add("K")
+                label.add("F")
+                label.add("W")
+
+                val xA = radarchart?.xAxis
+                xA?.valueFormatter = IndexAxisValueFormatter(label)
+                val xY = radarchart?.yAxis
+                xY?.setStartAtZero(true)
+                radarchart?.data = radarData
             }
+        }
     }
+
 
     fun setChart() {
         val xvalues = ArrayList<String>()
@@ -146,7 +114,6 @@ class PapikostickResult : SuperBottomSheetFragment() {
         xvalues.add("C")
         xvalues.add("D")
         xvalues.add("E")
-
     }
 
     override fun isSheetAlwaysExpanded(): Boolean {

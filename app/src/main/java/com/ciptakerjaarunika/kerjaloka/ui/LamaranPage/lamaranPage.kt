@@ -48,7 +48,7 @@ class LamaranPage : Fragment(), LamaranCellClickListener {
         var Context = this;
         if(SessionManager(context).user == null){
             val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(id, Login(this))
+            fragmentTransaction.replace(id, Login(this, "lamaran"))
             fragmentTransaction.commit()
         }
         else {

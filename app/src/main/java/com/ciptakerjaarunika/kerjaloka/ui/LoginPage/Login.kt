@@ -10,15 +10,24 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.CompanyDashboard
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
+import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import com.google.android.material.button.MaterialButton
 
 
-class Login(val Goto :Fragment) : Fragment() {
+class Login(val Goto :Fragment, val nameFragment: String) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -66,10 +75,8 @@ class Login(val Goto :Fragment) : Fragment() {
                             SessionManager(context).user = User
 
                             AUTHAPI().CheckLogin(context) {
-                                val fragmentTransaction = parentFragmentManager.beginTransaction()
-                                fragmentTransaction.remove(this)
-                                fragmentTransaction.replace(id, Goto)
-                                fragmentTransaction.commit()
+                                val mainActivity = activity as MainActivity
+                                mainActivity.replaceFragment(Goto, nameFragment)
                             }
                         }
                     }

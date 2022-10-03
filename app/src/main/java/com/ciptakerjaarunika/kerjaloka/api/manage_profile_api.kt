@@ -361,6 +361,46 @@ class ManageProfileAPI {
             }
         )
     }
+    interface JobseekerAddExperience {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/experience/add")
+        fun SendData(@Body files: JobseekerExperiences): Call<responseGeneral?>
+    }
+    interface JobseekerEditExperience {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/experience/{experienceNo}/edit")
+        fun SendData(@Body files: JobseekerExperiences, @Path("experienceNo") experienceNos : Long): Call<responseGeneral?>
+    }
+    fun JobseekerManageExperience(experiences: JobseekerExperiences, context: Context?, onResult: (responseGeneral?) -> Unit){
+        if(experiences.jobseekerExperienceNo != null){
+            val retrofit = ServiceBuilder(context).POST(JobseekerEditExperience::class.java)
+            retrofit.SendData(experiences, experiences.jobseekerExperienceNo).enqueue(
+                object : Callback<responseGeneral?> {
+                    override fun onFailure(call: Call<responseGeneral?>, t: Throwable) {
+                        onResult(null)
+                    }
+
+                    override fun onResponse(call: Call<responseGeneral?>,response: Response<responseGeneral?>) {
+                        onResult(response.body())
+                    }
+                }
+            )
+        }
+        else {
+            val retrofit = ServiceBuilder(context).POST(JobseekerAddExperience::class.java)
+            retrofit.SendData(experiences).enqueue(
+                object : Callback<responseGeneral?> {
+                    override fun onFailure(call: Call<responseGeneral?>, t: Throwable) {
+                        onResult(null)
+                    }
+
+                    override fun onResponse(call: Call<responseGeneral?>,response: Response<responseGeneral?>) {
+                        onResult(response.body())
+                    }
+                }
+            )
+        }
+    }
 
 
 //    interface GetMyReview {
