@@ -11,11 +11,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_job_active_page
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.Review
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
 import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditEmail
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditPassword
@@ -45,6 +48,7 @@ class ManageUserSetting : Fragment() {
         val editPassword = view.findViewById<TextView>(R.id.edit_kata_sandi)
         val discover = view.findViewById<Switch>(R.id.switchDiscoverable)
         val newsletter = view.findViewById<Switch>(R.id.switchNewsLetter)
+        val btnDeactive = view.findViewById<MaterialButton>(R.id.btn_nonaktifkan_akun)
         val user = SessionManager(context).user
 
         editEmail.setOnClickListener{
@@ -84,6 +88,16 @@ class ManageUserSetting : Fragment() {
             }
             else{
                 company_profile_api().undiscoverable(context){}
+            }
+        }
+
+        btnDeactive.setOnClickListener{
+            val sheet = ModalDeactivateAccount()
+            activity?.let { it1 ->
+                sheet.show(
+                    it1.supportFragmentManager,
+                    "DemoBottomSheetFragment"
+                )
             }
         }
 

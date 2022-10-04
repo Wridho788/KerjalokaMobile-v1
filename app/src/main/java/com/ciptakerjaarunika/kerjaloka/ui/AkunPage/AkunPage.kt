@@ -76,6 +76,7 @@ class AkunPage() : Fragment() {
                         email =  email,
                         emailHasVerified = null,
                         isDeleted = null,
+                        isDiscoverable = false,
                         isNewsletter = null,
                         lastChangeUsername = null,
                         username = "",

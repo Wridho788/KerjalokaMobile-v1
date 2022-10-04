@@ -174,6 +174,10 @@ data class ChangeUsernameRequest(
     val username: String
 )
 
+data class DeactivatedAccount(
+    val password : String
+)
+
 data class CheckPhoneResponse(
     val exists: Boolean
 )
