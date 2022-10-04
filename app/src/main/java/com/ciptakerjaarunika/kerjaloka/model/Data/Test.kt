@@ -8,11 +8,15 @@ data class TestResponse(
 data class TestJob(
     val testNo: Long,
     val testName: String,
-    val questions: List<question>
+    val question: List<questionList>
 )
 
+data class questionList(
+    val question: List<question>
+)
+
+
 data class question(
-    val questionNo: Long,
     val question: String,
-    val type: Int,
+    val questionTypeNo: Int,
 )

@@ -6,12 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.Companyjobs_adapter
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.ResponseJobs
-import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.ResponseCompanyJobs
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.CompanyJobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyJobsBinding
 
@@ -19,7 +18,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyJobsBinding
 class fragment_company_jobs : Fragment() {
 
     private lateinit var binding: FragmentCompanyJobsBinding
-    private var listJob: List<ResponseJobs> ? = null
+    private var listJob: List<ResponseCompanyJobs> ? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,17 +29,20 @@ class fragment_company_jobs : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val addjob = view.findViewById<ImageView>(R.id.idFABAdd)
 
-        addjob.setOnClickListener {
+        binding.idFABAdd.setOnClickListener {
             val myIntent = Intent(view.context, AddJobActivity::class.java)
             startActivity(myIntent)
+        }
+
+        binding.backButton.setOnClickListener {
+            val goToMainActivity = Intent(view.context, MainActivity::class.java)
+            startActivity(goToMainActivity)
         }
 
         CompanyJobAPI().getCompanyJobOfficer(context){
             if (it != null) {
                 listJob = it.data
-                Log.d("response", listJob.toString())
                 binding.recyleCompanyJobs.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = Companyjobs_adapter(listJob!!)
@@ -48,14 +50,5 @@ class fragment_company_jobs : Fragment() {
 
             }
         }
-//      binding.recyleCompanyJobs.apply {
-//
-//      }
-//        recyclerView.apply {
-//            layoutManager = LinearLayoutManager(activity)
-//            adapter = Companyjobs_adapter(list)
-//
-//        }
-
     }
 }

@@ -57,70 +57,67 @@ class AddJobActivity : AppCompatActivity(), iAddJob {
         fragmentTransaction.commit()
     }
 
-
     fun SendAddJob() {
         try {
-            if (getPosition != null) {
-                Log.d("addJob position", getPosition!!)
-            } else {
-                Toast.makeText(baseContext, "Posisi lowongan harus diisi", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-            if (getLocation!!.isEmpty()) {
-                listOf(getLocation)
-            } else {
-                Log.d("addJob location", getLocation.toString())
-            }
-            if (getjobType != null) {
-                Log.d("addJob type", getjobType.toString())
-            } else {
-                getjobType = 0
-            }
-            if (getjobSkills != null) {
-                Log.d("addJob skills", getjobSkills.toString())
-            }
-
-            AddJobAPI().AddJob(
-                baseContext,
-                addJobRequest(
-                    Position = getPosition!!,
-                    Location = getLocation!!.map { item ->
-                        JobLocation(
-                            item.locationsNo,
-                            item.city
-                        )
-                    },
-                    JobType = getjobType!!,
-                    MinSalary = getminSalary,
-                    MaxSalary = getmaxSalary,
-                    JobSkills = getjobSkills!!.map { item ->
-                        JobSkillRequest(
-                            0,
-                            0,
-                            item.skillNo.toLong()
-                        )
-                    },
-                    JobTitles = getjobTitle!!.map { item ->
-                        JobTitleRequest(
-                            0,
-                            0,
-                            item.titleNo.toLong()
-                        )
-                    },
-                    JobField = getjobField!!,
-                    JobRole = getjobRole!!,
-                    MinExperience = getminExperience!!.toInt(),
-                    JobExperienceLevelNo = getjobExperienceLevelNo!!,
-                    JobDescription = getjobDescription!!,
-                    JobTest = getjobTests!!,
-                    JobShortQuestion = getjobShortQuestion!!,
-                    AutoReject = getautoReject,
-                )
+            if (
+                getPosition != null && !getPosition.toString()
+                    .isNullOrBlank() && !getPosition.toString().isNullOrEmpty() &&
+                getLocation != null && !getLocation.toString()
+                    .isNullOrEmpty() && !getPosition.toString().isNullOrBlank() &&
+                getjobType != null && !getjobType.toString()
+                    .isNullOrEmpty() && !getjobType.toString().isNullOrBlank() &&
+                getjobSkills != null && !getjobSkills.toString().isNullOrEmpty() &&
+                !getjobSkills.toString().isNullOrBlank()
             ) {
-                Log.d("addJob response", it.toString())
-            }
+                AddJobAPI().AddJob(
+                    baseContext,
+                    addJobRequest(
+                        Position = getPosition!!,
+                        Location = getLocation!!.map { item ->
+                            JobLocation(
+                                item.locationsNo,
+                                item.city
+                            )
+                        },
+                        JobType = getjobType!!,
+                        MinSalary = getminSalary,
+                        MaxSalary = getmaxSalary,
+                        JobSkills = getjobSkills!!.map { item ->
+                            JobSkillRequest(
+                                0,
+                                0,
+                                item.skillNo.toLong()
+                            )
+                        },
+                        JobTitles = getjobTitle!!.map { item ->
+                            JobTitleRequest(
+                                0,
+                                0,
+                                item.titleNo.toLong()
+                            )
+                        },
+                        JobField = getjobField!!,
+                        JobRole = getjobRole!!,
+                        MinExperience = getminExperience!!.toInt(),
+                        JobExperienceLevelNo = getjobExperienceLevelNo!!,
+                        JobDescription = getjobDescription!!,
+                        JobTest = getjobTests!!,
+                        JobShortQuestion = getjobShortQuestion!!,
+                        AutoReject = getautoReject,
+                    )
+                ) {
+                    if (it != null) {
+                        if (it.code == "210") {
+                            Log.d("addJob response", it.toString())
+                            val myIntent = Intent(baseContext, MainActivity::class.java)
+                            startActivity(myIntent)
+                        }
+                    }
+                }
 
+            } else {
+                Toast.makeText(baseContext, "Kolom Harus diisi", Toast.LENGTH_SHORT).show()
+            }
         } catch (e: IllegalStateException) {
             Log.d("addJobErr", e.toString())
         }

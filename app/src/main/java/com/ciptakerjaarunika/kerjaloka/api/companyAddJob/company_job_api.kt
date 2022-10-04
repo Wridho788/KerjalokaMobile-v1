@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.api.companyAddJob
 
 import android.content.Context
+import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.getJobResponse
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import retrofit2.Call
@@ -26,6 +27,8 @@ class CompanyJobAPI {
 
               override fun onFailure(call: Call<getJobResponse>, t: Throwable) {
                   onResult(null)
+                  Log.d("response fail",t.toString())
+
               }
           }
       )

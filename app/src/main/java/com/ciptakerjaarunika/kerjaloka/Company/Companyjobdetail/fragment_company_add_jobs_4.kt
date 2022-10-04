@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.TestJob
 class fragment_company_add_jobs_4(val iAddJob: iAddJob) : Fragment(), iChooseTest {
     private lateinit var binding: FragmentCompanyAddJobs4Binding
     private var list: List<TestJob>? = null
+    var getTestJob: List<TestJob>? = listOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,9 +41,6 @@ class fragment_company_add_jobs_4(val iAddJob: iAddJob) : Fragment(), iChooseTes
                     adapter = TestAdapter(list,this@fragment_company_add_jobs_4)
                 }
             }
-//            res -> list
-//            Log.d("res", res.toString())
-
         }
 
         return view
@@ -55,11 +52,11 @@ class fragment_company_add_jobs_4(val iAddJob: iAddJob) : Fragment(), iChooseTes
         fragmentTransaction?.commit()
     }
 
-    override fun updateTest(testNo: Long) {
-        Log.d("test no", testNo.toString())
+    override fun updateTest(test: List<TestJob>?) {
+       getTestJob = test
     }
 }
 
 interface iChooseTest{
-    fun updateTest(testNo: Long)
+    fun updateTest(test: List<TestJob>?)
 }

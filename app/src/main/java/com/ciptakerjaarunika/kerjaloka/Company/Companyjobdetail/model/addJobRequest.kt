@@ -11,7 +11,7 @@ data class addJobResponse(
 
 data class getJobResponse(
     val code: String,
-    val data: List<ResponseJobs>
+    val data: List<ResponseCompanyJobs>
 )
 
 data class addJobRequest(
@@ -60,3 +60,28 @@ data class ShortChoice(
     var shortQuestionChoiceNo: Int? = 0,
 )
 
+data class ResponseCompanyJobs(
+    val jobNo: String,
+    val jobPosition: String,
+    val jobDescription: String,
+    val link: String,
+    val jobType: JobType?,
+    val jobExperienceLevel: JobExperienceLevel?,
+    val jobCity: List<String>,
+    val jobSalaryMax: Any? = null,
+    val jobSalaryMin: Long,
+    val jobField: JobField?,
+    val jobRole: JobRole?,
+    val jobMinExperience: Long,
+    val jobSkills: List<JobSkill>?,
+    val jobTitle: List<JobTitle>?,
+    val createdOn: String,
+    val createdBy: String,
+    val publish: Boolean,
+    val jobShortQuestion: List<JobShortQuestion>?,
+    val jobTests: List<JobTest>?,
+    val expired: String,
+    val takedown: Boolean,
+    val jobAdditionalDescription: Any? = null,
+    val packageName: Any? = null
+)
