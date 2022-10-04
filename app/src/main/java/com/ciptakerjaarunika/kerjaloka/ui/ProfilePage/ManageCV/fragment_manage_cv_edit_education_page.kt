@@ -1,17 +1,24 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.appcompat.widget.SearchView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetMajorJob
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.city
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditEducationPageBinding
@@ -22,9 +29,11 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducations
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducationsRequest
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import java.util.*
 
 
 class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsRequest?) : Fragment(), iEditBasic, iManageExp,
@@ -40,19 +49,7 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(data == null){
-            data = JobseekerEducationsRequest(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null)
-        }
+
 
         DataAPI().GetLocations(context) { res ->
             if (res != null) {
@@ -73,28 +70,52 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(data == null) {
+        if (data == null) {
+                data = JobseekerEducationsRequest(
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null)
             binding.mainToolbar.title = "Tambah Pendidikan"
         }
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             back()
         }
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             back()
         }
-        binding.pilihBulanMulai.text = Month.values().find { month -> month.value == beginMonth  }?.description
-        binding.pilihBulanBerakhir.text = Month.values().find { month -> month.value == endedMonth  }?.description
-        binding.pilihTahunMulai.text = beginYear.toString()
-        binding.pilihTahunBerakhir.text = if(endedYear!= null) endedYear.toString() else null
+        binding.pilihBulanMulai.text =
+            Month.values().find { month -> month.value == beginMonth }?.description
+        binding.pilihBulanBerakhir.text =
+            Month.values().find { month -> month.value == endedMonth }?.description
+        binding.pilihTahunMulai.text = if(beginYear!= null) beginYear.toString() else null
+        binding.pilihTahunBerakhir.text = if (endedYear != null) endedYear.toString() else null
+        binding.masukkanDeskripsiPendidikan.setText(data?.educationDescription)
+        binding.masukkanSekolahUniversitas.setText(data?.educationSchool)
+        data?.gpa?.let { binding.masukkanSkorGpa.setText(it.toString()) }
 
-        binding.pilihGelar.setOnClickListener {
-            val sheet = ChooseTitle(data?.educationTitleNo, this)
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+        DataAPI().GetTitles(context){ res->
+            if (res != null) {
+                titles = res
+                updateTitle(data?.educationTitleNo)
+                binding.pilihGelar.setOnClickListener {
+                    val sheet = ChooseTitle(data?.educationTitleNo,titles, this)
+                    activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+                }
+            }
         }
+
 
         DataAPI().GetMajors(context) {
             if (it != null) {
                 majors = it
+                updateMajor(data?.educationMajorNo)
                 binding.pilihBidangStudi.setOnClickListener {
                     val sheet = ChooseMajor(data?.educationMajorNo,majors, this)
                     activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
@@ -124,7 +145,95 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
             val sheet = ChooseYear("ended",if(endedYear != null) endedYear else null, this)
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
         }
+
+        binding.masukkanSkorGpa.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(s: Editable) {
+                if (!binding.masukkanSkorGpa.text.toString().isNullOrEmpty() && !binding.masukkanSkorGpa.text.toString()
+                        .isNullOrBlank() && binding.masukkanSkorGpa.text.toString() != ""
+                ) {
+                    if(binding.masukkanSkorGpa.text.toString().toInt() > 100){
+                        binding.masukkanSkorGpa.setText("100")
+                    }
+                    else if(binding.masukkanSkorGpa.text.toString().toInt() < 0){
+                        binding.masukkanSkorGpa.setText("0")
+                    }
+                }
+            }
+        })
+
+                    binding.saveBtn.setOnClickListener {
+            if(binding.masukkanSekolahUniversitas.text.isNullOrEmpty()){
+                showError("Nama Sekolah/Universitas tidak boleh kosong")
+            }
+            else if(data?.educationTitleNo == null || data?.educationTitleNo==0){
+                showError("Gelar pendidikan tidak boleh kosong")
+            }
+            else if(data?.educationMajorNo == null || data?.educationMajorNo==0){
+                showError("Bidang studi tidak boleh kosong")
+            }
+            else if(data?.educationCityNo == null || data?.educationCityNo==0){
+                showError("Lokasi sekolah tidak boleh kosong")
+            }
+            else if(beginMonth == null){
+                showError("Bulan Mulai tidak boleh kosong")
+            }
+            else if(beginYear == null){
+                showError("Tahun Mulai tidak boleh kosong")
+            }
+            else if(endedMonth == null && endedYear != null){
+                showError("Bulan Berakhir tidak boleh kosong")
+            }
+            else if(endedYear == null && endedMonth != null){
+                showError("Tahun Mulai tidak boleh kosong")
+            }
+            else if(endedMonth != null && Date(endedYear!!, endedMonth!!, 1) < Date(beginYear!!, beginMonth!!, 1)){
+                showError("Tanggal berakhir harus lebih besar dari tanggal mulai")
+            }
+            else if(binding.masukkanSkorGpa.text.isNullOrEmpty()){
+                showError("GPA tidak boleh kosong")
+            }
+            else{
+                val endedAt =  "${endedYear}-${String.format("%02d",endedMonth)}-01T00:00:00"
+                val beginAt =  "${beginYear}-${String.format("%02d",beginMonth)}-01T00:00:00"
+                ManageProfileAPI().JobseekerManageEducation(
+                    JobseekerEducationsRequest(
+                        data?.jobseekerEducationNo,
+                        SessionManager(context).user!!.userNo,
+                        binding.masukkanSekolahUniversitas.text.toString(),
+                        DateUtils().GetDateValueWithFormat(beginAt, "yyyy-MM-dd HH:mm"),
+                        if(endedMonth == null) null else DateUtils().GetDateValueWithFormat(endedAt, "yyyy-MM-dd HH:mm"),
+                        data?.educationMajorNo,
+                        data?.educationTitleNo,
+                        data?.educationCityNo,
+                        binding.masukkanSkorGpa.text.toString().toInt(),
+                        binding.masukkanDeskripsiPendidikan.text.toString()
+                    ),
+                    context
+                ){
+                    if (it != null) {
+                        if(it.code.toString() == "210"){
+                            showError(if(data?.jobseekerEducationNo != null) "Berhasil mengubah data" else "Berhasil menambah data")
+                            back()
+                        }
+                        else{
+                            showError(it.message)
+                        }
+                    }
+                    else{
+                        showError("Terjadi kesalahan yang tidak diketahui")
+                    }
+                }
+            }
+        }
     }
+
+    fun showError(message : String){
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
     override fun updateGender(value: Char) {
     }
     private fun back(){

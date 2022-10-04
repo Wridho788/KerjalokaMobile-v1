@@ -32,20 +32,6 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?) : F
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(data == null){
-            data = JobseekerExperienceRequest(
-                null,
-                null,
-                null,
-                null,
-            null,
-            null,
-            null,
-                null
-            ,null
-            ,null,
-            null)
-        }
     }
 
     override fun onCreateView(
@@ -59,6 +45,18 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?) : F
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(data == null) {
+            data = JobseekerExperienceRequest(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+                ,null
+                ,null,
+                null)
             binding.mainToolbar.title = "Tambah pengalaman"
         }
         binding.backBtn.setOnClickListener{
@@ -80,7 +78,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?) : F
         }
         binding.pilihBulanMulai.text = Month.values().find { month -> month.value == beginMonth  }?.description
         binding.pilihBulanBerakhir.text = Month.values().find { month -> month.value == endedMonth  }?.description
-        binding.pilihTahunMulai.text = beginYear.toString()
+        binding.pilihTahunMulai.text = if(beginYear!= null) beginYear.toString() else null
         binding.pilihTahunBerakhir.text = if(endedYear!= null) endedYear.toString() else null
         if(data?.experienceSalary != null) {
             binding.masukkanJlhGaji.setText(data?.experienceSalary.toString())
@@ -117,6 +115,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?) : F
 
         binding.pilihPosisi.setText(data?.experiencePosition)
         data?.experienceCompanyName?.let { binding.pilihPerusahaan.setText(it) }
+        binding.deskripsiPekerjaan.text = data?.experienceDescription
 
         binding.saveBtn.setOnClickListener {
             if(binding.pilihPosisi.text.isNullOrEmpty()){
@@ -128,7 +127,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?) : F
             else if(data?.jobTypeNo == null || data?.jobTypeNo == 0){
                 showError("Tipe pekerjaan tidak boleh kosong")
             }
-            else if(data?.experienceCityNo == null){
+            else if(data?.experienceCityNo == null || data?.experienceCityNo == 0){
                 showError("Lokasi perusahaan tidak boleh kosong")
             }
             else if(beginMonth == null){

@@ -14,13 +14,13 @@ data class JobseekerEducations(
     val educationEndedAt : String,
     val educationMajorName : String,
     val educationMajorNo : Int,
-    val experienceNo :Int,
+    val educationNo :Long,
     val educationProvinceName : String,
     val educationSchool : String,
     val educationTitleName : String,
     val educationTitleNo : Int,
     val gpa:Int,
-    val jobseekerEducationNo : Int,
+    val jobseekerEducationNo : Long,
     val jobseekerNo : Long
 )
 

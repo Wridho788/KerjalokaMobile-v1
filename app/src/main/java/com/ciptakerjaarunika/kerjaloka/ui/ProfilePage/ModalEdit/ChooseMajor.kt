@@ -32,6 +32,13 @@ class ChooseMajor(val value: Int?,val majors : List<Major>, val iUpdateMajor: iU
 
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = majors?.let { it1 ->
+                ChooseMajorAdapter(value,
+                    it1, this@ChooseMajor, iUpdateMajor)
+            }
+        }
 
 
         var searchInput = view.findViewById<SearchView>(R.id.search_filter)
@@ -73,7 +80,11 @@ class ChooseMajor(val value: Int?,val majors : List<Major>, val iUpdateMajor: iU
         return view
     }
 
-    override fun getCornerRadius() = 20f
+    override fun getCornerRadius() = 30f
+
+    override fun isSheetAlwaysExpanded(): Boolean {
+        return true
+    }
 
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {

@@ -169,31 +169,27 @@ class DataAPI {
     }
 
     //Get Titles
-    data class titleResponse(
-        val code : Int,
-        val data : List <Title>
-    )
     interface title {
         @GET("data/titles")
-        fun getData(): Call<titleResponse>
+        fun getData(): Call<List <Title>?>
     }
 
     fun GetTitles(
         context: Context?,
-        onResult: (titleResponse?) -> Unit
+        onResult: (List <Title>?) -> Unit
     ) {
         if (context != null) {
             val retrofit = ServiceBuilder(context).GET(title::class.java)
 
             retrofit.getData().enqueue(
-                object : Callback<titleResponse> {
+                object : Callback<List <Title>?> {
                     override fun onResponse(
-                        call: Call<titleResponse>,
-                        response: Response<titleResponse>
+                        call: Call<List <Title>?>,
+                        response: Response<List <Title>?>
                     ) {
                         onResult(response.body())
                     }
-                    override fun onFailure(call: Call<titleResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<List <Title>?>, t: Throwable) {
                         Log.e("error", t.toString())
                         onResult(null)
                     }

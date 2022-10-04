@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewResponse
 import com.ciptakerjaarunika.kerjaloka.model.Data.CheckDocument
 import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
 import com.ciptakerjaarunika.kerjaloka.model.Data.Field
@@ -366,20 +367,20 @@ class ProfileAPI {
 
     interface jobseekerGetMyReview {
         @GET("jobseeker/rating/myReview")
-        fun request(): Call<review_response?>
+        fun request(): Call<ReviewResponse?>
     }
 
-    fun JobseekerGetMyReview(context: Context?,onResult: (review_response?) -> Unit){
+    fun JobseekerGetMyReview(context: Context?,onResult: (ReviewResponse?) -> Unit){
         val retrofit = ServiceBuilder(context).GET(jobseekerGetMyReview::class.java)
 
         retrofit.request().enqueue(
-            object : Callback<review_response?> {
-                override fun onFailure(call: Call<review_response?>, t: Throwable) {
+            object : Callback<ReviewResponse?> {
+                override fun onFailure(call: Call<ReviewResponse?>, t: Throwable) {
                     Log.d("Response Failure", t.toString())
                     onResult(null)
                 }
 
-                override fun onResponse(call: Call<review_response?>, response: Response<review_response?>) {
+                override fun onResponse(call: Call<ReviewResponse?>, response: Response<ReviewResponse?>) {
                     onResult(response.body())
                 }
             }

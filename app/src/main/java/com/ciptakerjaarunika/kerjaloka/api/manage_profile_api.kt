@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.ciptakerjaarunika.kerjaloka.model.Data.CheckDocument
 import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
 import com.ciptakerjaarunika.kerjaloka.model.Interview.returnUploadChatPhotoApi
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.user
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.FragmentSalaryExpectation
 import okhttp3.MultipartBody
@@ -335,34 +337,6 @@ class ManageProfileAPI {
         )
     }
 
-    data class fileResume(
-        val photo : MultipartBody.Part,
-        val fileOldest : String?
-    )
-    data class uploadVideoResponse(
-        val code : Int,
-        val data : JobseekerVideoResume
-    )
-    interface JobseekerUploadResume {
-        @Multipart
-        @POST("jobseeker/upload/resume/video")
-        fun SendData(@Part files: fileResume): Call<uploadVideoResponse?>
-    }
-    fun JobseekerUploadResume(photo : MultipartBody.Part, oldestFile : String?, context: Context?, onResult: (uploadVideoResponse?) -> Unit){
-        val retrofit = ServiceBuilder(context).POSTFILE(JobseekerUploadResume::class.java)
-        retrofit.SendData(fileResume(photo, oldestFile)).enqueue(
-            object : Callback<uploadVideoResponse?> {
-                override fun onFailure(call: Call<uploadVideoResponse?>, t: Throwable) {
-                    onResult(null)
-                }
-                override fun onResponse(call: Call<uploadVideoResponse?>, response: Response<uploadVideoResponse?>) {
-                    onResult(response.body())
-                }
-            }
-        )
-    }
-
-
     interface JobseekerDeleteExperience {
         @GET("jobseeker/experience/{experienceNo}/delete")
         fun SendData(@Path("experienceNo") experienceNo: Long): Call<responseGeneral?>
@@ -389,7 +363,7 @@ class ManageProfileAPI {
     interface JobseekerEditExperience {
         @Headers("Content-Type: application/json","Accept: application/json")
         @POST("jobseeker/experience/{experienceNo}/edit")
-        fun SendData(@Body files: JobseekerExperienceRequest, @Path("experienceNo") experienceNos : Long): Call<responseGeneral?>
+        fun SendData(@Body files: JobseekerExperienceRequest, @Path("experienceNo") experienceNo : Long): Call<responseGeneral?>
     }
     fun JobseekerManageExperience(experiences: JobseekerExperienceRequest, context: Context?, onResult: (responseGeneral?) -> Unit){
         if(experiences.jobseekerExperienceNo != null && experiences.jobseekerExperienceNo != 0L){
@@ -440,4 +414,138 @@ class ManageProfileAPI {
 //            }
 //        )
 //    }
+    interface JobseekerDeleteEducation {
+        @GET("jobseeker/education/{educationNo}/delete")
+        fun SendData(@Path("educationNo") educationNo: Long): Call<responseGeneral?>
+    }
+    fun JobseekerDeleteEducation(educationNo: Long, context: Context?, onResult: (responseGeneral?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(JobseekerDeleteEducation::class.java)
+        retrofit.SendData(educationNo).enqueue(
+            object : Callback<responseGeneral?> {
+                override fun onFailure(call: Call<responseGeneral?>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<responseGeneral?>, response: Response<responseGeneral?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    interface JobseekerAddEdication {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/education/add")
+        fun SendData(@Body files: JobseekerEducationsRequest): Call<responseGeneral?>
+    }
+    interface JobseekerEditEducation {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("jobseeker/education/{educationNo}/edit")
+        fun SendData(@Body files: JobseekerEducationsRequest, @Path("educationNo") educationNo : Long): Call<responseGeneral?>
+    }
+    fun JobseekerManageEducation(education: JobseekerEducationsRequest, context: Context?, onResult: (responseGeneral?) -> Unit){
+        if(education.jobseekerEducationNo != null && education.jobseekerEducationNo != 0L){
+            val retrofit = ServiceBuilder(context).POST(JobseekerEditEducation::class.java)
+            retrofit.SendData(education, education.jobseekerEducationNo).enqueue(
+                object : Callback<responseGeneral?> {
+                    override fun onFailure(call: Call<responseGeneral?>, t: Throwable) {
+                        onResult(null)
+                    }
+
+                    override fun onResponse(call: Call<responseGeneral?>,response: Response<responseGeneral?>) {
+                        onResult(response.body())
+                    }
+                }
+            )
+        }
+        else {
+            val retrofit = ServiceBuilder(context).POST(JobseekerAddEdication::class.java)
+            retrofit.SendData(education).enqueue(
+                object : Callback<responseGeneral?> {
+                    override fun onFailure(call: Call<responseGeneral?>, t: Throwable) {
+                        onResult(null)
+                    }
+
+                    override fun onResponse(call: Call<responseGeneral?>,response: Response<responseGeneral?>) {
+                        onResult(response.body())
+                    }
+                }
+            )
+        }
+    }
+
+    interface JobseekerDeleteVaccine {
+        @GET("jobseeker/vaccineCertificate/delete")
+        fun SendData(@Query("vaccine") vaccine: Int): Call<responseGeneral?>
+    }
+    fun JobseekerDeleteVaccine(vaccine: Int, context: Context?, onResult: (responseGeneral?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(JobseekerDeleteVaccine::class.java)
+        retrofit.SendData(vaccine).enqueue(
+            object : Callback<responseGeneral?> {
+                override fun onFailure(call: Call<responseGeneral?>, t: Throwable) {
+                    onResult(null)
+                }
+                override fun onResponse(call: Call<responseGeneral?>, response: Response<responseGeneral?>) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    data class uploadVaccineResponse(
+        val code : Int,
+        val message: String,
+        val data: CheckDocument?
+    )
+    interface UploadVaccine {
+        @Multipart
+        @POST("jobseeker/mobile/uploadvaccine/{vaccine}")
+        fun SenData(@Path("vaccine") vaccine: Int, @Part file : MultipartBody.Part): Call<uploadVaccineResponse>
+    }
+    fun UploadVaccine(vaccine: Int, file : MultipartBody.Part, context: Context?, onResult: (uploadVaccineResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POSTFILE(UploadVaccine::class.java)
+        retrofit.SenData(vaccine, file).enqueue(
+            object : Callback<uploadVaccineResponse> {
+                override fun onFailure(call: Call<uploadVaccineResponse>, t: Throwable) {
+                    Log.d("error", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<uploadVaccineResponse>,
+                    response: Response<uploadVaccineResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
+
+    data class uploadVideoResumeResponse(
+        val code : Int,
+        val message: String,
+        val data: JobseekerVideoResume?
+    )
+    interface UploadVideoResume {
+        @Multipart
+        @POST("jobseeker/mobile/uploadresume")
+        fun SenData(@Part files : MultipartBody.Part): Call<uploadVideoResumeResponse>
+    }
+    fun UploadVideoResume(files : MultipartBody.Part, context: Context?, onResult: (uploadVideoResumeResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POSTFILE(UploadVideoResume::class.java)
+        retrofit.SenData(files).enqueue(
+            object : Callback<uploadVideoResumeResponse> {
+                override fun onFailure(call: Call<uploadVideoResumeResponse>, t: Throwable) {
+                    Log.d("error", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<uploadVideoResumeResponse>,
+                    response: Response<uploadVideoResumeResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
+    }
 }

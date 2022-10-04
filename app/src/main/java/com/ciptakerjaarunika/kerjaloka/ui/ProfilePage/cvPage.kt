@@ -16,6 +16,8 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfileCvBinding
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducations
+import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducationsRequest
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperiences
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -69,7 +71,7 @@ class cvPage : Fragment(), iCvPage {
 
                     binding.recycleEdu.apply {
                         layoutManager = LinearLayoutManager(activity)
-                        adapter = educations?.data?.let { EduAdapter(it) }
+                        adapter = educations?.data?.let { EduAdapter(it, this@cvPage) }
                     }
 
                 }
@@ -213,7 +215,6 @@ class cvPage : Fragment(), iCvPage {
 
     }
     private fun replaceFragment(fragment: Fragment) {
-
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
@@ -235,6 +236,21 @@ class cvPage : Fragment(), iCvPage {
                 ,data.experiencePosition,
                 data.experienceSalary)
         ))
+    }
+
+    override fun editEdu(data: JobseekerEducations) {
+        replaceFragment(fragment_manage_cv_edit_education_page(
+            JobseekerEducationsRequest(
+                data.jobseekerEducationNo,
+                SessionManager(context).user!!.userNo,
+                data.educationSchool,
+                data.educationBeginAt,
+                data.educationEndedAt,
+                data.educationMajorNo,
+                data.educationTitleNo,
+                data.educationCityNo,
+                data.gpa,
+                data.educationDescription)))
     }
 
     override fun deleteExp(data: JobseekerExperiences) {
@@ -264,6 +280,33 @@ class cvPage : Fragment(), iCvPage {
                                 }
                             }).create().show()
     }
+    override fun deleteEducation(data: JobseekerEducations) {
+        AlertDialog.Builder(context)
+            .setMessage("Yakin ingin menghapus '${data.educationSchool}'?")
+            .setTitle("Konfirmasi menghapus")
+            .setPositiveButton(android.R.string.ok, object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface, which: Int) {
+                    ManageProfileAPI().JobseekerDeleteEducation(data.educationNo, context){
+                        if(it != null){
+                            ProfileAPI().GetJobseekerEducations(context) { edu ->
+                                binding.recycleExp.apply {
+                                    layoutManager = LinearLayoutManager(activity)
+                                    adapter = edu?.data?.let { EduAdapter(it, this@cvPage) }
+                                }
+                                Toast.makeText(activity, "Berhasil menghapus", Toast.LENGTH_SHORT).show()
+                                dialog.dismiss()
+                            }
+
+                        }
+                    }
+                }
+            })
+            .setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener{
+                override fun onClick(dialog: DialogInterface, which: Int) {
+                    dialog.dismiss()
+                }
+            }).create().show()
+    }
     fun LoadingDone(){
         if(loading == 0){
             binding.spinner.visibility = GONE
@@ -273,5 +316,7 @@ class cvPage : Fragment(), iCvPage {
 }
 interface iCvPage{
     fun editExp(data : JobseekerExperiences)
+    fun editEdu(data : JobseekerEducations)
     fun deleteExp(data : JobseekerExperiences)
+    fun deleteEducation(data : JobseekerEducations)
 }

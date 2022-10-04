@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -72,7 +73,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?) : Fragment(), iEditL
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val data = it.data
                 val fileUri: Uri = data!!.data!!
-                val pathName = context?.let { it2 -> PathUtil().getPath(it2, fileUri) }
+                val pathName = context?.let { it2 -> PathUtil().getRealPath(it2, fileUri) }
 
                 val file = File(pathName?:"")
                 this.file = file
@@ -98,25 +99,26 @@ class FragmentEditLampiran(var dataList : List<Documents>?) : Fragment(), iEditL
 
             var intent = Intent(Intent.ACTION_GET_CONTENT);
             val mimeTypes = arrayOf(
+                "image/*",
                 "application/pdf",
                 "application/msword",
                 "application/vnd.ms-powerpoint",
                 "application/vnd.ms-excel",
                 "text/plain"
             )
-            intent.setType("*/*")
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                intent.type = if (mimeTypes.size === 1) mimeTypes[0] else "*/*"
-//                if (mimeTypes.size > 0) {
-//                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-//                }
-//            } else {
-//                var mimeTypesStr = ""
-//                for (mimeType in mimeTypes) {
-//                    mimeTypesStr += "$mimeType|"
-//                }
-//                intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
-//            }
+//            intent.type = "image/*|application/pdf|application/msword|application/vnd.ms-powerpoint|application/vnd.ms-excel|text/plain"
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                intent.type = if (mimeTypes.size === 1) mimeTypes[0] else "*/*"
+                if (mimeTypes.size > 0) {
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+                }
+            } else {
+                var mimeTypesStr = ""
+                for (mimeType in mimeTypes) {
+                    mimeTypesStr += "$mimeType|"
+                }
+                intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
+            }
 
             intent.addCategory(Intent.CATEGORY_OPENABLE);
 

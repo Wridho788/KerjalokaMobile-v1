@@ -14,10 +14,11 @@ import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseTitleAdapter
 
 
-class ChooseTitle(val value: Int?, val iUpdateTitle: iUpdateTitle) : SuperBottomSheetFragment(), iTitle {
+class ChooseTitle(val value: Int?, val dataList : List<Title>,val iUpdateTitle: iUpdateTitle) : SuperBottomSheetFragment(), iTitle {
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<ChooseTitleAdapter.chooseTitle>? = null
@@ -38,15 +39,11 @@ class ChooseTitle(val value: Int?, val iUpdateTitle: iUpdateTitle) : SuperBottom
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        DataAPI().GetTitles(context){
-            if(it != null){
-                adapter = ChooseTitleAdapter(value, it.data,iUpdateTitle, this)
-                recyclerView.adapter = adapter
-            }
-        }
 
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = ChooseTitleAdapter(value, dataList,iUpdateTitle, this@ChooseTitle)
+        }
     }
 
 

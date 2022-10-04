@@ -29,6 +29,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,7 +38,7 @@ import java.util.*
 //
 //
 class ChatAdapter
-    (private var downloadManager: DownloadManager, private val context: Context, private val jobNo : Long?, private val receiver : Long, val positionOnBottom : PositionOnBottom) :
+    (private val context: Context, private val jobNo : Long?, private val receiver : Long, val positionOnBottom : PositionOnBottom) :
     RecyclerView.Adapter<ChatAdapter.ViewHolder>(){
     private val Right1 = 1
     private val Right2 = 2
@@ -199,26 +200,12 @@ class ChatAdapter
                 }
             }
             else if(dataSet!![position].messageType == MessageType.FileMessage.type.toString().toInt()){
-                viewHolder.messageContainer?.setOnClickListener{
-                    Toast.makeText(context, "Downloading File...", Toast.LENGTH_SHORT).show()
-
-                    val request =
-                        DownloadManager.Request(
-                            Uri.parse(
-                                "${config().portAddress}/chat/file/download?chatMessageNo=${dataSet!![position].fileName}&fileName=${dataSet!![position].fileName}"
-                            )
-                        )
-                    request.setTitle(dataSet!![position].fileName)
-                        .setDescription("File is downloading...")
-                        .setDestinationInExternalFilesDir(
-                            context,
-                            Environment.DIRECTORY_DOWNLOADS, dataSet!![position].fileName
-                        )
-                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                    downloadManager!!.enqueue(request)
-                }
                 viewHolder.fileContainer?.visibility = VISIBLE
                 viewHolder.fileName?.text = dataSet!![position].message
+                viewHolder.messageContainer?.setOnClickListener{
+                    positionOnBottom.downloadFile(dataSet!![position])
+                }
+
             }
 
             viewHolder.createdOn?.text = DateUtils().GetTime(dataSet[position].createdOn)
@@ -261,5 +248,6 @@ class ChatAdapter
              return 0
         }
     }
+
 
 }

@@ -18,15 +18,7 @@ import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Global.GlobalDeleteModal
 import com.google.gson.Gson
 
-private var layoutManager: RecyclerView.LayoutManager? = null
-private var adapterRec: RecyclerView.Adapter<CompReviewHistoryAdapter.ViewHolder>? = null
-
 class ReviewHistory : Fragment(){
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

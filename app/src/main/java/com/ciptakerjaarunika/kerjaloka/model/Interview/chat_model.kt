@@ -13,7 +13,9 @@ data class chat_model(
     var messages : List<Messages>,
     var receiver : List<Long>)
 
-data class Messages(var message : String,
+data class Messages(
+    var chatMessageNo : Int,
+    var message : String,
                     var createdBy: Long,
                     var createdOn: String,
                     var hasRemove: Boolean,

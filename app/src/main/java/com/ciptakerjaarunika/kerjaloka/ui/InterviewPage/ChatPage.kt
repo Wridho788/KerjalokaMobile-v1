@@ -9,6 +9,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -35,6 +36,7 @@ import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
+import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -391,12 +393,10 @@ class ChatPage(var sectionName: String,
 
         var LinearLayoutManager = LinearLayoutManager(activity)
         val thisContext = this
-        val downloadManager = activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
 
         recyclerView?.apply {
             layoutManager = LinearLayoutManager
-            adapter = ChatAdapter( downloadManager!!,
-                context, jobNo, Receiver, thisContext)
+            adapter = ChatAdapter( context, jobNo, Receiver, thisContext)
         }
 
         recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
@@ -505,8 +505,30 @@ class ChatPage(var sectionName: String,
     override fun isOnBottom(isOnBottom: Boolean) {
         onBottom = isOnBottom
     }
+
+    override fun downloadFile(file: Messages) {
+        Toast.makeText(context, "Downloading File...", Toast.LENGTH_SHORT).show()
+        val downloadManager = activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        val request =
+            DownloadManager.Request(
+                Uri.parse(
+                    "${config().portAddress}/chat/file/download?chatMessageNo=${file.chatMessageNo}&fileName=${file.fileName}"
+                )
+            )
+        request.setTitle(file.fileName)
+            .setDescription("File is downloading...")
+            .setDestinationInExternalFilesDir(
+                context,
+                Environment.DIRECTORY_DOWNLOADS, file.fileName
+            )
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+
+        val downloadID = downloadManager.enqueue(request)
+    }
 }
 interface PositionOnBottom{
     fun isOnBottom(isOnBottom : Boolean)
+    fun downloadFile(fileName : Messages)
 }
 

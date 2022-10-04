@@ -1,40 +1,47 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Intent
-import android.graphics.BitmapFactory
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.provider.DocumentsContract
+import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageLampiranPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.enum.VerifyStatus
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.DocumentAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.FragmentEditLampiran
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin
+import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
 import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
+
 
 class manage_lampiran : Fragment() {
+    private lateinit var binding : FragmentManageLampiranPageBinding
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     private var oldestFile : String? = null;
 
@@ -46,42 +53,43 @@ class manage_lampiran : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_manage_lampiran_page_profile, container, false)
-        val btn_EdLamp = view.findViewById<TextView>(R.id.edit_lampiran_pelamar)
-        val spinnerDoc = view.findViewById<LinearLayout>(R.id.spinnerDoc)
-//        val btn_edResume = view.findViewById<TextView>(R.id.edit_video_resume_pelamar)
-        val btn_edVaccine = view.findViewById<TextView>(R.id.edit_status_vaksin_pelamar)
-        val btnResume = view.findViewById<TextView>(R.id.videoResumeName)
+        binding = FragmentManageLampiranPageBinding.inflate(layoutInflater)
+        return binding.root;
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val data = it.data
-                val fileUri: Uri? = data?.data
-                val pathName =
-                    fileUri?.let { it1 -> context?.let { it2 -> PathUtils.getPath(it2, it1) } }
+                val fileUri: Uri = data!!.data!!
+                val path = PathUtil().getRealPath(context!!, fileUri)
+                val file: File? = File(path?:"")
+                if(file != null){
+                    val requestFile: RequestBody =
+                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                    val files = MultipartBody.Part.createFormData("files", file.name, requestFile)
 
-                val file = File(pathName ?: "")
-                val requestFile: RequestBody =
-                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                val photo = MultipartBody.Part.createFormData("photo", file.name, requestFile)
-
-                ManageProfileAPI().JobseekerUploadResume(photo, oldestFile, context){res->
-                    if(res?.data != null){
-                        btnResume.text = res.data.videoName
+                    ManageProfileAPI().UploadVideoResume(files, context){res->
+                        if(res?.data != null){
+                            binding.videoResumeName.text = res.data.videoName
+                        }
                     }
                 }
-
             }
         }
 
         ProfileAPI().GetJobseekerDocuments(context){ documents ->
-            btn_EdLamp.setOnClickListener{
+            binding.editLampiranPelamar.visibility = VISIBLE
+            binding.editLampiranPelamar.setOnClickListener{
                 replaceFragment(FragmentEditLampiran(documents?.data))
             }
 
-            spinnerDoc.visibility = GONE
+            binding.spinnerDoc.visibility = GONE
             val recyclerView = view?.findViewById<RecyclerView>(R.id.RecyclerAttachment)
             recyclerView?.visibility = VISIBLE
             recyclerView?.layoutManager = LinearLayoutManager(activity)
@@ -91,30 +99,51 @@ class manage_lampiran : Fragment() {
 
 
         ProfileAPI().GetJobseekerResume(context){ resume ->
-            btnResume.setOnClickListener {
+            binding.spinnerResume.visibility = GONE
+            binding.uploadVideoResumeBtn.visibility = VISIBLE
+
+            binding.uploadVideoResumeBtn.setOnClickListener {
                 var intent = Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("video/*");
+                intent.setType("*/*");
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
 
                 val requestIntent = Intent.createChooser(intent, "Choose a Video");
                 activityResultLauncher.launch(requestIntent)
             }
+
             if (resume?.data != null) {
                 val resumeDoc = resume.data
                 oldestFile = resumeDoc.videoName;
-                btnResume.text = resumeDoc.videoName
-                val btnRemove = view.findViewById<ImageView>(R.id.btn_remove_resume)
-                btnRemove.visibility = VISIBLE
-                btnRemove.setOnClickListener {
+                binding.videoResumeName.text = resumeDoc.videoName
+
+
+                binding.btnRemoveResume.visibility = VISIBLE
+                binding.btnRemoveResume.setOnClickListener {
                     ProfileAPI().DeleteJobseekerResume(context){
                         Toast.makeText(context, "Berhasil menghapus video resume", Toast.LENGTH_SHORT).show()
-                        btnResume.text = "Upload Video Resume"
+                        binding.videoResumeName.text = "Upload Video Resume"
                     }
                 }
             }
         }
 
         ProfileAPI().GetJobseekerDocumentVaccine(context){vaccine->
+            binding.spinnerVac.visibility = GONE
+            binding.vaccineContainer.visibility = VISIBLE
+            binding.editStatusVaksinPelamar.visibility = VISIBLE
+
+            if(vaccine != null) {
+                binding.editStatusVaksinPelamar.setOnClickListener {
+                    replaceFragment(
+                        fragment_editlampiran_upload_vaksin(vaccine.data
+                            .filter { doc ->
+                                doc.documentType == DocumentType.Vaccine1.value ||
+                                        doc.documentType == DocumentType.Vaccine2.value ||
+                                        doc.documentType == DocumentType.Vaccine3.value
+                            })
+                    )
+                }
+            }
             if(vaccine != null && vaccine.data.size != 0) {
                 for (doc in vaccine.data) {
                     var vaccineLogo: ImageView = view.findViewById(R.id.vaccine1Status);
@@ -144,10 +173,7 @@ class manage_lampiran : Fragment() {
 //        btn_edResume.setOnClickListener{
 //
 //        }
-        btn_edVaccine.setOnClickListener{
-            replaceFragment(fragment_editlampiran_upload_vaksin())
-        }
-        return view
+
     }
 
 
