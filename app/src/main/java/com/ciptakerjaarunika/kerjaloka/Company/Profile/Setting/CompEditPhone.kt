@@ -50,24 +50,25 @@ class CompEditPhone : Fragment() {
     companion object {
     }
 
+    @SuppressLint("RestrictedApi")
     private fun replaceFragment(fragment: Fragment, token: String?) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
 
         otpVerificationFragment.arguments = mBundle
-        otpVerificationFragment.description = token
+        otpVerificationFragment.description = "phone"
         val mFragmentManager = parentFragmentManager
         mFragmentManager?.beginTransaction()?.apply {
-            replace(R.id.fragment_container, otpVerificationFragment, otpVerification::class.java.simpleName)
+            replace(
+                R.id.fragment_container,
+                otpVerificationFragment,
+                otpVerification::class.java.simpleName
+            )
             addToBackStack(null)
             commit()
 
         }
-//        val fragmentManager = activity?.supportFragmentManager
-//        val fragmentTransaction = fragmentManager?.beginTransaction()
-//        fragmentTransaction?.replace(R.id.fragment_container, fragment)
-//        fragmentTransaction?.commit()
     }
 
 }

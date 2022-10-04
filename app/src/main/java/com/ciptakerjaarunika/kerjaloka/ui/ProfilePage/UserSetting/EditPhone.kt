@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -63,13 +64,14 @@ class EditPhone : Fragment() {
         var EXTRA_USER_DATA = "extra_userData"
     }
 
+    @SuppressLint("RestrictedApi")
     private fun replaceFragment(fragment: Fragment, token: String?) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
 
         otpVerificationFragment.arguments = mBundle
-        otpVerificationFragment.description = token
+        otpVerificationFragment.description = "phone"
         val mFragmentManager = parentFragmentManager
         mFragmentManager?.beginTransaction()?.apply {
             replace(

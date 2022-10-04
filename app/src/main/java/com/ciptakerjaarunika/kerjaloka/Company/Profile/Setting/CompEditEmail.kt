@@ -33,7 +33,9 @@ class CompEditEmail : Fragment() {
             val email = newEmail?.text.toString()
             company_profile_api().checkNewEmail(email, context) { checkResponse ->
                     company_profile_api().ChangeEmail(email, context) { changeEmail ->
-                        replaceFragment(otpVerification(), changeEmail?.token)
+                        if(changeEmail?.code == 210) {
+                            replaceFragment(otpVerification(), changeEmail?.token)
+                        }
                 }
             }
         }
@@ -44,13 +46,14 @@ class CompEditEmail : Fragment() {
     companion object {
     }
 
+    @SuppressLint("RestrictedApi")
     private fun replaceFragment(fragment: Fragment, token: String?) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
 
         otpVerificationFragment.arguments = mBundle
-        otpVerificationFragment.description = token
+        otpVerificationFragment.description = "email"
         val mFragmentManager = parentFragmentManager
         mFragmentManager?.beginTransaction()?.apply {
             replace(
