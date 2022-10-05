@@ -1,20 +1,15 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
-import com.ciptakerjaarunika.kerjaloka.databinding.FragmentApplicantDetailBinding
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfileCvBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
@@ -24,9 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.PapikostickResult
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.edit_kemampuan
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.fragment_manage_cv_edit_education_page
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.manage_cv_edit_experience_page
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 
 class cvPage : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
@@ -177,7 +170,7 @@ class cvPage : Fragment() {
                         }
                     }
                     binding.addExp.setOnClickListener {
-                        replaceFragment(manage_cv_edit_experience_page())
+                        replaceFragment(manage_cv_edit_experience_page(null))
                     }
                     binding.addEdu.setOnClickListener {
                         replaceFragment(fragment_manage_cv_edit_education_page())
