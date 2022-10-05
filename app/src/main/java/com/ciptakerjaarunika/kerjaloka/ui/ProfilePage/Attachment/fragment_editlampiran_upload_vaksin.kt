@@ -251,9 +251,10 @@ class fragment_editlampiran_upload_vaksin(var dataVaccine : List<CheckDocument>)
     }
 
     private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
-        fragmentTransaction?.commit()
+//        val fragmentTransaction = parentFragmentManager.beginTransaction()
+//        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
+//        fragmentTransaction?.commit()
+        fragmentManager?.popBackStack()
     }
 
 }

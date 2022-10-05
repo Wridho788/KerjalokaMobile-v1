@@ -1,39 +1,45 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.os.Message
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RatingBar
+import android.widget.Toast
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_job_active_page
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Adapter.myPackageAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Listener.ShowModalHistory
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.Data
 import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
-import com.ciptakerjaarunika.kerjaloka.Company.Package.pack
-import com.ciptakerjaarunika.kerjaloka.Company.Package.pckHistory
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.CategoryList
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.conRatingList
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRatingList
+import com.ciptakerjaarunika.kerjaloka.enum.Role
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.google.gson.Gson
 
-class EditMyReview : SuperBottomSheetFragment() {
+class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment() {
 
     var review: DataX? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        return if (SessionManager(context).user?.roleNo == Role.Jobseekers.value)
+            inflater.inflate(R.layout.fragment_jobseeker_edit_review, container, false)
+        else
+            inflater.inflate(R.layout.fragment_edit_my_review, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,49 +71,95 @@ class EditMyReview : SuperBottomSheetFragment() {
             ratingBar.rating = review?.rating?.toFloat()!!
             var proRatingList = review?.proRating
             var conRatingList = review?.conRating
+
+            pro1.setOnClickListener {
+                if(con1.isChecked){con1.isChecked = false}
+            }
+            pro2.setOnClickListener {
+                if(con2.isChecked){con2.isChecked = false}
+            }
+            pro3.setOnClickListener {
+                if(con3.isChecked){con3.isChecked = false}
+            }
+            pro4.setOnClickListener {
+                if(con4.isChecked){con4.isChecked = false}
+            }
+            pro5.setOnClickListener {
+                if(con5.isChecked){con5.isChecked = false}
+            }
+            pro6.setOnClickListener {
+                if(con6.isChecked){con6.isChecked = false}
+            }
+            pro7.setOnClickListener {
+                if(con7.isChecked){con7.isChecked = false}
+            }
+
+            con1.setOnClickListener {
+                if(pro1.isChecked){pro1.isChecked = false}
+            }
+            con2.setOnClickListener {
+                if(pro2.isChecked){pro2.isChecked = false}
+            }
+            con3.setOnClickListener {
+                if(pro3.isChecked){pro3.isChecked = false}
+            }
+            con4.setOnClickListener {
+                if(pro4.isChecked){pro4.isChecked = false}
+            }
+            con5.setOnClickListener {
+                if(pro5.isChecked){pro5.isChecked = false}
+            }
+            con6.setOnClickListener {
+                if(pro6.isChecked){pro6.isChecked = false}
+            }
+            con7.setOnClickListener {
+                if(pro7.isChecked){pro7.isChecked = false}
+            }
+
+
             review?.proRating?.forEach {
-                if (it == "Disiplin") {
+                if (it == "Disiplin" || it == "Gaji dan Tunjangan") {
                     pro1.isChecked = true
                 }
-                if (it == "Kemauan Bekerja") {
+                if (it == "Kemauan Bekerja" || it == "Tingkat Stress") {
                     pro2.isChecked = true
                 }
-                if (it == "Bekerja Keras") {
+                if (it == "Bekerja Keras" || it == "Jumlah Pekerjaan") {
                     pro3.isChecked = true
                 }
-                if (it == "Emosional") {
+                if (it == "Emosional" || it == "Manajemen") {
                     pro4.isChecked = true
                 }
-                if (it == "Etika") {
+                if (it == "Etika" || it == "Lingkungan Pekerjaan") {
                     pro5.isChecked = true
                 }
-                if (it == "Bekerja Sama") {
+                if (it == "Bekerja Sama" || it == "Fleksibilitas Waktu") {
                     pro6.isChecked = true
                 }
-                if (it == "Kerapian") {
+                if (it == "Kerapian" || it == "Pengembangan Karir") {
                     pro7.isChecked = true
                 }
             }
             review?.conRating?.forEach {
-                if (it == "Disiplin") {
+                if (it == "Disiplin" || it == "Gaji dan Tunjangan") {
                     con1.isChecked = true
                 }
-                if (it == "Kemauan Bekerja") {
+                if (it == "Kemauan Bekerja" || it == "Tingkat Stress") {
                     con2.isChecked = true
                 }
-                if (it == "Bekerja Keras") {
+                if (it == "Bekerja Keras" || it == "Jumlah Pekerjaan") {
                     con3.isChecked = true
                 }
-                if (it == "Emosional") {
+                if (it == "Emosional" || it == "Manajemen") {
                     con4.isChecked = true
                 }
-                if (it == "Etika") {
+                if (it == "Etika" || it == "Lingkungan Pekerjaan") {
                     con5.isChecked = true
                 }
-                if (it == "Bekerja Sama") {
+                if (it == "Bekerja Sama" || it == "Fleksibilitas Waktu") {
                     con6.isChecked = true
                 }
-                if (it == "Kerapian") {
+                if (it == "Kerapian" || it == "Pengembangan Karir") {
                     con7.isChecked = true
                 }
             }
@@ -163,22 +215,39 @@ class EditMyReview : SuperBottomSheetFragment() {
             }
             ProRating = newPro
             ConRating = newCon
-            if (UserNo != null) {
-                UsersAPI().SendReview(UserNo, Message, Rating, ProRating, ConRating, context){}
+            if(ProRating.size == 0){
+                showMessage("Pilih minimal 1 kelebihan")
+            }
+            else if(ConRating.size == 0){
+                showMessage("Pilih minimal 1 kekurangan")
+            }
+            else if(ProRating.size > 3){
+                showMessage("Pilih maksimal hanya 3 kelebihan")
+            }
+            else if(ConRating.size > 3){
+                showMessage("Pilih maksimal hanya 3 'kekurangan'")
+            }
+            else if (UserNo != null) {
+                UsersAPI().SendReview(UserNo, Message, Rating, ProRating, ConRating, context){
+                    if(!it?.message.isNullOrEmpty()) {
+                        Toast.makeText(activity, it?.message, Toast.LENGTH_LONG).show()
+                    }
+                    if(it!= null && it.code == 210){
+                        iRefreshData.refresh()
+                        this.dismiss()
+                    }
+                }
             }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_edit_my_review, container, false)
-
-        return view
+    fun showMessage(message : String?){
+        if(!message.isNullOrEmpty()) {
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
+        }
     }
+
+
 
     companion object {
         var EXTRA_EDIT_REVIEW = "extra_editReview"
@@ -199,6 +268,17 @@ class EditMyReview : SuperBottomSheetFragment() {
         })
     }
 
+
+    override fun isSheetAlwaysExpanded(): Boolean {
+        return true
+    }
+
     @SuppressLint("Range")
-    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+    override fun getExpandedHeight(): Int {
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
+    }
 }

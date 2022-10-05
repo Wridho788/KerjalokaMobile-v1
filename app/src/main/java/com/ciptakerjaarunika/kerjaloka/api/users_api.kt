@@ -7,7 +7,9 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.Category
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.RatingSendedResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.editReviewRequest
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ratingSended_response
+import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.notifResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -67,29 +69,56 @@ class UsersAPI{
 
 
     data class  sendReviewResponse(val code :Int, val data : String, val errorCode: Int, val message: String)
-    interface sendReview {
+    interface companySendReview {
         @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("company/rating/send")
         fun sendReview(@Body editReviewReq: editReviewRequest) : Call<sendReviewResponse>
     }
+    interface jobseekerSendReview {
+        @Headers("Content-Type: application/json", "Accept: application/json")
+        @POST("jobseeker/rating/send")
+        fun sendReview(@Body editReviewReq: editReviewRequest) : Call<sendReviewResponse>
+    }
 
     fun SendReview(UserNo: Long, Message: String, Rating: Int, ProRating: ArrayList<CategoryList>, ConRating: ArrayList<CategoryList>, context: Context?, onResult: (sendReviewResponse?) -> Unit){
-        val retrofit = ServiceBuilder(context).POST(sendReview::class.java)
+        if(SessionManager(context).user!!.roleNo == Role.Jobseekers.value){
+            val retrofit = ServiceBuilder(context).POST(jobseekerSendReview::class.java)
 
-        retrofit.sendReview(editReviewRequest(UserNo, Message, Rating, ProRating, ConRating)).enqueue(
-            object : Callback<sendReviewResponse>{
-                override fun onResponse(
-                    call: Call<sendReviewResponse>,
-                    response: Response<sendReviewResponse>
-                ) {
-                    onResult(response.body())
-                }
+            retrofit.sendReview(editReviewRequest(UserNo, Message, Rating, ProRating, ConRating))
+                .enqueue(
+                    object : Callback<sendReviewResponse> {
+                        override fun onResponse(
+                            call: Call<sendReviewResponse>,
+                            response: Response<sendReviewResponse>
+                        ) {
+                            onResult(response.body())
+                        }
 
-                override fun onFailure(call: Call<sendReviewResponse>, t: Throwable) {
-                    onResult(null)
-                }
-            }
-        )
+                        override fun onFailure(call: Call<sendReviewResponse>, t: Throwable) {
+                            onResult(null)
+                        }
+                    }
+                )
+        }
+        else {
+            val retrofit = ServiceBuilder(context).POST(companySendReview::class.java)
+
+            retrofit.sendReview(editReviewRequest(UserNo, Message, Rating, ProRating, ConRating))
+                .enqueue(
+                    object : Callback<sendReviewResponse> {
+                        override fun onResponse(
+                            call: Call<sendReviewResponse>,
+                            response: Response<sendReviewResponse>
+                        ) {
+                            onResult(response.body())
+                        }
+
+                        override fun onFailure(call: Call<sendReviewResponse>, t: Throwable) {
+                            onResult(null)
+                        }
+                    }
+                )
+        }
     }
 
     data class  deleteReviewResponse(val code :Int, val data : String, val errorCode: Int, val message: String)

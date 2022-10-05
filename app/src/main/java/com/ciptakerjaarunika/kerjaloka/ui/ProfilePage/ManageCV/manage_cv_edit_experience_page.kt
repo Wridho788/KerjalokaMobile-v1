@@ -191,9 +191,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?) : F
     override fun updateGender(value: Char) {
     }
     private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
-        fragmentTransaction?.commit()
+        fragmentManager?.popBackStack()
     }
 
     override fun updateCity(cityNo: Int?) {

@@ -8,6 +8,10 @@ interface iUpdateMajor {
     fun updateMajor(value : Int?)
 }
 
+interface iRefreshData {
+    fun refresh()
+}
+
 interface iUpdateTitle {
     fun updateTitle(value : Int?)
 }

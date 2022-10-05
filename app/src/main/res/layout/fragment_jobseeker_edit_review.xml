@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_apply_job_modal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <ImageView
+        android:id="@+id/btn_bottom_sheet"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_bottom_sheet_1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/judul_bottom_sheet"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Berikan Rating"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_500" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Berikan Rating"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="@style/Theme.Kerjaloka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="16dp"
+                        android:numStars="5"
+                        android:progressTint="@color/danger_500"
+                        android:stepSize="1" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Kelebihan"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/pro1"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp"
+                            android:background="@color/danger_500"
+                            android:text="Gaji dan Tunjangan" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/pro2"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp"
+                            android:background="@color/danger_500"
+                            android:text="Tingkat stress" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/pro3"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp"
+                            android:background="@color/danger_500"
+                            android:text="Jumlah Pekerjaan" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/pro4"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/danger_500"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            android:text="Manajemen"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp" />
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/pro5"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/danger_500"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            android:text="Lingkungan Pekerjaan"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/pro6"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/danger_500"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            android:text="Fleksibilitas Waktu"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/pro7"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/danger_500"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            android:text="Pengembangan Karir"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Kekurangan"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/con1"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp"
+                            android:background="@color/danger_500"
+                            android:text="Gaji dan Tunjangan" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/con2"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp"
+                            android:background="@color/danger_500"
+                            android:text="Tingkat stress" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/con3"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp"
+                            android:background="@color/danger_500"
+                            android:text="Jumlah Pekerjaan" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/con4"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/danger_500"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            android:text="Manajemen"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/con5"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/danger_500"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            android:text="Lingkungan Pekerjaan"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/con6"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/danger_500"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            android:text="Fleksibilitas Waktu"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/con7"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/danger_500"
+                            android:backgroundTint="@color/background_color_chip_state_list"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
+                            android:text="Pengembangan Karir"
+                            app:chipStrokeColor="@color/stroke_chip"
+                            app:chipStrokeWidth="2dp" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Review"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/txt_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/light_300"
+                        android:fontFamily="@font/poppins"
+                        android:gravity="top|start"
+                        android:hint="Masukkan komentar rating"
+                        android:lines="6"
+                        android:padding="14dp"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/light_500" />
+
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:paddingBottom="10dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sendReview"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/danger_500"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Simpan"
+                android:textAllCaps="false"
+                android:textSize="14dp"
+                app:cornerRadius="100dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
+

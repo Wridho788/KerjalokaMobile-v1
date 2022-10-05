@@ -191,9 +191,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?) : Fragment(), iEditL
         }
     }
     private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(3), "Profile Page")
-        fragmentTransaction?.commit()
+        fragmentManager?.popBackStack()
     }
 
     override fun delete(value: Documents) {

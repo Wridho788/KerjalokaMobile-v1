@@ -11,6 +11,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -148,6 +149,9 @@ class viewJobDetail(val JobNo: Long,val CompanyNo: Long,val applicationData: App
                 val btnWithdrawBottom = view.findViewById<MaterialButton>(R.id.btnWithdrawBottom)
 
                 view.findViewById<ImageView>(R.id.backButton)?.setOnClickListener{
+                    fragmentManager?.popBackStack()
+                }
+                requireActivity().onBackPressedDispatcher.addCallback(this) {
                     fragmentManager?.popBackStack()
                 }
 

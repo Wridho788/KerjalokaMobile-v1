@@ -114,9 +114,7 @@ class edit_kemampuan(var dataList: List<JobseekerSkills>?) : Fragment(), iEditKe
         }
     }
     private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(1), "Profile Page")
-        fragmentTransaction?.commit()
+       fragmentManager?.popBackStack()
     }
 
     override fun updateSkill(value: SkillFilter) {

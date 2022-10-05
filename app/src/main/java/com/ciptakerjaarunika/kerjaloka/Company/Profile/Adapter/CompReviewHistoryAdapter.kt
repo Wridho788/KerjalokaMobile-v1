@@ -2,12 +2,16 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.ShowModal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -23,6 +27,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
         var ratBar : RatingBar
         var edit : MaterialButton
         var delete : MaterialButton
+        var logo : ImageView
 
         init {
             creator = itemView.findViewById(R.id.nama_jobseeker)
@@ -33,12 +38,13 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
             ratBar = itemView.findViewById(R.id.ratingbar)
             edit = itemView.findViewById(R.id.btn_Edit)
             delete = itemView.findViewById(R.id.btn_delete)
+            logo = itemView.findViewById(R.id.logo)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.review_history_card, null)
-
+        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         return ViewHolder(view)
     }
 
@@ -48,8 +54,19 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
         holder.Desc.text = currentItem.comment
         holder.ratBar.rating = currentItem.rating.toFloat()
 
-        holder.edit.setOnClickListener {
-            listener.showDetail(currentItem)
+        Glide.with(context)
+            .load(config().portAddress + "/photo/Profile/" + currentItem.raterPhoto).fitCenter()
+            .into(holder.logo)
+
+        if(currentItem.approved) {
+            holder.edit.setOnClickListener {
+                listener.showDetail(currentItem)
+            }
+        }
+        else{
+            holder.edit.setStrokeColorResource(R.color.light_500)
+            holder.edit.setTextColor(com.giphy.sdk.ui.R.color.material_on_background_disabled)
+            holder.edit.isEnabled = false
         }
 
         holder.delete.setOnClickListener{

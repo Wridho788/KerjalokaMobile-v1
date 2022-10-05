@@ -10,7 +10,7 @@ data class JobseekerRecord(
     val statusChangeOn : String,
     val description : String,
     val ownerName : String,
-    val appeal: List<RecordAppeal>
+    val appeal: RecordAppeal?
 )
 
 data class RecordAppeal(

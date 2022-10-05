@@ -41,4 +41,55 @@ class CompanyDetailAPI {
             )
         }
     }
+
+    interface followCompany{
+        @GET("jobseeker/follow/{companyNo}")
+        fun sendData( @Path("companyNo") companyNo: Long): Call<ManageProfileAPI.responseGeneral>
+    }
+    interface unFollowCompany{
+        @GET("jobseeker/unfollow/{companyNo}")
+        fun sendData( @Path("companyNo") companyNo: Long): Call<ManageProfileAPI.responseGeneral>
+    }
+
+    fun ManageFollowCompany(followed: Boolean, companyNo : Long, context: Context?, onResult: (ManageProfileAPI.responseGeneral?) -> Unit){
+        if(!followed) {
+            val retrofit = ServiceBuilder(context).GET(followCompany::class.java)
+            retrofit.sendData(companyNo).enqueue(
+                object : Callback<ManageProfileAPI.responseGeneral> {
+                    override fun onResponse(
+                        call: Call<ManageProfileAPI.responseGeneral>,
+                        response: Response<ManageProfileAPI.responseGeneral>
+                    ) {
+                        onResult(response.body())
+                    }
+
+                    override fun onFailure(
+                        call: Call<ManageProfileAPI.responseGeneral>,
+                        t: Throwable
+                    ) {
+                        onResult(null)
+                    }
+                }
+            )
+        }else{
+            val retrofit = ServiceBuilder(context).GET(unFollowCompany::class.java)
+            retrofit.sendData(companyNo).enqueue(
+                object : Callback<ManageProfileAPI.responseGeneral> {
+                    override fun onResponse(
+                        call: Call<ManageProfileAPI.responseGeneral>,
+                        response: Response<ManageProfileAPI.responseGeneral>
+                    ) {
+                        onResult(response.body())
+                    }
+
+                    override fun onFailure(
+                        call: Call<ManageProfileAPI.responseGeneral>,
+                        t: Throwable
+                    ) {
+                        onResult(null)
+                    }
+                }
+            )
+        }
+    }
 }

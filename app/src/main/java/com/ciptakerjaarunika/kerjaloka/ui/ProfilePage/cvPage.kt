@@ -217,6 +217,7 @@ class cvPage : Fragment(), iCvPage {
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.addToBackStack("")
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
         fragmentTransaction?.commit()
     }

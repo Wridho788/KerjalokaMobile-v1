@@ -87,7 +87,7 @@ class CompanyReviewAdapter(
         }
         holder.ratingBar.rating = currentItem.rating
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile" + currentItem.raterPhoto).fitCenter()
+            .load(config().portAddress + "/photo/Profile/" + currentItem.raterPhoto).fitCenter()
             .into(holder.picture)
 
         val SECOND = 1

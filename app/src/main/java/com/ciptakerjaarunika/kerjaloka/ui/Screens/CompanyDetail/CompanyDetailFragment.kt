@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -22,6 +23,10 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyBrowseAPI
 import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyDetailBinding
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentMyRecordPageBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.fragment_manage_cv_edit_education_page
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedCompanyJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.CompanyReviewFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
@@ -32,7 +37,7 @@ import com.google.android.material.button.MaterialButton
 
 class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
     OnFragmentCompanyDetailListener, OnFragmentClickListener {
-
+    private lateinit var binding: FragmentCompanyDetailBinding;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,10 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_company_detail, container, false)
+        binding = FragmentCompanyDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+
+
         val btn_follow = view.findViewById<MaterialButton>(R.id.follow_button)
         val btn_review = view.findViewById<MaterialButton>(R.id.review_button)
         val company_logo = view.findViewById<ImageView>(R.id.logo_company)
@@ -56,35 +64,53 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         val company_phone = view.findViewById<TextView>(R.id.company_phone)
         val toolbarShare = view.findViewById<ImageView>(R.id.toolbar_share)
 
-        btn_follow.setOnClickListener {
-            Toast.makeText(activity, "follow", Toast.LENGTH_SHORT).show()
+        if(SessionManager(context).user == null){
+            btn_follow.visibility = GONE
         }
+
         val rv_recommendations_job =
             view.findViewById<RecyclerView>(R.id.recycler_view_company_recommendation_jobs)
 
         val Context = this
 
-        CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
+        CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {it->
+            binding.spinner.visibility = GONE
+            binding.contentContainer.visibility = VISIBLE
             if (it != null) {
+                if(it.data.followed){
+                    binding.followButton.text = "Batal Ikuti"
+                }
+                else{
+                    binding.followButton.text = "Ikuti"
+                }
+                btn_follow.setOnClickListener { btn->
+                    CompanyDetailAPI().ManageFollowCompany(it.data.followed, CompanyNo, context){ res->
+                        if(res != null && (res.code == "210" || res.code == 210)){
+                            Toast.makeText(activity, res.message, Toast.LENGTH_SHORT).show()
+
+                            it.data.followed = !it.data.followed
+                            if(it.data.followed){
+                                binding.followButton.text = "Batal Ikuti"
+                            }
+                            else{
+                                binding.followButton.text = "Ikuti"
+                            }
+                        }
+                    }
+                }
+
+
                 company_name.text = it.data.companyName
                 company_phone.text = it.data.phone
                 Glide.with(this)
                     .load(config().portAddress + "/photo/Profile/" + it.data.logo)
                     .fitCenter().into(company_logo)
                 company_about.text = it.data.companyDescription
-                company_location.text = it.data.companyAddress
+                company_location.text = "${it.data.location.city}, ${it.data.location.province}"
                 company_workers.text = it.data.size
                 company_type.text = it.data.field
-                if(it.data.rating.ratingList.size == 0){
-                    view.findViewById<LinearLayout>(R.id.rating_contaier).visibility = GONE
-                    btn_review.visibility = GONE
-                }
-                else{
-                    view.findViewById<LinearLayout>(R.id.rating_contaier).visibility = VISIBLE
-                    btn_review.visibility = VISIBLE
-                }
 
-                txt_rating_company.text = it.data.rating.ratingValue.toString()
+                txt_rating_company.text = if(it.data.rating.ratingList.size == 0) "-" else  it.data.rating.ratingValue.toString()
                 txt_follower.text = it.data.followers.toString()
                 rv_recommendations_job.apply {
                     layoutManager =
@@ -120,6 +146,12 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         var recyclerView = view.findViewById(R.id.recycler_view_company_other_job) as RecyclerView
 
+        binding.toolbar.setNavigationOnClickListener {
+            fragmentManager?.popBackStack()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            fragmentManager?.popBackStack()
+        }
 
         CompanyBrowseAPI().CompanyGetBrowserJob(context){
             Log.d("response 119", it.toString())
@@ -170,8 +202,6 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         ft.addToBackStack("CompanyReviewFragment")
         ft.commit()
     }
-
-    companion object
 }
 
 interface OnFragmentCompanyDetailListener {

@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/danger_500"
-            app:navigationIcon="@drawable/ic_back">
+            app:navigationIcon="@drawable/ic_arrow_left_white">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -50,7 +50,20 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/spinner"
+        android:gravity="center">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"/>
+    </LinearLayout>
     <androidx.core.widget.NestedScrollView
+        android:visibility="gone"
+        android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -132,7 +145,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight=".20"
                                     android:id="@+id/rating_contaier"
-                                    android:visibility="gone"
                                     android:orientation="vertical">
 
                                     <TextView
@@ -236,7 +248,6 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/review_button"
-                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_marginStart="7dp"

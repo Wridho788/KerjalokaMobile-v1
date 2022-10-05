@@ -237,9 +237,10 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
     override fun updateGender(value: Char) {
     }
     private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
-        fragmentTransaction?.commit()
+//        val fragmentTransaction = parentFragmentManager.beginTransaction()
+//        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
+//        fragmentTransaction?.commit()
+        fragmentManager?.popBackStack()
     }
 
     override fun updateCity(cityNo: Int?) {

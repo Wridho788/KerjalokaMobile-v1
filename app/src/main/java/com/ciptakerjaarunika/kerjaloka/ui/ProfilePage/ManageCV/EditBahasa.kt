@@ -165,9 +165,7 @@ class EditBahasa(var jobseekerNo : Long, var data : List<JobseekerLanguages>?) :
         binding.recycleLanguage.adapter?.notifyDataSetChanged()
     }
     private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(1), "Profile Page")
-        fragmentTransaction?.commit()
+        fragmentManager?.popBackStack()
     }
 }
 interface iEditBahasa{

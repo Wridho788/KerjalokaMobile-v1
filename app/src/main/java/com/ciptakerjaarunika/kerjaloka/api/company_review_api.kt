@@ -19,7 +19,6 @@ class CompanyReviewAPI {
     fun getCompanyReviewAsync(
         context: Context?, userNo: Long?, onResult: (review_response?)->Unit
     ) {
-        if (context != null) {
             val retrofit = ServiceBuilder(context).GET(CompanyReviewAPIList::class.java)
 
             retrofit.getCompanyReview(userNo).enqueue(
@@ -37,7 +36,6 @@ class CompanyReviewAPI {
                     }
                 }
             )
-        }
     }
 }
 
@@ -75,10 +73,10 @@ class CompanyMyReviewAPI {
 class CanSendReview {
     interface SectionSendReviewResponse {
         @GET("/users/rating/canSend")
-        fun getSendReview(@Query("userNo") userNo: Long): Call<send_review_response>
+        fun getSendReview(@Query("userNo") userNo: Long?): Call<send_review_response>
     }
 
-    fun getSendReviewAsync(context: Context?, userNo: Long, onResult: (send_review_response?) -> Unit){
+    fun getSendReviewAsync(context: Context?, userNo: Long?, onResult: (send_review_response?) -> Unit){
         if(context != null){
             val retrofit = ServiceBuilder(context).GET(SectionSendReviewResponse::class.java)
 

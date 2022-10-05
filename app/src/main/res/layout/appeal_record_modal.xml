@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_apply_job_modal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    
+    <ImageView
+        android:id="@+id/btn_bottom_sheet"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|top"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_bottom_sheet_1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/judul_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Appeal"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_500" />
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Alasan melakukan Appeal"
+        android:textColor="@color/black"
+        android:textSize="14dp" />
+
+    <EditText
+        android:id="@+id/message_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/light_300"
+        android:fontFamily="@font/poppins"
+        android:gravity="top|start"
+        android:hint="Masukkan alasan melakukan appeal"
+        android:lines="6"
+        android:padding="14dp"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp" />
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:paddingVertical="5dp"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_500"
+        android:layout_marginTop="50dp"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSend"
+        android:layout_marginHorizontal="15dp"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/danger_500"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Kirim"
+        android:textAllCaps="false"
+        android:textSize="14dp"
+        app:cornerRadius="100dp" />
+</LinearLayout>
+</RelativeLayout>
+</LinearLayout>

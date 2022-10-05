@@ -1,6 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.ui.NotificationPage
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
@@ -59,6 +61,8 @@ class Notification : AppCompatActivity() {
     private fun reload() {
         UsersAPI().GetNotification(this) {
             if(it?.data != null) {
+                binding.spinner.visibility = GONE
+                binding.notifContainer.visibility = VISIBLE
                 val list = it?.data?.sortedByDescending { it.createdOn }
 //            val list = dummyData(0, 20)
                 binding.notifContainer.post {
@@ -70,6 +74,8 @@ class Notification : AppCompatActivity() {
 
     private fun loadMore() {
         UsersAPI().GetNotification(this) {
+            binding.spinner.visibility = GONE
+            binding.notifContainer.visibility = VISIBLE
             val list = it?.data?.sortedByDescending { it.createdOn }
 //            val list = dummyData(adapter.itemCount, 15)
             binding.notifContainer.post {
