@@ -50,7 +50,6 @@
                         android:padding="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tes yang pernah ada"
                         android:fontFamily="@font/poppins_semibold"
                         android:textSize="14sp"
                         android:textColor="@color/dark_100"/>
@@ -64,11 +63,11 @@
                         <TextView
                             android:id="@+id/question"
                             android:layout_width="match_parent"
-                            android:text="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
                             android:layout_height="wrap_content"
                             android:textColor="@color/dark_100"
                             android:fontFamily="@font/poppins_semibold"
-                            android:textSize="10dp"/>
+                            android:textSize="10sp"
+                            tools:ignore="SmallSp" />
                     </LinearLayout>
                 </LinearLayout>
 

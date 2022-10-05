@@ -33,18 +33,19 @@ class fragment_company_add_jobs_4(val iAddJob: iAddJob) : Fragment(), iChooseTes
         }
 
 
-        TestList().GetTest(context){
-            if(it != null){
+        TestList().GetTest(context) {
+            if (it != null) {
                 list = it.data
                 binding.listTest.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = TestAdapter(list,this@fragment_company_add_jobs_4)
+                    adapter = TestAdapter(list, this@fragment_company_add_jobs_4)
                 }
             }
         }
 
         return view
     }
+
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
@@ -53,10 +54,11 @@ class fragment_company_add_jobs_4(val iAddJob: iAddJob) : Fragment(), iChooseTes
     }
 
     override fun updateTest(test: List<TestJob>?) {
-       getTestJob = test
+        getTestJob = test
+        iAddJob.addJobPage4(getTestJob!!)
     }
 }
 
-interface iChooseTest{
+interface iChooseTest {
     fun updateTest(test: List<TestJob>?)
 }

@@ -17,7 +17,9 @@ import java.util.*
 
 class ListApplicantAdapter(
     private val context: Context,
-    private val listApplicantJobModel: List<listApplicantJobModel>?, private val onFragmentClickListener: OnFragmentClickListener? ) :
+    private val listApplicantJobModel: List<listApplicantJobModel>?,
+    private val onFragmentClickListener: OnFragmentClickListener?
+) :
     RecyclerView.Adapter<ListApplicantAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobPosition: TextView
@@ -42,42 +44,48 @@ class ListApplicantAdapter(
         val currentItem = listApplicantJobModel?.get(position)
         holder.jobPosition.text = currentItem?.jobPosition
 
-        val SECOND = 1
-        val MINUTE = 60 * SECOND
-        val HOUR = 60 * MINUTE
-        val DAY = 24 * HOUR
-        val WEEK = 7 * DAY
-        var time = currentItem?.createdOn
-        val now = LocalDateTime.now().toString()
+        if (currentItem?.createdOn != null && !currentItem.createdOn.toString()
+                .isNullOrEmpty() && !currentItem.createdOn.toString().isNullOrBlank()
+        ) {
+            val SECOND = 1
+            val MINUTE = 60 * SECOND
+            val HOUR = 60 * MINUTE
+            val DAY = 24 * HOUR
+            val WEEK = 7 * DAY
+            var time = currentItem.createdOn
+            val now = LocalDateTime.now().toString()
 
-        fun GetDateValue(value: String): Date {
-            val temp = value.split("T")
-            val time = temp[1].split(":")
-            val date = "${temp[0]} ${time[0]}:${time[1]}"
-            var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-            return dateFormat.parse(date)
-        }
-
-        fun dateDiff(): String {
-            val date1 = GetDateValue(time!!).time
-            val date2 = GetDateValue(now).time
-
-            val diff = (date2 - date1) / 1000
-            return when {
-                diff < MINUTE -> "Baru Saja"
-                diff < 2 * MINUTE -> "Beberapa Menit Lalu"
-                diff < 60 * MINUTE -> "${diff / MINUTE} Menit Lalu"
-                diff < 2 * HOUR -> "Beberapa Jam Lalu"
-                diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
-                diff < 2 * DAY -> "Kemarin"
-                diff < WEEK -> "${diff / DAY} Hari Lalu"
-                else -> LocalDateTime.parse(time)
-                    .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            fun GetDateValue(value: String): Date {
+                val temp = value.split("T")
+                val time = temp[1].split(":")
+                val date = "${temp[0]} ${time[0]}:${time[1]}"
+                var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+                return dateFormat.parse(date)
             }
 
-        }
+            fun dateDiff(): String {
+                val date1 = GetDateValue(time).time
+                val date2 = GetDateValue(now).time
 
-        holder.uploadAt.text = dateDiff()
+                val diff = (date2 - date1) / 1000
+                return when {
+                    diff < MINUTE -> "Baru Saja"
+                    diff < 2 * MINUTE -> "Beberapa Menit Lalu"
+                    diff < 60 * MINUTE -> "${diff / MINUTE} Menit Lalu"
+                    diff < 2 * HOUR -> "Beberapa Jam Lalu"
+                    diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
+                    diff < 2 * DAY -> "Kemarin"
+                    diff < WEEK -> "${diff / DAY} Hari Lalu"
+                    else -> LocalDateTime.parse(time)
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                }
+
+            }
+
+            holder.uploadAt.text = dateDiff()
+        } else holder.uploadAt.text = " "
+
+
         val status = currentItem?.publish
         if (status == true) {
             holder.status.text = "Aktif"
@@ -87,7 +95,7 @@ class ListApplicantAdapter(
             holder.status.setTextColor(Color.parseColor("#C12929"))
         }
         holder.cardApplicantJob.setOnClickListener {
-           onFragmentClickListener?.goToListJobApplicant(currentItem?.jobNo?.toLong()!!)
+            onFragmentClickListener?.goToListJobApplicant(currentItem?.jobNo?.toLong()!!)
         }
     }
 

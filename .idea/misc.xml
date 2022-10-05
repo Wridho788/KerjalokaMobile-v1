@@ -128,7 +128,7 @@
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_2.xml" value="0.125" />
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_3.xml" value="0.125531914893617" />
         <entry key="app/src/main/res/layout/fragment_company_add_jobs_4.xml" value="0.412109375" />
-        <entry key="app/src/main/res/layout/fragment_company_add_jobs_5.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/fragment_company_add_jobs_5.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_company_compare_jobseeker.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_company_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_detail_test.xml" value="0.19693221177634834" />
@@ -149,7 +149,7 @@
         <entry key="app/src/main/res/layout/fragment_job_nearme.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_page.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_job_recommendation.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_jobseeker_review.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_jobseeker_review.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_komentar_applicant.xml" value="0.1801088570014844" />
         <entry key="app/src/main/res/layout/fragment_lamaran.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/fragment_modal_global.xml" value="0.165" />
@@ -189,7 +189,7 @@
         <entry key="app/src/main/res/layout/item_list_educations.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_list_experiences.xml" value="0.14497773379515091" />
         <entry key="app/src/main/res/layout/item_location.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_location_job.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_location_job.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_section_record_applicant.xml" value="0.15239980207817913" />
         <entry key="app/src/main/res/layout/item_size_company.xml" value="0.2015810276679842" />
         <entry key="app/src/main/res/layout/jsprofile_modal_edit_basic.xml" value="0.15239980207817913" />
@@ -209,7 +209,7 @@
         <entry key="app/src/main/res/layout/modal_withdraw_layout.xml" value="0.22958931222167245" />
         <entry key="app/src/main/res/layout/review_section.xml" value="0.125" />
         <entry key="app/src/main/res/layout/section_company_add_jobs_4.xml" value="0.16170212765957448" />
-        <entry key="app/src/main/res/layout/section_company_add_jobs_5.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/section_company_add_jobs_5.xml" value="0.165" />
         <entry key="app/src/main/res/layout/section_company_jobs.xml" value="0.25" />
         <entry key="app/src/main/res/layout/section_find_category.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/section_my_interview.xml" value="0.49635416666666665" />

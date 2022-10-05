@@ -11,9 +11,7 @@ import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.AddJobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityAddJobBinding
-import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
-import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
-import com.ciptakerjaarunika.kerjaloka.model.Data.Title
+import com.ciptakerjaarunika.kerjaloka.model.Data.*
 import com.ciptakerjaarunika.kerjaloka.model.Job.JobLocation
 import java.math.BigDecimal
 
@@ -32,8 +30,8 @@ class AddJobActivity : AppCompatActivity(), iAddJob {
     var getminExperience: Int? = 0
     var getjobExperienceLevelNo: Int? = 0
     var getjobDescription: String? = ""
-    var getjobTests: List<JobTest>? = listOf()
-    var getjobShortQuestion: List<JobShortQuestionDto>? = listOf()
+    var getjobTests: List<TestJob>? = listOf()
+    var getjobShortQuestion: List<ShortQuestion>? = listOf()
     var getautoReject: Boolean? = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,8 +99,20 @@ class AddJobActivity : AppCompatActivity(), iAddJob {
                         MinExperience = getminExperience!!.toInt(),
                         JobExperienceLevelNo = getjobExperienceLevelNo!!,
                         JobDescription = getjobDescription!!,
-                        JobTest = getjobTests!!,
-                        JobShortQuestion = getjobShortQuestion!!,
+                        JobTest = getjobTests!!.map { item -> JobTestRequest(0, 0, item.testNo) },
+                        JobShortQuestion = getjobShortQuestion!!.map { item ->
+                            JobShortQuestionDto(
+                                0,
+                                0,
+                                item.shortQuestionNo,
+                                item.enabled,
+                                item.choice.map { choice ->
+                                    ShortChoice(
+                                        choice.isAnswer,
+                                        choice.shortQuestionChoiceNo
+                                    )
+                                })
+                        },
                         AutoReject = getautoReject,
                     )
                 ) {
@@ -164,6 +174,14 @@ class AddJobActivity : AppCompatActivity(), iAddJob {
     override fun addJobPage3(jobDescription: String?) {
         getjobDescription = jobDescription!!
     }
+
+    override fun addJobPage4(test: List<TestJob>?) {
+        getjobTests = test!!
+    }
+
+    override fun addJobPage5(shortQuestion: List<ShortQuestion>?) {
+        getjobShortQuestion = shortQuestion!!
+    }
 }
 
 interface iAddJob {
@@ -188,5 +206,13 @@ interface iAddJob {
 
     fun addJobPage3(
         jobDescription: String?
+    )
+
+    fun addJobPage4(
+        test: List<TestJob>?
+    )
+
+    fun addJobPage5(
+        shortQuestion: List<ShortQuestion>?
     )
 }

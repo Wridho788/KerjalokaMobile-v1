@@ -27,9 +27,9 @@ data class addJobRequest(
     var MinExperience: Int? = 0,
     var JobExperienceLevelNo: Int? = 0,
     var JobDescription: String? = "",
-    var JobTest: List<JobTest>?,
+    var JobTest: List<JobTestRequest>?,
     var JobShortQuestion: List<JobShortQuestionDto>?,
-    var AutoReject: Boolean?,
+    var AutoReject: Boolean? = true,
     var createdOn: String? = "",
     var expired: String? = "",
     var createdBy: String? = "",
@@ -51,7 +51,7 @@ data class JobShortQuestionDto(
     var JobShortQuestionNo: Long? = 0,
     var JobNo: Long? = 0,
     var ShortQuestionNo: Long? = 0,
-    var MustHave: Boolean? = false,
+    var MustHave: Boolean? = true,
     var choice: List<ShortChoice>
 )
 
@@ -84,4 +84,11 @@ data class ResponseCompanyJobs(
     val takedown: Boolean,
     val jobAdditionalDescription: Any? = null,
     val packageName: Any? = null
+)
+
+
+data class JobTestRequest (
+    val jobTestNo: Long,
+    val jobNo: Long,
+    val testNo: Long,
 )

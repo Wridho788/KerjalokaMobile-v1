@@ -59,9 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:checkable="true"
-            android:clickable="true"
-            android:focusable="true"
             app:cardCornerRadius="10dp"
             app:strokeColor="@color/light_500"
             app:strokeWidth="1dp">
@@ -86,10 +83,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6.59dp"
+                    android:clickable="false"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
                     app:cardCornerRadius="50dp"
                     app:cardElevation="0dp">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -161,21 +160,24 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <ScrollView
+
+                <LinearLayout
+                    android:id="@+id/layout_list_get_short_question"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:id="@+id/layout_list_get_short_question"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_short_questions_category"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/list_short_questions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:listitem="@layout/section_company_add_jobs_5" />
-                    </LinearLayout>
-                </ScrollView>
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

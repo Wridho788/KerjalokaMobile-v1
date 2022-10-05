@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.api.companyAddJob
 
 import android.content.Context
+import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestionCategoryResponse
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestionResponse
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import retrofit2.Call
@@ -50,6 +51,30 @@ class short_question_search {
                     onResult(response.body())
                 }
                 override fun onFailure(call: Call<ShortQuestionResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+}
+
+class short_question_category {
+    interface getShortQuestionCategory{
+        @GET("/company/shortquestion/category/list")
+        fun getShortQuestionCategory(): Call<ShortQuestionCategoryResponse>
+    }
+    fun getShortQuestionCategory(context: Context?, onResult: (ShortQuestionCategoryResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(getShortQuestionCategory::class.java)
+        retrofit.getShortQuestionCategory().enqueue(
+            object : Callback<ShortQuestionCategoryResponse>{
+                override fun onResponse(
+                    call: Call<ShortQuestionCategoryResponse>,
+                    response: Response<ShortQuestionCategoryResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<ShortQuestionCategoryResponse>, t: Throwable) {
                     onResult(null)
                 }
             }
