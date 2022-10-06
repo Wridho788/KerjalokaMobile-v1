@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
@@ -17,35 +16,34 @@ import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
+import com.reactnativegooglesignin.RNGoogleSigninModule.RC_SIGN_IN
 
 
 class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
 
     companion object {
         var googleSignInClient: GoogleSignInClient? = null
+        val REQUEST_CODE_GOOGLE_SIGN_IN = 0
     }
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken("863470789028-pmlnd7u7bifuj5ep8cvdp70eq3469nmb.apps.googleusercontent.com")
             .requestEmail()
             .build()
-        googleSignInClient= context?.let {
+        googleSignInClient = context?.let {
             GoogleSignIn.getClient(
-                it,gso)
-        };
-//        val googleSignInOptions = GoogleSignInOptions.Builder(
-//            GoogleSignInOptions.DEFAULT_SIGN_IN
-//        ).requestIdToken("438431947620-ecpi41uk3dhhf4mv8g8q993k3vs49ltm.apps.googleusercontent.com")
-//            .requestEmail()
-//            .build()
-        Log.d("Klik", "Start")
+                it, gso
+            )
+        }
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
         val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
@@ -96,19 +94,20 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         }
 
         btn_login_google.setOnClickListener {
-//            signInGoogle()
-            Toast.makeText(activity, "Sign in Google", Toast.LENGTH_SHORT).show()
-            val intent = googleSignInClient!!.signInIntent
-            startActivityForResult(intent, 100)
+            val signInIntent: Intent = googleSignInClient!!.getSignInIntent()
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+
         }
 
-        val register = itemView.findViewById<TextView>(R.id.register)
+        val register =
+            itemView.findViewById<TextView>(com.ciptakerjaarunika.kerjaloka.R.id.register)
         register.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kerjaloka.com/register"))
             startActivity(intent)
         }
 
-        val forgotPswd = itemView.findViewById<TextView>(R.id.forgotPswd)
+        val forgotPswd =
+            itemView.findViewById<TextView>(com.ciptakerjaarunika.kerjaloka.R.id.forgotPswd)
         forgotPswd.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kerjaloka.com/recovery"))
             startActivity(intent)
@@ -118,51 +117,26 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100) {
-            val temp = data?.data
-            Log.d("temp", temp.toString())
-            val credential: SignInCredential =
-                Identity.getSignInClient(requireActivity()).getSignInCredentialFromIntent(data)
-//            Log.d("TOken", credential.toString())
-        // Signed in successfully - show authenticated UI
-            // Signed in successfully - show authenticated UI
-//
-//
-//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//            task.addOnSuccessListener { res ->
-//                Log.d("TOken", res.toString())
-//            }
-//            task.addOnCompleteListener{res ->
-//                Log.d("TOken", res.toString())
-//            }
-//            Log.d("TOken", task.result.toString())
-//            // check condition
-//            task.onSuccessTask { googleRes ->
-//                return@onSuccessTask
-//            }
-//            {
-//                // When google sign in successful
-//                // Initialize string
-//                val s = "Google sign in successful"
-//                Toast.makeText(activity, s, Toast.LENGTH_SHORT).show()
-//                // Initialize sign in account
-//                try {
-//                    // Initialize sign in account
-//                    val googleSignInAccount = signInAccountTask
-//                        .getResult(ApiException::class.java)
-//                    if(googleSignInAccount!=null)
-//                    {
-//                        Log.d("googleSignInAccount", googleSignInAccount.toString())
-//
-//                    }
-//                } catch (e: ApiException) {
-//                    e.printStackTrace ()
-//
-//                }
-//            }
+        if (requestCode === RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            Log.d("data",data.toString())
+            handleSignInResult(task)
         }
     }
 
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
+
+            // Signed in successfully, show authenticated UI.
+//            updateUI(account)
+        } catch (e: ApiException) {
+            Log.d("signInResult:failed code=" + e.statusCode, e.toString())
+//            updateUI(null)
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -170,10 +144,5 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.activity_login, container, false)
     }
-
-//    private fun signInGoogle() {
-//        val signInIntent: Intent = Auth.GoogleSignInApi.getSignInIntent();
-//        startActivityForResult(signInIntent, RC_SIGN_IN)
-//    }
 
 }
