@@ -69,9 +69,10 @@ class FragmentEditJobType(var dataList : List<JobType>?) : Fragment(), iEditJobT
         }
     }
     private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(2), "Profile Page")
-        fragmentTransaction?.commit()
+//        val fragmentTransaction = parentFragmentManager.beginTransaction()
+//        fragmentTransaction?.replace(id, profilepage(2), "Profile Page")
+//        fragmentTransaction?.commit()
+        fragmentManager?.popBackStack()
     }
 
     override fun refreshRecyCleview() {

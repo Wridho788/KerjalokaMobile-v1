@@ -18,13 +18,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/backButton"
-            android:layout_centerVertical="true"
-            android:src="@drawable/back_white_icon"
-            android:layout_marginRight="10dp"/>
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_arrow_left_white" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

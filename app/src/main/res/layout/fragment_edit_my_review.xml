@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="50dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
 
     <ImageView
         android:id="@+id/btn_bottom_sheet"
@@ -40,8 +38,12 @@
         android:layout_height="2dp"
         android:layout_marginTop="10dp"
         android:background="@color/light_500" />
-
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <ScrollView
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -318,22 +320,26 @@
                 android:layout_height="2dp"
                 android:background="@color/light_500" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/sendReview"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="16dp"
-                android:backgroundTint="@color/danger_500"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Simpan"
-                android:textAllCaps="false"
-                android:textSize="14dp"
-                app:cornerRadius="100dp" />
         </LinearLayout>
     </ScrollView>
-
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:paddingBottom="10dp">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sendReview"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/danger_500"
+        android:fontFamily="@font/poppins_medium"
+        android:text="Simpan"
+        android:textAllCaps="false"
+        android:textSize="14dp"
+        app:cornerRadius="100dp" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

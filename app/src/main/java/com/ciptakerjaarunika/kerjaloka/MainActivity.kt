@@ -222,9 +222,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     open fun replaceFragment(fragment: Fragment, nameFragment : String?) {
-        binding?.bottomNavigationView?.visibility = GONE
-        binding?.bottomNavigationCompanyView?.visibility = GONE
-
         var selectedId : Int? = null
 
         when (nameFragment){
@@ -245,29 +242,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
         AUTHAPI().CheckLogin(baseContext) {
+            binding?.bottomNavigationView?.visibility = GONE
+            binding?.bottomNavigationCompanyView?.visibility = GONE
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container, fragment)
             fragmentTransaction.commit()
-        }
-        if (SessionManager(baseContext).user == null || SessionManager(baseContext).user?.roleNo == Role.Jobseekers.value) {
-            binding?.bottomNavigationView?.visibility = VISIBLE
-            if (selectedId != null) {
-                val menu: Menu = binding.bottomNavigationView.getMenu()
-                menu.forEach { item ->
-                    item.isChecked = item.itemId == selectedId
+            if (SessionManager(baseContext).user == null || SessionManager(baseContext).user?.roleNo == Role.Jobseekers.value) {
+                binding?.bottomNavigationView?.visibility = VISIBLE
+                if (selectedId != null) {
+                    binding.bottomNavigationView.getMenu().forEach { item ->
+                        item.isChecked = item.itemId == selectedId
+                    }
                 }
-            }
-
-        } else if (SessionManager(baseContext).user?.roleNo == Role.Companies.value || SessionManager(baseContext).user?.company != null) {
-            binding?.bottomNavigationCompanyView?.visibility = VISIBLE
-            if(selectedId == R.id.lamaran){
-                selectedId = R.id.pelamar
-            }
-            if (selectedId != null) {
-                val menu: Menu = binding.bottomNavigationCompanyView.getMenu()
-                menu.forEach { item ->
-                    item.isChecked = item.itemId == selectedId
+            } else if (SessionManager(baseContext).user?.roleNo == Role.Companies.value || SessionManager(
+                    baseContext
+                ).user?.company != null
+            ) {
+                binding?.bottomNavigationCompanyView?.visibility = VISIBLE
+                if (selectedId == R.id.lamaran) {
+                    selectedId = R.id.pelamar
+                }
+                if (selectedId != null) {
+                    binding.bottomNavigationCompanyView.getMenu().forEach { item ->
+                        item.isChecked = item.itemId == selectedId
+                    }
                 }
             }
         }

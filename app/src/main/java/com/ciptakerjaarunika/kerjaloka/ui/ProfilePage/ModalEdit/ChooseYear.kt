@@ -19,7 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iManageExp
 import java.time.LocalDate
 
 
-class ChooseYear(val type:String, val value: Int?, val iManageExp: iManageExp ): SuperBottomSheetFragment() {
+class ChooseYear(val type:String, val value: Int?, val iManageExp: iManageExp ): SuperBottomSheetFragment(), iCloseModal {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -35,18 +35,17 @@ class ChooseYear(val type:String, val value: Int?, val iManageExp: iManageExp ):
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<Int>()
+        var list : List<Int> = listOf()
         val now = LocalDate.now().year
 
-        for (i in now..now - 100){
-            list.add(i)
+        for (i in now - 100..now){
+            list +=  i
         }
-
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ChooseYearAdapter(type, list, iManageExp)
+            adapter = ChooseYearAdapter(type,value, list.sortedDescending(), iManageExp, this@ChooseYear)
         }
     }
 
@@ -63,4 +62,11 @@ class ChooseYear(val type:String, val value: Int?, val iManageExp: iManageExp ):
             .getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt();
     }
+
+    override fun close() {
+        this.dismiss()
+    }
+}
+interface iCloseModal{
+    fun close()
 }

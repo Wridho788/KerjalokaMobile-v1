@@ -52,6 +52,11 @@ class DateUtils {
         val date2 = GetDateValue(end).time
         return if (date1 > date2) ((date1 - date2)/60000).toInt() else ((date2 - date1)/60000).toInt()
     }
+    open fun GetDiffMonth(start : String, end : String): Int {
+        val date1 = GetDateValue(start).time
+        val date2 = GetDateValue(end).time
+        return if (date1 > date2) ((date1 - date2)/2592000000).toInt() else ((date2 - date1)/2592000000).toInt()
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     open fun GetHeaderMessage(value: String) : String {
         val dateValue =  GetDateValue(value)

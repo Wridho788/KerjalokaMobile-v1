@@ -17,7 +17,7 @@
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_back"
+            app:navigationIcon="@drawable/ic_arrow_left_white"
             android:elevation="0dp"
             app:title="Perusahaan" />
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_followed_company" />
+            <include layout="@layout/layout_followed_company"/>
             <include layout="@layout/layout_browse_company" />
             <include layout="@layout/layout_vacancies_company" />
 

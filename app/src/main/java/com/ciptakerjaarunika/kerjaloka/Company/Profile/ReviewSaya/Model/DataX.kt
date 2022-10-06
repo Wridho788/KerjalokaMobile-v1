@@ -7,7 +7,7 @@ data class DataX(
     @SerializedName("approved")
     var approved: Boolean,
     @SerializedName("approvedOn")
-    var approvedOn: String,
+    var approvedOn: String?,
     @SerializedName("comment")
     var comment: String?,
     @SerializedName("conRating")
@@ -21,9 +21,9 @@ data class DataX(
     @SerializedName("ratingAt")
     var ratingAt: String,
     @SerializedName("ratingBy")
-    var ratingBy: String,
+    var ratingBy: String?,
     @SerializedName("userFullName")
-    var userFullName: String,
+    var userFullName: String?,
     @SerializedName("userNo")
     var userNo: Long,
     @SerializedName("userRatingNo")

@@ -3,7 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingVertical="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_500"
+        android:layout_marginBottom="10dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/poppins"
                 android:text="Duration"
                 android:textColor="@color/black"
                 android:textSize="10sp" />
@@ -62,16 +68,17 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/removeEdu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/delete_btn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@drawable/ic_button_close"
-                tools:ignore="InvalidId" />
+                tools:ignore="InvalidId"
+                android:layout_marginBottom="10dp"/>
 
             <ImageButton
-                android:id="@+id/editEdu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/edit_btn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:background="@drawable/ic_button_edit"
                 tools:ignore="InvalidId" />
         </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
@@ -49,7 +50,7 @@ class AppealReviewModal: SuperBottomSheetFragment() {
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val data = it.data
                 val fileUri: Uri = data!!.data!!
-                val pathName = context?.let { it2 -> PathUtil().getPath(it2, fileUri) }
+                val pathName = context?.let { it2 -> PathUtil().getRealPath(it2, fileUri) }
 
                 val file = File(pathName?:"")
                 this.file = file
@@ -98,12 +99,15 @@ class AppealReviewModal: SuperBottomSheetFragment() {
             val AppealMessage = txtAppeal.text.toString()
                 btnSend.setOnClickListener{
                     if (RatingBy != null) {
-                        file?.let { it1 ->
-                            UserRatingAPI().AppealReview(RatingBy, AppealMessage,
-                                it1, context){
-                                this.dismiss()
+                        UserRatingAPI().SendAppeal(RatingBy, AppealMessage,file, context){
+                            if (it != null) {
+                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                                if(it.code==210) {
+                                    this.dismiss()
+                                }
                             }
                         }
+
                     }
             }
         }

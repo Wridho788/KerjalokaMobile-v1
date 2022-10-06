@@ -107,9 +107,7 @@ class fragment_edit_interest_layout(val jobseekerFields: List<Field>?) : Fragmen
         }
     }
     private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(2), "Profile Page")
-        fragmentTransaction?.commit()
+        fragmentManager?.popBackStack()
     }
 }
 

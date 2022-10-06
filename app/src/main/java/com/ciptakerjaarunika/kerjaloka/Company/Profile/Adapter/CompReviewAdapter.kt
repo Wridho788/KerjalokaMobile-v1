@@ -2,12 +2,15 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.AppealModal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -22,6 +25,7 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
         var conChip : ChipGroup
         var ratBar : RatingBar
         var appeal : MaterialButton
+        var logo : ImageView
 
         init {
             creator = itemView.findViewById(R.id.nama_jobseeker)
@@ -31,6 +35,7 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
             conChip = itemView.findViewById(R.id.chipGroup_kekurangan)
             ratBar = itemView.findViewById(R.id.ratingbar)
             appeal = itemView.findViewById(R.id.btn_appeal)
+            logo = itemView.findViewById(R.id.logo)
         }
     }
 
@@ -50,7 +55,9 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
             listener.appealModal(currentItem)
         }
 
-
+        Glide.with(context)
+            .load(config().portAddress + "/photo/Profile/" + currentItem.raterPhoto).fitCenter()
+            .into(holder.logo)
 
         if (currentItem.conRating.isNotEmpty()){
             currentItem.conRating.forEach {
@@ -64,7 +71,7 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
                     isClickable = false
                     isCheckable = false
                     holder.apply {
-                        conChip.addView(chip as View)
+                        holder.conChip.addView(chip as View)
                     }
                 }
             }

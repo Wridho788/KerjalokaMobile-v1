@@ -14,26 +14,26 @@ import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseMonthAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseScaleAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iManageExp
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.month
 
-class ChooseMonth(val value: Int?): SuperBottomSheetFragment() {
+class ChooseMonth(val value: Int?, val type: String, val iManageExp: iManageExp): SuperBottomSheetFragment(), iCloseModal {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
-        title.text = "Pilih Level "
+        title.text = "Pilih Bulan "
         return view
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = ArrayList<month>()
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ChooseMonthAdapter(value)
+            adapter = ChooseMonthAdapter(type,value, iManageExp, this@ChooseMonth)
         }
     }
 
@@ -49,6 +49,9 @@ class ChooseMonth(val value: Int?): SuperBottomSheetFragment() {
             .defaultDisplay
             .getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt();
+    }
+    override fun close() {
+        this.dismiss()
     }
 
 }

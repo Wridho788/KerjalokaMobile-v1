@@ -32,7 +32,8 @@
                 android:layout_gravity="center"
                 android:paddingLeft="16dp"
                 app:cornerRadius="100sp"
-                app:icon="@drawable/ic_back"
+                app:icon="@drawable/ic_arrow_left_red"
+                android:id="@+id/back_btn"
                 app:iconTint="@color/danger_500"/>
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -40,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:titleTextColor="@color/black"
-                app:title="Edit Lampiran"
+                app:title="Edit Dokumen Vaksin"
                 android:layout_gravity="center"/>
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -51,6 +52,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="8dp"
+            android:background="@color/white"
             android:paddingHorizontal="16dp"
             android:paddingVertical="16dp">
 
@@ -60,7 +62,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/unggah_vaksin_pertama"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
@@ -69,31 +70,38 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="35dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/btn_unggah_vaksin_pertama"
+                android:background="@drawable/card_background_primary">
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/btn_unggah_vaksin_pertama"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/vaccine1_txt"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:backgroundTint="@color/white"
-                    app:strokeColor="@color/danger_500"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     app:strokeWidth="1dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Upload"
                     android:textColor="@color/danger_500"
-                    android:textAllCaps="false"
-                    android:textSize="14dp"
-                    app:cornerRadius="100dp"
-                    tools:layout_editor_absoluteX="17dp"
-                    tools:layout_editor_absoluteY="346dp"/>
-            </LinearLayout>
+                    android:textSize="14dp"/>
+                <ImageButton
+                    android:visibility="gone"
+                    android:id="@+id/delete1_btn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_button_close"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    />
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -110,7 +118,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/unggah_vaksin_kedua"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
@@ -119,31 +126,38 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="35dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/btn_unggah_vaksin_kedua"
+                android:background="@drawable/card_background_primary">
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/btn_unggah_vaksin_kedua"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/vaccine2_txt"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:backgroundTint="@color/white"
-                    app:strokeColor="@color/danger_500"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     app:strokeWidth="1dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Upload"
                     android:textColor="@color/danger_500"
-                    android:textAllCaps="false"
-                    android:textSize="14dp"
-                    app:cornerRadius="100dp"
-                    tools:layout_editor_absoluteX="17dp"
-                    tools:layout_editor_absoluteY="346dp"/>
-            </LinearLayout>
+                    android:textSize="14dp"/>
+                <ImageButton
+                    android:visibility="gone"
+                    android:id="@+id/delete2_btn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_button_close"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    />
+            </RelativeLayout>
         </LinearLayout>
 
 
@@ -161,7 +175,6 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/unggah_vaksin_ketiga"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
@@ -170,31 +183,39 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="35dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/btn_unggah_vaksin_ketiga"
+                android:background="@drawable/card_background_primary">
 
-                <com.google.android.material.button.MaterialButton
-                    android:layout_marginTop="16dp"
-                    android:id="@+id/btn_unggah_vaksin_ketiga"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/vaccine3_txt"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:backgroundTint="@color/white"
-                    app:strokeColor="@color/danger_500"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     app:strokeWidth="1dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Upload"
                     android:textColor="@color/danger_500"
-                    android:textAllCaps="false"
-                    android:textSize="14dp"
-                    app:cornerRadius="100dp"
-                    tools:layout_editor_absoluteX="17dp"
-                    tools:layout_editor_absoluteY="346dp"/>
-            </LinearLayout>
+                    android:textSize="14dp"/>
+
+                <ImageButton
+                    android:visibility="gone"
+                    android:id="@+id/delete3_btn"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_button_close"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    />
+            </RelativeLayout>
         </LinearLayout>
 </LinearLayout>
 

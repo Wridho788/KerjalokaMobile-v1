@@ -113,15 +113,15 @@ class HomePage : Fragment(), OnFragmentClickListener {
 
     override fun onFragmentClick(JobNo: Long, CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.addToBackStack("")
         ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "jobDetailFragment")
-        ft.addToBackStack(null)
         ft.commit()
     }
 
     override fun onCompanyPage() {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.addToBackStack("")
         ft.replace(id, CompanyPage(), "companyFragment")
-        ft.addToBackStack(null)
         ft.commit()
     }
 

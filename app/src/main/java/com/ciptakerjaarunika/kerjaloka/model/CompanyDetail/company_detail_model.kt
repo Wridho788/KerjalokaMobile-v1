@@ -1,5 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.model.CompanyDetail
 
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
+
 
 data class company_detail_model(
     val code: Int,
@@ -22,6 +24,13 @@ data class company_detail_list(
     val job: List<job>,
     val link: String,
     val followers: Long,
+    var followed: Boolean,
+    var ownRating: Int?,
+    var ownRatingAt: String?,
+    var ownUserRatingNo: Int?,
+    var ownRatingComment: String?,
+    var ownProRating: List<String>?,
+    var ownConRating: List<String>?,
 )
 
 data class location(
@@ -31,11 +40,12 @@ data class location(
 
 data class rating(
     val ratingValue: Float,
-    val ratingList: ArrayList<*>
+    val ratingList: List<reviewList>
 )
 data class jobLocation(
     val cityNo : Int,
-    val location : String
+    val location : String,
+    val label : String
 )
 data class job(
     val jobNo: Long,

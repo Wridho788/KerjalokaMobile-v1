@@ -1,24 +1,27 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.iChooseMajor
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.DataAPI
+import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
+import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
+import com.ciptakerjaarunika.kerjaloka.model.Data.Major
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseMajorAdapter
 
 
-class ChooseMajor : SuperBottomSheetFragment() {
-
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<ChooseMajorAdapter.chooseMajor>? = null
-    private lateinit var chooseMajorAdapter: ChooseMajorAdapter
+class ChooseMajor(val value: Int?,val majors : List<Major>, val iUpdateMajor: iUpdateMajor) : SuperBottomSheetFragment(),
+    iChooseMajor {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,33 +29,74 @@ class ChooseMajor : SuperBottomSheetFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
+
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
-        title.text = "Pilih Bidang"
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = majors?.let { it1 ->
+                ChooseMajorAdapter(value,
+                    it1, this@ChooseMajor, iUpdateMajor)
+            }
+        }
+
+
+        var searchInput = view.findViewById<SearchView>(R.id.search_filter)
+        searchInput.visibility = View.VISIBLE
+
+
+            searchInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    val keyword = newText.toString().toLowerCase()
+                    if (keyword.isNullOrEmpty()) {
+                        recyclerView.apply {
+                            layoutManager = LinearLayoutManager(activity)
+                            adapter = majors?.let { it1 ->
+                                ChooseMajorAdapter(value,
+                                    it1, this@ChooseMajor, iUpdateMajor)
+                            }
+                        }
+                        recyclerView.adapter?.notifyDataSetChanged()
+                    } else {
+                        var temp = majors?.filter { data -> data.majorName.toLowerCase().contains(keyword)}
+                        recyclerView.apply {
+                            layoutManager = LinearLayoutManager(activity)
+                            adapter = temp?.let { it1 ->
+                                ChooseMajorAdapter(value,
+                                    it1, this@ChooseMajor, iUpdateMajor)
+                            }
+                        }
+                        recyclerView.adapter?.notifyDataSetChanged()
+                    }
+                    return true;
+                }
+            })
+        title.text = "Pilih Bidang Studi"
 
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-        layoutManager = LinearLayoutManager(activity)
-        recyclerView.layoutManager = layoutManager
-        DataAPI().GetMajors(context){
-            if(it != null){
-                adapter = ChooseMajorAdapter(it)
-                recyclerView.adapter = adapter
-            }
-        }
-    }
-
+    override fun getCornerRadius() = 30f
 
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
     }
 
     @SuppressLint("Range")
-    override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
+    override fun getExpandedHeight(): Int {
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
+    }
+    override fun close() {
+        this.dismiss()
+
+    }
 }
+

@@ -61,12 +61,12 @@
                 android:id="@+id/review_send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <include layout="@layout/review_section" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_my_review"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -85,14 +85,177 @@
                     android:textColor="@color/dark_100"
                     android:layout_marginStart="16dp"
                     />
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_item_my_review"
+                <LinearLayout
+                    android:padding="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_marginBottom="10dp"
-                    android:paddingHorizontal="16dp"
-                    tools:listitem="@layout/item_card_review" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/card_background_500"
+                            android:padding="10dp">
+
+                            <LinearLayout
+                                android:id="@+id/layout_header"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/myReviewPhoto"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginEnd="15dp"
+                                    android:scaleType="fitCenter"
+                                    android:src="@drawable/ic_account" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/myReviewName"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="20dp"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:textColor="@color/black"
+                                        android:text="User fullname"
+                                        android:textSize="16sp" />
+
+                                    <RatingBar
+                                        style="@style/Widget.AppCompat.RatingBar.Small"
+                                        android:id="@+id/myRating"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:max="5" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <!--            section kelebihan -->
+                            <LinearLayout
+                                android:id="@+id/layout_kelebihan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="@string/kelebihan"
+                                    android:textColor="@color/dark_100" />
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/myChipGroupPro"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/layout_tantangan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="@string/tantangan"
+                                    android:textColor="@color/dark_100" />
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/myChipGroupCon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    />
+                            </LinearLayout>
+                            <!--            section review-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="@string/review"
+                                    android:textColor="@color/dark_100" />
+
+                                <TextView
+                                    android:id="@+id/myReviewText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:fontFamily="@font/poppins"
+                                    android:textColor="@color/dark_100"
+                                    android:textSize="12sp" />
+                                <TextView
+                                    android:id="@+id/myReviewAt"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/trueGray_50"
+                                    android:fontFamily="@font/poppins"
+                                    android:textSize="10sp"
+                                    android:layout_marginTop="10dp"
+                                    tools:ignore="SmallSp" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/btn_Edit"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="top"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginRight="8dp"
+                                        android:backgroundTint="@color/white"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:text="Edit"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/danger_500"
+                                        android:textSize="14dp"
+                                        app:cornerRadius="100dp"
+                                        app:strokeColor="@color/danger_500"
+                                        app:strokeWidth="1dp"
+                                        tools:layout_editor_absoluteX="17dp"
+                                        tools:layout_editor_absoluteY="346dp"
+                                        android:layout_weight="5"/>
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/btn_delete"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="top"
+                                        android:layout_marginLeft="8dp"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginRight="8dp"
+                                        android:backgroundTint="@color/white"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:text="Hapus"
+                                        android:textAllCaps="false"
+                                        android:textColor="@color/danger_500"
+                                        android:textSize="14dp"
+                                        app:cornerRadius="100dp"
+                                        app:strokeColor="@color/danger_500"
+                                        app:strokeWidth="1dp"
+                                        tools:layout_editor_absoluteX="17dp"
+                                        tools:layout_editor_absoluteY="346dp"
+                                        android:layout_weight="5"/>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
 
 
@@ -101,6 +264,17 @@
                 android:layout_height="5dp"
                 android:layout_marginVertical="16dp"
                 android:background="@color/light_500" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/no_data_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="20dp"
+                android:fontFamily="@font/poppins"
+                android:textSize="14dp"
+                android:paddingLeft="10dp"
+                android:text="Tidak ada data review..."
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_item_card"
@@ -110,6 +284,8 @@
                 android:layout_marginBottom="10dp"
                 android:paddingHorizontal="16dp"
                 tools:listitem="@layout/item_card_review" />
+
+
         </LinearLayout>
 
 

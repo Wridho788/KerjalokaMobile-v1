@@ -39,8 +39,9 @@
                     android:id="@+id/logo"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:scaleType="center"
-                    tools:ignore="ContentDescription" />
+                    android:scaleType="centerCrop"
+                    tools:ignore="ContentDescription"
+                    android:src="@drawable/ic_account"/>
             </LinearLayout>
 
             <LinearLayout
@@ -100,7 +101,7 @@
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup_kelebihan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></com.google.android.material.chip.ChipGroup>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
 
