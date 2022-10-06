@@ -22,9 +22,13 @@ import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import com.reactnativegooglesignin.RNGoogleSigninModule
 
 
 class AkunPage() : Fragment() {
@@ -94,6 +98,22 @@ class AkunPage() : Fragment() {
                     SessionManager(context).user = null
                 }
             }
+        }
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken("863470789028-pmlnd7u7bifuj5ep8cvdp70eq3469nmb.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+        Login.googleSignInClient = context?.let {
+            GoogleSignIn.getClient(
+                it, gso
+            )
+        }
+
+        val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
+        btn_login_google.setOnClickListener {
+            val signInIntent: Intent = Login.googleSignInClient!!.getSignInIntent()
+            startActivityForResult(signInIntent, RNGoogleSigninModule.RC_SIGN_IN)
+
         }
 
         val register = itemView.findViewById<TextView>(R.id.register)

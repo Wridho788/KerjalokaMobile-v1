@@ -182,28 +182,29 @@
                 android:text="Masuk menggunakan Google"
                 />
 
-            <com.google.android.material.button.MaterialButton
-                android:textColor="@color/black"
-                android:id="@+id/btn_LoginFB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:cornerRadius="100sp"
-                app:strokeColor="@color/trueGray_300"
-                app:strokeWidth="1.5sp"
-                app:icon="@drawable/ic_account"
-                app:iconGravity="textStart"
-                android:text="Masuk menggunakan Facebook"
-                />
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:textColor="@color/black"-->
+<!--                android:id="@+id/btn_LoginFB"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:fontFamily="@font/poppins_bold"-->
+<!--                android:textSize="14sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+<!--                app:cornerRadius="100sp"-->
+<!--                app:strokeColor="@color/trueGray_300"-->
+<!--                app:strokeWidth="1.5sp"-->
+<!--                app:icon="@drawable/ic_account"-->
+<!--                app:iconGravity="textStart"-->
+<!--                android:text="Masuk menggunakan Facebook"-->
+<!--                />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
