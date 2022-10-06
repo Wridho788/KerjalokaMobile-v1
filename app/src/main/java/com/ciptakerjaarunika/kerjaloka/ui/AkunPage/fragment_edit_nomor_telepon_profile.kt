@@ -35,7 +35,7 @@ class fragment_edit_nomor_telepon_profile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_nomor_telepon_profile, container, false)
+        return inflater.inflate(R.layout.fragment_history, container, false)
     }
 
     companion object {

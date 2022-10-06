@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AkunPage.fragment_edit_email_profile">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    tools:context=".ui.AkunPage.fragment_edit_email_profile"
+    android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/mainAppbar"
@@ -143,9 +139,11 @@
                 android:textSize="10sp"/>
 
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_simpan_username"
-            android:layout_marginTop="550dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -159,8 +157,7 @@
             app:cornerRadius="100dp"
             tools:layout_editor_absoluteX="17dp"
             tools:layout_editor_absoluteY="346dp"/>
-
     </LinearLayout>
 
 
-</FrameLayout>
+</LinearLayout>

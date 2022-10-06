@@ -63,6 +63,7 @@ class Login(val Goto :Fragment, val nameFragment: String) : Fragment() {
                                 emailHasVerified = null,
                                 isDeleted = null,
                                 isNewsletter = null,
+                                isDiscoverable = false,
                                 lastChangeUsername = null,
                                 username = "",
                                 company = null,

@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ChangeUsernameRequest
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.DeactivatedAccount
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.CategoryList
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.RatingSendedResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.editReviewRequest
@@ -143,6 +144,32 @@ class UsersAPI{
                     onResult(null)
                 }
 
+            }
+        )
+    }
+
+    data class  deactivatedResponse(val code :Int, val message : String)
+    interface deactivatedAccount {
+        @Headers("Content-Type: application/json", "Accept: application/json")
+        @POST("users/account/deactivate")
+        fun deactivatedAccount(@Body deactivatedAccount: DeactivatedAccount) : Call<deactivatedResponse>
+    }
+
+    fun DeactiveAccount(password : String, context: Context?, onResult: (deactivatedResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(deactivatedAccount::class.java)
+
+        retrofit.deactivatedAccount(DeactivatedAccount(password)).enqueue(
+            object : Callback<deactivatedResponse>{
+                override fun onResponse(
+                    call: Call<deactivatedResponse>,
+                    response: Response<deactivatedResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<deactivatedResponse>, t: Throwable) {
+                    onResult(null)
+                }
             }
         )
     }

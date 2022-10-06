@@ -54,7 +54,6 @@ class company_package_list : Fragment() {
                     val jobData = Gson().toJson(it?.data)
                     mBundle.putString(history_modal.EXTRA_HISTORY_PACKAGE, jobData)
                     sheet.arguments = mBundle
-                    Log.d("data", pack.orderNo.toString())
 
                     activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
                 }

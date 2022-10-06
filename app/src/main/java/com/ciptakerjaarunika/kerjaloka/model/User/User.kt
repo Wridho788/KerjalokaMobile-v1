@@ -19,6 +19,7 @@ data class User(
     var authorized: Boolean?,
     var isDeleted: Boolean?,
     var isNewsletter: Boolean?,
+    var isDiscoverable: Boolean?,
     var lastChangeUsername: String?,
     var notice: Long?,
     var jobseekerAdditional: JobseekerAdditional?,

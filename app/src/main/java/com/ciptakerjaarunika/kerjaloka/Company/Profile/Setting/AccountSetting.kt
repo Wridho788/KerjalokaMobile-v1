@@ -13,6 +13,7 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.airbnb.lottie.parser.ColorParser
+import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
@@ -22,6 +23,7 @@ import com.ciptakerjaarunika.kerjaloka.api.users
 import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScore
 import com.google.android.material.button.MaterialButton
+import com.google.gson.Gson
 
 
 class AccountSetting(val data: data?) : Fragment() {
@@ -41,7 +43,7 @@ class AccountSetting(val data: data?) : Fragment() {
         val btn_editPhone = view.findViewById<TextView>(R.id.edit_nomor_telepon_setting)
         val btn_editEmail = view.findViewById<TextView>(R.id.edit_email_profile_setting)
         val btn_editPswd = view.findViewById<TextView>(R.id.edit_kata_sandi)
-        val btn_deactived = view.findViewById<MaterialButton>(R.id.btn_nonaktifkan_akun)
+        val btn_deactived = view.findViewById<MaterialButton>(R.id.btn_deactivedAcc)
         val txt_usrName = view.findViewById<TextView>(R.id.profile_username)
         val txt_phone = view.findViewById<TextView>(R.id.profile_nomor_telepon)
         val txt_email = view.findViewById<TextView>(R.id.profile_email)
@@ -57,7 +59,6 @@ class AccountSetting(val data: data?) : Fragment() {
         txt_addrees.text = data?.companyAddress
         users().CompanyGetUserData(context) {
             discover.isChecked = it?.data?.isDiscoverable!!
-            Log.d("onCreateView: ", it?.data?.isDiscoverable.toString())
             newsletter.isChecked = it?.data?.isNewsletter!!
             if (it?.data?.userGoogleId.isNullOrEmpty()){
                 btn_connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FF6666"))
@@ -82,7 +83,6 @@ class AccountSetting(val data: data?) : Fragment() {
 
             newsletter.setOnClickListener { it1 ->
                 val setNl = it?.data.isNewsletter
-                Log.d("asd", setNl.toString())
                 company_profile_api().newsletter(setNl, context){}
             }
         }
