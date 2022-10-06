@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -43,6 +44,10 @@ class CompanyBrowseAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job, null)
+        view.layoutParams = ConstraintLayout.LayoutParams(
+            RecyclerView.LayoutParams.MATCH_PARENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 

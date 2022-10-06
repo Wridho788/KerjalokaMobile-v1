@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/notif_logo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/kerjaloka_logo_small"/>
+        <TextView
+            android:id="@+id/title_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Title"
+            android:fontFamily="@font/poppins_semibold"
+            android:layout_toRightOf="@id/notif_logo"/>
+        <TextView
+            android:id="@+id/message_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="Description of Notification"
+            android:layout_below="@id/title_notification"
+            android:fontFamily="@font/poppins"
+            android:layout_toRightOf="@id/notif_logo"/>
+    </RelativeLayout>
+
+</LinearLayout>

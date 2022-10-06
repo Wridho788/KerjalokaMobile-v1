@@ -10,6 +10,8 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -50,6 +52,13 @@ class JobPage: Fragment(), IJobPage{
         binding.backButton.setOnClickListener{
             fragmentManager?.popBackStack()
         }
+//        val callback: OnBackPressedCallback =
+//            object : OnBackPressedCallback(true /* enabled by default */) {
+//                override fun handleOnBackPressed() {
+//                    fragmentManager?.popBackStack()
+//                }
+//            }
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()

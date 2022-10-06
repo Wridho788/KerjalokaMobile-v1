@@ -59,16 +59,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.visibility = GONE
-        binding.bottomNavigationCompanyView.visibility = GONE
-
-        AUTHAPI().CheckLogin(baseContext) {
-//            if(it?.user?.roleNo == Role.Jobseekers.value){
-//                // User Jobseeker
-//            }
-//            else if(it?.user?.roleNo == Role.Jobseekers.value || SessionManager(baseContext).user?.company != null) {
-//                // User Company
-//            }
+        AUTHAPI().CheckLogin(baseContext, this) {
 
             var context = baseContext
             hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
@@ -120,38 +111,53 @@ class MainActivity : AppCompatActivity() {
                     0 // or HIDE_IMPLICIT_ONLY
                 )
             }
-            
 
-//
 
+            var isCompany = SessionManager(context).user != null && (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null)
+
+            if (!isCompany) {
+                replaceFragment(HomePage())
+            } else {
+                replaceFragment(CompanyDashboard())
+            }
+            binding.bottomNavigationView.menu.forEach { item ->
+                if(item.itemId == R.id.lamaran){
+                    if(!isCompany) {
+                        item.title = "Lamaran"
+                    }
+                    else{
+                        item.title = "Pelamar"
+                    }
+                }
+            }
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                var isCompany = SessionManager(context).user != null && (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null)
+
                 when (item.itemId) {
-                    R.id.home -> replaceFragment((HomePage()), null)
-                    R.id.lamaran -> replaceFragment((LamaranPage()), null)
-                    R.id.interview -> replaceFragment((InterviewPage()), null)
-                    R.id.akun -> replaceFragment((AkunPage()), null)
+                    R.id.home -> replaceFragment(if(!isCompany) HomePage() else CompanyDashboard())
+                    R.id.lamaran -> {
+                        if(!isCompany) {
+                            replaceFragment(LamaranPage())
+                        }
+                        else{
+                            item.title = "Pelamar"
+                            replaceFragment(CompanyListApplicantFragment())
+                        }
+                    }
+                    R.id.interview -> replaceFragment(InterviewPage())
+                    R.id.akun -> replaceFragment(AkunPage())
                 }
                 true
             }
-            binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.home -> replaceFragment((CompanyDashboard()), null)
-                    R.id.pelamar -> replaceFragment((CompanyListApplicantFragment()), null)
-                    R.id.interview -> replaceFragment((InterviewPage()), null)
-                    R.id.akun -> replaceFragment((AkunPage()), null)
-                }
-                true
-            }
-            if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
-                replaceFragment(HomePage(), null)
-                binding.bottomNavigationView.visibility = VISIBLE
-
-                // User Jobseeker
-
-            } else if (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null) {
-                replaceFragment(CompanyDashboard(), null)
-                binding.bottomNavigationCompanyView.visibility = VISIBLE
-            }
+//            binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
+//                when (item.itemId) {
+//                    R.id.home -> replaceFragment(CompanyDashboard())
+//                    R.id.pelamar -> replaceFragment(CompanyListApplicantFragment())
+//                    R.id.interview -> replaceFragment(InterviewPage())
+//                    R.id.akun -> replaceFragment(AkunPage())
+//                }
+//                true
+//            }
         }
 
         val settings = getSharedPreferences("prefs", 0)
@@ -221,54 +227,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    open fun replaceFragment(fragment: Fragment, nameFragment : String?) {
-        var selectedId : Int? = null
-
-        when (nameFragment){
-            "home" ->{
-                selectedId = R.id.home
-            }
-            "lamaran" ->{
-                selectedId = R.id.lamaran
-            }
-            "pelamar" ->{
-                selectedId = R.id.pelamar
-            }
-            "interview" ->{
-                selectedId = R.id.interview
-            }
-            "akun" ->{
-                selectedId = R.id.akun
-            }
-        }
-        AUTHAPI().CheckLogin(baseContext) {
-            binding?.bottomNavigationView?.visibility = GONE
-            binding?.bottomNavigationCompanyView?.visibility = GONE
+    open fun replaceFragment(fragment: Fragment) {
+        AUTHAPI().CheckLogin(baseContext, this) {
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container, fragment)
             fragmentTransaction.commit()
-            if (SessionManager(baseContext).user == null || SessionManager(baseContext).user?.roleNo == Role.Jobseekers.value) {
-                binding?.bottomNavigationView?.visibility = VISIBLE
-                if (selectedId != null) {
-                    binding.bottomNavigationView.getMenu().forEach { item ->
-                        item.isChecked = item.itemId == selectedId
-                    }
-                }
-            } else if (SessionManager(baseContext).user?.roleNo == Role.Companies.value || SessionManager(
-                    baseContext
-                ).user?.company != null
-            ) {
-                binding?.bottomNavigationCompanyView?.visibility = VISIBLE
-                if (selectedId == R.id.lamaran) {
-                    selectedId = R.id.pelamar
-                }
-                if (selectedId != null) {
-                    binding.bottomNavigationCompanyView.getMenu().forEach { item ->
-                        item.isChecked = item.itemId == selectedId
-                    }
-                }
-            }
         }
     }
 
@@ -276,6 +240,20 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, Login(Goto, nameFragment))
         fragmentTransaction.commit()
+    }
+
+    open fun refreshBottomSheet() {
+        var isCompany = SessionManager(baseContext).user != null && (SessionManager(baseContext).user?.roleNo == Role.Companies.value || SessionManager(baseContext).user?.company != null)
+        binding.bottomNavigationView.menu.forEach { item ->
+            if(item.itemId == R.id.lamaran){
+                if(!isCompany) {
+                    item.title = "Lamaran"
+                }
+                else{
+                    item.title = "Pelamar"
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {}

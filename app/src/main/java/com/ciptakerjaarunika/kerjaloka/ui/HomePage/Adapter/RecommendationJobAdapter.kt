@@ -5,17 +5,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.OnFragmentClickListener
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.JobAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
@@ -25,7 +33,7 @@ import java.util.*
 
 class RecommendationJobAdapter(
     private val context: Context,
-    private val rJobList: List<rJobModel>?,
+    private var rJobList: List<SearchJobModel>?,
     private val onFragmentClick: OnFragmentClickListener,
 ) :
     RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>() {
@@ -54,21 +62,25 @@ class RecommendationJobAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
+        view.layoutParams= ConstraintLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return rJobList?.size ?: 0
+        return rJobList?.take(5)?.size ?: 0
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (rJobList != null) {
-            val currentItem = rJobList[position]
+            val currentItem = rJobList!![position]
             holder.jobPosition.text = currentItem.jobPosition
-            holder.companyName.text = currentItem.companyName
-            holder.jobLocation.text = currentItem.jobLocation
+            holder.companyName.text = currentItem.company.companyName
+            holder.jobLocation.text = if(currentItem.jobLocation.size > 1) "Banyak lokasi" else currentItem.jobLocation[0].label
             val SECOND = 1
             val MINUTE = 60 * SECOND
             val HOUR = 60 * MINUTE
@@ -107,11 +119,26 @@ class RecommendationJobAdapter(
             holder.CreatedOn.text = dateDiff()
 
             Glide.with(holder.itemView.context)
-                .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
+                .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).fitCenter()
                 .into(holder.logo)
+            holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 
-//            holder.bookmarkedJob.setOnClickListener {
-//            }
+            if(SessionManager(context).user == null){
+                holder.bookmarkedJob.visibility = GONE
+            }
+            holder.bookmarkedJob.setOnClickListener {
+                JobAPI().BookmarkJob(currentItem.jobNo.toLong(), !currentItem.bookmarked, context) {
+                    if(it != null) {
+                        if (it.code == 210) {
+                            currentItem.bookmarked = !currentItem.bookmarked
+                            rJobList!![position].bookmarked = rJobList!![position].bookmarked
+                            onFragmentClick.bookmarkJob(rJobList!!)
+                        } else {
+                            Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
             holder.shareableJob.setOnClickListener {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
@@ -124,7 +151,7 @@ class RecommendationJobAdapter(
                 startActivity(context, shareIntent, null)
             }
             holder.cardRecommendationJob.setOnClickListener {
-                onFragmentClick.onFragmentClick(currentItem.jobNo, currentItem.companyNo)
+                onFragmentClick.onFragmentClick(currentItem.jobNo.toLong(), currentItem.company.companyNo)
             }
         }
     }

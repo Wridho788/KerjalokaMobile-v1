@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
@@ -91,8 +92,13 @@ class AkunPage() : Fragment() {
                         phone = "",
                     );
                     SessionManager(context).user = user
+
                     val mainActivity = activity as MainActivity
-                    mainActivity.replaceFragment(AkunPage(), "akun")
+                    AUTHAPI().CheckLogin(mainActivity,mainActivity) {
+                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                        ft.replace(id, AkunPage(), "Akun Page")
+                        ft.commit()
+                    }
                 }
                 else{
                     SessionManager(context).user = null

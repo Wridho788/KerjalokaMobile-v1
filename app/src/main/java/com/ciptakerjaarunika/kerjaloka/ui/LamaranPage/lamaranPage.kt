@@ -45,7 +45,6 @@ class LamaranPage : Fragment(), LamaranCellClickListener {
         toolbar.setTitle("Lamaran Saya")
 
 
-        var Context = this;
         if(SessionManager(context).user == null){
             val fragmentTransaction = parentFragmentManager.beginTransaction()
             fragmentTransaction.replace(id, Login(this, "lamaran"))
@@ -61,8 +60,10 @@ class LamaranPage : Fragment(), LamaranCellClickListener {
 
                     recyclerView.visibility = VISIBLE
                     recyclerView.apply {
-                        layoutManager = LinearLayoutManager(activity)
-                        adapter = Application(it.data, context, Context)
+                        if(!it?.data.isNullOrEmpty()) {
+                            layoutManager = LinearLayoutManager(activity)
+                            adapter = Application(it.data, context, this@LamaranPage)
+                        }
                     }
                 }
             }

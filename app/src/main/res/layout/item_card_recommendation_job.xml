@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingVertical="5dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_recommendation_job"
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="10dp"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
@@ -26,8 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="10dp"
+            android:padding="10dp"
             android:weightSum="1">
 
             <LinearLayout

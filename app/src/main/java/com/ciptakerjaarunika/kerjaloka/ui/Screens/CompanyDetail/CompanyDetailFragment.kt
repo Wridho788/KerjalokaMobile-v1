@@ -167,11 +167,6 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
             }
         }
 
-        toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
-        }
-
-
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }

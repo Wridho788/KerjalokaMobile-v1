@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -46,6 +47,10 @@ class RelatedCompanyJobAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
+        view.layoutParams = ConstraintLayout.LayoutParams(
+            RecyclerView.LayoutParams.MATCH_PARENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 

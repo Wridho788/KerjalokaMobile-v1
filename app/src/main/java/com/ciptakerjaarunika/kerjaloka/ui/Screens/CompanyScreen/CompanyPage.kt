@@ -22,6 +22,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyPageBinding
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_browse_list
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_followed_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.fragment_manage_cv_edit_education_page
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
@@ -106,12 +107,12 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.setNavigationOnClickListener {
+        binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            fragmentManager?.popBackStack()
-        }
+//        activity?.onBackPressedDispatcher?.addCallback(this) {
+//            fragmentManager?.popBackStack()
+//        }
         var user = SessionManager(context).user
         val layout_followed_company = view.findViewById<LinearLayout>(R.id.layout_followed_company)
         val layout_search_company = view.findViewById<LinearLayout>(R.id.search_company_btn)
@@ -126,13 +127,10 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
             getFollowedJobData()
         }
         getBrowserJobData()
-        val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-        toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
-        }
+
 
         layout_search_company.setOnClickListener{
             val intent = Intent(activity, CompanySearchActivity::class.java)
@@ -155,10 +153,15 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
         }
 
     }
+    private fun back(){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction?.replace(id, HomePage(), "Home Page")
+        fragmentTransaction?.commit()
+    }
     override fun onCompanyDetailPage(CompanyNo: Long){
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.addToBackStack("")
         ft.replace(R.id.fragment_container, CompanyDetailFragment(CompanyNo))
+        ft.addToBackStack("companyPage")
         ft.commit()
     }
 }

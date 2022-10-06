@@ -32,18 +32,18 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginRight="15dp"
                     android:src="@drawable/ic_arrow_left_white"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_centerVertical="true"
-                    android:paddingTop="3dp"
-                    android:textColor="@color/white"
                     android:layout_toEndOf="@id/backButton"
-                    android:text="Pekerjaan"
                     android:fontFamily="@font/poppins_semibold"
-                    android:textSize="20dp"
-                    />
+                    android:gravity="center"
+                    android:paddingTop="3dp"
+                    android:text="Pekerjaan"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
             </RelativeLayout>
         </com.google.android.material.appbar.MaterialToolbar>
 

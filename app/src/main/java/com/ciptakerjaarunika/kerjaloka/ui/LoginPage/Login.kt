@@ -9,13 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
+import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -89,10 +94,19 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                         )
 
                         SessionManager(context).user = User
-
-                        AUTHAPI().CheckLogin(context) {
-                            val mainActivity = activity as MainActivity
-                            mainActivity.replaceFragment(Goto, nameFragment)
+                        val mainActivity = activity as MainActivity
+                        AUTHAPI().CheckLogin(context, mainActivity) {
+                            if(nameFragment != "lamaran" || SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value){
+                                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                                    ft.replace(id, Goto,"")
+                                    ft.commit()
+                            }
+                            else if (nameFragment == "lamaran" && SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null
+                            ) {
+                                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                                    ft.replace(id, CompanyListApplicantFragment(),"")
+                                    ft.commit()
+                            }
                         }
                     }
                 }
