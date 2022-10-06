@@ -43,10 +43,7 @@ class fragment_company_jobs : Fragment() {
             startActivity(goToMainActivity)
         }
 
-        var list = ArrayList<Data>()
-
         JobAPI().getJob(context){
-            list = it?.data as ArrayList<Data>
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyle_company_jobs)
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)

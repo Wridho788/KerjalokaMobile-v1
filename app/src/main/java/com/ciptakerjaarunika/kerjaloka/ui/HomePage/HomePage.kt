@@ -72,7 +72,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
         }
 
 
-        if (SessionManager(context).user?.roleNo == Role.Jobseekers.value){
+        if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value){
             btn_job.setOnClickListener {
                 onJobPage()
             }

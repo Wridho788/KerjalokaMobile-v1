@@ -47,16 +47,10 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class JobDetailFragment(
-    private val JobNo: Long, private val CompanyNo: Long?,
-) : Fragment(),
-    IJobDetail {
+    private val JobNo: Long, private val CompanyNo: Long?) : Fragment(),IJobDetail {
     private lateinit var binding: FragmentJobDetailBinding
     private var jobBookmark = false;
     private var currentJob : rJobDetailModel? = null;
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
@@ -69,7 +63,6 @@ class JobDetailFragment(
         val view = binding.root
         return view
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
