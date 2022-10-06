@@ -36,7 +36,7 @@ class FieldsAdapter(
         holder.txtFields.text = item.fieldName
         holder.txtFields.setOnClickListener {
             iChooseFields.close()
-            iUpdatePage2.updateField(item.fieldName)
+            iUpdatePage2.updateField(item.fieldName, item.fieldNo)
         }
     }
 

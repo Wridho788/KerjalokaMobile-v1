@@ -1,11 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,51 +12,40 @@ import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.TestList
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyAddJobs4Binding
 import com.ciptakerjaarunika.kerjaloka.model.Data.TestJob
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-class fragment_company_add_jobs_4 : Fragment(), iChooseTest {
+class fragment_company_add_jobs_4(val iAddJob: iAddJob) : Fragment(), iChooseTest {
     private lateinit var binding: FragmentCompanyAddJobs4Binding
     private var list: List<TestJob>? = null
+    var getTestJob: List<TestJob>? = listOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCompanyAddJobs4Binding.inflate(layoutInflater)
         val view = binding.root
-
-        binding.backButton.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_3())
-        }
-
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         binding.btnKembaliCmpny.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_3())
+            replaceFragment(fragment_company_add_jobs_3(this.iAddJob))
         }
         binding.btnSelanjutnyaCmpny.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_5())
-        }
-        binding.btnPostingPekerjaan.setOnClickListener {
-            Toast.makeText(context, "Posting Pekerjaan", Toast.LENGTH_SHORT).show()
+            replaceFragment(fragment_company_add_jobs_5(this.iAddJob))
         }
 
-        TestList().GetTest(context){
-            if(it != null){
+
+        TestList().GetTest(context) {
+            if (it != null) {
                 list = it.data
                 binding.listTest.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = TestAdapter(list,this@fragment_company_add_jobs_4)
+                    adapter = TestAdapter(list, this@fragment_company_add_jobs_4)
                 }
             }
-//            res -> list
-//            Log.d("res", res.toString())
-
         }
 
         return view
     }
+
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
@@ -66,11 +53,12 @@ class fragment_company_add_jobs_4 : Fragment(), iChooseTest {
         fragmentTransaction?.commit()
     }
 
-    override fun updateTest(testNo: Long) {
-        Log.d("test no", testNo.toString())
+    override fun updateTest(test: List<TestJob>?) {
+        getTestJob = test
+        iAddJob.addJobPage4(getTestJob!!)
     }
 }
 
-interface iChooseTest{
-    fun updateTest(testNo: Long)
+interface iChooseTest {
+    fun updateTest(test: List<TestJob>?)
 }

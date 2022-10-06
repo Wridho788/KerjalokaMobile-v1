@@ -1,88 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".Company.Companyjobdetail.fragment_company_add_jobs_2">
 
     <LinearLayout
+        android:id="@+id/layout_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical">
-
-        <!-- Toolbar -->
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="10dp">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/danger_500">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <LinearLayout
-                        android:id="@+id/back_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginEnd="10dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:src="@drawable/ic_arrow_left_white" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/toolbarTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@id/back_button"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:paddingTop="3dp"
-                        android:text="Tambah Pekerjaan"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_posting_pekerjaan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:backgroundTint="@color/white"
-                        android:fontFamily="@font/poppins"
-                        android:gravity="center"
-                        android:text="Posting"
-                        android:textAllCaps="false"
-                        android:textColor="@color/danger_500"
-                        android:textSize="12sp"
-                        app:cornerRadius="100sp"
-                        tools:ignore="MissingConstraints" />
-                </RelativeLayout>
-            </com.google.android.material.appbar.MaterialToolbar>
-        </com.google.android.material.appbar.AppBarLayout>
-
         <!-- Informasi Tambahan -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -148,18 +82,17 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins"
-                            android:text="Pilih Skill"
                             android:padding="14dp"
+                            android:text="Pilih Skill"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginVertical="10dp"
                             android:layout_weight="0.1"
-                            android:src="@drawable/ic_chevron_down"
-                            />
+                            android:src="@drawable/ic_chevron_down" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
@@ -214,23 +147,20 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins"
-                            android:text="Pilih Kualifikasi Pendidikan"
                             android:padding="14dp"
+                            android:text="Pilih Kualifikasi Pendidikan"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginVertical="10dp"
                             android:layout_weight="0.1"
-                            android:src="@drawable/ic_chevron_down"
-                            />
+                            android:src="@drawable/ic_chevron_down" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
-
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -281,18 +211,17 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins"
-                            android:text="Pilih Pengalaman"
                             android:padding="14dp"
+                            android:text="Pilih Pengalaman"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginVertical="10dp"
                             android:layout_weight="0.1"
-                            android:src="@drawable/ic_chevron_down"
-                            />
+                            android:src="@drawable/ic_chevron_down" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
@@ -347,18 +276,17 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins"
-                            android:text="Pilih Bidang Pekerjaan"
                             android:padding="14dp"
+                            android:text="Pilih Bidang Pekerjaan"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginVertical="10dp"
                             android:layout_weight="0.1"
-                            android:src="@drawable/ic_chevron_down"
-                            />
+                            android:src="@drawable/ic_chevron_down" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
@@ -412,22 +340,20 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins"
-                            android:text="Pilih Posisi Pekerjaan"
                             android:padding="14dp"
+                            android:text="Pilih Posisi Pekerjaan"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginVertical="10dp"
                             android:layout_weight="0.1"
-                            android:src="@drawable/ic_chevron_down"
-                            />
+                            android:src="@drawable/ic_chevron_down" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -484,18 +410,18 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
-
-
         </LinearLayout>
-
     </LinearLayout>
     <!-- Button -->
     <androidx.percentlayout.widget.PercentRelativeLayout
+        android:id="@+id/layout_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginHorizontal="16dp">
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_info"
+        android:layout_marginBottom="10dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_kembali_cmpny"
@@ -508,7 +434,7 @@
             android:text="Kembali"
             android:textAllCaps="false"
             android:textColor="@color/danger_500"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:cornerRadius="100dp"
             app:layout_widthPercent="45%"
             app:strokeColor="@color/danger_500"
@@ -520,7 +446,7 @@
             android:id="@+id/btn_selanjutnya_cmpny"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/white"
             android:fontFamily="@font/poppins"
@@ -528,7 +454,7 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/danger_500"
-            android:textSize="14dp"
+            android:textSize="14sp"
             app:cornerRadius="100dp"
             app:iconTint="@color/danger_500"
             app:layout_widthPercent="45%"
@@ -537,4 +463,5 @@
             tools:layout_editor_absoluteX="17dp"
             tools:layout_editor_absoluteY="346dp" />
     </androidx.percentlayout.widget.PercentRelativeLayout>
-</RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

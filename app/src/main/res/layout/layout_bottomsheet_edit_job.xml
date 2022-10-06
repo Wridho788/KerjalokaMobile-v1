@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <LinearLayout
@@ -41,6 +41,7 @@
             android:layout_marginBottom="10dp"
             android:background="@color/light_500" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layout_location"
         android:layout_width="match_parent"
@@ -51,12 +52,39 @@
         app:layout_constraintTop_toBottomOf="@+id/layout_header"
         app:layout_constraintVertical_bias="0.0">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_location_view"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_location_view"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            tools:listitem="@layout/item_location_job" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_konfirmasi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_location_job"
-        />
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/light_500" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_konfirmasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:backgroundTint="@color/danger_500"
+            android:fontFamily="@font/poppins"
+            android:text="@string/konfimasi"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:cornerRadius="100dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

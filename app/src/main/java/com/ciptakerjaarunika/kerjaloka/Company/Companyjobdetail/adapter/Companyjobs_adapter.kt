@@ -9,10 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Listener.JobDetail
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.JobAPI
-import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
 import com.google.android.material.button.MaterialButton
-
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Companyjobs_adapter (private val joblist: List<Data>, private val listener: JobDetail):
     RecyclerView.Adapter<Companyjobs_adapter.ViewHolder>() {
@@ -37,37 +36,40 @@ class Companyjobs_adapter (private val joblist: List<Data>, private val listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =LayoutInflater.from(parent.context).inflate( R.layout.section_company_jobs, null)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.section_company_jobs, null)
         val lp = RecyclerView.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        view.setLayoutParams(lp)
+        view.layoutParams = lp
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = joblist[position]
-        holder.jobTitle.text=currentItem.jobPosition
-        holder.jobInput.text=currentItem.createdOn
-        if (currentItem.publish==true){
-            holder.jobStatus.text="Aktif"
+        holder.jobTitle.text = currentItem.jobPosition
+        if (!currentItem.createdOn.isNullOrEmpty() && !currentItem.createdOn.isNullOrEmpty()) {
+
+            val createdOn = LocalDateTime.parse(currentItem.createdOn)
+                .format(DateTimeFormatter.ofPattern("dd MMMM YYYY")).toString()
+            holder.jobInput.text = createdOn
+        } else holder.jobInput.text = ""
+        if (!currentItem.expired.isNullOrEmpty() && !currentItem.expired.isNullOrBlank()) {
+            val expired = LocalDateTime.parse(currentItem.expired)
+                .format(DateTimeFormatter.ofPattern("dd MMMM YYYY")).toString()
+            holder.jobExpired.text = expired
         }
-        else{
-            holder.jobStatus.text="Draft"
-        }
-        holder.jobExpired.text=currentItem.expired
-        holder.jobAuthor.text=currentItem.createdBy
         holder.card.setOnClickListener{
             listener.jobDetail(currentItem)
         }
         holder.shareJob.setOnClickListener{
             listener.shareJob(currentItem)
         }
+        holder.jobAuthor.text = currentItem.createdBy
     }
 
     override fun getItemCount(): Int {
-        return joblist?.size ?:0
+        return joblist.size
     }
 
 }

@@ -11,25 +11,23 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.MajorAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.CategoryShortQuestionAdapter
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage5
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
-import com.ciptakerjaarunika.kerjaloka.model.Data.Title
-import com.google.android.material.button.MaterialButton
+import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.short_question_category
+import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestionCategory
 
-class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(),
-    iChooseMajor {
-    private var list: List<Title>? = null
+class BottomSheetShortCategory(val iUpdatePage5: iUpdatePage5) : SuperBottomSheetFragment(),
+    iChooseCategory {
+    private var short_question_list: List<ShortQuestionCategory>? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val view = inflater.inflate(
-            R.layout.layout_bottomsheet_edit_job, container, false
-        )
+        val view = inflater.inflate(R.layout.layout_bottomsheet_edit_job, container, false)
 
         view.layoutParams = RecyclerView.LayoutParams(
             RecyclerView.LayoutParams.MATCH_PARENT,
@@ -37,14 +35,18 @@ class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFrag
         )
 
         val title = view.findViewById<TextView>(R.id.title_location)
-        val rv_majors = view.findViewById<RecyclerView>(R.id.list_location_view)
-
-        title.text = "Pendidikan"
-        Majors().GetMajors(context) { res ->
-            list
-            rv_majors.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = MajorAdapter(res, this@BottomSheetMajorJob, iUpdatePage2)
+        val rv_category = view.findViewById<RecyclerView>(R.id.list_location_view)
+        title.text = "Kategori Pertanyaan Pendek"
+        short_question_category().getShortQuestionCategory(context) {
+            if (it != null) {
+                short_question_list = it.data
+                rv_category.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = CategoryShortQuestionAdapter(
+                        short_question_list,
+                        this@BottomSheetShortCategory, iUpdatePage5
+                    )
+                }
             }
         }
         return view
@@ -62,14 +64,11 @@ class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFrag
     }
 
     override fun close() {
-        val btn_confirm = view?.findViewById<MaterialButton>(R.id.btn_konfirmasi)
-        btn_confirm?.setOnClickListener {
-            this.dismiss()
-        }
+        this.dismiss()
 
     }
 }
 
-interface iChooseMajor {
+interface iChooseCategory {
     fun close()
 }

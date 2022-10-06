@@ -36,7 +36,7 @@ class JobRoleAdapter(
         holder.txtJobRole.text = item.jobRoleName
         holder.txtJobRole.setOnClickListener {
             iChooseJobRole.close()
-            iUpdatePage2.updateRole(item.jobRoleName)
+            iUpdatePage2.updateRole(item.jobRoleName, item.jobRoleNo)
         }
     }
 

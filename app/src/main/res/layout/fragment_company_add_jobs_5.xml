@@ -1,102 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Company.Companyjobdetail.fragment_company_add_jobs_5">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/layout_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            >
-        <!-- Toolbar -->
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="10dp">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/danger_500">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <LinearLayout
-                        android:id="@+id/back_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginEnd="10dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_arrow_left_white" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/toolbarTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_toEndOf="@id/back_button"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:paddingTop="3dp"
-                        android:text="Tambah Pekerjaan"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_posting_pekerjaan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
-                        android:backgroundTint="@color/white"
-                        android:fontFamily="@font/poppins"
-                        android:gravity="center"
-                        android:text="Posting"
-                        android:textAllCaps="false"
-                        android:textColor="@color/danger_500"
-                        android:textSize="12sp"
-                        app:cornerRadius="100sp"
-                        tools:ignore="MissingConstraints" />
-                </RelativeLayout>
-            </com.google.android.material.appbar.MaterialToolbar>
-        </com.google.android.material.appbar.AppBarLayout>
-
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
         <!-- Section pertanyaan pendek  -->
-
-
         <LinearLayout
-            android:layout_toEndOf="@+id/actionButton"
             android:id="@+id/compny_rearrange_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="16dp"
+            android:layout_toEndOf="@+id/actionButton"
             android:orientation="vertical">
 
             <LinearLayout
@@ -115,16 +41,16 @@
                     android:textColor="@color/dark_100"
                     android:textSize="16sp" />
 
-<!--                <TextView-->
-<!--                    android:id="@+id/btn_compny_perpen_rearrange"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:clickable="true"-->
-<!--                    android:focusable="true"-->
-<!--                    android:fontFamily="@font/poppins_semibold"-->
-<!--                    android:text="Rearrange"-->
-<!--                    android:textColor="@color/danger_500"-->
-<!--                    android:textSize="14sp" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/btn_compny_perpen_rearrange"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:clickable="true"-->
+                <!--                    android:focusable="true"-->
+                <!--                    android:fontFamily="@font/poppins_semibold"-->
+                <!--                    android:text="Rearrange"-->
+                <!--                    android:textColor="@color/danger_500"-->
+                <!--                    android:textSize="14sp" />-->
             </LinearLayout>
         </LinearLayout>
 
@@ -133,9 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:checkable="true"
-            android:clickable="true"
-            android:focusable="true"
             app:cardCornerRadius="10dp"
             app:strokeColor="@color/light_500"
             app:strokeWidth="1dp">
@@ -160,6 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6.59dp"
+                    android:clickable="false"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
                     app:cardCornerRadius="50dp"
@@ -171,20 +95,27 @@
                         android:background="@color/light_300"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/compny_insert_cari_perpen"
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/edit_search_short_question"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:clickable="true"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginVertical="10dp"
+                            android:background="@drawable/search_background"
                             android:focusable="true"
                             android:fontFamily="@font/poppins"
-                            android:hint="Pilih lokasi"
-                            android:padding="14dp"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            app:boxStrokeWidth="0dp"
-                            app:boxStrokeWidthFocused="0dp" />
+                            android:inputType="text"
+                            android:keepScreenOn="true"
+                            android:paddingEnd="10dp"
+                            android:queryHint="Cari Pertanyaan Pendek"
+                            android:searchIcon="@drawable/ic_search"
+                            android:textColor="@color/dark_100"
+                            android:textSize="10sp"
+                            android:tooltipText="Cari Pertanyaan Pendek"
+                            app:iconifiedByDefault="false"
+                            app:queryHint="Cari Pertanyaan Pendek"
+                            tools:ignore="RtlSymmetry,SmallSp"
+                            tools:targetApi="o" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -214,7 +145,7 @@
 
                         <TextView
                             android:id="@+id/compny_insert_kategori_perpen"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:clickable="true"
@@ -229,64 +160,78 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <ScrollView
+
+                <LinearLayout
+                    android:id="@+id/layout_list_get_short_question"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_short_questions_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/list_short_questions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:listitem="@layout/section_company_add_jobs_5" />
-                </ScrollView>
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
+    </LinearLayout>
 
-        <androidx.percentlayout.widget.PercentRelativeLayout
-            android:id="@+id/actionButton"
+    <!-- Button -->
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        android:id="@+id/layout_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_info">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_kembali_cmpny"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/poppins"
+            android:text="Kembali"
+            android:textAllCaps="false"
+            android:textColor="@color/danger_500"
+            android:textSize="14sp"
+            app:cornerRadius="100dp"
+            app:iconTint="@color/danger_500"
+            app:layout_widthPercent="45%"
+            app:strokeColor="@color/danger_500"
+            app:strokeWidth="1dp"
+            tools:layout_editor_absoluteX="17dp"
+            tools:layout_editor_absoluteY="346dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_kembali_cmpny"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/poppins"
-                android:text="Kembali"
-                android:textAllCaps="false"
-                android:textColor="@color/danger_500"
-                android:textSize="14dp"
-                app:cornerRadius="100dp"
-                app:layout_widthPercent="45%"
-                app:strokeColor="@color/danger_500"
-                app:strokeWidth="1dp"
-                tools:layout_editor_absoluteX="17dp"
-                tools:layout_editor_absoluteY="346dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_selanjutnya_cmpny"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:backgroundTint="@color/white"
-                android:fontFamily="@font/poppins"
-                android:text="Selanjutnya"
-                android:textAlignment="center"
-                android:textAllCaps="false"
-                android:textColor="@color/danger_500"
-                android:textSize="14dp"
-                app:cornerRadius="100dp"
-                app:iconTint="@color/danger_500"
-                app:layout_widthPercent="45%"
-                app:strokeColor="@color/danger_500"
-                app:strokeWidth="1dp"
-                tools:layout_editor_absoluteX="17dp"
-                tools:layout_editor_absoluteY="346dp" />
-        </androidx.percentlayout.widget.PercentRelativeLayout>
-    </RelativeLayout>
-</RelativeLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_selanjutnya_cmpny"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/poppins"
+            android:text="Selanjutnya"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/danger_500"
+            android:textSize="14sp"
+            app:cornerRadius="100dp"
+            app:iconTint="@color/danger_300"
+            app:layout_widthPercent="45%"
+            app:strokeColor="@color/danger_300"
+            app:strokeWidth="1dp"
+            tools:layout_editor_absoluteX="17dp"
+            tools:layout_editor_absoluteY="346dp" />
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,7 +30,7 @@ class ExperiencesLevelAdapter(private var dataset: List<ExperienceLevelFilter>?,
         val item = dataset!![position]
         holder.txtExperienceLevel.text = item.experienceLevelName
         holder.txtExperienceLevel.setOnClickListener { iChooseExperienceLevel.close()
-        iUpdatePage2.updateExperience(item.experienceLevelName)}
+        iUpdatePage2.updateExperience(item.experienceLevelName, item.experienceLevelNo)}
     }
 
 }

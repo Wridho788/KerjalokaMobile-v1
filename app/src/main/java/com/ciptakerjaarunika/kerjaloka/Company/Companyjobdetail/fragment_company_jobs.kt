@@ -5,38 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Listener.JobDetail
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.Companyjobs_adapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewHistoryAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.Listener.ShowModal
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.EditMyReview
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.myReview
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ratingData
-
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.ResponseCompanyJobs
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
-import com.ciptakerjaarunika.kerjaloka.ui.Global.GlobalDeleteModal
-import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
-import com.google.gson.Gson
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyJobsBinding
+import com.google.gson.Gson
 
 
 class fragment_company_jobs : Fragment() {
 
     private lateinit var binding: FragmentCompanyJobsBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
+    private var listJob: List<ResponseCompanyJobs> ? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,16 +31,18 @@ class fragment_company_jobs : Fragment() {
         val view = binding.root
         return view
     }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val addjob = view.findViewById<ImageView>(R.id.idFABAdd)
 
-        addjob.setOnClickListener{
+        binding.idFABAdd.setOnClickListener {
             val myIntent = Intent(view.context, AddJobActivity::class.java)
             startActivity(myIntent)
         }
+        binding.backButton.setOnClickListener {
+            val goToMainActivity = Intent(view.context, MainActivity::class.java)
+            startActivity(goToMainActivity)
+        }
+
         var list = ArrayList<Data>()
 
         JobAPI().getJob(context){
@@ -67,52 +55,30 @@ class fragment_company_jobs : Fragment() {
         }
     }
 
-    companion object {
+    /*companion object {
+        binding.idFABAdd.setOnClickListener {
+            val myIntent = Intent(view.context, AddJobActivity::class.java)
+            startActivity(myIntent)
+        }
 
-//        val list = ArrayList<ResponseJobs>()
-//        val citylist = ArrayList<JobCity>()
-//        val city1 = JobCity(
-//            id=0,
-//            cityname = "Kota Medan"
-//        )
-//        citylist.add(city1)
-//        val job1 = ResponseJobs(
-//            createdBy ="reyhan@kerjaloka.com",
-//            createdOn ="2022-08-03T10:56:24",
-//            expired ="2022-09-02T00:00:00",
-//            jobAdditionalDescription =null,
-//            jobCity =citylist,
-//            jobDescription ="<ul><li>Crosscheck cashflow, GL Accounting, and balance sheet</li><li>Financial overview per month</li><li>Manage Petty Cash</li><li>Prepare required document of daily banking transaction</li><li>Monitoring &amp; report export proceeds and import payment through SiMoDIS</li><li>Reconcile all of bank account every day</li><li>Update payment in SAP</li></ul><p><br></p>",
-//            jobExperienceLevel =null,
-//            jobField =null,
-//            jobMinExperience =12,
-//            jobNo ="4120220803105624",
-//            jobPosition ="Testing Baru",
-//            jobRole =null,
-//            jobSalaryMax =null,
-//            jobSalaryMin =1223333,
-//            jobShortQuestion =null,
-//            jobSkills =null,
-//            jobTests =null,
-//            jobTitle =null,
-//            jobType =null,
-//            link ="https://advance.kerjaloka.com/job/TESTING/4120220803105624",
-//            packageName =null,
-//            publish =false,
-//            takedown =false
-//        )
-//        list.add(job1)
-    }
+        binding.backButton.setOnClickListener {
+            val goToMainActivity = Intent(view.context, MainActivity::class.java)
+            startActivity(goToMainActivity)
+        }
 
-    private fun replaceFragment(fragment: Fragment) {
+        CompanyJobAPI().getCompanyJobOfficer(context){
+            if (it != null) {
+                listJob = it.data
+                binding.recyleCompanyJobs.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = Companyjobs_adapter(listJob!!)
+                }
 
-        val fragmentManager = activity?.supportFragmentManager
-        val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragment_container, fragment)
-        fragmentTransaction?.commit()
-    }
+            }
+        }
+    }*/
 
-    internal fun assignAdapter(list: List<Data>): Companyjobs_adapter {
+    private fun assignAdapter(list: List<Data>): Companyjobs_adapter {
         return Companyjobs_adapter(list, object : JobDetail {
             override fun jobDetail(jobDetail: Data) {
                 replaceFragment(jobDetail)

@@ -28,7 +28,8 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/kerjaloka_logo_small" />
+                        android:scaleType="fitCenter"
+                      />
                 </LinearLayout>
 
                 <LinearLayout
@@ -43,7 +44,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_semibold"
-                        android:text="Software Engineer"
                         android:textColor="@color/dark_100"
                         android:textSize="16sp" />
 
@@ -56,7 +56,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="Diubah pada :"
+                            android:text="Diubah pada : "
                             android:textColor="@color/trueGray_50"
                             android:textSize="10sp"
                             tools:ignore="SmallSp" />
@@ -67,7 +67,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="@font/poppins"
-                            android:text="22 Agustus 2022"
                             android:textColor="@color/trueGray_50"
                             android:textSize="10sp"
                             tools:ignore="SmallSp" />
@@ -92,7 +91,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="September 2022"
                             android:textColor="@color/trueGray_50"
                             android:textSize="10sp"
                             tools:ignore="SmallSp" />
@@ -144,7 +142,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins"
-                            android:text="Reyhan@kerjaloka.com"
                             android:textColor="@color/trueGray_50"
                             android:textSize="10sp"
                             tools:ignore="SmallSp" />

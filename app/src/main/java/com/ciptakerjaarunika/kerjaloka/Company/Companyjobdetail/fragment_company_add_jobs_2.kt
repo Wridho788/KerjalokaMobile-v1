@@ -1,17 +1,25 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.*
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyAddJobs2Binding
+import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
+import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 
-class fragment_company_add_jobs_2 : Fragment(), iUpdatePage2 {
+class fragment_company_add_jobs_2(val iAddJob: iAddJob) : Fragment(), iUpdatePage2 {
     private lateinit var binding: FragmentCompanyAddJobs2Binding
+    var getSkills: List<SkillFilter>? = listOf()
+    var getMajors: List<Title>? = listOf()
+    var getRoles: Int? = 0
+    var getField: Int? = 0
+    var getExperienceLevels: Int? = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,15 +28,9 @@ class fragment_company_add_jobs_2 : Fragment(), iUpdatePage2 {
         binding = FragmentCompanyAddJobs2Binding.inflate(layoutInflater)
         val view = binding.root
 
-        binding.backButton.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_1())
-        }
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        binding.btnPostingPekerjaan.setOnClickListener {
-            Toast.makeText(context, "Posting Pekerjaan", Toast.LENGTH_SHORT).show()
-        }
         binding.btnChooseSkill.setOnClickListener {
             skillModal()
         }
@@ -51,22 +53,53 @@ class fragment_company_add_jobs_2 : Fragment(), iUpdatePage2 {
 
         binding.compnySkill.text.toString()
         binding.compnyMajor.text.toString()
-        binding.compnyExperience.text.toString()
         binding.compnyJobField.text.toString()
         binding.compnyJobPosition.text.toString()
-        binding.compnyMinExperience.text.toString()
 
         binding.btnKembaliCmpny.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_1())
+            replaceFragment(fragment_company_add_jobs_1(iAddJob))
         }
+        binding.compnyMinExperience.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (!binding.compnyMinExperience.text.toString()
+                        .isNullOrEmpty() && !binding.compnyMinExperience.text.toString()
+                        .isNullOrBlank() && binding.compnyMinExperience.text.toString() != ""
+                ) {
+                    iAddJob.addMinExperience(binding.compnyMinExperience.text.toString())
+                }
+            }
+        })
+        if (!getSkills!!.isEmpty() && !getSkills!!.isNullOrEmpty() &&
+            !getField!!.toString().isEmpty() && !getField!!.toString().isNullOrEmpty() &&
+            !getMajors!!.toString().isEmpty() && !getMajors!!.toString().isNullOrEmpty() &&
+            !getExperienceLevels!!.toString().isEmpty() && !getExperienceLevels!!.toString()
+                .isNullOrEmpty() &&
+            !getRoles!!.toString().isEmpty() && !getRoles!!.toString().isNullOrEmpty()
+        ) {
+            iAddJob.addJobPage2(
+                getSkills!!,
+                getMajors!!,
+                getField!!,
+                getExperienceLevels!!,
+                getRoles!!,
+
+                )
+        }
+
         binding.btnSelanjutnyaCmpny.setOnClickListener {
-            replaceFragment(fragment_company_add_jobs_3())
+            replaceFragment(fragment_company_add_jobs_3(this.iAddJob))
         }
         return view
     }
 
     private fun replaceFragment(fragment: Fragment) {
-
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.replace(id, fragment)
@@ -104,31 +137,36 @@ class fragment_company_add_jobs_2 : Fragment(), iUpdatePage2 {
         activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "rolemodal") }
     }
 
-    override fun updateSkill(skill: String) {
-        binding.compnySkill.text = skill
+    override fun updateSkill(skill: List<SkillFilter>) {
+        skill.map { skill -> binding.compnySkill.text = skill.skillName }
+        getSkills = skill
     }
 
-    override fun updateMajor(major: String) {
-        binding.compnyMajor.text = major
+    override fun updateMajor(major: List<Title>) {
+        major.map { map -> binding.compnyMajor.text = map.titleName }
+        getMajors = major
     }
 
-    override fun updateExperience(experience: String) {
-        binding.compnyExperience.text =experience
+    override fun updateExperience(experience: String, experienceLevelNo: Int) {
+        binding.compnyExperience.text = experience
+        getExperienceLevels = experienceLevelNo
     }
 
-    override fun updateField(field: String) {
+    override fun updateField(field: String, fieldNo: Int) {
         binding.compnyJobField.text = field
+        getField = fieldNo
     }
 
-    override fun updateRole(role: String) {
-      binding.compnyJobPosition.text = role
+    override fun updateRole(role: String, roleNo: Int) {
+        binding.compnyJobPosition.text = role
+        getRoles = roleNo
     }
 }
 
 interface iUpdatePage2 {
-    fun updateSkill(skill: String)
-    fun updateMajor(major: String)
-    fun updateExperience(experience: String)
-    fun updateField(field: String)
-    fun updateRole(role: String)
+    fun updateSkill(skill: List<SkillFilter>)
+    fun updateMajor(major: List<Title>)
+    fun updateExperience(experience: String, experienceLevelNo: Int)
+    fun updateField(field: String, fieldNo: Int)
+    fun updateRole(role: String, roleNo: Int)
 }

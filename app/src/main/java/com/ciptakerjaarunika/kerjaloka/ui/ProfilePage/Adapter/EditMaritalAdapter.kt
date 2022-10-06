@@ -31,7 +31,7 @@ class EditMaritalAdapter(val maritalNo : Int?, private val listStatus: List<Mari
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditMarital {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
-        view.layoutParams = view.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         return EditMarital(view)
     }
 
