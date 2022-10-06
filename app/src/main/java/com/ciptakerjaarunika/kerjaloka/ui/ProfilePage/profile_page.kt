@@ -156,6 +156,7 @@ class profilepage(var Page : Int) : Fragment() {
     }
     fun updatePage(){
         val content = view?.findViewById<ViewPager2>(R.id.profileContent)
+        content?.currentItem = Page
 
         view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList = resources.getColorStateList(R.color.white);
         view?.findViewById<MaterialButton>(R.id.CV)?.backgroundTintList = resources.getColorStateList(R.color.white);
