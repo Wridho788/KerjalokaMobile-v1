@@ -16,6 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Skills
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
+import com.google.android.material.button.MaterialButton
 
 class BottomSheetSkillJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(), iChooseSkill {
     private var list: List<SkillFilter>? = null
@@ -57,13 +58,15 @@ class BottomSheetSkillJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFrag
             .getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt();
     }
-    override fun close() {
-        this.dismiss()
-
+    override fun close(list: List<SkillFilter>) {
+        val btn_confirm = view?.findViewById<MaterialButton>(R.id.btn_konfirmasi)
+        btn_confirm?.setOnClickListener {
+            this.dismiss()
+        }
     }
 }
 
 interface iChooseSkill{
-    fun close()
+    fun close(list: List<SkillFilter>)
 
 }

@@ -42,14 +42,8 @@ class LocationAdapter(
             dataset!![position].checked = holder.checkBox.isChecked
             val locations = dataset!!.filter { item -> item.checked == true }
             iUpdatePage1.updatePage1(locations)
-            iChooseLocation.close()
+            iChooseLocation.close(locations)
         }
-////        holder.checkBox.isChecked = item.checked == true
-//        holder.txtLocation.setOnClickListener {
-//            iUpdatePage1.updatePage1(locationName)
-////            item.checked = holder.checkBox.isChecked
-//            iChooseLocation.close()
-//        }
     }
 
 }

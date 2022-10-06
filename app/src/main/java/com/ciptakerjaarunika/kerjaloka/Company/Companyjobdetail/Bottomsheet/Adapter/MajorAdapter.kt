@@ -41,7 +41,7 @@ class MajorAdapter(
             dataset!![position].checked = holder.checkBox.isChecked
             val titles = dataset!!.filter{ item -> item.checked == true }
             iUpdatePage2.updateMajor(titles)
-            iChooseMajor.close()
+            iChooseMajor.close(titles)
         }
     }
 

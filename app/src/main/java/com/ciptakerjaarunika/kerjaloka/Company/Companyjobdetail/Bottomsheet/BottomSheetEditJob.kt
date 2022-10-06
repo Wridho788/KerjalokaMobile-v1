@@ -13,6 +13,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage1
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Locations
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
+import com.google.android.material.button.MaterialButton
 
 class BottomSheetEditJob(val iUpdatePage1: iUpdatePage1) : SuperBottomSheetFragment(), iChooseLocation{
     private var list: List<LocationFilter>? = null
@@ -39,13 +40,18 @@ class BottomSheetEditJob(val iUpdatePage1: iUpdatePage1) : SuperBottomSheetFragm
                 adapter = LocationAdapter(res, this@BottomSheetEditJob, iUpdatePage1 )
             }
         }
+
+
         return view
     }
-    override fun close() {
-        this.dismiss()
+    override fun close(list: List<LocationFilter>) {
+        val btn_confirm = view?.findViewById<MaterialButton>(R.id.btn_konfirmasi)
+        btn_confirm?.setOnClickListener {
+            this.dismiss()
+        }
     }
 }
 
 interface iChooseLocation{
-    fun close()
+    fun close(list: List<LocationFilter>)
 }

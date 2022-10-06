@@ -40,12 +40,8 @@ class SkillAdapter(
             dataset!![position].checked = holder.checkBox.isChecked
             val skills = dataset!!.filter { item -> item.checked == true }
             iUpdatePage2.updateSkill(skills)
-            iChooseSkill.close()
+            iChooseSkill.close(skills)
         }
-//        holder.txtSkill.setOnClickListener {
-//            iUpdatePage2.updateSkill(item.skillName)
-//            iChooseSkill.close(item.skillName)
-//        }
     }
 
 }

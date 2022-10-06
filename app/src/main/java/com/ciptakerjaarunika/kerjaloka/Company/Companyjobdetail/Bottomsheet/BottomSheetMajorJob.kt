@@ -16,6 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
+import com.google.android.material.button.MaterialButton
 
 class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(),
     iChooseMajor {
@@ -60,12 +61,15 @@ class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFrag
         return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
-    override fun close() {
-        this.dismiss()
+    override fun close(list: List<Title>) {
+        val btn_confirm = view?.findViewById<MaterialButton>(R.id.btn_konfirmasi)
+        btn_confirm?.setOnClickListener {
+            this.dismiss()
+        }
 
     }
 }
 
 interface iChooseMajor {
-    fun close()
+    fun close(list: List<Title>)
 }
