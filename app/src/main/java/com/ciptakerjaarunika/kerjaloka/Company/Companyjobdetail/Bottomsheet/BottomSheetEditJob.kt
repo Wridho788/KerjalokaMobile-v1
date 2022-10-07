@@ -37,7 +37,7 @@ class BottomSheetEditJob(val iUpdatePage1: iUpdatePage1) : SuperBottomSheetFragm
             res -> list
             rv_location.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = LocationAdapter(res, this@BottomSheetEditJob, iUpdatePage1 )
+                adapter = LocationAdapter(res, this@BottomSheetEditJob, iUpdatePage1)
             }
         }
 
