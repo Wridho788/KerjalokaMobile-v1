@@ -3,27 +3,24 @@ package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.Companyjobs_adapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.JobSQListAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.JobTestListAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobTitle
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
-import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class fragment_company_job_active_page : Fragment() {
 
@@ -32,11 +29,6 @@ class fragment_company_job_active_page : Fragment() {
     private var tadapter: RecyclerView.Adapter<JobTestListAdapter.ViewHolder>? = null
     private var layoutManager1: RecyclerView.LayoutManager? = null
     private var sqadapter: RecyclerView.Adapter<JobSQListAdapter.ViewHolder>? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,36 +50,55 @@ class fragment_company_job_active_page : Fragment() {
         val shareJob = view.findViewById<MaterialButton>(R.id.btn_job_share)
         val draftJob = view.findViewById<MaterialButton>(R.id.btn_job_draft)
         val publishJob = view.findViewById<MaterialButton>(R.id.btn_job_publish)
+        val btn_back = view.findViewById<LinearLayout>(R.id.back_button)
+        val btn_editJob = view.findViewById<MaterialButton>(R.id.btn_edit_pekerjan)
 
-        if (arguments != null){
-            val descFromBundle = arguments?.getString(fragment_company_job_active_page.EXTRA_DETAIL_JOB)
+        btn_back.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
+        btn_editJob.setOnClickListener {
+            val intentAddJob = Intent(context, AddJobActivity::class.java)
+            intentAddJob.putExtra(Intent.EXTRA_TEXT, jobData?.jobTitle.toString());
+            intentAddJob.putExtra(Intent.EXTRA_TEXT, jobData?.createdOn.toString());
+            intentAddJob.putExtra(Intent.EXTRA_TEXT, jobData?.expired.toString());
+            intentAddJob.putExtra(Intent.EXTRA_TEXT, jobData?.jobType.toString());
+
+            startActivity(intentAddJob)
+        }
+
+        if (arguments != null) {
+            val descFromBundle =
+                arguments?.getString(fragment_company_job_active_page.EXTRA_DETAIL_JOB)
             jobData = Gson().fromJson(descFromBundle, Data::class.java)
-            jobTitle.text=jobData?.jobPosition
-            jobInput.text="Diubah pada : "+jobData?.createdOn
-            jobExpired.text="Kadaluarsa : "+jobData?.expired
-            jobAuth.text="Oleh : " + jobData?.createdBy
-            jobLoc.text=jobData?.jobCity?.toString()
-//            jobView.text=listanalytic[0].clickCount.toString()
-            jobReq.text=jobData?.jobDescription
-            if (jobData?.jobSalaryMin!=null || jobData?.jobSalaryMax!=null){
-                jobSalary.text=jobData?.jobSalaryMin.toString()+" - "+jobData?.jobSalaryMax.toString()
+            jobTitle.text = jobData?.jobPosition
+            jobInput.text = "Diubah pada : " + jobData?.createdOn
+            jobExpired.text = "Kadaluarsa : " + jobData?.expired
+            jobAuth.text = "Oleh : " + jobData?.createdBy
+            jobData?.jobCity?.forEach {
+                jobLoc.text = jobData?.jobCity.toString() + ", "
             }
-            else{
-                jobSalary.text="-"
+//            jobView.text=listanalytic[0].clickCount.toString()
+            jobReq.text = jobData?.jobDescription
+            if (jobData?.jobSalaryMin != null || jobData?.jobSalaryMax != null) {
+                jobSalary.text =
+                    jobData?.jobSalaryMin.toString() + " - " + jobData?.jobSalaryMax.toString()
+            } else {
+                jobSalary.text = "-"
             }
             jobData?.jobTitle?.forEach {
-                jobQual.text= jobQual.text.toString()+it.titleName+", "
+                jobQual.text = jobQual.text.toString() + it.titleName + ", "
             }
-            jobMinex.text=jobData?.jobMinExperience.toString()
-            jobType.text=jobData?.jobField?.fieldName
-            jobRole.text=jobData?.jobRole?.jobRoleName
+            jobMinex.text = jobData?.jobMinExperience.toString()
+            jobType.text = jobData?.jobField?.fieldName
+            jobRole.text = jobData?.jobRole?.jobRoleName
 
             val sdf = SimpleDateFormat("yyyy-MM-dd")
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"))
-            val time: Long = sdf.parse(jobData?.createdOn.toString()).getTime()
+            sdf.timeZone = TimeZone.getTimeZone("GMT+7")
+            val time: Long = sdf.parse(jobData?.createdOn.toString()).time
             val now = System.currentTimeMillis()
             val ago = DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
-            jobtime.text=ago
+            jobtime.text = ago
             var testList = jobData?.jobTests
             layoutManager = LinearLayoutManager(activity)
             testRecycle.layoutManager = layoutManager
@@ -113,19 +124,18 @@ class fragment_company_job_active_page : Fragment() {
                 startActivity(shareIntent)
             }
 
-            if (jobData?.publish==true){
-                draftJob.isVisible=true
-            }
-            else{
-                publishJob.isVisible=true
+            if (jobData?.publish == true) {
+                draftJob.isVisible = true
+            } else {
+                publishJob.isVisible = true
             }
 
             val jobNo = jobData?.jobNo
-            draftJob.setOnClickListener{
-                jobNo?.let { it1 -> JobAPI().DraftJob(context, it1){} }
+            draftJob.setOnClickListener {
+                jobNo?.let { it1 -> JobAPI().DraftJob(context, it1) {} }
             }
-            publishJob.setOnClickListener{
-                jobNo?.let { it1 -> JobAPI().PublishJob(context, it1){} }
+            publishJob.setOnClickListener {
+                jobNo?.let { it1 -> JobAPI().PublishJob(context, it1) {} }
             }
 
         }
@@ -137,7 +147,7 @@ class fragment_company_job_active_page : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =inflater.inflate(R.layout.fragment_company_job_active_page, container, false)
+        val view = inflater.inflate(R.layout.fragment_company_job_active_page, container, false)
         return view
     }
 

@@ -45,7 +45,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = binding.root
         if(SessionManager(context).user != null) {
             binding.customToolbar.greetingTxt.text = SessionManager(context).user?.userFullname!!.split(" ")[0]

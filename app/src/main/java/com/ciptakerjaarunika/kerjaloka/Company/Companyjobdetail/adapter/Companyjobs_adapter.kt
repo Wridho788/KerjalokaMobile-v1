@@ -13,7 +13,7 @@ import com.google.android.material.button.MaterialButton
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class Companyjobs_adapter (private val joblist: List<Data>, private val listener: JobDetail):
+class Companyjobs_adapter(private val joblist: List<Data>, private val listener: JobDetail) :
     RecyclerView.Adapter<Companyjobs_adapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobTitle: TextView
@@ -59,10 +59,10 @@ class Companyjobs_adapter (private val joblist: List<Data>, private val listener
                 .format(DateTimeFormatter.ofPattern("dd MMMM YYYY")).toString()
             holder.jobExpired.text = expired
         }
-        holder.card.setOnClickListener{
+        holder.card.setOnClickListener {
             listener.jobDetail(currentItem)
         }
-        holder.shareJob.setOnClickListener{
+        holder.shareJob.setOnClickListener {
             listener.shareJob(currentItem)
         }
         holder.jobAuthor.text = currentItem.createdBy

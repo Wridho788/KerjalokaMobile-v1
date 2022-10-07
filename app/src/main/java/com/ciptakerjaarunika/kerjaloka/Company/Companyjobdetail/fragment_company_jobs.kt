@@ -22,7 +22,7 @@ import com.google.gson.Gson
 class fragment_company_jobs : Fragment() {
 
     private lateinit var binding: FragmentCompanyJobsBinding
-    private var listJob: List<ResponseCompanyJobs> ? = null
+    private var listJob: List<ResponseCompanyJobs>? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +31,7 @@ class fragment_company_jobs : Fragment() {
         val view = binding.root
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,12 +46,12 @@ class fragment_company_jobs : Fragment() {
 
         var list = ArrayList<Data>()
 
-        JobAPI().getJob(context){
+        JobAPI().getJob(context) {
             list = it?.data as ArrayList<Data>
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyle_company_jobs)
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)
-                adapter = it?.data?.let { it1 -> assignAdapter(it1) }
+                adapter = it.data.let { it1 -> assignAdapter(it1) }
             }
         }
     }
@@ -104,7 +105,7 @@ class fragment_company_jobs : Fragment() {
         mBundle.putString(fragment_company_job_active_page.EXTRA_DETAIL_JOB, jobData)
         jobDetailFragment.arguments = mBundle
         val mFragmentManager = parentFragmentManager
-        mFragmentManager?.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction()?.apply {
             replace(
                 R.id.fragment_container,
                 jobDetailFragment,
