@@ -3,11 +3,14 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Binder
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
@@ -17,62 +20,46 @@ import com.ciptakerjaarunika.kerjaloka.Company.Package.history_modal
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.api.users
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentAccountSettingBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScore
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 
 
-class AccountSetting(val data: data?) : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+class AccountSetting(var data: data?) : Fragment(), iRefreshData {
+    private lateinit var binding : FragmentAccountSettingBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_account_setting, container, false)
+        binding = FragmentAccountSettingBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
-        val btn_editUsername = view.findViewById<TextView>(R.id.edit_username_setting)
-        val btn_editPhone = view.findViewById<TextView>(R.id.edit_nomor_telepon_setting)
-        val btn_editEmail = view.findViewById<TextView>(R.id.edit_email_profile_setting)
-        val btn_editPswd = view.findViewById<TextView>(R.id.edit_kata_sandi)
-        val btn_deactived = view.findViewById<MaterialButton>(R.id.btn_deactivedAcc)
-        val txt_usrName = view.findViewById<TextView>(R.id.profile_username)
-        val txt_phone = view.findViewById<TextView>(R.id.profile_nomor_telepon)
-        val txt_email = view.findViewById<TextView>(R.id.profile_email)
-        val txt_addrees = view.findViewById<TextView>(R.id.comp_profile_address)
-        val discover = view.findViewById<Switch>(R.id.switchDiscoverable)
-        val newsletter = view.findViewById<Switch>(R.id.switchNewsLetter)
-        val btn_connect = view.findViewById<MaterialButton>(R.id.connect)
-
-
-        txt_usrName.text = data?.username
-        txt_phone.text = data?.phone
-        txt_email.text = data?.email
-        txt_addrees.text = data?.companyAddress
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         users().CompanyGetUserData(context) {
-            discover.isChecked = it?.data?.isDiscoverable!!
-            newsletter.isChecked = it?.data?.isNewsletter!!
+            binding.switchDiscoverable.isChecked = it?.data?.isDiscoverable!!
+            binding.switchNewsLetter.isChecked = it?.data?.isNewsletter!!
             if (it?.data?.userGoogleId.isNullOrEmpty()){
-                btn_connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FF6666"))
-                btn_connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FF6666")))
-                btn_connect.text="Hubungkan"
+                binding.connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FF6666"))
+                binding.connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FF6666")))
+                binding.connect.text="Hubungkan"
             }
             else{
-                btn_connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FFDEDE"))
-                btn_connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFDEDE")))
-                btn_connect.isClickable=false
-                btn_connect.text="Terkoneksi"
+                binding.connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FFDEDE"))
+                binding.connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFDEDE")))
+                binding.connect.isClickable=false
+                binding.connect.text="Terkoneksi"
             }
-            discover.setOnClickListener{
-                if (discover.isChecked==true){
+            binding.switchDiscoverable.setOnClickListener{
+                if (binding.switchDiscoverable.isChecked){
                     company_profile_api().discoverable(context){}
                 }
                 else{
@@ -81,33 +68,33 @@ class AccountSetting(val data: data?) : Fragment() {
             }
 
 
-            newsletter.setOnClickListener { it1 ->
+            binding.switchNewsLetter.setOnClickListener { it1 ->
                 val setNl = it?.data.isNewsletter
                 company_profile_api().newsletter(setNl, context){}
             }
         }
 
 
-        view.findViewById<MaterialButton>(R.id.btn_logout).setOnClickListener{
+        binding.btnLogout.setOnClickListener{
             ProfileAPI().Logout(context){
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)
             }
         }
-        btn_editUsername.setOnClickListener{
-            replaceFragment(CompEditUsername())
+        binding.editUsernameSetting.setOnClickListener{
+            replaceFragment(CompEditUsername(this))
         }
-        btn_editEmail.setOnClickListener {
-            replaceFragment(CompEditEmail())
+        binding.editEmailProfileSetting.setOnClickListener {
+            replaceFragment(CompEditEmail(this))
         }
-        btn_editPswd.setOnClickListener {
-            replaceFragment(CompEditKataSandi())
+        binding.editKataSandi.setOnClickListener {
+            replaceFragment(CompEditKataSandi(this))
         }
-        btn_editPhone.setOnClickListener {
-            replaceFragment(CompEditPhone())
+        binding.editNomorTeleponSetting.setOnClickListener {
+            replaceFragment(CompEditPhone(this))
         }
 
-        btn_deactived.setOnClickListener {
+        binding.btnDeactivedAcc.setOnClickListener {
             val sheet = ModalDeactivateAccount()
             activity?.let { it1 ->
                 sheet.show(
@@ -116,8 +103,7 @@ class AccountSetting(val data: data?) : Fragment() {
                 )
             }
         }
-
-        return view
+        refresh()
     }
 
     companion object {
@@ -129,6 +115,83 @@ class AccountSetting(val data: data?) : Fragment() {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.addToBackStack("")
         fragmentTransaction?.commit()
+    }
+
+    override fun refresh() {
+        company_profile_api().CompanyGetProfileData(context){
+            binding.spinner.visibility = GONE
+            binding.contentContainer.visibility = VISIBLE
+            if (it != null) {
+                data = it.data
+
+
+                binding.profileUsername.text = data?.username
+                binding.profilePhone.text = data?.phone
+                binding.profileEmail.text = data?.email
+                binding.compProfileAddress.text = data?.companyAddress
+
+                users().CompanyGetUserData(context) {
+                    binding.switchDiscoverable.isChecked = it?.data?.isDiscoverable!!
+                    binding.switchNewsLetter.isChecked = it?.data?.isNewsletter!!
+                    if (it?.data?.userGoogleId.isNullOrEmpty()){
+                        binding.connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FF6666"))
+                        binding.connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FF6666")))
+                        binding.connect.text="Hubungkan"
+                    }
+                    else{
+                        binding.connect.strokeColor= ColorStateList.valueOf(Color.parseColor("#FFDEDE"))
+                        binding.connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFDEDE")))
+                        binding.connect.isClickable=false
+                        binding.connect.text="Terkoneksi"
+                    }
+                    binding.switchDiscoverable.setOnClickListener{
+                        if (binding.switchDiscoverable.isChecked){
+                            company_profile_api().discoverable(context){}
+                        }
+                        else{
+                            company_profile_api().undiscoverable(context){}
+                        }
+                    }
+
+
+                    binding.switchNewsLetter.setOnClickListener { it1 ->
+                        val setNl = it?.data.isNewsletter
+                        company_profile_api().newsletter(setNl, context){}
+                    }
+                }
+
+
+                binding.btnLogout.setOnClickListener{
+                    ProfileAPI().Logout(context){
+                        val intent = Intent(context, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                binding.editUsernameSetting.setOnClickListener{
+                    replaceFragment(CompEditUsername(this))
+                }
+                binding.editEmailProfileSetting.setOnClickListener {
+                    replaceFragment(CompEditEmail(this))
+                }
+                binding.editKataSandi.setOnClickListener {
+                    replaceFragment(CompEditKataSandi(this))
+                }
+                binding.editNomorTeleponSetting.setOnClickListener {
+                    replaceFragment(CompEditPhone(this))
+                }
+
+                binding.btnDeactivedAcc.setOnClickListener {
+                    val sheet = ModalDeactivateAccount()
+                    activity?.let { it1 ->
+                        sheet.show(
+                            it1.supportFragmentManager,
+                            "DemoBottomSheetFragment"
+                        )
+                    }
+                }
+            }
+        }
     }
 }

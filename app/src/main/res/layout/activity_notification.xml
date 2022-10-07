@@ -23,12 +23,12 @@
 
                 <ImageView
                     android:id="@+id/btn_back_job"
-                    android:layout_width="35dp"
+                    android:layout_width="34dp"
                     android:layout_height="match_parent"
                     android:clickable="true"
                     android:contentDescription="@string/cari"
                     android:focusable="true"
-                    android:src="@drawable/ic_arrow_back_" />
+                    android:src="@drawable/ic_arrow_left_white" />
 
                 <TextView
                     android:layout_width="wrap_content"

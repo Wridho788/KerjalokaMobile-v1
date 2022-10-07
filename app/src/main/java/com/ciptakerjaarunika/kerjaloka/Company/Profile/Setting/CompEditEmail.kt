@@ -9,11 +9,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
 import com.google.android.material.button.MaterialButton
 
-class CompEditEmail : Fragment() {
+class CompEditEmail(val iRefreshData: iRefreshData) : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,11 @@ class CompEditEmail : Fragment() {
 
         val newEmail = view.findViewById<EditText>(R.id.comp_EditusrEmail)
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveEmail)
+
+        view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
+            fragmentManager?.popBackStack()
+            iRefreshData.refresh()
+        }
 
         btnSave.setOnClickListener {
             val email = newEmail?.text.toString()

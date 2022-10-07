@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,6 +17,7 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -67,6 +69,9 @@ class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, 
         holder.jobCompany.text = currentItem.company.companyName
         holder.jobLocation.text = if(currentItem?.jobLocation!!.size >1) "Banyak lokasi" else currentItem.jobLocation[0].label
         holder.timeUploadApplicant.text = currentItem.createdOn
+        if(SessionManager(context).user == null){
+            holder.bookmarkedJob.visibility = GONE
+        }
         Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).fitCenter().into(holder.logo)
         holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 

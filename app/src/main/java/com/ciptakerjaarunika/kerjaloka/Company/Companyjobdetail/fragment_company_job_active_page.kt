@@ -54,7 +54,7 @@ class fragment_company_job_active_page : Fragment() {
         val btn_editJob = view.findViewById<MaterialButton>(R.id.btn_edit_pekerjan)
 
         btn_back.setOnClickListener {
-            activity?.onBackPressed()
+            fragmentManager?.popBackStack()
         }
 
         btn_editJob.setOnClickListener {

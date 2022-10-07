@@ -41,7 +41,6 @@ class JobRecommendationFragment : Fragment(), IJobPage {
 
     }
     override fun RefreshData(){
-        if(SessionManager(context).user != null) {
             JobAPI().getJobRecommendation(true, context){
                 if (it != null) {
                     listData = it.data
@@ -54,10 +53,6 @@ class JobRecommendationFragment : Fragment(), IJobPage {
                     }
                 }
             }
-        }
-        else{
-            //Get All Jobs
-        }
     }
 
     override fun GoToJobDetail(JobNo: Long, CompanyNo: Long?) {

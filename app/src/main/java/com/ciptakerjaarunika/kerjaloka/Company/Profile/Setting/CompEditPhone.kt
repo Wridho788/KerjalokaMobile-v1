@@ -9,12 +9,13 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.delay
 
-class CompEditPhone : Fragment() {
+class CompEditPhone(val iRefreshData: iRefreshData) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,6 +43,11 @@ class CompEditPhone : Fragment() {
                 }
 
             }
+        }
+
+        view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
+            fragmentManager?.popBackStack()
+            iRefreshData.refresh()
         }
 
         return view

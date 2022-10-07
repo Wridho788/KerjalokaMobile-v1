@@ -38,8 +38,7 @@ class AddJobActivity : AppCompatActivity(), iAddJob {
         binding = ActivityAddJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.backButton.setOnClickListener {
-            val intentToMain = Intent(baseContext, MainActivity::class.java)
-            startActivity(intentToMain)
+            finish()
         }
 
         binding.btnPostingPekerjaan.setOnClickListener {

@@ -31,7 +31,8 @@
                     android:layout_gravity="center"
                     android:paddingLeft="16dp"
                     app:cornerRadius="100sp"
-                    app:icon="@drawable/ic_back"
+                    app:icon="@drawable/ic_arrow_left_red"
+                    android:id="@+id/back_btn"
                     app:iconSize="25dp"
                     app:iconTint="@color/danger_500"/>
 

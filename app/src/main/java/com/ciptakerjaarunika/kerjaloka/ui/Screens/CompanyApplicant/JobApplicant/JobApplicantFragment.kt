@@ -25,6 +25,7 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.ApplicantDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Adapter.ApplicantAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -58,7 +59,9 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
 
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_job)
         toolbar.setOnClickListener {
-            activity?.onBackPressed()
+            val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ft.replace(id, CompanyListApplicantFragment(), "CompanyApplicant")
+            ft.commit()
         }
 
         val companyNo = SessionManager(context).user!!.userNo

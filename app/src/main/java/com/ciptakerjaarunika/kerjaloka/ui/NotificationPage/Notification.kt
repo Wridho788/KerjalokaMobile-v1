@@ -28,7 +28,7 @@ class Notification : AppCompatActivity() {
         (thisActivity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         binding.btnBackJob.setOnClickListener{
-            thisActivity.onBackPressed()
+            finish()
         }
         initList()
         reload()

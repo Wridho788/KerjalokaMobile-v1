@@ -67,6 +67,7 @@ class CompMyReview(val data: data?, private val CompanyNo: Long? = null): Fragme
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.addToBackStack("")
         fragmentTransaction?.commit()
     }
 

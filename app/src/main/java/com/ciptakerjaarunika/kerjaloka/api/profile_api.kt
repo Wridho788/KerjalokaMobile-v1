@@ -9,6 +9,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.Field
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.review_response
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.search_model
 import retrofit2.Call
@@ -406,6 +407,8 @@ class ProfileAPI {
                 override fun onResponse(
                     call: Call<Any>, response: Response<Any>
                 ) {
+                    SessionManager(context).access_token = null
+                    SessionManager(context).user = null
                     onResult(response.body())
                 }
             }

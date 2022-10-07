@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyNotificationBinding
+import com.ciptakerjaarunika.kerjaloka.databinding.ActivityNotificationBinding
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.CompanyNotificationModel
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.item.CompanyItemSectionDecoration
 import java.time.LocalDateTime
@@ -26,10 +28,16 @@ class CompanyNotification : AppCompatActivity() {
     private lateinit var adapter: CompanyAdapter
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var itemSectionDecoration: CompanyItemSectionDecoration
+    private lateinit var binding: ActivityCompanyNotificationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_notification)
+        binding = ActivityCompanyNotificationBinding.inflate(layoutInflater)
+
+        binding.btnBackJob.setOnClickListener{
+            finish()
+        }
+        setContentView(binding.root)
             initList()
             reload()
     }
@@ -58,6 +66,8 @@ class CompanyNotification : AppCompatActivity() {
     private fun reload() {
         UsersAPI().GetNotification(this) {
             val list = it?.data?.sortedByDescending { it.createdOn }
+            binding.spinner.visibility = GONE
+            binding.notifContainer.visibility = VISIBLE
 //            val list = dummyData(0, 20)
             notifContainer.post {
                 adapter.reload(list as MutableList<CompanyNotificationModel>)
@@ -68,6 +78,8 @@ class CompanyNotification : AppCompatActivity() {
     private fun loadMore() {
         UsersAPI().GetNotification(this) {
             val list = it?.data?.sortedByDescending { it.createdOn }
+            binding.spinner.visibility = GONE
+            binding.notifContainer.visibility = VISIBLE
 //            val list = dummyData(adapter.itemCount, 15)
             notifContainer.post {
                 adapter.loadMore(list as MutableList<CompanyNotificationModel>)
