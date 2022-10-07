@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManagePreferenceBinding
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
@@ -21,7 +22,7 @@ import com.google.android.material.chip.ChipGroup
 import java.math.BigDecimal
 
 
-class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment() {
+class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefreshData {
     private lateinit var binding : FragmentManagePreferenceBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,20 +36,22 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment() {
     ): View? {
         binding = FragmentManagePreferenceBinding.inflate(layoutInflater)
         val view = binding.root
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getData()
+    }
+    fun getData(){
         ProfileAPI().GetJobseekerField(context) { fields ->
             loading -=1
             if(loading == 0){
-                view.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                view.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
+                view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
+                view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
             }
             binding.editMinat.setOnClickListener{
-                replaceFragment(fragment_edit_interest_layout(fields?.data))
+                replaceFragment(fragment_edit_interest_layout(fields?.data, this))
             }
 
             if (fields?.data?.size != 0) {
@@ -80,11 +83,11 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment() {
         ProfileAPI().GetJobseekerJobType(context){ jobTypes ->
             loading -=1
             if(loading == 0){
-                view.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                view.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
+                view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
+                view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
             }
             binding.editTipePekerjaan.setOnClickListener{
-                replaceFragment(FragmentEditJobType(jobTypes?.data))
+                replaceFragment(FragmentEditJobType(jobTypes?.data, this))
             }
             if (jobTypes?.data?.size != 0) {
                 jobTypes?.data?.forEach {
@@ -113,19 +116,19 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment() {
 
         ProfileAPI().GetJobseekerSalaryExpected(context) { salary->
             loading -=1
-            if(loading == 0){
-                view.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                view.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
+            if(activity != null && loading == 0){
+                view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
+                view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
             }
-            val expectedSalary = view.findViewById<TextView>(R.id.expectedSalary)
+            val expectedSalary = view!!.findViewById<TextView>(R.id.expectedSalary)
             expectedSalary.text = if(salary != null && salary?.data != BigDecimal(0)) salary?.data.toString() else "-"
 
-            val btn_EdMinat = view.findViewById<TextView>(R.id.edit_minat)
-            val btn_EdJobType = view.findViewById<TextView>(R.id.edit_tipe_pekerjaan)
-            val btn_gaji = view.findViewById<TextView>(R.id.edit_ekspektasi_gaji)
+            val btn_EdMinat = view!!.findViewById<TextView>(R.id.edit_minat)
+            val btn_EdJobType = view!!.findViewById<TextView>(R.id.edit_tipe_pekerjaan)
+            val btn_gaji = view!!.findViewById<TextView>(R.id.edit_ekspektasi_gaji)
 
             btn_gaji.setOnClickListener{
-                replaceFragment(FragmentSalaryExpectation(data?.additionals?.expectedSalary))
+                replaceFragment(FragmentSalaryExpectation(data?.additionals?.expectedSalary, this))
             }
         }
     }
@@ -137,5 +140,9 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment() {
         fragmentTransaction?.addToBackStack("")
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
         fragmentTransaction?.commit()
+    }
+
+    override fun refresh() {
+        this.getData()
     }
 }

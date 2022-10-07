@@ -74,7 +74,7 @@ class JobDetailFragment(
             fragmentManager?.popBackStack()
         }
         toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
+            fragmentManager?.popBackStack()
         }
         toolbarBookmark.setOnClickListener {
             Toast.makeText(context, "Bookmark", Toast.LENGTH_SHORT).show()
@@ -117,9 +117,12 @@ class JobDetailFragment(
                     view.findViewById<NestedScrollView>(R.id.job_detail_container).visibility = VISIBLE
                     jobBookmark = it.data.bookmarked == true;
 
-                    Glide.with(this)
-                        .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
-                        .fitCenter().into(company_logo)
+                    if (activity != null && !activity!!.isDestroyed) {
+                        Glide.with(this)
+                            .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
+                            .fitCenter().into(company_logo)
+                    }
+
                     job_position.text = it.data.jobPosition
                     if (it.data.jobLocation.size > 1) {
                         job_location.text = "Banyak Lokasi"
@@ -138,19 +141,23 @@ class JobDetailFragment(
 
                     val localeID = Locale("in", "ID")
                     val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
-                    if (it.data.jobSalaryMin == null) {
-                        job_salary_min.text = "Rp. 0 -"
-                    }
-                    if (it.data.jobSalaryMax == null) {
-                        job_salary_max.text = "Rp. 0"
-                    }
-                    if (it.data.jobSalaryMin != null) {
-                        var salary_min = formatRupiah.format(it.data.jobSalaryMin.toBigDecimal())
-                        job_salary_min.text = salary_min?.toString() + " - "
-                    }
-                    if (it.data.jobSalaryMax != null) {
-                        var salary_max = formatRupiah.format(it.data.jobSalaryMax.toBigDecimal())
-                        job_salary_max.text = salary_max?.toString()
+                    if(it.data.jobSalaryMin != null && it.data.jobSalaryMin != null) {
+                        if (it.data.jobSalaryMin == null) {
+                            job_salary_min.text = "Rp. 0 -"
+                        }
+                        if (it.data.jobSalaryMax == null) {
+                            job_salary_max.text = "Rp. 0"
+                        }
+                        if (it.data.jobSalaryMin != null) {
+                            var salary_min =
+                                formatRupiah.format(it.data.jobSalaryMin.toBigDecimal())
+                            job_salary_min.text = salary_min?.toString() + " - "
+                        }
+                        if (it.data.jobSalaryMax != null) {
+                            var salary_max =
+                                formatRupiah.format(it.data.jobSalaryMax.toBigDecimal())
+                            job_salary_max.text = salary_max?.toString()
+                        }
                     }
 
     //                location.text =

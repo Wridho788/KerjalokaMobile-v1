@@ -44,18 +44,13 @@ class fragment_company_jobs : Fragment() {
             startActivity(goToMainActivity)
         }
 
-<<<<<<< HEAD
         JobAPI().getJob(context){
-=======
-        var list = ArrayList<Data>()
-
-        JobAPI().getJob(context) {
-            list = it?.data as ArrayList<Data>
->>>>>>> 2a053fc98dff780b7d66186b15e7e8fdc8bb565f
-            val recyclerView = view.findViewById<RecyclerView>(R.id.recyle_company_jobs)
-            recyclerView.apply {
-                layoutManager = LinearLayoutManager(activity)
-                adapter = it.data.let { it1 -> assignAdapter(it1) }
+            if(it != null) {
+                val recyclerView = view.findViewById<RecyclerView>(R.id.recyle_company_jobs)
+                recyclerView.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = it.data.let { it1 -> assignAdapter(it1) }
+                }
             }
         }
     }

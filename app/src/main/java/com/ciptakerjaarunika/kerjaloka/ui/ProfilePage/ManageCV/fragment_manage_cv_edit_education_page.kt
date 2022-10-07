@@ -15,6 +15,7 @@ import androidx.appcompat.widget.SearchView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetMajorJob
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.city
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
@@ -36,7 +37,7 @@ import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.util.*
 
 
-class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsRequest?) : Fragment(), iEditBasic, iManageExp,
+class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsRequest?,val iRefreshData: iRefreshData) : Fragment(), iEditBasic, iManageExp,
     iUpdateMajor, iUpdateTitle {
     private lateinit var binding : FragmentManageCvEditEducationPageBinding
     private var beginMonth : Int? = data?.educationBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt() }
@@ -241,6 +242,7 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
 //        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
 //        fragmentTransaction?.commit()
         fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 
     override fun updateCity(cityNo: Int?) {

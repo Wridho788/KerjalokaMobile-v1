@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -147,9 +149,17 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
         return view
     }
 
+    override fun isSheetAlwaysExpanded(): Boolean {
+        return true
+    }
+
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
-        return 2000
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
     }
 
     override fun isSheetCancelableOnTouchOutside(): Boolean {

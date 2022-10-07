@@ -10,6 +10,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditJobtypeLayoutBinding
@@ -21,7 +22,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.JobTypeAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.MinatAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 
-class FragmentEditJobType(var dataList : List<JobType>?) : Fragment(), iEditJobType {
+class FragmentEditJobType(var dataList : List<JobType>?, val iRefreshData: iRefreshData) : Fragment(), iEditJobType {
     private lateinit var binding : FragmentEditJobtypeLayoutBinding
     private var jobTypes : List<JobTypeFilter> = listOf()
 
@@ -73,6 +74,7 @@ class FragmentEditJobType(var dataList : List<JobType>?) : Fragment(), iEditJobT
 //        fragmentTransaction?.replace(id, profilepage(2), "Profile Page")
 //        fragmentTransaction?.commit()
         fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 
     override fun refreshRecyCleview() {

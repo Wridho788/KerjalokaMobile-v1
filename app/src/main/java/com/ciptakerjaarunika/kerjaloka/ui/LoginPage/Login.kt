@@ -10,19 +10,26 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
+import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.reactnativegooglesignin.RNGoogleSigninModule.RC_SIGN_IN
 
 
@@ -57,8 +64,18 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
             val email = view?.findViewById<EditText>(R.id.txt_email)?.text.toString()
             val password = view?.findViewById<EditText>(R.id.txt_password)?.text.toString()
             if (!email.isNullOrEmpty() && !email.isNullOrBlank() && !password.isNullOrEmpty() && !password.isNullOrBlank()) {
+                if(SessionManager(context).device_token.isNullOrEmpty()){
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            return@OnCompleteListener
+                        }
+                        val token = task.result
+                        SessionManager(context).device_token = token
+                    })
+                }
 
-                AUTHAPI().Login(context, LoginRequest(email, password)) {
+
+                AUTHAPI().Login(context, LoginRequest(email, password, SessionManager(context).device_token.toString())) {
                     if (it != null) {
 
                         SessionManager(context).access_token = it.userToken
@@ -89,10 +106,19 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                         )
 
                         SessionManager(context).user = User
-
-                        AUTHAPI().CheckLogin(context) {
-                            val mainActivity = activity as MainActivity
-                            mainActivity.replaceFragment(Goto, nameFragment)
+                        val mainActivity = activity as MainActivity
+                        AUTHAPI().CheckLogin(context, mainActivity) {
+                            if(nameFragment != "lamaran" || SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value){
+                                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                                    ft.replace(id, Goto,"")
+                                    ft.commit()
+                            }
+                            else if (nameFragment == "lamaran" && SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null
+                            ) {
+                                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                                    ft.replace(id, CompanyListApplicantFragment(),"")
+                                    ft.commit()
+                            }
                         }
                     }
                 }

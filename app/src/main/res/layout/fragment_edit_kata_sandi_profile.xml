@@ -32,7 +32,8 @@
                     android:layout_gravity="center"
                     android:paddingLeft="16dp"
                     app:cornerRadius="100sp"
-                    app:icon="@drawable/ic_back"
+                    android:id="@+id/back_btn"
+                    app:icon="@drawable/ic_arrow_left_red"
                     app:iconTint="@color/danger_500"/>
 
                 <com.google.android.material.appbar.MaterialToolbar

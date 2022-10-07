@@ -40,6 +40,9 @@ class EditEmail : Fragment() {
                     }
                 }
             }
+            view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
+                fragmentManager?.popBackStack()
+            }
         }
 
 

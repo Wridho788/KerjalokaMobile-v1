@@ -1,12 +1,15 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -43,6 +46,15 @@ class CompanyBrowseAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job, null)
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+
+        view.layoutParams = ConstraintLayout.LayoutParams(
+            RecyclerView.LayoutParams.MATCH_PARENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 

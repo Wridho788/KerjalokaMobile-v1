@@ -13,6 +13,7 @@ import okio.ByteString.Companion.decodeHex
 import java.util.concurrent.Flow
 
 interface ISessionManager{
+    var device_token : String?
     var access_token : String?
     var user: User?
     var jobseeker: Jobseeker?

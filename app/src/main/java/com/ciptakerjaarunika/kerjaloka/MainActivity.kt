@@ -1,10 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.se.omapi.Session
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -15,6 +17,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat.toWindowInsetsCompat
@@ -27,6 +30,7 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.model.Interview.incoming_call_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.CompanyDashboard
@@ -36,6 +40,10 @@ import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.iid.FirebaseInstanceIdReceiver
+import com.google.firebase.messaging.FirebaseMessaging
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -52,23 +60,23 @@ class MainActivity : AppCompatActivity() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var hubConnection: HubConnection
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+            val token = task.result
+            SessionManager(baseContext).device_token = token
+        })
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationView.visibility = GONE
-        binding.bottomNavigationCompanyView.visibility = GONE
-
-        AUTHAPI().CheckLogin(baseContext) {
-//            if(it?.user?.roleNo == Role.Jobseekers.value){
-//                // User Jobseeker
-//            }
-//            else if(it?.user?.roleNo == Role.Jobseekers.value || SessionManager(baseContext).user?.company != null) {
-//                // User Company
-//            }
+        AUTHAPI().CheckLogin(baseContext, this) {
 
             var context = baseContext
             hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
@@ -91,17 +99,17 @@ class MainActivity : AppCompatActivity() {
                 )
                 hubConnection.on(
                     "incomingCall",
-                    { roomId ->
+                    { data ->
                         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
                         ft.replace(
                             R.id.fragment_container,
-                            IncomingCallPage(roomId),
+                            IncomingCallPage(data),
                             "IncomingCall"
                         )
                         ft.addToBackStack("Main")
                         ft.commit()
                     },
-                    String::class.java
+                    incoming_call_model::class.java
                 )
             }
 
@@ -120,38 +128,53 @@ class MainActivity : AppCompatActivity() {
                     0 // or HIDE_IMPLICIT_ONLY
                 )
             }
-            
 
-//
 
+            var isCompany = SessionManager(context).user != null && (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null)
+
+            if (!isCompany) {
+                replaceFragment(HomePage())
+            } else {
+                replaceFragment(CompanyDashboard())
+            }
+            binding.bottomNavigationView.menu.forEach { item ->
+                if(item.itemId == R.id.lamaran){
+                    if(!isCompany) {
+                        item.title = "Lamaran"
+                    }
+                    else{
+                        item.title = "Pelamar"
+                    }
+                }
+            }
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                var isCompany = SessionManager(context).user != null && (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null)
+
                 when (item.itemId) {
-                    R.id.home -> replaceFragment((HomePage()), null)
-                    R.id.lamaran -> replaceFragment((LamaranPage()), null)
-                    R.id.interview -> replaceFragment((InterviewPage()), null)
-                    R.id.akun -> replaceFragment((AkunPage()), null)
+                    R.id.home -> replaceFragment(if(!isCompany) HomePage() else CompanyDashboard())
+                    R.id.lamaran -> {
+                        if(!isCompany) {
+                            replaceFragment(LamaranPage())
+                        }
+                        else{
+                            item.title = "Pelamar"
+                            replaceFragment(CompanyListApplicantFragment())
+                        }
+                    }
+                    R.id.interview -> replaceFragment(InterviewPage())
+                    R.id.akun -> replaceFragment(AkunPage())
                 }
                 true
             }
-            binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.home -> replaceFragment((CompanyDashboard()), null)
-                    R.id.pelamar -> replaceFragment((CompanyListApplicantFragment()), null)
-                    R.id.interview -> replaceFragment((InterviewPage()), null)
-                    R.id.akun -> replaceFragment((AkunPage()), null)
-                }
-                true
-            }
-            if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
-                replaceFragment(HomePage(), null)
-                binding.bottomNavigationView.visibility = VISIBLE
-
-                // User Jobseeker
-
-            } else if (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null) {
-                replaceFragment(CompanyDashboard(), null)
-                binding.bottomNavigationCompanyView.visibility = VISIBLE
-            }
+//            binding.bottomNavigationCompanyView.setOnItemSelectedListener { item ->
+//                when (item.itemId) {
+//                    R.id.home -> replaceFragment(CompanyDashboard())
+//                    R.id.pelamar -> replaceFragment(CompanyListApplicantFragment())
+//                    R.id.interview -> replaceFragment(InterviewPage())
+//                    R.id.akun -> replaceFragment(AkunPage())
+//                }
+//                true
+//            }
         }
 
         val settings = getSharedPreferences("prefs", 0)
@@ -221,54 +244,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    open fun replaceFragment(fragment: Fragment, nameFragment : String?) {
-        var selectedId : Int? = null
-
-        when (nameFragment){
-            "home" ->{
-                selectedId = R.id.home
-            }
-            "lamaran" ->{
-                selectedId = R.id.lamaran
-            }
-            "pelamar" ->{
-                selectedId = R.id.pelamar
-            }
-            "interview" ->{
-                selectedId = R.id.interview
-            }
-            "akun" ->{
-                selectedId = R.id.akun
-            }
-        }
-        AUTHAPI().CheckLogin(baseContext) {
-            binding?.bottomNavigationView?.visibility = GONE
-            binding?.bottomNavigationCompanyView?.visibility = GONE
+    open fun replaceFragment(fragment: Fragment) {
+        AUTHAPI().CheckLogin(baseContext, this) {
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container, fragment)
             fragmentTransaction.commit()
-            if (SessionManager(baseContext).user == null || SessionManager(baseContext).user?.roleNo == Role.Jobseekers.value) {
-                binding?.bottomNavigationView?.visibility = VISIBLE
-                if (selectedId != null) {
-                    binding.bottomNavigationView.getMenu().forEach { item ->
-                        item.isChecked = item.itemId == selectedId
-                    }
-                }
-            } else if (SessionManager(baseContext).user?.roleNo == Role.Companies.value || SessionManager(
-                    baseContext
-                ).user?.company != null
-            ) {
-                binding?.bottomNavigationCompanyView?.visibility = VISIBLE
-                if (selectedId == R.id.lamaran) {
-                    selectedId = R.id.pelamar
-                }
-                if (selectedId != null) {
-                    binding.bottomNavigationCompanyView.getMenu().forEach { item ->
-                        item.isChecked = item.itemId == selectedId
-                    }
-                }
-            }
         }
     }
 
@@ -276,6 +257,20 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, Login(Goto, nameFragment))
         fragmentTransaction.commit()
+    }
+
+    open fun refreshBottomSheet() {
+        var isCompany = SessionManager(baseContext).user != null && (SessionManager(baseContext).user?.roleNo == Role.Companies.value || SessionManager(baseContext).user?.company != null)
+        binding.bottomNavigationView.menu.forEach { item ->
+            if(item.itemId == R.id.lamaran){
+                if(!isCompany) {
+                    item.title = "Lamaran"
+                }
+                else{
+                    item.title = "Pelamar"
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {}

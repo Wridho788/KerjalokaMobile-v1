@@ -49,6 +49,9 @@ class EditPassword : Fragment() {
             val newpassword = newPass.text.toString()
             company_profile_api().ChangePassword(password, newpassword, context){}
         }
+        view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
 
 
 

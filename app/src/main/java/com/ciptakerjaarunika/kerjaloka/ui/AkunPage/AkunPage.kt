@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
@@ -26,8 +27,10 @@ import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.messaging.FirebaseMessaging
 import com.reactnativegooglesignin.RNGoogleSigninModule
 
 
@@ -58,7 +61,19 @@ class AkunPage() : Fragment() {
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
-            val loginRequest = LoginRequest(email = email, password=password)
+
+            if(SessionManager(context).device_token.isNullOrEmpty()){
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+                    val token = task.result
+                    SessionManager(context).device_token = token
+                })
+            }
+
+
+            val loginRequest = LoginRequest(email = email, password=password, deviceToken = SessionManager(context).device_token.toString())
             AUTHAPI().Login(context, loginRequest){
                 Log.d("Login Response", it.toString());
                 if(it != null && it.code == 252){
@@ -91,8 +106,13 @@ class AkunPage() : Fragment() {
                         phone = "",
                     );
                     SessionManager(context).user = user
+
                     val mainActivity = activity as MainActivity
-                    mainActivity.replaceFragment(AkunPage(), "akun")
+                    AUTHAPI().CheckLogin(mainActivity,mainActivity) {
+                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                        ft.replace(id, AkunPage(), "Akun Page")
+                        ft.commit()
+                    }
                 }
                 else{
                     SessionManager(context).user = null

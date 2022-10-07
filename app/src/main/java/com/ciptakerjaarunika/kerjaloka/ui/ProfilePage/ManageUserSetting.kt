@@ -66,7 +66,7 @@ class ManageUserSetting : Fragment() {
 
         view.findViewById<MaterialButton>(R.id.btn_logout).setOnClickListener{
             ProfileAPI().Logout(context){
-                val intent = Intent(context, MainActivity::class.java)
+                val intent = Intent(context, MainActivity()::class.java)
                 startActivity(intent)
             }
         }

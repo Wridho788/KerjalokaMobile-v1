@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentLampiranBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
@@ -37,7 +38,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 
-class FragmentEditLampiran(var dataList : List<Documents>?) : Fragment(), iEditLampiran {
+class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRefreshData) : Fragment(), iEditLampiran {
     private lateinit var binding: FragmentLampiranBinding
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     private var document : MultipartBody.Part? = null
@@ -192,6 +193,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?) : Fragment(), iEditL
     }
     private fun back(){
         fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 
     override fun delete(value: Documents) {

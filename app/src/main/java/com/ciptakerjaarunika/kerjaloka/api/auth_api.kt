@@ -3,9 +3,11 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.model.User.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,7 +44,7 @@ class AUTHAPI {
         @GET("users/self")
         fun checkLogin(): Call<CheckLoginDataResponse>
     }
-    fun CheckLogin(context: Context?, onResult: (CheckLoginDataResponse?) -> Unit){
+    fun CheckLogin(context: Context?, mainActivity: MainActivity, onResult: (CheckLoginDataResponse?) -> Unit){
         val retrofit = ServiceBuilder(context).GET(ICheckLogin::class.java)
 
         retrofit.checkLogin().enqueue(
@@ -78,7 +80,7 @@ class AUTHAPI {
                                     Gson().fromJson(additional, CompanyAdditional::class.java)
                             }
                         }
-
+                        mainActivity.refreshBottomSheet()
                     }
                     return onResult(response.body())
                 }

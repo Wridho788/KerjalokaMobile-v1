@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.HomePage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -18,6 +19,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentHomeBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Role
+import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobModel
@@ -32,7 +34,7 @@ import com.google.android.material.card.MaterialCardView
 
 class HomePage : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentHomeBinding
-    private var listJob: List<rJobModel>? = null
+    private var listJob: List<SearchJobModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +50,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
     ): View {
         val view = binding.root
         if(SessionManager(context).user != null) {
-            binding.customToolbar.greetingTxt.text = SessionManager(context).user?.userFullname!!.split(" ")[0]
+            view.findViewById<TextView>(R.id.greeting_txt).text = SessionManager(context).user?.userFullname!!.split(" ")[0]
         }
         val btn_search = view.findViewById<LinearLayout>(R.id.btn_search)
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn)
@@ -97,7 +99,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
 
         val Context = this
-        JobAPI().getJobHomeAsync(context) {
+        JobAPI().getJobRecommendation(false,context) {
             if (it != null) {
                 listJob = it.data
                 recyclerView.apply {
@@ -112,28 +114,41 @@ class HomePage : Fragment(), OnFragmentClickListener {
     override fun onFragmentClick(JobNo: Long, CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.addToBackStack("")
-        ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "jobDetailFragment")
+        ft.replace(id, JobDetailFragment(JobNo, CompanyNo), "")
         ft.commit()
     }
 
     override fun onCompanyPage() {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.addToBackStack("")
-        ft.replace(id, CompanyPage(), "companyFragment")
+        ft.replace(id, CompanyPage(), "")
         ft.commit()
     }
 
     override fun onJobPage() {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack("Home Page")
-        fragmentTransaction.replace(id, JobPage(), "JobFragment")
+        fragmentTransaction.addToBackStack("")
+        fragmentTransaction.replace(id, JobPage(), "")
         fragmentTransaction.commit()
     }
 
     override fun onCompanyJobPage() {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction.replace(id, fragment_company_jobs(), "companyjob")
+        fragmentTransaction.addToBackStack("")
+        fragmentTransaction.replace(id, fragment_company_jobs(), "")
         fragmentTransaction.commit()
+    }
+
+    override fun bookmarkJob(list : List<SearchJobModel>) {
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
+        listJob = list
+
+                recyclerView?.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    recyclerView.layoutManager = layoutManager
+                    adapter = RecommendationJobAdapter(context, listJob, this@HomePage)
+                }
+        recyclerView?.adapter?.notifyDataSetChanged()
     }
 
 }
@@ -143,4 +158,5 @@ interface OnFragmentClickListener {
     fun onCompanyPage()
     fun onJobPage()
     fun onCompanyJobPage()
+    fun bookmarkJob(list : List<SearchJobModel>)
 }

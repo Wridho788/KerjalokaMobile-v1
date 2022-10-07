@@ -27,9 +27,11 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyDetailBinding
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentMyRecordPageBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.fragment_manage_cv_edit_education_page
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.OtherCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedCompanyJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.CompanyReviewFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyVacanciesAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.OnFragmentClickListener
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
@@ -160,17 +162,17 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                 if(companyList.size == 0){
                     view.findViewById<LinearLayout>(R.id.otherCompanyContainer).visibility = GONE
                 }
+
+//                recyclerView?.apply {
+//                    layoutManager = LinearLayoutManager(activity)
+//                    adapter = CompanyVacanciesAdapter(context, companyList, this@CompanyDetailFragment)
+//                }
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = CompanyBrowseAdapter(context, companyList, this@CompanyDetailFragment)
+                    adapter = OtherCompanyAdapter(context, companyList, this@CompanyDetailFragment)
                 }
             }
         }
-
-        toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
-        }
-
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)

@@ -39,7 +39,7 @@ class fragment_my_review_page : Fragment() {
 
 
         ProfileAPI().JobseekerGetMyReview(context){
-            if(it?.data != null){
+            if(it != null){
                 binding.spinner.visibility = GONE
                 binding.contentContainer.visibility = VISIBLE
                 binding.reviewBtn.setOnClickListener {

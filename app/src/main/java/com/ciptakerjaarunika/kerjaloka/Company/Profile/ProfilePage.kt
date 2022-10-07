@@ -61,9 +61,14 @@ class ProfilePage : Fragment() {
             content.adapter = adapter
             compName.text = response?.data?.companyName
             username.text = response?.data?.username
-            Glide.with(view.context)
-                .load(config().portAddress + "/photo/Profile/" + response?.data?.logo).fitCenter()
-                .into(view.findViewById<ImageView>(R.id.compLogo))
+
+            if(activity != null)
+                if(activity != null) {
+                    Glide.with(view.context)
+                        .load(config().portAddress + "/photo/Profile/" + response?.data?.logo)
+                        .fitCenter()
+                        .into(view.findViewById<ImageView>(R.id.compLogo))
+                }
 
             content.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 //            override fun onPageScrolled(

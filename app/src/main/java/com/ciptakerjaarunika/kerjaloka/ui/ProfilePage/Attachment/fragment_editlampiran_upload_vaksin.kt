@@ -20,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
@@ -37,7 +38,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import kotlin.reflect.jvm.internal.impl.util.Check
 
-class fragment_editlampiran_upload_vaksin(var dataVaccine : List<CheckDocument>) : Fragment() {
+class fragment_editlampiran_upload_vaksin(var dataVaccine : List<CheckDocument>, val iRefreshData: iRefreshData) : Fragment() {
     private lateinit var binding : FragmentEditlampiranUploadVaksinBinding
     private lateinit var uploadVaccine1 : ActivityResultLauncher<Intent>
     private lateinit var uploadVaccine2 : ActivityResultLauncher<Intent>
@@ -255,6 +256,7 @@ class fragment_editlampiran_upload_vaksin(var dataVaccine : List<CheckDocument>)
 //        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
 //        fragmentTransaction?.commit()
         fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 
 }

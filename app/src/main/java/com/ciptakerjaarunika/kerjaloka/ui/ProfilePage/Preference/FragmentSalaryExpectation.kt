@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSalaryExpectationBinding
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 
 
-class FragmentSalaryExpectation(val salaryExpectation: Int?) : Fragment() {
+class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: iRefreshData) : Fragment() {
     private lateinit var binding : FragmentSalaryExpectationBinding
 
     override fun onCreateView(
@@ -51,6 +52,7 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?) : Fragment() {
     }
     private fun back(){
        fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 
 }

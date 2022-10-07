@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageLampiranPageBinding
@@ -40,7 +41,7 @@ import java.io.File
 import java.io.InputStreamReader
 
 
-class manage_lampiran : Fragment() {
+class manage_lampiran : Fragment(), iRefreshData {
     private lateinit var binding : FragmentManageLampiranPageBinding
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     private var oldestFile : String? = null;
@@ -83,10 +84,21 @@ class manage_lampiran : Fragment() {
             }
         }
 
+        getData()
+
+
+
+//        btn_edResume.setOnClickListener{
+//
+//        }
+
+    }
+
+    fun getData(){
         ProfileAPI().GetJobseekerDocuments(context){ documents ->
             binding.editLampiranPelamar.visibility = VISIBLE
             binding.editLampiranPelamar.setOnClickListener{
-                replaceFragment(FragmentEditLampiran(documents?.data))
+                replaceFragment(FragmentEditLampiran(documents?.data, this))
             }
 
             binding.spinnerDoc.visibility = GONE
@@ -140,19 +152,19 @@ class manage_lampiran : Fragment() {
                                 doc.documentType == DocumentType.Vaccine1.value ||
                                         doc.documentType == DocumentType.Vaccine2.value ||
                                         doc.documentType == DocumentType.Vaccine3.value
-                            })
+                            }, this)
                     )
                 }
             }
             if(vaccine != null && vaccine.data.size != 0) {
                 for (doc in vaccine.data) {
-                    var vaccineLogo: ImageView = view.findViewById(R.id.vaccine1Status);
+                    var vaccineLogo: ImageView = view!!.findViewById(R.id.vaccine1Status);
                     if (doc.documentType == DocumentType.Vaccine1.value) {
-                        vaccineLogo = view.findViewById(R.id.vaccine1Status)
+                        vaccineLogo = view!!.findViewById(R.id.vaccine1Status)
                     } else if (doc.documentType == DocumentType.Vaccine2.value) {
-                        vaccineLogo = view.findViewById(R.id.vaccine2Status)
+                        vaccineLogo = view!!.findViewById(R.id.vaccine2Status)
                     } else if (doc.documentType == DocumentType.Vaccine3.value) {
-                        vaccineLogo = view.findViewById(R.id.vaccine3Status)
+                        vaccineLogo = view!!.findViewById(R.id.vaccine3Status)
                     }
 
                     when (doc.documentStatus) {
@@ -169,11 +181,6 @@ class manage_lampiran : Fragment() {
                 }
             }
         }
-
-//        btn_edResume.setOnClickListener{
-//
-//        }
-
     }
 
 
@@ -184,5 +191,9 @@ class manage_lampiran : Fragment() {
         fragmentTransaction?.addToBackStack("")
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
         fragmentTransaction?.commit()
+    }
+
+    override fun refresh() {
+        getData()
     }
 }
