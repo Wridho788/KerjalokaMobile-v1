@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "695482327328-070t9ei7kklb08n13n2jdoki2vac48og.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ciptakerjaarunika.kerjaloka",
+            "certificate_hash": "b601f0b8250c111e8c3598f5f531f62a7f6c4d23"
+          }
+        },
+        {
           "client_id": "695482327328-pr01pggqcbsa0id9e85sbacrvhsaufn7.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -87,3 +87,29 @@ class AUTHAPI {
     }
 }
 
+class AUTHGOOGLEAPI{
+    interface IGoogleLogin{
+        @Headers("Content-Type: application/json",
+            "Accept: application/json")
+        @POST("users/googleLogin")
+        fun login(@Body GoogleLoginRequest: GoogleLoginRequest): Call<LoginResponse>
+    }
+    fun GoogleLogin(context: Context?, GoogleLoginRequest: GoogleLoginRequest,onResult: (LoginResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(IGoogleLogin::class.java)
+        retrofit.login(GoogleLoginRequest).enqueue(
+            object : Callback<LoginResponse>{
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Log.d("error google login", t.toString())
+                    onResult(null)
+                }
+            }
+        )
+    }
+}

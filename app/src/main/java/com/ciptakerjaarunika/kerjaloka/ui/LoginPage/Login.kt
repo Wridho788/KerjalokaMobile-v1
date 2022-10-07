@@ -1,9 +1,11 @@
 package com.ciptakerjaarunika.kerjaloka.ui.LoginPage
 
+import android.content.Context
 import android.content.Intent
-import android.content.IntentSender.SendIntentException
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +17,11 @@ import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
+import com.ciptakerjaarunika.kerjaloka.api.AUTHGOOGLEAPI
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
-import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.google.android.gms.auth.api.identity.GetSignInIntentRequest
-import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -27,40 +29,50 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.util.*
+import kotlin.text.Charsets.UTF_8
 
 
 class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
 
     companion object {
-         var mGoogleSignInClient: GoogleSignInClient? = null
-        val REQUEST_CODE_GOOGLE_SIGN_IN = 0
-        private val RC_SIGN_IN = 1
+        var mGoogleSignInClient: GoogleSignInClient? = null
+        private var mAuth: FirebaseAuth? = null
+        val Req_Code: Int = 123
+        val firebaseAuth = FirebaseAuth.getInstance()
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        val account = GoogleSignIn.getLastSignedInAccount(activity)
-//        Log.d("account", account.idToken.toString())
-//        if(account!=null) {
-//            val mainActivity = activity as MainActivity
-//            mainActivity.replaceFragment(Goto, nameFragment)
-//        }
-//    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mAuth = FirebaseAuth.getInstance()
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+    }
+
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(context!!, gso)
-
+        // Configure Google Sign In inside onCreate mentod
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()// getting the value of gso inside the GoogleSigninClient
+        mGoogleSignInClient = GoogleSignIn.getClient(
+            context!!,
+            gso
+        )// initialize the firebaseAuth variable firebaseAuth= FirebaseAuth.getInstance()
         val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
 
         btn_login_google.setOnClickListener {
             signIn()
-
         }
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
@@ -71,7 +83,19 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
             if (!email.isNullOrEmpty() && !email.isNullOrBlank() && !password.isNullOrEmpty() && !password.isNullOrBlank()) {
 
                 AUTHAPI().Login(context, LoginRequest(email, password)) {
-                    if (it != null) {
+                    if (it != null)
+                        if (it.code == "252") {
+                            SessionManager(context).access_token = it.userToken
+                            AUTHAPI().CheckLogin(context) {
+                                val mainActivity = activity as MainActivity
+                                mainActivity.replaceFragment(Goto, nameFragment)
+                            }
+                        } else {
+                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                            SessionManager(context).user = null
+
+                        }
+                    /*if (it != null && it.code == "252") {
 
                         SessionManager(context).access_token = it.userToken
                         var User = User(
@@ -106,7 +130,10 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                             val mainActivity = activity as MainActivity
                             mainActivity.replaceFragment(Goto, nameFragment)
                         }
-                    }
+                    } else if (it != null) {
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                        SessionManager(context).user = null
+                    }*/
                 }
             }
         }
@@ -127,66 +154,76 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
     }
 
     private fun signIn() {
-//        val intent = mGoogleSignInClient!!.signInIntent
-//        startActivityForResult(intent, RC_SIGN_IN)
-        val request = GetSignInIntentRequest.builder()
-            .setServerClientId("953263165300-d93upe5e31bsfb1au1ns41c2ijpa2tb4.apps.googleusercontent.com")
-            .build()
-
-        Log.d("request", request.toString())
-
-        Identity.getSignInClient(context!!)
-            .getSignInIntent(request)
-            .addOnSuccessListener { result ->
-                try {
-                    startIntentSenderForResult(
-                        result.getIntentSender(),
-                        REQUEST_CODE_GOOGLE_SIGN_IN,  /* fillInIntent= */
-                        null,  /* flagsMask= */
-                        0,  /* flagsValue= */
-                        0,  /* extraFlags= */
-                        0,  /* options= */
-                        null
-                    )
-                } catch (e: SendIntentException) {
-                    Log.d("Google Sign-in failed", e.toString())
-                }
-            }
-            .addOnFailureListener { e -> Log.d( "Google Sign-in failed", e.toString()) }
+        val signInIntent: Intent = mGoogleSignInClient!!.signInIntent
+        startActivityForResult(signInIntent, Req_Code)
 
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
-            val task =
-                GoogleSignIn.getSignedInAccountFromIntent(data)
-            Log.d("onActivityResult", task.getResult().toString())
-
-            try {
-                val account :GoogleSignInAccount? = task.getResult(ApiException::class.java)
-//                val intent = Intent(context, MainActivity::class.java)
-//                startActivity(intent)
-
-                Log.d("account", account!!.idToken.toString())
-
-
-            } catch (e: ApiException) {
-                // The ApiException status code indicates the detailed failure reason.
-                // Please refer to the GoogleSignInStatusCodes class reference for more information.
-                Log.e("TAG","signInResult:failed code=" + e.statusCode)
-            }
+        if (requestCode == Req_Code) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
         }
     }
 
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
-            val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)
-            Log.d("account signin",account.toString())
+            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
+            if (account != null) {
+                UpdateUI(account)
+            }
         } catch (e: ApiException) {
-            Toast.makeText(context,e.toString(),Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun UpdateUI(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        val currentDate = Date()
+        val cal: Calendar = Calendar.getInstance()
+        // remove next line if you're always using the current time.
+        cal.setTime(currentDate)
+        cal.add(Calendar.HOUR, +1)
+        val oneHourBack: Date = cal.getTime()
+
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                SavedPreference.setEmail(context!!, account.email.toString())
+                SavedPreference.setUsername(context!!, account.displayName.toString())
+
+                val text = "${account.idToken}${config().authKey}${4}"
+                val crypt = MessageDigest.getInstance("MD5");
+                crypt.update(text.toByteArray());
+                val hash = BigInteger(1, crypt.digest()).toString(16)
+                fun md5(str: String): ByteArray =
+                    MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))
+                Log.d("Crypt", hash)
+
+                val googleRequest =
+                    GoogleLoginRequest(account.idToken.toString(), oneHourBack.toString(), hash)
+                AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
+                    Log.d("google login", it.toString())
+                    if (it != null)
+                        if (it.code == "252") {
+                            SessionManager(context).access_token = it.userToken
+                            AUTHAPI().CheckLogin(context) {
+                                val mainActivity = activity as MainActivity
+                                mainActivity.replaceFragment(Goto, nameFragment)
+                            }
+                        } else {
+                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                            SessionManager(context).user = null
+                        }
+                }
+            }
+//                val intent = Intent(context, MainActivity::class.java)
+//                startActivity(intent)
+//                finish()
+
+
         }
     }
 
@@ -199,4 +236,42 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         return inflater.inflate(R.layout.activity_login, container, false)
     }
 
+    object SavedPreference {
+        const val EMAIL = "email"
+        const val USERNAME = "username"
+        private fun getSharedPreference(ctx: Context?): SharedPreferences? {
+            return PreferenceManager.getDefaultSharedPreferences(ctx)
+        }
+
+        private fun editor(context: Context, const: String, string: String) {
+            getSharedPreference(
+                context
+            )?.edit()?.putString(const, string)?.apply()
+        }
+
+        fun getEmail(context: Context) = getSharedPreference(
+            context
+        )?.getString(EMAIL, "")
+
+        fun setEmail(context: Context, email: String) {
+            editor(
+                context,
+                EMAIL,
+                email
+            )
+        }
+
+        fun setUsername(context: Context, username: String) {
+            editor(
+                context,
+                USERNAME,
+                username
+            )
+        }
+
+        fun getUsername(context: Context) = getSharedPreference(
+            context
+        )?.getString(USERNAME, "")
+
+    }
 }

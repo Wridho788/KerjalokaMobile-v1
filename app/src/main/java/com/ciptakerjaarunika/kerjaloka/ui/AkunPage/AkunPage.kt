@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
@@ -16,7 +17,6 @@ import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
-import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -53,7 +53,20 @@ class AkunPage() : Fragment() {
             val loginRequest = LoginRequest(email = email, password=password)
             AUTHAPI().Login(context, loginRequest){
                 Log.d("Login Response", it.toString());
-                if(it != null && it.code == 252){
+
+                if(it!= null)
+                    if(it.code == "252") {
+                        SessionManager(context).access_token = it.userToken
+                        AUTHAPI().CheckLogin(context) {
+                            val mainActivity = activity as MainActivity
+                            mainActivity.replaceFragment(AkunPage(), "akun")
+                        }
+                    }
+                    else{
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                        SessionManager(context).user = null
+                    }
+                /*if(it != null && it.code == "252"){
 
                     SessionManager(context).access_token = it.userToken
 
@@ -86,9 +99,11 @@ class AkunPage() : Fragment() {
                     val mainActivity = activity as MainActivity
                     mainActivity.replaceFragment(AkunPage(), "akun")
                 }
-                else{
-                    SessionManager(context).user = null
-                }
+                else if (it != null) {
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                        SessionManager(context).user = null
+                    }
+                }*/
             }
         }
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
