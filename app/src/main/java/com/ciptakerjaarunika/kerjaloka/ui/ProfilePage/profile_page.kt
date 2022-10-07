@@ -73,9 +73,11 @@ class profilepage(var Page : Int) : Fragment() {
             js_AboutMe.text = user?.jobseekerAdditional?.jobseekerAbout
             jsusrname.text = user?.username
 
-            Glide.with(view.context)
-                .load(config().portAddress + "/photo/Profile/" + user?.photo).fitCenter()
-                .into(view.findViewById<ImageView>(R.id.userPhoto))
+            if(activity != null) {
+                Glide.with(view.context)
+                    .load(config().portAddress + "/photo/Profile/" + user?.photo).fitCenter()
+                    .into(view.findViewById<ImageView>(R.id.userPhoto))
+            }
             content.isUserInputEnabled=false
             content.adapter = adapter
             updatePage()

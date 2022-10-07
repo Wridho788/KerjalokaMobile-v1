@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.MainActivity
@@ -19,15 +18,18 @@ import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.reactnativegooglesignin.RNGoogleSigninModule.RC_SIGN_IN
 
 
@@ -62,8 +64,18 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
             val email = view?.findViewById<EditText>(R.id.txt_email)?.text.toString()
             val password = view?.findViewById<EditText>(R.id.txt_password)?.text.toString()
             if (!email.isNullOrEmpty() && !email.isNullOrBlank() && !password.isNullOrEmpty() && !password.isNullOrBlank()) {
+                if(SessionManager(context).device_token.isNullOrEmpty()){
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            return@OnCompleteListener
+                        }
+                        val token = task.result
+                        SessionManager(context).device_token = token
+                    })
+                }
 
-                AUTHAPI().Login(context, LoginRequest(email, password)) {
+
+                AUTHAPI().Login(context, LoginRequest(email, password, SessionManager(context).device_token.toString())) {
                     if (it != null) {
 
                         SessionManager(context).access_token = it.userToken

@@ -196,7 +196,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
                     binding.noDataTxt.visibility = GONE
                     rv_review?.apply {
                         layoutManager = LinearLayoutManager(context)
-                        adapter = CompanyReviewAdapter(it.data.reviewList)
+                        adapter = CompanyReviewAdapter(it.data.reviewList.filter { item -> item.userNo != SessionManager(context).user?.userNo })
                     }
                 }
             }
@@ -208,12 +208,8 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar_review)
         toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
+            fragmentManager?.popBackStack()
         }
-
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-
         refreshData()
     }
 

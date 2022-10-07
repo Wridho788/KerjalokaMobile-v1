@@ -13,6 +13,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditKemampuanBinding
@@ -28,7 +29,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.material.chip.ChipGroup
 
 
-class edit_kemampuan(var dataList: List<JobseekerSkills>?) : Fragment(), iEditKemampuan {
+class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRefreshData) : Fragment(), iEditKemampuan {
     private lateinit var binding : FragmentEditKemampuanBinding
     private var initialSkills : List<SkillFilter> = listOf()
     private var skills : List<SkillFilter> = listOf()
@@ -115,6 +116,7 @@ class edit_kemampuan(var dataList: List<JobseekerSkills>?) : Fragment(), iEditKe
     }
     private fun back(){
        fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 
     override fun updateSkill(value: SkillFilter) {

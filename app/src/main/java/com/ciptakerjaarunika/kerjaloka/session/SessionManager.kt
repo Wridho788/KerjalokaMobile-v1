@@ -35,11 +35,16 @@ class SessionManager (context: Context?) : ISessionManager{
         const val COMPANY_ADDITIONAL= "ocmpanyadditional"
         const val JOBSEEKER_ADDITIONAL = "jobseekeradditionl"
         const val LATESTSEARCHJOB = "latest_search_job"
+        const val DEVICE_TOKEN = "device_token"
     }
 
     override var access_token: String?
         get() = getData(ACCESS_TOKEN)
         set(value) {setData(ACCESS_TOKEN, value) }
+
+    override var device_token : String?
+        get() = getData(DEVICE_TOKEN)
+        set(value) {setData(DEVICE_TOKEN, value) }
 
     override var user: User?
         get() = Gson().fromJson(getData(USER), User::class.java)

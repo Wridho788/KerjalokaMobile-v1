@@ -1,6 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +24,7 @@ import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
+import com.ciptakerjaarunika.kerjaloka.model.Interview.incoming_call_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.ChatPage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
@@ -62,13 +66,13 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
             }, String::class.java)
         hubConnection.on(
             "incomingCall",
-            { roomId ->
+            { data ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
+                ft.replace(id,  IncomingCallPage(data), "IncomingCall")
                 ft.addToBackStack("CompanyInterviewJob")
                 ft.commit()
             },
-            String::class.java
+            incoming_call_model::class.java
         )
 
         var spinner = itemView.findViewById<LinearLayout>(R.id.spinnerInterviewByJob)
@@ -93,7 +97,33 @@ class company_interview_byjob(val SectionDetail : company_interview_list, val jo
         )
 
 
-        view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Pelamar"
+        val search = view?.findViewById<EditText>(R.id.searchInput)
+        search!!.hint= "Cari Pelamar"
+
+        search?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            @SuppressLint("NotifyDataSetChanged")
+            override fun afterTextChanged(s: Editable) {
+                if (!search?.text.toString().isNullOrEmpty() && !search?.text.toString()
+                        .isNullOrBlank() && search?.text.toString() != ""
+                ) {
+                    val temp = SectionDetail.interviewer.filter { item -> item.jobseekerName.toLowerCase().contains(search?.text.toString().toLowerCase()) }
+                    recyclerView.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        adapter = company_interview_byjob_adapter(company_interview_list(SectionDetail.jobPosition, SectionDetail.jobNo, temp), Context, jobNo, context,SectionDetail.jobPosition )
+                    }
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                } else {
+                    recyclerView.apply {
+                        layoutManager = LinearLayoutManager(activity)
+                        adapter = company_interview_byjob_adapter(SectionDetail, Context, jobNo, context,SectionDetail.jobPosition )
+                    }
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+            }
+        })
+
         view?.findViewById<TextView>(R.id.titleToolbar)!!.text = SectionDetail.jobPosition;
         var backButton = view?.findViewById<ImageButton>(R.id.backButton) as ImageButton;
         backButton.visibility = VISIBLE;

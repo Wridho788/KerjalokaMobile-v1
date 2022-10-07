@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -113,6 +114,8 @@ dependencies {
     //google dev
     implementation 'com.google.android.gms:play-services-auth:19.1.0'
 //    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+
+    implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha01'
 
 }
 

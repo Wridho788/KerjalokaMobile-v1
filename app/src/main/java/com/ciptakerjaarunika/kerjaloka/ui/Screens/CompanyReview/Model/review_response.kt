@@ -17,7 +17,7 @@ data class company_reviews(
 data class userInfo(
     val ownerPhoto: String,
     val name: String,
-    val rating: Long,
+    val rating: Float,
     val email: String,
 )
 

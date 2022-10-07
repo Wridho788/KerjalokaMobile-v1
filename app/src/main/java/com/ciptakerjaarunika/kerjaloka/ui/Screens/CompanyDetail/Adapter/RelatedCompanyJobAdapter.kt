@@ -47,10 +47,6 @@ class RelatedCompanyJobAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
-        view.layoutParams = ConstraintLayout.LayoutParams(
-            RecyclerView.LayoutParams.MATCH_PARENT,
-            RecyclerView.LayoutParams.WRAP_CONTENT
-        )
         return ViewHolder(view)
     }
 

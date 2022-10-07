@@ -9,6 +9,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditInterestLayoutBinding
@@ -19,7 +20,7 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.MinatAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 
-class fragment_edit_interest_layout(val jobseekerFields: List<Field>?) : Fragment() {
+class fragment_edit_interest_layout(val jobseekerFields: List<Field>?, val iRefreshData: iRefreshData) : Fragment() {
     private lateinit var binding: FragmentEditInterestLayoutBinding
     private var fields : List<FieldFilter> = listOf()
 
@@ -108,6 +109,7 @@ class fragment_edit_interest_layout(val jobseekerFields: List<Field>?) : Fragmen
     }
     private fun back(){
         fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 }
 

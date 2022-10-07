@@ -65,9 +65,12 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
         JobAPI().getJobDetailAsync(context, companyNo, JobNo) {
             if (it != null) {
                 title_job.text = it.data.jobPosition
-                Glide.with(this)
-                    .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
-                    .fitCenter().into(logo)
+
+                if(activity != null) {
+                    Glide.with(this)
+                        .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
+                        .fitCenter().into(logo)
+                }
                 if (it.data.jobLocation.size > 1) {
                     location_job.text = "Banyak Lokasi"
                 } else {

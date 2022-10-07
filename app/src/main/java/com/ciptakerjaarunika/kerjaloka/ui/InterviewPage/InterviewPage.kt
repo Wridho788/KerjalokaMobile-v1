@@ -1,6 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,12 +15,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
+import com.ciptakerjaarunika.kerjaloka.model.Interview.incoming_call_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_adapter
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
@@ -44,17 +49,43 @@ class InterviewPage : Fragment(), CellClickListener{
 
     }
 
-    private fun getCompanyData(){
+    private fun getCompanyData() {
         view?.findViewById<TextView>(R.id.titleToolbar)!!.text = "Interview"
         view?.findViewById<ImageButton>(R.id.backButton)!!.visibility = GONE;
 
-        view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Lowongan"
+        var search = view?.findViewById<EditText>(R.id.searchInput)
+        search?.hint = "Cari Lowongan"
+
         InterviewAPI().CompanyGetInterviewList(context) {
-            if(it!=null) {
+            if (it != null) {
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = company_interview_adapter(it.data, Context, context)
                 }
+                search?.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                    @SuppressLint("NotifyDataSetChanged")
+                    override fun afterTextChanged(s: Editable) {
+                        if (!search?.text.toString().isNullOrEmpty() && !search?.text.toString()
+                                .isNullOrBlank() && search?.text.toString() != ""
+                        ) {
+                            recyclerView?.apply {
+                                layoutManager = LinearLayoutManager(activity)
+                                adapter = company_interview_adapter(it.data.filter { list ->
+                                    list.jobPosition.toLowerCase().contains(search?.text.toString().toLowerCase())
+                                }, Context, context)
+                            }
+                            recyclerView?.adapter?.notifyDataSetChanged()
+                        } else {
+                            recyclerView?.apply {
+                                layoutManager = LinearLayoutManager(activity)
+                                adapter = company_interview_adapter(it.data, Context, context)
+                            }
+                            recyclerView?.adapter?.notifyDataSetChanged()
+                        }
+                    }
+                })
             }
         }
     }
@@ -92,13 +123,13 @@ class InterviewPage : Fragment(), CellClickListener{
         )
         hubConnection.on(
             "incomingCall",
-            { roomId ->
+            { data ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
+                ft.replace(id,  IncomingCallPage(data), "IncomingCall")
                 ft.addToBackStack("InterviewPage")
                 ft.commit()
             },
-            String::class.java
+            incoming_call_model::class.java
         )
 
 
@@ -109,7 +140,8 @@ class InterviewPage : Fragment(), CellClickListener{
             view?.findViewById<TextView>(R.id.titleToolbar)!!.text = "Interview"
             view?.findViewById<ImageButton>(R.id.backButton)!!.visibility = GONE;
 
-            view?.findViewById<EditText>(R.id.searchInput)!!.hint= "Cari Perusahaan"
+            val search = view?.findViewById<EditText>(R.id.searchInput)
+            search!!.hint= "Cari Perusahaan"
             val mainActivity = activity as MainActivity
             InterviewAPI().JobseekerGetInterviewList(context, mainActivity) {
                 if(it!=null) {
@@ -117,6 +149,30 @@ class InterviewPage : Fragment(), CellClickListener{
                         layoutManager = LinearLayoutManager(activity)
                         adapter = jobseeker_interview_adapter(it.data, context, Context)
                     }
+                    search?.addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                        @SuppressLint("NotifyDataSetChanged")
+                        override fun afterTextChanged(s: Editable) {
+                            if (!search?.text.toString().isNullOrEmpty() && !search?.text.toString()
+                                    .isNullOrBlank() && search?.text.toString() != ""
+                            ) {
+                                recyclerView?.apply {
+                                    layoutManager = LinearLayoutManager(activity)
+                                    adapter = jobseeker_interview_adapter(it.data.filter { list ->
+                                        list.jobPosition.toLowerCase().contains(search?.text.toString().toLowerCase())
+                                    }, context, this@InterviewPage)
+                                }
+                                recyclerView?.adapter?.notifyDataSetChanged()
+                            } else {
+                                recyclerView?.apply {
+                                    layoutManager = LinearLayoutManager(activity)
+                                    adapter = jobseeker_interview_adapter(it.data, context, Context)
+                                }
+                                recyclerView?.adapter?.notifyDataSetChanged()
+                            }
+                        }
+                    })
                 }
             }
         }else if(user == null){

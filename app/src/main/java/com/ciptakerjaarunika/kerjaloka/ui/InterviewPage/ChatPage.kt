@@ -35,10 +35,7 @@ import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
-import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
-import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
+import com.ciptakerjaarunika.kerjaloka.model.Interview.*
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
 import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
@@ -63,8 +60,7 @@ class ChatPage(var sectionName: String,
                val jobNo : Long?,
                val Receiver : Long,
                val logo: String?,
-               val jobPosition : String?
-)
+               val jobPosition : String?)
     :  Fragment(), PositionOnBottom {
 
     private var chatModel : chat_model? = null
@@ -187,32 +183,35 @@ class ChatPage(var sectionName: String,
 
         val videoCallButton = itemView.findViewById<ImageButton>(R.id.video_call_btn)
         videoCallButton?.setOnClickListener{
-            val roomId = SessionManager(context).user?.userNo.toString()+ Receiver.toString()
-            val userInfo = JitsiMeetUserInfo();
+            if(context!= null) {
+                val roomId = SessionManager(context).user?.userNo.toString() + Receiver.toString()
+                val userInfo = JitsiMeetUserInfo();
 
-            userInfo.email = SessionManager(context).user?.email
-            userInfo.displayName = SessionManager(context).user?.userFullname
+                userInfo.email = SessionManager(context).user?.email
+                userInfo.displayName = SessionManager(context).user?.userFullname
 
-            if(SessionManager(context).user?.company != null){
-                userInfo.displayName = SessionManager(context).user?.company?.companyName
+                if (SessionManager(context).user?.company != null) {
+                    userInfo.displayName = SessionManager(context).user?.company?.companyName
+                }
+
+
+                val options = JitsiMeetConferenceOptions.Builder()
+                    .setRoom(roomId)
+                    .setUserInfo(userInfo)
+                    // Settings for audio and video
+                    //.setAudioMuted(true)
+                    //.setVideoMuted(true)
+                    .build()
+                // Launch the new activity with the given options. The launch() method takes care
+                // of creating the required Intent and passing the options.
+                JitsiMeetActivity.launch(context, options)
+                hubConnection.send(
+                    "SendCall",
+                    listOf<Long>(Receiver),
+                    roomId,
+                    SessionManager(context).user!!.userNo
+                )
             }
-
-
-            val options = JitsiMeetConferenceOptions.Builder()
-                .setRoom(roomId)
-                .setUserInfo(userInfo)
-                // Settings for audio and video
-                //.setAudioMuted(true)
-                //.setVideoMuted(true)
-                .build()
-            // Launch the new activity with the given options. The launch() method takes care
-            // of creating the required Intent and passing the options.
-            JitsiMeetActivity.launch(context, options)
-            hubConnection.send(
-                "SendCall",
-                listOf<Long>(Receiver),
-                roomId
-            )
         }
 
         activityResultLauncher = registerForActivityResult(
@@ -283,9 +282,11 @@ class ChatPage(var sectionName: String,
         }
 
 
-        Glide.with(itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + logo).fitCenter()
-            .into(itemView.findViewById<ImageView>(R.id.userPhoto))
+        if(activity != null) {
+            Glide.with(itemView.context)
+                .load(config().portAddress + "/photo/Profile/" + logo).fitCenter()
+                .into(itemView.findViewById<ImageView>(R.id.userPhoto))
+        }
 
         backButton.setOnClickListener{
             var user = SessionManager(context).user
@@ -366,13 +367,13 @@ class ChatPage(var sectionName: String,
 
         hubConnection.on(
             "incomingCall",
-            { roomId ->
+            { data ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,  IncomingCallPage(roomId), "IncomingCall")
+                ft.replace(id,  IncomingCallPage(data), "IncomingCall")
                 ft.addToBackStack("ChatPage")
                 ft.commit()
             },
-            String::class.java
+            incoming_call_model::class.java
         )
 
         hubConnection.on(
@@ -486,6 +487,14 @@ class ChatPage(var sectionName: String,
                         else{
                             img_btnsend.setImageResource(R.drawable.ic_attach_file);
                             img_btnsend.rotation=45f
+                            btn_send.setOnClickListener{
+                                var intent = Intent(Intent.ACTION_GET_CONTENT);
+                                intent.setType("*/*");
+                                intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                                val requestIntent = Intent.createChooser(intent, "Choose a file");
+                                activityResultLauncher.launch(requestIntent)
+                            }
                         }
                     }
                 })

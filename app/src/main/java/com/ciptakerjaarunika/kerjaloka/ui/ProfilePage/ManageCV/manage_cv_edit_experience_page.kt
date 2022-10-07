@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditExperiencePageBinding
@@ -21,7 +22,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.util.*
 
-class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?) : Fragment(), iEditBasic, iManageExp {
+class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val iRefreshData: iRefreshData) : Fragment(), iEditBasic, iManageExp {
         private  lateinit var binding : FragmentManageCvEditExperiencePageBinding
         private var locations : List<LocationFilter> = listOf()
         private var jobTypes : List<JobTypeFilter> = listOf()
@@ -192,6 +193,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?) : F
     }
     private fun back(){
         fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 
     override fun updateCity(cityNo: Int?) {

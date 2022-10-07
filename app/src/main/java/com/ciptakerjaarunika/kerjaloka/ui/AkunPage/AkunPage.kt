@@ -27,8 +27,10 @@ import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.messaging.FirebaseMessaging
 import com.reactnativegooglesignin.RNGoogleSigninModule
 
 
@@ -59,7 +61,19 @@ class AkunPage() : Fragment() {
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
-            val loginRequest = LoginRequest(email = email, password=password)
+
+            if(SessionManager(context).device_token.isNullOrEmpty()){
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+                    val token = task.result
+                    SessionManager(context).device_token = token
+                })
+            }
+
+
+            val loginRequest = LoginRequest(email = email, password=password, deviceToken = SessionManager(context).device_token.toString())
             AUTHAPI().Login(context, loginRequest){
                 Log.d("Login Response", it.toString());
                 if(it != null && it.code == 252){

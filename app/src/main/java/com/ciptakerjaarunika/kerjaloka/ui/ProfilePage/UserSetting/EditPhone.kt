@@ -32,6 +32,10 @@ class EditPhone : Fragment() {
             userData = descFromBundle
             txtPhone.text = userData
         }
+        view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
+            fragmentManager?.popBackStack()
+        }
+
         btnSave.setOnClickListener{
             val keyword = newPhone.text.toString()
             company_profile_api().checkPhone(keyword, context){

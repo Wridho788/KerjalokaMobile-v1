@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfileCvBinding
@@ -31,7 +32,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.manage_cv_edit_ex
 import com.google.android.material.chip.Chip
 
 
-class cvPage : Fragment(), iCvPage {
+class cvPage : Fragment(), iRefreshData, iCvPage {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var binding : FragmentProfileCvBinding
     private var loading = 4;
@@ -51,6 +52,12 @@ class cvPage : Fragment(), iCvPage {
     }
 
     private fun GetData(){
+        binding.chipGroup1.removeAllViews()
+        binding.chipGroup2.removeAllViews()
+        binding.chipGroup3.removeAllViews()
+        binding.chipGroup4.removeAllViews()
+        binding.chipGroup5.removeAllViews()
+
             ProfileAPI().GetJobseekerSkills(context) { skills ->
                 loading -= 1;
                 LoadingDone()
@@ -180,7 +187,7 @@ class cvPage : Fragment(), iCvPage {
                     }
 
                     binding.editSkill.setOnClickListener {
-                        replaceFragment(edit_kemampuan(skills.data))
+                        replaceFragment(edit_kemampuan(skills.data, this))
                     }
 
                     binding.seePapiResult.setOnClickListener {
@@ -197,16 +204,17 @@ class cvPage : Fragment(), iCvPage {
                         }
                     }
                     binding.addExp.setOnClickListener {
-                        replaceFragment(manage_cv_edit_experience_page(null))
+                        replaceFragment(manage_cv_edit_experience_page(null, this))
                     }
                     binding.addEdu.setOnClickListener {
-                        replaceFragment(fragment_manage_cv_edit_education_page(null))
+                        replaceFragment(fragment_manage_cv_edit_education_page(null, this))
                     }
                     binding.addLang.setOnClickListener {
                         replaceFragment(
                             EditBahasa(
                                 SessionManager(context).user!!.userNo,
-                                languages?.data
+                                languages?.data,
+                                this
                             )
                         )
                     }
@@ -236,7 +244,7 @@ class cvPage : Fragment(), iCvPage {
                 ,data.experienceJobTypeNo
                 ,data.experiencePosition,
                 data.experienceSalary)
-        ))
+        , this))
     }
 
     override fun editEdu(data: JobseekerEducations) {
@@ -251,7 +259,7 @@ class cvPage : Fragment(), iCvPage {
                 data.educationTitleNo,
                 data.educationCityNo,
                 data.gpa,
-                data.educationDescription)))
+                data.educationDescription), this))
     }
 
     override fun deleteExp(data: JobseekerExperiences) {
@@ -313,6 +321,10 @@ class cvPage : Fragment(), iCvPage {
             binding.spinner.visibility = GONE
             binding.contentContainer.visibility = VISIBLE
         }
+    }
+
+    override fun refresh() {
+        GetData()
     }
 }
 interface iCvPage{

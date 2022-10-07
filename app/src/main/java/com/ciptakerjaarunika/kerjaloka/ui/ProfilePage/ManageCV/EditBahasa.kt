@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditBahasaBinding
@@ -25,7 +26,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScore
 
 
 
-class EditBahasa(var jobseekerNo : Long, var data : List<JobseekerLanguages>?) : Fragment(), iEditBahasa {
+class EditBahasa(var jobseekerNo : Long, var data : List<JobseekerLanguages>?, val iRefreshData: iRefreshData) : Fragment(), iEditBahasa {
     private lateinit var binding : FragmentEditBahasaBinding
     private var languages : List<Language> = listOf()
     private var language : Language? = null
@@ -166,6 +167,7 @@ class EditBahasa(var jobseekerNo : Long, var data : List<JobseekerLanguages>?) :
     }
     private fun back(){
         fragmentManager?.popBackStack()
+        iRefreshData.refresh()
     }
 }
 interface iEditBahasa{
