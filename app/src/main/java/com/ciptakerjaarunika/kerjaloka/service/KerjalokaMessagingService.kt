@@ -4,6 +4,8 @@ import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
@@ -62,13 +64,11 @@ class KerjalokaMessagingService() :FirebaseMessagingService() {
             var intent : Intent?  = null
         if(!isCall) {
             intent = Intent(this, MainActivity::class.java)
-            intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }else{
             intent = Intent(this, IncomingCallActivity::class.java)
-            intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_IMMUTABLE)
         var builder : NotificationCompat.Builder = NotificationCompat.Builder(this, config().channelId)
             .setSmallIcon(R.drawable.kerjaloka_logo_small)
             .setAutoCancel(true)
