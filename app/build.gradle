@@ -112,10 +112,9 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
 
     //google dev
-    implementation 'com.google.android.gms:play-services-auth:19.1.0'
 //    implementation 'com.google.android.gms:play-services-auth:20.3.0'
-
     implementation 'androidx.work:work-runtime-ktx:2.8.0-alpha01'
-
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.android.gms:play-services-auth:20.3.0'
 }
 

@@ -1,8 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.AkunPage
 
-import android.app.Activity
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -11,30 +9,45 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.view.forEach
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ProfilePage
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
-import com.ciptakerjaarunika.kerjaloka.enum.Role
+import com.ciptakerjaarunika.kerjaloka.api.AUTHGOOGLEAPI
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
-import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.messaging.FirebaseMessaging
-import com.reactnativegooglesignin.RNGoogleSigninModule
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.util.*
 
 
 class AkunPage() : Fragment() {
+
+    companion object {
+        var mGoogleSignInClient: GoogleSignInClient? = null
+        private var mAuth: FirebaseAuth? = null
+        val Req_Code: Int = 123
+        val firebaseAuth = FirebaseAuth.getInstance()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -57,6 +70,11 @@ class AkunPage() : Fragment() {
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
 
+        val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
+        btn_login_google.setOnClickListener {
+            signIn()
+        }
+
         btn_login?.setOnClickListener{
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
@@ -74,9 +92,21 @@ class AkunPage() : Fragment() {
 
 
             val loginRequest = LoginRequest(email = email, password=password, deviceToken = SessionManager(context).device_token.toString())
-            AUTHAPI().Login(context, loginRequest){
+            AUTHAPI().Login(context, loginRequest) {
                 Log.d("Login Response", it.toString());
-                if(it != null && it.code == 252){
+
+                if (it != null) {
+                    if (it.code == "252") {
+                        val activity = activity as MainActivity
+                        SessionManager(context).access_token = it.userToken
+                        AUTHAPI().CheckLogin(context, activity) {
+                            activity.replaceFragment(AkunPage())
+                        }
+                    } else {
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                        SessionManager(context).user = null
+                    }
+                    /*if(it != null && it.code == "252"){
 
                     SessionManager(context).access_token = it.userToken
 
@@ -114,27 +144,23 @@ class AkunPage() : Fragment() {
                         ft.commit()
                     }
                 }
-                else{
-                    SessionManager(context).user = null
+                else if (it != null) {
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                        SessionManager(context).user = null
+                    }
+                }*/
                 }
             }
         }
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken("863470789028-pmlnd7u7bifuj5ep8cvdp70eq3469nmb.apps.googleusercontent.com")
+            .requestIdToken("863470789028-pmlnd7u7bifuj5ep8cvdp70eq3469nmb.apps.googleusercontent.com")
             .requestEmail()
             .build()
-        Login.googleSignInClient = context?.let {
-            GoogleSignIn.getClient(
-                it, gso
-            )
-        }
-
-        val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
-        btn_login_google.setOnClickListener {
-            val signInIntent: Intent = Login.googleSignInClient!!.getSignInIntent()
-            startActivityForResult(signInIntent, RNGoogleSigninModule.RC_SIGN_IN)
-
-        }
+//        Login.googleSignInClient = context?.let {
+//            GoogleSignIn.getClient(
+//                it, gso
+//            )
+//        }
 
         val register = itemView.findViewById<TextView>(R.id.register)
         register?.setOnClickListener(View.OnClickListener {
@@ -147,6 +173,81 @@ class AkunPage() : Fragment() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kerjaloka.com/recovery"))
             startActivity(intent)
         })
+
+    }
+    private fun signIn() {
+        val signInIntent: Intent = Login.mGoogleSignInClient!!.signInIntent
+        startActivityForResult(signInIntent, Login.Req_Code)
+
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Login.Req_Code) {
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
+    }
+
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
+            if (account != null) {
+                UpdateUI(account)
+            }
+        } catch (e: ApiException) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun UpdateUI(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        val currentDate = Date()
+        val cal: Calendar = Calendar.getInstance()
+        // remove next line if you're always using the current time.
+        cal.setTime(currentDate)
+        cal.add(Calendar.HOUR, +1)
+        val oneHourBack: Date = cal.getTime()
+
+        Login.firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Login.SavedPreference.setEmail(context!!, account.email.toString())
+                Login.SavedPreference.setUsername(context!!, account.displayName.toString())
+
+                val text = "${account.idToken}${config().authKey}${4}"
+                val crypt = MessageDigest.getInstance("MD5");
+                crypt.update(text.toByteArray());
+                val hash = BigInteger(1, crypt.digest()).toString(16)
+                fun md5(str: String): ByteArray =
+                    MessageDigest.getInstance("MD5").digest(str.toByteArray(Charsets.UTF_8))
+                Log.d("Crypt", hash)
+
+                val googleRequest =
+                    GoogleLoginRequest(account.idToken.toString(), oneHourBack.toString(), hash)
+                AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
+                    Log.d("google login", it.toString())
+                    if (it != null)
+                        if (it.code == "252") {
+                            SessionManager(context).access_token = it.userToken
+                            val mainActivity = activity as MainActivity
+
+                            AUTHAPI().CheckLogin(context, mainActivity) {
+                                mainActivity.replaceFragment(AkunPage())
+                            }
+                        } else {
+                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                            SessionManager(context).user = null
+                        }
+                }
+            }
+//                val intent = Intent(context, MainActivity::class.java)
+//                startActivity(intent)
+//                finish()
+
+
+        }
     }
 
     override fun onCreateView(

@@ -312,5 +312,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="action_settings">Settings</string>
     <string name="pelamar">Pelamar</string>
-    <string name="server_client_id">863470789028-pmlnd7u7bifuj5ep8cvdp70eq3469nmb.apps.googleusercontent.com</string>
+<!--    <string name="default_web_client_id">953263165300-d93upe5e31bsfb1au1ns41c2ijpa2tb4.apps.googleusercontent.com</string>-->
 </resources>
