@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -19,10 +20,15 @@ import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.iSearchJob
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
-class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, private val context: Context, private val iJobPage: IJobPage) :
+class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, private val context: Context, private val iJobPage: IJobPage, private val searchJob: iSearchJob?) :
     RecyclerView.Adapter<JobAdapter.ViewHolder>() {
 
 
@@ -68,7 +74,47 @@ class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, 
         holder.jobPosition.text = currentItem.jobPosition
         holder.jobCompany.text = currentItem.company.companyName
         holder.jobLocation.text = if(currentItem?.jobLocation!!.size >1) "Banyak lokasi" else currentItem.jobLocation[0].label
-        holder.timeUploadApplicant.text = currentItem.createdOn
+        if(position+1 >= rJobList.size && searchJob != null){
+            searchJob.nextPage()
+        }
+
+        val SECOND = 1
+        val MINUTE = 60 * SECOND
+        val HOUR = 60 * MINUTE
+        val DAY = 24 * HOUR
+        val WEEK = 7 * DAY
+
+        var time = currentItem.createdOn
+        val now = LocalDateTime.now().toString()
+
+        @SuppressLint("SimpleDateFormat")
+        fun GetDateValue(value: String): Date {
+            val temp = value.split("T")
+            val time = temp[1].split(":")
+            val date = "${temp[0]} ${time[0]}:${time[1]}"
+            var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            return dateFormat.parse(date)
+        }
+
+        fun dateDiff(): String {
+            val date1 = GetDateValue(time).time
+            val date2 = GetDateValue(now).time
+
+            val diff = (date2 - date1) / 1000
+            return when {
+                diff < MINUTE -> "Baru Saja"
+                diff < 2 * MINUTE -> "Beberapa Menit Lalu"
+                diff < 60 * MINUTE -> "${diff / MINUTE} Menit Lalu"
+                diff < 2 * HOUR -> "Beberapa Jam Lalu"
+                diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
+                diff < 2 * DAY -> "Kemarin"
+                diff < WEEK -> "${diff / DAY} Hari Lalu"
+                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            }
+
+        }
+        holder.timeUploadApplicant.text = dateDiff()
+
         if(SessionManager(context).user == null){
             holder.bookmarkedJob.visibility = GONE
         }

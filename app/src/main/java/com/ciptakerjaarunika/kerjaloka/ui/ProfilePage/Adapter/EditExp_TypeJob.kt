@@ -29,6 +29,7 @@ class EditExp_TypeJob(val value: Int?, private val typeList: List<JobTypeFilter>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChooseType {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
+        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         return ChooseType(view)
     }
 

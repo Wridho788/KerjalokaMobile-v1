@@ -26,6 +26,8 @@ import com.google.android.material.chip.Chip
 
 class  SearchJob : Fragment(), IJobPage, iSearchJob {
     private var page = 0;
+    private var takeData = 25;
+    private var isSearching = false;
     private var listData : List<SearchJobModel> = listOf()
 
     private var locationSelected : List<Int> = listOf()
@@ -185,7 +187,7 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
         binding.query.text=keyword
         this.keyword = keyword
 
-        SearchJob()
+        SearchJobs()
     }
     private fun newChips(name: String) {
         if(SessionManager(context).latestSearchJob?.size == 0 ||  SessionManager(context).latestSearchJob?.last() != name) {
@@ -244,10 +246,46 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
         }
     }
 
-    override fun SearchJob() {
+    override fun nextPage() {
+        if(!isSearching && listData.size >= page * takeData) {
+            isSearching = true
+
+            JobAPI().SearchJob(
+                JobAPI.searchJobRequest(
+                    keyword!!,
+                    locationSelected,
+                    jobTypeSelected,
+                    skillSelected,
+                    experienceLevelSelected,
+                    salaryMin,
+                    salaryMax,
+                    page
+                ), context
+            ) { res ->
+                if (res != null) {
+                    if(res.data.isNotEmpty()) {
+                        listData += res.data
+                        page += 1
+
+                        val appContext = this
+                        binding.recycleJobs.apply {
+                            layoutManager = LinearLayoutManager(context)
+                            adapter = JobAdapter(1, listData, context, appContext, this@SearchJob)
+                        }
+                        binding.recycleJobs.adapter?.notifyDataSetChanged()
+                        binding.recycleJobs.adapter?.itemCount?.minus(28)
+                            ?.let { binding.recycleJobs.scrollToPosition(it) };
+                    }
+                }
+                isSearching = false
+            }
+        }
+    }
+    override fun SearchJobs() {
         this.hasSearch = true
         binding.searchResult.visibility = VISIBLE
         binding.history.visibility = GONE
+        page = 0
 
         JobAPI().SearchJob(
             JobAPI.searchJobRequest(keyword!! ,
@@ -265,7 +303,7 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
                 binding.recycleJobs.visibility = VISIBLE
                 binding.recycleJobs.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = JobAdapter(1, listData, context, appContext)
+                    adapter = JobAdapter(1, listData, context, appContext, this@SearchJob)
                 }
                 binding.recycleJobs.adapter?.notifyDataSetChanged()
             }
@@ -295,11 +333,12 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
     }
 }
 interface iSearchJob{
-    fun SearchJob()
+    fun SearchJobs()
     fun updateLocationSelected(data : List<Int>)
     fun updateJobTypeSelected(data : List<Int>)
     fun updateSkillSelected(data : List<Int>)
     fun updateExperienceSelected(data : List<Int>)
     fun updateSalaryMin(data : Int?)
     fun updateSalaryMax(data : Int?)
+    fun nextPage()
 }

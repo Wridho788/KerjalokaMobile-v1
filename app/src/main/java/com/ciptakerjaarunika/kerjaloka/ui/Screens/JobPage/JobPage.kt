@@ -113,7 +113,7 @@ class JobPage: Fragment(), IJobPage{
                 listRecommendation = it.data.take(5)
                 binding.seeRecommend?.visibility = if(it.data.size <= 5) GONE else VISIBLE
                 binding.recommenJob?.apply {
-                    adapter = JobAdapter(1, listRecommendation ,context, this@JobPage)
+                    adapter = JobAdapter(1, listRecommendation ,context, this@JobPage, null)
                     layoutManager = LinearLayoutManager(activity)
                 }
             }
@@ -126,7 +126,7 @@ class JobPage: Fragment(), IJobPage{
                     listBookmark = it.data.take(5)
                     binding.btnSeeBookmarked?.visibility = if (it.data.size <= 5) GONE else VISIBLE
                     binding.bookmaredJob?.apply {
-                        adapter = JobAdapter(3, listBookmark, context, this@JobPage)
+                        adapter = JobAdapter(3, listBookmark, context, this@JobPage, null)
                         layoutManager = LinearLayoutManager(activity)
                     }
                 }
@@ -183,7 +183,7 @@ class JobPage: Fragment(), IJobPage{
                         val recyclerView = binding.nearmeJob
 
                         recyclerView?.apply {
-                            adapter = JobAdapter(2, it.data.take(5), context, this@JobPage)
+                            adapter = JobAdapter(2, it.data.take(5), context, this@JobPage,  null)
                             layoutManager = LinearLayoutManager(activity)
                         }
                         recyclerView?.adapter?.notifyDataSetChanged()
@@ -203,7 +203,7 @@ class JobPage: Fragment(), IJobPage{
                         1 -> {
                             listRecommendation[Index].bookmarked = !listRecommendation[Index].bookmarked
                             binding.recommenJob?.apply {
-                                adapter = JobAdapter(1, listRecommendation ,context, this@JobPage)
+                                adapter = JobAdapter(1, listRecommendation ,context, this@JobPage, null)
                                 layoutManager = LinearLayoutManager(activity)
                             }
                             binding.recommenJob.adapter?.notifyDataSetChanged()
@@ -212,7 +212,7 @@ class JobPage: Fragment(), IJobPage{
                         2 -> {
                             listNear[Index].bookmarked = !listNear[Index].bookmarked
                             binding.nearmeJob?.apply {
-                                adapter = JobAdapter(1, listNear ,context, this@JobPage)
+                                adapter = JobAdapter(1, listNear ,context, this@JobPage, null)
                                 layoutManager = LinearLayoutManager(activity)
                             }
                             binding.nearmeJob.adapter?.notifyDataSetChanged()
@@ -222,7 +222,7 @@ class JobPage: Fragment(), IJobPage{
                         3 -> {
                             listBookmark[Index].bookmarked = !listBookmark[Index].bookmarked
                             binding.bookmaredJob?.apply {
-                                adapter = JobAdapter(1, listBookmark ,context, this@JobPage)
+                                adapter = JobAdapter(1, listBookmark ,context, this@JobPage,  null)
                                 layoutManager = LinearLayoutManager(activity)
                             }
                             binding.bookmaredJob.adapter?.notifyDataSetChanged()

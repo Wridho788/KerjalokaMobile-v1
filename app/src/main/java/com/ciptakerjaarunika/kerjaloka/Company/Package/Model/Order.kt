@@ -17,7 +17,7 @@ data class Order(
     @SerializedName("invoiceUrl")
     val invoiceUrl: String,
     @SerializedName("itemNo")
-    val itemNo: Int,
+    val itemNo: Long,
     @SerializedName("itemTypeNo")
     val itemTypeNo: Int,
     @SerializedName("orderNo")

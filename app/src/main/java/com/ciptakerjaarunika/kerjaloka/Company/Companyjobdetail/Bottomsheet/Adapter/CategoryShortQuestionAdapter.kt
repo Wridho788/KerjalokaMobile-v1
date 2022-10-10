@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.iChooseCategory
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage5
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestionCategory
 
-class CategoryShortQuestionAdapter(private var dataset: List<ShortQuestionCategory>?, val iChooseCategory: iChooseCategory, val iUpdatePage5: iUpdatePage5 ) : RecyclerView.Adapter<CategoryShortQuestionAdapter.ViewHolder?>() {
+class CategoryShortQuestionAdapter(private var dataset: List<ShortQuestionCategory>?, val iChooseCategory: iChooseCategory, val iUpdatePage5: iUpdatePage5) : RecyclerView.Adapter<CategoryShortQuestionAdapter.ViewHolder?>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtCategory: TextView
 
@@ -32,7 +32,7 @@ class CategoryShortQuestionAdapter(private var dataset: List<ShortQuestionCatego
         holder.txtCategory.text = item.categoryName
         holder.txtCategory.setOnClickListener {
             iChooseCategory.close()
-            iUpdatePage5.updateCategory(item.shortQuestionCategoryNo)
+            iUpdatePage5.updateCategory(item)
         }
     }
 }

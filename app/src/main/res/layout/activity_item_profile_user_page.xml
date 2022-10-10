@@ -65,6 +65,8 @@
                     android:layout_marginTop="0dp"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
+                    android:maxLines="8"
+                    android:ellipsize="end"
                     android:text="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud."
                     android:textColor="@color/black"
                     android:textSize="10dp">

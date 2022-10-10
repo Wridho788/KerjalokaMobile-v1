@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobResponses
 import com.ciptakerjaarunika.kerjaloka.model.Job.*
+import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.CompanyJobDetail
+import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.CompanyJobDetailResponse
 import com.ciptakerjaarunika.kerjaloka.model.Test.JobShortQuestions
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -18,21 +20,20 @@ import retrofit2.Response
 import retrofit2.http.*
 
 class JobAPI {
-    interface getJobHome {
-        @GET("users/home/job")
-        fun getJobHome(): Call<rjob_model>
+    interface icompanyJobDetail {
+        @GET("company/officer/job/{jobNo}")
+        fun getData(@Path("jobNo") jobNo : Long): Call<CompanyJobDetailResponse>
     }
-     fun getJobHomeAsync(context: Context?, onResult: (rjob_model?) -> Unit){
-        val retrofit = ServiceBuilder(context).GET(getJobHome::class.java)
+     fun GetCompanyJobDetail(jobNo: Long, context: Context?, onResult: (CompanyJobDetailResponse) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(icompanyJobDetail::class.java)
 
-        retrofit.getJobHome().enqueue(
-            object : Callback<rjob_model> {
-                override fun onFailure(call: Call<rjob_model>, t: Throwable) {
+        retrofit.getData(jobNo).enqueue(
+            object : Callback<CompanyJobDetailResponse> {
+                override fun onFailure(call: Call<CompanyJobDetailResponse>, t: Throwable) {
                     Log.d("Response API", t.toString())
-                    onResult(null)
                 }
-                override fun onResponse( call: Call<rjob_model>, response: Response<rjob_model>) {
-                    onResult(response.body())
+                override fun onResponse( call: Call<CompanyJobDetailResponse>, response: Response<CompanyJobDetailResponse>) {
+                    response.body()?.let { onResult(it) }
                 }
             }
         )

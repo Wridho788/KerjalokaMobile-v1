@@ -12,6 +12,10 @@ interface iRefreshData {
     fun refresh()
 }
 
+interface iCloseModal {
+    fun close()
+}
+
 interface iUpdateTitle {
     fun updateTitle(value : Int?)
 }

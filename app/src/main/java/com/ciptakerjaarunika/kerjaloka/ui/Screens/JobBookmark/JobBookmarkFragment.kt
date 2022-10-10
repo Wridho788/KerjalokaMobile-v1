@@ -46,7 +46,7 @@ class JobBookmarkFragment : Fragment(), IJobPage {
                     binding.recycleview.visibility = View.VISIBLE
 
                     binding.recycleview?.apply {
-                        adapter = JobAdapter(1, listData, context, this@JobBookmarkFragment)
+                        adapter = JobAdapter(1, listData, context, this@JobBookmarkFragment, null)
                         layoutManager = LinearLayoutManager(activity)
                     }
                 }

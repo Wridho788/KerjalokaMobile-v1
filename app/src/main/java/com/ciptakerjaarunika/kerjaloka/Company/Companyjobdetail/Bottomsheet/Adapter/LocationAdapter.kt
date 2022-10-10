@@ -1,49 +1,62 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter
 
+import android.graphics.Color
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.iChooseLocation
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage1
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.iUpdateLocation
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iBasicInfoPage
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iCloseModal
+import com.ciptakerjaarunika.kerjaloka.model.Data.City
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
+import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobLocation
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.iCity
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 
-class LocationAdapter(
-    private var dataset: List<LocationFilter>?,
-    val iChooseLocation: iChooseLocation,
-    val iUpdatePage1: iUpdatePage1
-) : RecyclerView.Adapter<LocationAdapter.ViewHolder?>() {
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val txtLocation: TextView
-        val checkBox: CheckBox
+class LocationAdapter(var data : List<JobLocation>, private val locations: List<LocationFilter>, private val iUpdateLocation: iUpdateLocation):
+    RecyclerView.Adapter<LocationAdapter.EditCity>()
+{
+    inner class EditCity(view: View): RecyclerView.ViewHolder(view){
+        var item: TextView
+        var checkbox :CheckBox
 
         init {
-            txtLocation = itemView.findViewById(R.id.txt_location)
-            checkBox = itemView.findViewById(R.id.check_location)
-
+            item = view.findViewById(R.id.txt_location)
+            checkbox = view.findViewById(R.id.check_location)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditCity {
         val view = View.inflate(parent.context, R.layout.item_location, null)
-        return ViewHolder(view)
+        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        return EditCity(view)
+    }
+
+    override fun onBindViewHolder(holder: EditCity, position: Int) {
+        val currentItem = locations[position]
+        holder.item.text= "${currentItem.city}, ${currentItem.province}"
+
+        var currentData = data.find { item -> item.cityNo == currentItem.locationsNo}
+        holder.checkbox.setOnClickListener {
+            if(currentData != null){
+                data = data.toMutableList()?.apply {
+                    remove(currentData)
+                }!!
+            }
+            else{
+                data += JobLocation(currentItem.locationsNo, null, null, holder.item.text.toString())
+            }
+            iUpdateLocation.updateLocation(data)
+        }
+        holder.checkbox.isChecked = currentData != null
     }
 
     override fun getItemCount(): Int {
-        return dataset!!.size
+        return locations.size
     }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = dataset!![position]
-        holder.txtLocation.text = item.city + ", " + item.province
-        holder.checkBox.setOnClickListener {
-            dataset!![position].checked = holder.checkBox.isChecked
-            val locations = dataset!!.filter { item -> item.checked == true }
-            iUpdatePage1.updatePage1(locations)
-            iChooseLocation.close(locations)
-        }
-    }
-
 }

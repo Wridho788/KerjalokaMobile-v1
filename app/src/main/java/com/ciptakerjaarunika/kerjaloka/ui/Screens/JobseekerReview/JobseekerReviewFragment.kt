@@ -64,57 +64,49 @@ class JobseekerReviewFragment(
 
 //        section send review
         var company = SessionManager(context).user?.company
+        binding.reviewList.btnSendReviewCompany.visibility = View.GONE
+
         if (company != null) {
             CanSendReview().getSendReviewAsync(context, companyNo) {
                 if (it != null) {
-                    if (it.data.hasSend == true) {
-                        binding.sectionItemReview.visibility = View.GONE
-                    } else if (it.data.canSend == true) {
+                    if (it.data.canSend) {
                         binding.reviewList.btnSendReviewCompany.visibility = View.VISIBLE
                         binding.reviewList.btnSendReviewCompany.setOnClickListener {
                             sendReviewModal(companyNo)
                         }
-                    } else {
-                        binding.reviewList.btnSendReviewCompany.setOnClickListener(null)
                     }
                 }
             }
         }
         val companyUserNo = SessionManager(context).user?.company?.userNo
         // my review
-        CompanyReviewAPI().getCompanyReviewAsync(context, companyUserNo!!) {
-            val my_review = it!!.data.reviewList.filter { item ->
-                item.userNo == companyUserNo
-            }
-            if (my_review != null) {
-                binding.layoutReviewParent.visibility = View.VISIBLE
-                binding.cardMyReview.btnHapusReview.setOnClickListener {
-                    if (applicantDetail.ownRating.ownUserRatingNo != null) {
-                        DeleteReviewResponse().getDeleteMyReview(
-                            context,
-                            applicantDetail.ownRating.ownUserRatingNo
-                        ) {
-                            binding.sectionItemReview.visibility = View.GONE
-                        }
-                    } else {
-                        binding.layoutReviewParent.visibility = View.GONE
-                    }
-                }
-                binding.cardMyReview.btnEditReview.setOnClickListener {
-                    sendReviewModal(companyNo)
-                }
-            } else {
-                binding.layoutReviewParent.visibility = View.GONE
-            }
-        }
-
-        // other review
-        val jobSeekerUserNo = applicantDetail.applicant.jobseekerNo
-        CompanyReviewAPI().getCompanyReviewAsync(context, jobSeekerUserNo) {
+        binding.layoutReviewParent.visibility = View.GONE
+        CompanyReviewAPI().getCompanyReviewAsync(context, applicantDetail.applicant.jobseekerNo!!) {
             if (it != null) {
                 binding.rvItemCard.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = JobseekerReviewAdapter(it.data.reviewList)
+                }
+                val my_review = it!!.data.reviewList.filter { item ->
+                    item.userNo == companyUserNo
+                }
+                if (!my_review.isEmpty()) {
+                    binding.layoutReviewParent.visibility = View.VISIBLE
+                    binding.cardMyReview.btnHapusReview.setOnClickListener {
+                        if (applicantDetail.ownRating.ownUserRatingNo != null) {
+                            DeleteReviewResponse().getDeleteMyReview(
+                                context,
+                                applicantDetail.ownRating.ownUserRatingNo
+                            ) {
+                                binding.sectionItemReview.visibility = View.GONE
+                            }
+                        } else {
+                            binding.layoutReviewParent.visibility = View.GONE
+                        }
+                    }
+                    binding.cardMyReview.btnEditReview.setOnClickListener {
+                        sendReviewModal(companyNo)
+                    }
                 }
             }
         }

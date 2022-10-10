@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context=".Company.Companyjobdetail.ManageJobPage.BasicInfoPage">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Informasi Dasar"
+                android:textColor="@color/dark_100"
+                android:textSize="16sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Posisi Lowongan"
+                    android:textColor="@color/dark_100"
+                    android:textSize="14dp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light_300"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp">
+
+                    <EditText
+                        android:id="@+id/jobPosition_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/poppins"
+                        android:hint="Masukkan Posisi lowongan"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:textSize="12dp"
+                        tools:ignore="Autofill,SmallSp" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="20dp"
+                    android:text="Lokasi"
+                    android:textColor="@color/dark_100"
+                    android:textSize="14dp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/selectLocation_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="0dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="20dp"
+                        android:background="@color/light_300">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:paddingVertical="10dp"
+                            android:hint="Pilih Lokasi Pekerjaan"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/ic_chevron_down" />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycle_location"
+                    android:layout_width="match_parent"
+                    app:layout_constraintHeight_max="200dp"
+                    app:layout_constrainedHeight="true"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/manage_job_selected_list"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:layout_marginTop="20dp"
+                android:text="Tipe Pekerjaan"
+                android:textColor="@color/dark_100"
+                android:textSize="14dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/selectJobType_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:background="@color/light_300">
+                    <TextView
+                        android:id="@+id/jobType_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins"
+                        android:paddingVertical="10dp"
+                        android:hint="Pilih Tipe Pekerjaan"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_chevron_down" />
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:text="Gaji"
+                android:textColor="@color/dark_100"
+                android:layout_marginTop="10dp"
+                android:textSize="14dp" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/light_300"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="0dp">
+
+                <EditText
+                    android:id="@+id/salary_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Masukkan Gaji"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textSize="12dp"/>
+            </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>

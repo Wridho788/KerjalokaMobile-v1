@@ -57,8 +57,8 @@ class RelatedJobAdapter(
         val currentItem = jobList[position]
         holder.relatedjobPosition.text = currentItem.jobPosition
         holder.relatedjobCompany.text = currentItem.company.companyName
-        holder.relatedjobLocation.text =
-            currentItem.company.location.city + ", " + currentItem.company.location.province
+        holder.relatedjobLocation.text = if(currentItem?.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem?.jobLocation?.get(0)?.label
+
 
         val SECOND = 1
         val MINUTE = 60 * SECOND

@@ -144,7 +144,7 @@ class FilterJobModal(
             iSearchJob.updateSalaryMin(salaryMin)
             iSearchJob.updateSalaryMin(salaryMax)
 
-            iSearchJob.SearchJob()
+            iSearchJob.SearchJobs()
             this.dismiss()
         }
         var recycle = view?.findViewById<RecyclerView>(R.id.list_filter)

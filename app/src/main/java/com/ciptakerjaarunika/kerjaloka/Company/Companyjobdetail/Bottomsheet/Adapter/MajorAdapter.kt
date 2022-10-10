@@ -6,14 +6,12 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.iChooseMajor
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 
 class MajorAdapter(
     private var dataset: List<Title>?,
     val iChooseMajor: iChooseMajor,
-    val iUpdatePage2: iUpdatePage2
 ) : RecyclerView.Adapter<MajorAdapter.ViewHolder?>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val txtJobType: TextView
@@ -40,7 +38,6 @@ class MajorAdapter(
         holder.checkBox.setOnClickListener {
             dataset!![position].checked = holder.checkBox.isChecked
             val titles = dataset!!.filter{ item -> item.checked == true }
-            iUpdatePage2.updateMajor(titles)
 //            iChooseMajor.close(titles)
             iChooseMajor.close()
         }

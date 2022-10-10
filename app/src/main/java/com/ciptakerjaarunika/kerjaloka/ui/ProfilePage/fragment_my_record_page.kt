@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
@@ -32,6 +33,7 @@ class fragment_my_record_page : Fragment() {
 
         ProfileAPI().JobseekerGetRecord(context){ res->
             if(res != null) {
+                binding.spinner.visibility = GONE
                 binding.contentContainer.visibility = VISIBLE
                 if (res.data.isEmpty()) {
                     binding.noDataTxt.visibility = VISIBLE

@@ -40,6 +40,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.Relate
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ApplyJob
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ReportJob
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -88,7 +89,7 @@ class JobDetailFragment(
     override fun RefreshData() {
         val view = view
         if(view != null){
-            val btn_applyJob = view.findViewById<View>(R.id.apply_job_button)
+            val btn_applyJob = view.findViewById<MaterialButton>(R.id.apply_job_button)
             val report_job = view.findViewById<View>(R.id.report_job)
 
             val company_logo = view.findViewById<ImageView>(R.id.logo_company)
@@ -116,6 +117,7 @@ class JobDetailFragment(
                     view.findViewById<LinearLayout>(R.id.spinnerDetailPekerjaan).visibility = GONE
                     view.findViewById<NestedScrollView>(R.id.job_detail_container).visibility = VISIBLE
                     jobBookmark = it.data.bookmarked == true;
+
 
                     if (activity != null && !activity!!.isDestroyed) {
                         Glide.with(this)
@@ -266,28 +268,32 @@ class JobDetailFragment(
                                 }
                             }
                         }
-
-                        btn_applyJob.setOnClickListener {
-                            if(currentJob?.jobShortQuestion!!.any()){
-                               JobAPI().GetJobShortQuestion(job?.jobNo!!, context){
-                                  if (it != null) {
-                                      val sheet = ApplyJob(currentJob, it.data,this)
-                                      activity?.let { it1 ->
-                                          sheet.show(
-                                              it1.supportFragmentManager,
-                                              "ApplyJob"
-                                          )
-                                      }
-                                  }
-                               }
-                            }
-                            else {
-                                val sheet = ApplyJob(currentJob, listOf(),this)
-                                activity?.let { it1 ->
-                                    sheet.show(
-                                        it1.supportFragmentManager,
-                                        "ApplyJob"
-                                    )
+                        if(currentJob!!.applied == true){
+                            btn_applyJob.text = "Sudah Melamar"
+                            btn_applyJob.setBackgroundResource(R.drawable.button_primary_disabled)
+                            btn_applyJob.setOnClickListener {}
+                        }else {
+                            btn_applyJob.setOnClickListener {
+                                if (currentJob?.jobShortQuestion!!.any()) {
+                                    JobAPI().GetJobShortQuestion(job?.jobNo!!, context) {
+                                        if (it != null) {
+                                            val sheet = ApplyJob(currentJob, it.data, this)
+                                            activity?.let { it1 ->
+                                                sheet.show(
+                                                    it1.supportFragmentManager,
+                                                    "ApplyJob"
+                                                )
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    val sheet = ApplyJob(currentJob, listOf(), this)
+                                    activity?.let { it1 ->
+                                        sheet.show(
+                                            it1.supportFragmentManager,
+                                            "ApplyJob"
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -300,7 +306,7 @@ class JobDetailFragment(
                 activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
 
             }
-            if(CompanyNo == null){
+            if(CompanyNo == null || CompanyNo == 0L ){
                 view.findViewById<LinearLayout>(R.id.other_job_container).visibility = GONE
             }else {
                 CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {

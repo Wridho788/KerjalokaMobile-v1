@@ -55,6 +55,8 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="File Name.zip"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:gravity="center_vertical"
                 android:fontFamily="@font/poppins"
                 android:layout_marginRight="10dp"

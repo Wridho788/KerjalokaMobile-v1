@@ -48,7 +48,7 @@ class JobRecommendationFragment : Fragment(), IJobPage {
                     binding.recycleview.visibility = VISIBLE
 
                     binding.recycleview?.apply {
-                        adapter = JobAdapter(1, listData, context, this@JobRecommendationFragment)
+                        adapter = JobAdapter(1, listData , context, this@JobRecommendationFragment, null)
                         layoutManager = LinearLayoutManager(activity)
                     }
                 }

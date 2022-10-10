@@ -1,10 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -24,6 +26,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +44,7 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
 import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
+import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -70,7 +75,10 @@ class ChatPage(var sectionName: String,
     private lateinit var binding : ActivityMainBinding
     private var MY_CAMERA_REQUEST_CODE :Int = 100
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
+    private lateinit var activityResultCameraLauncher : ActivityResultLauncher<Intent>
     private lateinit var defaultImagePicker: BasicImagePicker
+
+    private var downloadManager: DownloadManager? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +107,7 @@ class ChatPage(var sectionName: String,
                         // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
                         // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
                         // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
-                        mimesType = DefaultGalleryMimes.customTypes("video/*;image/*") // multiType
+                        mimesType = DefaultGalleryMimes.customTypes("image/*") // multiType
                     )
                 )
                 .subscribe { result -> onPickUriSuccess(result.uri) }
@@ -108,9 +116,17 @@ class ChatPage(var sectionName: String,
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun pickCamera() {
-        context?.let {
-            defaultImagePicker.openCamera(it)
-                .subscribe { result -> onPickUriSuccess(result.uri) }
+        try {
+            context?.let {
+                defaultImagePicker.openCamera(it)
+                    .subscribe { result -> onPickUriSuccess(result.uri) }
+            }
+        }
+        catch (e : Throwable){
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        }
+        catch (e : InterruptedException){
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -171,6 +187,7 @@ class ChatPage(var sectionName: String,
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
 
+        downloadManager = activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager?
 
         val titlePage = itemView.findViewById<TextView>(R.id.title)
         titlePage.text = sectionName
@@ -258,27 +275,25 @@ class ChatPage(var sectionName: String,
 
         cameraButton.setOnClickListener{
             pickCamera()
-            /*val intent = Intent("android.media.action.IMAGE_CAPTURE")
-
-            Log.d("Camera Permission", ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA).toString())
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_DENIED
-                ||
-                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_DENIED
-            ){
-                this.activity?.let { it1 ->
-                    ActivityCompat.requestPermissions(
-                        it1,
-                        listOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray(), MY_CAMERA_REQUEST_CODE)
-                };
-
-                Toast.makeText(context, "Tidak memiliki izin akses kamera", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                activityResultLauncher.launch(intent)
-//                startActivity(intent)
-            }*/
+//            val intent = Intent("android.media.action.IMAGE_CAPTURE")
+//
+//            Log.d("Camera Permission", ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA).toString())
+//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+//                == PackageManager.PERMISSION_DENIED
+//                ||
+//                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                == PackageManager.PERMISSION_DENIED
+//            ){
+//                this.activity?.let { it1 ->
+//                    ActivityCompat.requestPermissions(
+//                        it1,
+//                        listOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray(), MY_CAMERA_REQUEST_CODE)
+//                };
+//            }
+//            else{
+//                activityResultLauncher.launch(intent)
+////                startActivity(intent)
+//            }
         }
 
 
@@ -517,8 +532,8 @@ class ChatPage(var sectionName: String,
 
     override fun downloadFile(file: Messages) {
         Toast.makeText(context, "Downloading File...", Toast.LENGTH_SHORT).show()
-        val downloadManager = activity?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
+        Log.d("url","${config().portAddress}/chat/file/download?chatMessageNo=${file.chatMessageNo}&fileName=${file.fileName}")
         val request =
             DownloadManager.Request(
                 Uri.parse(
@@ -533,7 +548,7 @@ class ChatPage(var sectionName: String,
             )
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
-        val downloadID = downloadManager.enqueue(request)
+        val downloadID = downloadManager!!.enqueue(request)
     }
 }
 interface PositionOnBottom{

@@ -32,51 +32,16 @@ class fragment_company_jobs : Fragment() {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.idFABAdd.setOnClickListener {
-            val myIntent = Intent(view.context, AddJobActivity::class.java)
-            startActivity(myIntent)
-        }
-        binding.backButton.setOnClickListener {
-            val goToMainActivity = Intent(view.context, MainActivity::class.java)
-            startActivity(goToMainActivity)
-        }
-
-        JobAPI().getJob(context){
-            if(it != null) {
-                val recyclerView = view.findViewById<RecyclerView>(R.id.recyle_company_jobs)
-                recyclerView.apply {
-                    layoutManager = LinearLayoutManager(activity)
-                    adapter = it.data.let { it1 -> assignAdapter(it1) }
-                }
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        UpdateUI()
     }
 
-    /*companion object {
-        binding.idFABAdd.setOnClickListener {
-            val myIntent = Intent(view.context, AddJobActivity::class.java)
-            startActivity(myIntent)
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        UpdateUI()
+    }
 
-        binding.backButton.setOnClickListener {
-            val goToMainActivity = Intent(view.context, MainActivity::class.java)
-            startActivity(goToMainActivity)
-        }
-
-        CompanyJobAPI().getCompanyJobOfficer(context){
-            if (it != null) {
-                listJob = it.data
-                binding.recyleCompanyJobs.apply {
-                    layoutManager = LinearLayoutManager(activity)
-                    adapter = Companyjobs_adapter(listJob!!)
-                }
-
-            }
-        }
-    }*/
 
     private fun assignAdapter(list: List<Data>): Companyjobs_adapter {
         return Companyjobs_adapter(list, object : JobDetail {
@@ -95,6 +60,27 @@ class fragment_company_jobs : Fragment() {
                 startActivity(shareIntent)
             }
         })
+    }
+    fun UpdateUI(){
+
+        binding.idFABAdd.setOnClickListener {
+            val myIntent = Intent(view?.context, ManageJobActivity::class.java)
+            startActivity(myIntent)
+        }
+        binding.backButton.setOnClickListener {
+            val goToMainActivity = Intent(view?.context, MainActivity::class.java)
+            startActivity(goToMainActivity)
+        }
+
+        JobAPI().getJob(context){
+            if(it != null) {
+                val recyclerView = view?.findViewById<RecyclerView>(R.id.recyle_company_jobs)
+                recyclerView?.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = it.data.let { it1 -> assignAdapter(it1) }
+                }
+            }
+        }
     }
 
     private fun replaceFragment(data: Data?) {

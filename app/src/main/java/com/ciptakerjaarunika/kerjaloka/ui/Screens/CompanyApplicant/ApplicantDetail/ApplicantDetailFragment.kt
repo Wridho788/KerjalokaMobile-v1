@@ -62,10 +62,8 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
 
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_applicant)
         toolbar.setOnClickListener {
-            activity?.onBackPressed()
+            fragmentManager?.popBackStack()
         }
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val experienceJob = applicantDetail.applicant.experiences
         if (experienceJob != null) {

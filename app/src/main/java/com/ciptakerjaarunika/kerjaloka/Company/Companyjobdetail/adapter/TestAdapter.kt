@@ -1,37 +1,40 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter
 
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iChooseTest
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iAddidiontalInfoPage
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.TestJob
-import com.ciptakerjaarunika.kerjaloka.model.Data.questionList
+import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobTest
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
-class TestAdapter(private var dataset: List<TestJob>?, val iChooseTest: iChooseTest) :
+class TestAdapter(var data : List<JobTest>, private var dataset: List<TestJob>?, val iAddidiontalInfoPage: iAddidiontalInfoPage) :
     RecyclerView.Adapter<TestAdapter.ViewHolder?>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val cardTest: MaterialCardView
+        val container : LinearLayout
         val titleTest: TextView
-        val itemTest: TextView
+        val questionList : TextView
 
         init {
-            cardTest = itemView.findViewById(R.id.compny_tes_page)
-            titleTest = itemView.findViewById(R.id.title_test)
-            itemTest = itemView.findViewById(R.id.test_item)
+            container = itemView.findViewById(R.id.container)
+            titleTest = itemView.findViewById(R.id.testName)
+            questionList = itemView.findViewById(R.id.questions)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.section_company_add_jobs_4, null)
-        val lp = RecyclerView.LayoutParams(
+        val view = View.inflate(parent.context, R.layout.test_card_job, null)
+        view.layoutParams = RecyclerView.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        view.layoutParams = lp
         return ViewHolder(view)
     }
 
@@ -39,12 +42,36 @@ class TestAdapter(private var dataset: List<TestJob>?, val iChooseTest: iChooseT
         val item = dataset!![position]
 
         holder.titleTest.text = item.testName
-        val questionList = item.question.map { question -> questionList(question = question.question) }
-        questionList.map { question -> holder.itemTest.text = question.question[0].question}
-        holder.cardTest.setOnClickListener {
-           holder.cardTest.setStrokeColor(R.color.danger_500)
-            holder.cardTest.strokeWidth(3)
-            iChooseTest.updateTest(listOf(item))
+        var question = ""
+        item.question.forEachIndexed{index, it->
+            question += "${index+1}. ${it.question?.get(0)?.question}<br/>"
+        }
+        holder.questionList.text = Html.fromHtml(question)
+
+        var currentData = data.find { test -> test.testNo == item.testNo}
+        if(currentData == null){
+            holder.container.setBackgroundResource(R.drawable.card_background_500)
+        }
+        else {
+            holder.container.setBackgroundResource(R.drawable.card_background_selected)
+        }
+
+        holder.container.setOnClickListener {
+
+            Log.d("current data", currentData.toString())
+            if(currentData != null){
+                holder.container.setBackgroundResource(R.drawable.card_background_500)
+                data = data.toMutableList()?.apply {
+                    remove(currentData)
+                }!!
+            }
+            else{
+                holder.container.setBackgroundResource(R.drawable.card_background_selected)
+                data += JobTest(null,null,null,null,null,null,null,
+                    null,null,null,null,null,null,null,null,null,
+                    null,item.testNo,null)
+            }
+            iAddidiontalInfoPage.updateJobTest(data)
         }
 
     }
@@ -52,7 +79,4 @@ class TestAdapter(private var dataset: List<TestJob>?, val iChooseTest: iChooseT
     override fun getItemCount(): Int {
         return dataset!!.size
     }
-}
-
-private fun MaterialCardView.strokeWidth(i: Int) {
 }
