@@ -60,8 +60,10 @@ class HomePage : Fragment(), OnFragmentClickListener {
             view.findViewById<TextView>(R.id.btn_see_all_recommendation_jobs)
 
         btn_search.setOnClickListener {
-            val intent_search = Intent(activity, SearchActivity::class.java)
-            startActivity(intent_search)
+            val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ft.replace(id, SearchActivity(), "")
+            ft.addToBackStack("")
+            ft.commit()
         }
         if(SessionManager(context).user != null){
             btn_notif.visibility = VISIBLE

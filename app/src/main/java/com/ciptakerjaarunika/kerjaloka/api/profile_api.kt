@@ -391,13 +391,13 @@ class ProfileAPI {
 
     interface logout {
         @GET("users/logout")
-        fun logout(): Call<Any>
+        fun logout(@Query("deviceToken") deviceToken : String?): Call<Any>
     }
 
-    fun Logout(context: Context?,onResult: (Any?) -> Unit){
+    fun Logout(deviceToken: String?,context: Context?,onResult: (Any?) -> Unit){
         val retrofit = ServiceBuilder(context).GET(logout::class.java)
 
-        retrofit.logout().enqueue(
+        retrofit.logout(deviceToken).enqueue(
             object : Callback<Any> {
                 override fun onFailure(call: Call<Any>, t: Throwable) {
                     Log.d("Response Failure", t.toString())

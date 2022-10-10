@@ -81,15 +81,13 @@ class AkunPage() : Fragment() {
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
 
-            if(SessionManager(context).device_token.isNullOrEmpty()){
-                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         return@OnCompleteListener
                     }
                     val token = task.result
                     SessionManager(context).device_token = token
-                })
-            }
+            })
 
 
             val loginRequest = LoginRequest(email = email, password=password, deviceToken = SessionManager(context).device_token.toString())
@@ -98,6 +96,8 @@ class AkunPage() : Fragment() {
 
                 if (it != null) {
                     if (it.code == "252") {
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+
                         val activity = activity as MainActivity
                         SessionManager(context).access_token = it.userToken
                         AUTHAPI().CheckLogin(context, activity) {
@@ -178,7 +178,6 @@ class AkunPage() : Fragment() {
     private fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient!!.signInIntent
         startActivityForResult(signInIntent, Req_Code)
-
     }
 
     @Deprecated("Deprecated in Java")
@@ -224,8 +223,16 @@ class AkunPage() : Fragment() {
                     MessageDigest.getInstance("MD5").digest(str.toByteArray(Charsets.UTF_8))
                 Log.d("Crypt", hash)
 
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+                    val token = task.result
+                    SessionManager(context).device_token = token
+                })
+
                 val googleRequest =
-                    GoogleLoginRequest(account.idToken.toString(), oneHourBack.toString(), hash)
+                    GoogleLoginRequest(account.idToken.toString(), oneHourBack.toString(), hash, deviceToken =  SessionManager(context).device_token)
                 AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
                     Log.d("google login", it.toString())
                     if (it != null)

@@ -89,15 +89,13 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
             val email = view?.findViewById<EditText>(R.id.txt_email)?.text.toString()
             val password = view?.findViewById<EditText>(R.id.txt_password)?.text.toString()
             if (!email.isNullOrEmpty() && !email.isNullOrBlank() && !password.isNullOrEmpty() && !password.isNullOrBlank()) {
-                if(SessionManager(context).device_token.isNullOrEmpty()){
-                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+               FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                         if (!task.isSuccessful) {
                             return@OnCompleteListener
                         }
                         val token = task.result
                         SessionManager(context).device_token = token
-                    })
-                }
+               })
 
 
                 AUTHAPI().Login(context, LoginRequest(email, password, SessionManager(context).device_token.toString())) {
@@ -235,13 +233,22 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                 fun md5(str: String): ByteArray =
                     MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))
                 Log.d("Crypt", hash)
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+                    val token = task.result
+                    SessionManager(context).device_token = token
+                })
 
                 val googleRequest =
-                    GoogleLoginRequest(account.idToken.toString(), oneHourBack.toString(), hash)
+                    GoogleLoginRequest(account.idToken.toString(), oneHourBack.toString(), hash, deviceToken =  SessionManager(context).device_token)
                 AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
                     Log.d("google login", it.toString())
                     if (it != null)
                         if (it.code == "252") {
+                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+
                             SessionManager(context).access_token = it.userToken
                             val mainActivity = activity as MainActivity
 

@@ -11,7 +11,8 @@ data class GoogleLoginRequest(
     val expiredOn: String,
     val hash: String,
     val role: Int = 4,
-    val scode: String = ""
+    val scode: String = "",
+    val deviceToken: String?
 )
 
 data class LoginResponse(

@@ -1,45 +1,49 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile
 
-import android.R
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditBasicInfoBinding
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
-import com.ciptakerjaarunika.kerjaloka.model.Interview.returnUploadFile
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditGender
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+
+import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.google.android.material.datepicker.*
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
 import com.qingmei2.rximagepicker_extension.utils.PathUtils
+
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -58,6 +62,7 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
     private var date : String? = if (data?.jobseeker?.dateOfBirth == null) null
                                     else DateUtils().GetDateValueWithFormat(data?.jobseeker?.dateOfBirth, "yyyy-MM-dd HH:mm")
 
+    private lateinit var defaultImagePicker: BasicImagePicker
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +81,9 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initRxImagePicker()
+
 
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -96,10 +104,10 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
             }
         }
         binding.profileImg.setOnClickListener{
-            updatePhoto()
+            pickGallery()
         }
         binding.changePhotoTxt.setOnClickListener{
-            updatePhoto()
+            pickGallery()
         }
 
         binding.backBtn.setOnClickListener{
@@ -109,7 +117,7 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
             back()
         }
         Glide.with(context!!)
-            .load(config().portAddress + "/photo/Profile/" + data?.additionals?.Photo).into(binding.profileImg)
+            .load(config().portAddress + "/photo/Profile/" + data?.additionals?.photo).into(binding.profileImg)
 
         binding.jsName.setText(data?.jobseeker?.jobseekerName)
         binding.jsKTP.setText(data?.additionals?.ktp)
@@ -167,6 +175,51 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
             else{
                 updateBasic()
             }
+        }
+    }
+
+    private fun initRxImagePicker() {
+        defaultImagePicker = RxImagePicker.create(BasicImagePicker::class.java)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun pickGallery() {
+        context?.let {
+            defaultImagePicker
+                .openGallery(
+                    it,
+                    DefaultSystemGalleryConfig.instance(
+                        // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
+                        // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
+                        // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
+                        mimesType = DefaultGalleryMimes.customTypes("image/*") // multiType
+                    )
+                )
+                .subscribe { result -> onPickUriSuccess(result.uri) }
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun onPickUriSuccess(uri: Uri) {
+        val pathName = context?.let { getPathFromUri(it, uri) }
+        if(pathName != null) {
+            val file = File(pathName ?: "")
+            val requestFile: RequestBody =
+                file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+            val myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath())
+            binding.profileImg.setImageBitmap(myBitmap)
+            photo = MultipartBody.Part.createFormData("photo", file.name, requestFile)
+        }
+    }
+    private fun getPathFromUri(context: Context, contentUri: Uri): String {
+        var cursor: Cursor? = null
+        return try {
+            val project = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = context.contentResolver.query(contentUri, project, null, null, null)
+            val columnIndex: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            cursor.getString(columnIndex)
+        } finally {
+            cursor?.close()
         }
     }
 

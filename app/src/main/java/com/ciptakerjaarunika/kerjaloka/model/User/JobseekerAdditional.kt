@@ -11,7 +11,7 @@ data class JobseekerAdditional(
     val jobseekerCountryNo : Int?,
     val postalCode : String,
     val placeOfBirth : String,
-    val Photo : String,
+    val photo : String,
     val maritalNo : Int?,
     val ethnics : String,
     val religionNo : Int?,

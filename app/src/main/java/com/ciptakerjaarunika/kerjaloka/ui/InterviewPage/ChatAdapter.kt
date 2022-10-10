@@ -188,7 +188,7 @@ class ChatAdapter
             }
             else if(dataSet!![position].messageType == MessageType.ImageMessage.type.toString().toInt()){
                 viewHolder.messageContainer?.setOnClickListener{
-                    Toast.makeText(context, "Message has clicked", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "Message has clicked", Toast.LENGTH_SHORT).show()
                 }
                 viewHolder.messageContainer?.setPadding(10,10,10,10)
                 viewHolder.photoContainer?.visibility = VISIBLE

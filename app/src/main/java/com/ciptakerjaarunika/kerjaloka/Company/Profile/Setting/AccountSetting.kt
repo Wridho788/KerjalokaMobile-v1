@@ -76,7 +76,7 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
 
 
         binding.btnLogout.setOnClickListener{
-            ProfileAPI().Logout(context){
+            ProfileAPI().Logout(SessionManager(context).device_token, context){
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)
             }
@@ -164,7 +164,7 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
 
 
                 binding.btnLogout.setOnClickListener{
-                    ProfileAPI().Logout(context){
+                    ProfileAPI().Logout(SessionManager(context).device_token, context){
                         val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)
                     }

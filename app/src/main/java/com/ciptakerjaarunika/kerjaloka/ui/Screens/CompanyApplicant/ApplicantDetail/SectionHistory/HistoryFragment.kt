@@ -45,7 +45,6 @@ class HistoryFragment(private val jobApplicationHistory: List<List<jobApplicantH
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         val rv_history = view.findViewById<RecyclerView>(R.id.rv_history_applicant)
-        rv_history.setHasFixedSize(true)
 
         rv_history.apply {
             layoutManager = LinearLayoutManager(activity)

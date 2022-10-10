@@ -1,13 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
-import android.app.Activity
-import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.provider.DocumentsContract
-import android.provider.OpenableColumns
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -16,7 +15,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,24 +29,93 @@ import com.ciptakerjaarunika.kerjaloka.enum.VerifyStatus
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.DocumentAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.FragmentEditLampiran
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin
-import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
-import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStreamReader
 
+
+import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
+import com.qingmei2.rximagepicker_extension.utils.PathUtils
 
 class manage_lampiran : Fragment(), iRefreshData {
     private lateinit var binding : FragmentManageLampiranPageBinding
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     private var oldestFile : String? = null;
+    private lateinit var defaultImagePicker: BasicImagePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+    private fun initRxImagePicker() {
+        defaultImagePicker = RxImagePicker.create(BasicImagePicker::class.java)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun pickGallery() {
+        context?.let {
+            defaultImagePicker
+                .openGallery(
+                    it,
+                    DefaultSystemGalleryConfig.instance(
+                        // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
+                        // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
+                        // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
+                        mimesType = DefaultGalleryMimes.customTypes("video/*") // multiType
+                    )
+                )
+                .subscribe { result -> onPickUriSuccess(result.uri) }
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun onPickUriSuccess(uri: Uri) {
+        val pathName = context?.let { getPathFromUri(it, uri) }
+        if(pathName != null) {
+            val file = File(pathName ?: "")
+                 if(file != null) {
+
+                     val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+                     val files = MultipartBody.Part.createFormData(
+                                    "files",
+                                    file.name,
+                                    requestFile
+                                )
+
+                                ManageProfileAPI().UploadVideoResume(files, context) { res ->
+                                    if (res?.data != null) {
+                                        binding.videoResumeName.text = res.data.videoName
+                                        binding.btnRemoveResume.visibility = VISIBLE
+                                        binding.btnRemoveResume.setOnClickListener {
+                                            ProfileAPI().DeleteJobseekerResume(context) {
+                                                Toast.makeText(
+                                                    context,
+                                                    "Berhasil menghapus video resume",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                binding.videoResumeName.text = "Upload Video Resume"
+                                                binding.btnRemoveResume.visibility = GONE
+                                            }
+                                        }
+                                    }
+                                }
+            }
+        }
+    }
+    private fun getPathFromUri(context: Context, contentUri: Uri): String {
+        var cursor: Cursor? = null
+        return try {
+            val project = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = context.contentResolver.query(contentUri, project, null, null, null)
+            val columnIndex: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            cursor.getString(columnIndex)
+        } finally {
+            cursor?.close()
+        }
     }
 
     override fun onCreateView(
@@ -60,38 +128,31 @@ class manage_lampiran : Fragment(), iRefreshData {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initRxImagePicker()
 
-
-        activityResultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
-                val data = it.data
-                val fileUri: Uri = data!!.data!!
-                val path = PathUtil().getRealPath(context!!, fileUri)
-                val file: File? = File(path?:"")
-                if(file != null){
-                    val requestFile: RequestBody =
-                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    val files = MultipartBody.Part.createFormData("files", file.name, requestFile)
-
-                    ManageProfileAPI().UploadVideoResume(files, context){res->
-                        if(res?.data != null){
-                            binding.videoResumeName.text = res.data.videoName
-                        }
-                    }
-                }
-            }
-        }
-
-        getData()
-
-
-
-//        btn_edResume.setOnClickListener{
+//        activityResultLauncher = registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()
+//        ) {
+//            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+//                val data = it.data
+//                val fileUri: Uri = data!!.data!!
+//                val path = PathUtil().getRealPath(context!!, fileUri)
+//                val file: File? = File(path?:"")
+//                if(file != null){
+//                    val requestFile: RequestBody =
+//                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+//                    val files = MultipartBody.Part.createFormData("files", file.name, requestFile)
 //
+//                    ManageProfileAPI().UploadVideoResume(files, context){res->
+//                        if(res?.data != null){
+//                            binding.videoResumeName.text = res.data.videoName
+//                        }
+//                    }
+//                }
+//            }
 //        }
 
+        getData()
     }
 
     fun getData(){
@@ -116,12 +177,13 @@ class manage_lampiran : Fragment(), iRefreshData {
                 binding.uploadVideoResumeBtn.visibility = VISIBLE
 
                 binding.uploadVideoResumeBtn.setOnClickListener {
-                    var intent = Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("*/*");
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-                    val requestIntent = Intent.createChooser(intent, "Choose a Video");
-                    activityResultLauncher.launch(requestIntent)
+//                    var intent = Intent(Intent.ACTION_GET_CONTENT);
+//                    intent.setType("*/*");
+//                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+//
+//                    val requestIntent = Intent.createChooser(intent, "Choose a Video");
+//                    activityResultLauncher.launch(requestIntent)
+                    pickGallery()
                 }
 
                 if (resume?.data != null) {
@@ -139,6 +201,7 @@ class manage_lampiran : Fragment(), iRefreshData {
                                 Toast.LENGTH_SHORT
                             ).show()
                             binding.videoResumeName.text = "Upload Video Resume"
+                            binding.btnRemoveResume.visibility = GONE
                         }
                     }
                 }

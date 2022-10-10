@@ -1,28 +1,18 @@
 package com.ciptakerjaarunika.kerjaloka
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.se.omapi.Session
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.view.WindowInsets.Type.ime
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowInsetsCompat.toWindowInsetsCompat
 import androidx.core.view.forEach
-import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
@@ -41,8 +31,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.iid.FirebaseInstanceIdReceiver
 import com.google.firebase.messaging.FirebaseMessaging
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
@@ -59,7 +47,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var hubConnection: HubConnection
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,11 +102,11 @@ class MainActivity : AppCompatActivity() {
 
 
 
-            window.decorView.setOnApplyWindowInsetsListener { view, insets ->
-                val insetsCompat = toWindowInsetsCompat(insets, view)
-                binding.bottomNavigationView.isGone = insetsCompat.isVisible(ime())
-                view.onApplyWindowInsets(insets)
-            }
+//            window.decorView.setOnApplyWindowInsetsListener { view, insets ->
+//                val insetsCompat = toWindowInsetsCompat(insets, view)
+//                binding.bottomNavigationView.isGone = true
+//                view.onApplyWindowInsets(insets)
+//            }
             window.decorView.viewTreeObserver.addOnGlobalFocusChangeListener { oldView, newView ->
                 val imm = baseContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 if (newView !is EditText) imm.hideSoftInputFromWindow(
@@ -232,17 +219,12 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d("Request Code", requestCode.toString())
-        if (requestCode == MY_CAMERA_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val intent = Intent("android.media.action.IMAGE_CAPTURE")
-                activityResultLauncher.launch(intent)
-            } else {
-                Toast.makeText(baseContext, "Perlu akses kamera untuk fitur ini", Toast.LENGTH_LONG)
-                    .show()
-            }
+//        if(requestCode == 101) {
+            supportFragmentManager.fragments.find { a ->
+                a.id != 0
+            }?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        }
         }
-    }
 
     open fun replaceFragment(fragment: Fragment) {
 //        AUTHAPI().CheckLogin(baseContext, this) {
@@ -272,5 +254,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

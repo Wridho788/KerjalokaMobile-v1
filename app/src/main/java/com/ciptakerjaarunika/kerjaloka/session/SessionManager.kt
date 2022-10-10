@@ -35,6 +35,7 @@ class SessionManager (context: Context?) : ISessionManager{
         const val COMPANY_ADDITIONAL= "ocmpanyadditional"
         const val JOBSEEKER_ADDITIONAL = "jobseekeradditionl"
         const val LATESTSEARCHJOB = "latest_search_job"
+        const val LatestGeneralSearch = "latest_general_search"
         const val DEVICE_TOKEN = "device_token"
     }
 
@@ -53,6 +54,10 @@ class SessionManager (context: Context?) : ISessionManager{
     override var latestSearchJob: List<Any>?
         get() = (Gson().fromJson(getData(LATESTSEARCHJOB), ArrayList::class.java))
         set(value) {setData(LATESTSEARCHJOB, Gson().toJson(value))}
+
+    override var latestGeneralSearch: List<Any>?
+        get() = (Gson().fromJson(getData(LatestGeneralSearch), ArrayList::class.java))
+        set(value) {setData(LatestGeneralSearch, Gson().toJson(value))}
 
     override var deviceId: String = ""
         get() = Settings.Secure.getString(appContext?.contentResolver,

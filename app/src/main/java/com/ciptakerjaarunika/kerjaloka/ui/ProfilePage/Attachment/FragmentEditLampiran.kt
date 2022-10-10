@@ -1,14 +1,19 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -18,6 +23,9 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
@@ -27,23 +35,36 @@ import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.AttachmentAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
-import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.ByteArrayOutputStream
 import java.io.File
 
 
-class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRefreshData) : Fragment(), iEditLampiran {
+class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRefreshData?) : Fragment(), iEditLampiran {
     private lateinit var binding: FragmentLampiranBinding
     private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     private var document : MultipartBody.Part? = null
     private var file : File? = null
     private var documentNameError : Boolean = false
+    private var readExternalRequest = 101;
+
+    @RequiresApi(Build.VERSION_CODES.O)
+
+    private fun getPathFromUri(context: Context, contentUri: Uri): String {
+        var cursor: Cursor? = null
+        return try {
+            val project = arrayOf(MediaStore.Files.FileColumns.DATA)
+            cursor = context.contentResolver.query(contentUri, project, null, null, null)
+            val columnIndex: Int = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            cursor.moveToFirst()
+            cursor.getString(columnIndex)
+        } finally {
+            cursor?.close()
+        }
+    }
 
 
     override fun onCreateView(
@@ -55,8 +76,47 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
         return view;
     }
 
+    fun getPDFPath(uri: Uri?): String? {
+        val cursor: Cursor? = context?.contentResolver?.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, arrayOf("_data"), "_id=?",
+            arrayOf(DocumentsContract.getDocumentId(uri).split(":")[1]), null)
+        val column_index = cursor?.getColumnIndexOrThrow("_data")
+        cursor?.moveToFirst()
+        return column_index?.let { cursor?.getString(it) }
+    }
+
+    fun SelectFile(){
+        var intent = Intent(Intent.ACTION_GET_CONTENT);
+        val mimeTypes = arrayOf(
+            "image/*",
+            "application/pdf",
+            "application/msword",
+            "application/vnd.ms-powerpoint",
+            "application/vnd.ms-excel",
+            "text/plain"
+        )
+//            intent.type = "image/*|application/pdf|application/msword|application/vnd.ms-powerpoint|application/vnd.ms-excel|text/plain"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            intent.type = if (mimeTypes.size === 1) mimeTypes[0] else "*/*"
+            if (mimeTypes.size > 0) {
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
+            }
+        } else {
+            var mimeTypesStr = ""
+            for (mimeType in mimeTypes) {
+                mimeTypesStr += "$mimeType|"
+            }
+            intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
+        }
+
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        val requestIntent = Intent.createChooser(intent, "Choose a File");
+        activityResultLauncher.launch(requestIntent)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.recycleview.apply {
             layoutManager   = LinearLayoutManager(activity)
             adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
@@ -74,14 +134,22 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val data = it.data
                 val fileUri: Uri = data!!.data!!
-                val pathName = context?.let { it2 -> PathUtil().getRealPath(it2, fileUri) }
+                val pathName =
+                    context?.let { it2 -> PathUtil().getRealPath(it2, fileUri) } ?: fileUri.path
 
-                val file = File(pathName?:"")
-                this.file = file
-                val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                if (pathName != null) {
+                    val file = File(pathName ?: "")
+                    this.file = file
+                    val requestFile: RequestBody =
+                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-                binding.uploadDocumentBtn.text = file.name
-                document = MultipartBody.Part.createFormData("document", file.name, requestFile)
+                    binding.uploadDocumentBtn.text = file.name
+                    document =
+                        MultipartBody.Part.createFormData("document", file.name, requestFile)
+                } else {
+                    binding.uploadDocumentBtn.text = "Upload Lampiran"
+                    document = null
+                }
             }
         }
         binding.documentName.addTextChangedListener(object : TextWatcher {
@@ -97,34 +165,17 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
             }
         })
         binding.uploadDocumentBtn.setOnClickListener {
-
-            var intent = Intent(Intent.ACTION_GET_CONTENT);
-            val mimeTypes = arrayOf(
-                "image/*",
-                "application/pdf",
-                "application/msword",
-                "application/vnd.ms-powerpoint",
-                "application/vnd.ms-excel",
-                "text/plain"
-            )
-//            intent.type = "image/*|application/pdf|application/msword|application/vnd.ms-powerpoint|application/vnd.ms-excel|text/plain"
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                intent.type = if (mimeTypes.size === 1) mimeTypes[0] else "*/*"
-                if (mimeTypes.size > 0) {
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-                }
-            } else {
-                var mimeTypesStr = ""
-                for (mimeType in mimeTypes) {
-                    mimeTypesStr += "$mimeType|"
-                }
-                intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+            ){
+                this.activity?.let { it1 ->
+                    ActivityCompat.requestPermissions(it1,
+                        listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(), id + readExternalRequest)
+                };
             }
-
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-            val requestIntent = Intent.createChooser(intent, "Choose a File");
-            activityResultLauncher.launch(requestIntent)
+            else{
+                SelectFile()
+            }
         }
 
         binding.saveBtn.setOnClickListener {
@@ -193,7 +244,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
     }
     private fun back(){
         fragmentManager?.popBackStack()
-        iRefreshData.refresh()
+        iRefreshData!!.refresh()
     }
 
     override fun delete(value: Documents) {
@@ -206,6 +257,22 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
         }
         binding.recycleview.adapter?.notifyDataSetChanged()
     }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == id + readExternalRequest) {
+            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
+                SelectFile()
+            }
+            else{
+                Toast.makeText(activity, "Perlu akses untuk upload file", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 }
 
 interface iEditLampiran{
