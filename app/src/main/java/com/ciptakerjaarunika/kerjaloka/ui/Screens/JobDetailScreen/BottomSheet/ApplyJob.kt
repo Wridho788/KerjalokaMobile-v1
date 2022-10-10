@@ -97,6 +97,7 @@ class ApplyJob(val job : rJobDetailModel?, var jobShortQuestions: List<JobShortQ
                                     iJobDetail.RefreshData()
                                 } else {
                                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                                    this.dismiss()
                                 }
                             }else{
                                 Toast.makeText(context, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()

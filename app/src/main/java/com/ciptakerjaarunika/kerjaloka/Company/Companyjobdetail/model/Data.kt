@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model
 
 
+import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 

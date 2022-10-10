@@ -46,89 +46,101 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
     fun getData(){
         ProfileAPI().GetJobseekerField(context) { fields ->
             loading -=1
-            if(loading == 0){
-                view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
-            }
-            binding.editMinat.setOnClickListener{
-                replaceFragment(fragment_edit_interest_layout(fields?.data, this))
-            }
+            if(activity!=null) {
+                if (loading == 0) {
+                    view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
+                    view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
+                }
+                binding.editMinat.setOnClickListener {
+                    replaceFragment(fragment_edit_interest_layout(fields?.data, this))
+                }
 
-            if (fields?.data?.size != 0) {
+                if (fields?.data?.size != 0) {
 
-                fields?.data?.forEach {
-                    binding.fieldGroup.isVisible = true
-                    if (context != null) {
-                        val fieldChip : Chip = Chip(context)
+                    fields?.data?.forEach {
+                        binding.fieldGroup.isVisible = true
+                        if (context != null) {
+                            val fieldChip: Chip = Chip(context)
 
-                        fieldChip.setChipBackgroundColorResource(R.color.danger_100)
-                        fieldChip.apply {
-                            textSize = 12f
-                            text = it.fieldName
-                            isChipIconVisible = false
-                            isCloseIconVisible = false
-                            isClickable = true
-                            isCheckable = false
-                            view.apply {
-                                binding.chipGroupMinat.addView(fieldChip as View)
+                            fieldChip.setChipBackgroundColorResource(R.color.danger_100)
+                            fieldChip.apply {
+                                textSize = 12f
+                                text = it.fieldName
+                                isChipIconVisible = false
+                                isCloseIconVisible = false
+                                isClickable = true
+                                isCheckable = false
+                                view.apply {
+                                    binding.chipGroupMinat.addView(fieldChip as View)
+                                }
                             }
                         }
-                    }
 
+                    }
+                } else {
+                    binding.nullField.visibility = VISIBLE
                 }
-            } else {
-                binding.nullField.visibility = VISIBLE
             }
         }
         ProfileAPI().GetJobseekerJobType(context){ jobTypes ->
             loading -=1
-            if(loading == 0){
-                view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
-            }
-            binding.editTipePekerjaan.setOnClickListener{
-                replaceFragment(FragmentEditJobType(jobTypes?.data, this))
-            }
-            if (jobTypes?.data?.size != 0) {
-                jobTypes?.data?.forEach {
-                    binding.jobTypeGroup.isVisible = true
-                    if (context != null) {
-                        val jTypeChip: Chip = Chip(context)
+            if(activity!=null) {
+                if (loading == 0) {
+                    view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
+                    view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
+                }
+                binding.editTipePekerjaan.setOnClickListener {
+                    replaceFragment(FragmentEditJobType(jobTypes?.data, this))
+                }
+                if (jobTypes?.data?.size != 0) {
+                    jobTypes?.data?.forEach {
+                        binding.jobTypeGroup.isVisible = true
+                        if (context != null) {
+                            val jTypeChip: Chip = Chip(context)
 
-                        jTypeChip.setChipBackgroundColorResource(R.color.danger_100)
-                        jTypeChip.apply {
-                            textSize = 12f
-                            text = it.jobTypeName
-                            isChipIconVisible = false
-                            isCloseIconVisible = false
-                            isClickable = false
-                            isCheckable = false
-                            view.apply {
-                                binding.chipGroupTipePekerjaan.addView(jTypeChip as View)
+                            jTypeChip.setChipBackgroundColorResource(R.color.danger_100)
+                            jTypeChip.apply {
+                                textSize = 12f
+                                text = it.jobTypeName
+                                isChipIconVisible = false
+                                isCloseIconVisible = false
+                                isClickable = false
+                                isCheckable = false
+                                view.apply {
+                                    binding.chipGroupTipePekerjaan.addView(jTypeChip as View)
+                                }
                             }
                         }
                     }
+                } else {
+                    binding.nullJobType.visibility = VISIBLE
                 }
             }
-            else {
-                binding.nullJobType.visibility = VISIBLE
-            }}
+            }
 
         ProfileAPI().GetJobseekerSalaryExpected(context) { salary->
             loading -=1
-            if(activity != null && loading == 0){
-                view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
-            }
-            val expectedSalary = view!!.findViewById<TextView>(R.id.expectedSalary)
-            expectedSalary.text = if(salary != null && salary?.data != BigDecimal(0)) salary?.data.toString() else "-"
+            if(activity!=null) {
+                if (loading == 0) {
+                    view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
+                    view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
+                }
+                val expectedSalary = view!!.findViewById<TextView>(R.id.expectedSalary)
+                expectedSalary.text =
+                    if (salary != null && salary?.data != BigDecimal(0)) salary?.data.toString() else "-"
 
-            val btn_EdMinat = view!!.findViewById<TextView>(R.id.edit_minat)
-            val btn_EdJobType = view!!.findViewById<TextView>(R.id.edit_tipe_pekerjaan)
-            val btn_gaji = view!!.findViewById<TextView>(R.id.edit_ekspektasi_gaji)
+                val btn_EdMinat = view!!.findViewById<TextView>(R.id.edit_minat)
+                val btn_EdJobType = view!!.findViewById<TextView>(R.id.edit_tipe_pekerjaan)
+                val btn_gaji = view!!.findViewById<TextView>(R.id.edit_ekspektasi_gaji)
 
-            btn_gaji.setOnClickListener{
-                replaceFragment(FragmentSalaryExpectation(data?.additionals?.expectedSalary, this))
+                btn_gaji.setOnClickListener {
+                    replaceFragment(
+                        FragmentSalaryExpectation(
+                            data?.additionals?.expectedSalary,
+                            this
+                        )
+                    )
+                }
             }
         }
     }

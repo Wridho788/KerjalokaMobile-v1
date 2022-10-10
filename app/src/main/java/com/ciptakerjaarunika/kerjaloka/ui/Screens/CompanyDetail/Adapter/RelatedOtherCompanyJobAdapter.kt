@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -12,6 +13,10 @@ import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.job
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Model.relatedOtherCompanyJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.IJobDetail
 import com.google.android.material.card.MaterialCardView
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class RelatedOtherCompanyJobAdapter(private val listItem : List<job>?, private val iJobDetail: IJobDetail) :
     RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>() {
@@ -42,13 +47,51 @@ class RelatedOtherCompanyJobAdapter(private val listItem : List<job>?, private v
         val currentItem = listItem?.get(position)
         holder.relatedjobPosition.text = currentItem?.jobPosition
         holder.relatedjobCompany.text = currentItem?.company?.companyName
-        holder.relatedjobLocation.text = if(currentItem?.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem?.jobLocation?.get(0)?.location
-        holder.relatedJobDate.text = currentItem?.createdOn
+        holder.relatedjobLocation.text = if(currentItem?.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem?.jobLocation?.get(0)?.label
+
         Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).into(holder.relatedlogo)
 
         holder.cardrelatedJob.setOnClickListener {
             currentItem?.company?.companyNo?.let { it1 -> iJobDetail.onFragmentClick(it1, currentItem.jobNo) }
         }
+
+
+        val SECOND = 1
+        val MINUTE = 60 * SECOND
+        val HOUR = 60 * MINUTE
+        val DAY = 24 * HOUR
+        val WEEK = 7 * DAY
+
+        var time = currentItem.createdOn
+        val now = LocalDateTime.now().toString()
+
+        @SuppressLint("SimpleDateFormat")
+        fun GetDateValue(value: String): Date {
+            val temp = value.split("T")
+            val time = temp[1].split(":")
+            val date = "${temp[0]} ${time[0]}:${time[1]}"
+            var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            return dateFormat.parse(date)
+        }
+
+        fun dateDiff(): String {
+            val date1 = GetDateValue(time).time
+            val date2 = GetDateValue(now).time
+
+            val diff = (date2 - date1) / 1000
+            return when {
+                diff < MINUTE -> "Baru Saja"
+                diff < 2 * MINUTE -> "Beberapa Menit Lalu"
+                diff < 60 * MINUTE -> "${diff / MINUTE} Menit Lalu"
+                diff < 2 * HOUR -> "Beberapa Jam Lalu"
+                diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
+                diff < 2 * DAY -> "Kemarin"
+                diff < WEEK -> "${diff / DAY} Hari Lalu"
+                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            }
+
+        }
+        holder.relatedJobDate.text = dateDiff()
     }
 
     override fun getItemCount(): Int {

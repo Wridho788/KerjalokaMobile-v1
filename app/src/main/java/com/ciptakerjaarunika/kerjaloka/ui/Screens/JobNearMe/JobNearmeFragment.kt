@@ -55,7 +55,7 @@ class JobNearmeFragment : Fragment(), IJobPage {
                     binding.recycleview.visibility = View.VISIBLE
 
                     binding.recycleview?.apply {
-                        adapter = JobAdapter(1, listData, context, this@JobNearmeFragment)
+                        adapter = JobAdapter(1, listData, context, this@JobNearmeFragment, null)
                         layoutManager = LinearLayoutManager(activity)
                     }
                 }

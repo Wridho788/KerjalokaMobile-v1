@@ -93,6 +93,8 @@
                 android:text="File Name.zip"
                 android:gravity="center_vertical"
                 android:fontFamily="@font/poppins"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_marginRight="10dp"
                 android:id="@+id/fileName"
                 android:textColor="@color/black"/>

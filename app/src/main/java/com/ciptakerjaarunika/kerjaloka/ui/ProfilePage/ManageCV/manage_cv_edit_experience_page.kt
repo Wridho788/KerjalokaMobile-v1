@@ -12,6 +12,7 @@ import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditExperiencePageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Month
+import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
@@ -242,6 +243,6 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
 interface iManageExp{
     fun updateMonth(value : Int, type : String)
     fun updateYear(value : Int, type : String)
-    fun updateJobType(value : Int)
+    fun updateJobType(value: Int)
 }
 

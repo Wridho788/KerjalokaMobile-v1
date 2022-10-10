@@ -330,4 +330,26 @@ class DataAPI {
             }
         )
     }
+
+    interface GetRoles {
+        @GET("data/roles")
+        fun GetData(): Call<List<Roles>?>
+    }
+
+    fun GetRoles(context: Context?, onResult: (List<Roles>?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(GetRoles::class.java)
+
+        retrofit.GetData().enqueue(
+            object : Callback<List<Roles>?> {
+                override fun onResponse(call: Call<List<Roles>?>, response: Response<List<Roles>?>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<List<Roles>?>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
 }

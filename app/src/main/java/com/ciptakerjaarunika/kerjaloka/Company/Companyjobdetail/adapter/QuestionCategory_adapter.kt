@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage5
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.enum.QuestionType
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestion
 import com.google.android.material.card.MaterialCardView
 
-class QuestionCategory_adapter(private val shortQuestionList: List<ShortQuestion>,val iUpdatePage5: iUpdatePage5, val shortQuestionCategoryNo: Long) : RecyclerView.Adapter<QuestionCategory_adapter.ViewHolder>() {
+class QuestionCategory_adapter(private val shortQuestionList: List<ShortQuestion>, val iUpdatePage5: iUpdatePage5, val shortQuestionCategoryNo: Long) : RecyclerView.Adapter<QuestionCategory_adapter.ViewHolder>() {
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         var questionType: TextView
         var question: TextView
@@ -54,7 +54,6 @@ class QuestionCategory_adapter(private val shortQuestionList: List<ShortQuestion
             holder.cardShortQuestion.setOnClickListener {
                 holder.cardShortQuestion.strokeColor = R.color.danger_500
                 holder.cardShortQuestion.strokeWidth(3)
-                iUpdatePage5.updateShortQuestion(listOf(currentItem))
             }
         }
 

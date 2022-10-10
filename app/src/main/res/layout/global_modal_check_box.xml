@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_apply_job_modal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="70dp"
+            android:id="@+id/btn_bottom_sheet"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_bottom_sheet_1"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center|top"/>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Pilih {type}"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_filter"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/search_background"
+                android:focusable="true"
+                android:fontFamily="@font/poppins_light"
+                android:inputType="text"
+                android:keepScreenOn="true"
+                android:paddingEnd="10dp"
+                android:queryHint="Cari Lokasi"
+                android:searchIcon="@drawable/ic_search"
+                android:textColor="@color/dark_100"
+                android:textSize="12dp"
+                android:tooltipText="Cari di sini..."
+                app:iconifiedByDefault="false"
+                app:queryHint="Cari di sini..."
+                tools:ignore="RtlSymmetry"
+                android:layout_below="@+id/title"
+                tools:targetApi="o" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleEdit"
+                android:layout_below="@id/search_filter"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_location"
+                />
+        
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:background="@color/white">
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Konfirmasi"
+            app:cornerRadius="20dp"
+            android:id="@+id/confirm_btn"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="14dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

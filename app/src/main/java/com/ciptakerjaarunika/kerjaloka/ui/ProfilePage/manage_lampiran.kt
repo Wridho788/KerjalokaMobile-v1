@@ -111,35 +111,43 @@ class manage_lampiran : Fragment(), iRefreshData {
 
 
         ProfileAPI().GetJobseekerResume(context){ resume ->
-            binding.spinnerResume.visibility = GONE
-            binding.uploadVideoResumeBtn.visibility = VISIBLE
+            if(activity != null) {
+                binding.spinnerResume.visibility = GONE
+                binding.uploadVideoResumeBtn.visibility = VISIBLE
 
-            binding.uploadVideoResumeBtn.setOnClickListener {
-                var intent = Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("*/*");
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                binding.uploadVideoResumeBtn.setOnClickListener {
+                    var intent = Intent(Intent.ACTION_GET_CONTENT);
+                    intent.setType("*/*");
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-                val requestIntent = Intent.createChooser(intent, "Choose a Video");
-                activityResultLauncher.launch(requestIntent)
-            }
+                    val requestIntent = Intent.createChooser(intent, "Choose a Video");
+                    activityResultLauncher.launch(requestIntent)
+                }
 
-            if (resume?.data != null) {
-                val resumeDoc = resume.data
-                oldestFile = resumeDoc.videoName;
-                binding.videoResumeName.text = resumeDoc.videoName
+                if (resume?.data != null) {
+                    val resumeDoc = resume.data
+                    oldestFile = resumeDoc.videoName;
+                    binding.videoResumeName.text = resumeDoc.videoName
 
 
-                binding.btnRemoveResume.visibility = VISIBLE
-                binding.btnRemoveResume.setOnClickListener {
-                    ProfileAPI().DeleteJobseekerResume(context){
-                        Toast.makeText(context, "Berhasil menghapus video resume", Toast.LENGTH_SHORT).show()
-                        binding.videoResumeName.text = "Upload Video Resume"
+                    binding.btnRemoveResume.visibility = VISIBLE
+                    binding.btnRemoveResume.setOnClickListener {
+                        ProfileAPI().DeleteJobseekerResume(context) {
+                            Toast.makeText(
+                                context,
+                                "Berhasil menghapus video resume",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            binding.videoResumeName.text = "Upload Video Resume"
+                        }
                     }
                 }
             }
         }
 
         ProfileAPI().GetJobseekerDocumentVaccine(context){vaccine->
+
+            if(activity != null){
             binding.spinnerVac.visibility = GONE
             binding.vaccineContainer.visibility = VISIBLE
             binding.editStatusVaksinPelamar.visibility = VISIBLE
@@ -179,6 +187,7 @@ class manage_lampiran : Fragment(), iRefreshData {
                         }
                     }
                 }
+            }
             }
         }
     }

@@ -58,27 +58,27 @@ class OnBoarding : AppCompatActivity() {
             listOf(
                 OnBoardingItem(
                     id =1,
-                    onboardingImage = R.drawable.cv,
-                    title = "Melamar Pekerjaan",
-                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+                    onboardingImage = R.drawable.temukan_beragam_pekerjaan,
+                    title = "Temukan Beragam Pekerjaan",
+                    description = "Temukan beragam pekerjaan yang kamu inginkan.",
                     ),
                 OnBoardingItem(
                     id=2,
-                    onboardingImage = R.drawable.apply,
-                    title = "Melamar Wanita Pujaanmu",
-                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+                    onboardingImage = R.drawable.beragam_test,
+                    title = "Beragam Test",
+                    description = "Temukan ribuan tes untuk pengembangan diri",
                 ),
                 OnBoardingItem(
                     id=3,
                     onboardingImage = R.drawable.cv,
-                    title = "Lorem Ipsum",
-                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+                    title = "Buat e-CV",
+                    description = "kirim e-cv hanya dengan menggunakan link",
                 ),
                 OnBoardingItem(
                     id =4,
                     onboardingImage = R.drawable.apply,
-                    title = "Lorem Ipsum",
-                    description = "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.",
+                    title = "Interview langsung",
+                    description = "Atur tanggal dan langsung interview dengan perusahaan",
                 )
             )
         )

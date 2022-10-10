@@ -1,8 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model
 
 
-import com.ciptakerjaarunika.kerjaloka.model.Job.JobLocation
-import java.math.BigDecimal
+import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
+import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobLocation
 
 data class addJobResponse(
     val code: String,
@@ -15,24 +15,22 @@ data class getJobResponse(
 )
 
 data class addJobRequest(
+    var JobNo : Long?,
     var Position: String? = "",
     var Location: List<JobLocation>,
-    var JobType: Int? = 0,
-    var MinSalary: BigDecimal?,
-    var MaxSalary: BigDecimal?,
-    var JobSkills: List<JobSkillRequest>,
-    var JobTitles: List<JobTitleRequest>,
-    var JobField: Int? = 0,
-    var JobRole: Int? = 0,
-    var MinExperience: Int? = 0,
-    var JobExperienceLevelNo: Int? = 0,
-    var JobDescription: String? = "",
-    var JobTest: List<JobTestRequest>?,
-    var JobShortQuestion: List<JobShortQuestionDto>?,
-    var AutoReject: Boolean? = true,
-    var createdOn: String? = "",
-    var expired: String? = "",
-    var createdBy: String? = "",
+    var JobType: Int?,
+    var MinSalary: Int?,
+    var MaxSalary: Int?,
+    var JobSkills: List<com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobSkill>,
+    var JobTitles: List<com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobTitle>,
+    var JobField: Int?,
+    var JobRole: Int?,
+    var MinExperience: Int?,
+    var JobExperienceLevelNo: Int?,
+    var JobDescription: String?,
+    var JobTest: List<com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobTest>,
+    var JobShortQuestion: List<com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobShortQuestion>,
+    var AutoReject: Boolean? = false,
 )
 
 data class JobSkillRequest(

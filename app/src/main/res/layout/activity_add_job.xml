@@ -1,4 +1,4 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,9 +9,7 @@
         app:elevation="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_alignParentTop="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -82,6 +80,59 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/mainToolbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_below="@id/mainToolbar"
+        android:layout_above="@id/layout_footer"/>
+    <androidx.percentlayout.widget.PercentRelativeLayout
+        android:id="@+id/layout_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:paddingHorizontal="16dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/prev_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/poppins"
+            android:text="Kembali"
+            android:allowClickWhenDisabled="true"
+            android:textAllCaps="false"
+            android:textColor="@color/danger_500"
+            android:textSize="14sp"
+            app:cornerRadius="100dp"
+            app:layout_widthPercent="45%"
+            app:strokeColor="@color/danger_300"
+            app:strokeWidth="1dp"
+            tools:layout_editor_absoluteX="17dp"
+            tools:layout_editor_absoluteY="346dp"
+            tools:targetApi="s" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/next_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/poppins"
+            android:text="Selanjutnya"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/danger_500"
+            android:textSize="14sp"
+            app:cornerRadius="100dp"
+            app:iconTint="@color/danger_500"
+            app:layout_widthPercent="45%"
+            app:strokeColor="@color/danger_500"
+            app:strokeWidth="1dp"
+            tools:layout_editor_absoluteX="17dp"
+            tools:layout_editor_absoluteY="346dp" />
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+
+
+</RelativeLayout>

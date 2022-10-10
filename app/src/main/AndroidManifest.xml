@@ -46,7 +46,7 @@
             android:resource="@color/danger_500" />
 
         <activity
-            android:name=".Company.Companyjobdetail.AddJobActivity"
+            android:name=".Company.Companyjobdetail.ManageJobActivity"
             android:exported="false"
             android:label="@string/title_activity_add_job"
             android:theme="@style/Theme.Kerjaloka.NoActionBar" />

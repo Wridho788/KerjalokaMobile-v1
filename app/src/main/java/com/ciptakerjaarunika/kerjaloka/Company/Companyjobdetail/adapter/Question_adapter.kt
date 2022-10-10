@@ -3,23 +3,26 @@ package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage5
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iAddidiontalInfoPage
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.enum.QuestionType
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestion
-import com.google.android.material.card.MaterialCardView
+import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobShortQuestion
+import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobShortQuestionChoice
 
-class Question_adapter(private val shortQuestionList: List<ShortQuestion>,val iUpdatePage5: iUpdatePage5) : RecyclerView.Adapter<Question_adapter.ViewHolder>() {
+class ShortQuestion_adapter(var data : List<JobShortQuestion>, private val shortQuestionList: List<ShortQuestion>,val iAddidiontalInfoPage: iAddidiontalInfoPage) : RecyclerView.Adapter<ShortQuestion_adapter.ViewHolder>() {
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         var questionType: TextView
         var question: TextView
-        var cardShortQuestion: MaterialCardView
+        var container: LinearLayout
         init {
             questionType = view.findViewById(R.id.question_type)
             question = view.findViewById(R.id.question)
-            cardShortQuestion = view.findViewById(R.id.compny_tes_page)
+            container = view.findViewById(R.id.container)
         }
     }
 
@@ -34,34 +37,39 @@ class Question_adapter(private val shortQuestionList: List<ShortQuestion>,val iU
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = shortQuestionList[position]
-        if (currentItem.questionType == QuestionType.SubQuestion.value) {
-            holder.questionType.text = QuestionType.SubQuestion.name
-        } else if (currentItem.questionType == QuestionType.MultipleChoice.value) {
-            holder.questionType.text = QuestionType.MultipleChoice.name
-        } else if (currentItem.questionType == QuestionType.MultipleAnswer.value) {
-            holder.questionType.text = QuestionType.MultipleAnswer.name
-        } else if (currentItem.questionType == QuestionType.Essay.value) {
-            holder.questionType.text = QuestionType.Essay.name
-        } else if (currentItem.questionType == QuestionType.Programming.value) {
-            holder.questionType.text = QuestionType.Programming.name
-        } else if (currentItem.questionType == QuestionType.Attachment.value) {
-            holder.questionType.text = QuestionType.Attachment.name
-        } else if (currentItem.questionType == QuestionType.PapiKostick.value) {
-            holder.questionType.text = QuestionType.PapiKostick.name
+
+        var questionType = QuestionType.values().find { type -> type.value == currentItem.questionType }
+        if(questionType != null) {
+            holder.questionType.text = questionType.name
         }
         holder.question.text = currentItem.shortQuestion
-        holder.cardShortQuestion.setOnClickListener {
-          holder.cardShortQuestion.setStrokeColor(R.color.danger_500)
-            holder.cardShortQuestion.strokeWidth(3)
-            iUpdatePage5.updateShortQuestion(listOf(currentItem))
+        var currentData = data.find { test -> test.shortQuestionNo == currentItem.shortQuestionNo}
+        if(currentData == null){
+            holder.container.setBackgroundResource(R.drawable.card_background_500)
+        }
+        else {
+            holder.container.setBackgroundResource(R.drawable.card_background_selected)
         }
 
+        holder.container.setOnClickListener {
+            if(currentData != null){
+                holder.container.setBackgroundResource(R.drawable.card_background_500)
+                data = data.toMutableList()?.apply {
+                    remove(currentData)
+                }!!
+            }
+            else{
+                holder.container.setBackgroundResource(R.drawable.card_background_selected)
+                data += JobShortQuestion(currentItem.shortQuestionNo, currentItem.shortQuestion,
+                    currentItem.questionType, null,currentItem.choice.map {
+                        it -> JobShortQuestionChoice(null, it.choice, it.isAnswer)
+                    })
+            }
+            iAddidiontalInfoPage.updateJobShortQuestion(data)
+        }
     }
 
     override fun getItemCount(): Int {
         return shortQuestionList.size
     }
-}
-
-private fun MaterialCardView.strokeWidth(i: Int) {
 }

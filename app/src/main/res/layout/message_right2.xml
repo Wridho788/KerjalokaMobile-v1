@@ -59,6 +59,8 @@
                 android:fontFamily="@font/poppins"
                 android:layout_marginRight="10dp"
                 android:id="@+id/fileName"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/black"/>
             <ImageView
                 android:layout_width="30dp"

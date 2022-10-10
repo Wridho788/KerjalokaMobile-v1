@@ -245,12 +245,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     open fun replaceFragment(fragment: Fragment) {
-        AUTHAPI().CheckLogin(baseContext, this) {
+//        AUTHAPI().CheckLogin(baseContext, this) {
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_container, fragment)
             fragmentTransaction.commit()
-        }
+//        }
     }
 
     open fun showLogin(Goto: Fragment, nameFragment: String) {
@@ -273,5 +273,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {}
 }

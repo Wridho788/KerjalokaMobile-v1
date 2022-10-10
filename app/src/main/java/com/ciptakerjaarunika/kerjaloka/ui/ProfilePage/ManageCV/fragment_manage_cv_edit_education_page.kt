@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,10 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.appcompat.widget.SearchView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetMajorJob
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.city
 import com.ciptakerjaarunika.kerjaloka.R
@@ -24,6 +21,7 @@ import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditEducationPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Month
+import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.Major
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title

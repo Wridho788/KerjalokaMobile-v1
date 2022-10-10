@@ -48,12 +48,13 @@ class AkunPage() : Fragment() {
         val firebaseAuth = FirebaseAuth.getInstance()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mAuth = FirebaseAuth.getInstance()
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-
 
         if(SessionManager(context).user != null){
             if(SessionManager(context).user?.roleNo == 4) {
@@ -153,14 +154,13 @@ class AkunPage() : Fragment() {
             }
         }
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("863470789028-pmlnd7u7bifuj5ep8cvdp70eq3469nmb.apps.googleusercontent.com")
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-//        Login.googleSignInClient = context?.let {
-//            GoogleSignIn.getClient(
-//                it, gso
-//            )
-//        }
+        mGoogleSignInClient = GoogleSignIn.getClient(
+            context!!,
+            gso
+        )
 
         val register = itemView.findViewById<TextView>(R.id.register)
         register?.setOnClickListener(View.OnClickListener {
@@ -176,15 +176,15 @@ class AkunPage() : Fragment() {
 
     }
     private fun signIn() {
-        val signInIntent: Intent = Login.mGoogleSignInClient!!.signInIntent
-        startActivityForResult(signInIntent, Login.Req_Code)
+        val signInIntent: Intent = mGoogleSignInClient!!.signInIntent
+        startActivityForResult(signInIntent, Req_Code)
 
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Login.Req_Code) {
+        if (requestCode == Req_Code) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
         }
@@ -211,7 +211,7 @@ class AkunPage() : Fragment() {
         cal.add(Calendar.HOUR, +1)
         val oneHourBack: Date = cal.getTime()
 
-        Login.firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Login.SavedPreference.setEmail(context!!, account.email.toString())
                 Login.SavedPreference.setUsername(context!!, account.displayName.toString())

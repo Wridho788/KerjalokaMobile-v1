@@ -12,13 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.MajorAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage2
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 import com.google.android.material.button.MaterialButton
 
-class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFragment(),
+class BottomSheetMajorJob() : SuperBottomSheetFragment(),
     iChooseMajor {
     private var list: List<Title>? = null
     override fun onCreateView(
@@ -44,7 +43,7 @@ class BottomSheetMajorJob(val iUpdatePage2: iUpdatePage2) : SuperBottomSheetFrag
             list
             rv_majors.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = MajorAdapter(res, this@BottomSheetMajorJob, iUpdatePage2)
+                adapter = MajorAdapter(res, this@BottomSheetMajorJob)
             }
         }
         return view

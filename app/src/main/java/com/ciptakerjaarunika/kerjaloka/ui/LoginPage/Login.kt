@@ -106,7 +106,13 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                             SessionManager(context).access_token = it.userToken
                             val mainActivity = activity as MainActivity
                             AUTHAPI().CheckLogin(context, mainActivity) {
-                                mainActivity.replaceFragment(Goto)
+                                if(nameFragment != "lamaran" || SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
+                                    mainActivity.replaceFragment(Goto)
+                                }
+                                else if (nameFragment == "lamaran" && SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null
+                                ) {
+                                    mainActivity.replaceFragment(CompanyListApplicantFragment())
+                                }
                             }
                         } else {
                             Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()

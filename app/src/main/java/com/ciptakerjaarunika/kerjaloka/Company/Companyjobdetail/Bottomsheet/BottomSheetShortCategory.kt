@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.Adapter.CategoryShortQuestionAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iUpdatePage5
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.short_question_category
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestionCategory
@@ -65,7 +65,6 @@ class BottomSheetShortCategory(val iUpdatePage5: iUpdatePage5) : SuperBottomShee
 
     override fun close() {
         this.dismiss()
-
     }
 }
 
