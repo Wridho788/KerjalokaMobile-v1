@@ -1,10 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.ui.InterviewPage
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
@@ -24,6 +26,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,10 +44,10 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
 import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.company_interview_byjob
+import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
-import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -132,9 +136,6 @@ class ChatPage(var sectionName: String,
         if(pathName != null) {
             uploadImage(pathName)
         }
-//        GlideApp.with(this)
-//            .load(uri)
-//            .into(imageView)
     }
     private fun getPathFromUri(context: Context, contentUri: Uri): String {
         var cursor: Cursor? = null
@@ -214,8 +215,6 @@ class ChatPage(var sectionName: String,
                     //.setAudioMuted(true)
                     //.setVideoMuted(true)
                     .build()
-                // Launch the new activity with the given options. The launch() method takes care
-                // of creating the required Intent and passing the options.
                 JitsiMeetActivity.launch(context, options)
                 hubConnection.send(
                     "SendCall",
@@ -232,7 +231,7 @@ class ChatPage(var sectionName: String,
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val data = it.data
                 val fileUri: Uri? = data?.data
-                val pathName = fileUri?.let { it1 -> context?.let { it2 -> PathUtils.getPath(it2, it1) } }
+                val pathName = fileUri?.let { it1 -> context?.let { it2 -> PathUtil().GetFilePath(it1, it2) } }
 
                 val file = File(pathName?:"")
                 val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
@@ -257,38 +256,20 @@ class ChatPage(var sectionName: String,
                         }
                     }
                 }
-
-//                val photo = it.data?.extras!!["data"] as Bitmap?
-//                if (photo != null) {
-//
-////                    InterviewAPI().UploadChatPhoto(context, photo) { res ->
-////                        Log.d("Response Upload", res.toString())
-////                    }
-//                }
             }
         }
 
         cameraButton.setOnClickListener{
-            pickCamera()
-//            val intent = Intent("android.media.action.IMAGE_CAPTURE")
-//
-//            Log.d("Camera Permission", ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA).toString())
-//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-//                == PackageManager.PERMISSION_DENIED
-//                ||
-//                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                == PackageManager.PERMISSION_DENIED
-//            ){
-//                this.activity?.let { it1 ->
-//                    ActivityCompat.requestPermissions(
-//                        it1,
-//                        listOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray(), MY_CAMERA_REQUEST_CODE)
-//                };
-//            }
-//            else{
-//                activityResultLauncher.launch(intent)
-////                startActivity(intent)
-//            }
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED
+            ){
+                activity?.let { it1 -> ActivityCompat.requestPermissions(it1,listOf(Manifest.permission.CAMERA).toTypedArray(),
+                        id + context!!.resources.getInteger(R.integer.ChatPickCamera))
+                };
+            }
+            else {
+                pickCamera()
+            }
         }
 
 
@@ -447,12 +428,22 @@ class ChatPage(var sectionName: String,
                     }
                 }
                 btn_send.setOnClickListener{
-                    var intent = Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("*/*");
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED
+                    ){
+                        activity?.let { it1 ->
+                            ActivityCompat.requestPermissions(it1,listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                                id + context!!.resources.getInteger(R.integer.ChatUploadFile))
+                        };
+                    }
+                    else{
+                        var intent = Intent(Intent.ACTION_GET_CONTENT);
+                        intent.type = "*/*";
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-                    val requestIntent = Intent.createChooser(intent, "Choose a file");
-                    activityResultLauncher.launch(requestIntent)
+                        val requestIntent = Intent.createChooser(intent, "Choose a file");
+                        activityResultLauncher.launch(requestIntent)
+                    }
                 }
                 message.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -498,12 +489,22 @@ class ChatPage(var sectionName: String,
                             img_btnsend.setImageResource(R.drawable.ic_attach_file);
                             img_btnsend.rotation=45f
                             btn_send.setOnClickListener{
-                                var intent = Intent(Intent.ACTION_GET_CONTENT);
-                                intent.setType("*/*");
-                                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                                    != PackageManager.PERMISSION_GRANTED
+                                ){
+                                    activity?.let { it1 ->
+                                        ActivityCompat.requestPermissions(it1,listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                                            id + context!!.resources.getInteger(R.integer.ChatUploadFile))
+                                    };
+                                }
+                                else{
+                                    var intent = Intent(Intent.ACTION_GET_CONTENT);
+                                    intent.type = "*/*";
+                                    intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-                                val requestIntent = Intent.createChooser(intent, "Choose a file");
-                                activityResultLauncher.launch(requestIntent)
+                                    val requestIntent = Intent.createChooser(intent, "Choose a file");
+                                    activityResultLauncher.launch(requestIntent)
+                                }
                             }
                         }
                     }
@@ -544,6 +545,35 @@ class ChatPage(var sectionName: String,
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
         val downloadID = downloadManager!!.enqueue(request)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == id + context!!.resources.getInteger(R.integer.ChatUploadFile)) {
+            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
+                var intent = Intent(Intent.ACTION_GET_CONTENT);
+                intent.type = "*/*";
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+                val requestIntent = Intent.createChooser(intent, "Choose a file");
+                activityResultLauncher.launch(requestIntent)
+            }
+            else{
+                Toast.makeText(activity, "Perlu akses untuk upload file", Toast.LENGTH_SHORT).show()
+            }
+        }
+        else if(requestCode == id + context!!.resources.getInteger(R.integer.ChatPickCamera)) {
+            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
+                pickCamera()
+            }
+            else{
+                Toast.makeText(activity, "Perlu akses untuk membuka Camera", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
 interface PositionOnBottom{

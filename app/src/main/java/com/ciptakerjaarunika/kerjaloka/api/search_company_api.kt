@@ -3,7 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.searchRequest
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.searchCompanyRequest
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.search_company_response
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,37 +13,20 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 class CompanySearchAPI {
-    interface CompanySearchUnauthorizedAPIList {
-        @Headers(
-            "Content-Type: application/json",
-            "Accept: application/json"
-        )
-        @POST("/jobseeker/company/search")
-        fun getSearchCompany(
-            @Body searchRequest: searchRequest,
-        ): Call<search_company_response>
+    interface SearchCompany {
+        @Headers("Content-Type: application/json","Accept: application/json")
+        @POST("users/mobile/searchCompany")
+        fun getData(@Body searchRequest: searchCompanyRequest,): Call<search_company_response>
     }
 
-    interface CompanySearchAuthorizedAPIList {
-        @Headers(
-            "Content-Type: application/json",
-            "Accept: application/json"
-        )
-        @POST("/company/search/u")
-        fun getSearchCompanyAuthorized(
-            @Body searchRequest: searchRequest,
-        ): Call<search_company_response>
-    }
-
-    fun CompanyGetSearchCompany(
+    fun SearchCompany(
         context: Context?,
-        searchRequest: searchRequest,
+        searchRequest: searchCompanyRequest,
         onResult: (search_company_response?) -> Unit
     ) {
-        if (context !== null) {
             val retrofitAuthorized =
-                ServiceBuilder(context).GET(CompanySearchAuthorizedAPIList::class.java)
-            retrofitAuthorized.getSearchCompanyAuthorized(searchRequest)
+            ServiceBuilder(context).POST(SearchCompany::class.java)
+            retrofitAuthorized.getData(searchRequest)
                 .enqueue(
                     object : Callback<search_company_response> {
                         override fun onResponse(
@@ -59,23 +42,5 @@ class CompanySearchAPI {
                         }
                     }
                 )
-        } else {
-            val retrofit = ServiceBuilder(context).GET(CompanySearchUnauthorizedAPIList::class.java)
-            retrofit.getSearchCompany(searchRequest).enqueue(
-                object : Callback<search_company_response> {
-                    override fun onResponse(
-                        call: Call<search_company_response>,
-                        response: Response<search_company_response>
-                    ) {
-                        onResult(response.body())
-                    }
-
-                    override fun onFailure(call: Call<search_company_response>, t: Throwable) {
-                        Log.d("error", t.toString())
-                        onResult(null)
-                    }
-                }
-            )
-        }
     }
 }

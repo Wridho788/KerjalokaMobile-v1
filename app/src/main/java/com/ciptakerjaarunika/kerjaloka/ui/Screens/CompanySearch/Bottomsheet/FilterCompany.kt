@@ -7,29 +7,38 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.createViewModelLazy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.FilterIndustriAPI
 import com.ciptakerjaarunika.kerjaloka.api.FilterLocationAPI
 import com.ciptakerjaarunika.kerjaloka.api.FilterSizeCompanyAPI
+import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.IndustriAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.LocationAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.SizeCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.industri_model
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.location_model
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.searchCompanyRequest
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.size_company_model
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.iSearchCompany
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.Adapter.FilterLocationAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 
-class FilterCompany : SuperBottomSheetFragment(), iUpdate {
-
-    private var list_location: List<location_model>? = listOf()
-    private var list_industri: List<industri_model>? = listOf()
-    private var list_size_company: List<size_company_model>? = listOf()
+class FilterCompany(var request : searchCompanyRequest,val updateData : iSearchCompany) : SuperBottomSheetFragment(){
+    var list_location: List<LocationFilter> = listOf()
+    var list_industri: List<industri_model> = listOf()
+    var list_size_company: List<size_company_model> = listOf()
+    private var filterType = 1;
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -56,14 +65,13 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
             )
         )
 
-        val Context = this
-        FilterLocationAPI().getLocationAsync(context) {
+        DataAPI().GetLocations(context) {
             if (it != null) {
                 list_location = it
                 val thisActivity = this
                 listView.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = LocationAdapter(list_location!!, context, thisActivity)
+                    adapter = LocationAdapter(request.location, list_location!!, context)
                     listView.adapter = adapter
                 }
             }
@@ -75,7 +83,7 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
                 val thisActivity = this
                 listIndustri.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = IndustriAdapter(list_industri!!, context, thisActivity)
+                    adapter = IndustriAdapter(request.industry, list_industri!!, context)
                 }
             }
         }
@@ -86,7 +94,7 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
                 val thisActivity = this
                 listSizeCompany.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = SizeCompanyAdapter(list_size_company!!, context, thisActivity)
+                    adapter = SizeCompanyAdapter(request.size,list_size_company!!, context)
                 }
 
             }
@@ -98,42 +106,67 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
         FilterSizeCompanyAPI()
         listIndustri.visibility = View.GONE
         listSizeCompany.visibility = View.GONE
-        search_bar.visibility = View.GONE
 
         chipLocation.setOnClickListener {
-            search_bar.visibility = View.GONE
+            filterType = 1
+            search_bar.visibility = VISIBLE
             listView.visibility = View.VISIBLE
             listIndustri.visibility = View.GONE
             listSizeCompany.visibility = View.GONE
         }
 
         chipIndustri.setOnClickListener {
+            filterType = 2
+            search_bar.visibility = VISIBLE
             listView.visibility = View.GONE
             listSizeCompany.visibility = View.GONE
             listIndustri.visibility = View.VISIBLE
-            search_bar.visibility = View.GONE
         }
 
         chipSizeCompany.setOnClickListener {
+            search_bar.visibility = GONE
             listView.visibility = View.GONE
             listIndustri.visibility = View.GONE
             listSizeCompany.visibility = View.VISIBLE
-            search_bar.visibility = View.GONE
         }
-//        search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            val context = this
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                if(query?.isNotEmpty() == true) {
-////                    FilterLocationAPI().getLocationAsync()
-//                }
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                TODO("Not yet implemented")
-//            }
-//        })
+        search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query?.isNotEmpty() == true) {
+                    when(filterType){
+                        1->{
+                            var temp = list_location?.filter { data ->
+                                "${data.city}, ${data.province}".toLowerCase().contains(query)
+                            }
+                            listView?.apply {
+                                layoutManager = LinearLayoutManager(context)
+                                adapter = LocationAdapter(request.location, temp!!, context)
+                            }
+                            listView?.adapter?.notifyDataSetChanged()
+                        }
+                        2->{
+                            var temp = list_industri?.filter { data -> "${data.fieldName}".toLowerCase().contains(query)
+                            }
+                            listIndustri?.apply {
+                                layoutManager = LinearLayoutManager(context)
+                                adapter = IndustriAdapter(request.industry, temp!!, context)
+                            }
+                            listIndustri?.adapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+        })
         btnConfirm.setOnClickListener{
-            Log.d("check ${list_location}, ${list_industri}, ${list_size_company}", list_location.toString())
+            request.location = list_location.filter{ data-> data.checked == true}?.map{ data-> data.locationsNo}!!
+            request.industry = list_industri.filter{ data-> data.checked }?.map{ data-> data.fieldNo}!!
+            request.size = list_size_company.filter{ data-> data.checked }?.map{ data-> data.sizeNo}!!
+            updateData.searchCompany(request)
+            this.dismiss()
         }
 
         btn_hapus.setOnClickListener{
@@ -165,23 +198,4 @@ class FilterCompany : SuperBottomSheetFragment(), iUpdate {
     override fun isSheetCancelableOnTouchOutside(): Boolean {
         return true
     }
-
-    override fun updateLocation(locations: List<location_model>) {
-        list_location = locations
-    }
-
-    override fun updateField(fields: List<industri_model>) {
-        list_industri = fields
-    }
-
-    override fun updateSizeCompany(sizes: List<size_company_model>) {
-        list_size_company = sizes
-    }
-
-}
-
-interface iUpdate {
-    fun updateLocation(locations: List<location_model>)
-    fun updateField(fields: List<industri_model>)
-    fun updateSizeCompany(sizes: List<size_company_model>)
 }

@@ -52,7 +52,7 @@ class CompanySearchAdapter(
         holder.fieldName.text = currentItem.field
         holder.locationText.text = currentItem.location.city + ", " + currentItem.location.province
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile" + currentItem.logo).fitCenter()
+            .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
             .into(holder.logo)
     }
 

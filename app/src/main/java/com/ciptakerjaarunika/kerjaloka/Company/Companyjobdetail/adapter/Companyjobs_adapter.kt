@@ -8,12 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Listener.JobDetail
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.DataCount
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class Companyjobs_adapter(private val joblist: List<Data>, private val listener: JobDetail) :
+class Companyjobs_adapter(private val joblist: List<DataCount>, private val listener: JobDetail) :
     RecyclerView.Adapter<Companyjobs_adapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobTitle: TextView

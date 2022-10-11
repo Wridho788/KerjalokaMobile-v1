@@ -205,9 +205,6 @@
                     android:textColor="@color/dark_100"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
-
-
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
@@ -218,31 +215,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="@string/company2"
-                        android:textColor="@color/dark_100"
-                        android:textSize="16sp" />
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/searchCompanyJob"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
-                        tools:itemCount="4"
                         tools:listitem="@layout/item_card_job" />
-
                 </LinearLayout>
-
             </LinearLayout>
-
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

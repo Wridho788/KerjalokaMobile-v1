@@ -12,8 +12,10 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -28,6 +30,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentLampiranBinding
@@ -41,6 +44,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.io.FileOutputStream
 
 
 class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRefreshData?) : Fragment(), iEditLampiran {
@@ -49,7 +53,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
     private var document : MultipartBody.Part? = null
     private var file : File? = null
     private var documentNameError : Boolean = false
-    private var readExternalRequest = 101;
+    private var processUpload = 0;
 
     @RequiresApi(Build.VERSION_CODES.O)
 
@@ -94,10 +98,9 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
             "application/vnd.ms-excel",
             "text/plain"
         )
-//            intent.type = "image/*|application/pdf|application/msword|application/vnd.ms-powerpoint|application/vnd.ms-excel|text/plain"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             intent.type = if (mimeTypes.size === 1) mimeTypes[0] else "*/*"
-            if (mimeTypes.size > 0) {
+            if (mimeTypes.isNotEmpty()) {
                 intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
             }
         } else {
@@ -109,6 +112,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
         }
 
         intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         val requestIntent = Intent.createChooser(intent, "Choose a File");
         activityResultLauncher.launch(requestIntent)
@@ -134,18 +138,14 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val data = it.data
                 val fileUri: Uri = data!!.data!!
-                val pathName =
-                    context?.let { it2 -> PathUtil().getRealPath(it2, fileUri) } ?: fileUri.path
-
+                val pathName = context?.let { it1 -> PathUtil().GetFilePath(fileUri, it1) }
                 if (pathName != null) {
                     val file = File(pathName ?: "")
                     this.file = file
-                    val requestFile: RequestBody =
-                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                    val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
                     binding.uploadDocumentBtn.text = file.name
-                    document =
-                        MultipartBody.Part.createFormData("document", file.name, requestFile)
+                    document = MultipartBody.Part.createFormData("document", file.name, requestFile)
                 } else {
                     binding.uploadDocumentBtn.text = "Upload Lampiran"
                     document = null
@@ -170,7 +170,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
             ){
                 this.activity?.let { it1 ->
                     ActivityCompat.requestPermissions(it1,
-                        listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(), id + readExternalRequest)
+                        listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(), id + context!!.resources.getInteger(R.integer.LampiranUploadFile))
                 };
             }
             else{
@@ -184,9 +184,14 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
                 if(data.documentFile != null){
                     ManageProfileAPI().JobseekerUploadDocument(context, data.documentFile!!){
                         if(it != null){
-                            processUpload -= 1;
-                            data.documentFileName = it.documentName.toString()
-                            EditLampiran(processUpload)
+                            if(it.documentName != null) {
+                                processUpload -= 1;
+                                data.documentFileName = it.documentName.toString()
+                                EditLampiran(processUpload)
+                            }
+                            else{
+                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
@@ -227,7 +232,6 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
                 binding.documentName.text = null;
             }
         }
-
     }
     fun EditLampiran(totalProcess : Int){
         if(totalProcess == 0){
@@ -263,7 +267,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == id + readExternalRequest) {
+        if(requestCode == id + context!!.resources.getInteger(R.integer.LampiranUploadFile)) {
             if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
                 SelectFile()
             }

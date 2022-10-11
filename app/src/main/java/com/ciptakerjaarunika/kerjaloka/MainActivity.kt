@@ -30,6 +30,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
+import com.giphy.sdk.analytics.GiphyPingbacks.context
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.microsoft.signalr.HubConnection
@@ -219,12 +220,15 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        if(requestCode == 101) {
-            supportFragmentManager.fragments.find { a ->
-                a.id != 0
-            }?.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        }
-        }
+        supportFragmentManager.fragments.find { a ->
+                a.id == requestCode - baseContext.resources.getInteger(R.integer.LampiranUploadFile) ||
+                a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatPickCamera) ||
+                a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatUploadFile) ||
+                a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 1) ||
+                a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 2) ||
+                a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 3)
+        }?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+      }
 
     open fun replaceFragment(fragment: Fragment) {
 //        AUTHAPI().CheckLogin(baseContext, this) {

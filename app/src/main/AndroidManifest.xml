@@ -51,21 +51,12 @@
             android:exported="false"
             android:label="@string/title_activity_add_job"
             android:theme="@style/Theme.Kerjaloka.NoActionBar" />
-        <activity
-            android:name=".ui.Screens.CompanySearch.CompanySearchActivity"
-            android:exported="true" />
-<!--        <activity-->
-<!--            android:name=".ui.ProfilePage.Preference.modal_edit_ekspektasi_gaji_layout"-->
-<!--            android:exported="false"-->
-<!--            tools:ignore="Instantiatable,MissingClass" />-->
+
         <activity
             android:name=".ui.NotificationPage.Notification"
             android:exported="true" />
         <activity
             android:name=".ui.NotificationPage.CompanyNotification"
-            android:exported="true" />
-        <activity
-            android:name=".ui.Screens.SearchScreen.SearchActivity"
             android:exported="true" />
         <activity android:name=".ui.Screens.JobSearch.SearchJob" android:exported="true"
             tools:ignore="Instantiatable" />

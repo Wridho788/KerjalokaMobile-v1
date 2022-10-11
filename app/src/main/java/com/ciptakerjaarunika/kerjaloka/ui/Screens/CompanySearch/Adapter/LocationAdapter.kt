@@ -7,10 +7,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.iUpdate
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.location_model
+import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 
-class LocationAdapter(private var dataSet: List<location_model>, val context: Context, val iUpdate: iUpdate) :
+class LocationAdapter(var value : List<Int>,var dataSet: List<LocationFilter>, val context: Context) :
     RecyclerView.Adapter<LocationAdapter.ViewHolder?>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,23 +33,13 @@ class LocationAdapter(private var dataSet: List<location_model>, val context: Co
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataSet[position]
-        holder.txtLocation.text = currentItem.city
-
+        holder.txtLocation.text = "${currentItem.city}, ${currentItem.province}"
+        holder.checkBox.isChecked = value.any { data ->  data == currentItem.locationsNo}
         holder.checkBox.setOnClickListener{
+            currentItem.checked = holder.checkBox.isChecked
             dataSet[position].checked = holder.checkBox.isChecked
-
-            val locations = dataSet.filter { item->
-                item.checked
-            }
-            iUpdate.updateLocation(locations)
         }
     }
-//    open fun getListItem(): List<location_model> {
-//        return dataSet.filter { item->
-//            item.checked
-//        }
-//    }
-
 }
 
 

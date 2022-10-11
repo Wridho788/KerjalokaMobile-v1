@@ -11,7 +11,6 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 
 class FilterLocationAdapter(private var dataSet: List<LocationFilter>, val context: Context) :
     RecyclerView.Adapter<FilterLocationAdapter.ViewHolder?>(){
-
         inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
             var filterText: TextView
             var checked: CheckBox
@@ -39,6 +38,5 @@ class FilterLocationAdapter(private var dataSet: List<LocationFilter>, val conte
             currentItem.checked = holder.checked.isChecked
             dataSet[position].checked = holder.checked.isChecked
         }
-
     }
 }

@@ -24,6 +24,7 @@ interface ISessionManager{
     var deviceId : String
     var latestSearchJob : List<Any>?
     var latestGeneralSearch : List<Any>?
+    var latestCompanySearch : List<Any>?
 
     suspend fun clearData()
     fun refreshChat(hubConnection: HubConnection)

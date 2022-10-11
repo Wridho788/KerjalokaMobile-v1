@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Listener.JobDetail
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.Companyjobs_adapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.DataCount
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.ResponseCompanyJobs
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyJobsBinding
 import com.google.gson.Gson
 
@@ -43,13 +45,13 @@ class fragment_company_jobs : Fragment() {
     }
 
 
-    private fun assignAdapter(list: List<Data>): Companyjobs_adapter {
+    private fun assignAdapter(list: List<DataCount>): Companyjobs_adapter {
         return Companyjobs_adapter(list, object : JobDetail {
-            override fun jobDetail(jobDetail: Data) {
+            override fun jobDetail(jobDetail: DataCount) {
                 replaceFragment(jobDetail)
             }
 
-            override fun shareJob(shareJob: Data) {
+            override fun shareJob(shareJob: DataCount) {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TITLE, shareJob.jobPosition)
@@ -72,7 +74,7 @@ class fragment_company_jobs : Fragment() {
             startActivity(goToMainActivity)
         }
 
-        JobAPI().getJob(context){
+        company_profile_api().MyJob(context){
             if(it != null) {
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyle_company_jobs)
                 recyclerView?.apply {
@@ -83,7 +85,7 @@ class fragment_company_jobs : Fragment() {
         }
     }
 
-    private fun replaceFragment(data: Data?) {
+    private fun replaceFragment(data: DataCount?) {
         val jobDetailFragment = fragment_company_job_active_page()
         val mBundle = Bundle()
         val jobData = Gson().toJson(data)

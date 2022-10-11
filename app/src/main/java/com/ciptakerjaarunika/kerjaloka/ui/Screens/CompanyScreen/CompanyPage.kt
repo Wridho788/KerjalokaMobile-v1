@@ -133,8 +133,10 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
 
 
         layout_search_company.setOnClickListener{
-            val intent = Intent(activity, CompanySearchActivity::class.java)
-            startActivity(intent)
+            val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ft.replace(R.id.fragment_container, CompanySearchActivity())
+            ft.addToBackStack("companyPage")
+            ft.commit()
         }
 
         CompanyBrowseAPI().CompanyActiveHire(context){

@@ -1,0 +1,6 @@
+<resources>
+    <integer name="ChatUploadFile">201</integer>
+    <integer name="LampiranUploadFile">202</integer>
+    <integer name="UploadVaccine">203</integer>
+    <integer name="ChatPickCamera">204</integer>
+</resources>

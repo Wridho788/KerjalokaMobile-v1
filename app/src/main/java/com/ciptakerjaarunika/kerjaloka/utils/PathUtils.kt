@@ -10,14 +10,47 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.util.Log
 import com.giphy.sdk.analytics.GiphyPingbacks.context
 import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 
 
 open class PathUtil {
-    fun getRealPath(context: Context, fileUri: Uri): String? {
+    open fun GetFilePath(uri: Uri, context: Context): String? {
+        var result : String? = null
+        val returnCursor = context!!.contentResolver.query(uri, null, null, null, null)
+        val nameIndex = returnCursor!!.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        val sizeIndex = returnCursor!!.getColumnIndex(OpenableColumns.SIZE)
+        returnCursor!!.moveToFirst()
+        val name = returnCursor!!.getString(nameIndex)
+        val size = java.lang.Long.toString(returnCursor!!.getLong(sizeIndex))
+        val file = File(context!!.filesDir, name)
+        try {
+            val inputStream = context!!.contentResolver.openInputStream(uri)
+            val outputStream = FileOutputStream(file)
+            var read = 0
+            val maxBufferSize = 1 * 1024 * 1024
+            val bytesAvailable = inputStream!!.available()
+
+            //int bufferSize = 1024;
+            val bufferSize = Math.min(bytesAvailable, maxBufferSize)
+            val buffers = ByteArray(bufferSize)
+            while (inputStream!!.read(buffers).also { read = it } != -1) {
+                outputStream.write(buffers, 0, read)
+            }
+            inputStream!!.close()
+            outputStream.close()
+            result = file.path
+        } catch (e: Exception) {
+            Log.e("Exception", e.message!!)
+        }
+        return result ?: getPathAlternative(context, uri)
+    }
+
+    private fun getPathAlternative(context: Context, fileUri: Uri): String? {
         val realPath: String?
         // SDK < API11
         if (Build.VERSION.SDK_INT < 11) {

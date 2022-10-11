@@ -1,51 +1,56 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View.GONE
+import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.view.size
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.CompanySearchAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanySearchBinding
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.CompanySearchAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.FilterCompany
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.searchCompanyRequest
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.search_company_model
 import com.google.android.material.chip.Chip
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 
-class CompanySearchActivity : AppCompatActivity() {
-    private var list: List<search_company_model>?= null
-
-    var list_latest_search_company = ArrayList<String>()
+class CompanySearchActivity : Fragment(), iSearchCompany {
+    private var searchModel : searchCompanyRequest = searchCompanyRequest(null, listOf(), listOf(), listOf())
+    private var hasSearch = false;
 
     private lateinit var binding: ActivityCompanySearchBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = ActivityCompanySearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        val thisActivity = this
-        (thisActivity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (thisActivity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-
         binding.btnBack.setOnClickListener {
-            thisActivity.onBackPressed()
+            fragmentManager?.popBackStack()
         }
 
-        list_latest_search_company = getArrayList("SearchCompanyJob")
-        if (list_latest_search_company.isNotEmpty()) {
+        if(SessionManager(context).latestCompanySearch == null){
+            SessionManager(context).latestCompanySearch = listOf()
+        }
+        binding.layoutTopSearchResults.visibility = GONE
+        val list_latest_search_company = SessionManager(context).latestCompanySearch?.reversed()
+        if (list_latest_search_company?.size != 0) {
             var int = 0
-            list_latest_search_company.forEach {
-                val chip = Chip(this)
+            list_latest_search_company?.forEach {
+                val chip = Chip(context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it
+                    text = it.toString()
                     id = int
                     isChipIconVisible = false
                     isCloseIconVisible = false
@@ -55,20 +60,20 @@ class CompanySearchActivity : AppCompatActivity() {
                         latestResultGrup.addView(chip as View)
                     }
                 }
-                val chipTop = Chip(this)
-                chipTop.setChipBackgroundColorResource(R.color.danger_100)
-                chipTop.apply {
-                    textSize = 12f
-                    text = it
-                    id = int
-                    isChipIconVisible = false
-                    isCloseIconVisible = false
-                    isClickable = true
-                    isCheckable = true
-                    binding.apply {
-                        chipGroupTopSearch.addView(chipTop as View)
-                    }
-                }
+//                val chipTop = Chip(context)
+//                chipTop.setChipBackgroundColorResource(R.color.danger_100)
+//                chipTop.apply {
+//                    textSize = 12f
+//                    text = it.toString()
+//                    id = int
+//                    isChipIconVisible = false
+//                    isCloseIconVisible = false
+//                    isClickable = true
+//                    isCheckable = true
+//                    binding.apply {
+//                        chipGroupTopSearch.addView(chipTop as View)
+//                    }
+//                }
                 int++
             }
         } else {
@@ -78,33 +83,20 @@ class CompanySearchActivity : AppCompatActivity() {
         }
 
         binding.btnRemoveLatestSearch.setOnClickListener{
-            removeArrayList(list_latest_search_company, "SearchCompanyJob")
+            SessionManager(context).latestCompanySearch = listOf()
             binding.latestResultGrup.removeAllViews()
         }
 
         binding.btnFilter.setOnClickListener{
-//            Toast.makeText(this, "Filter", Toast.LENGTH_SHORT).show()
-            val sheet = FilterCompany()
-            thisActivity.let { it1 -> sheet.show(it1.supportFragmentManager, "FilterCompany") }
+            val sheet = FilterCompany(searchModel, this)
+            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "") }
         }
 
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            val context: Context = thisActivity
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
-//                    CompanySearchAPI().CompanyGetSearchCompany(context,) {
-//                        Log.d("response search company", it.toString())
-//                        if (it != null) {
-//                            list = it?.data
-//                            Log.d("response sukses", it.data.toString())
-//                            binding.searchCompanyJob.apply {
-//                                layoutManager = LinearLayoutManager(context)
-//                                adapter = CompanySearchAdapter(list!!, context)
-//                            }
-//                        }
-//                    }
-                    newChips(query)
-
+                    searchModel.keyword = query;
+                    searchCompany()
                 }
                 binding.layoutTopSearchResults.isVisible = false
                 binding.layoutResultSearch.isVisible = true
@@ -122,64 +114,74 @@ class CompanySearchActivity : AppCompatActivity() {
                     binding.layoutLatestSearchResults.isVisible = true
                     binding.layoutTopSearchResults.isVisible = true
                     binding.layoutResultSearch.isVisible = false
-
                 }
 
                 return true
             }
         })
+
+        return binding.root
+    }
+
+    fun searchCompany(){
+        hasSearch = true;
+        binding.layoutLatestSearchResults.visibility = GONE
+        binding.layoutTopSearchResults.visibility = GONE
+        binding.layoutResultSearch.isVisible = true
+        CompanySearchAPI().SearchCompany(context, searchModel) {
+            if (it != null) {
+                binding.searchCompanyJob.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = CompanySearchAdapter(it.data!!, context)
+                }
+                binding.searchCompanyJob.adapter?.notifyDataSetChanged()
+            }
+        }
+        searchModel.keyword?.let { newChips(it) }
     }
     private fun newChips(keyword: String) {
-        binding.latestResultGrup.isVisible = true
-        list_latest_search_company.add(keyword)
-        saveArrayList(list_latest_search_company, "SearchJob")
-        val chip = Chip(this)
-        chip.setChipBackgroundColorResource(R.color.danger_100)
-        chip.apply {
-            textSize = 12f
-            text = keyword
-            isChipIconVisible = false
-            isCloseIconVisible = false
-            isClickable = true
-            isCheckable = false
-            binding.apply {
-                if (latestResultGrup.size > 7) {
-                    latestResultGrup.removeViewAt(0)
-                    latestResultGrup.addView(chip as View)
-                } else {
-                    latestResultGrup.addView(chip as View)
+        if(SessionManager(context).latestCompanySearch?.size == 0 ||  SessionManager(context).latestCompanySearch?.last() != keyword) {
+            SessionManager(context).latestCompanySearch = SessionManager(context).latestCompanySearch?.plus(
+                keyword
+            )
+        }
+        if(SessionManager(context).latestCompanySearch!!.size > 10){
+            SessionManager(context).latestCompanySearch = SessionManager(context).latestCompanySearch?.takeLast((10))
+        }
+        val latestSearch = SessionManager(context).latestCompanySearch?.reversed()
+        if(latestSearch?.size != 0){
+            binding.latestResultGrup.visibility = View.VISIBLE
+            binding.latestResultGrup.removeAllViews()
+            val chip = Chip(context)
+            chip.setChipBackgroundColorResource(R.color.danger_100)
+            chip.apply {
+                textSize = 12f
+                text = keyword
+                isChipIconVisible = false
+                isCloseIconVisible = false
+                isClickable = true
+                isCheckable = false
+                binding.apply {
+                    if (latestResultGrup.size > 7) {
+                        latestResultGrup.removeViewAt(0)
+                        latestResultGrup.addView(chip as View)
+                    } else {
+                        latestResultGrup.addView(chip as View)
+                    }
                 }
             }
         }
+    }
+    override fun searchCompany(
+        value : searchCompanyRequest
+    ) {
+        searchModel.size = value.size
+        searchModel.industry = value.industry
+        searchModel.location = value.location
+        searchCompany()
+    }
+}
 
-    }
-
-    fun getArrayList(key: String?): ArrayList<String> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val gson = Gson()
-        val json: String? = prefs.getString(key, null)
-        val type: Type = object : TypeToken<ArrayList<String?>?>() {}.type
-        var listnull = ArrayList<String>()
-        if (json == null) {
-            return listnull
-        }
-        return gson.fromJson(json, type)
-    }
-    fun saveArrayList(list: ArrayList<String>, keyword: String?) {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-        editor.putString(keyword, json)
-        editor.apply()
-    }
-
-    fun removeArrayList(list: ArrayList<String>, key: String?) {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-        editor.remove(key)
-        editor.apply()
-    }
+interface iSearchCompany{
+    fun searchCompany(value : searchCompanyRequest)
 }

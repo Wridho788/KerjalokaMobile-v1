@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +13,12 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.UserRatingAPI
+import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
-import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
-import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -50,7 +47,7 @@ class AppealReviewModal: SuperBottomSheetFragment() {
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val data = it.data
                 val fileUri: Uri = data!!.data!!
-                val pathName = context?.let { it2 -> PathUtil().getRealPath(it2, fileUri) }
+                val pathName = context?.let { it2 -> PathUtil().GetFilePath(fileUri, it2) }
 
                 val file = File(pathName?:"")
                 this.file = file

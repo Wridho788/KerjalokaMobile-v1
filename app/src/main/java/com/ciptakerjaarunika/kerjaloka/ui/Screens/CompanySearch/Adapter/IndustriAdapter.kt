@@ -7,10 +7,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.iUpdate
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.industri_model
 
-class IndustriAdapter(private var dataSet: List<industri_model>, val context: Context, val iUpdate: iUpdate) :
+class IndustriAdapter(var value : List<Int>,var dataSet: List<industri_model>, val context: Context) :
     RecyclerView.Adapter<IndustriAdapter.ViewHolder?>(){
 
         inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -35,13 +34,10 @@ class IndustriAdapter(private var dataSet: List<industri_model>, val context: Co
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataSet[position]
         holder.txtFieldname.text = currentItem.fieldName
+        holder.checkbox.isChecked = value.any { data -> data == currentItem.fieldNo}
         holder.checkbox.setOnClickListener{
+            currentItem.checked = holder.checkbox.isChecked
             dataSet[position].checked = holder.checkbox.isChecked
-            val field = dataSet.filter {
-                item -> item.checked
-            }
-            iUpdate.updateField(field)
         }
-
     }
 }

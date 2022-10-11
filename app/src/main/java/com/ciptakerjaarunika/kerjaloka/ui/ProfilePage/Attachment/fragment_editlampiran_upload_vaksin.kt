@@ -1,13 +1,14 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -18,31 +19,28 @@ import androidx.activity.addCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
-import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
-import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditlampiranUploadVaksinBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.model.Data.CheckDocument
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
-import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import kotlin.reflect.jvm.internal.impl.util.Check
 
 class fragment_editlampiran_upload_vaksin(var dataVaccine : List<CheckDocument>, val iRefreshData: iRefreshData) : Fragment() {
     private lateinit var binding : FragmentEditlampiranUploadVaksinBinding
     private lateinit var uploadVaccine1 : ActivityResultLauncher<Intent>
     private lateinit var uploadVaccine2 : ActivityResultLauncher<Intent>
     private lateinit var uploadVaccine3 : ActivityResultLauncher<Intent>
+    private var requestIntent : Intent? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +54,7 @@ class fragment_editlampiran_upload_vaksin(var dataVaccine : List<CheckDocument>,
         if (activityResult.resultCode == Activity.RESULT_OK && activityResult.data != null) {
             val data = activityResult.data
             val fileUri: Uri? = data?.data
-            val pathName = fileUri?.let { it1 -> context?.let { it2 -> PathUtil().getRealPath(it2, it1) } }
+            val pathName = fileUri?.let { it1 -> context?.let { it2 -> PathUtil().GetFilePath(it1, it2) } }
 
             val file : File? = File(pathName ?: "")
             if(file != null) {
@@ -197,7 +195,7 @@ class fragment_editlampiran_upload_vaksin(var dataVaccine : List<CheckDocument>,
                 intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
             }
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        val requestIntent = Intent.createChooser(intent, "Choose a file");
+        requestIntent = Intent.createChooser(intent, "Choose a file");
 
         val vaccine1 = dataVaccine.find { data-> data.documentType == DocumentType.Vaccine1.value }
 
@@ -240,15 +238,72 @@ class fragment_editlampiran_upload_vaksin(var dataVaccine : List<CheckDocument>,
         }
 
         binding.btnUnggahVaksinPertama.setOnClickListener{
-            uploadVaccine1.launch(requestIntent)
+            checkPermission( context!!.resources.getInteger(R.integer.UploadVaccine) + 1)
         }
         binding.btnUnggahVaksinKedua.setOnClickListener{
-            uploadVaccine2.launch(requestIntent)
+            checkPermission( context!!.resources.getInteger(R.integer.UploadVaccine) + 2)
         }
         binding.btnUnggahVaksinKetiga.setOnClickListener{
-            uploadVaccine3.launch(requestIntent)
+            checkPermission( context!!.resources.getInteger(R.integer.UploadVaccine) + 3)
         }
+    }
 
+    fun checkPermission(requestCode: Int){
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED
+        ){
+            this.activity?.let { it1 ->
+                ActivityCompat.requestPermissions(it1,
+                    listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                    requestCode)
+            };
+        }
+        else{
+            when(requestCode){
+                context!!.resources.getInteger(R.integer.UploadVaccine) + 1 ->{
+                    uploadVaccine1.launch(requestIntent)
+                }
+                context!!.resources.getInteger(R.integer.UploadVaccine) + 2 ->{
+                    uploadVaccine2.launch(requestIntent)
+                }
+                context!!.resources.getInteger(R.integer.UploadVaccine) + 3 ->{
+                    uploadVaccine3.launch(requestIntent)
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == id + R.integer.UploadVaccine+1 ||
+            requestCode == id + R.integer.UploadVaccine+2 ||
+            requestCode == id + R.integer.UploadVaccine+3 ) {
+            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
+                var intent = Intent(Intent.ACTION_GET_CONTENT);
+                intent.type = "*/*";
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                val requestIntent = Intent.createChooser(intent, "Choose a file");
+
+                when(requestCode){
+                    context!!.resources.getInteger(R.integer.UploadVaccine) + 1 ->{
+                        uploadVaccine1.launch(requestIntent)
+                    }
+                    context!!.resources.getInteger(R.integer.UploadVaccine) + 2 ->{
+                        uploadVaccine2.launch(requestIntent)
+                    }
+                    context!!.resources.getInteger(R.integer.UploadVaccine) + 3 ->{
+                        uploadVaccine3.launch(requestIntent)
+                    }
+                }
+            }
+            else{
+                Toast.makeText(activity, "Perlu akses untuk upload file", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun back(){
