@@ -9,9 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.iConfirmPage
 import com.ciptakerjaarunika.kerjaloka.R
 
-class BottomSheetConfirm: SuperBottomSheetFragment() {
+class BottomSheetConfirm(val iConfirmPage: iConfirmPage): SuperBottomSheetFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +36,7 @@ class BottomSheetConfirm: SuperBottomSheetFragment() {
         }
 
         btn_delete.setOnClickListener {
-//            finish()
+            iConfirmPage.deletePage()
         }
 
         btn_save_draft.setOnClickListener {

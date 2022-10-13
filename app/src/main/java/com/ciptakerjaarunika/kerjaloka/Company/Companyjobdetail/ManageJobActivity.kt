@@ -56,11 +56,10 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
         }
 
         binding.backButton.setOnClickListener {
-//            finish()
-            val sheet = BottomSheetConfirm()
+            val sheet = BottomSheetConfirm(this@ManageJobActivity)
             this.let { it1 -> sheet.show(it1.supportFragmentManager, "confirm") }
-//            Toast.makeText(this, "show confirm", Toast.LENGTH_SHORT).show()
         }
+
         binding.btnPostingPekerjaan.setOnClickListener {
             if(JobDetailData?.jobPosition.isNullOrEmpty()){
                 page = 1
@@ -116,16 +115,18 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
                          false
                     )
                 ) {
+                    Log.d("Res", it.toString())
                     if (it != null) {
-                        Log.d("addjob ${it.message}", it.toString())
+                        Log.d("addjob ${it}", it.toString())
                         if (it.code == "210") {
                             finish()
+                        } else {
+                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                         }
-                        else {
-                           Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                        }
-
+                    } else {
+                        Toast.makeText(this, "err", Toast.LENGTH_SHORT).show()
                     }
+                    //faxepov349@dicopto.com
                 }
         } catch (e: IllegalStateException) {
             Log.d("addJobErr", e.toString())
