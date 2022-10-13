@@ -9,7 +9,6 @@ import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 class ServiceBuilder(context: Context?) {
     private lateinit var url: String
@@ -35,9 +34,6 @@ class ServiceBuilder(context: Context?) {
             }
         )
     }
-        .connectTimeout(10, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
         .build()
 
     private fun clientPost(): OkHttpClient {
@@ -50,10 +46,7 @@ class ServiceBuilder(context: Context?) {
                     builder.header("Accept", "application/json")
                     return@Interceptor chain.proceed(builder.build())
                 }
-            ).connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .callTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+            )
         }.build()
     }
 
@@ -67,10 +60,6 @@ class ServiceBuilder(context: Context?) {
                 return@Interceptor chain.proceed(builder.build())
             }
         )
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .callTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
     }
         .build()
 

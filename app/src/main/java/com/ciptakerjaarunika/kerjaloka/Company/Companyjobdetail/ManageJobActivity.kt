@@ -115,9 +115,7 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
                          false
                     )
                 ) {
-                    Log.d("Res", it.toString())
                     if (it != null) {
-                        Log.d("addjob ${it}", it.toString())
                         if (it.code == "210") {
                             finish()
                         } else {
@@ -228,6 +226,43 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
     override fun deletePage() {
         finish()
     }
+
+    override fun draftJob() {
+        try {
+            AddJobAPI().draftJob(
+                baseContext,
+                addJobRequest(
+                    JobDetailData.jobNo?.toLong(),
+                    JobDetailData.jobPosition,
+                    JobDetailData.jobLocation,
+                    JobDetailData.jobType!!.jobTypeNo,
+                    JobDetailData.jobSalaryMin,
+                    JobDetailData.jobSalaryMax,
+                    JobDetailData.jobSkills,
+                    JobDetailData.jobTitle,
+                    JobDetailData.jobField?.fieldNo,
+                    JobDetailData.jobRole?.fieldNo,
+                    JobDetailData.jobMinExperience,
+                    JobDetailData.jobExperienceLevel?.experienceLevelNo,
+                    JobDetailData.jobDescription,
+                    JobDetailData.jobTest,
+                    JobDetailData.jobShortQuestion,
+                    false
+                )
+            ) {
+                if (it != null) {
+                    if (it.code == "210") {
+                        finish()
+                    }
+                } else {
+                    Toast.makeText(this, "err", Toast.LENGTH_SHORT).show()
+                }
+                //faxepov349@dicopto.com
+            }
+        } catch (e: IllegalStateException) {
+            Log.d("addJobErr", e.toString())
+        }
+    }
 }
 
 interface iAddidiontalInfoPage{
@@ -250,4 +285,5 @@ interface iBasicInfoPage{
 
 interface iConfirmPage{
     fun deletePage()
+    fun draftJob()
 }

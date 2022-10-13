@@ -40,7 +40,7 @@ class BottomSheetConfirm(val iConfirmPage: iConfirmPage): SuperBottomSheetFragme
         }
 
         btn_save_draft.setOnClickListener {
-
+        iConfirmPage.draftJob()
         }
     }
 
