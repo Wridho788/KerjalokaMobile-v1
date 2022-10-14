@@ -55,8 +55,6 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
         val btn_expand = view.findViewById<ConstraintLayout>(R.id.layout_info_lowongan)
         val layout_content_info = view.findViewById<LinearLayout>(R.id.layout_content_info)
 
-
-
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_job)
         toolbar.setOnClickListener {
             val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
@@ -128,13 +126,16 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
 
 
         btn_expand.setOnClickListener {
-            if (layout_content_info.isVisible == isVisible) {
-                layout_content_info.visibility = View.GONE
-                btn_arrow.setImageResource(R.drawable.ic_arrow_down)
-            } else {
-                layout_content_info.visibility = View.VISIBLE
-                btn_arrow.setImageResource(R.drawable.ic_arrow_up)
+            if (layout_content_info != null ){
+                if (layout_content_info.isVisible == isVisible) {
+                    layout_content_info.visibility = View.GONE
+                    btn_arrow.setImageResource(R.drawable.ic_arrow_down)
+                } else {
+                    layout_content_info.visibility = View.VISIBLE
+                    btn_arrow.setImageResource(R.drawable.ic_arrow_up)
+                }
             }
+
 
         }
     }
@@ -149,7 +150,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
         val totalDiterimaText = view?.findViewById<TextView>(R.id.totalDiterimaText)
         val totalRejectedText = view?.findViewById<TextView>(R.id.totalRejectedText)
         val totalCVbanksText = view?.findViewById<TextView>(R.id.totalCVbanksText)
-
+        val btn_cvBanks = view?.findViewById<LinearLayout>(R.id.btn_cv_banks)
         CompanyListApplicantAPI().GetListApplicantPost(context, JobNo) {
             if (it != null) {
                 list = it.data
@@ -187,6 +188,9 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
                 val cvBanksList =
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.CVBank.value }.size
                 totalCVbanksText?.text = cvBanksList.toString() + " Orang"
+                btn_cvBanks?.setOnClickListener {
+                    activity?.onBackPressed()
+                }
             }
         }
     }
