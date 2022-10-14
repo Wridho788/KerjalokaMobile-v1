@@ -257,7 +257,6 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
                 } else {
                     Toast.makeText(this, "err", Toast.LENGTH_SHORT).show()
                 }
-                //faxepov349@dicopto.com
             }
         } catch (e: IllegalStateException) {
             Log.d("addJobErr", e.toString())

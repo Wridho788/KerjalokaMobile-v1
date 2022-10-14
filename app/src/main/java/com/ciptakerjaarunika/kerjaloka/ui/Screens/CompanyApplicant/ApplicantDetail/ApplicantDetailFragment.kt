@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentApplicantDetailBinding
+import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.MoreAction.MoreActionFragment
@@ -64,6 +64,19 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
         toolbar.setOnClickListener {
             fragmentManager?.popBackStack()
         }
+       if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.ShortList.value) {
+           binding.headerApplicantDetail.txtStatus.text = "Terpilih"
+       } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Test.value) {
+           binding.headerApplicantDetail.txtStatus.text = "Dalam Test"
+       } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Interview.value){
+           binding.headerApplicantDetail.txtStatus.text = "Interview"
+       } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Accepted.value){
+           binding.headerApplicantDetail.txtStatus.text = "Diterima"
+       } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Rejected.value){
+           binding.headerApplicantDetail.txtStatus.text = "Ditolak"
+       } else {
+           binding.headerApplicantDetail.txtStatus.text = "CV Bank"
+       }
 
         val experienceJob = applicantDetail.applicant.experiences
         if (experienceJob != null) {
@@ -93,7 +106,6 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
         } else {
             binding.headerApplicantDetail.sectionExperience.visibility = View.GONE
         }
-
         val education = applicantDetail.applicant.education
         if (education != null) {
             if (education.isEmpty() == true) {
@@ -323,6 +335,9 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
         downLoadId = downloadManager!!.enqueue(request)
+
+        Log.d("applicationStatusNo", applicantDetail.application.applicationStatusNo.toString())
+
     }
 
     override fun goToCommentApplicant(
@@ -363,7 +378,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(
             id,
-            StatusPageFragment(applicantDetail.application.applicationNo),
+            StatusPageFragment(applicantDetail.application.applicationNo, applicantDetail.application.applicationStatusNo),
             "ChangeStatus"
         )
         ft.addToBackStack("ChangeStatus")
