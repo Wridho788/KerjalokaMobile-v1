@@ -16,7 +16,7 @@ class CommentAPI {
     interface CommentAPI {
         @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("company/officer/applicant/{jobseekerNo}/comment")
-        fun getCommentApplicant(@Path("jobseekerNo") jobseekerNo: Long,  @Body sendComment: send_comment): Call<CommentResponse>
+        fun postCommentApplicant(@Path("jobseekerNo") jobseekerNo: Long,  @Body sendComment: send_comment): Call<CommentResponse>
     }
 
     fun SendCommentPost(
@@ -27,7 +27,7 @@ class CommentAPI {
     ) {
         val retrofit = ServiceBuilder(context).POST(CommentAPI::class.java)
 
-        retrofit.getCommentApplicant(jobseekerNo, sendComment).enqueue(
+        retrofit.postCommentApplicant(jobseekerNo, sendComment).enqueue(
             object : Callback<CommentResponse> {
                 override fun onResponse(
                     call: Call<CommentResponse>,

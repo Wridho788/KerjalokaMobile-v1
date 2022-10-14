@@ -15,7 +15,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDeta
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.send_comment
 
 class KomentarApplicantFragment(
-    private val comment: List<CommentModel>,
+    private var comment: List<CommentModel>,
     private val applicantNo : Long,
     private val jobseekerNo: Long,
     private val jobNo: Long,
@@ -39,6 +39,8 @@ class KomentarApplicantFragment(
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        binding.rvCommentApplicant.adapter?.notifyDataSetChanged()
 
         binding.btnSendComment.setOnClickListener {
             CommentAPI().SendCommentPost(
