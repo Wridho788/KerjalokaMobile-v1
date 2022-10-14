@@ -335,9 +335,6 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
         downLoadId = downloadManager!!.enqueue(request)
-
-        Log.d("applicationStatusNo", applicantDetail.application.applicationStatusNo.toString())
-
     }
 
     override fun goToCommentApplicant(
