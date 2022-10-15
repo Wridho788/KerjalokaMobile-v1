@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.*
@@ -111,7 +110,13 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
             val locationInterview = binding.txtInputLocation.text.toString()
             val nameInterview = binding.txtInputInterviewer.text.toString()
             binding.btnChangeStatus.setOnClickListener {
-                Toast.makeText(context, "Interview", Toast.LENGTH_SHORT).show()
+              InterviewStatus(context, applicantNo){
+                  if (it != null){
+                      if (it.code == 210){
+                          activity?.onBackPressed()
+                      }
+                  }
+              }
             }
         } else if (status == ApplicanStatusType.Accepted.value) {
             binding.statusChange.text = "Diterima"
