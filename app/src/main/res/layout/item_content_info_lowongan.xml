@@ -307,10 +307,13 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btn_cv_banks"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
             android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

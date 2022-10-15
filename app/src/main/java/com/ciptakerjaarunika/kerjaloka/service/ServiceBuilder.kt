@@ -4,16 +4,17 @@ import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 class ServiceBuilder(context: Context?) {
-    private lateinit var url : String
+    private lateinit var url: String
 
-    private var access_token : String = SessionManager(context).access_token.toString();
-    private var body : RequestBody? = null;
+    private var access_token: String = SessionManager(context).access_token.toString()
+    private var body: RequestBody? = null
 
 //    constructor(url : String){
 //        this.url = url
@@ -23,7 +24,7 @@ class ServiceBuilder(context: Context?) {
 //        this.body = sendData
 //    }
 
-    private val clientGet  = OkHttpClient.Builder().apply {
+    private val clientGet = OkHttpClient.Builder().apply {
         addInterceptor(
             Interceptor { chain ->
                 val builder = chain.request().newBuilder()
@@ -33,10 +34,9 @@ class ServiceBuilder(context: Context?) {
             }
         )
     }
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
         .build()
-    private fun clientPost(body : RequestBody): OkHttpClient {
+
+    private fun clientPost(): OkHttpClient {
         return OkHttpClient.Builder().apply {
             addInterceptor(
                 Interceptor { chain ->
@@ -49,18 +49,21 @@ class ServiceBuilder(context: Context?) {
             )
         }.build()
     }
-    private val clientPostFile  = OkHttpClient.Builder().apply {
+
+    private val clientPostFile = OkHttpClient.Builder().apply {
         addInterceptor(
             Interceptor { chain ->
                 val builder = chain.request().newBuilder()
                 builder.header("Authorization", access_token)
+//                Log.d("res", builder.toString())
 //                builder.method("POST", body)
                 return@Interceptor chain.proceed(builder.build())
             }
         )
-    }.build()
+    }
+        .build()
 
-    fun<T> GET(service: Class<T>): T{
+    fun <T> GET(service: Class<T>): T {
         Log.d("Builder Access Token : ", access_token)
         val retrofit = Retrofit.Builder()
             .baseUrl(config().portAddress) // change this IP for testing by your actual machine IP
@@ -71,15 +74,17 @@ class ServiceBuilder(context: Context?) {
 
         return retrofit.create(service)
     }
-    fun<T> POST(service: Class<T>): T{
+
+    fun <T> POST(service: Class<T>): T {
         val retrofit = Retrofit.Builder()
             .baseUrl(config().portAddress) // change this IP for testing by your actual machine IP
             .addConverterFactory(GsonConverterFactory.create())
-            .client(clientPostFile)
+            .client(clientPost())
             .build()
         return retrofit.create(service)
     }
-    fun<T> POSTFILE(service: Class<T>): T{
+
+    fun <T> POSTFILE(service: Class<T>): T {
         val retrofit = Retrofit.Builder()
             .baseUrl(config().portAddress) // change this IP for testing by your actual machine IP
             .addConverterFactory(GsonConverterFactory.create())

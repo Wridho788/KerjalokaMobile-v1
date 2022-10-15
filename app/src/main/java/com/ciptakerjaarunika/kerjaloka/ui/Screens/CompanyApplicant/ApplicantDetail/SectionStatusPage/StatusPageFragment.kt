@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.*
@@ -14,7 +13,8 @@ import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.UbahStatusFragment
 import java.util.*
 
-class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPage {
+class StatusPageFragment(private val applicantNo: Long, private var applicationStatusNo: Int) :
+    Fragment(), iStatusPage {
     private lateinit var binding: FragmentStatusPageBinding
     lateinit var datePicker: DatePickerHelper
 
@@ -24,7 +24,7 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
     ): View {
         binding = FragmentStatusPageBinding.inflate(layoutInflater)
         val view = binding.root
-        return  view
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,6 +40,20 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
         binding.btnStatus.setOnClickListener {
             ubahStatusModal()
         }
+        if (applicationStatusNo == ApplicanStatusType.ShortList.value){
+            binding.statusChange.text = "Terpilih"
+        } else if (applicationStatusNo == ApplicanStatusType.Test.value){
+            binding.statusChange.text = "Dalam Test"
+        } else if (applicationStatusNo == ApplicanStatusType.Interview.value) {
+            binding.statusChange.text = "Interview"
+        } else if (applicationStatusNo == ApplicanStatusType.Accepted.value) {
+            binding.statusChange.text = "Diterima"
+        } else if (applicationStatusNo == ApplicanStatusType.Rejected.value) {
+            binding.statusChange.text = "Ditolak"
+        } else {
+            binding.statusChange.text = "CV Bank"
+        }
+
 
     }
 
@@ -96,7 +110,13 @@ class StatusPageFragment(private val applicantNo: Long) : Fragment(), iStatusPag
             val locationInterview = binding.txtInputLocation.text.toString()
             val nameInterview = binding.txtInputInterviewer.text.toString()
             binding.btnChangeStatus.setOnClickListener {
-                Toast.makeText(context, "Interview", Toast.LENGTH_SHORT).show()
+              InterviewStatus(context, applicantNo){
+                  if (it != null){
+                      if (it.code == 210){
+                          activity?.onBackPressed()
+                      }
+                  }
+              }
             }
         } else if (status == ApplicanStatusType.Accepted.value) {
             binding.statusChange.text = "Diterima"

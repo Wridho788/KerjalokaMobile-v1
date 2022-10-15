@@ -1,10 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetConfirm
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.ManageJobPage.*
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.addJobRequest
 import com.ciptakerjaarunika.kerjaloka.R
@@ -15,7 +17,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.*
 import com.google.gson.Gson
 
-class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoPage {
+class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoPage, iConfirmPage {
     private var JobDetailData : CompanyJobDetail = CompanyJobDetail(
         null,null,null, listOf(), null,null,
         null, listOf(), null, null, null, null, null, null, listOf(), listOf(),
@@ -54,8 +56,10 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
         }
 
         binding.backButton.setOnClickListener {
-            finish()
+            val sheet = BottomSheetConfirm(this@ManageJobActivity)
+            this.let { it1 -> sheet.show(it1.supportFragmentManager, "confirm") }
         }
+
         binding.btnPostingPekerjaan.setOnClickListener {
             if(JobDetailData?.jobPosition.isNullOrEmpty()){
                 page = 1
@@ -87,6 +91,7 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
     }
 
 
+    @SuppressLint("LogNotTimber")
     fun SendJob() {
         try {
                 AddJobAPI().SendJob(
@@ -112,10 +117,14 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
                 ) {
                     if (it != null) {
                         if (it.code == "210") {
-                            Log.d("addJob response", it.toString())
                             finish()
+                        } else {
+                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                         }
+                    } else {
+                        Toast.makeText(this, "err", Toast.LENGTH_SHORT).show()
                     }
+                    //faxepov349@dicopto.com
                 }
         } catch (e: IllegalStateException) {
             Log.d("addJobErr", e.toString())
@@ -214,6 +223,45 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
         JobDetailData?.jobShortQuestion = value
     }
 
+    override fun deletePage() {
+        finish()
+    }
+
+    override fun draftJob() {
+        try {
+            AddJobAPI().draftJob(
+                baseContext,
+                addJobRequest(
+                    JobDetailData.jobNo?.toLong(),
+                    JobDetailData.jobPosition,
+                    JobDetailData.jobLocation,
+                    JobDetailData.jobType!!.jobTypeNo,
+                    JobDetailData.jobSalaryMin,
+                    JobDetailData.jobSalaryMax,
+                    JobDetailData.jobSkills,
+                    JobDetailData.jobTitle,
+                    JobDetailData.jobField?.fieldNo,
+                    JobDetailData.jobRole?.fieldNo,
+                    JobDetailData.jobMinExperience,
+                    JobDetailData.jobExperienceLevel?.experienceLevelNo,
+                    JobDetailData.jobDescription,
+                    JobDetailData.jobTest,
+                    JobDetailData.jobShortQuestion,
+                    false
+                )
+            ) {
+                if (it != null) {
+                    if (it.code == "210") {
+                        finish()
+                    }
+                } else {
+                    Toast.makeText(this, "err", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: IllegalStateException) {
+            Log.d("addJobErr", e.toString())
+        }
+    }
 }
 
 interface iAddidiontalInfoPage{
@@ -232,4 +280,9 @@ interface iBasicInfoPage{
     fun updateJobSalary(value : Int??)
     fun updateJobType(jobTypeNo : JobType)
     fun updateJobLocation(value : List<JobLocation>)
+}
+
+interface iConfirmPage{
+    fun deletePage()
+    fun draftJob()
 }

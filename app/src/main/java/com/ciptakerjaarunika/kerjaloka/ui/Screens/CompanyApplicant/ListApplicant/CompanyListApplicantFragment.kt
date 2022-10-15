@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyOfficerJobsApi
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.JobApplicantFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Adapter.ListApplicantAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model.listApplicantJobModel
@@ -20,13 +18,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant
 class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
 
 
-    private lateinit var binding: ActivityMainBinding
     private var listJob: List<listApplicantJobModel>? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,17 +34,24 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
         val rv_applicantJob = view.findViewById<RecyclerView>(R.id.rv_list_applicant_job)
         val txt_total_cv_banks = view.findViewById<TextView>(R.id.totalCVbanksText)
 
-        CompanyOfficerJobsApi().CompanyOfficerJob(context){
-            Log.d("response", it.toString())
-            if(it != null) {
+        CompanyOfficerJobsApi().CompanyOfficerJob(context) {
+            if (it != null) {
                 listJob = it.data
-                txt_total_cv_banks.text = listJob!!.size.toString()
                 rv_applicantJob.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter = ListApplicantAdapter(context, listJob, this@CompanyListApplicantFragment)
+                    adapter =
+                        ListApplicantAdapter(context, listJob, this@CompanyListApplicantFragment)
                 }
             }
         }
+
+        CompanyOfficerJobsApi().GetCVBanks(context) {
+            if (it != null) {
+                txt_total_cv_banks.text = it.data.toString()
+            }
+        }
+
+
     }
 
     override fun goToListJobApplicant(JobNo: Long) {

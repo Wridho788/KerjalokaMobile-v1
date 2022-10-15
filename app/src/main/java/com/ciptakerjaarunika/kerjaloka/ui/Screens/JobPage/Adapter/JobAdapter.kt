@@ -8,15 +8,11 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
@@ -28,7 +24,13 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, private val context: Context, private val iJobPage: IJobPage, private val searchJob: iSearchJob?) :
+class JobAdapter(
+    val ListType: Int,
+    private val rJobList: List<SearchJobModel>,
+    private val context: Context,
+    private val iJobPage: IJobPage,
+    private val searchJob: iSearchJob?
+) :
     RecyclerView.Adapter<JobAdapter.ViewHolder>() {
 
 
@@ -57,7 +59,7 @@ class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
-        view.layoutParams= ConstraintLayout.LayoutParams(
+        view.layoutParams = ConstraintLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
@@ -65,7 +67,7 @@ class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, 
     }
 
     override fun getItemCount(): Int {
-        return rJobList?.size ?: 0
+        return rJobList.size
     }
 
 
@@ -73,8 +75,9 @@ class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, 
         val currentItem = rJobList[position]
         holder.jobPosition.text = currentItem.jobPosition
         holder.jobCompany.text = currentItem.company.companyName
-        holder.jobLocation.text = if(currentItem?.jobLocation!!.size >1) "Banyak lokasi" else currentItem.jobLocation[0].label
-        if(position+1 >= rJobList.size && searchJob != null){
+        holder.jobLocation.text =
+            if (currentItem.jobLocation.size > 1) "Banyak lokasi" else currentItem.jobLocation[0].label
+        if (position + 1 >= rJobList.size && searchJob != null) {
             searchJob.nextPage()
         }
 
@@ -115,14 +118,16 @@ class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, 
         }
         holder.timeUploadApplicant.text = dateDiff()
 
-        if(SessionManager(context).user == null){
+        if (SessionManager(context).user == null) {
             holder.bookmarkedJob.visibility = GONE
         }
-        Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).fitCenter().into(holder.logo)
+        Glide.with(holder.itemView.context)
+            .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).fitCenter()
+            .into(holder.logo)
         holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 
         holder.bookmarkedJob.setOnClickListener {
-                iJobPage.BookmarkJob(ListType, currentItem!!.jobNo.toLong(), position)
+            iJobPage.BookmarkJob(ListType, currentItem.jobNo.toLong(), position)
         }
         holder.shareableJob.setOnClickListener {
             val text =
@@ -139,7 +144,10 @@ class JobAdapter(val ListType : Int,private val rJobList: List<SearchJobModel>, 
             context.startActivity(Intent.createChooser(sendIntent, "Bagikan Informasi Pekerjaan"))
         }
         holder.cardRecommendationJob.setOnClickListener {
-            iJobPage.GoToJobDetail(currentItem.jobNo.toLong(), if(currentItem.company.userNo != null) currentItem.company.userNo else currentItem.company.companyNo)
+            iJobPage.GoToJobDetail(
+                currentItem.jobNo.toLong(),
+                if (currentItem.company.userNo != null) currentItem.company.userNo else currentItem.company.companyNo
+            )
         }
     }
 

@@ -7,6 +7,8 @@ data class company_officer_jobs_response(
     val data: List<listApplicantJobModel>
 )
 
+data class cvBank_response(val code: Int, val data: Int)
+
 data class listApplicantJobModel(
     val jobNo: String,
     val jobPosition: String,
