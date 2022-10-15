@@ -7,7 +7,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Listener.JobDetail
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.DataCount
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
@@ -65,6 +64,11 @@ class Companyjobs_adapter(private val joblist: List<DataCount>, private val list
         }
         holder.shareJob.setOnClickListener {
             listener.shareJob(currentItem)
+        }
+        if (currentItem.publish == true) {
+            holder.jobStatus.text = "Aktif"
+        } else {
+            holder.jobStatus.text = "Draft"
         }
         holder.jobAuthor.text = currentItem.createdBy
     }
