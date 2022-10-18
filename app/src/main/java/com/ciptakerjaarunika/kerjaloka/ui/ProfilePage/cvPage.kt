@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -75,6 +76,8 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                 ProfileAPI().GetJobseekerEducations(context) { educations ->
                     loading -= 1;
                     LoadingDone()
+
+                    Log.d("edu", educations?.data.toString())
 
                     binding.recycleEdu.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -295,7 +298,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
             .setTitle("Konfirmasi menghapus")
             .setPositiveButton(android.R.string.ok, object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface, which: Int) {
-                    ManageProfileAPI().JobseekerDeleteEducation(data.educationNo, context){
+                    ManageProfileAPI().JobseekerDeleteEducation(data.jobseekerEducationNo, context){
                         if(it != null){
                             ProfileAPI().GetJobseekerEducations(context) { edu ->
                                 binding.recycleExp.apply {
@@ -304,6 +307,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                                 }
                                 Toast.makeText(activity, "Berhasil menghapus", Toast.LENGTH_SHORT).show()
                                 dialog.dismiss()
+                                GetData()
                             }
 
                         }

@@ -2,24 +2,18 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_job_active_page
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.Review
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.review
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
-import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditEmail
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditPassword
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting.EditPhone
@@ -76,9 +70,13 @@ class ManageUserSetting : Fragment() {
             newsletter.isChecked = it?.data?.users?.isNewsletter ?: false
 
             newsletter.setOnClickListener { it1 ->
-                val setNl = it?.data?.users?.isNewsletter
-                Log.d("asd", setNl.toString())
-                setNl?.let { it2 -> company_profile_api().newsletter(it2, context){} }
+                if (newsletter.isChecked == true) {
+                    var setNl = it?.data?.users?.isNewsletter == true
+                    company_profile_api().newsletter(setNl, context) {}
+                } else {
+                    var setNl = it?.data?.users?.isNewsletter == false
+                    company_profile_api().newsletter(setNl, context) {}
+                }
             }
         }
 

@@ -2,16 +2,16 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ChangeUsernameRequest
+import android.widget.Toast
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.DeactivatedAccount
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.CategoryList
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.RatingSendedResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.editReviewRequest
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ratingSended_response
 import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.notifResponse
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -164,11 +164,28 @@ class UsersAPI{
                     call: Call<deactivatedResponse>,
                     response: Response<deactivatedResponse>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        SessionManager(context).access_token = null
+                        SessionManager(context).user = null
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            SessionManager(context).access_token = null
+                            SessionManager(context).user = null
+                            Toast.makeText(context, "Password Salah", Toast.LENGTH_SHORT).show()
+                            Log.d("response json err", jObjError.toString())
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Log.d("response respon err", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<deactivatedResponse>, t: Throwable) {
                     onResult(null)
+                    Log.d("res err", t.toString())
                 }
             }
         )

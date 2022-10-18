@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
+        android:visibility="gone"
         android:gravity="center">
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
@@ -21,7 +22,7 @@
     <LinearLayout
         android:id="@+id/content_container"
         android:layout_width="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="wrap_content"
         android:orientation="vertical">
     <LinearLayout
@@ -334,6 +335,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_rv_edu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

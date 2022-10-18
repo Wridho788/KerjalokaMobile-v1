@@ -3,11 +3,9 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobCountResponses
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobResponses
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.MyPackagesResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Package.getHistoryResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.*
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.CompMyReview
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Test.testResponse
 import com.ciptakerjaarunika.kerjaloka.Company.dashboard.Model.TotalApplicantResponses
@@ -219,7 +217,7 @@ class company_profile_api {
         )
     }
 
-    data class  changePasswordResponse(val code :Int, val message : String)
+    data class  changePasswordResponse(val code :String, val message : String)
     interface getNewPassword{
         @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("users/change/password")

@@ -12,10 +12,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -44,7 +42,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.io.FileOutputStream
 
 
 class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRefreshData?) : Fragment(), iEditLampiran {
@@ -180,21 +177,23 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
 
         binding.saveBtn.setOnClickListener {
             var processUpload = dataList?.filter { data-> data.documentFile != null }!!.size
-            dataList?.forEach {data ->
-                if(data.documentFile != null){
-                    ManageProfileAPI().JobseekerUploadDocument(context, data.documentFile!!){
-                        if(it != null){
-                            if(it.documentName != null) {
-                                processUpload -= 1;
-                                data.documentFileName = it.documentName.toString()
-                                EditLampiran(processUpload)
-                            }
-                            else{
-                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+
+            if(processUpload != 0) {
+                dataList?.filter { data-> data.documentFile != null }!!.forEach { data ->
+                        ManageProfileAPI().JobseekerUploadDocument(context, data.documentFile!!) {
+                            if (it != null) {
+                                if (it.documentName != null) {
+                                    processUpload -= 1;
+                                    data.documentFileName = it.documentName.toString()
+                                    EditLampiran(processUpload)
+                                } else {
+                                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                                }
                             }
                         }
-                    }
                 }
+            }
+            else{
                 EditLampiran(processUpload)
             }
         }
@@ -208,6 +207,12 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
             }
             else if(document == null){
                 binding.errorTxt.text = "Upload lampiran terlebih dahulu"
+            }
+            else if(dataList!!.any { data-> data.documentFileName == file!!.name }){
+                binding.errorTxt.text = "Tidak dapat menambahkan file yang sama"
+                document = null
+                file = null
+                binding.documentName.text = null;
             }
             else {
                 binding.errorTxt.visibility = GONE
@@ -228,6 +233,7 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
                 binding.recycleview.adapter?.notifyDataSetChanged()
 
                 document = null
+                file = null
                 binding.uploadDocumentBtn.text = "Upload Lampiran"
                 binding.documentName.text = null;
             }
@@ -236,12 +242,12 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
     fun EditLampiran(totalProcess : Int){
         if(totalProcess == 0){
             ManageProfileAPI().JobseekerEditLampiran(dataList, context){
-                if(it != null) {
-                    Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                if(it != null && context != null) {
+                    Toast.makeText(context, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
                     back()
                 }
                 else{
-                    Toast.makeText(activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -18,20 +18,15 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobseekerProfilePageBinding
-import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfilePageBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
 import com.google.android.material.button.MaterialButton
 
 
-class profilepage(var Page : Int) : Fragment() {
-    private lateinit var binding : FragmentJobseekerProfilePageBinding
-    private var loading :Int = 0;
+class profilepage(var Page: Int) : Fragment() {
+    private lateinit var binding: FragmentJobseekerProfilePageBinding
+    private var loading: Int = 0
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -126,37 +121,37 @@ class profilepage(var Page : Int) : Fragment() {
                     }
                 })
 
-                btn_mngProfile.setOnClickListener() {
+                btn_mngProfile.setOnClickListener {
                     Page = 0
                     content.currentItem = Page
                     updatePage()
                 }
-                btn_mngCV.setOnClickListener() {
+                btn_mngCV.setOnClickListener {
                     Page = 1
                     content.currentItem = Page
                     updatePage()
                 }
-                btn_mngPref.setOnClickListener() {
+                btn_mngPref.setOnClickListener {
                     Page = 2
                     content.currentItem = Page
                     updatePage()
                 }
-                btn_mngAttach.setOnClickListener() {
+                btn_mngAttach.setOnClickListener {
                     Page = 3
                     content.currentItem = Page
                     updatePage()
                 }
-                btn_mngMyReview.setOnClickListener() {
+                btn_mngMyReview.setOnClickListener {
                     Page = 4
                     content.currentItem = Page
                     updatePage()
                 }
-                btn_mngMyRecord.setOnClickListener() {
+                btn_mngMyRecord.setOnClickListener {
                     Page = 5
                     content.currentItem = Page
                     updatePage()
                 }
-                btn_mngSetting.setOnClickListener() {
+                btn_mngSetting.setOnClickListener {
                     Page = 6
                     content.currentItem = Page
                     updatePage()
@@ -165,25 +160,40 @@ class profilepage(var Page : Int) : Fragment() {
         }
 
     }
-    fun updatePage(){
+
+    fun updatePage() {
         val content = view?.findViewById<ViewPager2>(R.id.profileContent)
         content?.currentItem = Page
 
-        view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList = resources.getColorStateList(R.color.white);
-        view?.findViewById<MaterialButton>(R.id.CV)?.backgroundTintList = resources.getColorStateList(R.color.white);
-        view?.findViewById<MaterialButton>(R.id.Preference)?.backgroundTintList = resources.getColorStateList(R.color.white);
-        view?.findViewById<MaterialButton>(R.id.attachment)?.backgroundTintList = resources.getColorStateList(R.color.white);
-        view?.findViewById<MaterialButton>(R.id.myReview)?.backgroundTintList = resources.getColorStateList(R.color.white);
-        view?.findViewById<MaterialButton>(R.id.myRecord)?.backgroundTintList = resources.getColorStateList(R.color.white);
-        view?.findViewById<MaterialButton>(R.id.setting)?.backgroundTintList = resources.getColorStateList(R.color.white);
-        when (Page){
-            0 ->   view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
-            1 ->   view?.findViewById<MaterialButton>(R.id.CV)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
-            2 ->   view?.findViewById<MaterialButton>(R.id.Preference)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
-            3 ->   view?.findViewById<MaterialButton>(R.id.attachment)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
-            4 ->   view?.findViewById<MaterialButton>(R.id.myReview)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
-            5 ->   view?.findViewById<MaterialButton>(R.id.myRecord)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
-            6 ->   view?.findViewById<MaterialButton>(R.id.setting)?.backgroundTintList = resources.getColorStateList(R.color.danger_300);
+        view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        view?.findViewById<MaterialButton>(R.id.CV)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        view?.findViewById<MaterialButton>(R.id.Preference)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        view?.findViewById<MaterialButton>(R.id.attachment)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        view?.findViewById<MaterialButton>(R.id.myReview)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        view?.findViewById<MaterialButton>(R.id.myRecord)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        view?.findViewById<MaterialButton>(R.id.setting)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        when (Page) {
+            0 -> view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+            1 -> view?.findViewById<MaterialButton>(R.id.CV)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+            2 -> view?.findViewById<MaterialButton>(R.id.Preference)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+            3 -> view?.findViewById<MaterialButton>(R.id.attachment)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+            4 -> view?.findViewById<MaterialButton>(R.id.myReview)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+            5 -> view?.findViewById<MaterialButton>(R.id.myRecord)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+            6 -> view?.findViewById<MaterialButton>(R.id.setting)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
         }
 
     }
