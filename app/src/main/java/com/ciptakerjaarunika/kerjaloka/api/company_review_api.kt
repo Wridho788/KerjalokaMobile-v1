@@ -157,11 +157,37 @@ class SendReviewAPI {
         @POST("/jobseeker/rating/send")
         fun sendReview(@Body sendRequest: send_Request): Call<sendResponse>
     }
+    interface SendReviewCompanyAPI {
+        @Headers("Content-Type: application/json",
+            "Accept: application/json")
+        @POST("/company/rating/send")
+        fun sendReviewCompany(@Body sendRequest: send_Request): Call<sendResponse>
+    }
 
     fun SendReviewPost(context: Context?, sendRequest: send_Request, onResult: (sendResponse?) -> Unit){
         val retrofit = ServiceBuilder(context).POST(SendReviewAPI::class.java)
 
         retrofit.sendReview(sendRequest).enqueue(
+            object : Callback<sendResponse> {
+                override fun onResponse(
+                    call: Call<sendResponse>,
+                    response: Response<sendResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<sendResponse>, t: Throwable) {
+                    Log.d("error", t.toString())
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    fun SendReviewCompanyPost(context: Context?, sendRequest: send_Request, onResult: (sendResponse?) -> Unit){
+        val retrofit = ServiceBuilder(context).POST(SendReviewCompanyAPI::class.java)
+
+        retrofit.sendReviewCompany(sendRequest).enqueue(
             object : Callback<sendResponse> {
                 override fun onResponse(
                     call: Call<sendResponse>,

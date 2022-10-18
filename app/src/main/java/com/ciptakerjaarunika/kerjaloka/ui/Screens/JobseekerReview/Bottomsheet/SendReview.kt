@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.Bottomsheet
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +24,11 @@ class SendReview : SuperBottomSheetFragment() {
         val ratingBar = view.findViewById<RatingBar>(R.id.RatingModal)
         val btn_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review)
         val textReview = view.findViewById<EditText>(R.id.insertreview)
+//        val ratingBar = view.findViewById<RatingBar>(R.id.RatingModal)
+//        val btn_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review)
+//        val textReview = view.findViewById<EditText>(R.id.insertreview)
 //        ratingBar.onRatingBarChangeListener =
-//            OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating}
+//            OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating }
 //
 //        val proRatingList = ArrayList<proRatingList>()
 //        val category1 = proRatingList(
@@ -33,19 +38,42 @@ class SendReview : SuperBottomSheetFragment() {
 //        val conRating1 = conRatingList(1)
 //        conRatingList.add(conRating1)
 //        proRatingList.add(category1)
-//        Log.d("rating list", proRatingList.toString())
-
+//        btn_send_review.setOnClickListener {
+//            SendReviewAPI().SendReviewPost(
+//                context,
+//                send_Request(
+//                    CompanyNo,
+//                    textReview.text.toString(),
+//                    ratingBar.rating.toLong(),
+//                    proRatingList,
+//                    conRatingList
+//                )
+//            ) {
+//                if (it != null) {
+//                    this.dismiss()
+//                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+//                    ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
+//                    ft.commit()
+//                }
+//            }
+//        }
         return view
     }
 
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
-        return 2000
+        val displayMetrics = DisplayMetrics()
+        (context as Activity?)!!.windowManager
+            .defaultDisplay
+            .getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt();
     }
 
+    override fun isSheetAlwaysExpanded(): Boolean {
+        return true
+    }
     override fun isSheetCancelableOnTouchOutside(): Boolean {
         return true
     }
-
 
 }

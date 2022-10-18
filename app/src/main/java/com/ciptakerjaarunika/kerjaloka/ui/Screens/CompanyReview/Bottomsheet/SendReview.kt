@@ -20,6 +20,8 @@ import com.ciptakerjaarunika.kerjaloka.api.SendReviewAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.conRatingList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRatingList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.send_Request
+import com.google.android.material.chip.Chip
+
 
 class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fragment) :
     SuperBottomSheetFragment() {
@@ -34,10 +36,51 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
         val ratingBar = view.findViewById<RatingBar>(R.id.RatingModal)
         val btn_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review)
         val textReview = view.findViewById<EditText>(R.id.insertreview)
+        val chipProRating1 = view.findViewById<Chip>(R.id.chip_gajitunjangan)
+        val chipProRating2 = view.findViewById<Chip>(R.id.chip_tingkatStress)
+        val chipProRating3 = view.findViewById<Chip>(R.id.chip_jumlahpekerjaan)
+        val chipProRating4 = view.findViewById<Chip>(R.id.chip_manajemen)
+        val chipProRating5 = view.findViewById<Chip>(R.id.chip_lingkunganKerja)
+        val chipProRating6 = view.findViewById<Chip>(R.id.chip_FlexibilitasWaktu)
+        val chipProRating7 = view.findViewById<Chip>(R.id.chip_PengembanganKarir)
+
+        val chipConRating1 = view.findViewById<Chip>(R.id.chip_congajitunjangan)
+        val chipConRating2 = view.findViewById<Chip>(R.id.chip_contingkatStress)
+        val chipConRating3 = view.findViewById<Chip>(R.id.chip_conjumlahpekerjaan)
+        val chipConRating4 = view.findViewById<Chip>(R.id.chip_conmanajemen)
+        val chipConRating5 = view.findViewById<Chip>(R.id.chip_conlingkunganKerja)
+        val chipConRating6 = view.findViewById<Chip>(R.id.chip_conFlexibilitasWaktu)
+        val chipConRating7 = view.findViewById<Chip>(R.id.chip_conPengembanganKarir)
+
+        val chipIds: Set<Int> = HashSet()
+
+        val chip1Id = 1
+        val chip2Id = 2
+        val chip3Id = 3
+        val chip4Id = 4
+        val chip5Id = 5
+        val chip6Id = 6
+        val chip7Id = 7
+
+        chipProRating1.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                Log.d("true", "chipProRating1")
+            } else {
+                for (i in chipIds) {
+                    if (i == chip1Id) {
+//                        chipIds.remove(i)
+                        Log.d("chips", chip1Id.toString())
+                    }
+                }
+            }
+        }
+
         ratingBar.onRatingBarChangeListener =
             OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating }
 
+
         val proRatingList = ArrayList<proRatingList>()
+
         val category1 = proRatingList(
             1
         )
@@ -45,9 +88,8 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
         val conRating1 = conRatingList(1)
         conRatingList.add(conRating1)
         proRatingList.add(category1)
-        Log.d("rating list", proRatingList.toString())
         btn_send_review.setOnClickListener {
-            SendReviewAPI().SendReviewPost(
+            SendReviewAPI().SendReviewCompanyPost(
                 context,
                 send_Request(
                     CompanyNo,

@@ -21,7 +21,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobseekerReview.Adapter.Jobsee
 
 
 class JobseekerReviewFragment(
-    private val companyNo: Long,
+    private val jobseekerNo: Long,
     private val applicantDetail: applicantModel
 ) : Fragment() {
     private lateinit var binding: FragmentJobseekerReviewBinding
@@ -67,12 +67,12 @@ class JobseekerReviewFragment(
         binding.reviewList.btnSendReviewCompany.visibility = View.GONE
 
         if (company != null) {
-            CanSendReview().getSendReviewAsync(context, companyNo) {
+            CanSendReview().getSendReviewAsync(context, jobseekerNo) {
                 if (it != null) {
                     if (it.data.canSend) {
                         binding.reviewList.btnSendReviewCompany.visibility = View.VISIBLE
                         binding.reviewList.btnSendReviewCompany.setOnClickListener {
-                            sendReviewModal(companyNo)
+                            sendReviewModal(jobseekerNo)
                         }
                     }
                 }
@@ -105,17 +105,17 @@ class JobseekerReviewFragment(
                         }
                     }
                     binding.cardMyReview.btnEditReview.setOnClickListener {
-                        sendReviewModal(companyNo)
+                        sendReviewModal(jobseekerNo)
                     }
                 }
             }
         }
     }
 
-    fun sendReviewModal(companyNo: Long) {
+    fun sendReviewModal(jobseekerNo: Long) {
         val sheet =
             SendReview(
-                companyNo, id, JobseekerReviewFragment(companyNo, applicantDetail)
+                jobseekerNo, id, JobseekerReviewFragment(jobseekerNo, applicantDetail)
             )
         activity.let { it1 ->
             sheet.show(

@@ -19,7 +19,6 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentApplicantDetailBinding
 import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
-import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.MoreAction.MoreActionFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.Bottomsheet.PapikostikResultFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionEducations.EducationsAdapter
@@ -298,9 +297,10 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
                 chip.setOnClickListener { downloadCV(data.documentFileName, data.documentName) }
             }
         }
-        val companyNo = SessionManager(context).user!!.userNo
+        val jobseekerNo = applicantDetail.application.jobseekerNo
+//        Log.d("userno", applicantDeta.toString())
         binding.headerApplicantDetail.btnReview.setOnClickListener {
-            goToReview(companyNo, applicantDetail)
+            goToReview(jobseekerNo, applicantDetail)
         }
 
 
@@ -382,9 +382,9 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
         ft.commit()
     }
 
-    override fun goToReview(companyNo: Long, applicantDetail: applicantModel) {
+    override fun goToReview(jobseekerNo: Long, applicantDetail: applicantModel) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, JobseekerReviewFragment(companyNo, applicantDetail), "JobseekerReview")
+        ft.replace(id, JobseekerReviewFragment(jobseekerNo, applicantDetail), "JobseekerReview")
         ft.addToBackStack("JobseekerReview")
         ft.commit()
     }
@@ -407,7 +407,7 @@ interface OnFragmentClickListener {
     fun goToHistoryApplicant(jobApplicantHistory: List<List<jobApplicantHistory>>)
     fun goToRecordApplicant()
     fun goToChangeStatus()
-    fun goToReview(companyNo: Long, applicantDetail: applicantModel)
+    fun goToReview(jobseekerNo: Long, applicantDetail: applicantModel)
     fun goToCompareJobseeker()
     fun goToPapikostikModal()
 }
