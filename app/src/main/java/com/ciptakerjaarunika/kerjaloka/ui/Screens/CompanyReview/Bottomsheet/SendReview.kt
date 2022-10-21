@@ -18,13 +18,16 @@ import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.SendReviewAPI
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.conRatingList
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRating
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRatingList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.send_Request
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 
 class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fragment) :
     SuperBottomSheetFragment() {
+    private var list: List<proRatingList> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,79 +36,71 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.layout_send_review, container, false)
-        val ratingBar = view.findViewById<RatingBar>(R.id.RatingModal)
         val btn_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review)
-        val textReview = view.findViewById<EditText>(R.id.insertreview)
-        val chipProRating1 = view.findViewById<Chip>(R.id.chip_gajitunjangan)
-        val chipProRating2 = view.findViewById<Chip>(R.id.chip_tingkatStress)
-        val chipProRating3 = view.findViewById<Chip>(R.id.chip_jumlahpekerjaan)
-        val chipProRating4 = view.findViewById<Chip>(R.id.chip_manajemen)
-        val chipProRating5 = view.findViewById<Chip>(R.id.chip_lingkunganKerja)
-        val chipProRating6 = view.findViewById<Chip>(R.id.chip_FlexibilitasWaktu)
-        val chipProRating7 = view.findViewById<Chip>(R.id.chip_PengembanganKarir)
 
-        val chipConRating1 = view.findViewById<Chip>(R.id.chip_congajitunjangan)
-        val chipConRating2 = view.findViewById<Chip>(R.id.chip_contingkatStress)
-        val chipConRating3 = view.findViewById<Chip>(R.id.chip_conjumlahpekerjaan)
-        val chipConRating4 = view.findViewById<Chip>(R.id.chip_conmanajemen)
-        val chipConRating5 = view.findViewById<Chip>(R.id.chip_conlingkunganKerja)
-        val chipConRating6 = view.findViewById<Chip>(R.id.chip_conFlexibilitasWaktu)
-        val chipConRating7 = view.findViewById<Chip>(R.id.chip_conPengembanganKarir)
+        val proRatingGrup = view.findViewById<ChipGroup>(R.id.chipGroupProRating)
+        val conRatingGrup = view.findViewById<ChipGroup>(R.id.chipGroupConRating)
 
-        val chipIds: Set<Int> = HashSet()
+        val rating = arrayOf(
+            proRating("Gaji dan Tunjangan", 1),
+            proRating("Tingkat Stress", 2),
+            proRating("Jumlah Pekerjaan", 3),
+            proRating("Manajemen", 4),
+            proRating("Lingkungan Kerja", 5),
+            proRating("Flexibilitas Waktu", 6),
+            proRating("Pengembangan Waktu", 7),
+        )
 
-        val chip1Id = 1
-        val chip2Id = 2
-        val chip3Id = 3
-        val chip4Id = 4
-        val chip5Id = 5
-        val chip6Id = 6
-        val chip7Id = 7
 
-        chipProRating1.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                Log.d("true", "chipProRating1")
-            } else {
-                for (i in chipIds) {
-                    if (i == chip1Id) {
-//                        chipIds.remove(i)
-                        Log.d("chips", chip1Id.toString())
-                    }
+        rating.forEach {
+            val chip = Chip(context)
+            chip.setChipBackgroundColorResource(R.color.white)
+            chip.chipStrokeWidth = 3f
+            chip.apply {
+                textSize = 12f
+                text = it.categoryName
+                id = it.categoryNo.toInt()
+                isChipIconVisible = false
+                isCloseIconVisible = false
+                isClickable = true
+                isCheckable = false
+                proRatingGrup.addView(chip as View)
+                chip.setOnClickListener {
+                    chip.setChipBackgroundColorResource(R.color.danger_100)
+                    chip.setChipStrokeColorResource(R.color.danger_500)
+                    chip.chipStrokeWidth = 7f
+                    Log.d("click ${id} = ${text}", text.toString())
+
+                }
+            }
+            val chipConRating = Chip(context)
+            chipConRating.setChipBackgroundColorResource(R.color.white)
+            chipConRating.isCheckable = false
+            chipConRating.chipStrokeWidth = 3f
+            chipConRating.apply {
+                textSize = 12f
+                text = it.categoryName
+                id = it.categoryNo.toInt()
+                isChipIconVisible = false
+                isCloseIconVisible = false
+                isClickable = true
+                isCheckable = false
+                conRatingGrup.addView(chipConRating as View)
+                chipConRating.setOnClickListener {
+                    chip.setChipBackgroundColorResource(R.color.danger_100)
+                    chip.setChipStrokeColorResource(R.color.danger_500)
+                    chip.chipStrokeWidth = 7f
+                    Log.d("click ${id} = ${text}", text.toString())
                 }
             }
         }
 
-        ratingBar.onRatingBarChangeListener =
-            OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating }
 
-
-        val proRatingList = ArrayList<proRatingList>()
-
-        val category1 = proRatingList(
-            1
-        )
         val conRatingList = ArrayList<conRatingList>()
         val conRating1 = conRatingList(1)
         conRatingList.add(conRating1)
-        proRatingList.add(category1)
         btn_send_review.setOnClickListener {
-            SendReviewAPI().SendReviewCompanyPost(
-                context,
-                send_Request(
-                    CompanyNo,
-                    textReview.text.toString(),
-                    ratingBar.rating.toLong(),
-                    proRatingList,
-                    conRatingList
-                )
-            ) {
-                if (it != null) {
-                    this.dismiss()
-                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                    ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
-                    ft.commit()
-                }
-            }
+            sendReview()
         }
         return view
     }
@@ -116,15 +111,51 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
         (context as Activity?)!!.windowManager
             .defaultDisplay
             .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
 
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
     }
+
     override fun isSheetCancelableOnTouchOutside(): Boolean {
         return true
+    }
+
+
+    fun sendReview() {
+        val textReview = view?.findViewById<EditText>(R.id.insertreview)
+        val ratingBar = view?.findViewById<RatingBar>(R.id.RatingModal)
+        ratingBar?.onRatingBarChangeListener =
+            OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating }
+        val proRatingList = ArrayList<proRatingList>()
+        val category1 = proRatingList(
+            1
+        )
+        proRatingList.add(category1)
+        val conRatingList = ArrayList<conRatingList>()
+        val categoryc1 = conRatingList(
+            1
+        )
+        conRatingList.add(categoryc1)
+        SendReviewAPI().SendReviewCompanyPost(
+            context,
+            send_Request(
+                CompanyNo,
+                textReview?.text.toString(),
+                ratingBar?.rating!!.toLong(),
+                proRatingList,
+                conRatingList
+            )
+        ) {
+            if (it != null) {
+                this.dismiss()
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
+                ft.commit()
+            }
+        }
     }
 
 }

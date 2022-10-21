@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -12,7 +11,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.createViewModelLazy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
@@ -26,19 +24,19 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.Industri
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.LocationAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.SizeCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.industri_model
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.location_model
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.searchCompanyRequest
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.size_company_model
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.iSearchCompany
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.Adapter.FilterLocationAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
+import java.util.*
 
-class FilterCompany(var request : searchCompanyRequest,val updateData : iSearchCompany) : SuperBottomSheetFragment(){
+class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCompany) :
+    SuperBottomSheetFragment() {
     var list_location: List<LocationFilter> = listOf()
     var list_industri: List<industri_model> = listOf()
     var list_size_company: List<size_company_model> = listOf()
-    private var filterType = 1;
+    private var filterType = 1
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -55,14 +53,12 @@ class FilterCompany(var request : searchCompanyRequest,val updateData : iSearchC
         val listIndustri = view.findViewById<RecyclerView>(R.id.list_industri_view)
         val listSizeCompany = view.findViewById<RecyclerView>(R.id.list_size_company_view)
         val btnConfirm = view.findViewById<MaterialButton>(R.id.btn_konfirmasi)
-        val search_bar = view.findViewById<androidx.appcompat.widget.SearchView>(R.id.search_filter)
+        val search_bar = view.findViewById<SearchView>(R.id.search_filter)
         val btn_hapus = view.findViewById<TextView>(R.id.btn_hapus_check)
 
-        view.setLayoutParams(
-            RecyclerView.LayoutParams(
-                RecyclerView.LayoutParams.MATCH_PARENT,
-                RecyclerView.LayoutParams.WRAP_CONTENT
-            )
+        view.layoutParams = RecyclerView.LayoutParams(
+            RecyclerView.LayoutParams.MATCH_PARENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
         )
 
         DataAPI().GetLocations(context) {
@@ -71,30 +67,29 @@ class FilterCompany(var request : searchCompanyRequest,val updateData : iSearchC
                 val thisActivity = this
                 listView.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = LocationAdapter(request.location, list_location!!, context)
+                    adapter = LocationAdapter(request.location, list_location, context)
                     listView.adapter = adapter
                 }
             }
         }
 
-        FilterIndustriAPI().getIndustriAsync(context){
+        FilterIndustriAPI().getIndustriAsync(context) {
             if (it != null) {
                 list_industri = it
-                val thisActivity = this
                 listIndustri.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = IndustriAdapter(request.industry, list_industri!!, context)
+                    adapter = IndustriAdapter(request.industry, list_industri, context)
                 }
             }
         }
 
-        FilterSizeCompanyAPI().getSizeIndustriAsync(context){
+        FilterSizeCompanyAPI().getSizeIndustriAsync(context) {
             if (it != null) {
                 list_size_company = it
                 val thisActivity = this
                 listSizeCompany.apply {
                     layoutManager = LinearLayoutManager(context)
-                    adapter = SizeCompanyAdapter(request.size,list_size_company!!, context)
+                    adapter = SizeCompanyAdapter(request.size, list_size_company, context)
                 }
 
             }
@@ -104,38 +99,38 @@ class FilterCompany(var request : searchCompanyRequest,val updateData : iSearchC
         FilterLocationAPI()
         FilterIndustriAPI()
         FilterSizeCompanyAPI()
-        listIndustri.visibility = View.GONE
-        listSizeCompany.visibility = View.GONE
+        listIndustri.visibility = GONE
+        listSizeCompany.visibility = GONE
 
         chipLocation.setOnClickListener {
             filterType = 1
             search_bar.visibility = VISIBLE
-            listView.visibility = View.VISIBLE
-            listIndustri.visibility = View.GONE
-            listSizeCompany.visibility = View.GONE
+            listView.visibility = VISIBLE
+            listIndustri.visibility = GONE
+            listSizeCompany.visibility = GONE
         }
 
         chipIndustri.setOnClickListener {
             filterType = 2
             search_bar.visibility = VISIBLE
-            listView.visibility = View.GONE
-            listSizeCompany.visibility = View.GONE
-            listIndustri.visibility = View.VISIBLE
+            listView.visibility = GONE
+            listSizeCompany.visibility = GONE
+            listIndustri.visibility = VISIBLE
         }
 
         chipSizeCompany.setOnClickListener {
             search_bar.visibility = GONE
-            listView.visibility = View.GONE
-            listIndustri.visibility = View.GONE
-            listSizeCompany.visibility = View.VISIBLE
+            listView.visibility = GONE
+            listIndustri.visibility = GONE
+            listSizeCompany.visibility = VISIBLE
         }
         search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query?.isNotEmpty() == true) {
-                    when(filterType){
-                        1->{
-                            var temp = list_location?.filter { data ->
-                                "${data.city}, ${data.province}".toLowerCase().contains(query)
+                if (query?.isNotEmpty() == true) {
+                    when (filterType) {
+                        1 -> {
+                            var temp = list_location.filter { data ->
+                                "${data.city}, ${data.province}".lowercase(Locale.getDefault()).contains(query)
                             }
                             listView?.apply {
                                 layoutManager = LinearLayoutManager(context)
@@ -143,8 +138,9 @@ class FilterCompany(var request : searchCompanyRequest,val updateData : iSearchC
                             }
                             listView?.adapter?.notifyDataSetChanged()
                         }
-                        2->{
-                            var temp = list_industri?.filter { data -> "${data.fieldName}".toLowerCase().contains(query)
+                        2 -> {
+                            var temp = list_industri.filter { data ->
+                                "${data.fieldName}".lowercase(Locale.getDefault()).contains(query)
                             }
                             listIndustri?.apply {
                                 layoutManager = LinearLayoutManager(context)
@@ -158,18 +154,21 @@ class FilterCompany(var request : searchCompanyRequest,val updateData : iSearchC
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
+                return true
             }
         })
-        btnConfirm.setOnClickListener{
-            request.location = list_location.filter{ data-> data.checked == true}?.map{ data-> data.locationsNo}!!
-            request.industry = list_industri.filter{ data-> data.checked }?.map{ data-> data.fieldNo}!!
-            request.size = list_size_company.filter{ data-> data.checked }?.map{ data-> data.sizeNo}!!
+        btnConfirm.setOnClickListener {
+            request.location = list_location.filter { data -> data.checked == true }
+                .map { data -> data.locationsNo }
+            request.industry =
+                list_industri.filter { data -> data.checked }.map { data -> data.fieldNo }
+            request.size =
+                list_size_company.filter { data -> data.checked }.map { data -> data.sizeNo }
             updateData.searchCompany(request)
             this.dismiss()
         }
 
-        btn_hapus.setOnClickListener{
+        btn_hapus.setOnClickListener {
             list_location = listOf()
             list_industri = listOf()
             list_size_company = listOf()
@@ -192,7 +191,7 @@ class FilterCompany(var request : searchCompanyRequest,val updateData : iSearchC
         (context as Activity?)!!.windowManager
             .defaultDisplay
             .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun isSheetCancelableOnTouchOutside(): Boolean {

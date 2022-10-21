@@ -3,31 +3,23 @@ package com.ciptakerjaarunika.kerjaloka.ui.Global
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
-import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.google.android.material.button.MaterialButton
-import com.google.gson.Gson
 
 
-class otpVerification() : Fragment() {
+class otpVerification : Fragment() {
 
     private lateinit var timer: CountDownTimer
     var description: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
-
+    var phone: String? = null
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,15 +32,25 @@ class otpVerification() : Fragment() {
             }
 
             override fun onFinish() {
-                replaceFragment(AkunPage())
+//                replaceFragment(AkunPage())
+                Log.d("finish", "onFinish")
             }
 
         }
 
         if (arguments != null) {
             val descFromBundle = arguments?.getString(EXTRA_DESCRIPTION)
+            Log.d("descFromBundle", descFromBundle.toString())
             val token = descFromBundle
-//            description = descFromBundle
+            description = descFromBundle
+
+            if ( token == "phone"){
+                Log.d("otp phone", token.toString())
+            } else if ( token == "email"){
+                Log.d("otp email", token.toString())
+            } else {
+                Log.d("otp", token.toString())
+            }
             btnSend.setOnClickListener {
                 val otp1 = view.findViewById<EditText>(R.id.otp1)?.text.toString()
                 val otp2 = view.findViewById<EditText>(R.id.otp2)?.text.toString()
@@ -57,11 +59,15 @@ class otpVerification() : Fragment() {
                 val otp5 = view.findViewById<EditText>(R.id.otp5)?.text.toString()
                 val otp6 = view.findViewById<EditText>(R.id.otp6)?.text.toString()
                 val code = "${otp1 + otp2 + otp3 + otp4 + otp5 + otp6}"
-                if (description=="phone"){
-                    company_profile_api().PhoneChangeVerification(token, code, context) {}
-                }
-                else if (description=="email"){
-                    company_profile_api().EmailChangeVerification(token, code, context) {}
+                if (description == "phone") {
+                    Log.d("otp phone", description.toString())
+
+                    company_profile_api().PhoneChangeVerification(token.toString(), code, context) {
+                        Log.d("otp phone", description.toString())
+                    }
+                } else if (description == "email") {
+                    Log.d("otp email", description.toString())
+//                    company_profile_api().EmailChangeVerification(token, code, context) {}
                 }
                 timer.onFinish()
             }
@@ -88,13 +94,13 @@ class otpVerification() : Fragment() {
 
     companion object {
         var EXTRA_DESCRIPTION = "extra_description"
+        var EXTRA_DESCRIPTION_PHONE = "phone_number"
     }
 
     private fun replaceFragment(fragment: Fragment) {
-
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.fragmentHolder, fragment)
+        fragmentTransaction?.replace(id, fragment)
         fragmentTransaction?.commit()
     }
 }
