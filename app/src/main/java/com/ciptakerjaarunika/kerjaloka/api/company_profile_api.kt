@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobCountResponses
 import com.ciptakerjaarunika.kerjaloka.Company.Package.Model.MyPackagesResponse
 import com.ciptakerjaarunika.kerjaloka.Company.Package.getHistoryResponse
@@ -10,6 +11,7 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewRe
 import com.ciptakerjaarunika.kerjaloka.Company.Test.testResponse
 import com.ciptakerjaarunika.kerjaloka.Company.dashboard.Model.TotalApplicantResponses
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -118,7 +120,7 @@ class company_profile_api {
         )
     }
 
-    data class phoneVerificationResponse(val token: String?, val code: String?)
+    data class phoneVerificationResponse(val token: String?, val code: String?, val message: String?)
     interface changeVerification{
         @GET("users/change/phoneVerification")
         fun changeVerification(@Query("token")token: String?, @Query("code")code: String?):Call<phoneVerificationResponse>
@@ -132,7 +134,27 @@ class company_profile_api {
                     call: Call<phoneVerificationResponse>,
                     response: Response<phoneVerificationResponse>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            Log.d("response err", jObjError.toString())
+
+                            Toast.makeText(
+                                context, "Phone number is Not Valid",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(
+                            context, "Error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d("response", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<phoneVerificationResponse>, t: Throwable) {

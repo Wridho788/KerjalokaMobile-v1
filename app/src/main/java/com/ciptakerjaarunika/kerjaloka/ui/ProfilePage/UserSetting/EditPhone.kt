@@ -2,13 +2,12 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.user
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
@@ -41,7 +40,7 @@ class EditPhone : Fragment() {
             company_profile_api().checkPhone(keyword, context){
                 company_profile_api().ChangeNumber(keyword, context){ it1 ->
                     if (it1?.code == 210){
-                        replaceFragment(otpVerification(), it1?.token)
+                        replaceFragment(otpVerification(), it1?.token, userData)
                     }
                 }
                 if (it?.exists == false){
@@ -69,10 +68,11 @@ class EditPhone : Fragment() {
     }
 
     @SuppressLint("RestrictedApi")
-    private fun replaceFragment(fragment: Fragment, token: String?) {
+    private fun replaceFragment(fragment: Fragment, token: String?, phone: String?) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION_PHONE, phone)
 
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "phone"

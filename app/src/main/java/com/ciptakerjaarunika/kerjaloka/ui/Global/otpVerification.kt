@@ -3,18 +3,18 @@ package com.ciptakerjaarunika.kerjaloka.ui.Global
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.google.android.material.button.MaterialButton
-import com.google.gson.Gson
 
 
 class otpVerification() : Fragment() {
@@ -40,7 +40,8 @@ class otpVerification() : Fragment() {
             }
 
             override fun onFinish() {
-                replaceFragment(AkunPage())
+                Log.d("onFinish", "finish")
+//                replaceFragment(AkunPage())
             }
 
         }
@@ -58,10 +59,24 @@ class otpVerification() : Fragment() {
                 val otp6 = view.findViewById<EditText>(R.id.otp6)?.text.toString()
                 val code = "${otp1 + otp2 + otp3 + otp4 + otp5 + otp6}"
                 if (description=="phone"){
-                    company_profile_api().PhoneChangeVerification(token, code, context) {}
+                    Log.d("token", token.toString())
+                    Log.d("token code", code)
+                    Log.d("token desc", description.toString())
+                    company_profile_api().PhoneChangeVerification(token.toString(), code, context) {
+                        Log.d("token successfully", it.toString())
+                        if (it != null) {
+                            if (it.code == "210"){
+                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                                replaceFragment(AkunPage())
+                            } else {
+                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                 }
                 else if (description=="email"){
-                    company_profile_api().EmailChangeVerification(token, code, context) {}
+                    Log.d("token email", description.toString())
+//                    company_profile_api().EmailChangeVerification(token.toString(), code, context) {}
                 }
                 timer.onFinish()
             }
@@ -88,6 +103,7 @@ class otpVerification() : Fragment() {
 
     companion object {
         var EXTRA_DESCRIPTION = "extra_description"
+        var EXTRA_DESCRIPTION_PHONE = "phone"
     }
 
     private fun replaceFragment(fragment: Fragment) {
