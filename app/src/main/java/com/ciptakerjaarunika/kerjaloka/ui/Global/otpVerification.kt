@@ -11,7 +11,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.google.android.material.button.MaterialButton
 
 
@@ -19,13 +18,12 @@ class otpVerification : Fragment() {
 
     private lateinit var timer: CountDownTimer
     var description: String? = null
-    var phone: String? = null
+    var phoneText: String? = null
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val btnSend = view.findViewById<MaterialButton>(R.id.sendOTP)
         val ticker = view.findViewById<TextView>(R.id.time)
-
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(p0: Long) {
                 ticker.text = (p0 / 1000).toString()
@@ -37,12 +35,16 @@ class otpVerification : Fragment() {
             }
 
         }
-
+        var phone = view.findViewById<TextView>(R.id.phone_verif)
         if (arguments != null) {
             val descFromBundle = arguments?.getString(EXTRA_DESCRIPTION)
+            val descPhone = arguments?.getString(EXTRA_DESCRIPTION_PHONE)
             Log.d("descFromBundle", descFromBundle.toString())
             val token = descFromBundle
             description = descFromBundle
+            phoneText = descPhone.toString()
+            phone.text = phoneText
+
 
             if ( token == "phone"){
                 Log.d("otp phone", token.toString())
@@ -59,17 +61,17 @@ class otpVerification : Fragment() {
                 val otp5 = view.findViewById<EditText>(R.id.otp5)?.text.toString()
                 val otp6 = view.findViewById<EditText>(R.id.otp6)?.text.toString()
                 val code = "${otp1 + otp2 + otp3 + otp4 + otp5 + otp6}"
-                if (description == "phone") {
-                    Log.d("otp phone", description.toString())
-
-                    company_profile_api().PhoneChangeVerification(token.toString(), code, context) {
-                        Log.d("otp phone", description.toString())
-                    }
-                } else if (description == "email") {
-                    Log.d("otp email", description.toString())
-//                    company_profile_api().EmailChangeVerification(token, code, context) {}
-                }
-                timer.onFinish()
+//                if (description == "phone") {
+//                    Log.d("otp phone", description.toString())
+//
+//                    company_profile_api().PhoneChangeVerification(token.toString(), code, context) {
+//                        Log.d("otp phone", description.toString())
+//                    }
+//                } else if (description == "email") {
+//                    Log.d("otp email", description.toString())
+////                    company_profile_api().EmailChangeVerification(token, code, context) {}
+//                }
+//                timer.onFinish()
             }
         }
 
