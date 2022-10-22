@@ -23,17 +23,24 @@ class EditPhone(var phone: String) : Fragment() {
         val txtPhone = view.findViewById<TextView>(R.id.current_user_nomor_telepon_2)
         val newPhone = view.findViewById<EditText>(R.id.masukkan_nomor_telepon_baru)
         val btnSave = view.findViewById<MaterialButton>(R.id.btn_simpan_nomor_telepon)
-        txtPhone.text = phone
+
+
+        if (arguments != null) {
+            val descFromBundle = arguments?.getString(EditEmail.EXTRA_USER_DATA)
+            userData = descFromBundle
+            txtPhone.text = userData
+        }
         view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
             back()
         }
 
         btnSave.setOnClickListener {
-            val keyword = newPhone.text.toString()
+            var keyword = newPhone.text.toString()
+
             company_profile_api().checkPhone(keyword, context) {
                 company_profile_api().ChangeNumber(keyword, context) { it1 ->
                     if (it1?.code == 210) {
-                        replaceFragment(otpVerification(), it1.token, phone, "")
+                        replaceFragment(otpVerification(), it1.token, userData, keyword)
                     }
                 }
                 if (it?.exists == false) {
@@ -59,19 +66,18 @@ class EditPhone(var phone: String) : Fragment() {
     }
 
     @SuppressLint("RestrictedApi")
-    private fun replaceFragment(fragment: Fragment, token: String?, phone: String?, email: String?) {
+    private fun replaceFragment(fragment: Fragment, token: String?, phone: String?, newPhone: String?) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION_PHONE, phone)
-//        mBundle.putString(otpVerification.EXTRA_DESCRIPTION, phone)
-//        mBundle.putString(otpVerification.EXTRA_DESCRIPTION, email)
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION_NEW_PHONE, newPhone)
 
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "phone"
         val mFragmentManager = parentFragmentManager
-        mFragmentManager.beginTransaction().apply {
+        mFragmentManager.beginTransaction()?.apply {
             replace(
                 R.id.fragment_container,
                 otpVerificationFragment,

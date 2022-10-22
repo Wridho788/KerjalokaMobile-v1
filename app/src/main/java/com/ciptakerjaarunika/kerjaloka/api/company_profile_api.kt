@@ -142,13 +142,8 @@ class company_profile_api {
         )
     }
 
-    data class phoneVerificationResponse(
-        val token: String?,
-        val code: String?,
-        val message: String?
-    )
-
-    interface changeVerification {
+    data class phoneVerificationResponse(val token: String?, val code: String?, val message: String?)
+    interface changeVerification{
         @GET("users/change/phoneVerification")
         fun changeVerification(
             @Query("token") token: String?,
@@ -240,7 +235,7 @@ class company_profile_api {
                             context, "Error",
                             Toast.LENGTH_LONG
                         ).show()
-//                        Log.d("response", response.toString())
+                        Log.d("response", response.toString())
                     }
                 }
 
@@ -293,7 +288,27 @@ class company_profile_api {
                     call: Call<changeEmailResponse>,
                     response: Response<changeEmailResponse>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            Log.d("response err", jObjError.toString())
+
+                            Toast.makeText(
+                                context, "Email Already Exist ",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(
+                            context, "Error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d("response", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<changeEmailResponse>, t: Throwable) {
