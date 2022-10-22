@@ -17,10 +17,6 @@ class EditPhone : Fragment() {
 
     var userData: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val txtPhone = view.findViewById<TextView>(R.id.current_user_nomor_telepon_2)
@@ -35,15 +31,15 @@ class EditPhone : Fragment() {
             fragmentManager?.popBackStack()
         }
 
-        btnSave.setOnClickListener{
+        btnSave.setOnClickListener {
             val keyword = newPhone.text.toString()
-            company_profile_api().checkPhone(keyword, context){
-                company_profile_api().ChangeNumber(keyword, context){ it1 ->
-                    if (it1?.code == 210){
-                        replaceFragment(otpVerification(), it1?.token, userData)
+            company_profile_api().checkPhone(keyword, context) {
+                company_profile_api().ChangeNumber(keyword, context) { it1 ->
+                    if (it1?.code == 210) {
+                        replaceFragment(otpVerification(), it1.token, userData)
                     }
                 }
-                if (it?.exists == false){
+                if (it?.exists == false) {
 
                 }
 
@@ -77,7 +73,7 @@ class EditPhone : Fragment() {
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "phone"
         val mFragmentManager = parentFragmentManager
-        mFragmentManager?.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction()?.apply {
             replace(
                 R.id.fragment_container,
                 otpVerificationFragment,

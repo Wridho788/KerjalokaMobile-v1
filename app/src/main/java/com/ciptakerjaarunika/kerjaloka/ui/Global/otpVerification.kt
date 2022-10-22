@@ -17,16 +17,10 @@ import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.google.android.material.button.MaterialButton
 
 
-class otpVerification() : Fragment() {
+class otpVerification : Fragment() {
 
     private lateinit var timer: CountDownTimer
     var description: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +42,17 @@ class otpVerification() : Fragment() {
 
         if (arguments != null) {
             val descFromBundle = arguments?.getString(EXTRA_DESCRIPTION)
-            val token = descFromBundle
+            val descPhone = arguments?.getString(EXTRA_DESCRIPTION_PHONE)
+            val descEmail = arguments?.getString(EXTRA_DESCRIPTION_EMAIL)
+            val phoneTextView = view.findViewById<TextView>(R.id.phone_verif)
+
+            if (description == "phone") {
+                phoneTextView.text = descPhone
+            } else if (description == "email") {
+                phoneTextView.text = descEmail
+            }
+
+            var token = descFromBundle
 //            description = descFromBundle
             btnSend.setOnClickListener {
                 val otp1 = view.findViewById<EditText>(R.id.otp1)?.text.toString()
@@ -58,25 +62,35 @@ class otpVerification() : Fragment() {
                 val otp5 = view.findViewById<EditText>(R.id.otp5)?.text.toString()
                 val otp6 = view.findViewById<EditText>(R.id.otp6)?.text.toString()
                 val code = "${otp1 + otp2 + otp3 + otp4 + otp5 + otp6}"
-                if (description=="phone"){
-                    Log.d("token", token.toString())
-                    Log.d("token code", code)
-                    Log.d("token desc", description.toString())
+                if (description == "phone") {
                     company_profile_api().PhoneChangeVerification(token.toString(), code, context) {
-                        Log.d("token successfully", it.toString())
                         if (it != null) {
-                            if (it.code == "210"){
+                            if (it.code == "210") {
                                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                                 replaceFragment(AkunPage())
                             } else {
                                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                             }
+                        } else {
+                            Toast.makeText(context, it?.message, Toast.LENGTH_SHORT).show()
                         }
                     }
-                }
-                else if (description=="email"){
+                } else if (description == "email") {
                     Log.d("token email", description.toString())
-//                    company_profile_api().EmailChangeVerification(token.toString(), code, context) {}
+                    Log.d("token email", token.toString())
+                    company_profile_api().EmailChangeVerification(token.toString(), code, context) {
+                        Log.d("token email", it.toString())
+                        if (it != null) {
+                        Log.d("token email not null", it.toString())
+                            if (it.code == "210") {
+                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                                replaceFragment(AkunPage())
+                            } else {
+                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
+                    }
                 }
                 timer.onFinish()
             }
@@ -104,6 +118,7 @@ class otpVerification() : Fragment() {
     companion object {
         var EXTRA_DESCRIPTION = "extra_description"
         var EXTRA_DESCRIPTION_PHONE = "phone"
+        var EXTRA_DESCRIPTION_EMAIL = "email"
     }
 
     private fun replaceFragment(fragment: Fragment) {

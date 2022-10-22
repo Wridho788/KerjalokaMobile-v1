@@ -178,7 +178,27 @@ class company_profile_api {
                     call: Call<phoneVerificationResponse>,
                     response: Response<phoneVerificationResponse>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            Log.d("response err", jObjError.toString())
+
+                            Toast.makeText(
+                                context, "Token Tidak Valid",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(
+                            context, "Error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d("response", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<phoneVerificationResponse>, t: Throwable) {
@@ -229,7 +249,27 @@ class company_profile_api {
                     call: Call<changeEmailResponse>,
                     response: Response<changeEmailResponse>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            Log.d("response err", jObjError.toString())
+
+                            Toast.makeText(
+                                context, "Email Already Exist ",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(
+                            context, "Error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d("response", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<changeEmailResponse>, t: Throwable) {
