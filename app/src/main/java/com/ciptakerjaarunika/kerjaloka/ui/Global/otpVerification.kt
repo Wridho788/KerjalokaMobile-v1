@@ -12,6 +12,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.google.android.material.button.MaterialButton
 
 
@@ -125,7 +127,6 @@ class otpVerification : Fragment() {
                                 replaceFragment(AkunPage())
                             } else {
                                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-
                             }
                         }
                     }

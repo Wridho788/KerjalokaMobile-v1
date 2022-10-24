@@ -142,8 +142,13 @@ class company_profile_api {
         )
     }
 
-    data class phoneVerificationResponse(val token: String?, val code: String?, val message: String?)
-    interface changeVerification{
+    data class phoneVerificationResponse(
+        val token: String?,
+        val code: String?,
+        val message: String?
+    )
+
+    interface changeVerification {
         @GET("users/change/phoneVerification")
         fun changeVerification(
             @Query("token") token: String?,
@@ -196,21 +201,29 @@ class company_profile_api {
         )
     }
 
-    data class changeEmailResponses(val code: Int, val message: String)
+    data class changeEmailResponses(
+        val token: String?,
+        val code: String?,
+        val message: String?
+    )
+
     interface emailChangeVerification {
-        @Headers("Content-Type: application/json", "Accept: application/json")
-        @POST("users/change/email")
-        fun EmailChangeVerification(@Body changeEmailRequest: ChangeEmailRequest): Call<changeEmailResponses>
+        @GET("users/change/emailVerification")
+        fun EmailChangeVerification(
+            @Query("token") token: String?,
+            @Query("code") code: String?
+        ): Call<changeEmailResponses>
     }
 
     fun EmailChangeVerification(
-        email: String,
+        token: String?,
+        code: String?,
         context: Context?,
         onResult: (changeEmailResponses?) -> Unit
     ) {
-        val retrofit = ServiceBuilder(context).POST(emailChangeVerification::class.java)
+        val retrofit = ServiceBuilder(context).GET(emailChangeVerification::class.java)
 
-        retrofit.EmailChangeVerification(ChangeEmailRequest(email)).enqueue(
+        retrofit.EmailChangeVerification(token, code).enqueue(
             object : Callback<changeEmailResponses> {
                 override fun onResponse(
                     call: Call<changeEmailResponses>,
