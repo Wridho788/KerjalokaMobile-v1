@@ -25,22 +25,13 @@ class otpVerification : Fragment() {
     private var countdown_timer: CountDownTimer? = null
     private var time_in_milliseconds = 60000L
     private var pauseOffSet = 0L
+    private var token = ""
 
     @SuppressLint("RestrictedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val btnSend = view.findViewById<MaterialButton>(R.id.sendOTP)
         val btnResend = view.findViewById<TextView>(R.id.btn_resend)
-//        timer = object : CountDownTimer(60000, 1000) {
-//            override fun onTick(p0: Long) {
-//                ticker.text = (p0 / 1000).toString()
-//            }
-//
-//            override fun onFinish() {
-//                Log.d("onFinish", "finish")
-////                replaceFragment(AkunPage())
-//            }
-//        }
         starTimer(pauseOffSet)
 
 
@@ -48,17 +39,17 @@ class otpVerification : Fragment() {
             val descFromBundle = arguments?.getString(EXTRA_DESCRIPTION)
             val descPhone = arguments?.getString(EXTRA_DESCRIPTION_PHONE)
             val descNewPhone = arguments?.getString(EXTRA_DESCRIPTION_NEW_PHONE)
-            val descEmail = arguments?.getString(EXTRA_DESCRIPTION_EMAIL)
+//            val descEmail = arguments?.getString(EXTRA_DESCRIPTION_EMAIL)
+            val descNewEmail = arguments?.getString(EXTRA_DESCRIPTION_NEW_EMAIL)
 
             val phoneTextView = view.findViewById<TextView>(R.id.phone_verif)
-            var token = descFromBundle
-            Log.d("token first", token.toString())
+            token = descFromBundle.toString()
+            Log.d("token lama", token.toString())
 
             if (description == "phone") {
-                phoneTextView.text = descPhone
+                phoneTextView.text = descNewPhone
 
                 btnResend.setOnClickListener {
-//                    timer.onFinish()
                     resetTimer()
                     starTimer(pauseOffSet)
                     Log.d("new phone", descNewPhone.toString())
@@ -68,9 +59,8 @@ class otpVerification : Fragment() {
                             context
                         ) { it1 ->
                             if (it1?.code == 210) {
-                                Log.d("new token", it1.token.toString())
-//                                token = it1.token
-//                                Log.d("token new", token.toString())
+                                token = it1.token.toString()
+                                Log.d("token resend", token)
 
                             }
                         }
@@ -78,13 +68,22 @@ class otpVerification : Fragment() {
                     Toast.makeText(context, "Resend phone", Toast.LENGTH_SHORT).show()
                 }
             } else if (description == "email") {
-                phoneTextView.text = descEmail
+                phoneTextView.text = descNewEmail
                 btnSend.setOnClickListener {
                     resetTimer()
+                    starTimer(pauseOffSet)
+                    company_profile_api().checkNewEmail(descNewEmail.toString(), context) {
+                        company_profile_api().ChangeEmail(descNewEmail.toString(), context) { it1 ->
+                            if (it1?.code == 210) {
+                                token = it1.token.toString()
+                                Log.d("token resend", token)
+
+                            }
+                        }
+                    }
                     Toast.makeText(context, "ReSend email", Toast.LENGTH_SHORT).show()
                 }
             }
-
 
 //            description = descFromBundle
             btnSend.setOnClickListener {
@@ -95,13 +94,9 @@ class otpVerification : Fragment() {
                 val otp5 = view.findViewById<EditText>(R.id.otp5)?.text.toString()
                 val otp6 = view.findViewById<EditText>(R.id.otp6)?.text.toString()
                 val code = "${otp1 + otp2 + otp3 + otp4 + otp5 + otp6}"
-//                Log.d("token new", token.toString())
 
                 if (description == "phone") {
-//                    Log.d("token new desc", description.toString())
-//                    Log.d("token new phone", token.toString())
-
-                    company_profile_api().PhoneChangeVerification(token.toString(), code, context) {
+                    company_profile_api().PhoneChangeVerification(token, code, context) {
                         if (it != null) {
                             if (it.code == "210") {
                                 resetTimer()
@@ -116,8 +111,8 @@ class otpVerification : Fragment() {
                     }
                 } else if (description == "email") {
                     Log.d("token email", description.toString())
-                    Log.d("token email", token.toString())
-                    company_profile_api().EmailChangeVerification(token.toString(), code, context) {
+                    Log.d("token email", token)
+                    company_profile_api().EmailChangeVerification(token, code, context) {
                         Log.d("token email", it.toString())
                         if (it != null) {
                             Log.d("token email not null", it.toString())
@@ -154,12 +149,6 @@ class otpVerification : Fragment() {
         }.start()
     }
 
-//    private fun pauseTimer(){
-//        if (countdown_timer!= null){
-//            countdown_timer!!.cancel()
-//        }
-//    }
-
     private fun resetTimer() {
         val ticker = view?.findViewById<TextView>(R.id.time)
         if (countdown_timer != null) {
@@ -178,11 +167,6 @@ class otpVerification : Fragment() {
 
         return view
     }
-
-//    override fun onStart() {
-//        super.onStart()
-//        timer.start()
-//    }
 
     companion object {
         var EXTRA_DESCRIPTION = "extra_description"

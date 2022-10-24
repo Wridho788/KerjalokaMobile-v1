@@ -3,12 +3,13 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.model.User.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.google.gson.Gson
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +35,25 @@ class AUTHAPI {
                     onResult(null)
                 }
                 override fun onResponse( call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+//                            Log.d("response json", map.toString())
+
+                            Toast.makeText(
+                                context, map.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+
+                        Log.d("response", response.toString())
+                    }
                 }
             }
         )

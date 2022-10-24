@@ -35,7 +35,7 @@ class EditEmail : Fragment() {
                 ) {
                     company_profile_api().ChangeEmail(newEmail?.text.toString(), context) { it1 ->
                         if (it1?.code == 210) {
-                            replaceFragment(otpVerification(), it1.token, userData)
+                            replaceFragment(otpVerification(), it1.token, userData,  newEmail?.text.toString())
                         }
                     }
                 }
@@ -62,11 +62,12 @@ class EditEmail : Fragment() {
 
 
     @SuppressLint("RestrictedApi")
-    private fun replaceFragment(fragment: Fragment, token: String?, email: String?) {
+    private fun replaceFragment(fragment: Fragment, token: String?, email: String?, newEmail: String?) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION_EMAIL, email)
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION_NEW_EMAIL, newEmail)
 
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "email"

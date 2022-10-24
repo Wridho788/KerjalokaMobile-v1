@@ -120,10 +120,9 @@ class company_profile_api {
                         val data: String = response.errorBody()!!.string()
                         try {
                             val jObjError = JSONObject(data)
-                            Log.d("response", jObjError.toString())
-
+                            val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, "Phone number is Not Valid",
+                                context, map.toString(),
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {
@@ -176,10 +175,9 @@ class company_profile_api {
                         val data: String = response.errorBody()!!.string()
                         try {
                             val jObjError = JSONObject(data)
-                            Log.d("response err", jObjError.toString())
-
+                            val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, "Phone number is Not Valid",
+                                context, map.toString(),
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {
@@ -235,10 +233,9 @@ class company_profile_api {
                         val data: String = response.errorBody()!!.string()
                         try {
                             val jObjError = JSONObject(data)
-                            Log.d("response err", jObjError.toString())
-
+                            val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, "Token Tidak Valid",
+                                context, map.toString(),
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {
@@ -307,10 +304,9 @@ class company_profile_api {
                         val data: String = response.errorBody()!!.string()
                         try {
                             val jObjError = JSONObject(data)
-                            Log.d("response err", jObjError.toString())
-
+                            val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, "Email Already Exist ",
+                                context, map.toString(),
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {

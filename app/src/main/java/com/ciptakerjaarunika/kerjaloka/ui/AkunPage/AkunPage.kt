@@ -39,7 +39,7 @@ import java.security.MessageDigest
 import java.util.*
 
 
-class AkunPage() : Fragment() {
+class AkunPage : Fragment() {
 
     companion object {
         var mGoogleSignInClient: GoogleSignInClient? = null
@@ -53,18 +53,18 @@ class AkunPage() : Fragment() {
         super.onCreate(savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
     }
+
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
 
-        if(SessionManager(context).user != null){
-            if(SessionManager(context).user?.roleNo == 4) {
+        if (SessionManager(context).user != null) {
+            if (SessionManager(context).user?.roleNo == 4) {
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,profilepage(0),"ProfileFragment")
+                ft.replace(id, profilepage(0), "ProfileFragment")
                 ft.commit()
-            }
-            else{
+            } else {
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id, ProfilePage(),"ProfileFragment")
+                ft.replace(id, ProfilePage(), "ProfileFragment")
                 ft.commit()
             }
         }
@@ -76,23 +76,26 @@ class AkunPage() : Fragment() {
             signIn()
         }
 
-        btn_login?.setOnClickListener{
+        btn_login?.setOnClickListener {
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
 
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        return@OnCompleteListener
-                    }
-                    val token = task.result
-                    SessionManager(context).device_token = token
+                if (!task.isSuccessful) {
+                    return@OnCompleteListener
+                }
+                val token = task.result
+                SessionManager(context).device_token = token
             })
 
 
-            val loginRequest = LoginRequest(email = email, password=password, deviceToken = SessionManager(context).device_token.toString())
+            val loginRequest = LoginRequest(
+                email = email,
+                password = password,
+                deviceToken = SessionManager(context).device_token.toString()
+            )
             AUTHAPI().Login(context, loginRequest) {
-                Log.d("Login Response", it.toString());
 
                 if (it != null) {
                     if (it.code == "252") {
@@ -175,6 +178,7 @@ class AkunPage() : Fragment() {
         })
 
     }
+
     private fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient!!.signInIntent
         startActivityForResult(signInIntent, Req_Code)
@@ -206,9 +210,9 @@ class AkunPage() : Fragment() {
         val currentDate = Date()
         val cal: Calendar = Calendar.getInstance()
         // remove next line if you're always using the current time.
-        cal.setTime(currentDate)
+        cal.time = currentDate
         cal.add(Calendar.HOUR, +1)
-        val oneHourBack: Date = cal.getTime()
+        val oneHourBack: Date = cal.time
 
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -216,8 +220,8 @@ class AkunPage() : Fragment() {
                 Login.SavedPreference.setUsername(context!!, account.displayName.toString())
 
                 val text = "${account.idToken}${config().authKey}${4}"
-                val crypt = MessageDigest.getInstance("MD5");
-                crypt.update(text.toByteArray());
+                val crypt = MessageDigest.getInstance("MD5")
+                crypt.update(text.toByteArray())
                 val hash = BigInteger(1, crypt.digest()).toString(16)
                 fun md5(str: String): ByteArray =
                     MessageDigest.getInstance("MD5").digest(str.toByteArray(Charsets.UTF_8))
@@ -232,7 +236,12 @@ class AkunPage() : Fragment() {
                 })
 
                 val googleRequest =
-                    GoogleLoginRequest(account.idToken.toString(), oneHourBack.toString(), hash, deviceToken =  SessionManager(context).device_token)
+                    GoogleLoginRequest(
+                        account.idToken.toString(),
+                        oneHourBack.toString(),
+                        hash,
+                        deviceToken = SessionManager(context).device_token
+                    )
                 AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
                     Log.d("google login", it.toString())
                     if (it != null)
@@ -263,6 +272,6 @@ class AkunPage() : Fragment() {
     ): View? {
 
         // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.activity_login, container, false)
+        return inflater.inflate(R.layout.activity_login, container, false)
     }
 }

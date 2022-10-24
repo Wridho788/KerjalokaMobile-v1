@@ -23,12 +23,12 @@ class EditPhone(var phone: String) : Fragment() {
         val txtPhone = view.findViewById<TextView>(R.id.current_user_nomor_telepon_2)
         val newPhone = view.findViewById<EditText>(R.id.masukkan_nomor_telepon_baru)
         val btnSave = view.findViewById<MaterialButton>(R.id.btn_simpan_nomor_telepon)
+        txtPhone.text = phone
 
 
         if (arguments != null) {
             val descFromBundle = arguments?.getString(EditEmail.EXTRA_USER_DATA)
             userData = descFromBundle
-            txtPhone.text = userData
         }
         view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
             back()
@@ -73,7 +73,6 @@ class EditPhone(var phone: String) : Fragment() {
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION_PHONE, phone)
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION_NEW_PHONE, newPhone)
 
-        otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "phone"
         val mFragmentManager = parentFragmentManager
