@@ -14,13 +14,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
-import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.api.AUTHGOOGLEAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -31,14 +30,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.reactnativegooglesignin.RNGoogleSigninModule.RC_SIGN_IN
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.messaging.FirebaseMessaging
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -58,11 +54,6 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
-    }
-
-
-    override fun onStart() {
-        super.onStart()
     }
 
 
@@ -89,25 +80,32 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
             val email = view?.findViewById<EditText>(R.id.txt_email)?.text.toString()
             val password = view?.findViewById<EditText>(R.id.txt_password)?.text.toString()
             if (!email.isNullOrEmpty() && !email.isNullOrBlank() && !password.isNullOrEmpty() && !password.isNullOrBlank()) {
-               FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                        if (!task.isSuccessful) {
-                            return@OnCompleteListener
-                        }
-                        val token = task.result
-                        SessionManager(context).device_token = token
-               })
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+                    val token = task.result
+                    SessionManager(context).device_token = token
+                })
 
 
-                AUTHAPI().Login(context, LoginRequest(email, password, SessionManager(context).device_token.toString())) {
-                    if (it != null){
+                AUTHAPI().Login(
+                    context,
+                    LoginRequest(email, password, SessionManager(context).device_token.toString())
+                ) {
+                    if (it != null) {
                         if (it.code == "252") {
                             SessionManager(context).access_token = it.userToken
                             val mainActivity = activity as MainActivity
                             AUTHAPI().CheckLogin(context, mainActivity) {
-                                if(nameFragment != "lamaran" || SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
+                                if (nameFragment != "lamaran" || SessionManager(context).user == null || SessionManager(
+                                        context
+                                    ).user?.roleNo == Role.Jobseekers.value
+                                ) {
                                     mainActivity.replaceFragment(Goto)
-                                }
-                                else if (nameFragment == "lamaran" && SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null
+                                } else if (nameFragment == "lamaran" && SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(
+                                        context
+                                    ).user?.company != null
                                 ) {
                                     mainActivity.replaceFragment(CompanyListApplicantFragment())
                                 }
@@ -117,7 +115,7 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                             SessionManager(context).user = null
 
                         }
-                        }
+                    }
                     /*if (it != null && it.code == "252") {
 
                         SessionManager(context).access_token = it.userToken
@@ -217,9 +215,9 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         val currentDate = Date()
         val cal: Calendar = Calendar.getInstance()
         // remove next line if you're always using the current time.
-        cal.setTime(currentDate)
+        cal.time = currentDate
         cal.add(Calendar.HOUR, +1)
-        val oneHourBack: Date = cal.getTime()
+        val oneHourBack: Date = cal.time
 
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -227,8 +225,8 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                 SavedPreference.setUsername(context!!, account.displayName.toString())
 
                 val text = "${account.idToken}${config().authKey}${4}"
-                val crypt = MessageDigest.getInstance("MD5");
-                crypt.update(text.toByteArray());
+                val crypt = MessageDigest.getInstance("MD5")
+                crypt.update(text.toByteArray())
                 val hash = BigInteger(1, crypt.digest()).toString(16)
                 fun md5(str: String): ByteArray =
                     MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))
@@ -242,7 +240,12 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                 })
 
                 val googleRequest =
-                    GoogleLoginRequest(account.idToken.toString(), oneHourBack.toString(), hash, deviceToken =  SessionManager(context).device_token)
+                    GoogleLoginRequest(
+                        account.idToken.toString(),
+                        oneHourBack.toString(),
+                        hash,
+                        deviceToken = SessionManager(context).device_token
+                    )
                 AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
                     Log.d("google login", it.toString())
                     if (it != null)

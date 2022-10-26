@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
@@ -52,7 +53,9 @@ class ManageUserSetting : Fragment() {
             replaceFragment(EditUserName())
         }
         editPhone.setOnClickListener{
-            editPhoneFragment(user?.phone)
+           val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ft.replace(R.id.fragment_container, EditPhone(user?.phone.toString()), "editphone")
+            ft.commit()
         }
         editPassword.setOnClickListener{
             replaceFragment(EditPassword())
@@ -102,12 +105,7 @@ class ManageUserSetting : Fragment() {
         username.text = user?.username
         email.text = user?.email
         phone.text = user?.phone
-
-
         return view
-    }
-
-    companion object {
     }
 
     private fun replaceFragment(fragment: Fragment, ){
@@ -138,21 +136,21 @@ class ManageUserSetting : Fragment() {
         }
     }
 
-    private fun editPhoneFragment(data: String?) {
-        val editPhoneFragment = EditPhone()
-        val mBundle = Bundle()
-        val data = Gson().toJson(data)
-        mBundle.putString(EditPhone.EXTRA_USER_DATA, data)
-        editPhoneFragment.arguments = mBundle
-        val mFragmentManager = parentFragmentManager
-        mFragmentManager?.beginTransaction()?.apply {
-            replace(
-                R.id.fragment_container,
-                editPhoneFragment,
-                EditPhone::class.java.simpleName
-            )
-            addToBackStack(null)
-            commit()
-        }
-    }
+//    private fun editPhoneFragment(data: String?) {
+//        val editPhoneFragment = EditPhone(data!!)
+//        val mBundle = Bundle()
+//        val data = Gson().toJson(data)
+//        mBundle.putString(EditPhone.EXTRA_USER_DATA, data)
+//        editPhoneFragment.arguments = mBundle
+//        val mFragmentManager = parentFragmentManager
+//        mFragmentManager?.beginTransaction()?.apply {
+//            replace(
+//                R.id.fragment_container,
+//                editPhoneFragment,
+//                EditPhone::class.java.simpleName
+//            )
+//            addToBackStack(null)
+//            commit()
+//        }
+//    }
 }

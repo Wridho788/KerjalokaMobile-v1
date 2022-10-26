@@ -11,9 +11,10 @@ import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.material.button.MaterialButton
 
-class EditPhone : Fragment() {
+class EditPhone(var phone: String) : Fragment() {
 
     var userData: String? = null
 
@@ -22,15 +23,15 @@ class EditPhone : Fragment() {
         val txtPhone = view.findViewById<TextView>(R.id.current_user_nomor_telepon_2)
         val newPhone = view.findViewById<EditText>(R.id.masukkan_nomor_telepon_baru)
         val btnSave = view.findViewById<MaterialButton>(R.id.btn_simpan_nomor_telepon)
+        txtPhone.text = phone
 
 
         if (arguments != null) {
             val descFromBundle = arguments?.getString(EditEmail.EXTRA_USER_DATA)
             userData = descFromBundle
-            txtPhone.text = userData
         }
         view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
-            fragmentManager?.popBackStack()
+            back()
         }
 
         btnSave.setOnClickListener {
@@ -85,5 +86,11 @@ class EditPhone : Fragment() {
             commit()
 
         }
+    }
+
+    private fun back() {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(id, profilepage(6), "Profile Page")
+        fragmentTransaction.commit()
     }
 }
