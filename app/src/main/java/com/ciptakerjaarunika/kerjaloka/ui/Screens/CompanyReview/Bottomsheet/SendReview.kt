@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,9 @@ import com.google.android.material.chip.ChipGroup
 
 class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fragment) :
     SuperBottomSheetFragment() {
-    private var list: List<proRatingList> = listOf()
+    //    var proRating = null
+    var proRatingId = ArrayList<proRatingList>()
+    var conRatingid = ArrayList<conRatingList>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +42,7 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
         val proRatingGrup = view.findViewById<ChipGroup>(R.id.chipGroupProRating)
         val conRatingGrup = view.findViewById<ChipGroup>(R.id.chipGroupConRating)
 
-        val rating = arrayOf(
+        val proratings = arrayOf(
             proRating("Gaji dan Tunjangan", 1),
             proRating("Tingkat Stress", 2),
             proRating("Jumlah Pekerjaan", 3),
@@ -51,8 +52,17 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
             proRating("Pengembangan Waktu", 7),
         )
 
+        val conratings = arrayOf(
+            proRating("Gaji dan Tunjangan", 1),
+            proRating("Tingkat Stress", 2),
+            proRating("Jumlah Pekerjaan", 3),
+            proRating("Manajemen", 4),
+            proRating("Lingkungan Kerja", 5),
+            proRating("Flexibilitas Waktu", 6),
+            proRating("Pengembangan Waktu", 7),
+        )
 
-        rating.forEach {
+        proratings.forEach {
             val chip = Chip(context)
             chip.setChipBackgroundColorResource(R.color.white)
             chip.chipStrokeWidth = 3f
@@ -69,13 +79,19 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
                     chip.setChipBackgroundColorResource(R.color.danger_100)
                     chip.setChipStrokeColorResource(R.color.danger_500)
                     chip.chipStrokeWidth = 7f
-                    Log.d("click ${id} = ${text}", text.toString())
+                    var idPro = id.toLong()
+                    val idProRating = proRatingList(
+                        idPro
+                    )
+                    proRatingId.add(idProRating)
 
                 }
             }
+        }
+
+        conratings.forEach {
             val chipConRating = Chip(context)
             chipConRating.setChipBackgroundColorResource(R.color.white)
-            chipConRating.isCheckable = false
             chipConRating.chipStrokeWidth = 3f
             chipConRating.apply {
                 textSize = 12f
@@ -87,18 +103,17 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
                 isCheckable = false
                 conRatingGrup.addView(chipConRating as View)
                 chipConRating.setOnClickListener {
-                    chip.setChipBackgroundColorResource(R.color.danger_100)
-                    chip.setChipStrokeColorResource(R.color.danger_500)
-                    chip.chipStrokeWidth = 7f
-                    Log.d("click ${id} = ${text}", text.toString())
+                    chipConRating.setChipBackgroundColorResource(R.color.danger_100)
+                    chipConRating.setChipStrokeColorResource(R.color.danger_500)
+                    chipConRating.chipStrokeWidth = 7f
+                    var idCon = id.toLong()
+                    val idConRating = conRatingList(idCon)
+                    conRatingid.add(idConRating)
                 }
             }
         }
 
 
-        val conRatingList = ArrayList<conRatingList>()
-        val conRating1 = conRatingList(1)
-        conRatingList.add(conRating1)
         btn_send_review.setOnClickListener {
             sendReview()
         }
@@ -129,24 +144,15 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
         val ratingBar = view?.findViewById<RatingBar>(R.id.RatingModal)
         ratingBar?.onRatingBarChangeListener =
             OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating }
-        val proRatingList = ArrayList<proRatingList>()
-        val category1 = proRatingList(
-            1
-        )
-        proRatingList.add(category1)
-        val conRatingList = ArrayList<conRatingList>()
-        val categoryc1 = conRatingList(
-            1
-        )
-        conRatingList.add(categoryc1)
+
         SendReviewAPI().SendReviewCompanyPost(
             context,
             send_Request(
                 CompanyNo,
                 textReview?.text.toString(),
                 ratingBar?.rating!!.toLong(),
-                proRatingList,
-                conRatingList
+                proRatingId,
+                conRatingid
             )
         ) {
             if (it != null) {

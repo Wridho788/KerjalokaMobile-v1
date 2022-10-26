@@ -90,8 +90,6 @@ class fragment_company_job_active_page : Fragment() {
                 jobData = Gson().fromJson(descFromBundle, Data::class.java)
             }
 
-
-
             jobTitle?.text = jobData?.jobPosition
             jobInput?.text = "Diubah pada : " + jobData?.createdOn
             jobExpired?.text = "Kadaluarsa : " + jobData?.expired
@@ -179,6 +177,8 @@ class fragment_company_job_active_page : Fragment() {
                     }
                 } }
             }
+
+
 
         }
     }

@@ -154,13 +154,13 @@ class SendReviewAPI {
     interface SendReviewAPI {
         @Headers("Content-Type: application/json",
             "Accept: application/json")
-        @POST("/jobseeker/rating/send")
+        @POST("jobseeker/rating/send")
         fun sendReview(@Body sendRequest: send_Request): Call<sendResponse>
     }
     interface SendReviewCompanyAPI {
         @Headers("Content-Type: application/json",
             "Accept: application/json")
-        @POST("/company/rating/send")
+        @POST("company/rating/send")
         fun sendReviewCompany(@Body sendRequest: send_Request): Call<sendResponse>
     }
 
