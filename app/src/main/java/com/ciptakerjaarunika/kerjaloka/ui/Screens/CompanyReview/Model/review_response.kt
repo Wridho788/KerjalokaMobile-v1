@@ -78,6 +78,11 @@ data class send_Request(
     val conRating: ArrayList<conRatingList>
 )
 
+data class proRating(
+    val categoryName: String,
+    val categoryNo: Long
+)
+
 data class proRatingList(
     val categoryNo: Long,
 )

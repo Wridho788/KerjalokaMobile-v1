@@ -10,12 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Listener.JobDetail
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.Companyjobs_adapter
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.DataCount
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.ResponseCompanyJobs
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyJobsBinding
 import com.google.gson.Gson

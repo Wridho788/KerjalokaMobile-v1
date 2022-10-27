@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
@@ -109,14 +110,10 @@ class ManageUserSetting : Fragment() {
         username.text = user?.username
         email.text = user?.email
         phone.text = user?.phone
-
-
         return view
     }
 
-    companion object;
-
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, ){
 
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()

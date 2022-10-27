@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.HomePage
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,7 +78,9 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
         company_profile_api().MyJob(context) {
             var count = 0
+                Log.d("myjob", it.toString())
             if (it != null) {
+
                 it.data.forEach {
                     if (it.publish == true) {
                         count++

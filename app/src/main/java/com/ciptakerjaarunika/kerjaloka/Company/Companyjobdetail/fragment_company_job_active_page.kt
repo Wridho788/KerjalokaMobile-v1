@@ -186,6 +186,8 @@ class fragment_company_job_active_page : Fragment() {
 //    }
             }
 
+
+
         }
     }
 
