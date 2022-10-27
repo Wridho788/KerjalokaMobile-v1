@@ -25,25 +25,32 @@ class EditPassword : Fragment() {
         val confPass = view.findViewById<EditText>(R.id.konfirmasi_kata_sandi_baru)
         val btnSimpan = view.findViewById<MaterialButton>(R.id.btn_simpan_kata_sandi)
 
-        btnSimpan.setOnClickListener{
-            company_profile_api().ChangePassword(oldPass.text.toString(), newPass.text.toString(), context){
-                if (it != null && it.code == "210") {
-                    Toast.makeText(activity, "Berhasil Mengubah Password", Toast.LENGTH_SHORT).show()
-                    back()
-                }
-                else {
+        btnSimpan.setOnClickListener {
+            company_profile_api().ChangePassword(
+                oldPass.text.toString(),
+                newPass.text.toString(),
+                context
+            ) {
+                if (it != null) {
+                    if (it.code == "210") {
+                        Toast.makeText(activity, "Berhasil Mengubah Password", Toast.LENGTH_SHORT)
+                            .show()
+                        back()
+                    }
+                } else {
                     Toast.makeText(activity, it?.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
         view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
-           back()
+            back()
         }
         return view
     }
-    private fun back(){
+
+    private fun back() {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(6), "Profile Page")
-        fragmentTransaction?.commit()
+        fragmentTransaction.replace(id, profilepage(6), "Profile Page")
+        fragmentTransaction.commit()
     }
 }

@@ -2,18 +2,15 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.JobResponses
 import com.ciptakerjaarunika.kerjaloka.model.Job.*
-import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.CompanyJobDetail
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.CompanyJobDetailResponse
 import com.ciptakerjaarunika.kerjaloka.model.Test.JobShortQuestions
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailResponse
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rjob_model
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.experience
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobSearch.SearchJob
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -136,8 +133,28 @@ class JobAPI {
                 override fun onFailure(call: Call<withdrawResponse>, t: Throwable) {
                     onResult(null)
                 }
-                override fun onResponse( call: Call<withdrawResponse>, response: Response<withdrawResponse>) {
-                    onResult(response.body())
+                override fun onResponse( call: Call<withdrawResponse>, response: Response<withdrawResponse>)
+                {
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            Log.d("response err", jObjError.toString())
+//                            Toast.makeText(
+//                                context, "Email Already Exist ",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(
+                            context, "Error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d("response", response.toString())
+                    }
                 }
             }
         )

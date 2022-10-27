@@ -4,12 +4,12 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.MainActivity
@@ -25,7 +25,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
 
 class AccountSetting(var data: data?) : Fragment(), iRefreshData {
     private lateinit var binding: FragmentAccountSettingBinding
-
+    var setNewsletter: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +38,11 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
         users().CompanyGetUserData(context) {
             binding.switchDiscoverable.isChecked = it?.data?.isDiscoverable!!
             binding.switchNewsLetter.isChecked = it.data.isNewsletter
+
+
+            Log.d("newsletter", it.data.isNewsletter.toString())
+
+
             if (it.data.userGoogleId.isNullOrEmpty()) {
                 binding.connect.strokeColor = ColorStateList.valueOf(Color.parseColor("#FF6666"))
                 binding.connect.setTextColor(ColorStateList.valueOf(Color.parseColor("#FF6666")))
@@ -59,12 +64,11 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
 
             binding.switchNewsLetter.setOnClickListener { it1 ->
                 if (binding.switchNewsLetter.isChecked == true) {
-                    var setNl = it.data.isNewsletter == true
-                    company_profile_api().newsletter(setNl, context) {
-                    }
+                    setNewsletter = true
+                    company_profile_api().newsletter(setNewsletter, context) {}
                 } else {
-                    var setNl = !it.data.isNewsletter
-                    company_profile_api().newsletter(setNl, context) {}
+                    setNewsletter = false
+                    company_profile_api().newsletter(setNewsletter, context) {}
                 }
             }
         }
@@ -151,12 +155,11 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
 
                     binding.switchNewsLetter.setOnClickListener { it1 ->
                         if (binding.switchNewsLetter.isChecked == true) {
-                            var setNl = it.data.isNewsletter == true
-                            company_profile_api().newsletter(setNl, context) {
-                            }
+                            setNewsletter = true
+                            company_profile_api().newsletter(setNewsletter, context) {}
                         } else {
-                            var setNl = !it.data.isNewsletter
-                            company_profile_api().newsletter(setNl, context) {}
+                            setNewsletter = false
+                            company_profile_api().newsletter(setNewsletter, context) {}
                         }
                     }
                 }

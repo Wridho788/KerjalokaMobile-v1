@@ -4,12 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,10 +44,12 @@ class fragment_company_job_active_page : Fragment() {
             }
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         UpdateUI()
     }
+
     fun UpdateUI(){
         val jobTitle = view?.findViewById<TextView>(R.id.company_job_title)
         val jobInput = view?.findViewById<TextView>(R.id.company_job_input)
@@ -89,8 +91,6 @@ class fragment_company_job_active_page : Fragment() {
                     arguments?.getString(fragment_company_job_active_page.EXTRA_DETAIL_JOB)
                 jobData = Gson().fromJson(descFromBundle, Data::class.java)
             }
-
-
 
             jobTitle?.text = jobData?.jobPosition
             jobInput?.text = "Diubah pada : " + jobData?.createdOn
@@ -162,22 +162,28 @@ class fragment_company_job_active_page : Fragment() {
 
             val jobNo = jobData?.jobNo
             draftJob?.setOnClickListener {
-                jobNo?.let { it1 -> JobAPI().DraftJob(context, it1) {
-                    Toast.makeText(context, it?.Message, Toast.LENGTH_SHORT).show()
-                    if(it?.Message?.toLowerCase()?.contains("success") == true){
-                        publishJob?.isVisible = true
-                        draftJob?.isVisible = false
-                    }
-                } }
+                JobAPI().DraftJob(context, jobNo!!) {
+                    Log.d("draft", it.toString())
+                }
+//                jobNo?.let { it1 -> JobAPI().DraftJob(context, it1) {
+//                    Log.d("draft", it.toString())
+//                    Toast.makeText(context, it?.Message, Toast.LENGTH_SHORT).show()
+//                    if(it?.Message?.toLowerCase()?.contains("success") == true){
+//                        publishJob?.isVisible = true
+//                        draftJob?.isVisible = false
+//                    }
+//                }
+
             }
             publishJob?.setOnClickListener {
-                jobNo?.let { it1 -> JobAPI().PublishJob(context, it1) {
-                    Toast.makeText(context, it?.Message, Toast.LENGTH_SHORT).show()
-                    if(it?.Message?.toLowerCase()?.contains("success") == true){
-                        publishJob?.isVisible = false
-                        draftJob?.isVisible = true
-                    }
-                } }
+//                jobNo?.let { it1 -> JobAPI().PublishJob(context, it1) {
+//                    Toast.makeText(context, it?.Message, Toast.LENGTH_SHORT).show()
+//                    if(it?.Message?.toLowerCase()?.contains("success") == true){
+//                        publishJob?.isVisible = false
+//                        draftJob?.isVisible = true
+//                    }
+//                }
+//    }
             }
 
         }

@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,15 +24,12 @@ import com.google.gson.Gson
 
 class ManageUserSetting : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_manage_profile_setting_layout, container, false)
+        val view =
+            inflater.inflate(R.layout.fragment_manage_profile_setting_layout, container, false)
         val username = view.findViewById<TextView>(R.id.profile_username)
         val email = view.findViewById<TextView>(R.id.profile_email)
         val phone = view.findViewById<TextView>(R.id.profile_nomor_telepon)
@@ -45,21 +43,21 @@ class ManageUserSetting : Fragment() {
         val btnDeactive = view.findViewById<MaterialButton>(R.id.btn_nonaktifkan_akun)
         val user = SessionManager(context).user
 
-        editEmail.setOnClickListener{
+        editEmail.setOnClickListener {
             editEmailFragment(user?.email)
         }
-        editUserName.setOnClickListener{
+        editUserName.setOnClickListener {
             replaceFragment(EditUserName())
         }
-        editPhone.setOnClickListener{
+        editPhone.setOnClickListener {
             editPhoneFragment(user?.phone)
         }
-        editPassword.setOnClickListener{
+        editPassword.setOnClickListener {
             replaceFragment(EditPassword())
         }
 
-        view.findViewById<MaterialButton>(R.id.btn_logout).setOnClickListener{
-            ProfileAPI().Logout(SessionManager(context).device_token, context){
+        view.findViewById<MaterialButton>(R.id.btn_logout).setOnClickListener {
+            ProfileAPI().Logout(SessionManager(context).device_token, context) {
                 val intent = Intent(context, MainActivity()::class.java)
                 startActivity(intent)
             }
@@ -70,26 +68,35 @@ class ManageUserSetting : Fragment() {
             newsletter.isChecked = it?.data?.users?.isNewsletter ?: false
 
             newsletter.setOnClickListener { it1 ->
-                if (newsletter.isChecked == true) {
-                    var setNl = it?.data?.users?.isNewsletter == true
-                    company_profile_api().newsletter(setNl, context) {}
-                } else {
+                Log.d("newsletter", newsletter.isChecked.toString())
+                if (newsletter.isChecked == false) {
                     var setNl = it?.data?.users?.isNewsletter == false
-                    company_profile_api().newsletter(setNl, context) {}
+                    company_profile_api().newsletter(setNl, context) {
+                        Log.d("newsletter", it.toString())
+                    }
+                } else {
+                    var setNl = it?.data?.users?.isNewsletter == true
+                    company_profile_api().newsletter(setNl, context) {
+                        Log.d("newsletter", it.toString())
+
+                    }
+                }
+            }
+            discover.setOnClickListener {
+                if (discover.isChecked == true) {
+                    company_profile_api().discoverable(context) {
+                        Log.d("discover", it.toString())
+                    }
+                } else {
+                    company_profile_api().undiscoverable(context) {
+                        Log.d("discover", it.toString())
+                    }
                 }
             }
         }
 
-        discover.setOnClickListener{
-            if (discover.isChecked==true){
-                company_profile_api().discoverable(context){}
-            }
-            else{
-                company_profile_api().undiscoverable(context){}
-            }
-        }
 
-        btnDeactive.setOnClickListener{
+        btnDeactive.setOnClickListener {
             val sheet = ModalDeactivateAccount()
             activity?.let { it1 ->
                 sheet.show(
@@ -107,10 +114,9 @@ class ManageUserSetting : Fragment() {
         return view
     }
 
-    companion object {
-    }
+    companion object;
 
-    private fun replaceFragment(fragment: Fragment, ){
+    private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
@@ -126,7 +132,7 @@ class ManageUserSetting : Fragment() {
         mBundle.putString(EditEmail.EXTRA_USER_DATA, data)
         editEmailFragment.arguments = mBundle
         val mFragmentManager = parentFragmentManager
-        mFragmentManager?.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction().apply {
             replace(
                 R.id.fragment_container,
                 editEmailFragment,
@@ -145,7 +151,7 @@ class ManageUserSetting : Fragment() {
         mBundle.putString(EditPhone.EXTRA_USER_DATA, data)
         editPhoneFragment.arguments = mBundle
         val mFragmentManager = parentFragmentManager
-        mFragmentManager?.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction().apply {
             replace(
                 R.id.fragment_container,
                 editPhoneFragment,
