@@ -19,9 +19,14 @@ import retrofit2.http.*
 class JobAPI {
     interface icompanyJobDetail {
         @GET("company/officer/job/{jobNo}")
-        fun getData(@Path("jobNo") jobNo : Long): Call<CompanyJobDetailResponse>
+        fun getData(@Path("jobNo") jobNo: Long): Call<CompanyJobDetailResponse>
     }
-     fun GetCompanyJobDetail(jobNo: Long, context: Context?, onResult: (CompanyJobDetailResponse) -> Unit){
+
+    fun GetCompanyJobDetail(
+        jobNo: Long,
+        context: Context?,
+        onResult: (CompanyJobDetailResponse) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(icompanyJobDetail::class.java)
 
         retrofit.getData(jobNo).enqueue(
@@ -29,24 +34,40 @@ class JobAPI {
                 override fun onFailure(call: Call<CompanyJobDetailResponse>, t: Throwable) {
                     Log.d("Response API", t.toString())
                 }
-                override fun onResponse( call: Call<CompanyJobDetailResponse>, response: Response<CompanyJobDetailResponse>) {
+
+                override fun onResponse(
+                    call: Call<CompanyJobDetailResponse>,
+                    response: Response<CompanyJobDetailResponse>
+                ) {
                     response.body()?.let { onResult(it) }
                 }
             }
         )
     }
+
     interface getJobDetailLogin {
         @GET("/users/jobseeker/job/{CompanyNo}/{JobNo}")
-        fun getJobDetailLogin(@Path("CompanyNo") CompanyNo: Long?, @Path("JobNo") JobNo: Long) : Call<rJobDetailResponse>
+        fun getJobDetailLogin(
+            @Path("CompanyNo") CompanyNo: Long?,
+            @Path("JobNo") JobNo: Long
+        ): Call<rJobDetailResponse>
     }
 
     interface getJobDetail {
         @GET("/job/{CompanyNo}/{JobNo}/Visitor")
-        fun getJobDetail(@Path("CompanyNo") CompanyNo: Long?, @Path("JobNo") JobNo: Long) : Call<rJobDetailResponse>
+        fun getJobDetail(
+            @Path("CompanyNo") CompanyNo: Long?,
+            @Path("JobNo") JobNo: Long
+        ): Call<rJobDetailResponse>
     }
 
-    fun getJobDetailAsync(context: Context?,CompanyNo:Long?, JobNo:Long,onResult: (rJobDetailResponse?) -> Unit){
-        if(SessionManager(context).user == null) {
+    fun getJobDetailAsync(
+        context: Context?,
+        CompanyNo: Long?,
+        JobNo: Long,
+        onResult: (rJobDetailResponse?) -> Unit
+    ) {
+        if (SessionManager(context).user == null) {
             val retrofit = ServiceBuilder(context).GET(getJobDetail::class.java)
             retrofit.getJobDetail(CompanyNo, JobNo).enqueue(
                 object : Callback<rJobDetailResponse> {
@@ -63,15 +84,18 @@ class JobAPI {
                     }
                 }
             )
-        }
-        else{
+        } else {
             val retrofit = ServiceBuilder(context).GET(getJobDetailLogin::class.java)
             retrofit.getJobDetailLogin(CompanyNo, JobNo).enqueue(
                 object : Callback<rJobDetailResponse> {
                     override fun onFailure(call: Call<rJobDetailResponse>, t: Throwable) {
                         onResult(null)
                     }
-                    override fun onResponse( call: Call<rJobDetailResponse>, response: Response<rJobDetailResponse>) {
+
+                    override fun onResponse(
+                        call: Call<rJobDetailResponse>,
+                        response: Response<rJobDetailResponse>
+                    ) {
                         onResult(response.body())
                     }
                 }
@@ -80,7 +104,12 @@ class JobAPI {
     }
 
 
-    fun GetJobDetailLogin(context: Context?,CompanyNo:Long, JobNo:Long,onResult: (rJobDetailResponse?) -> Unit){
+    fun GetJobDetailLogin(
+        context: Context?,
+        CompanyNo: Long,
+        JobNo: Long,
+        onResult: (rJobDetailResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(getJobDetailLogin::class.java)
 
         retrofit.getJobDetailLogin(CompanyNo, JobNo).enqueue(
@@ -88,7 +117,11 @@ class JobAPI {
                 override fun onFailure(call: Call<rJobDetailResponse>, t: Throwable) {
                     onResult(null)
                 }
-                override fun onResponse( call: Call<rJobDetailResponse>, response: Response<rJobDetailResponse>) {
+
+                override fun onResponse(
+                    call: Call<rJobDetailResponse>,
+                    response: Response<rJobDetailResponse>
+                ) {
                     onResult(response.body())
                 }
             }
@@ -99,10 +132,10 @@ class JobAPI {
     //Jobseeker Get All his Applications
     interface getMyApplications {
         @GET("jobseeker/applications")
-        fun getList() : Call<myApplicationsResponse>
+        fun getList(): Call<myApplicationsResponse>
     }
 
-    fun GetMyAPplications(context: Context?,onResult: (myApplicationsResponse?) -> Unit){
+    fun GetMyAPplications(context: Context?, onResult: (myApplicationsResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getMyApplications::class.java)
 
         retrofit.getList().enqueue(
@@ -111,7 +144,11 @@ class JobAPI {
                     Log.d("Response API", t.toString())
                     onResult(null)
                 }
-                override fun onResponse( call: Call<myApplicationsResponse>, response: Response<myApplicationsResponse>) {
+
+                override fun onResponse(
+                    call: Call<myApplicationsResponse>,
+                    response: Response<myApplicationsResponse>
+                ) {
                     onResult(response.body())
                 }
             }
@@ -119,13 +156,13 @@ class JobAPI {
     }
 
     // Withdraw Job
-    data class  withdrawResponse(val code :Int, val Message : String)
+    data class withdrawResponse(val code: Int, val Message: String)
     interface withdrawJob {
         @GET("jobseeker/withdraw/{JobNo}")
-        fun withdrawJob(@Path("JobNo") JobNo: Long) : Call<withdrawResponse>
+        fun withdrawJob(@Path("JobNo") JobNo: Long): Call<withdrawResponse>
     }
 
-    fun WithdrawJob(context: Context?, JobNo:Long,onResult: (withdrawResponse?) -> Unit){
+    fun WithdrawJob(context: Context?, JobNo: Long, onResult: (withdrawResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(withdrawJob::class.java)
 
         retrofit.withdrawJob(JobNo).enqueue(
@@ -133,50 +170,49 @@ class JobAPI {
                 override fun onFailure(call: Call<withdrawResponse>, t: Throwable) {
                     onResult(null)
                 }
-                override fun onResponse( call: Call<withdrawResponse>, response: Response<withdrawResponse>)
-                {
-                    if (response.body() != null) {
-                        onResult(response.body())
-                    } else {
-                        val data: String = response.errorBody()!!.string()
-                        try {
-                            val jObjError = JSONObject(data)
-                            Log.d("response err", jObjError.toString())
-//                            Toast.makeText(
-//                                context, "Email Already Exist ",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-                        } catch (e: Exception) {
-                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
-                        }
-                        Toast.makeText(
-                            context, "Error",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        Log.d("response", response.toString())
-                    }
+
+                override fun onResponse(
+                    call: Call<withdrawResponse>,
+                    response: Response<withdrawResponse>
+                ) {
+                    onResult(response.body())
                 }
             }
         )
     }
 
     // Report Job
-    data class  reportJobResponse(val code :Int, val message : String)
+    data class reportJobResponse(val code: Int, val message: String)
     interface reportJob {
         @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("jobseeker/job/{JobNo}/report")
-        fun reportJob(@Path("JobNo") JobNo: Long, @Body reportJobRequest: ReportJobRequest) : Call<reportJobResponse>
+        fun reportJob(
+            @Path("JobNo") JobNo: Long,
+            @Body reportJobRequest: ReportJobRequest
+        ): Call<reportJobResponse>
     }
 
-    fun ReportJob(JobNo:Long, Message : String, context: Context?,onResult: (reportJobResponse?) -> Unit){
+    fun ReportJob(
+        JobNo: Long,
+        Message: String,
+        context: Context?,
+        onResult: (reportJobResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).POST(reportJob::class.java)
 
-        retrofit.reportJob(JobNo, ReportJobRequest(JobNo, SessionManager(context).user?.userNo!!, Message)).enqueue(
+        retrofit.reportJob(
+            JobNo,
+            ReportJobRequest(JobNo, SessionManager(context).user?.userNo!!, Message)
+        ).enqueue(
             object : Callback<reportJobResponse> {
                 override fun onFailure(call: Call<reportJobResponse>, t: Throwable) {
                     onResult(null)
                 }
-                override fun onResponse( call: Call<reportJobResponse>, response: Response<reportJobResponse>) {
+
+                override fun onResponse(
+                    call: Call<reportJobResponse>,
+                    response: Response<reportJobResponse>
+                ) {
                     onResult(response.body())
                 }
             }
@@ -187,37 +223,50 @@ class JobAPI {
     interface bookmarkJob {
         @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("jobseeker/bookmark")
-        fun start(@Body bookmarkJob: BookmarkJob) : Call<BookmarkResponse>
+        fun start(@Body bookmarkJob: BookmarkJob): Call<BookmarkResponse>
     }
+
     //UnBookmark Job
     interface unbookmarkJob {
         @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("jobseeker/unbookmark")
-        fun start(@Body bookmarkJob: BookmarkJob) : Call<BookmarkResponse>
+        fun start(@Body bookmarkJob: BookmarkJob): Call<BookmarkResponse>
     }
 
-    fun BookmarkJob(jobNo : Long, bookmark: Boolean, context: Context?,onResult: (BookmarkResponse?) -> Unit){
-        if(bookmark){
+    fun BookmarkJob(
+        jobNo: Long,
+        bookmark: Boolean,
+        context: Context?,
+        onResult: (BookmarkResponse?) -> Unit
+    ) {
+        if (bookmark) {
             var retrofit = ServiceBuilder(context).POST(bookmarkJob::class.java)
             retrofit.start(BookmarkJob(jobNo, SessionManager(context).user?.userNo!!)).enqueue(
                 object : Callback<BookmarkResponse> {
                     override fun onFailure(call: Call<BookmarkResponse>, t: Throwable) {
                         onResult(null)
                     }
-                    override fun onResponse( call: Call<BookmarkResponse>, response: Response<BookmarkResponse>) {
+
+                    override fun onResponse(
+                        call: Call<BookmarkResponse>,
+                        response: Response<BookmarkResponse>
+                    ) {
                         onResult(response.body())
                     }
                 }
             )
-        }
-        else{
+        } else {
             var retrofit = ServiceBuilder(context).POST(unbookmarkJob::class.java)
             retrofit.start(BookmarkJob(jobNo, SessionManager(context).user?.userNo!!)).enqueue(
                 object : Callback<BookmarkResponse> {
                     override fun onFailure(call: Call<BookmarkResponse>, t: Throwable) {
                         onResult(null)
                     }
-                    override fun onResponse( call: Call<BookmarkResponse>, response: Response<BookmarkResponse>) {
+
+                    override fun onResponse(
+                        call: Call<BookmarkResponse>,
+                        response: Response<BookmarkResponse>
+                    ) {
                         onResult(response.body())
                     }
                 }
@@ -227,39 +276,44 @@ class JobAPI {
     }
 
     data class jobRecommendationResponse(
-        val code : Int,
-        val data : List<SearchJobModel>
+        val code: Int,
+        val data: List<SearchJobModel>
     )
+
     interface getJobRecommendationAuth {
         @GET("jobseeker/job/recommendation")
-        fun getData(@Query("getAll") getAll : Boolean) : Call<jobRecommendationResponse>
+        fun getData(@Query("getAll") getAll: Boolean): Call<jobRecommendationResponse>
     }
 
-    fun getJobRecommendation(getAll : Boolean, context: Context?, onResult: (jobRecommendationResponse?) -> Unit){
-            val retrofit = ServiceBuilder(context).GET(getJobRecommendationAuth::class.java)
+    fun getJobRecommendation(
+        getAll: Boolean,
+        context: Context?,
+        onResult: (jobRecommendationResponse?) -> Unit
+    ) {
+        val retrofit = ServiceBuilder(context).GET(getJobRecommendationAuth::class.java)
 
-            retrofit.getData(getAll).enqueue(
-                object : Callback<jobRecommendationResponse> {
-                    override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
-                        onResult(null)
-                    }
-
-                    override fun onResponse(
-                        call: Call<jobRecommendationResponse>,
-                        response: Response<jobRecommendationResponse>
-                    ) {
-                        onResult(response.body())
-                    }
+        retrofit.getData(getAll).enqueue(
+            object : Callback<jobRecommendationResponse> {
+                override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
+                    onResult(null)
                 }
-            )
+
+                override fun onResponse(
+                    call: Call<jobRecommendationResponse>,
+                    response: Response<jobRecommendationResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
     }
 
     interface getBookmarkedJob {
         @GET("jobseeker/bookmark")
-        fun getData() : Call<jobRecommendationResponse>
+        fun getData(): Call<jobRecommendationResponse>
     }
 
-    fun getBookmarkedJob(context: Context?, onResult: (jobRecommendationResponse?) -> Unit){
+    fun getBookmarkedJob(context: Context?, onResult: (jobRecommendationResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getBookmarkedJob::class.java)
 
         retrofit.getData().enqueue(
@@ -280,10 +334,18 @@ class JobAPI {
 
     interface getNearJob {
         @GET("jobseeker/nearMe")
-        fun getData(@Query("latitude")latitude: String,@Query("longtitude")longtitude: String ) : Call<jobRecommendationResponse>
+        fun getData(
+            @Query("latitude") latitude: String,
+            @Query("longtitude") longtitude: String
+        ): Call<jobRecommendationResponse>
     }
 
-    fun getNearJob(latitude : String,longtitude: String, context: Context?, onResult: (jobRecommendationResponse?) -> Unit){
+    fun getNearJob(
+        latitude: String,
+        longtitude: String,
+        context: Context?,
+        onResult: (jobRecommendationResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(getNearJob::class.java)
 
         retrofit.getData(latitude, longtitude).enqueue(
@@ -307,22 +369,24 @@ class JobAPI {
         val message: String,
         val data: List<topSearchModel>
     )
+
     data class topSearchModel(
-        val keyword : String,
-        val count : Int
+        val keyword: String,
+        val count: Int
     )
+
     interface getTopSearch {
         @GET("users/job/topsearch")
-        fun getData() : Call<topSearchResponse>
+        fun getData(): Call<topSearchResponse>
     }
 
     // Get All Company Job
     interface getCompanyJob {
         @GET("company/officer/jobs")
-        fun getData() : Call<JobResponses>
+        fun getData(): Call<JobResponses>
     }
 
-    fun getJob(context: Context?, onResult: (JobResponses?) -> Unit){
+    fun getJob(context: Context?, onResult: (JobResponses?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getCompanyJob::class.java)
 
         retrofit.getData().enqueue(
@@ -347,10 +411,10 @@ class JobAPI {
     //Draft Job
     interface draftJob {
         @GET("company/officer/job/{jobNo}/unpublish")
-        fun draftJob(@Path("jobNo") jobNo: Long) : Call<withdrawResponse>
+        fun draftJob(@Path("jobNo") jobNo: Long): Call<withdrawResponse>
     }
 
-    fun DraftJob(context: Context?, jobNo:Long,onResult: (withdrawResponse?) -> Unit){
+    fun DraftJob(context: Context?, jobNo: Long, onResult: (withdrawResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(draftJob::class.java)
 
         retrofit.draftJob(jobNo).enqueue(
@@ -358,8 +422,31 @@ class JobAPI {
                 override fun onFailure(call: Call<withdrawResponse>, t: Throwable) {
                     onResult(null)
                 }
-                override fun onResponse( call: Call<withdrawResponse>, response: Response<withdrawResponse>) {
-                    onResult(response.body())
+
+                override fun onResponse(
+                    call: Call<withdrawResponse>,
+                    response: Response<withdrawResponse>
+                ) {
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            Toast.makeText(
+                                context, map.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(
+                            context, "Error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d("response", response.toString())
+                    }
                 }
             }
         )
@@ -368,10 +455,10 @@ class JobAPI {
     //Publish Job
     interface publishJob {
         @GET("company/officer/job/{jobNo}/publish")
-        fun publishJob(@Path("jobNo") jobNo: Long) : Call<withdrawResponse>
+        fun publishJob(@Path("jobNo") jobNo: Long): Call<withdrawResponse>
     }
 
-    fun PublishJob(context: Context?, jobNo:Long,onResult: (withdrawResponse?) -> Unit){
+    fun PublishJob(context: Context?, jobNo: Long, onResult: (withdrawResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(publishJob::class.java)
 
         retrofit.publishJob(jobNo).enqueue(
@@ -379,14 +466,37 @@ class JobAPI {
                 override fun onFailure(call: Call<withdrawResponse>, t: Throwable) {
                     onResult(null)
                 }
-                override fun onResponse( call: Call<withdrawResponse>, response: Response<withdrawResponse>) {
-                    onResult(response.body())
+
+                override fun onResponse(
+                    call: Call<withdrawResponse>,
+                    response: Response<withdrawResponse>
+                ) {
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            Toast.makeText(
+                                context, map.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(
+                            context, "Error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d("response", response.toString())
+                    }
                 }
             }
         )
     }
 
-    fun GetTopSearch(context: Context?, onResult: (topSearchResponse?) -> Unit){
+    fun GetTopSearch(context: Context?, onResult: (topSearchResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getTopSearch::class.java)
 
         retrofit.getData().enqueue(
@@ -394,7 +504,11 @@ class JobAPI {
                 override fun onFailure(call: Call<topSearchResponse>, t: Throwable) {
                     onResult(null)
                 }
-                override fun onResponse(call: Call<topSearchResponse>, response: Response<topSearchResponse> ) {
+
+                override fun onResponse(
+                    call: Call<topSearchResponse>,
+                    response: Response<topSearchResponse>
+                ) {
                     onResult(response.body())
                 }
             }
@@ -403,10 +517,14 @@ class JobAPI {
 
     interface getRelatedJOb {
         @GET("users/job/related")
-        fun getData(@Query("jobNo")jobNo: Long) : Call<jobRecommendationResponse>
+        fun getData(@Query("jobNo") jobNo: Long): Call<jobRecommendationResponse>
     }
 
-    fun getRelatedJob(jobNo: Long, context: Context?, onResult: (jobRecommendationResponse?) -> Unit){
+    fun getRelatedJob(
+        jobNo: Long,
+        context: Context?,
+        onResult: (jobRecommendationResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(getRelatedJOb::class.java)
 
         retrofit.getData(jobNo).enqueue(
@@ -419,10 +537,9 @@ class JobAPI {
                     call: Call<jobRecommendationResponse>,
                     response: Response<jobRecommendationResponse>
                 ) {
-                    if(response.body()?.code == 210){
+                    if (response.body()?.code == 210) {
                         onResult(response.body())
-                    }
-                    else{
+                    } else {
                         onResult(null)
                     }
                 }
@@ -432,37 +549,42 @@ class JobAPI {
 
     data class searchJobRequest(
         var keyword: String?,
-        var locations : List<Int>,
-        var jobtypes : List<Int>,
-        var skills : List<Int>,
-        var experienceLevel : List<Int>,
-        var salaryMin : Int?,
-        var salaryMax : Int?,
-        var page : Int,
+        var locations: List<Int>,
+        var jobtypes: List<Int>,
+        var skills: List<Int>,
+        var experienceLevel: List<Int>,
+        var salaryMin: Int?,
+        var salaryMax: Int?,
+        var page: Int,
     )
+
     interface searchJob {
-        @Headers("Content-Type: application/json","Accept: application/json")
+        @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("users/mobile/search_job")
-        fun getData(@Body search : searchJobRequest) : Call<jobRecommendationResponse>
+        fun getData(@Body search: searchJobRequest): Call<jobRecommendationResponse>
     }
 
-    fun SearchJob(search : searchJobRequest, context: Context?, onResult: (jobRecommendationResponse?) -> Unit) {
-            val retrofit = ServiceBuilder(context).POST(searchJob::class.java)
+    fun SearchJob(
+        search: searchJobRequest,
+        context: Context?,
+        onResult: (jobRecommendationResponse?) -> Unit
+    ) {
+        val retrofit = ServiceBuilder(context).POST(searchJob::class.java)
 
-            retrofit.getData(search).enqueue(
-                object : Callback<jobRecommendationResponse> {
-                    override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
-                        onResult(null)
-                    }
-
-                    override fun onResponse(
-                        call: Call<jobRecommendationResponse>,
-                        response: Response<jobRecommendationResponse>
-                    ) {
-                            onResult(response.body())
-                    }
+        retrofit.getData(search).enqueue(
+            object : Callback<jobRecommendationResponse> {
+                override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
+                    onResult(null)
                 }
-            )
+
+                override fun onResponse(
+                    call: Call<jobRecommendationResponse>,
+                    response: Response<jobRecommendationResponse>
+                ) {
+                    onResult(response.body())
+                }
+            }
+        )
     }
 
 
@@ -470,13 +592,22 @@ class JobAPI {
         val code: String,
         val message: String
     )
+
     interface applyJob {
-        @Headers("Content-Type: application/json","Accept: application/json")
+        @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("jobseeker/apply/{jobNo}")
-        fun getData(@Path("jobNo")jobNo: Long, @Body apply : ApplyJobRequest) : Call<ApplyJobResponse>
+        fun getData(
+            @Path("jobNo") jobNo: Long,
+            @Body apply: ApplyJobRequest
+        ): Call<ApplyJobResponse>
     }
 
-    fun ApplyJob(jobNo: Long,ApplyJobRequest : ApplyJobRequest , context: Context?, onResult: (ApplyJobResponse?) -> Unit) {
+    fun ApplyJob(
+        jobNo: Long,
+        ApplyJobRequest: ApplyJobRequest,
+        context: Context?,
+        onResult: (ApplyJobResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).POST(applyJob::class.java)
 
         retrofit.getData(jobNo, ApplyJobRequest).enqueue(
@@ -500,12 +631,17 @@ class JobAPI {
         val message: String,
         val data: List<JobShortQuestions>
     )
+
     interface GetJobShortQuestion {
         @GET("jobseeker/job/jobshortquestions")
-        fun getData(@Query("jobNo")jobNo: Long) : Call<jobShortQuestionResponse>
+        fun getData(@Query("jobNo") jobNo: Long): Call<jobShortQuestionResponse>
     }
 
-    fun GetJobShortQuestion(jobNo: Long, context: Context?, onResult: (jobShortQuestionResponse?) -> Unit) {
+    fun GetJobShortQuestion(
+        jobNo: Long,
+        context: Context?,
+        onResult: (jobShortQuestionResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).POST(GetJobShortQuestion::class.java)
 
         retrofit.getData(jobNo).enqueue(

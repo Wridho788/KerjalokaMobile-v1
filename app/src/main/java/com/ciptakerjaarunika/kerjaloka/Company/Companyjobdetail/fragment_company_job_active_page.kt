@@ -4,12 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,11 +34,10 @@ class fragment_company_job_active_page : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        JobAPI().getJob(context){
-            if(it != null) {
-                if(jobData != null)
-                {
-                    jobData = it.data.find { data-> data.jobNo == jobData!!.jobNo }
+        JobAPI().getJob(context) {
+            if (it != null) {
+                if (jobData != null) {
+                    jobData = it.data.find { data -> data.jobNo == jobData!!.jobNo }
                 }
                 UpdateUI()
             }
@@ -50,7 +49,7 @@ class fragment_company_job_active_page : Fragment() {
         UpdateUI()
     }
 
-    fun UpdateUI(){
+    fun UpdateUI() {
         val jobTitle = view?.findViewById<TextView>(R.id.company_job_title)
         val jobInput = view?.findViewById<TextView>(R.id.company_job_input)
         val jobExpired = view?.findViewById<TextView>(R.id.company_job_expired)
@@ -86,7 +85,7 @@ class fragment_company_job_active_page : Fragment() {
 
         if (arguments != null) {
 
-            if(jobData == null) {
+            if (jobData == null) {
                 val descFromBundle =
                     arguments?.getString(fragment_company_job_active_page.EXTRA_DETAIL_JOB)
                 jobData = Gson().fromJson(descFromBundle, Data::class.java)
@@ -105,10 +104,9 @@ class fragment_company_job_active_page : Fragment() {
 
 //            jobView.text=listanalytic[0].clickCount.toString()
             jobReq?.text = jobData?.jobDescription
-            if(jobData?.jobSalaryMin == jobData?.jobSalaryMax){
+            if (jobData?.jobSalaryMin == jobData?.jobSalaryMax) {
                 jobSalary?.text = jobData?.jobSalaryMax.toString()
-            }
-            else if (jobData?.jobSalaryMin != null || jobData?.jobSalaryMax != null) {
+            } else if (jobData?.jobSalaryMin != null || jobData?.jobSalaryMax != null) {
                 jobSalary?.text =
                     jobData?.jobSalaryMin.toString() + " - " + jobData?.jobSalaryMax.toString()
             } else {
@@ -117,11 +115,11 @@ class fragment_company_job_active_page : Fragment() {
             jobData?.jobTitle?.forEach {
                 jobQual?.text = jobQual?.text.toString() + it.titleName + ", "
             }
-            jobMinex?.text = jobData?.jobMinExperience.toString() +" tahun"
+            jobMinex?.text = jobData?.jobMinExperience.toString() + " tahun"
             jobType?.text = jobData?.jobField?.fieldName
             jobRole?.text = jobData?.jobRole?.jobRoleName
 
-            if(jobData?.createdOn != null) {
+            if (jobData?.createdOn != null) {
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
                 sdf.timeZone = TimeZone.getTimeZone("GMT+7")
                 val time: Long = sdf.parse(jobData?.createdOn.toString()).time
@@ -163,29 +161,26 @@ class fragment_company_job_active_page : Fragment() {
             val jobNo = jobData?.jobNo
             draftJob?.setOnClickListener {
                 JobAPI().DraftJob(context, jobNo!!) {
-                    Log.d("draft", it.toString())
+                    if (it != null) {
+                        if (it.Message.lowercase(Locale.getDefault()).contains("success") == true) {
+                            Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                            publishJob?.isVisible = true
+                            draftJob.isVisible = false
+                        }
+                    }
                 }
-//                jobNo?.let { it1 -> JobAPI().DraftJob(context, it1) {
-//                    Log.d("draft", it.toString())
-//                    Toast.makeText(context, it?.Message, Toast.LENGTH_SHORT).show()
-//                    if(it?.Message?.toLowerCase()?.contains("success") == true){
-//                        publishJob?.isVisible = true
-//                        draftJob?.isVisible = false
-//                    }
-//                }
-
             }
             publishJob?.setOnClickListener {
-//                jobNo?.let { it1 -> JobAPI().PublishJob(context, it1) {
-//                    Toast.makeText(context, it?.Message, Toast.LENGTH_SHORT).show()
-//                    if(it?.Message?.toLowerCase()?.contains("success") == true){
-//                        publishJob?.isVisible = false
-//                        draftJob?.isVisible = true
-//                    }
-//                }
-//    }
+                JobAPI().PublishJob(context, jobNo!!) {
+                    if (it != null) {
+                        if (it.Message.lowercase(Locale.getDefault()).contains("success") == true) {
+                            Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                            publishJob.isVisible = false
+                            draftJob?.isVisible = true
+                        }
+                    }
+                }
             }
-
 
 
         }
@@ -199,6 +194,7 @@ class fragment_company_job_active_page : Fragment() {
         val view = inflater.inflate(R.layout.fragment_company_job_active_page, container, false)
         return view
     }
+
     companion object {
         var EXTRA_DETAIL_JOB = "extra_detailJob"
     }

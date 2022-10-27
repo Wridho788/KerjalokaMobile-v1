@@ -6,23 +6,13 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import com.ciptakerjaarunika.kerjaloka.model.Data.CheckDocument
 import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
-import com.ciptakerjaarunika.kerjaloka.model.Interview.returnUploadChatPhotoApi
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.user
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.FragmentSalaryExpectation
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
-import java.io.File
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 class ManageProfileAPI {
     data class editAboutMeRequest(

@@ -2,14 +2,12 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
@@ -24,6 +22,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 
 class ManageUserSetting : Fragment() {
+
+    var setNewsletter: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,36 +66,25 @@ class ManageUserSetting : Fragment() {
 
         ProfileAPI().JobseekerGetProfileData(context) {
             discover.isChecked = it?.data?.users?.isDiscoverable ?: false
-            newsletter.isChecked = it?.data?.users?.isNewsletter ?: false
+//            newsletter.isChecked = it?.data?.users?.isNewsletter ?: false
 
             newsletter.setOnClickListener { it1 ->
-                Log.d("newsletter", newsletter.isChecked.toString())
-                if (newsletter.isChecked == false) {
-                    var setNl = it?.data?.users?.isNewsletter == false
-                    company_profile_api().newsletter(setNl, context) {
-                        Log.d("newsletter", it.toString())
-                    }
+                if (newsletter.isChecked == true) {
+                    setNewsletter = true
+                    company_profile_api().newsletter(setNewsletter, context) {}
                 } else {
-                    var setNl = it?.data?.users?.isNewsletter == true
-                    company_profile_api().newsletter(setNl, context) {
-                        Log.d("newsletter", it.toString())
-
-                    }
+                    setNewsletter = false
+                    company_profile_api().newsletter(setNewsletter, context) {}
                 }
             }
             discover.setOnClickListener {
                 if (discover.isChecked == true) {
-                    company_profile_api().discoverable(context) {
-                        Log.d("discover", it.toString())
-                    }
+                    company_profile_api().discoverable(context) {}
                 } else {
-                    company_profile_api().undiscoverable(context) {
-                        Log.d("discover", it.toString())
-                    }
+                    company_profile_api().undiscoverable(context) {}
                 }
             }
         }
-
 
         btnDeactive.setOnClickListener {
             val sheet = ModalDeactivateAccount()
@@ -113,7 +102,7 @@ class ManageUserSetting : Fragment() {
         return view
     }
 
-    private fun replaceFragment(fragment: Fragment, ){
+    private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
@@ -142,7 +131,8 @@ class ManageUserSetting : Fragment() {
     }
 
     private fun editPhoneFragment(data: String?) {
-        val editPhoneFragment = EditPhone()
+        val user = SessionManager(context).user
+        val editPhoneFragment = EditPhone(user?.phone!!)
         val mBundle = Bundle()
         val data = Gson().toJson(data)
         mBundle.putString(EditPhone.EXTRA_USER_DATA, data)

@@ -25,6 +25,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Global.ModalDeactivateAccount
 
 class AccountSetting(var data: data?) : Fragment(), iRefreshData {
     private lateinit var binding: FragmentAccountSettingBinding
+
     var setNewsletter: Boolean = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,10 +39,7 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
         users().CompanyGetUserData(context) {
             binding.switchDiscoverable.isChecked = it?.data?.isDiscoverable!!
             binding.switchNewsLetter.isChecked = it.data.isNewsletter
-
-
-            Log.d("newsletter", it.data.isNewsletter.toString())
-
+            Log.d("users", it.toString())
 
             if (it.data.userGoogleId.isNullOrEmpty()) {
                 binding.connect.strokeColor = ColorStateList.valueOf(Color.parseColor("#FF6666"))
@@ -71,6 +69,14 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                     company_profile_api().newsletter(setNewsletter, context) {}
                 }
             }
+            var phone = it.data.phone.toString()
+            var email = it.data.email.toString()
+            binding.editNomorTeleponSetting.setOnClickListener {
+                replaceFragment(CompEditPhone(this, phone))
+            }
+            binding.editEmailProfileSetting.setOnClickListener {
+                replaceFragment(CompEditEmail(this, email))
+            }
         }
 
 
@@ -83,15 +89,11 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
         binding.editUsernameSetting.setOnClickListener {
             replaceFragment(CompEditUsername(this))
         }
-        binding.editEmailProfileSetting.setOnClickListener {
-            replaceFragment(CompEditEmail(this))
-        }
+
         binding.editKataSandi.setOnClickListener {
             replaceFragment(CompEditKataSandi(this))
         }
-        binding.editNomorTeleponSetting.setOnClickListener {
-            replaceFragment(CompEditPhone(this))
-        }
+
 
         binding.btnDeactivedAcc.setOnClickListener {
             val sheet = ModalDeactivateAccount()
@@ -122,8 +124,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
             binding.contentContainer.visibility = VISIBLE
             if (it != null) {
                 data = it.data
-
-
                 binding.profileUsername.text = data?.username
                 binding.profilePhone.text = data?.phone
                 binding.profileEmail.text = data?.email
@@ -175,13 +175,13 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                     replaceFragment(CompEditUsername(this))
                 }
                 binding.editEmailProfileSetting.setOnClickListener {
-                    replaceFragment(CompEditEmail(this))
+                    replaceFragment(CompEditEmail(this, data?.email.toString()))
                 }
                 binding.editKataSandi.setOnClickListener {
                     replaceFragment(CompEditKataSandi(this))
                 }
                 binding.editNomorTeleponSetting.setOnClickListener {
-                    replaceFragment(CompEditPhone(this))
+                    replaceFragment(CompEditPhone(this, data?.phone.toString()))
                 }
 
                 binding.btnDeactivedAcc.setOnClickListener {

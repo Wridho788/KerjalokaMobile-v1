@@ -84,10 +84,11 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/comp_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_medium"
-                        android:text="vvictoria2991@gmail.com"
+                        android:text="johndoe@gmail.com"
                         android:textColor="@color/dark_100"
                         android:textSize="14sp" />
 

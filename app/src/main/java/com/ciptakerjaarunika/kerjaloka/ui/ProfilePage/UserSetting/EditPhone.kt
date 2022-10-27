@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.UserSetting
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ class EditPhone(var phone: String) : Fragment() {
         if (arguments != null) {
             val descFromBundle = arguments?.getString(EditEmail.EXTRA_USER_DATA)
             userData = descFromBundle
+            Log.d("editPhone", userData.toString())
         }
         view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
             back()

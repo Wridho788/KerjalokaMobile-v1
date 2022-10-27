@@ -2,23 +2,19 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.ui.Global.otpVerification
 import com.google.android.material.button.MaterialButton
 
-class CompEditEmail(val iRefreshData: iRefreshData) : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+class CompEditEmail(val iRefreshData: iRefreshData, var email: String) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +25,8 @@ class CompEditEmail(val iRefreshData: iRefreshData) : Fragment() {
 
         val newEmail = view.findViewById<EditText>(R.id.comp_EditusrEmail)
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveEmail)
+        val txtEmail = view.findViewById<TextView>(R.id.comp_email)
+        txtEmail.text = email
 
         view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
             fragmentManager?.popBackStack()
@@ -38,10 +36,10 @@ class CompEditEmail(val iRefreshData: iRefreshData) : Fragment() {
         btnSave.setOnClickListener {
             val email = newEmail?.text.toString()
             company_profile_api().checkNewEmail(email, context) { checkResponse ->
-                    company_profile_api().ChangeEmail(email, context) { changeEmail ->
-                        if(changeEmail?.code == 210) {
-                            replaceFragment(otpVerification(), changeEmail?.token)
-                        }
+                company_profile_api().ChangeEmail(email, context) { changeEmail ->
+                    if (changeEmail?.code == 210) {
+                        replaceFragment(otpVerification(), changeEmail.token, email, newEmail?.text.toString())
+                    }
                 }
             }
         }
@@ -49,19 +47,24 @@ class CompEditEmail(val iRefreshData: iRefreshData) : Fragment() {
         return view
     }
 
-    companion object {
-    }
+    companion object;
 
     @SuppressLint("RestrictedApi")
-    private fun replaceFragment(fragment: Fragment, token: String?) {
+    private fun replaceFragment(
+        fragment: Fragment,
+        token: String?,
+        email: String?,
+        newEmail: String?
+    ) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
-
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION_EMAIL, email)
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION_NEW_EMAIL, newEmail)
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "email"
         val mFragmentManager = parentFragmentManager
-        mFragmentManager?.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction()?.apply {
             replace(
                 R.id.fragment_container,
                 otpVerificationFragment,
