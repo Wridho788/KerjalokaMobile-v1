@@ -359,7 +359,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Rp 6.000.000 - Rp 7.500.000"
                                 android:textColor="@color/black"
                                 android:textSize="12dp" />
                         </LinearLayout>
@@ -382,7 +381,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Bachelor’s Degree, Master, Prof Cert"
                                 android:textColor="@color/dark_100"
                                 android:textSize="12dp" />
                         </LinearLayout>

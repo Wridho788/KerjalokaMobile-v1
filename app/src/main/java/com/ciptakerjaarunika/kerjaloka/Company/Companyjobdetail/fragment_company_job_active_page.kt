@@ -104,18 +104,31 @@ class fragment_company_job_active_page : Fragment() {
 
 //            jobView.text=listanalytic[0].clickCount.toString()
             jobReq?.text = jobData?.jobDescription
-            if (jobData?.jobSalaryMin == jobData?.jobSalaryMax) {
-                jobSalary?.text = jobData?.jobSalaryMax.toString()
-            } else if (jobData?.jobSalaryMin != null || jobData?.jobSalaryMax != null) {
-                jobSalary?.text =
-                    jobData?.jobSalaryMin.toString() + " - " + jobData?.jobSalaryMax.toString()
-            } else {
+            if (jobData?.jobSalaryMin != null && jobData?.jobSalaryMin != null) {
+                if (jobData?.jobSalaryMin == null) {
+                    jobSalary?.text = "Rp. 0 -"
+                }
+                if (jobData?.jobSalaryMax == null) {
+                    jobSalary?.text = "Rp. 0 -"
+                }
+                if (jobData?.jobSalaryMin != null || jobData?.jobSalaryMax != null) {
+                    jobSalary?.text =
+                        jobData?.jobSalaryMin.toString() + " - " + jobData?.jobSalaryMax.toString()
+                } else {
+                    jobSalary?.text = "-"
+                }
+            }else {
                 jobSalary?.text = "-"
             }
+
             jobData?.jobTitle?.forEach {
                 jobQual?.text = jobQual?.text.toString() + it.titleName + ", "
             }
-            jobMinex?.text = jobData?.jobMinExperience.toString() + " tahun"
+            if (jobData?.jobMinExperience != null) {
+                jobMinex?.text = jobData?.jobMinExperience.toString() + " tahun"
+            } else {
+                jobMinex?.text = "0 Tahun"
+            }
             jobType?.text = jobData?.jobField?.fieldName
             jobRole?.text = jobData?.jobRole?.jobRoleName
 
