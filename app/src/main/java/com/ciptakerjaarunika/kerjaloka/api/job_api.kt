@@ -441,10 +441,6 @@ class JobAPI {
                         } catch (e: Exception) {
                             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                         }
-                        Toast.makeText(
-                            context, "Error",
-                            Toast.LENGTH_LONG
-                        ).show()
                         Log.d("response", response.toString())
                     }
                 }
@@ -485,10 +481,6 @@ class JobAPI {
                         } catch (e: Exception) {
                             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                         }
-                        Toast.makeText(
-                            context, "Error",
-                            Toast.LENGTH_LONG
-                        ).show()
                         Log.d("response", response.toString())
                     }
                 }

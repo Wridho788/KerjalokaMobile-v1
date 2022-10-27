@@ -162,8 +162,8 @@ class fragment_company_job_active_page : Fragment() {
             draftJob?.setOnClickListener {
                 JobAPI().DraftJob(context, jobNo!!) {
                     if (it != null) {
-                        if (it.Message.lowercase(Locale.getDefault()).contains("success") == true) {
-                            Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                        if (it.code == 280) {
+                            Toast.makeText(context, "Sukses Publish Job", Toast.LENGTH_SHORT).show()
                             publishJob?.isVisible = true
                             draftJob.isVisible = false
                         }
@@ -173,11 +173,12 @@ class fragment_company_job_active_page : Fragment() {
             publishJob?.setOnClickListener {
                 JobAPI().PublishJob(context, jobNo!!) {
                     if (it != null) {
-                        if (it.Message.lowercase(Locale.getDefault()).contains("success") == true) {
-                            Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                        if (it.code == 280) {
+                            Toast.makeText(context, "Sukses Draft Job", Toast.LENGTH_SHORT).show()
                             publishJob.isVisible = false
                             draftJob?.isVisible = true
                         }
+
                     }
                 }
             }
