@@ -5,6 +5,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/imac24teal/Documents/keystoreKerjaloka')
+            storePassword 'SuksesSelalu345'
+            keyAlias 'keyKerjaloka'
+            keyPassword 'SuksesSelalu345'
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -15,6 +23,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {

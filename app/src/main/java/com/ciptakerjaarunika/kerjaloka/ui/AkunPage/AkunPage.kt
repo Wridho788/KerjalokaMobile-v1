@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -71,6 +72,7 @@ class AkunPage : Fragment() {
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
 
+
         val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
         btn_login_google.setOnClickListener {
             signIn()
@@ -95,20 +97,22 @@ class AkunPage : Fragment() {
                 password = password,
                 deviceToken = SessionManager(context).device_token.toString()
             )
-            AUTHAPI().Login(context, loginRequest) {
 
+
+            AUTHAPI().Login(context, loginRequest) {
                 if (it != null) {
                     if (it.code == "252") {
+                        loadingDone()
                         Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-
                         val activity = activity as MainActivity
                         SessionManager(context).access_token = it.userToken
                         AUTHAPI().CheckLogin(context, activity) {
+                            loadingDone()
                             activity.replaceFragment(AkunPage())
                         }
                     } else {
-                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                         SessionManager(context).user = null
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                     }
                     /*if(it != null && it.code == "252"){
 
@@ -155,6 +159,9 @@ class AkunPage : Fragment() {
                 }*/
                 }
             }
+            loadingFailed()
+
+
         }
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -270,8 +277,24 @@ class AkunPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_login, container, false)
+        val view = inflater.inflate(R.layout.activity_login, container, false)
+        return view
+    }
+
+    fun loadingDone() {
+        val spinnerLogin = view?.findViewById<LinearLayout>(R.id.spinnerLogin)
+        val loginForm = view?.findViewById<LinearLayout>(R.id.loginForm)
+
+        spinnerLogin?.visibility = View.VISIBLE
+        loginForm?.visibility = View.GONE
+    }
+
+    fun loadingFailed() {
+        val spinnerLogin = view?.findViewById<LinearLayout>(R.id.spinnerLogin)
+        val loginForm = view?.findViewById<LinearLayout>(R.id.loginForm)
+
+        spinnerLogin?.visibility = View.GONE
+        loginForm?.visibility = View.VISIBLE
     }
 }
