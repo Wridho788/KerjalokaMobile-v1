@@ -1,4 +1,4 @@
-package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage;
+package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage
 
 import android.Manifest
 import android.content.Intent
@@ -10,8 +10,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -34,12 +32,12 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.appbar.MaterialToolbar
 
 
-class JobPage: Fragment(), IJobPage{
+class JobPage : Fragment(), IJobPage {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Array<String>>
-    private var listRecommendation : List<SearchJobModel> = listOf()
-    private var listNear : List<SearchJobModel> = listOf()
-    private var listBookmark : List<SearchJobModel> = listOf()
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Array<String>>
+    private var listRecommendation: List<SearchJobModel> = listOf()
+    private var listNear: List<SearchJobModel> = listOf()
+    private var listBookmark: List<SearchJobModel> = listOf()
     private lateinit var binding: FragmentJobPageBinding
 
     override fun onCreateView(
@@ -49,7 +47,7 @@ class JobPage: Fragment(), IJobPage{
         binding = FragmentJobPageBinding.inflate(layoutInflater)
         val view = binding.root
 
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
 //        val callback: OnBackPressedCallback =
@@ -67,11 +65,15 @@ class JobPage: Fragment(), IJobPage{
                 permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) ||
                         permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false)
                 -> {
-                   getNearJob()
+                    getNearJob()
                 }
-                 else -> {
-                     Toast.makeText(context, "Memerlukan akses lokasi untuk mendapatkan pekerjaan terdekat", Toast.LENGTH_LONG).show()
-                     view.findViewById<ConstraintLayout>(R.id.near_container).visibility = GONE
+                else -> {
+                    Toast.makeText(
+                        context,
+                        "Memerlukan akses lokasi untuk mendapatkan pekerjaan terdekat",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    view.findViewById<ConstraintLayout>(R.id.near_container).visibility = GONE
                 }
             }
         }
@@ -99,59 +101,59 @@ class JobPage: Fragment(), IJobPage{
             activity?.onBackPressed()
         }
 
-        layout_search_job.setOnClickListener{
+        layout_search_job.setOnClickListener {
             changeFragment(SearchJob())
         }
 
     }
-    override fun RefreshData(){
+
+    override fun RefreshData() {
         binding.bookmarkContainer.visibility = VISIBLE
         JobAPI().getJobRecommendation(true, context) {
             recommendationDone()
             if (it != null) {
-                binding.recommenJob?.visibility = VISIBLE
+                binding.recommenJob.visibility = VISIBLE
                 listRecommendation = it.data.take(5)
-                binding.seeRecommend?.visibility = if(it.data.size <= 5) GONE else VISIBLE
-                binding.recommenJob?.apply {
-                    adapter = JobAdapter(1, listRecommendation ,context, this@JobPage, null)
+                binding.seeRecommend.visibility = if (it.data.size <= 5) GONE else VISIBLE
+                binding.recommenJob.apply {
+                    adapter = JobAdapter(1, listRecommendation, context, this@JobPage, null)
                     layoutManager = LinearLayoutManager(activity)
                 }
             }
         }
 
-        if(SessionManager(context).user != null) {
+        if (SessionManager(context).user != null) {
             JobAPI().getBookmarkedJob(context) {
-                    bookmarkedDone()
+                bookmarkedDone()
                 if (it?.data != null) {
                     listBookmark = it.data.take(5)
-                    binding.btnSeeBookmarked?.visibility = if (it.data.size <= 5) GONE else VISIBLE
-                    binding.bookmaredJob?.apply {
+                    binding.btnSeeBookmarked.visibility = if (it.data.size <= 5) GONE else VISIBLE
+                    binding.bookmaredJob.apply {
                         adapter = JobAdapter(3, listBookmark, context, this@JobPage, null)
                         layoutManager = LinearLayoutManager(activity)
                     }
                 }
             }
-        }
-        else{
+        } else {
             //Get Search Job
             view?.findViewById<ConstraintLayout>(R.id.bookmark_container)?.visibility = GONE
         }
 
 
-        binding.searchJobBtn?.setOnClickListener {
+        binding.searchJobBtn.setOnClickListener {
             val intent = Intent(activity, SearchJob::class.java)
             startActivity(intent)
         }
 
-        binding.btnSeeBookmarked?.setOnClickListener {
+        binding.btnSeeBookmarked.setOnClickListener {
             changeFragment(JobBookmarkFragment())
         }
 
-        binding.btnSeeNearMe?.setOnClickListener {
+        binding.btnSeeNearMe.setOnClickListener {
             changeFragment(JobNearmeFragment())
         }
 
-        binding.seeRecommend?.setOnClickListener {
+        binding.seeRecommend.setOnClickListener {
             changeFragment(JobRecommendationFragment())
         }
     }
@@ -163,15 +165,14 @@ class JobPage: Fragment(), IJobPage{
         ft.commit()
     }
 
-    fun getNearJob(){
+    fun getNearJob() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
-            if(it == null){
+            if (it == null) {
                 nearJobDone()
                 binding.emptyNearJob.visibility = VISIBLE
                 binding.btnSeeNearMe.visibility = GONE
-            }
-            else {
+            } else {
                 binding.emptyNearJob.visibility = GONE
 
                 val latitude = it.latitude.toString()
@@ -179,14 +180,14 @@ class JobPage: Fragment(), IJobPage{
                 JobAPI().getNearJob(latitude, longtitude, context) {
                     nearJobDone()
                     if (it != null && it.data != null && it.data.size != 0) {
-                        binding.btnSeeNearMe.visibility = if(it.data.size <= 5) GONE else VISIBLE
+                        binding.btnSeeNearMe.visibility = if (it.data.size <= 5) GONE else VISIBLE
                         val recyclerView = binding.nearmeJob
 
-                        recyclerView?.apply {
-                            adapter = JobAdapter(2, it.data.take(5), context, this@JobPage,  null)
+                        recyclerView.apply {
+                            adapter = JobAdapter(2, it.data.take(5), context, this@JobPage, null)
                             layoutManager = LinearLayoutManager(activity)
                         }
-                        recyclerView?.adapter?.notifyDataSetChanged()
+                        recyclerView.adapter?.notifyDataSetChanged()
                     } else {
                         binding.emptyNearJob.visibility = VISIBLE
                         binding.btnSeeNearMe.visibility = GONE
@@ -195,15 +196,18 @@ class JobPage: Fragment(), IJobPage{
             }
         }
     }
-    override fun BookmarkJob(ListType : Int, JobNo: Long, Index: Int) {
+
+    override fun BookmarkJob(ListType: Int, JobNo: Long, Index: Int) {
         JobAPI().BookmarkJob(JobNo, !listRecommendation[Index].bookmarked, context) {
-            if(it != null) {
+            if (it != null) {
                 if (it.code == 210) {
-                    when(ListType){
+                    when (ListType) {
                         1 -> {
-                            listRecommendation[Index].bookmarked = !listRecommendation[Index].bookmarked
-                            binding.recommenJob?.apply {
-                                adapter = JobAdapter(1, listRecommendation ,context, this@JobPage, null)
+                            listRecommendation[Index].bookmarked =
+                                !listRecommendation[Index].bookmarked
+                            binding.recommenJob.apply {
+                                adapter =
+                                    JobAdapter(1, listRecommendation, context, this@JobPage, null)
                                 layoutManager = LinearLayoutManager(activity)
                             }
                             binding.recommenJob.adapter?.notifyDataSetChanged()
@@ -211,8 +215,8 @@ class JobPage: Fragment(), IJobPage{
                         }
                         2 -> {
                             listNear[Index].bookmarked = !listNear[Index].bookmarked
-                            binding.nearmeJob?.apply {
-                                adapter = JobAdapter(1, listNear ,context, this@JobPage, null)
+                            binding.nearmeJob.apply {
+                                adapter = JobAdapter(1, listNear, context, this@JobPage, null)
                                 layoutManager = LinearLayoutManager(activity)
                             }
                             binding.nearmeJob.adapter?.notifyDataSetChanged()
@@ -221,8 +225,8 @@ class JobPage: Fragment(), IJobPage{
                         }
                         3 -> {
                             listBookmark[Index].bookmarked = !listBookmark[Index].bookmarked
-                            binding.bookmaredJob?.apply {
-                                adapter = JobAdapter(1, listBookmark ,context, this@JobPage,  null)
+                            binding.bookmaredJob.apply {
+                                adapter = JobAdapter(1, listBookmark, context, this@JobPage, null)
                                 layoutManager = LinearLayoutManager(activity)
                             }
                             binding.bookmaredJob.adapter?.notifyDataSetChanged()
@@ -245,23 +249,27 @@ class JobPage: Fragment(), IJobPage{
         binding.recommendationJobContainer.visibility = VISIBLE
         binding.spinnerRecommendation.visibility = GONE
     }
+
     fun bookmarkedDone() {
         binding.bookmarkJobContainer.visibility = VISIBLE
         binding.spinnerBookmark.visibility = GONE
     }
+
     fun nearJobDone() {
         binding.nearJobContainer.visibility = VISIBLE
         binding.spinnerNear.visibility = GONE
     }
-    fun changeFragment(Goto : Fragment){
+
+    fun changeFragment(Goto: Fragment) {
         val fragmentTransaction = fragmentManager!!.beginTransaction()
         fragmentTransaction.addToBackStack("Job Page")
         fragmentTransaction.replace(R.id.fragment_container, Goto)
         fragmentTransaction.commit()
     }
 }
-interface IJobPage{
+
+interface IJobPage {
     fun RefreshData()
-    fun GoToJobDetail(JobNo : Long, CompanyNo: Long?)
-    fun BookmarkJob(ListType : Int, JobNo : Long, Index: Int)
+    fun GoToJobDetail(JobNo: Long, CompanyNo: Long?)
+    fun BookmarkJob(ListType: Int, JobNo: Long, Index: Int)
 }

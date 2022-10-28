@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -75,6 +76,8 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         }
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
+        val spinnerLogin = itemView.findViewById<LinearLayout>(R.id.spinnerLogin)
+        val loginForm = itemView.findViewById<LinearLayout>(R.id.loginForm)
 
         btn_login.setOnClickListener {
             val email = view?.findViewById<EditText>(R.id.txt_email)?.text.toString()
@@ -93,8 +96,11 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                     context,
                     LoginRequest(email, password, SessionManager(context).device_token.toString())
                 ) {
+
                     if (it != null) {
                         if (it.code == "252") {
+                            spinnerLogin.visibility = View.VISIBLE
+                            loginForm.visibility = View.GONE
                             SessionManager(context).access_token = it.userToken
                             val mainActivity = activity as MainActivity
                             AUTHAPI().CheckLogin(context, mainActivity) {
@@ -111,6 +117,8 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                                 }
                             }
                         } else {
+                            spinnerLogin.visibility = View.GONE
+                            loginForm.visibility = View.VISIBLE
                             Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                             SessionManager(context).user = null
 
@@ -317,6 +325,5 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         fun getUsername(context: Context) = getSharedPreference(
             context
         )?.getString(USERNAME, "")
-
     }
 }

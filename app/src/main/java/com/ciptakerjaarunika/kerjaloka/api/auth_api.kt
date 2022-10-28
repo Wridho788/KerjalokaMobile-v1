@@ -42,8 +42,7 @@ class AUTHAPI {
                         try {
                             val jObjError = JSONObject(data)
                             val map = jObjError.getString("message")
-//                            Log.d("response json", map.toString())
-
+                            Log.d("error", map.toString())
                             Toast.makeText(
                                 context, map.toString(),
                                 Toast.LENGTH_LONG
