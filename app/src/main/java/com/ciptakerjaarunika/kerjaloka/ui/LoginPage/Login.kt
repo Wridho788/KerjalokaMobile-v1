@@ -117,8 +117,6 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                                 }
                             }
                         } else {
-                            spinnerLogin.visibility = View.GONE
-                            loginForm.visibility = View.VISIBLE
                             Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                             SessionManager(context).user = null
 
