@@ -35,6 +35,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:elevation="0dp"
+                android:id="@+id/btn_cv_banks"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardCornerRadius="10dp"
                 app:strokeColor="@color/light_500"
                 app:strokeWidth="1dp">

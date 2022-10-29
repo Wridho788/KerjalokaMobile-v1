@@ -1,18 +1,21 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyOfficerJobsApi
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCVbanksBinding
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.Adapter.ListApplicantCVAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model.listApplicantJobModel
 
 class CVbanks : Fragment() {
     private lateinit var binding: FragmentCVbanksBinding
+    private var listJob: List<listApplicantJobModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +35,11 @@ class CVbanks : Fragment() {
 
         CompanyOfficerJobsApi().GetCVBanksList(context){
             if (it != null){
-                Log.d("cv", it.toString())
+                listJob = it.data
+                rv_applicantCV.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = ListApplicantCVAdapter(context, listJob)
+                }
             }
 
         }
