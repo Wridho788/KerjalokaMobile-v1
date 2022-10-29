@@ -82,6 +82,9 @@ class AkunPage : Fragment() {
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
+            val errorMessage = view?.findViewById<TextView>(R.id.errorLoginMessage) as TextView
+            errorMessage.visibility = View.GONE
+            errorMessage.text = ""
 
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -115,8 +118,8 @@ class AkunPage : Fragment() {
 
                     } else {
                         SessionManager(context).user = null
-                        error_login.visibility = View.VISIBLE
-                        error_login.text = it.message
+                        errorMessage.visibility = View.VISIBLE
+                        errorMessage.text = it.message
                     }
                     /*if(it != null && it.code == "252"){
 

@@ -44,19 +44,14 @@ class AUTHAPI {
                         val data: String = response.errorBody()!!.string()
                         try {
                             val jObjError = JSONObject(data)
-                            val map = jObjError.getString("message")
-                            Log.d("error", map.toString())
-//                            message = jObjError.getString("message")
-                            onResult(response.body())
-//                            Log.d("error login", message.toString())
-//                            Toast.makeText(
-//                                context, map.toString(),
-//                                Toast.LENGTH_LONG
-//                            ).show()
+                            val message = jObjError.getString("message")
+                            val code = jObjError.getString("code")
+                            onResult(LoginResponse(code.toString(),
+                            message.toString()))
+//                            onResult(LoginResponse())
                         } catch (e: Exception) {
                             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                         }
-                        Log.d("response", response.toString())
                     }
 
                 }

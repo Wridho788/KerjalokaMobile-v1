@@ -16,20 +16,20 @@ data class GoogleLoginRequest(
 )
 
 data class LoginResponse(
-    var code: String,
-    var message: String,
-    val userToken: String,
-    val userNo: Long,
-    val userFullname: String,
-    val userRole: Int,
-    val suspended: Boolean,
-    val photo: String?,
-    val deactivated: Boolean,
-    val dataComplete: Boolean,
-    val ownerStatus: Boolean?,
-    val authorized: Boolean?,
-    val notice: Long?,
-    val privilege: List<RolePrevileges>?
+    val code: String,
+    val message: String,
+    val userToken: String? = null,
+    val userNo: Long ? = null ,
+    val userFullname: String? = null,
+    val userRole: Int? = null,
+    val suspended: Boolean? = null,
+    val photo: String? = null,
+    val deactivated: Boolean? = null,
+    val dataComplete: Boolean? = null,
+    val ownerStatus: Boolean? = null,
+    val authorized: Boolean? = null,
+    val notice: Long? = null,
+    val privilege: List<RolePrevileges>? = null
 )
 
 data class LoginResponseData(
