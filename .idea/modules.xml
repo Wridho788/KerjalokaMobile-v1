@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Kerjaloka.iml" filepath="$PROJECT_DIR$/.idea/modules/Kerjaloka.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Kerjaloka.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.Kerjaloka.app.unitTest.iml" />
     </modules>

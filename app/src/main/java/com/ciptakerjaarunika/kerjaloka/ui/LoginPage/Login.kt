@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.LoginPage
 
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -51,7 +52,6 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         val Req_Code: Int = 123
         val firebaseAuth = FirebaseAuth.getInstance()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,6 +206,7 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
             if (resultCode == Activity.RESULT_OK) {
+                Log.d("result", "resultCode")
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
                 try {
@@ -228,7 +229,8 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
             }
         } catch (e: ApiException) {
             Log.d("err", e.toString())
-            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+//            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
 //            UpdateUI(null)
         }
     }
@@ -282,7 +284,7 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                                 mainActivity.replaceFragment(Goto)
                             }
                         } else {
-                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                             SessionManager(context).user = null
                         }
                 }

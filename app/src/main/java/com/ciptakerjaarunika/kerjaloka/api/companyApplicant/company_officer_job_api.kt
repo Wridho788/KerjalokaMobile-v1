@@ -20,6 +20,11 @@ class CompanyOfficerJobsApi {
         fun getCVBanks(): Call<cvBank_response>
     }
 
+    interface getCVBanksList {
+        @GET("/company/officer/application/cvbank")
+        fun getCVBanksList(): Call<company_officer_jobs_response>
+    }
+
     fun CompanyOfficerJob(context: Context?, onResult: (company_officer_jobs_response?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getOfficerJobs::class.java)
 
@@ -51,6 +56,24 @@ class CompanyOfficerJobsApi {
                 }
 
                 override fun onFailure(call: Call<cvBank_response>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    fun GetCVBanksList(context: Context?, onResult: (company_officer_jobs_response?) -> Unit){
+        val retrofit = ServiceBuilder(context).GET(getCVBanksList::class.java)
+        retrofit.getCVBanksList().enqueue(
+            object : Callback<company_officer_jobs_response>{
+                override fun onResponse(
+                    call: Call<company_officer_jobs_response>,
+                    response: Response<company_officer_jobs_response>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<company_officer_jobs_response>, t: Throwable) {
                     onResult(null)
                 }
             }
