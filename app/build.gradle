@@ -7,7 +7,8 @@ plugins {
 android {
     signingConfigs {
         debug {
-            storeFile file('/Users/imac24teal/Documents/keystoreKerjaloka')
+            //Ganti sesuai KeyStore yang disimpan pada directory
+            storeFile file('/Users/imac24pink/Desktop/kerjaloka/Mobile/keyStoreKerjaloka')
             storePassword 'SuksesSelalu345'
             keyAlias 'keyKerjaloka'
             keyPassword 'SuksesSelalu345'

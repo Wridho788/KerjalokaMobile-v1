@@ -9,6 +9,8 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -82,6 +84,9 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         btn_login.setOnClickListener {
             val email = view?.findViewById<EditText>(R.id.txt_email)?.text.toString()
             val password = view?.findViewById<EditText>(R.id.txt_password)?.text.toString()
+            val errorMessage = view?.findViewById<TextView>(R.id.errorLoginMessage) as TextView
+            errorMessage.visibility = GONE
+            errorMessage.text = ""
             if (!email.isNullOrEmpty() && !email.isNullOrBlank() && !password.isNullOrEmpty() && !password.isNullOrBlank()) {
                 FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
@@ -96,7 +101,7 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                     context,
                     LoginRequest(email, password, SessionManager(context).device_token.toString())
                 ) {
-
+                    it?.let { it1 -> Log.d("Login Res", it1.message) }
                     if (it != null) {
                         if (it.code == "252") {
                             spinnerLogin.visibility = View.VISIBLE
@@ -117,10 +122,9 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                                 }
                             }
                         } else {
-
-                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                             SessionManager(context).user = null
-
+                            errorMessage.visibility = VISIBLE
+                            errorMessage.text = it.message
                         }
                     }
                     /*if (it != null && it.code == "252") {

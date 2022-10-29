@@ -141,6 +141,15 @@
                 android:layout_marginTop="20sp"
                 android:backgroundTint="@color/danger_500">
             </androidx.cardview.widget.CardView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/errorLoginMessage"
+                android:textColor="@color/danger_500"
+                android:fontFamily="@font/poppins"
+                android:visibility="gone"
+                android:textSize="12dp"
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogin"
