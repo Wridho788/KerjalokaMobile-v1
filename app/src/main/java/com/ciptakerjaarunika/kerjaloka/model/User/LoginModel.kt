@@ -16,8 +16,8 @@ data class GoogleLoginRequest(
 )
 
 data class LoginResponse(
-    val code: String,
-    val message: String,
+    var code: String,
+    var message: String,
     val userToken: String,
     val userNo: Long,
     val userFullname: String,

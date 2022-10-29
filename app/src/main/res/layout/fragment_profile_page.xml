@@ -17,11 +17,21 @@
         app:titleTextColor="@color/white"
         tools:ignore="MissingConstraints" />
 
-    <ScrollView
+    <!--    <ScrollView-->
+    <!--        android:id="@+id/profile_content2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_above="@+id/menuFixo">-->
+
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/profile_content2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/menuFixo">
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        >
+
 
         <LinearLayout
             android:id="@+id/profileLl2"
@@ -107,6 +117,8 @@
                 android:background="@color/white"
                 android:scrollbars="none" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+    <!--    </ScrollView>-->
 
 </LinearLayout>

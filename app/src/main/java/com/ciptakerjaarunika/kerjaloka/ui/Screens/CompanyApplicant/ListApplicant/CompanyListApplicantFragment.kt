@@ -16,8 +16,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model.listApplicantJobModel
 
 class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
-
-
     private var listJob: List<listApplicantJobModel>? = null
 
     override fun onCreateView(
