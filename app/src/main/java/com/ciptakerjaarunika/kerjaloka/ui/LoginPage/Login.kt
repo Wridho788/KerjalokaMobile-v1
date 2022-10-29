@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.LoginPage
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -78,6 +79,8 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
         val spinnerLogin = itemView.findViewById<LinearLayout>(R.id.spinnerLogin)
         val loginForm = itemView.findViewById<LinearLayout>(R.id.loginForm)
+        val error_login = itemView.findViewById<TextView>(R.id.error_login)
+
 
         btn_login.setOnClickListener {
             val email = view?.findViewById<EditText>(R.id.txt_email)?.text.toString()
@@ -119,6 +122,9 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                         } else {
                             Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                             SessionManager(context).user = null
+                            Log.d("res err", it.message.toString())
+                            error_login.visibility = View.VISIBLE
+                            error_login.text = "Password Salah"
 
                         }
                     }
@@ -199,8 +205,17 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
+            if (resultCode == Activity.RESULT_OK) {
+                val task: Task<GoogleSignInAccount> =
+                    GoogleSignIn.getSignedInAccountFromIntent(data)
+                try {
+                    val account = task.result
+                    UpdateUI(account)
+                    handleSignInResult(task)
+                } catch (e: ApiException) {
+                    Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
@@ -212,7 +227,9 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                 UpdateUI(account)
             }
         } catch (e: ApiException) {
+            Log.d("err", e.toString())
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+//            UpdateUI(null)
         }
     }
 

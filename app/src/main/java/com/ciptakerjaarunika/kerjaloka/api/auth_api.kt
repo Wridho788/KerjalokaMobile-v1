@@ -25,13 +25,16 @@ class AUTHAPI {
         @POST("users/login")
         fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
     }
+    data class LoginResponses(
+        var code: String,
+        var message: String)
     fun Login(context: Context?, loginRequest: LoginRequest, onResult: (LoginResponse?) -> Unit){
         val retrofit = ServiceBuilder(context).POST(ILogin::class.java)
+
 
         retrofit.login(loginRequest).enqueue(
             object : Callback<LoginResponse> {
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Log.d("error", t.toString())
                     onResult(null)
                 }
                 override fun onResponse( call: Call<LoginResponse>, response: Response<LoginResponse>) {
@@ -43,16 +46,19 @@ class AUTHAPI {
                             val jObjError = JSONObject(data)
                             val map = jObjError.getString("message")
                             Log.d("error", map.toString())
-                            Toast.makeText(
-                                context, map.toString(),
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            message = jObjError.getString("message")
+                            onResult(response.body())
+//                            Log.d("error login", message.toString())
+//                            Toast.makeText(
+//                                context, map.toString(),
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         } catch (e: Exception) {
                             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                         }
-
                         Log.d("response", response.toString())
                     }
+
                 }
             }
         )

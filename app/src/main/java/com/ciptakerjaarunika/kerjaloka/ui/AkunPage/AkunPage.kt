@@ -71,7 +71,7 @@ class AkunPage : Fragment() {
         }
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
-
+        val error_login = itemView.findViewById<TextView>(R.id.error_login)
 
         val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
         btn_login_google.setOnClickListener {
@@ -101,7 +101,9 @@ class AkunPage : Fragment() {
 
             AUTHAPI().Login(context, loginRequest) {
                 if (it != null) {
+                    Log.d("login", it.code.toString())
                     if (it.code == "252") {
+                    Log.d("login", it.code.toString())
                         loadingDone()
                         Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                         val activity = activity as MainActivity
@@ -110,9 +112,11 @@ class AkunPage : Fragment() {
                             loadingDone()
                             activity.replaceFragment(AkunPage())
                         }
+
                     } else {
                         SessionManager(context).user = null
-                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                        error_login.visibility = View.VISIBLE
+                        error_login.text = it.message
                     }
                     /*if(it != null && it.code == "252"){
 
@@ -265,11 +269,6 @@ class AkunPage : Fragment() {
                         }
                 }
             }
-//                val intent = Intent(context, MainActivity::class.java)
-//                startActivity(intent)
-//                finish()
-
-
         }
     }
 

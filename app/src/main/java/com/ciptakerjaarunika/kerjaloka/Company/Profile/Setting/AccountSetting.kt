@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
@@ -121,7 +120,7 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
     override fun refresh() {
         company_profile_api().CompanyGetProfileData(context) {
             binding.spinner.visibility = GONE
-            binding.contentContainer.visibility = VISIBLE
+//            binding.contentContainer.visibility = VISIBLE
             if (it != null) {
                 data = it.data
                 binding.profileUsername.text = data?.username

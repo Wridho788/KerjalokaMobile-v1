@@ -11,7 +11,7 @@ import retrofit2.http.GET
 
 class CompanyOfficerJobsApi {
     interface getOfficerJobs {
-        @GET("/company/officer/jobs")
+        @GET("company/officer/jobs/own")
         fun getOfficerJobs(): Call<company_officer_jobs_response>
     }
 

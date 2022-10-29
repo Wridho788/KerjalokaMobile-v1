@@ -38,7 +38,7 @@
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="asdas"
+                    android:text="Name"
                     android:textColor="@color/black"
                     android:textSize="16dp">
 
@@ -51,7 +51,7 @@
                     android:layout_marginTop="0dp"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
-                    android:text="tuken65756"
+                    android:text="Username"
                     android:textColor="@color/trueGray_300"
                     android:textSize="10dp">
 

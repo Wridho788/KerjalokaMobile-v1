@@ -6,12 +6,13 @@ plugins {
 
 android {
     signingConfigs {
-        debug {
-            storeFile file('/Users/imac24teal/Documents/keystoreKerjaloka')
-            storePassword 'SuksesSelalu345'
-            keyAlias 'keyKerjaloka'
-            keyPassword 'SuksesSelalu345'
-        }
+        release {}
+//        debug {
+//            storeFile file('/Users/imac24teal/Documents/keystoreKerjaloka')
+//            storePassword 'SuksesSelalu345'
+//            keyAlias 'keyKerjaloka'
+//            keyPassword 'SuksesSelalu345'
+//        }
     }
     compileSdk 32
 
