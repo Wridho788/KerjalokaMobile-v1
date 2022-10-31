@@ -71,7 +71,6 @@ class AkunPage : Fragment() {
         }
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
-        val error_login = itemView.findViewById<TextView>(R.id.error_login)
 
         val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
         btn_login_google.setOnClickListener {
@@ -104,9 +103,7 @@ class AkunPage : Fragment() {
 
             AUTHAPI().Login(context, loginRequest) {
                 if (it != null) {
-                    Log.d("login", it.code.toString())
                     if (it.code == "252") {
-                    Log.d("login", it.code.toString())
                         loadingDone()
                         Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                         val activity = activity as MainActivity
@@ -202,9 +199,16 @@ class AkunPage : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
+            try{
+
+                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+                handleSignInResult(task)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()
+            }
         }
+
     }
 
 
@@ -216,6 +220,10 @@ class AkunPage : Fragment() {
             }
         } catch (e: ApiException) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+
+            Log.d("err", "handleSignInResult:" + e.toString())
+//            Log.w(ContentValues.TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
 

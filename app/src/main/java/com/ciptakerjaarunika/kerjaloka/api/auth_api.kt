@@ -25,9 +25,7 @@ class AUTHAPI {
         @POST("users/login")
         fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
     }
-    data class LoginResponses(
-        var code: String,
-        var message: String)
+
     fun Login(context: Context?, loginRequest: LoginRequest, onResult: (LoginResponse?) -> Unit){
         val retrofit = ServiceBuilder(context).POST(ILogin::class.java)
 
@@ -48,7 +46,6 @@ class AUTHAPI {
                             val code = jObjError.getString("code")
                             onResult(LoginResponse(code.toString(),
                             message.toString()))
-//                            onResult(LoginResponse())
                         } catch (e: Exception) {
                             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                         }

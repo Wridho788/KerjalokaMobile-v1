@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -23,6 +24,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobApplicantBinding
 import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.ApplicantDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.CVbanks
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Adapter.ApplicantAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
@@ -189,7 +191,14 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.CVBank.value }.size
                 totalCVbanksText?.text = cvBanksList.toString() + " Orang"
                 btn_cvBanks?.setOnClickListener {
-                    activity?.onBackPressed()
+                    if (cvBanksList == 0) {
+                        Toast.makeText(context, "CV Bank 0", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                        ft.replace(id, CVbanks(), "CompanyApplicant")
+                        ft.addToBackStack("CompanyApplicant")
+                        ft.commit()
+                    }
                 }
             }
         }

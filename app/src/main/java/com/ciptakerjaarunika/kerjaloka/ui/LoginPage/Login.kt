@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.LoginPage
 
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -59,7 +58,6 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         super.onCreate(savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
     }
-
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
@@ -208,7 +206,6 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
             if (resultCode == Activity.RESULT_OK) {
-                Log.d("result", "resultCode")
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
                 try {
@@ -216,8 +213,8 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                     UpdateUI(account)
                     handleSignInResult(task)
                 } catch (e: ApiException) {
-                    Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()
-                }
+                    Log.d("error", e.toString())
+                    Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()                }
             }
         }
     }
@@ -230,10 +227,11 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                 UpdateUI(account)
             }
         } catch (e: ApiException) {
-            Log.d("err", e.toString())
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-//            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
-//            UpdateUI(null)
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+
+            Log.d("err", "handleSignInResult:" + e.toString())
+//            Log.w(ContentValues.TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
 
