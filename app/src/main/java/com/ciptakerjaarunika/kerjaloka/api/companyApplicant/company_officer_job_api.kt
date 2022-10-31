@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api.companyApplicant
 
 import android.content.Context
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.listApplicantResponse
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model.company_officer_jobs_response
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model.cvBank_response
 import retrofit2.Call
@@ -22,7 +23,7 @@ class CompanyOfficerJobsApi {
 
     interface getCVBanksList {
         @GET("/company/officer/application/cvbank")
-        fun getCVBanksList(): Call<company_officer_jobs_response>
+        fun getCVBanksList(): Call<listApplicantResponse>
     }
 
     fun CompanyOfficerJob(context: Context?, onResult: (company_officer_jobs_response?) -> Unit) {
@@ -62,18 +63,18 @@ class CompanyOfficerJobsApi {
         )
     }
 
-    fun GetCVBanksList(context: Context?, onResult: (company_officer_jobs_response?) -> Unit){
+    fun GetCVBanksList(context: Context?, onResult: (listApplicantResponse?) -> Unit){
         val retrofit = ServiceBuilder(context).GET(getCVBanksList::class.java)
         retrofit.getCVBanksList().enqueue(
-            object : Callback<company_officer_jobs_response>{
+            object : Callback<listApplicantResponse>{
                 override fun onResponse(
-                    call: Call<company_officer_jobs_response>,
-                    response: Response<company_officer_jobs_response>
+                    call: Call<listApplicantResponse>,
+                    response: Response<listApplicantResponse>
                 ) {
                     onResult(response.body())
                 }
 
-                override fun onFailure(call: Call<company_officer_jobs_response>, t: Throwable) {
+                override fun onFailure(call: Call<listApplicantResponse>, t: Throwable) {
                     onResult(null)
                 }
             }
