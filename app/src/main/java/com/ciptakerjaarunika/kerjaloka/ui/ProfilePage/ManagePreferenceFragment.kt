@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -123,8 +124,11 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                     view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
                 }
                 val expectedSalary = view!!.findViewById<TextView>(R.id.expectedSalary)
-                expectedSalary.text =
-                    if (salary != null && salary.data != BigDecimal(0)) salary.data.toString() else "-"
+                if (salary != null) {
+                    if (salary.data != null && salary.data != BigDecimal(0)) {
+                        salary.data.toString()
+                    } else expectedSalary.text = "0"
+                }  else expectedSalary.text = "0"
 
                 val btn_EdMinat = view!!.findViewById<TextView>(R.id.edit_minat)
                 val btn_EdJobType = view!!.findViewById<TextView>(R.id.edit_tipe_pekerjaan)
@@ -140,6 +144,7 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                 }
             }
         }
+
     }
 
     private fun replaceFragment(fragment: Fragment) {
