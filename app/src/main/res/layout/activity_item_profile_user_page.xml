@@ -16,7 +16,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="16dp"
@@ -39,9 +39,9 @@
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
-                    android:text="asdas"
+                    android:text="Name"
                     android:textColor="@color/black"
-                    android:textSize="16dp">
+                    android:textSize="16sp">
 
                 </TextView>
 
@@ -52,9 +52,10 @@
                     android:layout_marginTop="0dp"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
-                    android:text="tuken65756"
+                    android:text="Username"
                     android:textColor="@color/trueGray_300"
-                    android:textSize="10dp">
+                    android:textSize="10sp"
+                    card_view:ignore="SmallSp">
 
                 </TextView>
 
@@ -67,9 +68,9 @@
                     android:gravity="center"
                     android:maxLines="7"
                     android:ellipsize="end"
-                    android:text="Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud."
                     android:textColor="@color/black"
-                    android:textSize="10dp">
+                    android:textSize="10sp"
+                    card_view:ignore="SmallSp">
 
                 </TextView>
             </LinearLayout>

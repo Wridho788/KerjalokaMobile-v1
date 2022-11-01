@@ -18,16 +18,12 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.FragmentEditJob
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.FragmentSalaryExpectation
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.fragment_edit_interest_layout
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import java.math.BigDecimal
 
 
 class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefreshData {
-    private lateinit var binding : FragmentManagePreferenceBinding
+    private lateinit var binding: FragmentManagePreferenceBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     private var loading = 3
 
     override fun onCreateView(
@@ -43,10 +39,11 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
         super.onViewCreated(view, savedInstanceState)
         getData()
     }
-    fun getData(){
+
+    fun getData() {
         ProfileAPI().GetJobseekerField(context) { fields ->
-            loading -=1
-            if(activity!=null) {
+            loading -= 1
+            if (activity != null) {
                 if (loading == 0) {
                     view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
                     view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
@@ -82,9 +79,9 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                 }
             }
         }
-        ProfileAPI().GetJobseekerJobType(context){ jobTypes ->
-            loading -=1
-            if(activity!=null) {
+        ProfileAPI().GetJobseekerJobType(context) { jobTypes ->
+            loading -= 1
+            if (activity != null) {
                 if (loading == 0) {
                     view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
                     view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
@@ -116,18 +113,18 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                     binding.nullJobType.visibility = VISIBLE
                 }
             }
-            }
+        }
 
-        ProfileAPI().GetJobseekerSalaryExpected(context) { salary->
-            loading -=1
-            if(activity!=null) {
+        ProfileAPI().GetJobseekerSalaryExpected(context) { salary ->
+            loading -= 1
+            if (activity != null) {
                 if (loading == 0) {
                     view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
                     view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
                 }
                 val expectedSalary = view!!.findViewById<TextView>(R.id.expectedSalary)
                 expectedSalary.text =
-                    if (salary != null && salary?.data != BigDecimal(0)) salary?.data.toString() else "-"
+                    if (salary != null && salary.data != BigDecimal(0)) salary.data.toString() else "-"
 
                 val btn_EdMinat = view!!.findViewById<TextView>(R.id.edit_minat)
                 val btn_EdJobType = view!!.findViewById<TextView>(R.id.edit_tipe_pekerjaan)
@@ -145,7 +142,7 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
         }
     }
 
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()

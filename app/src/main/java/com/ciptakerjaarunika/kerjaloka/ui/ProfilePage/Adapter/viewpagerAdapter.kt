@@ -7,38 +7,27 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.*
 
-class viewpagerAdapter (var data : JobseekerProfile?, fragmentManager: FragmentManager, lifecycle: Lifecycle,): FragmentStateAdapter(fragmentManager,lifecycle){
-    override fun getItemCount(): Int {
-        return 7
-    }
+class viewpagerAdapter(
+    var data: JobseekerProfile?,
+    fragmentManager: FragmentManager,
+    lifecycle: Lifecycle,
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
+
+    override fun getItemCount(): Int = 7
 
     override fun createFragment(position: Int): Fragment {
-        return when(position){
-            0->{
-                ManageProfile(data)
-            }
-            1->{
-                cvPage()
-            }
-            2->{
-                ManagePreferenceFragment(data)
-            }
-            3->{
-                manage_lampiran()
-            }
-            4->{
-                fragment_my_review_page()
-            }
-            5->{
-                fragment_my_record_page()
-            }
-            6->{
-                ManageUserSetting()
-            }
-            else -> {
-                ManageProfile(data)
-            }
+        var fragment = Fragment()
+        when (position) {
+            0 -> fragment = ManageProfile(data)
+            1 -> fragment = cvPage()
+            2 -> fragment = ManagePreferenceFragment(data)
+            3 -> fragment = manage_lampiran()
+            4 -> fragment = fragment_my_review_page()
+            5 -> fragment = fragment_my_record_page()
+            6 -> fragment = ManageUserSetting()
         }
+        return fragment
     }
+
 
 }

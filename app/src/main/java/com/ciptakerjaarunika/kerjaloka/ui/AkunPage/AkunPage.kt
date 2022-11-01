@@ -221,9 +221,7 @@ class AkunPage : Fragment() {
         } catch (e: ApiException) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
             e.printStackTrace()
-
             Log.d("err", "handleSignInResult:" + e.toString())
-//            Log.w(ContentValues.TAG, "signInResult:failed code=" + e.getStatusCode());
         }
     }
 
