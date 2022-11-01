@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -28,7 +27,7 @@ class ProfilePage : Fragment() {
 
         company_profile_api().CompanyGetProfileData(context) { response ->
 
-            val scroll = view.findViewById<NestedScrollView>(R.id.profile_content2)
+//            val scroll = view.findViewById<ScrollView>(R.id.profile_content2)
             val cParent = view.findViewById<LinearLayout>(R.id.profileLl2)
             val content = view.findViewById<ViewPager2>(R.id.Comp_profileContent)
             val mProfile = view.findViewById<MaterialButton>(R.id.manageProfile)
@@ -62,6 +61,8 @@ class ProfilePage : Fragment() {
                         .into(view.findViewById<ImageView>(R.id.compLogo))
                 }
 
+
+
             content.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrolled(
                     position: Int,
@@ -81,18 +82,15 @@ class ProfilePage : Fragment() {
                     cParent.post {
                         val wMeasureSpec =
                             View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
-                        val hMeasureSpec =
-                            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-                        view.measure(wMeasureSpec, hMeasureSpec)
-
-                        if (content.layoutParams.height != view.measuredHeight) {
+                        val height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+                        view.measure(wMeasureSpec, height)
+                        if (content.layoutParams.height != view.height) {
                             content.layoutParams = (content.layoutParams as ViewGroup.LayoutParams)
-                                .also { lp -> lp.height = view.measuredHeight }
+                                .also { lp -> lp.height = view.height }
                         }
                     }
                 }
             })
-
 
         }
 

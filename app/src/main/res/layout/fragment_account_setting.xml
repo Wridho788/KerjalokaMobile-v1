@@ -95,9 +95,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="vivi2992"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp"></TextView>
+                                android:textSize="12sp"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -172,7 +171,9 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="0822 2873 8750"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp"></TextView>
+                                android:textSize="12sp"/>
+
+
                         </LinearLayout>
 
                     </LinearLayout>
@@ -244,9 +245,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins"
-                                android:text="vvictoria2991@gmail.com"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp"></TextView>
+                                android:textSize="12sp"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -297,9 +297,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins"
-                            android:text="Jl. Kaki Terus Sampai Capek"
                             android:textColor="@color/dark_100"
-                            android:textSize="12dp"></TextView>
+                            android:textSize="12dp"/>
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -372,7 +371,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="***********"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp"></TextView>
+                                android:textSize="12sp"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -509,7 +508,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Dengan menyalakan switch Discoverable, Profil Kamu akan dapat dilihat oleh semua perusahaan. Hal ini akan membantu Perusahaan untuk menemukan mu."
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp"></TextView>
+                                android:textSize="12sp"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -579,7 +578,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Manage Newsletter berfungsi untuk menghentikan pengiriman newsletter secara berkala ke email kamu."
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp"></TextView>
+                                android:textSize="12sp"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -645,7 +644,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Jika akun di non-aktifkan seluruh aktivitas akan dihapus termasuk namun tidak terbatas pada lamaran, komen, dan parsitipasi acara."
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp"></TextView>
+                                android:textSize="12sp"/>
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btn_deactivedAcc"

@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Model
 
-import com.anychart.scales.DateTime
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.*
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.jobField
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.jobTitle
@@ -16,26 +15,26 @@ data class company_officer_jobs_response(
 data class cvBank_response(val code: Int, val data: Int)
 
 data class listApplicantJobModel(
-    val jobNo: String,
+    val jobNo: Long,
     val jobPosition: String,
     val jobDescription: String,
     val jobType: jobType,
     val jobExperienceLevel: JobExperienceLevel,
-    val jobCity: jobCity,
+    val jobCity: List<String>,
     val jobSalaryMin: BigDecimal?,
     val jobSalaryMax: BigDecimal?,
     val jobField: jobField,
     val jobRole: JobRole,
     val jobMinExperience: Int?,
-    val jobSkill: JobSkill,
-    val jobTitle: jobTitle,
+    val jobSkill: List<JobSkill>,
+    val jobTitle: List<jobTitle>,
     val createdOn: String,
-    val updatedOn: DateTime?,
+    val updatedOn: String?,
     val createdBy: String?,
     var publish: Boolean,
-    val jobShortQuestion: JobShortQuestion,
-    val jobTest: JobTest,
-    val expired: DateTime?,
+    val jobShortQuestion: List<JobShortQuestion>,
+    val jobTest: List<JobTest>,
+    val expired: String?,
     val takedown: Boolean?,
     val jobAdditionalInfo: String?
     )
@@ -45,9 +44,6 @@ data class jobType(
     val jobTypeName : String,
 )
 
-data class jobCity(
-    val cityNo: Int
-)
 
 data class jobField(val fieldName: String)
 

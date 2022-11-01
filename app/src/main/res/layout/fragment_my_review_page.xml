@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.ProfilePage.fragment_my_review_page">
+
     <LinearLayout
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
         android:layout_marginTop="20dp"
         android:gravity="center">
+
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
@@ -20,56 +21,59 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/content_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/card_background"
-        android:paddingLeft="16dp"
         android:layout_margin="8dp"
-        android:paddingRight="16dp">
+        android:background="@drawable/card_background"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="16dp">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/review_saya"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Review Saya"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/review_saya"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="Review Saya"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    app:cardBackgroundColor="@color/danger_100"
                     app:cardCornerRadius="35dp"
-                    app:cardElevation="0dp"
-                    app:cardBackgroundColor="@color/danger_100">
+                    app:cardElevation="0dp">
+
                     <RelativeLayout
                         android:layout_width="260dp"
-                        android:gravity="center_vertical"
-                        android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingRight="1dp">
 
@@ -77,73 +81,71 @@
                             android:id="@+id/ratingValue"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:numStars="5"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:numStars="5"
                             android:progressBackgroundTint="@color/trueGray_100"
                             android:progressTint="@color/danger_500"
                             android:rating="0"
                             android:scaleX="0.5"
                             android:scaleY="0.5"
-                            android:stepSize="1"/>
+                            android:stepSize="1" />
+
                         <TextView
-                            android:layout_alignParentRight="true"
                             android:id="@+id/jumlah_review"
                             android:layout_width="wrap_content"
-                            android:gravity="center_vertical"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
+                            android:layout_marginRight="5dp"
                             android:fontFamily="@font/poppins"
+                            android:gravity="center_vertical"
+                            android:paddingRight="5dp"
                             android:text="0 dari 0"
                             android:textColor="@color/trueGray_500"
-                            android:paddingRight="5dp"
-                            android:layout_marginRight="5dp"
                             android:textSize="12sp" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
-                    <TextView
-                        android:id="@+id/totalReview"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="7dp"
-                        android:textSize="10dp"
-                        android:text=""/>
-                </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/review_btn"
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/totalReview"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/card_background_primary"
-                    android:textAllCaps="false">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:textColor="@color/danger_500"
-                        android:text="Riwayat Review Saya"
-                        android:textSize="14dp"
-                        android:paddingVertical="10dp"
-                        android:textAlignment="center"
-                        />
-                </LinearLayout>
-
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingTop="7dp"
+                    android:text=""
+                    android:textSize="10dp" />
             </LinearLayout>
 
-            <ScrollView
+            <LinearLayout
+                android:id="@+id/review_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/revList"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/section_my_review"/>
-            </ScrollView>
+                android:layout_marginTop="20dp"
+                android:background="@drawable/card_background_primary"
+                android:textAllCaps="false">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingVertical="10dp"
+                    android:text="Riwayat Review Saya"
+                    android:textAlignment="center"
+                    android:textColor="@color/danger_500"
+                    android:textSize="14dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/revList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:listitem="@layout/section_my_review" />
     </LinearLayout>
 
 

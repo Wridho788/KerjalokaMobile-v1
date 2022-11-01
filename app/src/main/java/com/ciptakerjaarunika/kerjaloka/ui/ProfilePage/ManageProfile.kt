@@ -14,13 +14,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.EditBasicIn
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 
 class ManageProfile(val data : JobseekerProfile?) : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -71,7 +71,6 @@ class AkunPage : Fragment() {
         }
 
         val btn_login = itemView.findViewById<MaterialButton>(R.id.btnLogin)
-        val error_login = itemView.findViewById<TextView>(R.id.error_login)
 
         val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
         btn_login_google.setOnClickListener {
@@ -82,6 +81,9 @@ class AkunPage : Fragment() {
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
+            val errorMessage = view?.findViewById<TextView>(R.id.errorLoginMessage) as TextView
+            errorMessage.visibility = View.GONE
+            errorMessage.text = ""
 
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -101,9 +103,7 @@ class AkunPage : Fragment() {
 
             AUTHAPI().Login(context, loginRequest) {
                 if (it != null) {
-                    Log.d("login", it.code.toString())
                     if (it.code == "252") {
-                    Log.d("login", it.code.toString())
                         loadingDone()
                         Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
                         val activity = activity as MainActivity
@@ -115,8 +115,8 @@ class AkunPage : Fragment() {
 
                     } else {
                         SessionManager(context).user = null
-                        error_login.visibility = View.VISIBLE
-                        error_login.text = it.message
+                        errorMessage.visibility = View.VISIBLE
+                        errorMessage.text = it.message
                     }
                     /*if(it != null && it.code == "252"){
 
@@ -199,9 +199,16 @@ class AkunPage : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
+            try{
+
+                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+                handleSignInResult(task)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()
+            }
         }
+
     }
 
 
@@ -213,6 +220,8 @@ class AkunPage : Fragment() {
             }
         } catch (e: ApiException) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+            Log.d("err", "handleSignInResult:" + e.toString())
         }
     }
 
