@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -83,11 +84,6 @@ class JobPage : Fragment(), IJobPage {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             )
         )
-//        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED {
-//
-//        }else{
-//
-//        }
         return view
     }
 
@@ -125,13 +121,18 @@ class JobPage : Fragment(), IJobPage {
         if (SessionManager(context).user != null) {
             JobAPI().getBookmarkedJob(context) {
                 bookmarkedDone()
-                if (it?.data != null) {
+                if (it?.data != null ) {
+                    Log.d("bookmarked", it.data!!.toString())
                     listBookmark = it.data.take(5)
                     binding.btnSeeBookmarked.visibility = if (it.data.size <= 5) GONE else VISIBLE
                     binding.bookmaredJob.apply {
                         adapter = JobAdapter(3, listBookmark, context, this@JobPage, null)
                         layoutManager = LinearLayoutManager(activity)
                     }
+                } else if(it?.data?.size != 0) {
+                    binding.emptyBookmarkJob.visibility = VISIBLE
+                } else {
+                    binding.emptyBookmarkJob.visibility = View.GONE
                 }
             }
         } else {
@@ -231,7 +232,6 @@ class JobPage : Fragment(), IJobPage {
                             }
                             binding.bookmaredJob.adapter?.notifyDataSetChanged()
                             this.RefreshData()
-
                         }
                     }
 

@@ -1,25 +1,18 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.Search_Api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchBinding
@@ -29,13 +22,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragm
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.general_search_model
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.lang.reflect.Type
 
 class SearchActivity : Fragment(), onFragmentTransactionList,
     onFragmentTransactionListCompany {
@@ -105,8 +92,8 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
                     Search_Api().getGeneralSearchAsync(context, query) {
-                        Log.d("response Search Api", it.toString())
                         if (it != null) {
+                        Log.d("response Search Api", it.data.toString())
                             list = it.data
 
                             if (list?.jobList?.size!! < 5) {
@@ -194,36 +181,6 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         }
 
     }
-
-    fun saveArrayList(list: ArrayList<String>, keyword: String?) {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-        editor.putString(keyword, json)
-        editor.apply()
-    }
-
-    @SuppressLint("CommitPrefEdits")
-    fun removeArrayList(list: ArrayList<String>, key: String?) {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(list)
-    }
-
-    fun getArrayList(key: String?): ArrayList<String> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val gson = Gson()
-        val json: String? = prefs.getString(key, null)
-        val type: Type = object : TypeToken<ArrayList<String?>?>() {}.type
-        var listnull = ArrayList<String>()
-        if (json == null) {
-            return listnull
-        }
-        return gson.fromJson(json, type)
-    }
-
     fun replaceFragment(fragment: Fragment) {
         val fragmentManager = parentFragmentManager
         val ft = fragmentManager.beginTransaction()
