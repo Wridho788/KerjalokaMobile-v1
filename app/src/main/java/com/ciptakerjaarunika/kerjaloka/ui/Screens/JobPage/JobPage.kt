@@ -118,18 +118,20 @@ class JobPage : Fragment(), IJobPage {
             }
         }
 
+        getNearJob()
+
         if (SessionManager(context).user != null) {
             JobAPI().getBookmarkedJob(context) {
                 bookmarkedDone()
-                if (it?.data != null ) {
-                    Log.d("bookmarked", it.data!!.toString())
+                if (it?.data != null) {
+                    Log.d("bookmarked", it.data.toString())
                     listBookmark = it.data.take(5)
                     binding.btnSeeBookmarked.visibility = if (it.data.size <= 5) GONE else VISIBLE
                     binding.bookmaredJob.apply {
                         adapter = JobAdapter(3, listBookmark, context, this@JobPage, null)
                         layoutManager = LinearLayoutManager(activity)
                     }
-                } else if(it?.data?.size != 0) {
+                } else if (it?.data?.size != 0) {
                     binding.emptyBookmarkJob.visibility = VISIBLE
                 } else {
                     binding.emptyBookmarkJob.visibility = View.GONE
@@ -169,6 +171,8 @@ class JobPage : Fragment(), IJobPage {
     fun getNearJob() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
+            var latitude = it.latitude.toString()
+            var longitude = it.longitude.toString()
             if (it == null) {
                 nearJobDone()
                 binding.emptyNearJob.visibility = VISIBLE
@@ -176,9 +180,7 @@ class JobPage : Fragment(), IJobPage {
             } else {
                 binding.emptyNearJob.visibility = GONE
 
-                val latitude = it.latitude.toString()
-                val longtitude = it.longitude.toString()
-                JobAPI().getNearJob(latitude, longtitude, context) {
+                JobAPI().getNearJob(latitude, longitude, context) {
                     nearJobDone()
                     if (it != null && it.data != null && it.data.size != 0) {
                         binding.btnSeeNearMe.visibility = if (it.data.size <= 5) GONE else VISIBLE

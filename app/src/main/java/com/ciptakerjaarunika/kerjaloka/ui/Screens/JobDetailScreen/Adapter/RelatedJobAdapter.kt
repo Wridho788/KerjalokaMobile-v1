@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.model.Job.RecommendationJob
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.IJobDetail
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
@@ -48,6 +47,10 @@ class RelatedJobAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
+        view.layoutParams= ConstraintLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 
@@ -58,8 +61,6 @@ class RelatedJobAdapter(
         holder.relatedjobPosition.text = currentItem.jobPosition
         holder.relatedjobCompany.text = currentItem.company.companyName
         holder.relatedjobLocation.text = if(currentItem?.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem?.jobLocation?.get(0)?.label
-
-
         val SECOND = 1
         val MINUTE = 60 * SECOND
         val HOUR = 60 * MINUTE

@@ -17,24 +17,19 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anychart.core.annotations.Line
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobDetailBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.jobLocation
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.rJobDetailModel
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedCompanyJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter.RelatedOtherCompanyJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter.RelatedJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.BottomSheet.ApplyJob
@@ -48,10 +43,11 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class JobDetailFragment(
-    private val JobNo: Long, private val CompanyNo: Long?) : Fragment(),IJobDetail {
+    private val JobNo: Long, private val CompanyNo: Long?
+) : Fragment(), IJobDetail {
     private lateinit var binding: FragmentJobDetailBinding
-    private var jobBookmark = false;
-    private var currentJob : rJobDetailModel? = null;
+    private var jobBookmark = false
+    private var currentJob: rJobDetailModel? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
@@ -71,7 +67,7 @@ class JobDetailFragment(
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark)
         RefreshData()
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
         toolbar.setNavigationOnClickListener {
@@ -88,7 +84,7 @@ class JobDetailFragment(
 
     override fun RefreshData() {
         val view = view
-        if(view != null){
+        if (view != null) {
             val btn_applyJob = view.findViewById<MaterialButton>(R.id.apply_job_button)
             val report_job = view.findViewById<View>(R.id.report_job)
 
@@ -115,8 +111,9 @@ class JobDetailFragment(
                     currentJob = it.data
 
                     view.findViewById<LinearLayout>(R.id.spinnerDetailPekerjaan).visibility = GONE
-                    view.findViewById<NestedScrollView>(R.id.job_detail_container).visibility = VISIBLE
-                    jobBookmark = it.data.bookmarked == true;
+                    view.findViewById<NestedScrollView>(R.id.job_detail_container).visibility =
+                        VISIBLE
+                    jobBookmark = it.data.bookmarked == true
 
 
                     if (activity != null && !activity!!.isDestroyed) {
@@ -143,7 +140,7 @@ class JobDetailFragment(
 
                     val localeID = Locale("in", "ID")
                     val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
-                    if(it.data.jobSalaryMin != null && it.data.jobSalaryMin != null) {
+                    if (it.data.jobSalaryMin != null && it.data.jobSalaryMin != null) {
                         if (it.data.jobSalaryMin == null) {
                             job_salary_min.text = "Rp. 0 -"
                         }
@@ -161,10 +158,6 @@ class JobDetailFragment(
                             job_salary_max.text = salary_max?.toString()
                         }
                     }
-
-    //                location.text =
-    //                    it.data.companyjob.city.cityName + "," + it.data.companyjob.province.provinceName
-
                     val SECOND = 1
                     val MINUTE = 60 * SECOND
                     val HOUR = 60 * MINUTE
@@ -202,7 +195,8 @@ class JobDetailFragment(
                     }
                     createdOn.text = dateDiff()
 
-                    job_field.text = if (it.data.jobField != null) it.data.jobField.fieldName else ""
+                    job_field.text =
+                        if (it.data.jobField != null) it.data.jobField.fieldName else ""
                     job_role.text = if (it.data.jobRole != null) it.data.jobRole.jobRoleName else ""
 
                     var jobDesc = it.data.jobDescription
@@ -213,18 +207,18 @@ class JobDetailFragment(
                     } else {
                         job_description.text = Html.fromHtml(jobDesc)
                     }
-                    if (it.data.jobLocation != null ) {
+                    if (it.data.jobLocation != null) {
                         var locationText = ""
-                        for (location in it.data.jobLocation){
+                        for (location in it.data.jobLocation) {
                             locationText += "&#8226; ${location.label}<br/>"
                         }
-                        location.text = Html.fromHtml(locationText);
+                        location.text = Html.fromHtml(locationText)
                     }
 
-    //                recyclerView.apply {
-    //                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-    //                    adapter = RelatedJobAdapter(it.data.job, Context)
-    //                }
+                    //                recyclerView.apply {
+                    //                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                    //                    adapter = RelatedJobAdapter(it.data.job, Context)
+                    //                }
 
                     val titleJob = it.data.jobPosition.toString()
                     val link = it.data.link
@@ -241,41 +235,46 @@ class JobDetailFragment(
                             type = "text/plain"
                         }
 
-                        val shareIntent = Intent.createChooser(sendIntent, "Bagikan Informasi Pekerjaan")
+                        val shareIntent =
+                            Intent.createChooser(sendIntent, "Bagikan Informasi Pekerjaan")
                         startActivity(shareIntent)
                     }
 
-                    if(SessionManager(context).user == null){
+                    if (SessionManager(context).user == null) {
                         toolbarBookmark.visibility = GONE
                         btn_applyJob.setBackgroundResource(R.drawable.button_primary_disabled)
                         btn_applyJob.setOnClickListener {
-                            Toast.makeText(context,"Silahkan login terlebih dahulu untuk dapat melamar pekerjaan" , Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                context,
+                                "Silahkan login terlebih dahulu untuk dapat melamar pekerjaan",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
-                    }
-                    else {
+                    } else {
                         toolbarBookmark.setImageResource(if (jobBookmark) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark)
 
-                        toolbarBookmark.setOnClickListener{
+                        toolbarBookmark.setOnClickListener {
                             JobAPI().BookmarkJob(job.jobNo, !jobBookmark, context) {
                                 Log.d("Bookmark Response", it.toString())
-                                if(it != null) {
+                                if (it != null) {
                                     if (it.code == 210) {
                                         jobBookmark = !jobBookmark
                                         toolbarBookmark.setImageResource(if (jobBookmark == true) R.drawable.ic_bookmark_filled else R.drawable.ic_bookmark)
                                     } else {
-                                        Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, it.Message, Toast.LENGTH_SHORT)
+                                            .show()
                                     }
                                 }
                             }
                         }
-                        if(currentJob!!.applied == true){
+                        if (currentJob!!.applied == true) {
                             btn_applyJob.text = "Sudah Melamar"
                             btn_applyJob.setBackgroundResource(R.drawable.button_primary_disabled)
                             btn_applyJob.setOnClickListener {}
-                        }else {
+                        } else {
                             btn_applyJob.setOnClickListener {
                                 if (currentJob?.jobShortQuestion!!.any()) {
-                                    JobAPI().GetJobShortQuestion(job?.jobNo!!, context) {
+                                    JobAPI().GetJobShortQuestion(job.jobNo, context) {
                                         if (it != null) {
                                             val sheet = ApplyJob(currentJob, it.data, this)
                                             activity?.let { it1 ->
@@ -306,41 +305,50 @@ class JobDetailFragment(
                 activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
 
             }
-            if(CompanyNo == null || CompanyNo == 0L ){
+            if (CompanyNo == null || CompanyNo == 0L) {
                 view.findViewById<LinearLayout>(R.id.other_job_container).visibility = GONE
-            }else {
+            } else {
                 CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) {
                     if (it != null) {
-                        view.findViewById<LinearLayout>(R.id.spinnerOtherJobCompany).visibility = GONE
+                        view.findViewById<LinearLayout>(R.id.spinnerOtherJobCompany).visibility =
+                            GONE
                         val recyclerView =
                             view.findViewById<RecyclerView>(R.id.recycler_other_job_company)
                         recyclerView.visibility = VISIBLE
                         val otherJob = it.data.job.filter { job -> job.jobNo != currentJob?.jobNo }
-                        if(otherJob.isNotEmpty()){
+                        if (otherJob.isNotEmpty()) {
                             recyclerView.apply {
-                                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                                adapter = RelatedOtherCompanyJobAdapter(otherJob,this@JobDetailFragment)
+                                layoutManager = LinearLayoutManager(
+                                    context,
+                                    LinearLayoutManager.HORIZONTAL,
+                                    false
+                                )
+                                adapter =
+                                    RelatedOtherCompanyJobAdapter(otherJob, this@JobDetailFragment)
                             }
-                        }else{
-                            view.findViewById<LinearLayout>(R.id.other_job_container).visibility = GONE
+                        } else {
+                            view.findViewById<LinearLayout>(R.id.other_job_container).visibility =
+                                GONE
                         }
                     }
                 }
             }
             JobAPI().getRelatedJob(JobNo, context) {
                 if (it != null) {
-                    if(it.data.size == 0)  view.findViewById<LinearLayout>(R.id.related_job_container).visibility = GONE
+                    if (it.data.size == 0) view.findViewById<LinearLayout>(R.id.related_job_container).visibility =
+                        GONE
 
                     view.findViewById<LinearLayout>(R.id.spinnerRelatedJob).visibility = GONE
                     val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_related_job)
                     recyclerView.visibility = VISIBLE
 
                     recyclerView.apply {
-                        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                        adapter = RelatedJobAdapter( it.data,this@JobDetailFragment)
+                        layoutManager =
+                            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        recyclerView.layoutManager = layoutManager
+                        adapter = RelatedJobAdapter(it.data, this@JobDetailFragment)
                     }
-                }
-                else{
+                } else {
                     view.findViewById<LinearLayout>(R.id.related_job_container).visibility = GONE
                 }
             }

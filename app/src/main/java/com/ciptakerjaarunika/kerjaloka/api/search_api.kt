@@ -14,10 +14,14 @@ class Search_Api {
 
     interface getGeneralSearch {
         @GET("mobile/generalsearch")
-        fun getGeneralSearch( @Query("keyword") keyword : String?): Call<search_model>
+        fun getGeneralSearch(@Query("keyword") keyword: String?): Call<search_model>
     }
 
-    fun getGeneralSearchAsync(context: Context?,keyword: String?,onResult: (search_model?) -> Unit){
+    fun getGeneralSearchAsync(
+        context: Context?,
+        keyword: String?,
+        onResult: (search_model?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(getGeneralSearch::class.java)
 
         retrofit.getGeneralSearch(keyword).enqueue(
