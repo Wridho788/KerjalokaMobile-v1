@@ -8,94 +8,136 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.viewpagerCompAdapter
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfilePageBinding
 import com.google.android.material.button.MaterialButton
 
 
-class ProfilePage : Fragment() {
+class ProfilePage(var Page: Int) : Fragment() {
+    private lateinit var binding: FragmentProfilePageBinding
+    private lateinit var viewpagerAdapter: viewpagerCompAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_profile_page, container, false)
-
+//        val view = inflater.inflate(R.layout.fragment_profile_page, container, false)
+        binding = FragmentProfilePageBinding.inflate(layoutInflater)
         company_profile_api().CompanyGetProfileData(context) { response ->
+            val cParent = view?.findViewById<LinearLayout>(R.id.profileLl2)
+            val content = view?.findViewById<ViewPager2>(R.id.Comp_profileContent)
+            val mProfile = view?.findViewById<MaterialButton>(R.id.manageProfile)
+            val myRev = view?.findViewById<MaterialButton>(R.id.myReview)
+            val accSet = view?.findViewById<MaterialButton>(R.id.accSetting)
+            val compName = view?.findViewById<TextView>(R.id.jsName1)
+            val username = view?.findViewById<TextView>(R.id.username)
 
-//            val scroll = view.findViewById<ScrollView>(R.id.profile_content2)
-            val cParent = view.findViewById<LinearLayout>(R.id.profileLl2)
-            val content = view.findViewById<ViewPager2>(R.id.Comp_profileContent)
-            val mProfile = view.findViewById<MaterialButton>(R.id.manageProfile)
-            val myRev = view.findViewById<MaterialButton>(R.id.myReview)
-            val accSet = view.findViewById<MaterialButton>(R.id.accSetting)
-            val compName = view.findViewById<TextView>(R.id.jsName1)
-            val username = view.findViewById<TextView>(R.id.username)
+//            mProfile.setOnClickListener {
+//                content.currentItem = 0
+//            }
+//            myRev.setOnClickListener {
+//                content.currentItem = 1
+//            }
+//            accSet.setOnClickListener {
+//                content.currentItem = 3
+//            }
 
-            mProfile.setOnClickListener {
-                content.currentItem = 0
+//            val adapter = viewpagerCompAdapter(response?.data, parentFragmentManager, lifecycle)
+//            content.isUserInputEnabled = false
+//            content.adapter = adapter
+//            content.isFakeDragging
+            lifecycleScope.launchWhenResumed {
+                viewpagerAdapter =
+                    viewpagerCompAdapter(response?.data, parentFragmentManager, lifecycle)
+                with(binding) {
+                    binding.CompProfileContent.adapter = viewpagerAdapter
+                    binding.manageProfile.setOnClickListener {
+                        Page = 0
+                        updatePage()
+                        binding.CompProfileContent.currentItem = Page
+                    }
+                    binding.myReview.setOnClickListener {
+                        Page = 1
+                        updatePage()
+                        binding.CompProfileContent.currentItem = Page
+                    }
+                    binding.accSetting.setOnClickListener {
+                        Page = 2
+                        updatePage()
+                        binding.CompProfileContent.currentItem = Page
+                    }
+                }
             }
-            myRev.setOnClickListener {
-                content.currentItem = 1
-            }
-            accSet.setOnClickListener {
-                content.currentItem = 3
-            }
-
-            val adapter = viewpagerCompAdapter(response?.data, parentFragmentManager, lifecycle)
-            content.isUserInputEnabled = false
-            content.adapter = adapter
-            content.isFakeDragging
-            compName.text = response?.data?.companyName
-            username.text = response?.data?.username
+            compName?.text = response?.data?.companyName
+            username?.text = response?.data?.username
 
             if (activity != null)
                 if (activity != null) {
-                    Glide.with(view.context)
+                    Glide.with(view!!.context)
                         .load(config().portAddress + "/photo/Profile/" + response?.data?.logo)
                         .fitCenter()
-                        .into(view.findViewById<ImageView>(R.id.compLogo))
+                        .into(view!!.findViewById<ImageView>(R.id.compLogo))
                 }
 
 
-
-            content.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
-                ) {
-                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-                    if (position > 0 && positionOffset == 0.0f && positionOffsetPixels == 0) {
-                        content.layoutParams.height =
-                            content.getChildAt(0).height
-                    }
-                }
-
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-
-                    cParent.post {
-                        val wMeasureSpec =
-                            View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
-                        val height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-                        view.measure(wMeasureSpec, height)
-                        if (content.layoutParams.height != view.height) {
-                            content.layoutParams = (content.layoutParams as ViewGroup.LayoutParams)
-                                .also { lp -> lp.height = view.height }
-                        }
-                    }
-                }
-            })
+//            content.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//                override fun onPageScrolled(
+//                    position: Int,
+//                    positionOffset: Float,
+//                    positionOffsetPixels: Int
+//                ) {
+//                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+//                    if (position > 0 && positionOffset == 0.0f && positionOffsetPixels == 0) {
+//                        content.layoutParams.height =
+//                            content.getChildAt(0).height
+//                    }
+//                }
+//
+//                override fun onPageSelected(position: Int) {
+//                    super.onPageSelected(position)
+//
+//                    cParent.post {
+//                        val wMeasureSpec =
+//                            View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY)
+//                        val height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+//                        view.measure(wMeasureSpec, height)
+//                        if (content.layoutParams.height != view.height) {
+//                            content.layoutParams = (content.layoutParams as ViewGroup.LayoutParams)
+//                                .also { lp -> lp.height = view.height }
+//                        }
+//                    }
+//                }
+//            })
 
         }
 
 
-        return view
+        return binding.root
+    }
+
+    fun updatePage() {
+        val content = view?.findViewById<ViewPager2>(R.id.Comp_profileContent)
+        content?.currentItem = Page
+        view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        view?.findViewById<MaterialButton>(R.id.myReview)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        view?.findViewById<MaterialButton>(R.id.accSetting)?.backgroundTintList =
+            resources.getColorStateList(R.color.white)
+        when (Page) {
+            0 -> view?.findViewById<MaterialButton>(R.id.manageProfile)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+            1 -> view?.findViewById<MaterialButton>(R.id.myReview)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+            2 -> view?.findViewById<MaterialButton>(R.id.accSetting)?.backgroundTintList =
+                resources.getColorStateList(R.color.danger_300)
+        }
     }
 
 }

@@ -1,12 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.Adapter.CompReviewAdapter
@@ -18,11 +18,11 @@ import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 
-private var layoutManager: RecyclerView.LayoutManager? = null
-private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
 
 
 class CompMyReview(val data: data?, private val CompanyNo: Long? = null): Fragment() {
+private var layoutManager: RecyclerView.LayoutManager? = null
+private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

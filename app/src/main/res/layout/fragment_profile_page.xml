@@ -94,18 +94,22 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
-
+            android:id="@+id/parentViewPager"
+            android:background="@color/white"
+            android:layout_marginBottom="6dp">
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/Comp_profileContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
-                android:background="@color/white" />
-        </androidx.core.widget.NestedScrollView>
+                android:background="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -2,166 +2,176 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".Company.Profile.Profile.Profile">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/card_background"
-        android:orientation="vertical"
-        android:padding="10dp">
-
-        <TextView
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Informasi Dasar"
-            android:textColor="@color/black"
-            android:textSize="14dp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="Lokasi"
-            android:textColor="@color/trueGray_50"
-            android:textSize="12dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_background"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-        <TextView
-            android:id="@+id/compLoc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Informasi Dasar"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Lokasi"
+                    android:textColor="@color/trueGray_50"
+                    android:textSize="12dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="Alamat"
-            android:textColor="@color/trueGray_50"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/compAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
+                <TextView
+                    android:id="@+id/compLoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="Nomor Telepon"
-            android:textColor="@color/trueGray_50"
-            android:textSize="12dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Alamat"
+                    android:textColor="@color/trueGray_50"
+                    android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/compPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="Dipimpin Oleh"
-            android:textColor="@color/trueGray_50"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/compCEO"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="Didirikan Pada"
-            android:textColor="@color/trueGray_50"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/since"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="Bidang Perusahaan"
-            android:textColor="@color/trueGray_50"
-            android:textSize="12dp" />
-
-        <TextView
-            android:id="@+id/compField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
+                <TextView
+                    android:id="@+id/compAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="Ukuran Perusahaan"
-            android:textColor="@color/trueGray_50"
-            android:textSize="12dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Nomor Telepon"
+                    android:textColor="@color/trueGray_50"
+                    android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/compSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/compPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/card_background"
-        android:orientation="vertical"
-        android:padding="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Dipimpin Oleh"
+                    android:textColor="@color/trueGray_50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/compCEO"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Didirikan Pada"
+                    android:textColor="@color/trueGray_50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/since"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Bidang Perusahaan"
+                    android:textColor="@color/trueGray_50"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/compField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Deskripsi Perusahaan"
-            android:textColor="@color/black"
-            android:textSize="14dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:text="Ukuran Perusahaan"
+                    android:textColor="@color/trueGray_50"
+                    android:textSize="12dp" />
 
-        <TextView
-            android:id="@+id/compDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/compSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_background"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Deskripsi Perusahaan"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/compDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

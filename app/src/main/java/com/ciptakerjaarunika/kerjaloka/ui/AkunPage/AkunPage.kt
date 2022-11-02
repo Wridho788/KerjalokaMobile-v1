@@ -65,7 +65,7 @@ class AkunPage : Fragment() {
                 ft.commit()
             } else {
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id, ProfilePage(), "ProfileFragment")
+                ft.replace(id, ProfilePage(0), "ProfileFragment")
                 ft.commit()
             }
         }
