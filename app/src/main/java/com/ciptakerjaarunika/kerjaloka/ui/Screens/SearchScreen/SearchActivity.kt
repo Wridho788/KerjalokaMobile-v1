@@ -92,9 +92,13 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
                     Search_Api().getGeneralSearchAsync(context, query) {
+                        Log.d("search", it.toString())
                         if (it != null) {
-                        Log.d("response Search Api", it.data.toString())
                             list = it.data
+                            var listjob = list?.jobList
+                            var listcompany = list?.companyList
+//                        Log.d("response job", listjob.toString())
+//                        Log.d("response company", listcompany.toString())
 
                             if (list?.jobList?.size!! < 5) {
                                 binding.seeMoreJob.visibility = GONE

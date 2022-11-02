@@ -3,7 +3,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -13,7 +12,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,7 +48,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
         return binding.root
     }
 
-    fun refreshData(){
+    fun refreshData() {
         val companyName = view?.findViewById<TextView>(R.id.company_name)
         val logo = view?.findViewById<ImageView>(R.id.company_logo)
         val field = view?.findViewById<TextView>(R.id.company_field)
@@ -65,7 +63,6 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
         val thisActivity = this
         CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo!!) {
             if (it != null) {
-                Log.d("company review", it.data.toString())
                 companyName?.text = it.data.companyName
                 if (logo != null) {
                     Glide.with(this).load(config().portAddress + "/photo/Profile/" + it.data.logo)
@@ -74,19 +71,22 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
                 field?.text = it.data.field
                 location?.text = "${it.data.location.city}, ${it.data.location.province}"
                 ratingBar?.rating = it.data.rating.ratingValue
-                txtRating?.text = String.format("%.0f",it.data.rating.ratingValue) + " dari " + 5
+                txtRating?.text = String.format("%.0f", it.data.rating.ratingValue) + " dari " + 5
                 totalReview?.text = it.data.rating.ratingList.size.toString() + "Reviews"
 
-                if(it.data.ownRating != null){
+                if (it.data.ownRating != null) {
                     layout_my_review?.visibility = VISIBLE
 
                     view?.findViewById<ImageView>(R.id.myReviewPhoto)?.let { it1 ->
-                        Glide.with(this).load(config().portAddress + "/photo/Profile/" + SessionManager(context).user?.photo)
+                        Glide.with(this)
+                            .load(config().portAddress + "/photo/Profile/" + SessionManager(context).user?.photo)
                             .fitCenter().into(it1)
                     }
 
-                    view?.findViewById<TextView>(R.id.myReviewName)?.text = SessionManager(context).user!!.userFullname
-                    view?.findViewById<RatingBar>(R.id.myRating)?.rating = it.data.ownRating!!.toFloat()
+                    view?.findViewById<TextView>(R.id.myReviewName)?.text =
+                        SessionManager(context).user!!.userFullname
+                    view?.findViewById<RatingBar>(R.id.myRating)?.rating =
+                        it.data.ownRating!!.toFloat()
 
                     it.data.ownProRating?.forEach {
                         val chip = Chip(context)
@@ -99,7 +99,8 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
                             isClickable = false
                             isCheckable = false
                             rootView.apply {
-                                view?.findViewById<ChipGroup>(R.id.myChipGroupPro)?.addView(chip as View)
+                                view?.findViewById<ChipGroup>(R.id.myChipGroupPro)
+                                    ?.addView(chip as View)
                             }
                         }
                     }
@@ -114,20 +115,27 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
                             isClickable = false
                             isCheckable = false
                             rootView.apply {
-                                view?.findViewById<ChipGroup>(R.id.myChipGroupCon)?.addView(chip as View)
+                                view?.findViewById<ChipGroup>(R.id.myChipGroupCon)
+                                    ?.addView(chip as View)
                             }
                         }
                     }
 
                     view?.findViewById<TextView>(R.id.myReviewText)?.text = it.data.ownRatingComment
-                    view?.findViewById<TextView>(R.id.myReviewAt)?.text = "${DateUtils().GetDateValueWithFormat( it.data.ownRatingAt, "dd MMMM yyyy")} pada " +
-                            "${DateUtils().GetDateValueWithFormat( it.data.ownRatingAt, "hh:mm")}"
+                    view?.findViewById<TextView>(R.id.myReviewAt)?.text = "${
+                        DateUtils().GetDateValueWithFormat(
+                            it.data.ownRatingAt,
+                            "dd MMMM yyyy"
+                        )
+                    } pada " +
+                            "${DateUtils().GetDateValueWithFormat(it.data.ownRatingAt, "hh:mm")}"
 
                     view?.findViewById<MaterialButton>(R.id.btn_Edit)?.setOnClickListener { btn ->
                         val sheet = EditMyReview(this)
                         val mBundle = Bundle()
                         val reviewData = Gson().toJson(
-                            DataX(true,
+                            DataX(
+                                true,
                                 null,
                                 it.data.ownRatingComment,
                                 it.data.ownConRating!!,
@@ -150,53 +158,53 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
                             )
                         }
                     }
-                    view?.findViewById<MaterialButton>(R.id.btn_delete)?.setOnClickListener {btn->
+                    view?.findViewById<MaterialButton>(R.id.btn_delete)?.setOnClickListener { btn ->
                         AlertDialog.Builder(context)
                             .setMessage("Yakin ingin menghapus review kamu pada '${it.data.companyName}'?")
                             .setTitle("Konfirmasi menghapus")
                             .setPositiveButton("Ya", object : DialogInterface.OnClickListener {
                                 override fun onClick(dialog: DialogInterface, which: Int) {
                                     it.data.ownUserRatingNo?.let { it1 ->
-                                        UsersAPI().DeleteSendedReview(it1, context){
+                                        UsersAPI().DeleteSendedReview(it1, context) {
                                             dialog.dismiss()
                                             layout_my_review?.visibility = GONE
                                         }
                                     }
                                 }
                             })
-                            .setNegativeButton("Batal", object : DialogInterface.OnClickListener{
+                            .setNegativeButton("Batal", object : DialogInterface.OnClickListener {
                                 override fun onClick(dialog: DialogInterface, which: Int) {
                                     dialog.dismiss()
                                 }
                             }).create().show()
                     }
-                }
-                else{
+                } else {
                     layout_my_review?.visibility = GONE
                 }
             }
         }
         layout_send_review?.visibility = GONE
-            CanSendReview().getSendReviewAsync(context, CompanyNo) {
-                if (it != null) {
-                    if (it.data.canSend == true) {
-                        layout_send_review?.visibility = View.VISIBLE
-                        layout_send_review?.setOnClickListener {
-                          sendReviewModal(CompanyNo)
-                        }
+        CanSendReview().getSendReviewAsync(context, CompanyNo) {
+            if (it != null) {
+                if (it.data.canSend == true) {
+                    layout_send_review?.visibility = View.VISIBLE
+                    layout_send_review?.setOnClickListener {
+                        sendReviewModal(CompanyNo)
                     }
                 }
+            }
         }
         CompanyReviewAPI().getCompanyReviewAsync(context, CompanyNo) {
             if (it != null) {
-                if(it.data.reviewList.isEmpty()){
-                   binding.noDataTxt.visibility = VISIBLE
-                }
-                else {
+                if (it.data.reviewList.isEmpty()) {
+                    binding.noDataTxt.visibility = VISIBLE
+                } else {
                     binding.noDataTxt.visibility = GONE
                     rv_review?.apply {
                         layoutManager = LinearLayoutManager(context)
-                        adapter = CompanyReviewAdapter(it.data.reviewList.filter { item -> item.userNo != SessionManager(context).user?.userNo })
+                        adapter = CompanyReviewAdapter(it.data.reviewList.filter { item ->
+                            item.userNo != SessionManager(context).user?.userNo
+                        })
                     }
                 }
             }
@@ -213,7 +221,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
         refreshData()
     }
 
-    fun sendReviewModal(UserNo: Long){
+    fun sendReviewModal(UserNo: Long) {
         val sheet = SendReview(UserNo, id, CompanyReviewFragment())
         activity.let { it1 ->
             sheet.show(

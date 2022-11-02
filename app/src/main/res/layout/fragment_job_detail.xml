@@ -28,11 +28,12 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/backButton"
-                    android:src="@drawable/ic_arrow_left_white"/>
+                    android:src="@drawable/ic_arrow_left_white"
+                    tools:ignore="ContentDescription" />
                 <TextView
                     android:id="@+id/toolbarTitle"
                     android:layout_width="wrap_content"
@@ -43,7 +44,8 @@
                     android:layout_toEndOf="@id/backButton"
                     android:layout_centerVertical="true"
                     android:textSize="16sp"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RelativeOverlap" />
 
                 <ImageView
                     android:layout_centerVertical="true"
@@ -66,7 +68,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@drawable/ic_share"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="ContentDescription,MissingConstraints" />
@@ -78,16 +80,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/spinnerDetailPekerjaan"
+        android:visibility="gone"
         android:gravity="center">
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
     <androidx.core.widget.NestedScrollView
         android:id="@+id/job_detail_container"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

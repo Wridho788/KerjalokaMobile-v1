@@ -24,20 +24,20 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
 import com.google.android.material.chip.Chip
 
 
-class  SearchJob : Fragment(), IJobPage, iSearchJob {
-    private var page = 0;
-    private var takeData = 25;
-    private var isSearching = false;
-    private var listData : List<SearchJobModel> = listOf()
+class SearchJob : Fragment(), IJobPage, iSearchJob {
+    private var page = 0
+    private var takeData = 25
+    private var isSearching = false
+    private var listData: List<SearchJobModel> = listOf()
 
-    private var locationSelected : List<Int> = listOf()
-    private var skillSelected : List<Int> = listOf()
-    private var jobTypeSelected : List<Int> = listOf()
-    private var experienceLevelSelected : List<Int> = listOf()
-    private var salaryMin : Int? = null
-    private var salaryMax : Int? = null
-    private var keyword : String? = ""
-    private var hasSearch : Boolean = false;
+    private var locationSelected: List<Int> = listOf()
+    private var skillSelected: List<Int> = listOf()
+    private var jobTypeSelected: List<Int> = listOf()
+    private var experienceLevelSelected: List<Int> = listOf()
+    private var salaryMin: Int? = null
+    private var salaryMax: Int? = null
+    private var keyword: String? = ""
+    private var hasSearch: Boolean = false
 
 
     var list = ArrayList<SearchModel>()
@@ -48,25 +48,26 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchJobBinding.inflate(layoutInflater)
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             fragmentManager?.popBackStack()
         }
         val view = binding.root
-        return  view
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.topSearchContainer.visibility= GONE
-        binding.latestSearchContainer.visibility= GONE
-        if(binding.searchJob.isNotEmpty()){
-            Log.d("text",binding.searchJob.query.toString())
+        binding.topSearchContainer.visibility = GONE
+        binding.latestSearchContainer.visibility = GONE
+        if (binding.searchJob.isNotEmpty()) {
+            Log.d("text", binding.searchJob.query.toString())
         }
-        if(SessionManager(context).latestSearchJob == null){
+        if (SessionManager(context).latestSearchJob == null) {
             SessionManager(context).latestSearchJob = listOf()
         }
-        binding.btnFilter.setOnClickListener{
-            val sheet = FilterJobModal(this@SearchJob,
+        binding.btnFilter.setOnClickListener {
+            val sheet = FilterJobModal(
+                this@SearchJob,
                 locationSelected,
                 jobTypeSelected,
                 skillSelected,
@@ -77,7 +78,7 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
             activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "ReportJob") }
         }
         val latestSearch = SessionManager(context).latestSearchJob?.reversed()
-        if(latestSearch?.size != 0){
+        if (latestSearch?.size != 0) {
             binding.latestSearchContainer.visibility = VISIBLE
             binding.chipGroup.removeAllViews()
 
@@ -90,7 +91,7 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = true
-                    setOnClickListener{
+                    setOnClickListener {
                         SearchJob(data.toString())
                         binding.searchJob.setQuery(data.toString(), true)
                     }
@@ -103,10 +104,10 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
         }
 
 
-        JobAPI().GetTopSearch(context){ res ->
-            if(res != null){
-                if(res.data.size != 0){
-                    binding.topSearchContainer.visibility= VISIBLE
+        JobAPI().GetTopSearch(context) { res ->
+            if (res != null) {
+                if (res.data.size != 0) {
+                    binding.topSearchContainer.visibility = VISIBLE
                     binding.chipGroupTopSearch.removeAllViews()
                     res.data.forEach { data ->
                         val chipTop = Chip(context)
@@ -117,7 +118,7 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
                             isChipIconVisible = false
                             isCloseIconVisible = false
                             isClickable = true
-                            setOnClickListener{
+                            setOnClickListener {
                                 SearchJob(data.keyword.toString())
                                 binding.searchJob.setQuery(data.keyword.toString(), true)
                             }
@@ -140,14 +141,14 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
             override fun onQueryTextChange(newText: String?): Boolean {
                 keyword = newText
 
-                if (newText!!.isBlank() && !hasSearch){
+                if (newText!!.isBlank() && !hasSearch) {
                     binding.searchResult.visibility = GONE
                     binding.history.visibility = VISIBLE
 
-                    JobAPI().GetTopSearch(context){ res ->
-                        if(res != null){
-                            if(res.data.size != 0){
-                                binding.topSearchContainer.visibility= VISIBLE
+                    JobAPI().GetTopSearch(context) { res ->
+                        if (res != null) {
+                            if (res.data.size != 0) {
+                                binding.topSearchContainer.visibility = VISIBLE
                                 binding.chipGroupTopSearch.removeAllViews()
                                 res.data.forEach { data ->
                                     val chipTop = Chip(context)
@@ -158,7 +159,7 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
                                         isChipIconVisible = false
                                         isCloseIconVisible = false
                                         isClickable = true
-                                        setOnClickListener{SearchJob(data.keyword)}
+                                        setOnClickListener { SearchJob(data.keyword) }
                                         isCheckable = false
                                         binding.apply {
                                             chipGroupTopSearch.addView(chipTop as View)
@@ -173,33 +174,36 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
             }
         })
 
-        binding.removeHistory.setOnClickListener(){
+        binding.removeHistory.setOnClickListener {
             SessionManager(context).latestSearchJob = listOf()
             binding.chipGroup.removeAllViews()
         }
 
 
     }
-    fun SearchJob(keyword : String?){
+
+    fun SearchJob(keyword: String?) {
         if (keyword?.isNotEmpty() == true) {
             newChips(keyword)
         }
-        binding.query.text=keyword
+        binding.query.text = keyword
         this.keyword = keyword
 
         SearchJobs()
     }
+
     private fun newChips(name: String) {
-        if(SessionManager(context).latestSearchJob?.size == 0 ||  SessionManager(context).latestSearchJob?.last() != name) {
+        if (SessionManager(context).latestSearchJob?.size == 0 || SessionManager(context).latestSearchJob?.last() != name) {
             SessionManager(context).latestSearchJob = SessionManager(context).latestSearchJob?.plus(
                 name
             )
         }
-        if(SessionManager(context).latestSearchJob!!.size > 10){
-            SessionManager(context).latestSearchJob = SessionManager(context).latestSearchJob?.takeLast((10))
+        if (SessionManager(context).latestSearchJob!!.size > 10) {
+            SessionManager(context).latestSearchJob =
+                SessionManager(context).latestSearchJob?.takeLast((10))
         }
         val latestSearch = SessionManager(context).latestSearchJob?.reversed()
-        if(latestSearch?.size != 0){
+        if (latestSearch?.size != 0) {
             binding.latestSearchContainer.visibility = VISIBLE
             binding.chipGroup.removeAllViews()
 
@@ -212,7 +216,7 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = true
-                    setOnClickListener{SearchJob(data.toString())}
+                    setOnClickListener { SearchJob(data.toString()) }
                     isCheckable = false
                     binding.apply {
                         chipGroup.addView(chip as View)
@@ -233,9 +237,9 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
         ft.commit()
     }
 
-    override fun BookmarkJob(ListNo : Int, JobNo: Long, Index: Int) {
+    override fun BookmarkJob(ListNo: Int, JobNo: Long, Index: Int) {
         JobAPI().BookmarkJob(JobNo, !listData[Index].bookmarked, context) {
-            if(it != null) {
+            if (it != null) {
                 if (it.code == 210) {
                     listData[Index].bookmarked = !listData[Index].bookmarked
                     binding.recycleJobs.adapter?.notifyDataSetChanged()
@@ -247,40 +251,44 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
     }
 
     override fun nextPage() {
-        if(!isSearching && listData.size >= page * takeData) {
+        if (!isSearching) {
             isSearching = true
+            var size = listData.size <= page * takeData
+            if (size == true) {
+                JobAPI().SearchJob(
+                    JobAPI.searchJobRequest(
+                        keyword!!,
+                        locationSelected,
+                        jobTypeSelected,
+                        skillSelected,
+                        experienceLevelSelected,
+                        salaryMin,
+                        salaryMax,
+                        page
+                    ), context
+                ) { res ->
+                    if (res != null) {
+                        if (res.data.isNotEmpty()) {
+                            listData += res.data
+                            page += 1
 
-            JobAPI().SearchJob(
-                JobAPI.searchJobRequest(
-                    keyword!!,
-                    locationSelected,
-                    jobTypeSelected,
-                    skillSelected,
-                    experienceLevelSelected,
-                    salaryMin,
-                    salaryMax,
-                    page
-                ), context
-            ) { res ->
-                if (res != null) {
-                    if(res.data.isNotEmpty()) {
-                        listData += res.data
-                        page += 1
-
-                        val appContext = this
-                        binding.recycleJobs.apply {
-                            layoutManager = LinearLayoutManager(context)
-                            adapter = JobAdapter(1, listData, context, appContext, this@SearchJob)
+                            val appContext = this
+                            binding.recycleJobs.apply {
+                                layoutManager = LinearLayoutManager(context)
+                                adapter =
+                                    JobAdapter(1, listData, context, appContext, this@SearchJob)
+                            }
+                            binding.recycleJobs.adapter?.notifyDataSetChanged()
+                            binding.recycleJobs.adapter?.itemCount?.minus(28)
+                                ?.let { binding.recycleJobs.scrollToPosition(it) }
                         }
-                        binding.recycleJobs.adapter?.notifyDataSetChanged()
-                        binding.recycleJobs.adapter?.itemCount?.minus(28)
-                            ?.let { binding.recycleJobs.scrollToPosition(it) };
                     }
+                    isSearching = false
                 }
-                isSearching = false
             }
         }
     }
+
     override fun SearchJobs() {
         this.hasSearch = true
         binding.searchResult.visibility = VISIBLE
@@ -288,17 +296,20 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
         page = 0
 
         JobAPI().SearchJob(
-            JobAPI.searchJobRequest(keyword!! ,
+            JobAPI.searchJobRequest(
+                keyword!!,
                 locationSelected,
                 jobTypeSelected,
                 skillSelected,
                 experienceLevelSelected,
                 salaryMin,
                 salaryMax,
-                page)
-            , context){ res ->
-            if(res != null) {
+                page
+            ), context
+        ) { res ->
+            if (res != null) {
                 listData = res.data
+                Log.d("response search", listData.toString())
                 val appContext = this
                 binding.recycleJobs.visibility = VISIBLE
                 binding.recycleJobs.apply {
@@ -325,20 +336,23 @@ class  SearchJob : Fragment(), IJobPage, iSearchJob {
     override fun updateExperienceSelected(data: List<Int>) {
         this.experienceLevelSelected = data
     }
+
     override fun updateSalaryMin(data: Int?) {
         this.salaryMin = data
     }
+
     override fun updateSalaryMax(data: Int?) {
         this.salaryMax = data
     }
 }
-interface iSearchJob{
+
+interface iSearchJob {
     fun SearchJobs()
-    fun updateLocationSelected(data : List<Int>)
-    fun updateJobTypeSelected(data : List<Int>)
-    fun updateSkillSelected(data : List<Int>)
-    fun updateExperienceSelected(data : List<Int>)
-    fun updateSalaryMin(data : Int?)
-    fun updateSalaryMax(data : Int?)
+    fun updateLocationSelected(data: List<Int>)
+    fun updateJobTypeSelected(data: List<Int>)
+    fun updateSkillSelected(data: List<Int>)
+    fun updateExperienceSelected(data: List<Int>)
+    fun updateSalaryMin(data: Int?)
+    fun updateSalaryMax(data: Int?)
     fun nextPage()
 }
