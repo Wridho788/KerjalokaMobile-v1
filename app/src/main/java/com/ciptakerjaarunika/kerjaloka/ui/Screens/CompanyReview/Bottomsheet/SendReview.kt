@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.SendReviewAPI
+import com.ciptakerjaarunika.kerjaloka.enum.Role
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.conRatingList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRating
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRatingList
@@ -113,7 +115,6 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
             }
         }
 
-
         btn_send_review.setOnClickListener {
             sendReview()
         }
@@ -144,23 +145,47 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
         val ratingBar = view?.findViewById<RatingBar>(R.id.RatingModal)
         ratingBar?.onRatingBarChangeListener =
             OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating }
+        var isUser =
+            SessionManager(context).user?.roleNo == Role.Jobseekers.value
+        var isCompany = SessionManager(context).user?.roleNo == Role.Companies.value
 
-        SendReviewAPI().SendReviewCompanyPost(
-            context,
-            send_Request(
-                CompanyNo,
-                textReview?.text.toString(),
-                ratingBar?.rating!!.toLong(),
-                proRatingId,
-                conRatingid
-            )
-        ) {
-            if (it != null) {
-                this.dismiss()
-                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
-                ft.commit()
+        if (isUser) {
+            SendReviewAPI().SendReviewPost(
+                context, send_Request(
+                    CompanyNo,
+                    textReview?.text.toString(),
+                    ratingBar?.rating!!.toLong(),
+                    proRatingId,
+                    conRatingid
+                )
+            ) {
+                if (it != null) {
+                    this.dismiss()
+                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                    ft.replace(fragmentId, GotoFragment, "companyReviewFragment")
+                    ft.commit()
+                }
             }
+
+        } else if (isCompany) {
+            SendReviewAPI().SendReviewCompanyPost(
+                context,
+                send_Request(
+                    CompanyNo,
+                    textReview?.text.toString(),
+                    ratingBar?.rating!!.toLong(),
+                    proRatingId,
+                    conRatingid
+                )
+            ) {
+                if (it != null) {
+                    this.dismiss()
+                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                    ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
+                    ft.commit()
+                }
+            }
+
         }
     }
 
