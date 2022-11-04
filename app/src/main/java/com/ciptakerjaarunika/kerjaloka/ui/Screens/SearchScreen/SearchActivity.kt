@@ -30,17 +30,12 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 
     private lateinit var binding: ActivitySearchBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        if(SessionManager(context).latestGeneralSearch == null){
+    ): View {
+        if (SessionManager(context).latestGeneralSearch == null) {
             SessionManager(context).latestGeneralSearch = listOf()
         }
 
@@ -64,7 +59,9 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                     isClickable = true
                     isCheckable = false
                     binding.apply {
-                        latestResultGrup.addView(chip as View)
+                        if (int < 8) {
+                            latestResultGrup.addView(chip as View)
+                        }
                     }
                 }
                 val chipTop = Chip(context)
@@ -92,14 +89,8 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
                     Search_Api().getGeneralSearchAsync(context, query) {
-                        Log.d("search", it.toString())
                         if (it != null) {
                             list = it.data
-                            var listjob = list?.jobList
-                            var listcompany = list?.companyList
-//                        Log.d("response job", listjob.toString())
-//                        Log.d("response company", listcompany.toString())
-
                             if (list?.jobList?.size!! < 5) {
                                 binding.seeMoreJob.visibility = GONE
                             } else binding.seeMoreJob.visibility = VISIBLE
@@ -110,28 +101,38 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 
                             binding.recycleJob.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                adapter = SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
+                                adapter =
+                                    SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
                             }
                             binding.recycleCompany.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                adapter = SearchCompanyAdapter(list!!.companyList, context, this@SearchActivity)
+                                adapter = SearchCompanyAdapter(
+                                    list!!.companyList,
+                                    context,
+                                    this@SearchActivity
+                                )
                             }
                         }
                     }
                     newChips(query)
-                    binding.latestResultGrup.setOnClickListener{
-                        Toast.makeText(context,"search" + query, Toast.LENGTH_SHORT).show()
+                    binding.latestResultGrup.setOnClickListener {
+                        Toast.makeText(context, "search" + query, Toast.LENGTH_SHORT).show()
                     }
                 }
                 binding.layoutTopSearchResults.isVisible = false
                 binding.layoutResultSearch.isVisible = true
-                binding.layoutLatestSearchResults.isVisible = false
+                binding.layoutLatestSearchResults.isVisible = true
                 binding.resultSearchJob.text = query
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText!!.isEmpty()) {
+                if (newText?.length!! > 50) {
+                    Toast.makeText(context, "Text character is more than 50", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                if (newText.isEmpty()) {
                     binding.layoutLatestSearchResults.isVisible = false
                     binding.layoutTopSearchResults.isVisible = false
                     binding.layoutResultSearch.isVisible = true
@@ -140,7 +141,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                     binding.layoutTopSearchResults.isVisible = true
                     binding.layoutResultSearch.isVisible = false
                 }
-                return true
+                return false
             }
         })
 
@@ -155,18 +156,20 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 
     private fun newChips(keyword: String) {
         binding.latestResultGrup.isVisible = true
-        if(SessionManager(context).latestGeneralSearch?.size == 0 ||  SessionManager(context).latestGeneralSearch?.last() != keyword) {
-            SessionManager(context).latestGeneralSearch = SessionManager(context).latestGeneralSearch?.plus(
-                keyword
-            )
+        if (SessionManager(context).latestGeneralSearch?.size == 0 || SessionManager(context).latestGeneralSearch?.last() != keyword) {
+            SessionManager(context).latestGeneralSearch =
+                SessionManager(context).latestGeneralSearch?.plus(
+                    keyword
+                )
         }
-        if(SessionManager(context).latestGeneralSearch!!.size > 10){
-            SessionManager(context).latestGeneralSearch = SessionManager(context).latestGeneralSearch?.takeLast((10))
+        if (SessionManager(context).latestGeneralSearch!!.size > 10) {
+            SessionManager(context).latestGeneralSearch =
+                SessionManager(context).latestGeneralSearch?.takeLast((10))
         }
         val latestSearch = SessionManager(context).latestGeneralSearch?.reversed()
         val chip = Chip(context)
 
-        if(latestSearch?.size != 0){
+        if (latestSearch?.size != 0) {
             chip.setChipBackgroundColorResource(R.color.danger_100)
             chip.apply {
                 textSize = 12f
@@ -185,16 +188,17 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         }
 
     }
+
     fun replaceFragment(fragment: Fragment) {
         val fragmentManager = parentFragmentManager
         val ft = fragmentManager.beginTransaction()
-        ft.replace(id , fragment)
+        ft.replace(id, fragment)
         ft.addToBackStack("")
         ft.commit()
     }
 
     override fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long) {
-    replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))
+        replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))
 
     }
 

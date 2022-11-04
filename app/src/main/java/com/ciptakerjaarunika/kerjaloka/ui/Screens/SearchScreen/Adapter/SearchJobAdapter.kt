@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +14,9 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.jobList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.onFragmentTransactionList
 import com.google.android.material.card.MaterialCardView
-import org.ocpsoft.prettytime.PrettyTime
-import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class SearchJobAdapter(
@@ -35,7 +34,6 @@ class SearchJobAdapter(
         var logo: ImageView
         var cardJob: MaterialCardView
 
-
         init {
             jobPosition = itemView.findViewById(R.id.jobPosition)
             jobLocation = itemView.findViewById(R.id.jobLocation)
@@ -51,12 +49,6 @@ class SearchJobAdapter(
         view.layoutParams = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             return ViewHolder(view)
     }
-
-    private var inputDate: Date? = null
-    private var outputDate: Date? = null
-    private var formattedDateString: String? = null
-    private var prettyTimeString: String? = null
-
     @SuppressLint("SimpleDateFormat")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = joblist[position]
@@ -66,19 +58,43 @@ class SearchJobAdapter(
         Glide.with(holder.itemView.context)
             .load(config().portAddress + "/photo/Profile/" + currentItem.photo).fitCenter()
             .into(holder.logo)
-        val dateString = currentItem.createdOn
-        val convertDate = SimpleDateFormat("yyyy-MM-dd kk:mm:ss")
-        val dateFormat = SimpleDateFormat("MM/dd/yyyy hh:mm:ss aa")
-        try {
-            inputDate = convertDate.parse(dateString)
-            formattedDateString = inputDate?.let { it1 -> dateFormat.format(it1) }
-            outputDate = formattedDateString?.let { it1 -> dateFormat.parse(it1) }
-        } catch (e: ParseException) {
-            e.printStackTrace()
+        val SECOND = 1
+        val MINUTE = 60 * SECOND
+        val HOUR = 60 * MINUTE
+        val DAY = 24 * HOUR
+        val WEEK = 7 * DAY
+
+        var time = currentItem.createdOn
+        val now = LocalDateTime.now().toString()
+
+        fun GetDateValue(value: String): Date {
+            val temp = value.split("T")
+            val time = temp[1].split(":")
+            val date = "${temp[0]} ${time[0]}:${time[1]}"
+            var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            return dateFormat.parse(date)
         }
-        val prettyTime = PrettyTime()
-        prettyTimeString = prettyTime.format(outputDate)
-        holder.createOn.text = prettyTimeString
+
+        fun dateDiff(): String {
+            val date1 = GetDateValue(time).time
+            val date2 = GetDateValue(now).time
+
+            val diff = (date2 - date1) / 1000
+            return when {
+                diff < MINUTE -> "Baru Saja"
+                diff < 2 * MINUTE -> "Beberapa Menit Lalu"
+                diff < 60 * MINUTE -> "${diff / MINUTE} Menit Lalu"
+                diff < 2 * HOUR -> "Beberapa Jam Lalu"
+                diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
+                diff < 2 * DAY -> "Kemarin"
+                diff < WEEK -> "${diff / DAY} Hari Lalu"
+                else -> LocalDateTime.parse(time)
+                    .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            }
+
+        }
+        holder.createOn.text = dateDiff()
+
         holder.cardJob.setOnClickListener{
             onFragmentClickListener.onFragmentTransactionListenerClick(currentItem.companyNo, currentItem.jobNo)
         }

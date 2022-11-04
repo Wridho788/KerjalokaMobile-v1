@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.OnFragmentCvBankListener
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.iCvBankInterface
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.google.android.material.card.MaterialCardView
 
 class ApplicantCVBankAdapter(
     private val context: Context,
     private val applicantModel: List<applicantModel>?,
-    private val onFragmentCvBankListener: OnFragmentCvBankListener
+    private val iCVBankAdapter: iCvBankInterface
 ) :
     RecyclerView.Adapter<ApplicantCVBankAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -72,7 +72,7 @@ class ApplicantCVBankAdapter(
             .into(holder.profileApplicant)
 
         holder.cardApplicant.setOnClickListener {
-            onFragmentCvBankListener.goToJobApplicant(currentItem.application.jobNo)
+            iCVBankAdapter.goToJobApplicant(currentItem.application.jobNo, currentItem.application.jobseekerNo)
         }
     }
 

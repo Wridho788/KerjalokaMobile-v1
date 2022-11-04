@@ -33,11 +33,11 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant {
+class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant, iCvBankInterface {
 
     private lateinit var binding: FragmentJobApplicantBinding
     private var list: List<applicantModel>? = null
-
+    private var loading = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -155,6 +155,8 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
         val btn_cvBanks = view?.findViewById<LinearLayout>(R.id.btn_cv_banks)
         CompanyListApplicantAPI().GetListApplicantPost(context, JobNo) {
             if (it != null) {
+                loading -= 1
+                LoadingDone()
                 list = it.data
                 rv_applicant?.apply {
                     layoutManager = LinearLayoutManager(activity)
@@ -204,10 +206,16 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
         }
     }
 
+    fun LoadingDone() {
+        if (loading == 0) {
+            binding.spinner.visibility = View.GONE
+            binding.contentContainer.visibility = View.VISIBLE
+        }
+    }
 
     override fun goToApplicantDetail(applicantDetail: applicantModel) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, ApplicantDetailFragment ( applicantDetail, this), "company applicant detail")
+        ft.replace(id, ApplicantDetailFragment ( applicantDetail, this, null), "company applicant detail")
         ft.addToBackStack("CompanyApplicantDetail")
         ft.commit()
     }
@@ -216,4 +224,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant 
 interface iJobApplicant {
     fun goToApplicantDetail(applicantDetail: applicantModel)
     fun getRefreshData()
+}
+
+interface iCvBankInterface{
 }

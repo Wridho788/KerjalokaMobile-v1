@@ -7,16 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyListApplicantAPI
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyOfficerJobsApi
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCVbanksBinding
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.ApplicantDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.Adapter.ApplicantCVBankAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 
-class CVbanks : Fragment(), OnFragmentCvBankListener {
+class CVbanks : Fragment(), iCvBankInterface {
     private lateinit var binding: FragmentCVbanksBinding
     private var listJob: List<applicantModel>? = null
     private var list: List<applicantModel>? = null
@@ -48,7 +50,7 @@ class CVbanks : Fragment(), OnFragmentCvBankListener {
                 Log.d("list", listJob.toString())
                 rvListApplicant.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter = ApplicantCVBankAdapter(context,listJob, this@CVbanks)
+                    adapter = ApplicantCVBankAdapter(context, listJob, this@CVbanks)
                 }
             }
 
@@ -61,15 +63,17 @@ class CVbanks : Fragment(), OnFragmentCvBankListener {
             binding.contentContainer.visibility = View.VISIBLE
         }
     }
-    override fun goToJobApplicant(jobNo: Long) {
+
+    override fun goToJobApplicant(jobNo: Long, jobseekerNo: Long) {
         CompanyListApplicantAPI().GetListApplicantPost(context, jobNo) {
             if (it != null) {
                 list = it.data
-                Log.d("applicantModel", list.toString())
-//                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-//                ft.replace(id, ApplicantDetailFragment(list!!, this@CVbanks), "CompanyApplicant")
-//                ft.addToBackStack("CompanyApplicant")
-//                ft.commit()
+                var temp  = list!!.find { data -> data.applicant.jobseekerNo == jobseekerNo }
+                var applicantObj : applicantModel = temp!!
+                val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                ft.replace(id, ApplicantDetailFragment(applicantObj, null, this@CVbanks), "CompanyApplicant")
+                ft.addToBackStack("CompanyApplicant")
+                ft.commit()
             }
         }
 
@@ -77,6 +81,6 @@ class CVbanks : Fragment(), OnFragmentCvBankListener {
     }
 }
 
-interface OnFragmentCvBankListener {
-    fun goToJobApplicant(jobNo: Long)
+interface iCvBankInterface {
+    fun goToJobApplicant(jobNo: Long, jobseekerNo: Long)
 }

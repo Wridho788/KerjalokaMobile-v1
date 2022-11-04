@@ -7,5 +7,5 @@ data class JobResponses(
     @SerializedName("code")
     val code: Int,
     @SerializedName("data")
-    val `data`: List<Data>
+    val `data`: List<DataActiveJob>
 )

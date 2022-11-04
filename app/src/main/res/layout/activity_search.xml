@@ -71,6 +71,7 @@
                 android:fontFamily="@font/poppins"
                 android:inputType="text"
                 android:keepScreenOn="true"
+
                 android:paddingEnd="10dp"
                 android:queryHint="@string/search_placeholder"
                 android:searchIcon="@drawable/ic_search"

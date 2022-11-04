@@ -52,6 +52,53 @@ data class Data(
     val takedown: Boolean
 )
 
+data class DataActiveJob(
+    @SerializedName("createdBy")
+    val createdBy: String,
+    @SerializedName("createdOn")
+    val createdOn: String,
+    @SerializedName("expired")
+    val expired: String,
+    @SerializedName("jobAdditionalDescription")
+    val jobAdditionalDescription: Any?,
+    @SerializedName("jobCity")
+    val jobCity: String,
+    @SerializedName("jobDescription")
+    val jobDescription: String?,
+    @SerializedName("jobExperienceLevel")
+    val jobExperienceLevel: JobExperienceLevel?,
+    @SerializedName("jobField")
+    val jobField: JobField?,
+    @SerializedName("jobMinExperience")
+    val jobMinExperience: Int?,
+    @SerializedName("jobNo")
+    val jobNo: Long,
+    @SerializedName("jobPosition")
+    val jobPosition: String,
+    @SerializedName("jobRole")
+    val jobRole: JobRole?,
+    @SerializedName("jobSalaryMax")
+    val jobSalaryMax: BigDecimal?,
+    @SerializedName("jobSalaryMin")
+    val jobSalaryMin: BigDecimal?,
+    @SerializedName("jobShortQuestion")
+    val jobShortQuestion: List<JobShortQuestion>,
+    @SerializedName("jobSkills")
+    val jobSkills: List<JobSkill>,
+    @SerializedName("jobTests")
+    val jobTests: List<JobTest>,
+    @SerializedName("jobTitle")
+    val jobTitle: List<JobTitle>,
+    @SerializedName("jobType")
+    val jobType: JobType,
+    @SerializedName("link")
+    val link: String,
+    @SerializedName("publish")
+    val publish: Boolean,
+    @SerializedName("takedown")
+    val takedown: Boolean
+)
+
 data class JobShortQuestion (
     val shortQuestionNo: Long,
     val companyNo: Long,
