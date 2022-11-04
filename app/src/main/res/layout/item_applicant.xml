@@ -39,7 +39,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:radius="10dp"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/kerjaloka_logo_small" />
                 </com.google.android.material.card.MaterialCardView>
 

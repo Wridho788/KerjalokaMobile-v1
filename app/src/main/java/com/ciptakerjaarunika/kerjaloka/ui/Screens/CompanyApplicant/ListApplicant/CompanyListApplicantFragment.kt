@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.CompanyOfficerJobsApi
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyListApplicantBinding
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.CVbanks
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.JobApplicantFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ListApplicant.Adapter.ListApplicantAdapter
@@ -19,12 +21,15 @@ import com.google.android.material.card.MaterialCardView
 
 class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
     private var listJob: List<listApplicantJobModel>? = null
-
+    private lateinit var binding: FragmentCompanyListApplicantBinding
+    private var loading = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_company_list_applicant, container, false)
+    ): View {
+        binding = FragmentCompanyListApplicantBinding.inflate(layoutInflater)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,11 +49,18 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
 
         CompanyOfficerJobsApi().CompanyOfficerJob(context) {
             if (it != null) {
+                loading -= 1
+                LoadingDone()
                 listJob = it.data
+                Log.d("own", listJob.toString())
                 rv_applicantJob.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter =
-                        ListApplicantAdapter(context, listJob, this@CompanyListApplicantFragment)
+                        ListApplicantAdapter(
+                            context,
+                            listJob,
+                            this@CompanyListApplicantFragment
+                        )
                 }
             }
         }
@@ -59,7 +71,13 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
             }
         }
 
+    }
 
+    fun LoadingDone() {
+        if (loading == 0) {
+            binding.spinner.visibility = View.GONE
+            binding.contentContainer.visibility = View.VISIBLE
+        }
     }
 
     override fun goToListJobApplicant(JobNo: Long) {

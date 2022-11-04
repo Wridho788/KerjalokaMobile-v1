@@ -23,6 +23,8 @@ class fragment_company_jobs : Fragment() {
 
     private lateinit var binding: FragmentCompanyJobsBinding
     private var listJob: List<ResponseCompanyJobs>? = null
+    private var loading = 1
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,12 +76,21 @@ class fragment_company_jobs : Fragment() {
 
         company_profile_api().MyJob(context){
             if(it != null) {
+                loading -= 1
+                LoadingDone()
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyle_company_jobs)
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = it.data.let { it1 -> assignAdapter(it1) }
                 }
             }
+        }
+    }
+
+    fun LoadingDone() {
+        if (loading == 0) {
+            binding.spinner.visibility = View.GONE
+            binding.contentContainer.visibility = View.VISIBLE
         }
     }
 

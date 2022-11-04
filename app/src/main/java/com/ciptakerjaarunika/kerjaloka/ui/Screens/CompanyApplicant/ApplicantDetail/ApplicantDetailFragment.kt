@@ -38,7 +38,10 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJobApplicant: iJobApplicant) : Fragment(),
+class ApplicantDetailFragment(
+    private val applicantDetail: applicantModel,
+    val iJobApplicant: iJobApplicant
+) : Fragment(),
     OnFragmentClickListener {
 
     private lateinit var binding: FragmentApplicantDetailBinding
@@ -63,19 +66,19 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
         toolbar.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-       if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.ShortList.value) {
-           binding.headerApplicantDetail.txtStatus.text = "Terpilih"
-       } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Test.value) {
-           binding.headerApplicantDetail.txtStatus.text = "Dalam Test"
-       } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Interview.value){
-           binding.headerApplicantDetail.txtStatus.text = "Interview"
-       } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Accepted.value){
-           binding.headerApplicantDetail.txtStatus.text = "Diterima"
-       } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Rejected.value){
-           binding.headerApplicantDetail.txtStatus.text = "Ditolak"
-       } else {
-           binding.headerApplicantDetail.txtStatus.text = "CV Bank"
-       }
+        if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.ShortList.value) {
+            binding.headerApplicantDetail.txtStatus.text = "Terpilih"
+        } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Test.value) {
+            binding.headerApplicantDetail.txtStatus.text = "Dalam Test"
+        } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Interview.value) {
+            binding.headerApplicantDetail.txtStatus.text = "Interview"
+        } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Accepted.value) {
+            binding.headerApplicantDetail.txtStatus.text = "Diterima"
+        } else if (applicantDetail.application.applicationStatusNo == ApplicanStatusType.Rejected.value) {
+            binding.headerApplicantDetail.txtStatus.text = "Ditolak"
+        } else {
+            binding.headerApplicantDetail.txtStatus.text = "CV Bank"
+        }
 
         val experienceJob = applicantDetail.applicant.experiences
         if (experienceJob != null) {
@@ -116,7 +119,7 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
                 val beginYearEducation =
                     LocalDateTime.parse(educationBegin[0].educationBeginAt)
                         .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-                if (educationEnded != null){
+                if (educationEnded != null) {
                     val endedYearEducation =
                         LocalDateTime.parse(educationEnded[0].educationEndedAt)
                             .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
@@ -305,8 +308,13 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
 
 
         binding.headerApplicantDetail.btnMore.setOnClickListener {
-            val sheet = MoreActionFragment( applicantDetail.applicant.jobseekerNo, applicantDetail.application.jobNo, applicantDetail, iJobApplicant)
-            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment")}
+            val sheet = MoreActionFragment(
+                applicantDetail.applicant.jobseekerNo,
+                applicantDetail.application.jobNo,
+                applicantDetail,
+                iJobApplicant
+            )
+            activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment") }
         }
 
         binding.headerApplicantDetail.btnChangeStatus.setOnClickListener {
@@ -375,7 +383,10 @@ class ApplicantDetailFragment(private val applicantDetail: applicantModel,val iJ
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(
             id,
-            StatusPageFragment(applicantDetail.application.applicationNo, applicantDetail.application.applicationStatusNo),
+            StatusPageFragment(
+                applicantDetail.application.applicationNo,
+                applicantDetail.application.applicationStatusNo
+            ),
             "ChangeStatus"
         )
         ft.addToBackStack("ChangeStatus")

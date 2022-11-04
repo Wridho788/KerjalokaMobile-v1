@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.Adapter
 
+import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -8,11 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.OnFragmentCvBankListener
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.google.android.material.card.MaterialCardView
 
 class ApplicantCVBankAdapter(
+    private val context: Context,
     private val applicantModel: List<applicantModel>?,
+    private val onFragmentCvBankListener: OnFragmentCvBankListener
 ) :
     RecyclerView.Adapter<ApplicantCVBankAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,15 +43,21 @@ class ApplicantCVBankAdapter(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        view.setLayoutParams(lp)
+        view.layoutParams = lp
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = applicantModel!![position]
         holder.nameApplicant.text = currentItem.applicant.name
-        holder.locationApplicant.text =
-            currentItem.applicant.location.city + ", " + currentItem.applicant.location.province
+        if (currentItem.applicant.location != null) {
+            holder.locationApplicant.text =
+                currentItem.applicant.location.city + ", " + currentItem.applicant.location.province
+        } else if (currentItem.applicant.location == null) {
+            holder.locationApplicant.text = ""
+        } else {
+            holder.locationApplicant.text = ""
+        }
 //        val status = currentItem.publish
 //        if (status == true) {
 //            holder.statusApplicant.text = "Qualified"
@@ -60,14 +70,10 @@ class ApplicantCVBankAdapter(
             .load(config().portAddress + "/photo/Profile/" + currentItem.applicant.photo)
             .fitCenter()
             .into(holder.profileApplicant)
-//        if (currentItem.bookmarked == true) {
-//            holder.pinImage.setImageResource(R.drawable.ic_pin)
-//        }
 
-
-//        holder.cardApplicant.setOnClickListener {
-//            onFragmentClickListener?.goToApplicantDetail(currentItem)
-//        }
+        holder.cardApplicant.setOnClickListener {
+            onFragmentCvBankListener.goToJobApplicant(currentItem.application.jobNo)
+        }
     }
 
     override fun getItemCount(): Int {
