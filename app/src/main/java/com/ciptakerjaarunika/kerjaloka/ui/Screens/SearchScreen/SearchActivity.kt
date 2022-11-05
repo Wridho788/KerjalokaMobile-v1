@@ -40,7 +40,40 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         }
 
         binding = ActivitySearchBinding.inflate(layoutInflater)
+        Log.d("keyword", keyword.toString())
+        if (keyword?.isNotEmpty() == true) {
+            Search_Api().getGeneralSearchAsync(context, keyword) {
+                if (it != null) {
+                    binding.layoutTopSearchResults.isVisible = false
+                    binding.layoutLatestSearchResults.isVisible = false
+                    binding.layoutResultSearch.isVisible = true
+                    binding.resultSearchJob.text = keyword
+                    list = it.data
+                    if (list?.jobList?.size!! < 5) {
+                        binding.seeMoreJob.visibility = GONE
+                    } else binding.seeMoreJob.visibility = VISIBLE
 
+                    if (list?.companyList?.size!! < 5) {
+                        binding.seeMoreCompany.visibility = GONE
+                    } else binding.seeMoreCompany.visibility = VISIBLE
+
+                    binding.recycleJob.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter =
+                            SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
+                    }
+                    binding.recycleJob.adapter?.notifyDataSetChanged()
+                    binding.recycleCompany.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = SearchCompanyAdapter(
+                            list!!.companyList,
+                            context,
+                            this@SearchActivity
+                        )
+                    }
+                }
+            }
+        }
         binding.btnBack.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -57,9 +90,9 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                     isClickable = true
                     isCheckable = false
                     setOnClickListener {
-                      Log.d("keyword", data.toString())
                         SearchJob(data.toString())
                         binding.searchBar.setQuery(data.toString(), true)
+                        binding.layoutLatestSearchResults.visibility = View.GONE
                     }
                     binding.apply {
                             latestResultGrup.addView(chip as View)
@@ -81,8 +114,8 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
             }
         } else {
             binding.layoutLatestSearchResults.isVisible = true
-            binding.layoutResultSearch.isVisible = false
-            binding.layoutTopSearchResults.isVisible = true
+            binding.layoutResultSearch.isVisible = true
+            binding.layoutTopSearchResults.isVisible = false
         }
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -103,6 +136,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                                 adapter =
                                     SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
                             }
+                            binding.recycleJob.adapter?.notifyDataSetChanged()
                             binding.recycleCompany.apply {
                                 layoutManager = LinearLayoutManager(context)
                                 adapter = SearchCompanyAdapter(

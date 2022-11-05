@@ -2,15 +2,19 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.jobList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.onFragmentTransactionList
 import com.google.android.material.card.MaterialCardView
@@ -33,6 +37,7 @@ class SearchJobAdapter(
         var createOn: TextView
         var logo: ImageView
         var cardJob: MaterialCardView
+        var bookmarkedJob: ImageView
 
         init {
             jobPosition = itemView.findViewById(R.id.jobPosition)
@@ -41,6 +46,7 @@ class SearchJobAdapter(
             createOn = itemView.findViewById(R.id.createdOn)
             logo = itemView.findViewById(R.id.logo)
             cardJob = itemView.findViewById(R.id.card_recommendation_job)
+            bookmarkedJob = itemView.findViewById(R.id.btn_bookmark)
         }
     }
 
@@ -58,6 +64,25 @@ class SearchJobAdapter(
         Glide.with(holder.itemView.context)
             .load(config().portAddress + "/photo/Profile/" + currentItem.photo).fitCenter()
             .into(holder.logo)
+        holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
+
+        if(SessionManager(context).user == null){
+            holder.bookmarkedJob.visibility = View.GONE
+        }
+        holder.bookmarkedJob.setOnClickListener {
+            JobAPI().BookmarkJob(currentItem.jobNo.toLong(), !currentItem.bookmarked, context) {
+                if(it != null) {
+                    if (it.code == 210) {
+                        currentItem.bookmarked = !currentItem.bookmarked
+                        joblist!![position].bookmarked = joblist!![position].bookmarked
+//                        onFragmentClick.bookmarkJob(rJobList!!)
+                    } else {
+                        Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
         val SECOND = 1
         val MINUTE = 60 * SECOND
         val HOUR = 60 * MINUTE
