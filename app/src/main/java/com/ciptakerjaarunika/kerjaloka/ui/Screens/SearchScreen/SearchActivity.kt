@@ -27,7 +27,7 @@ import com.google.android.material.chip.Chip
 class SearchActivity : Fragment(), onFragmentTransactionList,
     onFragmentTransactionListCompany {
     private var list: general_search_model? = null
-
+    private var keyword: String? = ""
     private lateinit var binding: ActivitySearchBinding
 
     override fun onCreateView(
@@ -45,31 +45,31 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
             activity?.onBackPressed()
         }
         var listSearch = SessionManager(context).latestGeneralSearch?.reversed()
-        if (listSearch?.isNotEmpty() == true) {
-            var int = 0
-            listSearch.forEach {
+        if (listSearch?.size != 0) {
+            listSearch?.forEach { data ->
                 val chip = Chip(context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it.toString()
-                    id = int
+                    text = data.toString()
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = true
                     isCheckable = false
+                    setOnClickListener {
+                      Log.d("keyword", data.toString())
+                        SearchJob(data.toString())
+                        binding.searchBar.setQuery(data.toString(), true)
+                    }
                     binding.apply {
-                        if (int < 8) {
                             latestResultGrup.addView(chip as View)
-                        }
                     }
                 }
                 val chipTop = Chip(context)
                 chipTop.setChipBackgroundColorResource(R.color.danger_100)
                 chipTop.apply {
                     textSize = 12f
-                    text = it.toString()
-                    id = int
+                    text = data.toString()
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = true
@@ -78,7 +78,6 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 //                        chipGroupTopSearch.addView(chipTop as View)
 //                    }
                 }
-                int++
             }
         } else {
             binding.layoutLatestSearchResults.isVisible = true
@@ -127,6 +126,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                keyword = newText
                 if (newText?.length!! > 50) {
                     Toast.makeText(context, "Text character is more than 50", Toast.LENGTH_SHORT)
                         .show()
@@ -153,6 +153,11 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         return binding.root
     }
 
+    fun SearchJob(keyword: String?) {
+        if (keyword?.isNotEmpty() == true) {
+            newChips(keyword)
+        }
+    }
 
     private fun newChips(keyword: String) {
         binding.latestResultGrup.isVisible = true
@@ -162,9 +167,9 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                     keyword
                 )
         }
-        if (SessionManager(context).latestGeneralSearch!!.size > 10) {
+        if (SessionManager(context).latestGeneralSearch!!.size > 8) {
             SessionManager(context).latestGeneralSearch =
-                SessionManager(context).latestGeneralSearch?.takeLast((10))
+                SessionManager(context).latestGeneralSearch?.takeLast((8))
         }
         val latestSearch = SessionManager(context).latestGeneralSearch?.reversed()
         val chip = Chip(context)
@@ -178,11 +183,14 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                 isCloseIconVisible = false
                 isClickable = true
                 isCheckable = false
+                setOnClickListener { SearchJob(keyword) }
                 binding.apply {
                     if (latestResultGrup.size > 7) {
                         latestResultGrup.removeViewAt(0)
                     }
-                    Log.d("keyword", keyword)
+                    chip.setOnClickListener {
+                        Log.d("keyword", keyword)
+                    }
                 }
             }
         }
