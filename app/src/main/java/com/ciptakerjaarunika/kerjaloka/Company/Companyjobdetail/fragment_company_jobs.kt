@@ -42,6 +42,8 @@ class fragment_company_jobs : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         UpdateUI()
+        loading -= 1
+        LoadingDone()
     }
 
 
@@ -76,8 +78,7 @@ class fragment_company_jobs : Fragment() {
 
         company_profile_api().MyJob(context){
             if(it != null) {
-                loading -= 1
-                LoadingDone()
+
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyle_company_jobs)
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity)

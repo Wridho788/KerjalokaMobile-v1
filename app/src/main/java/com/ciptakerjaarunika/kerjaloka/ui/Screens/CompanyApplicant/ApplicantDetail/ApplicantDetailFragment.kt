@@ -28,6 +28,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDeta
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionRecords.RecordsFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.StatusPageFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.CVbanks.iCvBankInterface
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.jobApplicantHistory
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.iJobApplicant
@@ -40,7 +41,7 @@ import java.time.format.DateTimeFormatter
 
 class ApplicantDetailFragment(
     private val applicantDetail: applicantModel,
-    val iJobApplicant: iJobApplicant
+    val iJobApplicant: iJobApplicant?, iCvBankInterface: iCvBankInterface?
 ) : Fragment(),
     OnFragmentClickListener {
 
@@ -312,7 +313,7 @@ class ApplicantDetailFragment(
                 applicantDetail.applicant.jobseekerNo,
                 applicantDetail.application.jobNo,
                 applicantDetail,
-                iJobApplicant
+                iJobApplicant!!
             )
             activity?.let { it -> sheet.show(it.supportFragmentManager, "MoreActionFragment") }
         }

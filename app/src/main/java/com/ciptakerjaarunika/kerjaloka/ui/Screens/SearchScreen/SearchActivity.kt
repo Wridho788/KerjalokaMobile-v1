@@ -14,6 +14,7 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.api.Search_Api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -22,47 +23,79 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragm
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.general_search_model
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.jobList
 import com.google.android.material.chip.Chip
 
 class SearchActivity : Fragment(), onFragmentTransactionList,
     onFragmentTransactionListCompany {
     private var list: general_search_model? = null
-
+    private var keyword: String? = ""
     private lateinit var binding: ActivitySearchBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
+    private var listBookmark: List<jobList> = listOf()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        if(SessionManager(context).latestGeneralSearch == null){
+    ): View {
+        if (SessionManager(context).latestGeneralSearch == null) {
             SessionManager(context).latestGeneralSearch = listOf()
         }
 
         binding = ActivitySearchBinding.inflate(layoutInflater)
+        Log.d("keyword", keyword.toString())
+        if (keyword?.isNotEmpty() == true) {
+            Search_Api().getGeneralSearchAsync(context, keyword) {
+                if (it != null) {
+                    binding.layoutTopSearchResults.isVisible = false
+                    binding.layoutLatestSearchResults.isVisible = false
+                    binding.layoutResultSearch.isVisible = true
+                    binding.resultSearchJob.text = keyword
+                    list = it.data
+                    if (list?.jobList?.size!! < 5) {
+                        binding.seeMoreJob.visibility = GONE
+                    } else binding.seeMoreJob.visibility = VISIBLE
 
+                    if (list?.companyList?.size!! < 5) {
+                        binding.seeMoreCompany.visibility = GONE
+                    } else binding.seeMoreCompany.visibility = VISIBLE
+
+                    binding.recycleJob.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter =
+                            SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
+                    }
+                    binding.recycleJob.adapter?.notifyDataSetChanged()
+                    binding.recycleCompany.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = SearchCompanyAdapter(
+                            list!!.companyList,
+                            context,
+                            this@SearchActivity
+                        )
+                    }
+                }
+            }
+        }
         binding.btnBack.setOnClickListener {
             activity?.onBackPressed()
         }
         var listSearch = SessionManager(context).latestGeneralSearch?.reversed()
-        if (listSearch?.isNotEmpty() == true) {
-            var int = 0
-            listSearch.forEach {
+        if (listSearch?.size != 0) {
+            listSearch?.forEach { data ->
                 val chip = Chip(context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it.toString()
-                    id = int
+                    text = data.toString()
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = true
                     isCheckable = false
+                    setOnClickListener {
+                        SearchJob(data.toString())
+                        binding.searchBar.setQuery(data.toString(), true)
+                        binding.layoutLatestSearchResults.visibility = View.GONE
+                    }
                     binding.apply {
                         latestResultGrup.addView(chip as View)
                     }
@@ -71,8 +104,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                 chipTop.setChipBackgroundColorResource(R.color.danger_100)
                 chipTop.apply {
                     textSize = 12f
-                    text = it.toString()
-                    id = int
+                    text = data.toString()
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = true
@@ -81,25 +113,18 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 //                        chipGroupTopSearch.addView(chipTop as View)
 //                    }
                 }
-                int++
             }
         } else {
             binding.layoutLatestSearchResults.isVisible = true
-            binding.layoutResultSearch.isVisible = false
-            binding.layoutTopSearchResults.isVisible = true
+            binding.layoutResultSearch.isVisible = true
+            binding.layoutTopSearchResults.isVisible = false
         }
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
                     Search_Api().getGeneralSearchAsync(context, query) {
-                        Log.d("search", it.toString())
                         if (it != null) {
                             list = it.data
-                            var listjob = list?.jobList
-                            var listcompany = list?.companyList
-//                        Log.d("response job", listjob.toString())
-//                        Log.d("response company", listcompany.toString())
-
                             if (list?.jobList?.size!! < 5) {
                                 binding.seeMoreJob.visibility = GONE
                             } else binding.seeMoreJob.visibility = VISIBLE
@@ -110,28 +135,44 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 
                             binding.recycleJob.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                adapter = SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
+                                adapter =
+                                    SearchJobAdapter(
+                                        list!!.jobList,
+                                        context,
+                                        this@SearchActivity
+                                    )
                             }
+                            binding.recycleJob.adapter?.notifyDataSetChanged()
                             binding.recycleCompany.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                adapter = SearchCompanyAdapter(list!!.companyList, context, this@SearchActivity)
+                                adapter = SearchCompanyAdapter(
+                                    list!!.companyList,
+                                    context,
+                                    this@SearchActivity
+                                )
                             }
                         }
                     }
                     newChips(query)
-                    binding.latestResultGrup.setOnClickListener{
-                        Toast.makeText(context,"search" + query, Toast.LENGTH_SHORT).show()
+                    binding.latestResultGrup.setOnClickListener {
+                        Toast.makeText(context, "search" + query, Toast.LENGTH_SHORT).show()
                     }
                 }
                 binding.layoutTopSearchResults.isVisible = false
                 binding.layoutResultSearch.isVisible = true
-                binding.layoutLatestSearchResults.isVisible = false
+                binding.layoutLatestSearchResults.isVisible = true
                 binding.resultSearchJob.text = query
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText!!.isEmpty()) {
+                keyword = newText
+                if (newText?.length!! > 50) {
+                    Toast.makeText(context, "Text character is more than 50", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+                if (newText.isEmpty()) {
                     binding.layoutLatestSearchResults.isVisible = false
                     binding.layoutTopSearchResults.isVisible = false
                     binding.layoutResultSearch.isVisible = true
@@ -140,7 +181,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                     binding.layoutTopSearchResults.isVisible = true
                     binding.layoutResultSearch.isVisible = false
                 }
-                return true
+                return false
             }
         })
 
@@ -152,21 +193,28 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         return binding.root
     }
 
+    fun SearchJob(keyword: String?) {
+        if (keyword?.isNotEmpty() == true) {
+            newChips(keyword)
+        }
+    }
 
     private fun newChips(keyword: String) {
         binding.latestResultGrup.isVisible = true
-        if(SessionManager(context).latestGeneralSearch?.size == 0 ||  SessionManager(context).latestGeneralSearch?.last() != keyword) {
-            SessionManager(context).latestGeneralSearch = SessionManager(context).latestGeneralSearch?.plus(
-                keyword
-            )
+        if (SessionManager(context).latestGeneralSearch?.size == 0 || SessionManager(context).latestGeneralSearch?.last() != keyword) {
+            SessionManager(context).latestGeneralSearch =
+                SessionManager(context).latestGeneralSearch?.plus(
+                    keyword
+                )
         }
-        if(SessionManager(context).latestGeneralSearch!!.size > 10){
-            SessionManager(context).latestGeneralSearch = SessionManager(context).latestGeneralSearch?.takeLast((10))
+        if (SessionManager(context).latestGeneralSearch!!.size > 8) {
+            SessionManager(context).latestGeneralSearch =
+                SessionManager(context).latestGeneralSearch?.takeLast((8))
         }
         val latestSearch = SessionManager(context).latestGeneralSearch?.reversed()
         val chip = Chip(context)
 
-        if(latestSearch?.size != 0){
+        if (latestSearch?.size != 0) {
             chip.setChipBackgroundColorResource(R.color.danger_100)
             chip.apply {
                 textSize = 12f
@@ -175,36 +223,58 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                 isCloseIconVisible = false
                 isClickable = true
                 isCheckable = false
+                setOnClickListener { SearchJob(keyword) }
                 binding.apply {
                     if (latestResultGrup.size > 7) {
                         latestResultGrup.removeViewAt(0)
                     }
-                    Log.d("keyword", keyword)
+                    chip.setOnClickListener {
+                        Log.d("keyword", keyword)
+                    }
                 }
             }
         }
 
     }
+
     fun replaceFragment(fragment: Fragment) {
         val fragmentManager = parentFragmentManager
         val ft = fragmentManager.beginTransaction()
-        ft.replace(id , fragment)
+        ft.replace(id, fragment)
         ft.addToBackStack("")
         ft.commit()
     }
 
     override fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long) {
-    replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))
+        replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))
 
     }
 
     override fun onFragmentCompanyDetailsClick(companyNo: Long) {
         replaceFragment(CompanyDetailFragment(companyNo))
     }
+
+    override fun BookmarkJob(jobNo: Long, Index: Int) {
+            var bookmark = !list!!.jobList[Index].bookmarked
+        JobAPI().BookmarkJob(jobNo, bookmark, context) {
+            if (it != null) {
+                if (it.code == 210) {
+                    binding.recycleJob.adapter?.notifyDataSetChanged()
+                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+
+                    } else {
+                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }
 
 interface onFragmentTransactionList {
     fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long)
+    fun BookmarkJob(jobNo: Long, Index: Int)
 }
 
 interface onFragmentTransactionListCompany {

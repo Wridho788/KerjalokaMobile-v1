@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.JobSQListAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.JobTestListAdapter
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.Data
+import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.DataActiveJob
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.google.android.material.button.MaterialButton
@@ -26,7 +25,7 @@ import java.util.*
 
 class fragment_company_job_active_page : Fragment() {
 
-    var jobData: Data? = null
+    var jobData: DataActiveJob? = null
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var tadapter: RecyclerView.Adapter<JobTestListAdapter.ViewHolder>? = null
     private var layoutManager1: RecyclerView.LayoutManager? = null
@@ -88,7 +87,7 @@ class fragment_company_job_active_page : Fragment() {
             if (jobData == null) {
                 val descFromBundle =
                     arguments?.getString(fragment_company_job_active_page.EXTRA_DETAIL_JOB)
-                jobData = Gson().fromJson(descFromBundle, Data::class.java)
+                jobData = Gson().fromJson(descFromBundle, DataActiveJob::class.java)
             }
 
             jobTitle?.text = jobData?.jobPosition
@@ -96,11 +95,13 @@ class fragment_company_job_active_page : Fragment() {
             jobExpired?.text = "Kadaluarsa : " + jobData?.expired
             jobAuth?.text = "Oleh : " + jobData?.createdBy
 
-            var location = ""
-            jobData?.jobCity?.forEach {
-                location += "&#8226; ${it}<br/>"
-            }
-            jobLoc?.text = Html.fromHtml(location)
+//            var location = ""
+//
+//            jobData?.jobCity?.forEach {
+//                location += "&#8226; ${it}<br/>"
+//            }
+
+            jobLoc?.text = jobData?.jobCity
 
 //            jobView.text=listanalytic[0].clickCount.toString()
             jobReq?.text = jobData?.jobDescription

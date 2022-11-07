@@ -41,15 +41,21 @@ class ApplicantAdapter(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        view.setLayoutParams(lp)
+        view.layoutParams = lp
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = applicantModel!![position]
         holder.nameApplicant.text = currentItem.applicant.name
-        holder.locationApplicant.text =
-            currentItem.applicant.location.city + ", " + currentItem.applicant.location.province
+        if (currentItem.applicant.location != null) {
+            holder.locationApplicant.text =
+                currentItem.applicant.location.city + ", " + currentItem.applicant.location.province
+        } else if (currentItem.applicant.location == null) {
+            holder.locationApplicant.text = ""
+        } else {
+            holder.locationApplicant.text = ""
+        }
 //        val status = currentItem.publish
 //        if (status == true) {
 //            holder.statusApplicant.text = "Qualified"
