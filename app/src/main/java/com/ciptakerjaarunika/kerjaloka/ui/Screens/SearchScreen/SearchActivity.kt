@@ -14,6 +14,7 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.api.Search_Api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -22,6 +23,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragm
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.general_search_model
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.jobList
 import com.google.android.material.chip.Chip
 
 class SearchActivity : Fragment(), onFragmentTransactionList,
@@ -29,7 +31,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
     private var list: general_search_model? = null
     private var keyword: String? = ""
     private lateinit var binding: ActivitySearchBinding
-
+    private var listBookmark: List<jobList> = listOf()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -95,7 +97,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                         binding.layoutLatestSearchResults.visibility = View.GONE
                     }
                     binding.apply {
-                            latestResultGrup.addView(chip as View)
+                        latestResultGrup.addView(chip as View)
                     }
                 }
                 val chipTop = Chip(context)
@@ -134,7 +136,11 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                             binding.recycleJob.apply {
                                 layoutManager = LinearLayoutManager(context)
                                 adapter =
-                                    SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
+                                    SearchJobAdapter(
+                                        list!!.jobList,
+                                        context,
+                                        this@SearchActivity
+                                    )
                             }
                             binding.recycleJob.adapter?.notifyDataSetChanged()
                             binding.recycleCompany.apply {
@@ -247,10 +253,28 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
     override fun onFragmentCompanyDetailsClick(companyNo: Long) {
         replaceFragment(CompanyDetailFragment(companyNo))
     }
+
+    override fun BookmarkJob(jobNo: Long, Index: Int) {
+            var bookmark = !list!!.jobList[Index].bookmarked
+        JobAPI().BookmarkJob(jobNo, bookmark, context) {
+            if (it != null) {
+                if (it.code == 210) {
+                    binding.recycleJob.adapter?.notifyDataSetChanged()
+                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+
+                    } else {
+                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }
 
 interface onFragmentTransactionList {
     fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long)
+    fun BookmarkJob(jobNo: Long, Index: Int)
 }
 
 interface onFragmentTransactionListCompany {

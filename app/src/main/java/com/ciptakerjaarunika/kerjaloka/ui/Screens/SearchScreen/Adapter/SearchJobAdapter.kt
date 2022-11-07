@@ -2,17 +2,14 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.jobList
@@ -70,17 +67,8 @@ class SearchJobAdapter(
             holder.bookmarkedJob.visibility = View.GONE
         }
         holder.bookmarkedJob.setOnClickListener {
-            JobAPI().BookmarkJob(currentItem.jobNo.toLong(), !currentItem.bookmarked, context) {
-                if(it != null) {
-                    if (it.code == 210) {
-                        currentItem.bookmarked = !currentItem.bookmarked
-                        joblist!![position].bookmarked = joblist!![position].bookmarked
-//                        onFragmentClick.bookmarkJob(rJobList!!)
-                    } else {
-                        Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+            onFragmentClickListener.BookmarkJob(currentItem.jobNo, position)
+
         }
 
         val SECOND = 1
