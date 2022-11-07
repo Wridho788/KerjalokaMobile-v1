@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -22,14 +20,11 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyPageBinding
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_browse_list
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_followed_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.fragment_manage_cv_edit_education_page
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyFollowedAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyVacanciesAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.CompanySearchActivity
-import com.google.android.material.appbar.MaterialToolbar
 
 class CompanyPage : Fragment(), OnFragmentClickListener{
     private lateinit var binding : FragmentCompanyPageBinding
@@ -38,6 +33,8 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
     private val Context = this
     private var listFollowedJob : List<company_followed_list>?= null
     private var listSearchJob : List<company_browse_list>?= null
+    private var keyword: String? = ""
+    private var hasSearch: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,11 +152,11 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
         }
 
     }
-    private fun back(){
-        val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, HomePage(), "Home Page")
-        fragmentTransaction?.commit()
-    }
+//    private fun back(){
+//        val fragmentTransaction = parentFragmentManager.beginTransaction()
+//        fragmentTransaction?.replace(id, HomePage(), "Home Page")
+//        fragmentTransaction?.commit()
+//    }
     override fun onCompanyDetailPage(CompanyNo: Long){
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container, CompanyDetailFragment(CompanyNo))

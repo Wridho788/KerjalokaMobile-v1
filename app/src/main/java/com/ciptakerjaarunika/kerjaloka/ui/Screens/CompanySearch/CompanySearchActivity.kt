@@ -42,6 +42,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
         binding.layoutTopSearchResults.visibility = GONE
         val list_latest_search_company = SessionManager(context).latestCompanySearch?.reversed()
         if (list_latest_search_company?.size != 0) {
+            binding.latestResultGrup.removeAllViews()
             var int = 0
             list_latest_search_company?.forEach {
                 val chip = Chip(context)
@@ -130,13 +131,19 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
             if (it != null) {
                 if (it.code == 210) {
                     if (it.data != null) {
+                        if (it.data.size != 0) {
                         binding.searchCompanyJob.apply {
                             layoutManager = LinearLayoutManager(context)
                             adapter = CompanySearchAdapter(it.data, context)
                         }
+                        } else {
+                            binding.notfoundLayout.isVisible = true
+                            binding.message.text = it.message
+//                            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                        }
                         binding.searchCompanyJob.adapter?.notifyDataSetChanged()
                     } else {
-
+                        binding.layoutResultSearch.isVisible = false
                         binding.resultSearchJob.text = it.message
                     }
 

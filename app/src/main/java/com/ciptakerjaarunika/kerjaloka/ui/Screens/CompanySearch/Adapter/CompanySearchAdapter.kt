@@ -31,8 +31,6 @@ class CompanySearchAdapter(
             locationText = itemView.findViewById(R.id.followCompanyjobLocation)
             logo = itemView.findViewById(R.id.followCompanyJoblogo)
             cardCompany = itemView.findViewById(R.id.card_followed_company_job)
-
-
         }
     }
 
