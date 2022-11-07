@@ -2,11 +2,13 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -14,6 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.jobList
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.onFragmentTransactionList
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -35,7 +38,7 @@ class SearchJobAdapter(
         var logo: ImageView
         var cardJob: MaterialCardView
         var bookmarkedJob: ImageView
-
+        var shareableJob: MaterialButton
         init {
             jobPosition = itemView.findViewById(R.id.jobPosition)
             jobLocation = itemView.findViewById(R.id.jobLocation)
@@ -44,6 +47,8 @@ class SearchJobAdapter(
             logo = itemView.findViewById(R.id.logo)
             cardJob = itemView.findViewById(R.id.card_recommendation_job)
             bookmarkedJob = itemView.findViewById(R.id.btn_bookmark)
+            shareableJob = itemView.findViewById(R.id.btn_share)
+
         }
     }
 
@@ -107,7 +112,17 @@ class SearchJobAdapter(
 
         }
         holder.createOn.text = dateDiff()
+        holder.shareableJob.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TITLE, currentItem.jobPosition)
+                putExtra(Intent.EXTRA_TEXT, currentItem.link)
+                type = "text/plain"
 
+            }
+            val shareIntent = Intent.createChooser(sendIntent, currentItem.jobPosition)
+            ContextCompat.startActivity(context, shareIntent, null)
+        }
         holder.cardJob.setOnClickListener{
             onFragmentClickListener.onFragmentTransactionListenerClick(currentItem.companyNo, currentItem.jobNo)
         }
