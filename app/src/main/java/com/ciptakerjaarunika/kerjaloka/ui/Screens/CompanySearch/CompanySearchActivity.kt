@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanySearchAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanySearchBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.CompanySearchAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Bottomsheet.FilterCompany
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.searchCompanyRequest
@@ -23,7 +27,8 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
     private var searchModel: searchCompanyRequest =
         searchCompanyRequest(null, listOf(), listOf(), listOf())
     private var hasSearch = false
-
+    private var isLoading: Boolean = true
+    private var keyword: String? = ""
     private lateinit var binding: ActivityCompanySearchBinding
 
     override fun onCreateView(
@@ -36,6 +41,8 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
             fragmentManager?.popBackStack()
         }
 
+        binding.spinnerResult.visibility = View.GONE
+
         if (SessionManager(context).latestCompanySearch == null) {
             SessionManager(context).latestCompanySearch = listOf()
         }
@@ -43,20 +50,22 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
         val list_latest_search_company = SessionManager(context).latestCompanySearch?.reversed()
         if (list_latest_search_company?.size != 0) {
             binding.latestResultGrup.removeAllViews()
-            var int = 0
-            list_latest_search_company?.forEach {
+            list_latest_search_company?.forEach { data ->
                 val chip = Chip(context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
                 chip.apply {
                     textSize = 12f
-                    text = it.toString()
-                    id = int
+                    text = data.toString()
                     isChipIconVisible = false
                     isCloseIconVisible = false
                     isClickable = true
-                    isCheckable = true
+                    isCheckable = false
                     binding.apply {
                         latestResultGrup.addView(chip as View)
+                    }
+                    setOnClickListener {
+                        SearchJob(data.toString())
+                        binding.searchBar.setQuery(data.toString(), true)
                     }
                 }
 //                val chipTop = Chip(context)
@@ -73,7 +82,6 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
 //                        chipGroupTopSearch.addView(chipTop as View)
 //                    }
 //                }
-                int++
             }
         } else {
             binding.layoutLatestSearchResults.isVisible = true
@@ -81,7 +89,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
             binding.layoutTopSearchResults.isVisible = true
         }
 
-        binding.btnRemoveLatestSearch.setOnClickListener {
+        binding.removeHistory.setOnClickListener {
             SessionManager(context).latestCompanySearch = listOf()
             binding.latestResultGrup.removeAllViews()
         }
@@ -95,59 +103,83 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query?.isNotEmpty() == true) {
                     searchModel.keyword = query
+                    SearchJob(query)
                     searchCompany()
                 }
-                binding.layoutTopSearchResults.isVisible = false
-                binding.layoutResultSearch.isVisible = true
-                binding.layoutLatestSearchResults.isVisible = false
-                binding.resultSearchJob.text = query
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText!!.isEmpty()) {
-                    binding.layoutLatestSearchResults.isVisible = false
+                keyword = newText
+                if (newText?.length!! > 50) {
+                    Toast.makeText(context, "Text character is more than 50", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                if (newText.isBlank()) {
+                    binding.layoutResultSearch.isVisible = false
                     binding.layoutTopSearchResults.isVisible = false
                     binding.layoutResultSearch.isVisible = true
+                    binding.notfoundLayout.isVisible = false
                 } else {
                     binding.layoutLatestSearchResults.isVisible = true
                     binding.layoutTopSearchResults.isVisible = true
                     binding.layoutResultSearch.isVisible = false
+                    binding.layoutCompanyResult.isVisible = false
                 }
 
-                return true
+                return false
             }
         })
 
         return binding.root
     }
 
+    fun SearchJob(keyword: String?) {
+        if (keyword?.isNotEmpty() == true) {
+            newChips(keyword)
+//            searchCompany()
+        }
+        binding.resultSearchJob.text = keyword
+        this.keyword = keyword
+    }
+
     fun searchCompany() {
         hasSearch = true
         binding.layoutLatestSearchResults.visibility = GONE
         binding.layoutTopSearchResults.visibility = GONE
-        binding.layoutResultSearch.isVisible = true
+        binding.spinnerResult.visibility = VISIBLE
         CompanySearchAPI().SearchCompany(context, searchModel) {
             if (it != null) {
+                isLoading = false
+                binding.spinnerResult.visibility = GONE
+                binding.layoutResultSearch.isVisible = true
                 if (it.code == 210) {
                     if (it.data != null) {
                         if (it.data.size != 0) {
-                        binding.searchCompanyJob.apply {
-                            layoutManager = LinearLayoutManager(context)
-                            adapter = CompanySearchAdapter(it.data, context)
-                        }
+                            binding.layoutCompanyResult.isVisible = true
+                            binding.searchCompanyJob.apply {
+                                layoutManager = LinearLayoutManager(context)
+                                adapter = CompanySearchAdapter(
+                                    it.data,
+                                    context,
+                                    this@CompanySearchActivity
+                                )
+                            }
                         } else {
                             binding.notfoundLayout.isVisible = true
                             binding.message.text = it.message
-//                            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                         }
                         binding.searchCompanyJob.adapter?.notifyDataSetChanged()
                     } else {
-                        binding.layoutResultSearch.isVisible = false
+                        binding.notfoundLayout.isVisible = true
+                        binding.layoutCompanyResult.isVisible = false
                         binding.resultSearchJob.text = it.message
                     }
-
                 }
+            } else {
+                binding.notfoundLayout.isVisible = true
+                binding.layoutCompanyResult.isVisible = false
+                binding.layoutResultSearch.isVisible = true
             }
         }
         searchModel.keyword?.let { newChips(it) }
@@ -180,9 +212,6 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
                 binding.apply {
                     if (latestResultGrup.size > 7) {
                         latestResultGrup.removeViewAt(0)
-                        latestResultGrup.addView(chip as View)
-                    } else {
-                        latestResultGrup.addView(chip as View)
                     }
                 }
             }
@@ -195,10 +224,18 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
         searchModel.size = value.size
         searchModel.industry = value.industry
         searchModel.location = value.location
-        searchCompany()
+//        searchCompany()
+    }
+
+    override fun onCompanyDetailPage(CompanyNo: Long) {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container, CompanyDetailFragment(CompanyNo))
+        ft.addToBackStack("companyPage")
+        ft.commit()
     }
 }
 
 interface iSearchCompany {
     fun searchCompany(value: searchCompanyRequest)
+    fun onCompanyDetailPage(CompanyNo: Long)
 }

@@ -88,85 +88,81 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
                     android:layout_weight="1"
                     android:background="@drawable/search_background"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:padding="6dp"
                     app:srcCompat="@drawable/ic_filter" />
             </LinearLayout>
 
-
             <LinearLayout
-                android:id="@+id/layout_latest_search_results"
+                android:id="@+id/historyChips"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="16dp"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/layout_latest_search_results"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/latest_search"
-                        android:textColor="@color/dark_100"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/btn_remove_latest_search"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Pencarian Terbaru"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/removeHistory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:padding="2dp"
+                            android:text="Hapus Riwayat"
+                            android:textColor="@color/danger_500"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/latest_result_grup"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/delete_history"
-                        android:textColor="@color/danger_500"
-                        android:textSize="14sp" />
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+
+                        />
+
                 </LinearLayout>
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/latest_result_grup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-
-                    />
-
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout_top_search_results"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Pencarian Teratas"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/top_search"
-                        android:textColor="@color/dark_100"
-                        android:textSize="16sp" />
-                </LinearLayout>
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroupTopSearch"
@@ -205,48 +201,68 @@
                     android:textColor="@color/dark_100"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="5dp"
                     android:layout_marginVertical="20dp"
                     android:background="@color/light_500" />
 
-                <LinearLayout
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/spinnerResult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:gravity="center">
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_company_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/searchCompanyJob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:orientation="vertical">
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/searchCompanyJob"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:paddingRight="16dp"
-                        tools:listitem="@layout/item_card_job" />
-                </LinearLayout>
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    tools:listitem="@layout/item_card_job" />
+            </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/notfound_layout"
+            <LinearLayout
+                android:id="@+id/notfound_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:visibility="invisible"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:srcCompat="@drawable/ic_not_found" />
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        app:srcCompat="@drawable/ic_not_found" />
-                    <TextView
-                        android:id="@+id/message"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:fontFamily="@font/poppins_bold"
-                        android:textColor="@color/dark_100"
-                        android:textSize="16sp"
+                <TextView
+                    android:id="@+id/message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_100"
+                    android:textSize="16sp"
 
-                        />
-                </LinearLayout>
+                    />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

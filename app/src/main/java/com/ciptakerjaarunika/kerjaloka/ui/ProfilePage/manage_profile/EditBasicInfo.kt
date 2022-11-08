@@ -19,25 +19,23 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-
+import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditBasicInfoBinding
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditGender
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
-
-import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
-import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
-import com.google.android.material.datepicker.*
-import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
-import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.qingmei2.rximagepicker_extension.utils.PathUtils
-
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -49,31 +47,27 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
-    private var locations :List<LocationFilter> = listOf()
-    private lateinit var binding : FragmentEditBasicInfoBinding
+class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
+    private var locations: List<LocationFilter> = listOf()
+    private lateinit var binding: FragmentEditBasicInfoBinding
     private var gender = data?.jobseeker?.jobseekerGender
     private var cityNo = data?.additionals?.jobseekerCityNo
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
-    private var photo : MultipartBody.Part? = null
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private var photo: MultipartBody.Part? = null
     private val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-    private var dateValue : Date? = if (data?.jobseeker?.dateOfBirth == null) null
-                                    else DateUtils().GetDateValue(data?.jobseeker?.dateOfBirth)
-    private var date : String? = if (data?.jobseeker?.dateOfBirth == null) null
-                                    else DateUtils().GetDateValueWithFormat(data?.jobseeker?.dateOfBirth, "yyyy-MM-dd HH:mm")
+    private var dateValue: Date? = if (data?.jobseeker?.dateOfBirth == null) null
+    else DateUtils().GetDateValue(data.jobseeker.dateOfBirth)
+    private var date: String? = if (data?.jobseeker?.dateOfBirth == null) null
+    else DateUtils().GetDateValueWithFormat(data.jobseeker.dateOfBirth, "yyyy-MM-dd HH:mm")
 
     private lateinit var defaultImagePicker: BasicImagePicker
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding  = FragmentEditBasicInfoBinding.inflate(layoutInflater)
+        binding = FragmentEditBasicInfoBinding.inflate(layoutInflater)
         val view = binding.root
         return view
     }
@@ -98,52 +92,55 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
                 val requestFile: RequestBody =
                     file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-                val myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath())
+                val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
                 binding.profileImg.setImageBitmap(myBitmap)
                 photo = MultipartBody.Part.createFormData("photo", file.name, requestFile)
             }
         }
-        binding.profileImg.setOnClickListener{
+        binding.profileImg.setOnClickListener {
             pickGallery()
         }
-        binding.changePhotoTxt.setOnClickListener{
+        binding.changePhotoTxt.setOnClickListener {
             pickGallery()
         }
 
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             back()
         }
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             back()
         }
         Glide.with(context!!)
-            .load(config().portAddress + "/photo/Profile/" + data?.additionals?.photo).into(binding.profileImg)
+            .load(config().portAddress + "/photo/Profile/" + data?.additionals?.photo)
+            .into(binding.profileImg)
 
         binding.jsName.setText(data?.jobseeker?.jobseekerName)
         binding.jsKTP.setText(data?.additionals?.ktp)
-        binding.jsGender.setText(
-            if(gender == 'M') "Laki-laki" else "Perempuan")
+        binding.jsGender.text = if (gender == 'M') "Laki-laki" else "Perempuan"
         binding.jsAddress.setText(data?.additionals?.jobseekerCurrentAddress)
 
-        if(data?.jobseeker?.dateOfBirth != null){
-            binding.jsBirthDay.setText(DateUtils().GetDateValueWithFormat(data.jobseeker.dateOfBirth, "dd MMMM yyyy"))
+        if (data?.jobseeker?.dateOfBirth != null) {
+            binding.jsBirthDay.text = DateUtils().GetDateValueWithFormat(
+                data.jobseeker.dateOfBirth,
+                "dd MMMM yyyy"
+            )
         }
-        binding.jsBirthDay.setOnClickListener{
-                val datePicker = MaterialDatePicker
-                    .Builder
-                    .datePicker()
-                    .setTitleText("Pilih tanggal lahir")
-                    .setCalendarConstraints(calendarConstraints).build()
+        binding.jsBirthDay.setOnClickListener {
+            val datePicker = MaterialDatePicker
+                .Builder
+                .datePicker()
+                .setTitleText("Pilih tanggal lahir")
+                .setCalendarConstraints(calendarConstraints).build()
 
-                datePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
+            datePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
 
-                datePicker.addOnPositiveButtonClickListener {
-                    val dates = Date(it)
-                    dateValue = dates;
+            datePicker.addOnPositiveButtonClickListener {
+                val dates = Date(it)
+                dateValue = dates
 
-                    date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
-                    binding.jsBirthDay.setText(SimpleDateFormat("dd MMMM yyyy").format(dates))
-                }
+                date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
+                binding.jsBirthDay.text = SimpleDateFormat("dd MMMM yyyy").format(dates)
+            }
         }
 
         DataAPI().GetLocations(context) { res ->
@@ -155,24 +152,33 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
 
         binding.jsGender.setOnClickListener {
             val sheet = EditGender(gender, this)
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+            activity?.let { it1 ->
+                sheet.show(
+                    it1.supportFragmentManager,
+                    "DemoBottomSheetFragment"
+                )
+            }
         }
 
         binding.jsCity.setOnClickListener {
             val sheet = EditCity(cityNo, locations, this)
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+            activity?.let { it1 ->
+                sheet.show(
+                    it1.supportFragmentManager,
+                    "DemoBottomSheetFragment"
+                )
+            }
         }
-        binding.btnSaveBasic.setOnClickListener{
-            if(photo != null) { ManageProfileAPI().UploadPhoto(context, photo!!){ resUpload ->
-                if(resUpload?.code == 210){
-                    updateBasic()
+        binding.btnSaveBasic.setOnClickListener {
+            if (photo != null) {
+                ManageProfileAPI().UploadPhoto(context, photo!!) { resUpload ->
+                    if (resUpload?.code == 210) {
+                        updateBasic()
+                    } else {
+                        Toast.makeText(activity, resUpload?.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
-                else{
-                    Toast.makeText(activity, resUpload?.message, Toast.LENGTH_SHORT).show()
-                }
-            }
-            }
-            else{
+            } else {
                 updateBasic()
             }
         }
@@ -181,6 +187,7 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
     private fun initRxImagePicker() {
         defaultImagePicker = RxImagePicker.create(BasicImagePicker::class.java)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun pickGallery() {
         context?.let {
@@ -197,19 +204,21 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
                 .subscribe { result -> onPickUriSuccess(result.uri) }
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onPickUriSuccess(uri: Uri) {
         val pathName = context?.let { getPathFromUri(it, uri) }
-        if(pathName != null) {
-            val file = File(pathName ?: "")
+        if (pathName != null) {
+            val file = File(pathName)
             val requestFile: RequestBody =
                 file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-            val myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath())
+            val myBitmap = BitmapFactory.decodeFile(file.absolutePath)
             binding.profileImg.setImageBitmap(myBitmap)
             photo = MultipartBody.Part.createFormData("photo", file.name, requestFile)
         }
     }
+
     private fun getPathFromUri(context: Context, contentUri: Uri): String {
         var cursor: Cursor? = null
         return try {
@@ -223,14 +232,15 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
         }
     }
 
-    fun updatePhoto(){
-        var intent = Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
+    fun updatePhoto() {
+        var intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
 
-        val requestIntent = Intent.createChooser(intent, "Choose a Image");
+        val requestIntent = Intent.createChooser(intent, "Choose a Image")
         activityResultLauncher.launch(requestIntent)
     }
+
     fun getLongAsDate(year: Int, month: Int, date: Int): Long {
         val calendar: Calendar = GregorianCalendar()
         calendar[Calendar.DAY_OF_MONTH] = date
@@ -238,6 +248,7 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
         calendar[Calendar.YEAR] = year
         return calendar.timeInMillis
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private val calendarConstraints = CalendarConstraints.Builder().setOpenAt(
         dateValue?.time
@@ -246,23 +257,24 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
 
     override fun updateGender(value: Char) {
         this.gender = value
-        binding.jsGender.setText(
-            if(gender == 'M') "Laki-laki" else "Perempuan")
+        binding.jsGender.text = if (gender == 'M') "Laki-laki" else "Perempuan"
     }
 
     override fun updateCity(cityNo: Int?) {
         this.cityNo = cityNo
-        var currentLocation = locations.find { loc-> loc.locationsNo == cityNo }
-        if(currentLocation != null){
-            binding.jsCity.setText("${currentLocation.city}, ${currentLocation.province}")
+        var currentLocation = locations.find { loc -> loc.locationsNo == cityNo }
+        if (currentLocation != null) {
+            binding.jsCity.text = "${currentLocation.city}, ${currentLocation.province}"
         }
     }
-    private fun back(){
+
+    private fun back() {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
-        fragmentTransaction?.commit()
+        fragmentTransaction.replace(id, profilepage(0), "Profile Page")
+        fragmentTransaction.commit()
     }
-    private fun updateBasic(){
+
+    private fun updateBasic() {
         ManageProfileAPI().EditBasicInfo(
             ManageProfileAPI.editBasicInfoRequest(
                 binding.jsName.text.toString(),
@@ -272,18 +284,22 @@ class EditBasicInfo(val data : JobseekerProfile?) : Fragment(), iEditBasic {
                 date,
                 cityNo
             ), context
-        ){
-            if(it != null) {
+        ) {
+            if (it != null) {
                 Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
                 back()
-            }
-            else{
-                Toast.makeText(activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    activity,
+                    "Terjadi kesalahan yang tidak diketahui",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 }
-interface iEditBasic{
-    fun updateGender(value :Char)
-    fun updateCity(cityNo :Int?)
+
+interface iEditBasic {
+    fun updateGender(value: Char)
+    fun updateCity(cityNo: Int?)
 }

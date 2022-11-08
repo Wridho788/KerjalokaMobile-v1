@@ -12,11 +12,13 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.search_company_model
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.iSearchCompany
 import com.google.android.material.card.MaterialCardView
 
 class CompanySearchAdapter(
     private val companyList: List<search_company_model>,
     private val context: Context,
+    val iSearchCompany: iSearchCompany
 ) : RecyclerView.Adapter<CompanySearchAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var companyName: TextView
@@ -52,6 +54,9 @@ class CompanySearchAdapter(
         Glide.with(holder.itemView.context)
             .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
             .into(holder.logo)
+        holder.cardCompany.setOnClickListener {
+            iSearchCompany.onCompanyDetailPage(currentItem.companyNo)
+        }
     }
 
     override fun getItemCount(): Int {
