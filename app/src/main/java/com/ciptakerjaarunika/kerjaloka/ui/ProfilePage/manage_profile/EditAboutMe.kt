@@ -43,7 +43,7 @@ class EditAboutMe(var data : JobseekerProfile?) : Fragment() {
         }
         binding.saveBtn.setOnClickListener{
             if(binding.aboutTxt.text.toString().isNullOrEmpty()){
-                Toast.makeText(activity, "Input text tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity,  "Beri tahu tentang dirimu supaya kamu lebih dikenal oleh perusahaan.", Toast.LENGTH_SHORT).show()
             }
             else{
                 ManageProfileAPI().EditAboutMe(binding.aboutTxt.text.toString(), context){

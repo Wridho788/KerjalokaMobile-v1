@@ -224,7 +224,6 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
         searchModel.size = value.size
         searchModel.industry = value.industry
         searchModel.location = value.location
-//        searchCompany()
     }
 
     override fun onCompanyDetailPage(CompanyNo: Long) {

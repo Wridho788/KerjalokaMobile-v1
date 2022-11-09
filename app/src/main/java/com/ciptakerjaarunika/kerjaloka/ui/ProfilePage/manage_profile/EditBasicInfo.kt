@@ -34,7 +34,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditGender
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -126,21 +125,21 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
             )
         }
         binding.jsBirthDay.setOnClickListener {
-            val datePicker = MaterialDatePicker
-                .Builder
-                .datePicker()
-                .setTitleText("Pilih tanggal lahir")
-                .setCalendarConstraints(calendarConstraints).build()
-
-            datePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
-
-            datePicker.addOnPositiveButtonClickListener {
-                val dates = Date(it)
-                dateValue = dates
-
-                date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
-                binding.jsBirthDay.text = SimpleDateFormat("dd MMMM yyyy").format(dates)
-            }
+//            val datePicker = MaterialDatePicker
+//                .Builder
+//                .datePicker()
+//                .setTitleText("Pilih tanggal lahir")
+//                .setCalendarConstraints(calendarConstraints).build()
+//
+//            datePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
+//
+//            datePicker.addOnPositiveButtonClickListener {
+//                val dates = Date(it)
+//                dateValue = dates
+//
+//                date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
+//                binding.jsBirthDay.text = SimpleDateFormat("dd MMMM yyyy").format(dates)
+//            }
         }
 
         DataAPI().GetLocations(context) { res ->
@@ -275,26 +274,43 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     }
 
     private fun updateBasic() {
-        ManageProfileAPI().EditBasicInfo(
-            ManageProfileAPI.editBasicInfoRequest(
-                binding.jsName.text.toString(),
-                binding.jsKTP.text.toString(),
-                gender,
-                binding.jsAddress.text.toString(),
-                date,
-                cityNo
-            ), context
-        ) {
-            if (it != null) {
-                Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
-                back()
+        var name = binding.jsName.text.toString()
+        var noKtp = binding.jsKTP.text.toString()
+        if (name.length == 0) {
+            Toast.makeText(context, "Nama tidak boleh kosong", Toast.LENGTH_SHORT).show()
+        } else if (noKtp.length == 16) {
+            if (noKtp != data?.additionals?.ktp) {
+                ManageProfileAPI().EditBasicInfo(
+                    ManageProfileAPI.editBasicInfoRequest(
+                        name,
+                        noKtp,
+                        gender,
+                        binding.jsAddress.text.toString(),
+                        date,
+                        cityNo
+                    ), context
+                ) {
+                    if (it != null) {
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
+                            .show()
+                        back()
+                    } else {
+                        Toast.makeText(
+                            activity,
+                            "Terjadi kesalahan yang tidak diketahui",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             } else {
-                Toast.makeText(
-                    activity,
-                    "Terjadi kesalahan yang tidak diketahui",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(activity, "No KTP sudah terdaftar", Toast.LENGTH_SHORT).show()
             }
+        } else {
+            Toast.makeText(
+                activity,
+                "Mohon masukkan nilai KTP asli",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

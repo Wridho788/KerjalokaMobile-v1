@@ -47,7 +47,7 @@ class ManageProfile(val data : JobseekerProfile?) : Fragment() {
         txt_KTP.text = data?.additionals?.ktp
         if(data?.jobseeker?.jobseekerGender == 'M') txt_gender.text = "Laki-Laki"
         else txt_gender.text = "Perempuan"
-        txt_alamat.text = data?.additionals?.jobseekerCurrentAddress
+        txt_alamat.text = if(data?.additionals?.jobseekerCurrentAddress.isNullOrEmpty()) "-" else data?.additionals?.jobseekerCurrentAddress
         txt_dob.text = DateUtils().GetDateValueWithFormat(data?.jobseeker?.dateOfBirth, "dd MMMM yyyy")
         txt_city.text = data?.city?.cityName
         txt_country.text = data?.country?.countryName

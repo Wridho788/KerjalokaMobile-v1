@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
     android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
+    android:orientation="vertical"
     android:paddingHorizontal="20dp"
-    android:paddingVertical="5dp"
-    android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/item_modal"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:textAlignment="center"
-            android:text="Full-Time"
-            android:layout_marginTop="0dp"
-            android:textColor="@color/dark_100"
-            android:textSize="12dp"
-            android:fontFamily="@font/poppins">
-        </TextView>
+    android:paddingVertical="5dp">
+
+    <TextView
+        android:id="@+id/item_modal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        android:fontFamily="@font/poppins"
+        android:paddingVertical="5dp"
+        android:text="Full-Time"
+        android:textAlignment="center"
+        android:textColor="@color/dark_100"
+        android:textSize="12sp" />
 </LinearLayout>
