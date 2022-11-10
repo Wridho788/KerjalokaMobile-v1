@@ -35,6 +35,9 @@ class ChooseScaleAdapter(val value : Int?, val iChooseSkill: iChooseScale, val i
 
         if(value == position+1){
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
+            holder.container.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
         holder.item.setOnClickListener{
             iEditKemampuan.updateScale(position +1)

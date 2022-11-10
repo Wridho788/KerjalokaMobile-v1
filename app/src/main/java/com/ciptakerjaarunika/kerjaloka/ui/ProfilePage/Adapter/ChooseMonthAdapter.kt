@@ -10,7 +10,6 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.enum.Month
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iManageExp
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.iCloseModal
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.month
 
 class ChooseMonthAdapter(val type: String, val value : Int?, val iManageExp: iManageExp, val iCloseModal: iCloseModal) :
     RecyclerView.Adapter<ChooseMonthAdapter.chooseMonth>() {
@@ -36,6 +35,9 @@ class ChooseMonthAdapter(val type: String, val value : Int?, val iManageExp: iMa
         holder.item.text = currentItem?.description
         if(position+1 == value){
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
+            holder.container.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
         holder.container.setOnClickListener{
             iManageExp.updateMonth(position+1, type)

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iManageExp
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.iCloseModal
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.*
 
 class ChooseYearAdapter(val type: String, val value : Int?, private val yearList: List<Int>, val iManageExp: iManageExp, val iCloseModal: iCloseModal):
     RecyclerView.Adapter<ChooseYearAdapter.chooseYr>()
@@ -35,6 +34,9 @@ class ChooseYearAdapter(val type: String, val value : Int?, private val yearList
         holder.item.text = yearList[position].toString()
         if(yearList[position] == value){
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
+            holder.container.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
 
         holder.container.setOnClickListener{

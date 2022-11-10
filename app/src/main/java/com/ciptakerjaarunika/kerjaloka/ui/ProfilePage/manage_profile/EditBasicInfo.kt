@@ -33,7 +33,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditGender
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
-import com.google.android.material.datepicker.CalendarConstraints
 import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -41,8 +40,6 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -249,10 +246,10 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private val calendarConstraints = CalendarConstraints.Builder().setOpenAt(
-        dateValue?.time
-            ?: sdf.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).time
-    ).build()
+//    private val calendarConstraints = CalendarConstraints.Builder().setOpenAt(
+//        dateValue?.time
+//            ?: sdf.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).time
+//    ).build()
 
     override fun updateGender(value: Char) {
         this.gender = value

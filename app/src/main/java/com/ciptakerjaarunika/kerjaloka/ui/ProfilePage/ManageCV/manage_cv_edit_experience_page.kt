@@ -12,14 +12,15 @@ import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditExperiencePageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Month
-import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseMonth
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseYear
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditExpTypeJob
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.util.*
 
@@ -117,7 +118,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
 
         binding.pilihPosisi.setText(data?.experiencePosition)
         data?.experienceCompanyName?.let { binding.pilihPerusahaan.setText(it) }
-        binding.deskripsiPekerjaan.text = data?.experienceDescription
+        binding.masukkanDeskrPekerjaan.setText(data?.experienceDescription)
 
         binding.saveBtn.setOnClickListener {
             if(binding.pilihPosisi.text.isNullOrEmpty()){
@@ -160,7 +161,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
                         data!!.experienceCityNo,
                         binding.pilihPerusahaan.text.toString(),
                         null,
-                        binding.deskripsiPekerjaan.text.toString(),
+                        binding.masukkanDeskrPekerjaan.text.toString(),
                         if(endedMonth == null) null else DateUtils().GetDateValueWithFormat(endedAt, "yyyy-MM-dd HH:mm"),
                         DateUtils().GetDateValueWithFormat(beginAt, "yyyy-MM-dd HH:mm"),
                         data!!.jobTypeNo,

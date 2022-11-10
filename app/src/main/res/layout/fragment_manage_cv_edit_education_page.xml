@@ -439,7 +439,8 @@
                                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                                 android:paddingHorizontal="15dp"
                                 android:textColor="@color/black"
-                                android:textSize="12sp"/>
+                                android:textSize="12sp"
+                                tools:ignore="TextViewEdits" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -473,11 +474,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
-                    android:ems="10"
                     android:hint="Masukkan skor GPA kamu (1-100)"
-                    android:inputType="number"
-                    android:lines="10"
-                    android:maxLines="10"
+                    android:inputType="numberDecimal|text"
+                    android:maxLines="3"
                     android:paddingHorizontal="15dp"
                     android:textColor="@color/black"
                     android:textSize="12sp"/>
@@ -516,7 +515,7 @@
                     android:hint="Masukkan deskripsi pendidikan (optional)"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
-                    android:maxLines="10"
+                    android:maxLength="255"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/black"
                     android:textSize="12sp" />

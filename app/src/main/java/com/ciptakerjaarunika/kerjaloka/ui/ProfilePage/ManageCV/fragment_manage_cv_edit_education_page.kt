@@ -3,34 +3,26 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetMajorJob
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.city
-import com.ciptakerjaarunika.kerjaloka.R
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
-import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditEducationPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Month
-import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.Major
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducations
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducationsRequest
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.util.*
 
@@ -146,8 +138,27 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
         }
 
         binding.masukkanSkorGpa.addTextChangedListener(object : TextWatcher {
+            var current = ""
+
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                val stringText = p0.toString()
+//
+//                if (stringText != current) {
+//                    binding.masukkanSkorGpa.removeTextChangedListener(this)
+//
+//                    val locale: Locale = Locale.UK
+//                    val currency = Currency.getInstance(locale)
+//                    val cleanString = stringText.replace("[${currency.symbol},.]".toRegex(), "")
+//                    val parsed = cleanString.toDouble()
+//                    var formatted = NumberFormat.getCurrencyInstance(locale).format(parsed / 100)
+//
+//                    current = formatted
+//                    binding.masukkanSkorGpa.text = formatted
+//                    binding.masukkanSkorGpa.setSelection(formatted.length)
+//                    binding.masukkanSkorGpa.addTextChangedListener(this)
+//                }
+            }
 
             override fun afterTextChanged(s: Editable) {
                 if (!binding.masukkanSkorGpa.text.toString().isNullOrEmpty() && !binding.masukkanSkorGpa.text.toString()
