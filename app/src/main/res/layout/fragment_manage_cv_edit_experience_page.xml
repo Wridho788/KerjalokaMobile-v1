@@ -485,8 +485,7 @@
                     android:ems="10"
                     android:hint="Masukkan Gaji"
                     android:inputType="number"
-                    android:lines="10"
-                    android:maxLines="10"
+                    android:maxLength="10"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/black"
                     android:textSize="12sp" />

@@ -37,6 +37,9 @@ class ChooseTitleAdapter(val value: Int?, private val titleList: List<Title>, va
 
         if(currentItem.titleNo == value){
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
+            holder.container.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
         holder.container.setOnClickListener {
             iUpdateTitle.updateTitle(currentItem.titleNo)

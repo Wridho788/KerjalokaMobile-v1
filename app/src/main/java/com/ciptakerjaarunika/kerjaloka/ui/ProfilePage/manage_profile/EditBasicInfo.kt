@@ -33,6 +33,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditGender
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -41,7 +42,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     private var locations: List<LocationFilter> = listOf()
@@ -57,7 +57,6 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     else DateUtils().GetDateValueWithFormat(data.jobseeker.dateOfBirth, "yyyy-MM-dd HH:mm")
 
     private lateinit var defaultImagePicker: BasicImagePicker
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -122,21 +121,20 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
             )
         }
         binding.jsBirthDay.setOnClickListener {
-//            val datePicker = MaterialDatePicker
-//                .Builder
-//                .datePicker()
-//                .setTitleText("Pilih tanggal lahir")
-//                .setCalendarConstraints(calendarConstraints).build()
-//
-//            datePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
-//
-//            datePicker.addOnPositiveButtonClickListener {
-//                val dates = Date(it)
-//                dateValue = dates
-//
-//                date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
-//                binding.jsBirthDay.text = SimpleDateFormat("dd MMMM yyyy").format(dates)
-//            }
+            val datePicker = MaterialDatePicker
+                .Builder
+                .datePicker()
+                .setTitleText("Pilih tanggal lahir")
+                .build()
+
+            datePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
+
+            datePicker.addOnPositiveButtonClickListener {
+                val dates = Date(it)
+                dateValue = dates
+                date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
+                binding.jsBirthDay.text = SimpleDateFormat("dd MMMM yyyy").format(dates)
+            }
         }
 
         DataAPI().GetLocations(context) { res ->
@@ -245,10 +243,9 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
         return calendar.timeInMillis
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+//    @RequiresApi(Build.VERSION_CODES.O)
 //    private val calendarConstraints = CalendarConstraints.Builder().setOpenAt(
-//        dateValue?.time
-//            ?: sdf.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))).time
+//        dateValue?.time?: sdf.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))!!.time
 //    ).build()
 
     override fun updateGender(value: Char) {

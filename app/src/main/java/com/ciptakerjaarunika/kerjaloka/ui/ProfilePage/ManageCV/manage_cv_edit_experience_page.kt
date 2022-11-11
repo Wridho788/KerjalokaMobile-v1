@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
@@ -23,6 +24,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditExpTypeJob
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.util.*
+
 
 class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val iRefreshData: iRefreshData) : Fragment(), iEditBasic, iManageExp {
         private  lateinit var binding : FragmentManageCvEditExperiencePageBinding
@@ -68,6 +70,10 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             back()
         }
+
+        binding.masukkanJlhGaji.addTextChangedListener(
+
+        )
 
         DataAPI().GetJobTypes(context){ jobtypes ->
             if (jobtypes != null) {
@@ -186,6 +192,12 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
             }
         }
     }
+
+//    private fun formatRupiah(number: Double): String? {
+//        val localeID = Locale("in", "ID")
+//        val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
+//        return formatRupiah.format(number)
+//    }
 
     fun showError(message : String){
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
