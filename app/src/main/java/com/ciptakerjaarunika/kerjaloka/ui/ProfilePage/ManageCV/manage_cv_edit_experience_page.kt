@@ -1,12 +1,13 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
@@ -23,6 +24,8 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditExpTypeJob
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -71,9 +74,35 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
             back()
         }
 
-        binding.masukkanJlhGaji.addTextChangedListener(
+        binding.masukkanJlhGaji.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
-        )
+            override fun afterTextChanged(arg0: Editable) {
+                binding.masukkanJlhGaji.removeTextChangedListener(this)
+
+                try {
+                    var originalString: String = arg0.toString()
+                    val longval: Long
+                    if (originalString.contains(",")) {
+                        originalString = originalString.replace(",".toRegex(), "")
+                    }
+                    longval = originalString.toLong()
+                    val formatter: DecimalFormat =
+                        NumberFormat.getInstance(Locale.US) as DecimalFormat
+                    formatter.applyPattern("#,###,###,###")
+                    val formattedString: String = formatter.format(longval)
+
+                    //setting text after format to EditText
+                    binding.masukkanJlhGaji.setText(formattedString)
+                    binding.masukkanJlhGaji.setSelection(binding.masukkanJlhGaji.getText().length)
+                } catch (nfe: NumberFormatException) {
+                    nfe.printStackTrace()
+                }
+
+                binding.masukkanJlhGaji.addTextChangedListener(this)
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        })
 
         DataAPI().GetJobTypes(context){ jobtypes ->
             if (jobtypes != null) {

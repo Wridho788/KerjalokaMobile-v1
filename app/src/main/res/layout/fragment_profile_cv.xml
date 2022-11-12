@@ -59,7 +59,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Kemampuan"
                             android:textColor="@color/black"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/editSkill"
@@ -70,7 +70,7 @@
                             android:text="Edit"
                             android:textAlignment="center"
                             android:textColor="@color/danger_500"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -236,7 +236,7 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Hasil Tes PAPI Kostick"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -245,7 +245,7 @@
                         android:fontFamily="@font/poppins"
                         android:text="Hasil dari Tes PAPI Kostick terakhir kamu akan otomatis tersimpan disini"
                         android:textColor="@color/black"
-                        android:textSize="12dp" />
+                        android:textSize="12sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/seePapiResult"
@@ -256,7 +256,7 @@
                         android:fontFamily="@font/poppins"
                         android:text="Lihat Hasil"
                         android:textColor="@color/danger_500"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         app:cornerRadius="100dp"
                         app:strokeColor="@color/danger_500"
                         app:strokeWidth="1dp" />
@@ -284,7 +284,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Pengalaman"
                             android:textColor="@color/black"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/addExp"
@@ -295,7 +295,7 @@
                             android:text="Add New"
                             android:textAlignment="textEnd"
                             android:textColor="@color/danger_500"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -336,7 +336,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Edukasi"
                             android:textColor="@color/black"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/addEdu"
@@ -347,7 +347,7 @@
                             android:text="Add New"
                             android:textAlignment="textEnd"
                             android:textColor="@color/danger_500"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -387,7 +387,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Bahasa"
                             android:textColor="@color/black"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/addLang"
@@ -398,7 +398,7 @@
                             android:text="Edit"
                             android:textAlignment="textEnd"
                             android:textColor="@color/danger_500"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView

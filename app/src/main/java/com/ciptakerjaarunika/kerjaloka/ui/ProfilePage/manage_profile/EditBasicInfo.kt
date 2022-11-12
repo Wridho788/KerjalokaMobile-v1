@@ -73,7 +73,6 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
 
         initRxImagePicker()
 
-
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {

@@ -476,9 +476,10 @@
                     android:layout_height="40dp"
                     android:background="@color/light_300"
                     android:hint="Masukkan skor GPA kamu (1-100)"
-                    android:inputType="numberDecimal|text"
-                    android:maxLines="3"
-                    android:paddingHorizontal="15dp"
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"
+                    android:ems="10"
+                    android:paddingHorizontal="10dp"
                     android:textColor="@color/black"
                     android:textSize="12sp"/>
             </com.google.android.material.card.MaterialCardView>

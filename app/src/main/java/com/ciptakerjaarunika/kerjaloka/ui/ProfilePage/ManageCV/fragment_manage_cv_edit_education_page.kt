@@ -24,6 +24,8 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -138,39 +140,40 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
         }
 
         binding.masukkanSkorGpa.addTextChangedListener(object : TextWatcher {
-            var current = ""
-
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                val stringText = p0.toString()
-//
-//                if (stringText != current) {
-//                    binding.masukkanSkorGpa.removeTextChangedListener(this)
-//
-//                    val locale: Locale = Locale.UK
-//                    val currency = Currency.getInstance(locale)
-//                    val cleanString = stringText.replace("[${currency.symbol},.]".toRegex(), "")
-//                    val parsed = cleanString.toDouble()
-//                    var formatted = NumberFormat.getCurrencyInstance(locale).format(parsed / 100)
-//
-//                    current = formatted
-//                    binding.masukkanSkorGpa.text = formatted
-//                    binding.masukkanSkorGpa.setSelection(formatted.length)
-//                    binding.masukkanSkorGpa.addTextChangedListener(this)
-//                }
-            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(s: Editable) {
-                if (!binding.masukkanSkorGpa.text.toString().isNullOrEmpty() && !binding.masukkanSkorGpa.text.toString()
-                        .isNullOrBlank() && binding.masukkanSkorGpa.text.toString() != ""
-                ) {
-                    if(binding.masukkanSkorGpa.text.toString().toInt() > 100){
-                        binding.masukkanSkorGpa.setText("100")
+                binding.masukkanSkorGpa.removeTextChangedListener(this)
+                try {
+                    var originalString: String = s.toString()
+                    val longval: Long
+                    if (originalString.contains(",")) {
+                        originalString = originalString.replace(",".toRegex(), "")
                     }
-                    else if(binding.masukkanSkorGpa.text.toString().toInt() < 0){
-                        binding.masukkanSkorGpa.setText("0")
-                    }
+                    longval = originalString.toLong()
+                    val formatter: DecimalFormat =
+                        NumberFormat.getInstance(Locale.US) as DecimalFormat
+                    formatter.applyPattern("#,##")
+                    val formattedString: String = formatter.format(longval)
+
+                    binding.masukkanSkorGpa.setText(formattedString)
+                    binding.masukkanSkorGpa.setSelection(binding.masukkanSkorGpa.getText().length)
+
+                }  catch (nfe: NumberFormatException) {
+                    nfe.printStackTrace()
                 }
+                binding.masukkanSkorGpa.addTextChangedListener(this)
+//                if (!binding.masukkanSkorGpa.text.toString().isNullOrEmpty() && !binding.masukkanSkorGpa.text.toString()
+//                        .isNullOrBlank() && binding.masukkanSkorGpa.text.toString() != ""
+//                ) {
+//                    if(binding.masukkanSkorGpa.text.toString().toInt() > 100){
+//                        binding.masukkanSkorGpa.setText("100")
+//                    }
+//                    else if(binding.masukkanSkorGpa.text.toString().toInt() < 0){
+//                        binding.masukkanSkorGpa.setText("0")
+//                    }
+//                }
             }
         })
 
