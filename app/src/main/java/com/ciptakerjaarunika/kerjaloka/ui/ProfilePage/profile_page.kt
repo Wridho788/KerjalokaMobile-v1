@@ -93,7 +93,7 @@ class profilepage(var Page: Int) : Fragment() {
                 }
             }
         }
-
+        updatePage()
         return binding.root
     }
 

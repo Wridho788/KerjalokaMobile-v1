@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +51,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     private var cityNo = data?.additionals?.jobseekerCityNo
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private var photo: MultipartBody.Part? = null
-    private val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private var dateValue: Date? = if (data?.jobseeker?.dateOfBirth == null) null
     else DateUtils().GetDateValue(data.jobseeker.dateOfBirth)
     private var date: String? = if (data?.jobseeker?.dateOfBirth == null) null
@@ -64,8 +65,12 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     ): View? {
         binding = FragmentEditBasicInfoBinding.inflate(layoutInflater)
         val view = binding.root
+
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        Log.d("Currentdate", currentDate.toString())
         return view
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -120,6 +125,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
             )
         }
         binding.jsBirthDay.setOnClickListener {
+
             val datePicker = MaterialDatePicker
                 .Builder
                 .datePicker()
@@ -127,11 +133,14 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
                 .build()
 
             datePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
-
             datePicker.addOnPositiveButtonClickListener {
                 val dates = Date(it)
                 dateValue = dates
+                if (dates == sdf) {
+                    Toast.makeText(context, "true", Toast.LENGTH_SHORT).show()
+                } else Toast.makeText(context, "false", Toast.LENGTH_SHORT).show()
                 date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
+                Log.d("current", dates.toString())
                 binding.jsBirthDay.text = SimpleDateFormat("dd MMMM yyyy").format(dates)
             }
         }
