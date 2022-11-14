@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.time.LocalDateTime
 import java.util.*
 
 
@@ -74,6 +76,8 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
             back()
         }
 
+        var timeNow = DateUtils().GetDateValueWithFormat(LocalDateTime.now().toString(), "yyyy-MM-dd HH:mm")
+        Log.d("timeNow", timeNow.toString())
         binding.masukkanJlhGaji.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
@@ -182,6 +186,12 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
             }
             else if(endedMonth != null && Date(endedYear!!, endedMonth!!, 1) < Date(beginYear!!, beginMonth!!, 1)){
                 showError("Tanggal berakhir harus lebih besar dari tanggal mulai")
+            }
+            else if (beginYear != null && beginYear.toString() != timeNow){
+                showError( "Tanggal tidak boleh melebihi tanggal hari ini")
+            }
+            else if(endedMonth != null && endedMonth.toString() != timeNow ) {
+                showError("Tanggal tidak boleh melebihi tanggal hari ini")
             }
 //            else if(binding.masukkanJlhGaji.text.isNullOrEmpty()){
 //                showError("Gaji tidak boleh kosong")
