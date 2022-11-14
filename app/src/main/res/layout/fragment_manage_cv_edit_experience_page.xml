@@ -95,7 +95,7 @@
                     android:ems="10"
                     android:inputType="text"
                     android:lines="10"
-                    android:maxLines="10"
+                    android:maxLength="50"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
@@ -132,7 +132,7 @@
                     android:hint="Masukkan Nama Perusahaan"
                     android:inputType="textPersonName"
                     android:lines="10"
-                    android:maxLines="10"
+                    android:maxLength="50"
                     android:textColor="@color/black"
                     android:paddingHorizontal="10dp"
                     android:textSize="12sp" />
@@ -143,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins"
                 android:text="Tipe Pekerjaan"
                 android:textColor="@color/dark_100"
@@ -181,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins"
                 android:text="Lokasi Perusahaan"
                 android:textColor="@color/dark_100"
@@ -216,6 +216,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:orientation="vertical">
@@ -234,7 +235,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
 
@@ -253,7 +254,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Bulan"
-                            android:textColor="@color/dark_100"></TextView>
+                            android:textColor="@color/dark_100"/>
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
@@ -360,7 +361,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
 
@@ -379,7 +380,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
                             android:text="Bulan"
-                            android:textColor="@color/dark_100"></TextView>
+                            android:textColor="@color/dark_100"/>
 
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
@@ -460,7 +461,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins"
                 android:text="Gaji"
                 android:textColor="@color/dark_100"
@@ -484,20 +485,18 @@
                     android:background="@color/light_300"
                     android:ems="10"
                     android:hint="Masukkan Gaji"
-                    android:inputType="number"
-                    android:lines="10"
-                    android:maxLines="10"
+                    android:inputType="numberDecimal"
+                    android:maxLength="10"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/deskripsi_pekerjaan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins"
                 android:text="Deskripsi Pekerjaan"
                 android:textColor="@color/dark_100"
@@ -525,7 +524,7 @@
                     android:hint="Masukkan deskripsi pekerjaan (optional)"
                     android:inputType="textMultiLine|text"
                     android:lines="10"
-                    android:maxLines="10"
+                    android:maxLength="255"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/black"
                     android:textSize="12sp" />

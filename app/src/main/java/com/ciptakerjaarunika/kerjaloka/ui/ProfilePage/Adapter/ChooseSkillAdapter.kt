@@ -7,11 +7,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.enum.SkillScale
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iEditKemampuan
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.iChooseSkill
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skill
 
 class ChooseSkillAdapter(val value : SkillFilter?, private val skilItems: List<SkillFilter>, val iEditKemampuan: iEditKemampuan, val iChooseSkill: iChooseSkill):
     RecyclerView.Adapter<ChooseSkillAdapter.chooseSkil>()
@@ -39,6 +37,9 @@ class ChooseSkillAdapter(val value : SkillFilter?, private val skilItems: List<S
 
         if(value == currentItem){
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
+            holder.container.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+            )
         }
         holder.item.setOnClickListener{
             iEditKemampuan.updateSkill(currentItem)

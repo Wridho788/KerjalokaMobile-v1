@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
@@ -36,6 +37,8 @@ class EduAdapter(private val eduList: List<JobseekerEducations>, val iCvPage: iC
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): edu {
         val view = View.inflate(parent.context, R.layout.card_education, null)
+        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
         return edu(view)
     }
 

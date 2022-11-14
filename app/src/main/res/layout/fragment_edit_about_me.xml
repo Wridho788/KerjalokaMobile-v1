@@ -100,6 +100,7 @@
                             android:padding="14dp"
                             android:textColor="@color/black"
                             android:textSize="12sp"
+                            android:maxLength="500"
                             app:boxStrokeWidth="0dp"
                             app:boxStrokeWidthFocused="0dp"
                             android:lines="6"

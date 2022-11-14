@@ -83,7 +83,7 @@
                         android:scaleType="centerCrop"
                         app:shapeAppearanceOverlay="@style/Circular"
                         app:strokeColor="@color/light_500"
-                        app:strokeWidth="1dp"></com.google.android.material.imageview.ShapeableImageView>
+                        app:strokeWidth="1dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -126,18 +126,19 @@
                             android:layout_height="wrap_content"
                             android:background="@color/light_300">
 
-                        <EditText
-                            android:id="@+id/jsName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins"
-                            android:hint="Jhon Doe"
-                            android:background="@null"
-                            android:padding="14dp"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            app:boxStrokeWidth="0dp"
-                            app:boxStrokeWidthFocused="0dp" />
+                            <EditText
+                                android:id="@+id/jsName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:fontFamily="@font/poppins"
+                                android:hint="Jhon Doe"
+                                android:maxLength="50"
+                                android:padding="14dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                app:boxStrokeWidth="0dp"
+                                app:boxStrokeWidthFocused="0dp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
@@ -175,9 +176,11 @@
                                 android:id="@+id/jsKTP"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@null"
                                 android:fontFamily="@font/poppins"
                                 android:hint="Input nomor KTP"
-                                android:background="@null"
+                                android:inputType="number|numberDecimal|phone"
+                                android:maxLength="16"
                                 android:padding="14dp"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
@@ -266,9 +269,10 @@
                             android:layout_height="wrap_content"
                             android:background="@color/light_300"
                             android:fontFamily="@font/poppins"
-                            android:hint="Jl. Berdua"
+                            android:hint="Masukkan Alamat Sesuai KTP"
                             android:padding="14dp"
                             android:textColor="@color/black"
+                            android:maxLength="255"
                             android:textSize="12sp"
                             app:boxStrokeWidth="0dp"
                             app:boxStrokeWidthFocused="0dp" />
@@ -312,7 +316,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins"
-                                android:hint="Jl. Berdua"
                                 android:padding="14dp"
                                 android:textColor="@color/black"
                                 android:textSize="12sp"

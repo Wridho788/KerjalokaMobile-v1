@@ -1,6 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +14,20 @@ import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditExperiencePageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Month
-import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseMonth
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseYear
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditCity
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditExpTypeJob
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.util.*
+
 
 class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val iRefreshData: iRefreshData) : Fragment(), iEditBasic, iManageExp {
         private  lateinit var binding : FragmentManageCvEditExperiencePageBinding
@@ -67,6 +73,36 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             back()
         }
+
+        binding.masukkanJlhGaji.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(arg0: Editable) {
+                binding.masukkanJlhGaji.removeTextChangedListener(this)
+
+                try {
+                    var originalString: String = arg0.toString()
+                    val longval: Long
+                    if (originalString.contains(",")) {
+                        originalString = originalString.replace(",".toRegex(), "")
+                    }
+                    longval = originalString.toLong()
+                    val formatter: DecimalFormat =
+                        NumberFormat.getInstance(Locale.US) as DecimalFormat
+                    formatter.applyPattern("#,###,###,###")
+                    val formattedString: String = formatter.format(longval)
+
+                    //setting text after format to EditText
+                    binding.masukkanJlhGaji.setText(formattedString)
+                    binding.masukkanJlhGaji.setSelection(binding.masukkanJlhGaji.getText().length)
+                } catch (nfe: NumberFormatException) {
+                    nfe.printStackTrace()
+                }
+
+                binding.masukkanJlhGaji.addTextChangedListener(this)
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        })
 
         DataAPI().GetJobTypes(context){ jobtypes ->
             if (jobtypes != null) {
@@ -117,7 +153,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
 
         binding.pilihPosisi.setText(data?.experiencePosition)
         data?.experienceCompanyName?.let { binding.pilihPerusahaan.setText(it) }
-        binding.deskripsiPekerjaan.text = data?.experienceDescription
+        binding.masukkanDeskrPekerjaan.setText(data?.experienceDescription)
 
         binding.saveBtn.setOnClickListener {
             if(binding.pilihPosisi.text.isNullOrEmpty()){
@@ -160,7 +196,7 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
                         data!!.experienceCityNo,
                         binding.pilihPerusahaan.text.toString(),
                         null,
-                        binding.deskripsiPekerjaan.text.toString(),
+                        binding.masukkanDeskrPekerjaan.text.toString(),
                         if(endedMonth == null) null else DateUtils().GetDateValueWithFormat(endedAt, "yyyy-MM-dd HH:mm"),
                         DateUtils().GetDateValueWithFormat(beginAt, "yyyy-MM-dd HH:mm"),
                         data!!.jobTypeNo,
@@ -185,6 +221,12 @@ class manage_cv_edit_experience_page(var data : JobseekerExperienceRequest?, val
             }
         }
     }
+
+//    private fun formatRupiah(number: Double): String? {
+//        val localeID = Locale("in", "ID")
+//        val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
+//        return formatRupiah.format(number)
+//    }
 
     fun showError(message : String){
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

@@ -140,8 +140,11 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 keyword = newText
-
-                if (newText!!.isBlank() && !hasSearch) {
+                if (newText?.length!! > 50) {
+                    Toast.makeText(context, "Text character is more than 50", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                if (newText.isBlank() && !hasSearch) {
                     binding.searchResult.visibility = GONE
                     binding.history.visibility = VISIBLE
 

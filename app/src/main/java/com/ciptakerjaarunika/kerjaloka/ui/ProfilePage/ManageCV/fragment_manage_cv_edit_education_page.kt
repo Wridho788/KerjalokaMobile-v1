@@ -3,35 +3,29 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet.BottomSheetMajorJob
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.city
-import com.ciptakerjaarunika.kerjaloka.R
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
-import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditEducationPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Month
-import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.Major
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducations
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducationsRequest
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -150,16 +144,36 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(s: Editable) {
-                if (!binding.masukkanSkorGpa.text.toString().isNullOrEmpty() && !binding.masukkanSkorGpa.text.toString()
-                        .isNullOrBlank() && binding.masukkanSkorGpa.text.toString() != ""
-                ) {
-                    if(binding.masukkanSkorGpa.text.toString().toInt() > 100){
-                        binding.masukkanSkorGpa.setText("100")
+                binding.masukkanSkorGpa.removeTextChangedListener(this)
+                try {
+                    var originalString: String = s.toString()
+                    val longval: Long
+                    if (originalString.contains(",")) {
+                        originalString = originalString.replace(",".toRegex(), "")
                     }
-                    else if(binding.masukkanSkorGpa.text.toString().toInt() < 0){
-                        binding.masukkanSkorGpa.setText("0")
-                    }
+                    longval = originalString.toLong()
+                    val formatter: DecimalFormat =
+                        NumberFormat.getInstance(Locale.US) as DecimalFormat
+                    formatter.applyPattern("#,##")
+                    val formattedString: String = formatter.format(longval)
+
+                    binding.masukkanSkorGpa.setText(formattedString)
+                    binding.masukkanSkorGpa.setSelection(binding.masukkanSkorGpa.getText().length)
+
+                }  catch (nfe: NumberFormatException) {
+                    nfe.printStackTrace()
                 }
+                binding.masukkanSkorGpa.addTextChangedListener(this)
+//                if (!binding.masukkanSkorGpa.text.toString().isNullOrEmpty() && !binding.masukkanSkorGpa.text.toString()
+//                        .isNullOrBlank() && binding.masukkanSkorGpa.text.toString() != ""
+//                ) {
+//                    if(binding.masukkanSkorGpa.text.toString().toInt() > 100){
+//                        binding.masukkanSkorGpa.setText("100")
+//                    }
+//                    else if(binding.masukkanSkorGpa.text.toString().toInt() < 0){
+//                        binding.masukkanSkorGpa.setText("0")
+//                    }
+//                }
             }
         })
 
