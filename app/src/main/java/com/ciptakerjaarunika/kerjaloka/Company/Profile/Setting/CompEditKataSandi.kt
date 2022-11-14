@@ -1,14 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.Setting
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
@@ -27,12 +25,20 @@ class CompEditKataSandi(val iRefreshData: iRefreshData) : Fragment() {
         val confPass = view.findViewById<EditText>(R.id.confPass)
         val btnSimpan = view.findViewById<MaterialButton>(R.id.btn_simpan_kata_sandi)
 
-        btnSimpan.setOnClickListener{
+        btnSimpan.setOnClickListener {
             val password = oldPass.text.toString()
             val newpassword = newPass.text.toString()
-            company_profile_api().ChangePassword(password, newpassword, context){
-                if (it != null) {
-                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+            if (password.length == 0 && newpassword.length == 0) {
+                Toast.makeText(context, "Please enter your password", Toast.LENGTH_SHORT).show()
+            } else if( password.length == 0) {
+                Toast.makeText(context, "Please enter your password", Toast.LENGTH_SHORT).show()
+            } else if (newpassword.length == 0) {
+                Toast.makeText(context, "Please enter your new password", Toast.LENGTH_SHORT).show()
+            } else {
+                company_profile_api().ChangePassword(password, newpassword, context) {
+                    if (it != null) {
+                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

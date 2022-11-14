@@ -1,7 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile
 
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
-
 data class CompanyProfileResponse(
     val code : Int,
     val data : data,
@@ -179,7 +177,7 @@ data class DeactivatedAccount(
 )
 
 data class CheckPhoneResponse(
-    val exists: Boolean
+    var exists: Boolean
 )
 
 data class CheckEmailResponse(

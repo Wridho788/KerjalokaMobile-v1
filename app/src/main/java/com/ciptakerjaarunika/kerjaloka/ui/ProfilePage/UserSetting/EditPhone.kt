@@ -45,7 +45,7 @@ class EditPhone(var phone: String) : Fragment() {
                         replaceFragment(otpVerification(), it1.token, userData, keyword)
                     }
                 }
-                if (it?.exists == false) {
+                if (it == false) {
 
                 }
 

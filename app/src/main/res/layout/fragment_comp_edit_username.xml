@@ -97,6 +97,7 @@
                             android:fontFamily="@font/poppins"
                             android:hint="Masukkan username baru"
                             android:padding="14dp"
+                            android:maxLength="50"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:boxStrokeWidth="0dp"
@@ -106,10 +107,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:textSize="10dp"
+                        android:textSize="10sp"
                         android:textColor="@color/trueGray_50"
                         android:text="Username hanya dapat diubah satu kali dalam sebulan."
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="5dp"
+                        tools:ignore="SmallSp" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -68,11 +68,14 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                     company_profile_api().newsletter(setNewsletter, context) {}
                 }
             }
-            var phone = it.data.phone.toString()
-            var email = it.data.email.toString()
-            binding.editNomorTeleponSetting.setOnClickListener {
-                replaceFragment(CompEditPhone(this, phone))
+            if (it.data.phone != null) {
+                var phone = it.data.phone.toString()
+                binding.editNomorTeleponSetting.setOnClickListener {
+                    replaceFragment(CompEditPhone(this, phone))
+                }
             }
+
+            var email = it.data.email.toString()
             binding.editEmailProfileSetting.setOnClickListener {
                 replaceFragment(CompEditEmail(this, email))
             }

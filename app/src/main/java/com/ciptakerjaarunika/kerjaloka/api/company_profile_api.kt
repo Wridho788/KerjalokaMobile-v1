@@ -73,7 +73,7 @@ class company_profile_api {
                             val jObjError = JSONObject(data)
                             val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, map.toString(),
+                                context, "Username baru saja diganti, dan dapat diganti kembali jika sudah 30 hari",
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {
@@ -93,22 +93,22 @@ class company_profile_api {
 
     interface checkPhoneNumber {
         @GET("users/checkPhone/{phone}")
-        fun checkNumber(@Path("phone") phone: String): Call<CheckPhoneResponse>
+        fun checkNumber(@Path("phone") phone: String): Call<Boolean>
     }
 
-    fun checkPhone(phone: String, context: Context?, onResult: (CheckPhoneResponse?) -> Unit) {
+    fun checkPhone(phone: String, context: Context?, onResult: (Boolean?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(checkPhoneNumber::class.java)
 
         retrofit.checkNumber(phone).enqueue(
-            object : Callback<CheckPhoneResponse> {
+            object : Callback<Boolean> {
                 override fun onResponse(
-                    call: Call<CheckPhoneResponse>,
-                    response: Response<CheckPhoneResponse>
+                    call: Call<Boolean>,
+                    response: Response<Boolean>
                 ) {
                     onResult(response.body())
                 }
 
-                override fun onFailure(call: Call<CheckPhoneResponse>, t: Throwable) {
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     onResult(null)
                 }
             }

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
@@ -35,12 +36,23 @@ class CompEditEmail(val iRefreshData: iRefreshData, var email: String) : Fragmen
 
         btnSave.setOnClickListener {
             val email = newEmail?.text.toString()
-            company_profile_api().checkNewEmail(email, context) { checkResponse ->
-                company_profile_api().ChangeEmail(email, context) { changeEmail ->
-                    if (changeEmail?.code == 210) {
-                        replaceFragment(otpVerification(), changeEmail.token, email, newEmail?.text.toString())
+            if (email.length == 0) {
+              Toast.makeText(context, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
+            } else if (email.isEmailValid()) {
+                company_profile_api().checkNewEmail(email, context) { checkResponse ->
+                    company_profile_api().ChangeEmail(email, context) { changeEmail ->
+                        if (changeEmail?.code == 210) {
+                            replaceFragment(
+                                otpVerification(),
+                                changeEmail.token,
+                                email,
+                                newEmail?.text.toString()
+                            )
+                        }
                     }
                 }
+            } else {
+                Toast.makeText(context, "Email Tidak Valid", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -48,6 +60,9 @@ class CompEditEmail(val iRefreshData: iRefreshData, var email: String) : Fragmen
     }
 
     companion object;
+    private fun String.isEmailValid(): Boolean {
+        return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    }
 
     @SuppressLint("RestrictedApi")
     private fun replaceFragment(

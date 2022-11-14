@@ -26,6 +26,7 @@ class CompEditUsername(val iRefreshData: iRefreshData) : Fragment() {
             if (!username.isNullOrEmpty()){
                 company_profile_api().ChangeUsername(username, context){
                     if (it != null){
+                        fragmentManager?.popBackStack()
                         Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
