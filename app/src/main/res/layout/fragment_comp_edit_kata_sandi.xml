@@ -152,34 +152,14 @@
             </LinearLayout>
 
             <TextView
-                android:layout_marginTop="5dp"
                 android:id="@+id/password_rules_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Password tidak boleh kosong"
-                android:textColor="@color/danger_900"
-                android:textSize="10sp"/>
-
-            <TextView
                 android:layout_marginTop="5dp"
-                android:id="@+id/passsword_rules_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Password harus mengandung setidaknya 1 huruf kapital"
+                android:visibility="gone"
+                android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/danger_900"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/passsword_rules_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Password harus mengandung setidaknya 1 angka"
-                android:textColor="@color/danger_900"
-                android:textSize="10sp"/>
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
