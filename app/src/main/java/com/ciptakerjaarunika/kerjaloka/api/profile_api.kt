@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewResponse
 import com.ciptakerjaarunika.kerjaloka.model.Data.CheckDocument
 import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
@@ -10,13 +11,11 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.review_response
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.search_model
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 import java.math.BigDecimal
 
 class ProfileAPI {
@@ -26,7 +25,7 @@ class ProfileAPI {
         fun getProfileData(): Call<JobseekerProfileResponse>
     }
 
-    fun JobseekerGetProfileData(context: Context?,onResult: (JobseekerProfileResponse?) -> Unit){
+    fun JobseekerGetProfileData(context: Context?, onResult: (JobseekerProfileResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerGetProfileData::class.java)
 
         retrofit.getProfileData().enqueue(
@@ -37,7 +36,8 @@ class ProfileAPI {
                 }
 
                 override fun onResponse(
-                    call: Call<JobseekerProfileResponse>, response: Response<JobseekerProfileResponse>
+                    call: Call<JobseekerProfileResponse>,
+                    response: Response<JobseekerProfileResponse>
                 ) {
                     onResult(response.body())
                 }
@@ -52,7 +52,7 @@ class ProfileAPI {
         fun getJobseekerSkills(): Call<JobseekerSkillsResponse>
     }
 
-    fun GetJobseekerSkills(context: Context?,onResult: (JobseekerSkillsResponse?) -> Unit){
+    fun GetJobseekerSkills(context: Context?, onResult: (JobseekerSkillsResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerSkills::class.java)
 
         retrofit.getJobseekerSkills().enqueue(
@@ -77,7 +77,10 @@ class ProfileAPI {
         fun getJobseekerEducations(): Call<JobseekerEducationsResponse>
     }
 
-    fun GetJobseekerEducations(context: Context?,onResult: (JobseekerEducationsResponse?) -> Unit){
+    fun GetJobseekerEducations(
+        context: Context?,
+        onResult: (JobseekerEducationsResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(jobseekerEducations::class.java)
 
         retrofit.getJobseekerEducations().enqueue(
@@ -88,7 +91,8 @@ class ProfileAPI {
                 }
 
                 override fun onResponse(
-                    call: Call<JobseekerEducationsResponse>, response: Response<JobseekerEducationsResponse>
+                    call: Call<JobseekerEducationsResponse>,
+                    response: Response<JobseekerEducationsResponse>
                 ) {
                     onResult(response.body())
                 }
@@ -102,7 +106,10 @@ class ProfileAPI {
         fun getJobseekerExperiences(): Call<JobseekerExperiencesResponse>
     }
 
-    fun GetJobseekerExperiences(context: Context?,onResult: (JobseekerExperiencesResponse?) -> Unit){
+    fun GetJobseekerExperiences(
+        context: Context?,
+        onResult: (JobseekerExperiencesResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(jobseekerExperiences::class.java)
 
         retrofit.getJobseekerExperiences().enqueue(
@@ -113,7 +120,8 @@ class ProfileAPI {
                 }
 
                 override fun onResponse(
-                    call: Call<JobseekerExperiencesResponse>, response: Response<JobseekerExperiencesResponse>
+                    call: Call<JobseekerExperiencesResponse>,
+                    response: Response<JobseekerExperiencesResponse>
                 ) {
                     onResult(response.body())
                 }
@@ -127,7 +135,7 @@ class ProfileAPI {
         fun getJobseekerLanguages(): Call<JobseekerLanguagesResponse>
     }
 
-    fun GetJobseekerLanguages(context: Context?,onResult: (JobseekerLanguagesResponse?) -> Unit){
+    fun GetJobseekerLanguages(context: Context?, onResult: (JobseekerLanguagesResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerLanguages::class.java)
 
         retrofit.getJobseekerLanguages().enqueue(
@@ -138,7 +146,8 @@ class ProfileAPI {
                 }
 
                 override fun onResponse(
-                    call: Call<JobseekerLanguagesResponse>, response: Response<JobseekerLanguagesResponse>
+                    call: Call<JobseekerLanguagesResponse>,
+                    response: Response<JobseekerLanguagesResponse>
                 ) {
                     onResult(response.body())
                 }
@@ -148,15 +157,19 @@ class ProfileAPI {
 
     //Jobseeker Get Expected Salary
     data class JobseekerSalaryExpectedResponse(
-        val code : Int,
-        val data : BigDecimal
+        val code: Int,
+        val data: BigDecimal
     )
+
     interface jobseekerSalaryExpected {
         @GET("jobseeker/preference/salary")
         fun getJobseekerSalaryExpected(): Call<JobseekerSalaryExpectedResponse>
     }
 
-    fun GetJobseekerSalaryExpected(context: Context?,onResult: (JobseekerSalaryExpectedResponse?) -> Unit){
+    fun GetJobseekerSalaryExpected(
+        context: Context?,
+        onResult: (JobseekerSalaryExpectedResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(jobseekerSalaryExpected::class.java)
 
         retrofit.getJobseekerSalaryExpected().enqueue(
@@ -167,7 +180,8 @@ class ProfileAPI {
                 }
 
                 override fun onResponse(
-                    call: Call<JobseekerSalaryExpectedResponse>, response: Response<JobseekerSalaryExpectedResponse>
+                    call: Call<JobseekerSalaryExpectedResponse>,
+                    response: Response<JobseekerSalaryExpectedResponse>
                 ) {
                     onResult(response.body())
                 }
@@ -177,15 +191,16 @@ class ProfileAPI {
 
     //Get Jobseeker Job Type
     data class JobseekerJobTypeResponse(
-        val code : Int,
-        val data : List<JobType>
+        val code: Int,
+        val data: List<JobType>
     )
+
     interface jobseekerJobType {
         @GET("jobseeker/preference/job-type")
         fun getJobseekerJobType(): Call<JobseekerJobTypeResponse>
     }
 
-    fun GetJobseekerJobType(context: Context?,onResult: (JobseekerJobTypeResponse?) -> Unit){
+    fun GetJobseekerJobType(context: Context?, onResult: (JobseekerJobTypeResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerJobType::class.java)
 
         retrofit.getJobseekerJobType().enqueue(
@@ -196,24 +211,27 @@ class ProfileAPI {
                 }
 
                 override fun onResponse(
-                    call: Call<JobseekerJobTypeResponse>, response: Response<JobseekerJobTypeResponse>
+                    call: Call<JobseekerJobTypeResponse>,
+                    response: Response<JobseekerJobTypeResponse>
                 ) {
                     onResult(response.body())
                 }
             }
         )
     }
+
     //Get Jobseeker Job Type
     data class JobseekerFieldResponse(
-        val code : Int,
-        val data : List<Field>
+        val code: Int,
+        val data: List<Field>
     )
+
     interface jobseekerField {
         @GET("jobseeker/preference/field")
         fun getJobseekerField(): Call<JobseekerFieldResponse>
     }
 
-    fun GetJobseekerField(context: Context?,onResult: (JobseekerFieldResponse?) -> Unit){
+    fun GetJobseekerField(context: Context?, onResult: (JobseekerFieldResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerField::class.java)
 
         retrofit.getJobseekerField().enqueue(
@@ -234,15 +252,16 @@ class ProfileAPI {
 
     //Get Jobseeker Documents
     data class JobseekerDocumentsResponse(
-        val code : Int,
-        val data : List<Documents>
+        val code: Int,
+        val data: List<Documents>
     )
+
     interface jobseekerDocuments {
         @GET("jobseeker/documents")
         fun getJobseekerDocuments(): Call<JobseekerDocumentsResponse>
     }
 
-    fun GetJobseekerDocuments(context: Context?,onResult: (JobseekerDocumentsResponse?) -> Unit){
+    fun GetJobseekerDocuments(context: Context?, onResult: (JobseekerDocumentsResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerDocuments::class.java)
 
         retrofit.getJobseekerDocuments().enqueue(
@@ -253,7 +272,8 @@ class ProfileAPI {
                 }
 
                 override fun onResponse(
-                    call: Call<JobseekerDocumentsResponse>, response: Response<JobseekerDocumentsResponse>
+                    call: Call<JobseekerDocumentsResponse>,
+                    response: Response<JobseekerDocumentsResponse>
                 ) {
                     onResult(response.body())
                 }
@@ -263,15 +283,19 @@ class ProfileAPI {
 
     //Get Jobseeker Document Vaccine
     data class JobseekerDocumentVaccineResponse(
-        val code : Int,
-        val data : List<CheckDocument>
+        val code: Int,
+        val data: List<CheckDocument>
     )
+
     interface jobseekerDocumentVaccine {
         @GET("jobseeker/documents/vaccine")
         fun getJobseekerDocumentVaccine(): Call<JobseekerDocumentVaccineResponse>
     }
 
-    fun GetJobseekerDocumentVaccine(context: Context?,onResult: (JobseekerDocumentVaccineResponse?) -> Unit){
+    fun GetJobseekerDocumentVaccine(
+        context: Context?,
+        onResult: (JobseekerDocumentVaccineResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(jobseekerDocumentVaccine::class.java)
 
         retrofit.getJobseekerDocumentVaccine().enqueue(
@@ -282,7 +306,8 @@ class ProfileAPI {
                 }
 
                 override fun onResponse(
-                    call: Call<JobseekerDocumentVaccineResponse>, response: Response<JobseekerDocumentVaccineResponse>
+                    call: Call<JobseekerDocumentVaccineResponse>,
+                    response: Response<JobseekerDocumentVaccineResponse>
                 ) {
                     onResult(response.body())
                 }
@@ -292,15 +317,16 @@ class ProfileAPI {
 
     //Get Jobseeker Get Resume
     data class JobseekerResumeResponse(
-        val code : Int,
-        val data : JobseekerVideoResume
+        val code: Int,
+        val data: JobseekerVideoResume
     )
+
     interface jobseekerResume {
         @GET("jobseeker/get/resume")
         fun getJobseekerDocumentVaccine(): Call<JobseekerResumeResponse>
     }
 
-    fun GetJobseekerResume(context: Context?,onResult: (JobseekerResumeResponse?) -> Unit){
+    fun GetJobseekerResume(context: Context?, onResult: (JobseekerResumeResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerResume::class.java)
 
         retrofit.getJobseekerDocumentVaccine().enqueue(
@@ -324,7 +350,7 @@ class ProfileAPI {
         fun request(): Call<Any?>
     }
 
-    fun DeleteJobseekerResume(context: Context?,onResult: (Any?) -> Unit){
+    fun DeleteJobseekerResume(context: Context?, onResult: (Any?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerDeleteResume::class.java)
 
         retrofit.request().enqueue(
@@ -342,14 +368,15 @@ class ProfileAPI {
     }
 
     data class recordResponse(
-        val data : List<JobseekerRecord>
+        val data: List<JobseekerRecord>
     )
+
     interface jobseekerGetRecord {
         @GET("jobseeker/record/get")
         fun request(): Call<recordResponse?>
     }
 
-    fun JobseekerGetRecord(context: Context?,onResult: (recordResponse?) -> Unit){
+    fun JobseekerGetRecord(context: Context?, onResult: (recordResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerGetRecord::class.java)
 
         retrofit.request().enqueue(
@@ -359,7 +386,10 @@ class ProfileAPI {
                     onResult(null)
                 }
 
-                override fun onResponse(call: Call<recordResponse?>, response: Response<recordResponse?>) {
+                override fun onResponse(
+                    call: Call<recordResponse?>,
+                    response: Response<recordResponse?>
+                ) {
                     onResult(response.body())
                 }
             }
@@ -371,7 +401,7 @@ class ProfileAPI {
         fun request(): Call<ReviewResponse?>
     }
 
-    fun JobseekerGetMyReview(context: Context?,onResult: (ReviewResponse?) -> Unit){
+    fun JobseekerGetMyReview(context: Context?, onResult: (ReviewResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(jobseekerGetMyReview::class.java)
 
         retrofit.request().enqueue(
@@ -381,7 +411,10 @@ class ProfileAPI {
                     onResult(null)
                 }
 
-                override fun onResponse(call: Call<ReviewResponse?>, response: Response<ReviewResponse?>) {
+                override fun onResponse(
+                    call: Call<ReviewResponse?>,
+                    response: Response<ReviewResponse?>
+                ) {
                     onResult(response.body())
                 }
             }
@@ -391,10 +424,10 @@ class ProfileAPI {
 
     interface logout {
         @GET("users/logout")
-        fun logout(@Query("deviceToken") deviceToken : String?): Call<Any>
+        fun logout(@Query("deviceToken") deviceToken: String?): Call<Any>
     }
 
-    fun Logout(deviceToken: String?,context: Context?,onResult: (Any?) -> Unit){
+    fun Logout(deviceToken: String?, context: Context?, onResult: (Any?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(logout::class.java)
 
         retrofit.logout(deviceToken).enqueue(
@@ -414,17 +447,91 @@ class ProfileAPI {
             }
         )
     }
-    data class papiKostickResponse(
-        val code : Int,
-        val message : String,
-        val data : PapiKostickResult
+
+    data class terminateAcc(
+        val UserNo: Long
     )
+
+    data class TerminateResponse(
+        val code: Int,
+        val Message: String
+    )
+
+    interface deactivate {
+        @Headers("Content-Type: application/json", "Accept: application/json")
+        @POST("users/terminate")
+        fun deactivateAccount(@Body terminateAcc: terminateAcc): Call<TerminateResponse>
+    }
+
+    fun GetDeactivatedAccount(context: Context?, onResult: (Any?) -> Unit) {
+        var retrofit = ServiceBuilder(context).POST(deactivate::class.java)
+        retrofit.deactivateAccount(terminateAcc(SessionManager(context).user?.userNo!!)).enqueue(
+            object : Callback<TerminateResponse> {
+                override fun onResponse(
+                    call: Call<TerminateResponse>,
+                    response: Response<TerminateResponse>
+                ) {
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            Toast.makeText(
+                                context, map.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Log.d("response", response.toString())
+                    }
+
+                }
+
+                override fun onFailure(call: Call<TerminateResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface GetReactivateAccount {
+        @GET("users/account/reactivate")
+        fun getReactivateAccount(): Call<TerminateResponse>
+    }
+
+    fun GetReactivateAccount(context: Context?, onResult: (TerminateResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(GetReactivateAccount::class.java)
+        retrofit.getReactivateAccount().enqueue(
+            object : Callback<TerminateResponse> {
+                override fun onResponse(
+                    call: Call<TerminateResponse>,
+                    response: Response<TerminateResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<TerminateResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    data class papiKostickResponse(
+        val code: Int,
+        val message: String,
+        val data: PapiKostickResult
+    )
+
     interface GetPapiKostick {
         @GET("jobseeker/profile/papi/result")
         fun getData(): Call<papiKostickResponse>
     }
 
-    fun GetPapiKostick(context: Context?,onResult: (papiKostickResponse?) -> Unit){
+    fun GetPapiKostick(context: Context?, onResult: (papiKostickResponse?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(GetPapiKostick::class.java)
 
         retrofit.getData().enqueue(
@@ -442,8 +549,5 @@ class ProfileAPI {
             }
         )
     }
-
-
-
 
 }

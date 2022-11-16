@@ -472,7 +472,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Kota Jakarta Utara, DKI Jakarta"
                                 android:textColor="@color/dark_100"
                                 android:textSize="12dp" />
                         </LinearLayout>

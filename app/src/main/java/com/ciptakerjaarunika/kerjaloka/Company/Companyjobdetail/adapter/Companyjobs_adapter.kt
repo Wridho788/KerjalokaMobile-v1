@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,8 +68,10 @@ class Companyjobs_adapter(private val joblist: List<DataCount>, private val list
         }
         if (currentItem.publish == true) {
             holder.jobStatus.text = "Aktif"
+            holder.jobStatus.setTextColor(Color.parseColor("#27AE60"))
         } else {
             holder.jobStatus.text = "Draft"
+            holder.jobStatus.setTextColor(Color.parseColor("#999999"))
         }
         holder.jobAuthor.text = currentItem.createdBy
     }

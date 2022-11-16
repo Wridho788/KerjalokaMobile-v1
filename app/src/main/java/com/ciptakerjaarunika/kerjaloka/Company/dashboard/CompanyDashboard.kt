@@ -18,6 +18,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyDashboardBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.CompanyNotification
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.formatter.ValueFormatter
@@ -58,7 +59,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         val jlhInterview = view.findViewById<TextView>(R.id.jlhInterview)
         val btnSeeInterview = view.findViewById<TextView>(R.id.seeInterview)
         val jlhFollower = view.findViewById<TextView>(R.id.jlh_org_pengikut)
-        val btnSeeFollower = view.findViewById<TextView>(R.id.seeFollower)
+//        val btnSeeFollower = view.findViewById<TextView>(R.id.seeFollower)
 
         company_profile_api().MyFollowerAmount(context) {
             if (it != null) {
@@ -70,10 +71,18 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
         company_profile_api().InterviewAmount(context) {
             if (it != null) {
-                jlhInterview.text = it.data.toString() + " Orang"
+                Log.d("total interview", it.toString())
+                jlhInterview.text = it.interview.toString() + " Orang"
             } else {
                 jlhInterview.text = "0 Orang"
             }
+        }
+
+        btnSeeInterview.setOnClickListener {
+            val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ft.addToBackStack("MainActivity")
+            ft.replace(id, InterviewPage(), "companyFragment")
+            ft.commit()
         }
 
         company_profile_api().MyJob(context) {
@@ -88,6 +97,13 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
                 }
             }
             jlhApplicant.text = count.toString() + " Pekerjaan"
+        }
+
+        btnSeeApp.setOnClickListener {
+            val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+            ft.addToBackStack("MainActivity")
+            ft.replace(id, fragment_company_jobs(), "companyFragment")
+            ft.commit()
         }
 
 //        btn_search.setOnClickListener {

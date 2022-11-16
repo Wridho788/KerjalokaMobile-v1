@@ -435,7 +435,7 @@ class JobAPI {
                             val jObjError = JSONObject(data)
                             val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, map.toString(),
+                                 context, map.toString(),
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {
@@ -475,7 +475,7 @@ class JobAPI {
                             val jObjError = JSONObject(data)
                             val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, map.toString(),
+                                context,"Silahkan beli paket melalui Website Kerjaloka. Terima kasih.",
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {

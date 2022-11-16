@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobseekerProfilePageBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Global.DeactivatedAccount
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
 import com.google.android.material.button.MaterialButton
 
@@ -29,6 +31,12 @@ class profilepage(var Page: Int) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentJobseekerProfilePageBinding.inflate(layoutInflater)
+        var isDeactivate =
+            SessionManager(context).user != null && (SessionManager(context).user?.deactivated) != null
+        if (isDeactivate) {
+            val intent = Intent(context, DeactivatedAccount::class.java)
+            startActivity(intent)
+        }
         ProfileAPI().JobseekerGetProfileData(context) { response ->
             if (response?.data != null) {
                 if (response.data.users.roleNo == 4) {

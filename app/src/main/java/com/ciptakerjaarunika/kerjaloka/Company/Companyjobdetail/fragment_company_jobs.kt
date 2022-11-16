@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,8 +43,8 @@ class fragment_company_jobs : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         UpdateUI()
-        loading -= 1
-        LoadingDone()
+//        loading -= 1
+//        LoadingDone()
     }
 
 
@@ -65,7 +66,8 @@ class fragment_company_jobs : Fragment() {
             }
         })
     }
-    fun UpdateUI(){
+
+    fun UpdateUI() {
 
         binding.idFABAdd.setOnClickListener {
             val myIntent = Intent(view?.context, ManageJobActivity::class.java)
@@ -76,9 +78,9 @@ class fragment_company_jobs : Fragment() {
             startActivity(goToMainActivity)
         }
 
-        company_profile_api().MyJob(context){
-            if(it != null) {
-
+        company_profile_api().MyJob(context) {
+            if (it != null) {
+                Log.d("ownjob", it.toString())
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyle_company_jobs)
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity)
@@ -102,7 +104,7 @@ class fragment_company_jobs : Fragment() {
         mBundle.putString(fragment_company_job_active_page.EXTRA_DETAIL_JOB, jobData)
         jobDetailFragment.arguments = mBundle
         val mFragmentManager = parentFragmentManager
-        mFragmentManager.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction().apply {
             replace(
                 R.id.fragment_container,
                 jobDetailFragment,

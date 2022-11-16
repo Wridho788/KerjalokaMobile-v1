@@ -21,6 +21,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.incoming_call_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
+import com.ciptakerjaarunika.kerjaloka.ui.Global.DeactivatedAccount
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.CompanyDashboard
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var hubConnection: HubConnection
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +80,8 @@ class MainActivity : AppCompatActivity() {
             if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
                 hubConnection.start()
 
-                hubConnection.on("connected",
+                hubConnection.on(
+                    "connected",
                     { res ->
                         val userNo = SessionManager(context).user!!.userNo.toString()
                         hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
@@ -109,14 +112,14 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-
 //            window.decorView.setOnApplyWindowInsetsListener { view, insets ->
 //                val insetsCompat = toWindowInsetsCompat(insets, view)
 //                binding.bottomNavigationView.isGone = true
 //                view.onApplyWindowInsets(insets)
 //            }
             window.decorView.viewTreeObserver.addOnGlobalFocusChangeListener { oldView, newView ->
-                val imm = baseContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    baseContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 if (newView !is EditText) imm.hideSoftInputFromWindow(
                     (oldView ?: newView)?.windowToken
                         ?: window.attributes.token,
@@ -124,34 +127,43 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
+            var isCompany =
+                SessionManager(context).user != null && (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(
+                    context
+                ).user?.company != null)
 
-            var isCompany = SessionManager(context).user != null && (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null)
-
-            if (!isCompany) {
-                replaceFragment(HomePage())
+            if (SessionManager(context).user !=null && SessionManager(context).user?.deactivated!! == true) {
+                val intent = Intent(baseContext, DeactivatedAccount::class.java)
+                startActivity(intent)
             } else {
-                replaceFragment(CompanyDashboard())
+                if (!isCompany) {
+                    replaceFragment(HomePage())
+                } else {
+                    replaceFragment(CompanyDashboard())
+                }
+
             }
             binding.bottomNavigationView.menu.forEach { item ->
-                if(item.itemId == R.id.lamaran){
-                    if(!isCompany) {
+                if (item.itemId == R.id.lamaran) {
+                    if (!isCompany) {
                         item.title = "Lamaran"
-                    }
-                    else{
+                    } else {
                         item.title = "Pelamar"
                     }
                 }
             }
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
-                var isCompany = SessionManager(context).user != null && (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null)
+                var isCompany =
+                    SessionManager(context).user != null && (SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(
+                        context
+                    ).user?.company != null)
 
                 when (item.itemId) {
-                    R.id.home -> replaceFragment(if(!isCompany) HomePage() else CompanyDashboard())
+                    R.id.home -> replaceFragment(if (!isCompany) HomePage() else CompanyDashboard())
                     R.id.lamaran -> {
-                        if(!isCompany) {
+                        if (!isCompany) {
                             replaceFragment(LamaranPage())
-                        }
-                        else{
+                        } else {
                             item.title = "Pelamar"
                             replaceFragment(CompanyListApplicantFragment())
                         }
@@ -181,46 +193,9 @@ class MainActivity : AppCompatActivity() {
         Log.d("TAG1", "firstRun: " + Boolean.valueOf(firstRun).toString())
 
     }
-//        hubConnection.on("connected",
-//            {res -> Log.d("Websocket Response : ", res.toString())
-//                val userNo = SessionManager(context).user!!.userNo.toString()
-//                hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
-//                SessionManager(context).refreshChat(hubConnection);
-//
-//                this?.runOnUiThread(Runnable {
-//                    if(stateFragment == null) {
-//                        binding = ActivityMainBinding.inflate(layoutInflater)
-//                        setContentView(binding.root)
-//
-//                        replaceFragment(HomePage(hubConnection))
-//
-//                        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-//                            when (item.itemId) {
-//                                R.id.home -> replaceFragment((HomePage(hubConnection)))
-//                                R.id.lamaran -> replaceFragment((LamaranPage(hubConnection)))
-//                                R.id.interview -> replaceFragment((InterviewPage(hubConnection)))
-//                                R.id.akun -> replaceFragment((AkunPage(hubConnection)))
-//
-//                                else -> {
-//
-//                                }
-//                            }
-//                            true
-//                        }
-//                    }
-//                })
-//
-//            }, String::class.java)
-//        hubConnection.onClosed{
-//                if(SessionManager(context).user != null
-//                    && hubConnection.connectionState != HubConnectionState.CONNECTED){
-//                    hubConnection.start()
-//                }
-//        }
 
     private var MY_CAMERA_REQUEST_CODE = 100
 
-    //WebSocketService().startWebsocket();
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -228,21 +203,21 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         supportFragmentManager.fragments.find { a ->
-                a.id == requestCode - baseContext.resources.getInteger(R.integer.LampiranUploadFile) ||
-                a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatPickCamera) ||
-                a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatUploadFile) ||
-                a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 1) ||
-                a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 2) ||
-                a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 3)
+            a.id == requestCode - baseContext.resources.getInteger(R.integer.LampiranUploadFile) ||
+                    a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatPickCamera) ||
+                    a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatUploadFile) ||
+                    a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 1) ||
+                    a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 2) ||
+                    a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 3)
         }?.onRequestPermissionsResult(requestCode, permissions, grantResults)
-      }
+    }
 
     open fun replaceFragment(fragment: Fragment) {
 //        AUTHAPI().CheckLogin(baseContext, this) {
-            val fragmentManager = supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container, fragment)
-            fragmentTransaction.commit()
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.commit()
 //        }
     }
 
@@ -253,13 +228,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     open fun refreshBottomSheet() {
-        var isCompany = SessionManager(baseContext).user != null && (SessionManager(baseContext).user?.roleNo == Role.Companies.value || SessionManager(baseContext).user?.company != null)
+        var isCompany =
+            SessionManager(baseContext).user != null && (SessionManager(baseContext).user?.roleNo == Role.Companies.value || SessionManager(
+                baseContext
+            ).user?.company != null)
         binding.bottomNavigationView.menu.forEach { item ->
-            if(item.itemId == R.id.lamaran){
-                if(!isCompany) {
+            if (item.itemId == R.id.lamaran) {
+                if (!isCompany) {
                     item.title = "Lamaran"
-                }
-                else{
+                } else {
                     item.title = "Pelamar"
                 }
             }

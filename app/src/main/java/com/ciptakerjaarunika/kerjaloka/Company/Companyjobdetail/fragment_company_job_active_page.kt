@@ -2,7 +2,9 @@ package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -95,13 +97,15 @@ class fragment_company_job_active_page : Fragment() {
             jobExpired?.text = "Kadaluarsa : " + jobData?.expired
             jobAuth?.text = "Oleh : " + jobData?.createdBy
 
-//            var location = ""
-//
-//            jobData?.jobCity?.forEach {
-//                location += "&#8226; ${it}<br/>"
-//            }
+            var location = ""
+            var listLocation: List<String> = listOf()
 
-            jobLoc?.text = jobData?.jobCity
+            jobData?.jobCity?.forEach {
+                location += "&#8226; ${it}<br/>"
+                listLocation = listOf(it)
+            }
+            Log.d("location", listLocation.toString())
+            jobLoc?.text = Html.fromHtml(location)
 
 //            jobView.text=listanalytic[0].clickCount.toString()
             jobReq?.text = jobData?.jobDescription
@@ -173,11 +177,13 @@ class fragment_company_job_active_page : Fragment() {
             }
 
             val jobNo = jobData?.jobNo
+            Log.d("jobcity", jobData?.jobCity.toString())
             draftJob?.setOnClickListener {
+//                AddJobAPI().SendJob(context, addJobRequest(jobNo, titleJob, listLocation, ))
                 JobAPI().DraftJob(context, jobNo!!) {
                     if (it != null) {
                         if (it.code == 280) {
-                            Toast.makeText(context, "Sukses Publish Job", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Sukses Draft Job", Toast.LENGTH_SHORT).show()
                             publishJob?.isVisible = true
                             draftJob.isVisible = false
                         }
@@ -188,7 +194,7 @@ class fragment_company_job_active_page : Fragment() {
                 JobAPI().PublishJob(context, jobNo!!) {
                     if (it != null) {
                         if (it.code == 280) {
-                            Toast.makeText(context, "Sukses Draft Job", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Sukses Publish Job", Toast.LENGTH_SHORT).show()
                             publishJob.isVisible = false
                             draftJob?.isVisible = true
                         }

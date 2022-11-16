@@ -45,9 +45,9 @@ private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = nu
         }
 
         company_profile_api().CompMyReview(sortByNewest = false, context){
+            if (it != null) {
             allRating.rating = it?.data?.userInfo?.rating?.toFloat()!!
             sumRate.text = "${it?.data?.userInfo?.rating} dari 5"
-            if (it != null) {
                 recyclerCompReview?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = assignAdapter(it.data.reviewList)

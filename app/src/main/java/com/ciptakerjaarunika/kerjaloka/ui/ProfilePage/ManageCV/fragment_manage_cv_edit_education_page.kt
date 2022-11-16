@@ -157,7 +157,7 @@ class fragment_manage_cv_edit_education_page(var data : JobseekerEducationsReque
                     formatter.applyPattern("#,##")
                     val formattedString: String = formatter.format(longval)
 
-                    binding.masukkanSkorGpa.setText(formattedString)
+                    binding.masukkanSkorGpa.text.toString()
                     binding.masukkanSkorGpa.setSelection(binding.masukkanSkorGpa.getText().length)
 
                 }  catch (nfe: NumberFormatException) {

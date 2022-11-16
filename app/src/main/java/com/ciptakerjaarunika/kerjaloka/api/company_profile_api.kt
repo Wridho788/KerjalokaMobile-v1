@@ -549,6 +549,7 @@ class company_profile_api {
     }
 
     data class followerAmountResponse(val code: Int, val data: Int)
+    data class totalInterview(val code: Int, val interview: Int)
     interface getFollowerAmount {
         @GET("company/follower")
         fun followerAmount(): Call<followerAmountResponse>
@@ -575,22 +576,22 @@ class company_profile_api {
 
     interface getInterviewAmount {
         @GET("company/officer/totalInterview")
-        fun interviewAmount(): Call<followerAmountResponse>
+        fun interviewAmount(): Call<totalInterview>
     }
 
-    fun InterviewAmount(context: Context?, onResult: (followerAmountResponse?) -> Unit) {
+    fun InterviewAmount(context: Context?, onResult: (totalInterview?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getInterviewAmount::class.java)
 
         retrofit.interviewAmount().enqueue(
-            object : Callback<followerAmountResponse> {
+            object : Callback<totalInterview> {
                 override fun onResponse(
-                    call: Call<followerAmountResponse>,
-                    response: Response<followerAmountResponse>
+                    call: Call<totalInterview>,
+                    response: Response<totalInterview>
                 ) {
                     onResult(response.body())
                 }
 
-                override fun onFailure(call: Call<followerAmountResponse>, t: Throwable) {
+                override fun onFailure(call: Call<totalInterview>, t: Throwable) {
                     onResult(null)
                 }
             }

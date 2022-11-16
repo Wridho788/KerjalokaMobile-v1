@@ -389,6 +389,7 @@
                             android:inputType="number"
                             android:padding="14dp"
                             android:textSize="12sp"
+                            android:maxLength="2"
                             tools:ignore="Autofill,SmallSp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
