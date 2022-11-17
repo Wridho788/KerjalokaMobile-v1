@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
@@ -29,16 +30,22 @@ class EditEmail : Fragment() {
             val email = view.findViewById<TextView>(R.id.current_user_email_2)
             email.text = userData
             btnSave.setOnClickListener {
-                company_profile_api().checkNewEmail(
-                    newEmail?.text.toString(),
-                    context
-                ) {
-                    company_profile_api().ChangeEmail(newEmail?.text.toString(), context) { it1 ->
-                        if (it1?.code == 210) {
-                            replaceFragment(otpVerification(), it1.token, userData,  newEmail?.text.toString())
+                val email = newEmail?.text.toString()
+                if (email.length == 0) {
+                    Toast.makeText(context, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                } else if (email.isEmailValid()) {
+                    company_profile_api().checkNewEmail(
+                        email,
+                        context
+                    ) {
+                        company_profile_api().ChangeEmail(email, context) { it1 ->
+                            if (it1?.code == 210) {
+                                replaceFragment(otpVerification(), it1.token, userData,  newEmail?.text.toString())
+                            }
                         }
                     }
                 }
+
             }
             view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
                 fragmentManager?.popBackStack()
@@ -47,7 +54,9 @@ class EditEmail : Fragment() {
 
 
     }
-
+    private fun String.isEmailValid(): Boolean {
+        return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

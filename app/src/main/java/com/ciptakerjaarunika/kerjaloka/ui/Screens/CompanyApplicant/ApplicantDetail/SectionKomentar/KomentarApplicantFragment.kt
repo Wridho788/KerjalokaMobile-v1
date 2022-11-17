@@ -55,6 +55,7 @@ class KomentarApplicantFragment(
                             val currentData = res.data.find {
                                 data-> data.application.applicationNo == applicantNo
                             }
+                            binding.etReportJob.setText("")
                             binding.rvCommentApplicant.apply {
                                 layoutManager = LinearLayoutManager(activity)
                                 adapter = KomentarAdapter(context, currentData!!.comment)

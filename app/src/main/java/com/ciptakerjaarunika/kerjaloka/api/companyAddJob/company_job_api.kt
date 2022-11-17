@@ -14,23 +14,56 @@ class CompanyJobAPI {
         @GET("company/officer/jobs")
         fun getCompanyJob(): Call<getJobResponse>
     }
-    fun getCompanyJobOfficer(context: Context?, onResult: (getJobResponse?) -> Unit){
-      val retrofit = ServiceBuilder(context).GET(getCompanyJobOfficer::class.java)
-      retrofit.getCompanyJob().enqueue(
-          object : Callback<getJobResponse> {
-              override fun onResponse(
-                  call: Call<getJobResponse>,
-                  response: Response<getJobResponse>
-              ) {
-                  onResult(response.body())
-              }
 
-              override fun onFailure(call: Call<getJobResponse>, t: Throwable) {
-                  onResult(null)
-                  Log.d("response fail",t.toString())
+    fun getCompanyJobOfficer(context: Context?, onResult: (getJobResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(getCompanyJobOfficer::class.java)
+        retrofit.getCompanyJob().enqueue(
+            object : Callback<getJobResponse> {
+                override fun onResponse(
+                    call: Call<getJobResponse>,
+                    response: Response<getJobResponse>
+                ) {
+                    onResult(response.body())
+                }
 
-              }
-          }
-      )
+                override fun onFailure(call: Call<getJobResponse>, t: Throwable) {
+                    onResult(null)
+                    Log.d("response fail", t.toString())
+
+                }
+            }
+        )
+    }
+
+    data class CompanyAnalytic(
+        val code: Int,
+        val message: String,
+        val data: itemAnalytic
+    )
+
+    data class itemAnalytic(
+        val viewCount: Int,
+    )
+
+    interface getCompanyAnalytic {
+        @GET("users/analytic/get")
+        fun getCompanyAnalytic(): Call<CompanyAnalytic>
+    }
+    fun GetCompanyAnalytic(context: Context?, analyticItemType: Int, jobNo: Long, onResult: (CompanyAnalytic?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(getCompanyAnalytic::class.java)
+        retrofit.getCompanyAnalytic().enqueue(
+            object : Callback<CompanyAnalytic> {
+                override fun onResponse(
+                    call: Call<CompanyAnalytic>,
+                    response: Response<CompanyAnalytic>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<CompanyAnalytic>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
     }
 }

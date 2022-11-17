@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +48,7 @@ class fragment_company_jobs : Fragment() {
 
 
     private fun assignAdapter(list: List<DataCount>): Companyjobs_adapter {
+
         return Companyjobs_adapter(list, object : JobDetail {
             override fun jobDetail(jobDetail: DataCount) {
                 replaceFragment(jobDetail)
@@ -80,7 +80,6 @@ class fragment_company_jobs : Fragment() {
 
         company_profile_api().MyJob(context) {
             if (it != null) {
-                Log.d("ownjob", it.toString())
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyle_company_jobs)
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity)

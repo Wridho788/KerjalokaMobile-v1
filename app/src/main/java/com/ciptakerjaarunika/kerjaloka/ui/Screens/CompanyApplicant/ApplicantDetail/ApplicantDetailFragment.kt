@@ -95,7 +95,7 @@ class ApplicantDetailFragment(
                     if (endingAt[0].experienceEndedAt != null) {
                         val beginEndYear =
                             LocalDateTime.parse(endingAt[0].experienceEndedAt)
-                                .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                                .format(DateTimeFormatter.ofPattern("MMMM yyyy "))
                         binding.headerApplicantDetail.experienceJobText.text =
                             beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
                         binding.headerApplicantDetail.experienceYearText.text =

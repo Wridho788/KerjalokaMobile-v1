@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import com.ciptakerjaarunika.kerjaloka.R
+import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditUsernameProfileBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -35,22 +34,8 @@ class EditUserName() : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             back()
         }
-        binding.saveBtn.setOnClickListener {
-            if(binding.inputTxt.text.isNullOrEmpty()){
-                binding.errorMessage.visibility = View.VISIBLE
-            }
-            else{
-                ManageProfileAPI().JobseekerChangeUsername(binding.inputTxt.text.toString(), context){
-                    if (it!= null && it.code.toString() == "210"){
-                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
-                        back()
-                    }
-                    else{
-                        Toast.makeText(activity, it?.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
+        binding.errorMessage.visibility = View.GONE
+
         binding.inputTxt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -66,7 +51,18 @@ class EditUserName() : Fragment() {
             }
         })
 
-
+        binding.saveBtn.setOnClickListener {
+            if (binding.inputTxt.text.toString().isNullOrEmpty()) {
+                binding.errorMessage.visibility = View.VISIBLE
+            } else{
+                ManageProfileAPI().JobseekerChangeUsername(binding.inputTxt.text.toString(), context){
+                    if (it!= null){
+                        fragmentManager?.popBackStack()
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
     private fun back(){
         val fragmentTransaction = parentFragmentManager.beginTransaction()

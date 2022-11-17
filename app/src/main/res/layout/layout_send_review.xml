@@ -97,7 +97,9 @@
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/chipGroupProRating"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+                        app:selectionRequired="true"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -117,7 +119,10 @@
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/chipGroupConRating"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+
+                        app:selectionRequired="true"/>
                 </LinearLayout>
 
                 <LinearLayout

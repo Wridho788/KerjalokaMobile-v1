@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.format.DateUtils
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -15,11 +17,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.JobSQListAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.JobTestListAdapter
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.DataActiveJob
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
@@ -47,6 +52,7 @@ class fragment_company_job_active_page : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         UpdateUI()
     }
 
@@ -57,6 +63,7 @@ class fragment_company_job_active_page : Fragment() {
         val jobAuth = view?.findViewById<TextView>(R.id.company_job_author)
         val jobtime = view?.findViewById<TextView>(R.id.company_job_time)
         val jobView = view?.findViewById<TextView>(R.id.company_job_viewed)
+        val imgJob =    view?.findViewById<ImageView>(R.id.img_job)
         val jobReq = view?.findViewById<TextView>(R.id.job_req)
         val jobSalary = view?.findViewById<TextView>(R.id.company_salary)
         val jobQual = view?.findViewById<TextView>(R.id.company_qualification)
@@ -75,6 +82,15 @@ class fragment_company_job_active_page : Fragment() {
         btn_back?.setOnClickListener {
             fragmentManager?.popBackStack()
         }
+
+        if (imgJob != null) {
+            Glide.with(view!!.context)
+                .load(config().portAddress + "photo/Profile/" + SessionManager(context).user?.companyAdditional?.logo)
+                .fitCenter()
+                .into(imgJob)
+        }
+
+
 
         btn_editJob?.setOnClickListener {
             val intentAddJob = Intent(context, ManageJobActivity::class.java)
@@ -109,6 +125,11 @@ class fragment_company_job_active_page : Fragment() {
 
 //            jobView.text=listanalytic[0].clickCount.toString()
             jobReq?.text = jobData?.jobDescription
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                jobReq?.setText(Html.fromHtml(jobData?.jobDescription, Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                jobReq?.setText(Html.fromHtml(jobData?.jobDescription));
+            }
             if (jobData?.jobSalaryMin != null && jobData?.jobSalaryMin != null) {
                 if (jobData?.jobSalaryMin == null) {
                     jobSalary?.text = "Rp. 0 -"
@@ -179,7 +200,6 @@ class fragment_company_job_active_page : Fragment() {
             val jobNo = jobData?.jobNo
             Log.d("jobcity", jobData?.jobCity.toString())
             draftJob?.setOnClickListener {
-//                AddJobAPI().SendJob(context, addJobRequest(jobNo, titleJob, listLocation, ))
                 JobAPI().DraftJob(context, jobNo!!) {
                     if (it != null) {
                         if (it.code == 280) {
@@ -213,6 +233,12 @@ class fragment_company_job_active_page : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_company_job_active_page, container, false)
+//        CompanyJobAPI().GetCompanyAnalytic(context, 8, jobData?.jobNo!!){
+//            if (it != null) {
+//
+//                Log.d("analytic", it.toString())
+//            }
+//        }
         return view
     }
 

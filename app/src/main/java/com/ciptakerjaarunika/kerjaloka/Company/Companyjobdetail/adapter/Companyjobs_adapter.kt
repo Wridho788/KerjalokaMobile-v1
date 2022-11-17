@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import java.time.format.DateTimeFormatter
 
 class Companyjobs_adapter(private val joblist: List<DataCount>, private val listener: JobDetail) :
     RecyclerView.Adapter<Companyjobs_adapter.ViewHolder>() {
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobTitle: TextView
         var jobInput: TextView
@@ -24,8 +26,10 @@ class Companyjobs_adapter(private val joblist: List<DataCount>, private val list
         var jobAuthor: TextView
         var card: RelativeLayout
         var shareJob: MaterialButton
+        var imageJob: ImageView
 
         init {
+            imageJob = itemView.findViewById(R.id.img_job)
             jobTitle = itemView.findViewById(R.id.company_job_title)
             jobInput = itemView.findViewById(R.id.company_job_input)
             jobExpired = itemView.findViewById(R.id.company_job_expired)
@@ -48,6 +52,11 @@ class Companyjobs_adapter(private val joblist: List<DataCount>, private val list
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = joblist[position]
+//        var logoComp = SessionManager(context).user?.companyAdditional?.logo
+////        Log.d("logo", logoComp.toString())
+//        Glide.with(holder.imageJob)
+//            .load(config().portAddress + "/photo/Profile/" + SessionManager(context).user?.companyAdditional?.logo).fitCenter()
+//            .into(holder.imageJob)
         holder.jobTitle.text = currentItem.jobPosition
         if (!currentItem.createdOn.isNullOrEmpty() && !currentItem.createdOn.isNullOrEmpty()) {
 
