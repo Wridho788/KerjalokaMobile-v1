@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -48,9 +49,10 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                     view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
                 }
                 binding.editMinat.setOnClickListener {
-                    fields?.data = listOf()
+//                    fields?.data = listOf()
                     binding.chipGroupMinat.removeAllViews()
                     binding.chipGroupTipePekerjaan.removeAllViews()
+                    binding.nullField.visibility = GONE
                     replaceFragment(fragment_edit_interest_layout(fields?.data, this))
                 }
 
@@ -58,7 +60,7 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                     fields?.data?.forEach {
                         binding.fieldGroup.isVisible = true
                         if (context != null) {
-                            val fieldChip: Chip = Chip(context)
+                            val fieldChip = Chip(context)
                             fieldChip.setChipBackgroundColorResource(R.color.danger_100)
                             fieldChip.apply {
                                 textSize = 12f
@@ -87,9 +89,10 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                     view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
                 }
                 binding.editTipePekerjaan.setOnClickListener {
-                    jobTypes?.data = listOf()
+//                    jobTypes?.data = listOf()
                     binding.chipGroupTipePekerjaan.removeAllViews()
                     binding.chipGroupMinat.removeAllViews()
+                    binding.nullJobType.visibility = GONE
                     replaceFragment(FragmentEditJobType(jobTypes?.data, this))
                 }
                 if (jobTypes?.data?.size != 0) {
@@ -132,6 +135,10 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                 val btn_gaji = view!!.findViewById<TextView>(R.id.edit_ekspektasi_gaji)
 
                 btn_gaji.setOnClickListener {
+                    binding.chipGroupTipePekerjaan.removeAllViews()
+                    binding.chipGroupMinat.removeAllViews()
+                    binding.nullJobType.visibility = GONE
+                    binding.nullField.visibility = GONE
                     replaceFragment(
                         FragmentSalaryExpectation(
                             data?.additionals?.expectedSalary,

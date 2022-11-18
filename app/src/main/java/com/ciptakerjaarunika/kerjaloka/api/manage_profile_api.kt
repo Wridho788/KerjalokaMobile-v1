@@ -276,7 +276,7 @@ class ManageProfileAPI {
         fun SendData(@Body salaryExpectation: SalaryExpectationRequest?): Call<Any?>
     }
 
-    fun EditSalaryExpectation(salary: Int?, context: Context?, onResult: (Any?) -> Unit) {
+    fun EditSalaryExpectation(salary: Int, context: Context?, onResult: (Any?) -> Unit) {
         val retrofit = ServiceBuilder(context).POST(EditSalaryExpectation::class.java)
         retrofit.SendData(SalaryExpectationRequest(salary)).enqueue(
             object : Callback<Any?> {
