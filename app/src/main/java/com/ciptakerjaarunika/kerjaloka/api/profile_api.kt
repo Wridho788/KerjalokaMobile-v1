@@ -192,7 +192,7 @@ class ProfileAPI {
     //Get Jobseeker Job Type
     data class JobseekerJobTypeResponse(
         val code: Int,
-        val data: List<JobType>
+        var data: List<JobType>
     )
 
     interface jobseekerJobType {
@@ -223,7 +223,7 @@ class ProfileAPI {
     //Get Jobseeker Job Type
     data class JobseekerFieldResponse(
         val code: Int,
-        val data: List<Field>
+        var data: List<Field>
     )
 
     interface jobseekerField {

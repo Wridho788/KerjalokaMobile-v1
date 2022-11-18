@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -19,7 +18,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.FragmentEditJob
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.FragmentSalaryExpectation
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference.fragment_edit_interest_layout
 import com.google.android.material.chip.Chip
-import java.math.BigDecimal
 
 
 class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefreshData {
@@ -50,23 +48,24 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                     view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
                 }
                 binding.editMinat.setOnClickListener {
+                    fields?.data = listOf()
+                    binding.chipGroupMinat.removeAllViews()
+                    binding.chipGroupTipePekerjaan.removeAllViews()
                     replaceFragment(fragment_edit_interest_layout(fields?.data, this))
                 }
 
                 if (fields?.data?.size != 0) {
-
                     fields?.data?.forEach {
                         binding.fieldGroup.isVisible = true
                         if (context != null) {
                             val fieldChip: Chip = Chip(context)
-
                             fieldChip.setChipBackgroundColorResource(R.color.danger_100)
                             fieldChip.apply {
                                 textSize = 12f
                                 text = it.fieldName
                                 isChipIconVisible = false
                                 isCloseIconVisible = false
-                                isClickable = true
+                                isClickable = false
                                 isCheckable = false
                                 view.apply {
                                     binding.chipGroupMinat.addView(fieldChip as View)
@@ -88,14 +87,15 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                     view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
                 }
                 binding.editTipePekerjaan.setOnClickListener {
+                    jobTypes?.data = listOf()
+                    binding.chipGroupTipePekerjaan.removeAllViews()
+                    binding.chipGroupMinat.removeAllViews()
                     replaceFragment(FragmentEditJobType(jobTypes?.data, this))
                 }
                 if (jobTypes?.data?.size != 0) {
                     jobTypes?.data?.forEach {
+                    val jTypeChip = Chip(context)
                         binding.jobTypeGroup.isVisible = true
-                        if (context != null) {
-                            val jTypeChip: Chip = Chip(context)
-
                             jTypeChip.setChipBackgroundColorResource(R.color.danger_100)
                             jTypeChip.apply {
                                 textSize = 12f
@@ -106,16 +106,15 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                                 isCheckable = false
                                 view.apply {
                                     binding.chipGroupTipePekerjaan.addView(jTypeChip as View)
+
                                 }
                             }
-                        }
                     }
                 } else {
                     binding.nullJobType.visibility = VISIBLE
                 }
             }
         }
-
         ProfileAPI().GetJobseekerSalaryExpected(context) { salary ->
             loading -= 1
             if (activity != null) {
@@ -125,13 +124,11 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                 }
                 val expectedSalary = view!!.findViewById<TextView>(R.id.expectedSalary)
                 if (salary != null) {
-                    if (salary.data != null && salary.data != BigDecimal(0)) {
-                        salary.data.toString()
+                    if (salary.data != null) {
+                        expectedSalary.text =  salary.data.toString()
                     } else expectedSalary.text = "0"
                 }  else expectedSalary.text = "0"
 
-                val btn_EdMinat = view!!.findViewById<TextView>(R.id.edit_minat)
-                val btn_EdJobType = view!!.findViewById<TextView>(R.id.edit_tipe_pekerjaan)
                 val btn_gaji = view!!.findViewById<TextView>(R.id.edit_ekspektasi_gaji)
 
                 btn_gaji.setOnClickListener {
@@ -144,7 +141,6 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                 }
             }
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -153,6 +149,8 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.addToBackStack("")
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
+        fragmentTransaction?.detach(this)
+        fragmentTransaction?.attach(this)
         fragmentTransaction?.commit()
     }
 

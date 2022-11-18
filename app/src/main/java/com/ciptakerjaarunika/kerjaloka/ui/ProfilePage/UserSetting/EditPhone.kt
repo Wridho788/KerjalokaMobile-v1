@@ -35,9 +35,8 @@ class EditPhone(var phone: String) : Fragment() {
         view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
             back()
         }
-
+        var keyword = newPhone.text.toString()
         btnSave.setOnClickListener {
-            var keyword = newPhone.text.toString()
             if (keyword.length == 0) {
                 Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
             } else if (keyword.length < 8) {

@@ -41,9 +41,6 @@ class fragment_edit_interest_layout(val jobseekerFields: List<Field>?, val iRefr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        ActivityMainBinding.inflate(layoutInflater).bottomNavigationView.visibility = GONE
-
         binding.backBtn.setOnClickListener{
             back()
         }
@@ -108,6 +105,11 @@ class fragment_edit_interest_layout(val jobseekerFields: List<Field>?, val iRefr
         }
     }
     private fun back(){
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.replace(id, profilepage(2), "Profile Page")
+        fragmentTransaction.commit()
+        fragmentTransaction.detach(this)
+        fragmentTransaction.attach(this)
         fragmentManager?.popBackStack()
         iRefreshData.refresh()
     }
