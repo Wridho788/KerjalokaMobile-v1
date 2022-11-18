@@ -171,33 +171,40 @@ class JobPage : Fragment(), IJobPage {
     fun getNearJob() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
-            var latitude = it.latitude.toString()
-            var longitude = it.longitude.toString()
-            if (it == null) {
-                nearJobDone()
-                binding.emptyNearJob.visibility = VISIBLE
-                binding.btnSeeNearMe.visibility = GONE
-            } else {
-                binding.emptyNearJob.visibility = GONE
-
-                JobAPI().getNearJob(latitude, longitude, context) {
+            if (it != null) {
+                if (!it.latitude.toString().isNullOrEmpty() && !it.longitude.toString()
+                        .isNullOrEmpty()
+                ) {
                     nearJobDone()
-                    if (it != null && it.data != null && it.data.size != 0) {
-                        binding.btnSeeNearMe.visibility = if (it.data.size <= 5) GONE else VISIBLE
-                        val recyclerView = binding.nearmeJob
+                    var latitude = it.latitude.toString()
+                    var longitude = it.longitude.toString()
+                    JobAPI().getNearJob(latitude, longitude, context) {
+                        nearJobDone()
+                        if (it != null && it.data != null && it.data.size != 0) {
+                            binding.btnSeeNearMe.visibility =
+                                if (it.data.size <= 5) GONE else VISIBLE
+                            val recyclerView = binding.nearmeJob
 
-                        recyclerView.apply {
-                            adapter = JobAdapter(2, it.data.take(5), context, this@JobPage, null)
-                            layoutManager = LinearLayoutManager(activity)
+                            recyclerView.apply {
+                                adapter =
+                                    JobAdapter(2, it.data.take(5), context, this@JobPage, null)
+                                layoutManager = LinearLayoutManager(activity)
+                            }
+                            recyclerView.adapter?.notifyDataSetChanged()
+                        } else {
+                            binding.emptyNearJob.visibility = VISIBLE
+                            binding.btnSeeNearMe.visibility = GONE
                         }
-                        recyclerView.adapter?.notifyDataSetChanged()
-                    } else {
-                        binding.emptyNearJob.visibility = VISIBLE
-                        binding.btnSeeNearMe.visibility = GONE
+
                     }
                 }
+                Log.d("location", it.toString())
+            } else {
+                nearJobDone()
+                binding.emptyNearJob.visibility = VISIBLE
             }
         }
+
     }
 
     override fun BookmarkJob(ListType: Int, JobNo: Long, Index: Int) {
