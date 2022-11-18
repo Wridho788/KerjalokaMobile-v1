@@ -37,13 +37,20 @@ class EditEmail : Fragment() {
                     company_profile_api().checkNewEmail(
                         email,
                         context
-                    ) {
-                        company_profile_api().ChangeEmail(email, context) { it1 ->
-                            if (it1?.code == 210) {
-                                replaceFragment(otpVerification(), it1.token, userData,  newEmail?.text.toString())
+                    ) { checkResponse ->
+                        company_profile_api().ChangeEmail(email, context) { changeEmail ->
+                            if (changeEmail?.code == 210) {
+                                replaceFragment(
+                                    otpVerification(),
+                                    changeEmail.token,
+                                    userData,
+                                    newEmail?.text.toString()
+                                )
                             }
                         }
                     }
+                }else {
+                    Toast.makeText(context, "Email Tidak Valid", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -54,9 +61,11 @@ class EditEmail : Fragment() {
 
 
     }
+
     private fun String.isEmailValid(): Boolean {
         return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,7 +80,12 @@ class EditEmail : Fragment() {
 
 
     @SuppressLint("RestrictedApi")
-    private fun replaceFragment(fragment: Fragment, token: String?, email: String?, newEmail: String?) {
+    private fun replaceFragment(
+        fragment: Fragment,
+        token: String?,
+        email: String?,
+        newEmail: String?
+    ) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)

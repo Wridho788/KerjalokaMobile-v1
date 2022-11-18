@@ -52,7 +52,6 @@ class fragment_company_job_active_page : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         UpdateUI()
     }
 
@@ -63,7 +62,7 @@ class fragment_company_job_active_page : Fragment() {
         val jobAuth = view?.findViewById<TextView>(R.id.company_job_author)
         val jobtime = view?.findViewById<TextView>(R.id.company_job_time)
         val jobView = view?.findViewById<TextView>(R.id.company_job_viewed)
-        val imgJob =    view?.findViewById<ImageView>(R.id.img_job)
+        val imgJob = view?.findViewById<ImageView>(R.id.img_job)
         val jobReq = view?.findViewById<TextView>(R.id.job_req)
         val jobSalary = view?.findViewById<TextView>(R.id.company_salary)
         val jobQual = view?.findViewById<TextView>(R.id.company_qualification)
@@ -107,7 +106,12 @@ class fragment_company_job_active_page : Fragment() {
                     arguments?.getString(fragment_company_job_active_page.EXTRA_DETAIL_JOB)
                 jobData = Gson().fromJson(descFromBundle, DataActiveJob::class.java)
             }
-
+            Log.d("jobNo", jobData!!.jobNo.toString())
+//            CompanyJobAPI().GetCompanyAnalytic(context, 8, jobData?.jobNo!!){
+//                if (it != null) {
+//                    Log.d("analytic", it.toString())
+//                }
+//            }
             jobTitle?.text = jobData?.jobPosition
             jobInput?.text = "Diubah pada : " + jobData?.createdOn
             jobExpired?.text = "Kadaluarsa : " + jobData?.expired
@@ -123,12 +127,19 @@ class fragment_company_job_active_page : Fragment() {
             Log.d("location", listLocation.toString())
             jobLoc?.text = Html.fromHtml(location)
 
-//            jobView.text=listanalytic[0].clickCount.toString()
-            jobReq?.text = jobData?.jobDescription
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                jobReq?.setText(Html.fromHtml(jobData?.jobDescription, Html.FROM_HTML_MODE_COMPACT));
+            jobView?.text = "0"
+            Log.d("jobdesc", jobData?.jobDescription.toString())
+            if (jobData?.jobDescription != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    jobReq?.text = Html.fromHtml(
+                        jobData?.jobDescription,
+                        Html.FROM_HTML_MODE_COMPACT
+                    )
+                } else {
+                    jobReq?.text = Html.fromHtml(jobData?.jobDescription)
+                }
             } else {
-                jobReq?.setText(Html.fromHtml(jobData?.jobDescription));
+                jobReq?.setText("")
             }
             if (jobData?.jobSalaryMin != null && jobData?.jobSalaryMin != null) {
                 if (jobData?.jobSalaryMin == null) {
@@ -143,7 +154,7 @@ class fragment_company_job_active_page : Fragment() {
                 } else {
                     jobSalary?.text = "-"
                 }
-            }else {
+            } else {
                 jobSalary?.text = "-"
             }
 
@@ -233,12 +244,7 @@ class fragment_company_job_active_page : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_company_job_active_page, container, false)
-//        CompanyJobAPI().GetCompanyAnalytic(context, 8, jobData?.jobNo!!){
-//            if (it != null) {
-//
-//                Log.d("analytic", it.toString())
-//            }
-//        }
+
         return view
     }
 

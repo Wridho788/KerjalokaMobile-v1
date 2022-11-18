@@ -37,7 +37,7 @@ class CompEditEmail(val iRefreshData: iRefreshData, var email: String) : Fragmen
         btnSave.setOnClickListener {
             val email = newEmail?.text.toString()
             if (email.length == 0) {
-              Toast.makeText(context, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
             } else if (email.isEmailValid()) {
                 company_profile_api().checkNewEmail(email, context) { checkResponse ->
                     company_profile_api().ChangeEmail(email, context) { changeEmail ->
@@ -79,7 +79,7 @@ class CompEditEmail(val iRefreshData: iRefreshData, var email: String) : Fragmen
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "email"
         val mFragmentManager = parentFragmentManager
-        mFragmentManager.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction().apply {
             replace(
                 R.id.fragment_container,
                 otpVerificationFragment,

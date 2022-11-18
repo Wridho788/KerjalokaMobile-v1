@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 class CompanyJobAPI {
     interface getCompanyJobOfficer {
@@ -47,11 +48,11 @@ class CompanyJobAPI {
 
     interface getCompanyAnalytic {
         @GET("users/analytic/get")
-        fun getCompanyAnalytic(): Call<CompanyAnalytic>
+        fun getCompanyAnalytic(@Query("analyticItemType") analyticItemType: Int, @Query("jobNo") jobNo: Long): Call<CompanyAnalytic>
     }
-    fun GetCompanyAnalytic(context: Context?, analyticItemType: Int, jobNo: Long, onResult: (CompanyAnalytic?) -> Unit) {
+    fun GetCompanyAnalytic(context: Context?, analyticItemType: Int,jobNo: Long, onResult: (CompanyAnalytic?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getCompanyAnalytic::class.java)
-        retrofit.getCompanyAnalytic().enqueue(
+        retrofit.getCompanyAnalytic(analyticItemType, jobNo).enqueue(
             object : Callback<CompanyAnalytic> {
                 override fun onResponse(
                     call: Call<CompanyAnalytic>,
