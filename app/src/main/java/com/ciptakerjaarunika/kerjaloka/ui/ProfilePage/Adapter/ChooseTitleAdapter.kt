@@ -28,6 +28,11 @@ class ChooseTitleAdapter(val value: Int?, private val titleList: List<Title>, va
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): chooseTitle {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
+        val lp = RecyclerView.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        view.layoutParams = lp
         return chooseTitle(view)
     }
 

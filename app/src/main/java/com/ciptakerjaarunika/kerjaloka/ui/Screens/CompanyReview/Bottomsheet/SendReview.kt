@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RatingBar
 import android.widget.RatingBar.OnRatingBarChangeListener
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
@@ -86,10 +88,11 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
                         idPro
                     )
                     proRatingId.add(idProRating)
-
                 }
+
             }
         }
+
 
         conratings.forEach {
             val chipConRating = Chip(context)
@@ -116,7 +119,29 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
         }
 
         btn_send_review.setOnClickListener {
-            sendReview()
+            if (proRatingId.size > 3) {
+                Toast.makeText(
+                    context,
+                    "Anda hanya bisa memilih maksimal 3 kelebihan",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (proRatingId.size == 0) {
+                Toast.makeText(context, "Pilih minimal 1 kelebihan", Toast.LENGTH_SHORT).show()
+            } else if (conRatingid.size > 3) {
+                Toast.makeText(
+                    context,
+                    "Anda hanya bisa memilih maksimal 3 tantangan",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (conRatingid.size == 0) {
+                Toast.makeText(context, "Pilih minimal 1 tantangan", Toast.LENGTH_SHORT).show()
+            } else {
+
+                sendReview()
+            }
+            Log.d("size pro rating", proRatingId.size.toString())
+            Log.d("size con rating", conRatingid.size.toString())
+
         }
         return view
     }
@@ -148,44 +173,48 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
         var isUser =
             SessionManager(context).user?.roleNo == Role.Jobseekers.value
         var isCompany = SessionManager(context).user?.roleNo == Role.Companies.value
+        if (ratingBar?.rating!!.toLong().toString().length == 0) {
+            Toast.makeText(context, "Pilih Rating Minimal 1", Toast.LENGTH_SHORT).show()
+        } else if (textReview?.text.toString().length == 0) {
+            Toast.makeText(context, "Pesan review tidak boleh kosong", Toast.LENGTH_SHORT).show()
+        } else {
+            if (isUser) {
+                SendReviewAPI().SendReviewPost(
+                    context, send_Request(
+                        CompanyNo,
+                        textReview?.text.toString(),
+                        ratingBar.rating.toLong(),
+                        proRatingId,
+                        conRatingid
+                    )
+                ) {
+                    if (it != null) {
+                        this.dismiss()
+                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                        ft.replace(fragmentId, GotoFragment, "companyReviewFragment")
+                        ft.commit()
+                    }
+                }
 
-        if (isUser) {
-            SendReviewAPI().SendReviewPost(
-                context, send_Request(
-                    CompanyNo,
-                    textReview?.text.toString(),
-                    ratingBar?.rating!!.toLong(),
-                    proRatingId,
-                    conRatingid
-                )
-            ) {
-                if (it != null) {
-                    this.dismiss()
-                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                    ft.replace(fragmentId, GotoFragment, "companyReviewFragment")
-                    ft.commit()
+            } else if (isCompany) {
+                SendReviewAPI().SendReviewCompanyPost(
+                    context,
+                    send_Request(
+                        CompanyNo,
+                        textReview?.text.toString(),
+                        ratingBar.rating.toLong(),
+                        proRatingId,
+                        conRatingid
+                    )
+                ) {
+                    if (it != null) {
+                        this.dismiss()
+                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                        ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
+                        ft.commit()
+                    }
                 }
             }
-
-        } else if (isCompany) {
-            SendReviewAPI().SendReviewCompanyPost(
-                context,
-                send_Request(
-                    CompanyNo,
-                    textReview?.text.toString(),
-                    ratingBar?.rating!!.toLong(),
-                    proRatingId,
-                    conRatingid
-                )
-            ) {
-                if (it != null) {
-                    this.dismiss()
-                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                    ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
-                    ft.commit()
-                }
-            }
-
         }
     }
 

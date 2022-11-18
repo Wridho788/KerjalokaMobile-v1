@@ -195,7 +195,6 @@
                 android:fontFamily="@font/poppins_light"
                 android:textColor="@color/trueGray_300"
                 android:textSize="12sp"
-                android:layout_marginTop="20sp"
                 android:text="--- atau ---"
                 />
 

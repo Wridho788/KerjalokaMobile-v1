@@ -52,7 +52,7 @@
         android:textColor="@color/black"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_delete"
+        android:id="@+id/delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
@@ -63,7 +63,7 @@
         android:gravity="start"
         style="@style/Widget.Material3.Button.TextButton"/>
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_cancel"
+        android:id="@+id/cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"

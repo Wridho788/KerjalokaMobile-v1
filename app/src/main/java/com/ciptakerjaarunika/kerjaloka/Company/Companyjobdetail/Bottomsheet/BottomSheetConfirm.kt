@@ -1,9 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.Bottomsheet
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +17,7 @@ class BottomSheetConfirm(val iConfirmPage: iConfirmPage): SuperBottomSheetFragme
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_confirm_publish, container, false)
     }
 
@@ -50,10 +49,6 @@ class BottomSheetConfirm(val iConfirmPage: iConfirmPage): SuperBottomSheetFragme
 
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
-        val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        return ViewGroup.LayoutParams.WRAP_CONTENT
     }
 }

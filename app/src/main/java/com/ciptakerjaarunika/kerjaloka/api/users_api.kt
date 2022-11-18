@@ -174,8 +174,11 @@ class UsersAPI{
                             val jObjError = JSONObject(data)
                             SessionManager(context).access_token = null
                             SessionManager(context).user = null
-                            Toast.makeText(context, "Password Salah", Toast.LENGTH_SHORT).show()
-                            Log.d("response json err", jObjError.toString())
+                            val map = jObjError.getString("message")
+                            Toast.makeText(
+                                context, map.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
                         } catch (e: Exception) {
                             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                         }

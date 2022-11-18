@@ -17,12 +17,7 @@ import com.google.android.material.button.MaterialButton
 
 class ModalDeactivateAccount : SuperBottomSheetFragment() {
 
-    var password : String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    var password: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,18 +26,26 @@ class ModalDeactivateAccount : SuperBottomSheetFragment() {
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSave)
         email.setText(SessionManager(context).user?.email)
         btnSave.setOnClickListener {
-            UsersAPI().DeactiveAccount(pswd.text.toString(), context) {
-                if (it != null && context != null) {
-                    this.dismiss()
-                    val intent = Intent(context, MainActivity()::class.java)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Terjadi kesalahan yang tidak diketahui",
-                        Toast.LENGTH_SHORT
-                    ).show()
+            if (pswd.text.toString().length != 0) {
+                UsersAPI().DeactiveAccount(pswd.text.toString(), context) {
+                    if (it != null && context != null) {
+                        this.dismiss()
+                        val intent = Intent(context, MainActivity()::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Terjadi kesalahan yang tidak diketahui",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
+            } else {
+                Toast.makeText(
+                    context,
+                    "Mohon masukkan kata sandi",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

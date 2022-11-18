@@ -73,7 +73,7 @@ class company_profile_api {
                             val jObjError = JSONObject(data)
                             val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, map.toString(),
+                                context, "Username baru saja diganti, dan dapat diganti kembali jika sudah 30 hari",
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {
@@ -93,22 +93,22 @@ class company_profile_api {
 
     interface checkPhoneNumber {
         @GET("users/checkPhone/{phone}")
-        fun checkNumber(@Path("phone") phone: String): Call<CheckPhoneResponse>
+        fun checkNumber(@Path("phone") phone: String): Call<Boolean>
     }
 
-    fun checkPhone(phone: String, context: Context?, onResult: (CheckPhoneResponse?) -> Unit) {
+    fun checkPhone(phone: String, context: Context?, onResult: (Boolean?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(checkPhoneNumber::class.java)
 
         retrofit.checkNumber(phone).enqueue(
-            object : Callback<CheckPhoneResponse> {
+            object : Callback<Boolean> {
                 override fun onResponse(
-                    call: Call<CheckPhoneResponse>,
-                    response: Response<CheckPhoneResponse>
+                    call: Call<Boolean>,
+                    response: Response<Boolean>
                 ) {
                     onResult(response.body())
                 }
 
-                override fun onFailure(call: Call<CheckPhoneResponse>, t: Throwable) {
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     onResult(null)
                 }
             }
@@ -364,7 +364,26 @@ class company_profile_api {
                     call: Call<changePasswordResponse>,
                     response: Response<changePasswordResponse>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            Toast.makeText(
+                                context, map.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Toast.makeText(
+                            context, "Error",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        Log.d("response", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<changePasswordResponse>, t: Throwable) {
@@ -530,6 +549,7 @@ class company_profile_api {
     }
 
     data class followerAmountResponse(val code: Int, val data: Int)
+    data class totalInterview(val code: Int, val interview: Int)
     interface getFollowerAmount {
         @GET("company/follower")
         fun followerAmount(): Call<followerAmountResponse>
@@ -556,22 +576,22 @@ class company_profile_api {
 
     interface getInterviewAmount {
         @GET("company/officer/totalInterview")
-        fun interviewAmount(): Call<followerAmountResponse>
+        fun interviewAmount(): Call<totalInterview>
     }
 
-    fun InterviewAmount(context: Context?, onResult: (followerAmountResponse?) -> Unit) {
+    fun InterviewAmount(context: Context?, onResult: (totalInterview?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getInterviewAmount::class.java)
 
         retrofit.interviewAmount().enqueue(
-            object : Callback<followerAmountResponse> {
+            object : Callback<totalInterview> {
                 override fun onResponse(
-                    call: Call<followerAmountResponse>,
-                    response: Response<followerAmountResponse>
+                    call: Call<totalInterview>,
+                    response: Response<totalInterview>
                 ) {
                     onResult(response.body())
                 }
 
-                override fun onFailure(call: Call<followerAmountResponse>, t: Throwable) {
+                override fun onFailure(call: Call<totalInterview>, t: Throwable) {
                     onResult(null)
                 }
             }

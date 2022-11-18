@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
+
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -20,12 +21,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageLampiranPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.enum.VerifyStatus
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
+import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.DocumentAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.FragmentEditLampiran
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin
@@ -34,13 +39,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-
-
-import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
-import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
-import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
-import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
-import com.qingmei2.rximagepicker_extension.utils.PathUtils
 
 class manage_lampiran : Fragment(), iRefreshData {
     private lateinit var binding : FragmentManageLampiranPageBinding
@@ -76,9 +74,7 @@ class manage_lampiran : Fragment(), iRefreshData {
         if(pathName != null) {
             val file = File(pathName ?: "")
                  if(file != null) {
-
                      val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-
                      val files = MultipartBody.Part.createFormData(
                                     "files",
                                     file.name,

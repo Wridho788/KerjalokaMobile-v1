@@ -76,7 +76,7 @@ class AddJobAPI {
                                 Log.d("response", jObjError.toString())
 
                                 Toast.makeText(
-                                    context, "Not enough credit, please buy a package first",
+                                    context, "Silahkan beli paket melalui Website Kerjaloka. Terima kasih.",
                                     Toast.LENGTH_LONG
                                 ).show()
                             } catch (e: Exception) {

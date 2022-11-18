@@ -15,7 +15,7 @@ data class DataCount(
     @SerializedName("jobAdditionalDescription")
     val jobAdditionalDescription: Any?,
     @SerializedName("jobCity")
-    val jobCity: String,
+    val jobCity: Array<String>,
     @SerializedName("jobDescription")
     val jobDescription: String?,
     @SerializedName("jobExperienceLevel")

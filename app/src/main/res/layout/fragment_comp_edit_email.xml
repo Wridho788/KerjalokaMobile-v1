@@ -109,6 +109,7 @@
                             android:fontFamily="@font/poppins"
                             android:hint="Masukkan email baru"
                             android:padding="14dp"
+                            android:maxLength="50"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             app:boxStrokeWidth="0dp"

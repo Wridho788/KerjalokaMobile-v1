@@ -171,5 +171,5 @@
     <string name="rating7">Pengembangan Waktu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-<!--        <string name="default_web_client_id">953263165300-d93upe5e31bsfb1au1ns41c2ijpa2tb4.apps.googleusercontent.com</string>-->
+    <!--        <string name="default_web_client_id">953263165300-d93upe5e31bsfb1au1ns41c2ijpa2tb4.apps.googleusercontent.com</string>-->
 </resources>

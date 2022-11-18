@@ -122,6 +122,7 @@
                         android:hint="Masukkan email baru"
                         android:inputType="textMultiLine|text"
                         android:lines="10"
+                        android:maxLength="50"
                         android:maxLines="10"
                         android:padding="8dp"
                         android:textColor="@color/trueGray_300"

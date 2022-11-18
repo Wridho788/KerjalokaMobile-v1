@@ -49,7 +49,6 @@ class AkunPage : Fragment() {
         val firebaseAuth = FirebaseAuth.getInstance()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
@@ -199,9 +198,10 @@ class AkunPage : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Req_Code) {
-            try{
+            try {
 
-                val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+                val task: Task<GoogleSignInAccount> =
+                    GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleSignInResult(task)
             } catch (e: Exception) {
                 e.printStackTrace()

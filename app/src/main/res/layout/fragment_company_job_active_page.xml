@@ -116,6 +116,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
+                            android:id="@+id/img_job"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/kerjaloka_logo_small" />
@@ -185,7 +186,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins"
-                            android:text="628.901 Views"
                             android:textColor="@color/trueGray_50"
                             android:textSize="10sp"
                             tools:ignore="SmallSp" />
@@ -218,7 +218,7 @@
                         android:text="Draft"
                         android:textAllCaps="false"
                         android:textColor="@color/danger_500"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         app:cornerRadius="100dp"
                         app:strokeColor="@color/danger_500"
                         app:strokeWidth="1dp"
@@ -237,7 +237,7 @@
                         android:text="Publish"
                         android:textAllCaps="false"
                         android:textColor="@color/danger_500"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         app:cornerRadius="100dp"
                         app:strokeColor="@color/danger_500"
                         app:strokeWidth="1dp"
@@ -257,7 +257,7 @@
                     android:textAlignment="center"
                     android:textAllCaps="false"
                     android:textColor="@color/danger_500"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     app:cornerRadius="100dp"
                     app:icon="@drawable/ic_share"
                     app:iconGravity="textStart"
@@ -296,16 +296,15 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Requirentments"
                             android:textColor="@color/dark_100"
-                            android:textSize="16dp" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/job_req"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
-                            android:text="1. Deliveree is a fast-moving, rapidly growing, and very successful logistics technology company that is changing the cargo and trucking industry in Indonesia, Philippines, and Thailand to reduce waste, grow the economy, create jobs, and make the logistics industry more competitive. As Assistant Manager-Finance, you will be responsible for corporate legal compliances, financial reporting requirements, financial planning and analysis, and various other financial processes."
                             android:textColor="@color/dark_100"
-                            android:textSize="12dp" />
+                            android:textSize="12sp" />
                     </LinearLayout>
 
 
@@ -339,7 +338,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Additional Information"
                             android:textColor="@color/dark_100"
-                            android:textSize="16dp" />
+                            android:textSize="16sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -352,7 +351,7 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Gaji"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/company_salary"
@@ -360,7 +359,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
                                 android:textColor="@color/black"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -374,7 +373,7 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Kualifikasi Pendidikan"
                                 android:textColor="@color/black"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/company_qualification"
@@ -382,7 +381,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -396,7 +395,7 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Minimal Pengalaman"
                                 android:textColor="@color/black"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/company_min_ex"
@@ -405,7 +404,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Bachelor’s Degree, Master, Prof Cert"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -419,7 +418,7 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Bidang Pekerjaan"
                                 android:textColor="@color/black"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/company_type_job"
@@ -428,7 +427,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Marketing"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -442,7 +441,7 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Peran"
                                 android:textColor="@color/black"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/company_role"
@@ -451,7 +450,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Manager"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -465,16 +464,15 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:text="Lokasi"
                                 android:textColor="@color/black"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/company_loc"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Kota Jakarta Utara, DKI Jakarta"
                                 android:textColor="@color/dark_100"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -507,7 +505,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Tes"
                             android:textColor="@color/dark_100"
-                            android:textSize="16dp" />
+                            android:textSize="16sp" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recycleTest"
@@ -549,7 +547,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Pertanyaan Pendek"
                             android:textColor="@color/dark_100"
-                            android:textSize="16dp" />
+                            android:textSize="16sp" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/questionRecycle"

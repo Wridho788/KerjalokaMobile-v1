@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
@@ -28,16 +29,27 @@ class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragmen
         phoneText.text = phone
         btnSave.setOnClickListener {
             val keyword = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
-            company_profile_api().checkPhone(keyword, context) {
-                company_profile_api().ChangeNumber(keyword, context) { it1 ->
-                    if (it1?.code == 210) {
-                        replaceFragment(otpVerification(), it1.token, phone, keyword)
+            if (keyword.length < 8) {
+                Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
+            } else {
+                company_profile_api().checkPhone(keyword, context) {
+                    if (it != null) {
+                        if (it == false) {
+                            company_profile_api().ChangeNumber(keyword, context) { it1 ->
+                                if (it1?.code == 210) {
+                                    replaceFragment(otpVerification(), it1.token, phone, keyword)
+                                }
+                            }
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Phone number already exists",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                     }
                 }
-                if (it?.exists == false) {
-
-                }
-
             }
         }
 
@@ -52,7 +64,12 @@ class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragmen
     companion object;
 
     @SuppressLint("RestrictedApi")
-    private fun replaceFragment(fragment: Fragment, token: String?, phone: String?, newPhone: String?) {
+    private fun replaceFragment(
+        fragment: Fragment,
+        token: String?,
+        phone: String?,
+        newPhone: String?
+    ) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
@@ -62,7 +79,7 @@ class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragmen
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "phone"
         val mFragmentManager = parentFragmentManager
-        mFragmentManager.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction().apply {
             replace(
                 R.id.fragment_container,
                 otpVerificationFragment,

@@ -65,7 +65,7 @@ data class ResponseCompanyJobs(
     val link: String,
     val jobType: JobType?,
     val jobExperienceLevel: JobExperienceLevel?,
-    val jobCity: List<String>,
+    val jobCity: String,
     val jobSalaryMax: Any? = null,
     val jobSalaryMin: Long,
     val jobField: JobField?,

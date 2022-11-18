@@ -80,7 +80,6 @@
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Qualified"
                             android:textColor="@color/green_300"
                             android:textSize="12sp" />
                     </LinearLayout>

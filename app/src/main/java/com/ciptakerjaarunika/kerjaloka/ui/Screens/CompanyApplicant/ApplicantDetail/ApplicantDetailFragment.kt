@@ -92,13 +92,20 @@ class ApplicantDetailFragment(
                 val beginYear = LocalDateTime.parse(beginat[0].experienceBeginAt)
                     .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
                 if (endingAt != null) {
-                    val beginEndYear =
-                        LocalDateTime.parse(endingAt[0].experienceEndedAt)
-                            .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
-                    binding.headerApplicantDetail.experienceJobText.text =
-                        beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
-                    binding.headerApplicantDetail.experienceYearText.text =
-                        "$beginYear - $beginEndYear"
+                    if (endingAt[0].experienceEndedAt != null) {
+                        val beginEndYear =
+                            LocalDateTime.parse(endingAt[0].experienceEndedAt)
+                                .format(DateTimeFormatter.ofPattern("MMMM yyyy "))
+                        binding.headerApplicantDetail.experienceJobText.text =
+                            beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
+                        binding.headerApplicantDetail.experienceYearText.text =
+                            "$beginYear - $beginEndYear"
+                    }
+                    else {
+                        binding.headerApplicantDetail.experienceYearText.text =
+                            "$beginYear - Sekarang"
+                    }
+
                 } else {
                     binding.headerApplicantDetail.experienceJobText.text =
                         beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName

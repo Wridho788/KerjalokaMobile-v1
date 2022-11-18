@@ -1,7 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +24,8 @@ class DeleteReviewModal : SuperBottomSheetFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnDelete = view.findViewById<MaterialButton>(R.id.btn_delete)
-        val btnCancel = view.findViewById<MaterialButton>(R.id.btn_cancel)
+        val btnDelete = view.findViewById<MaterialButton>(R.id.delete)
+        val btnCancel = view.findViewById<MaterialButton>(R.id.cancel)
 
         if (arguments!=null){
             val descFromBundle = arguments?.getString(EXTRA_DELETE_REVIEW)
@@ -45,7 +44,6 @@ class DeleteReviewModal : SuperBottomSheetFragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
         return inflater.inflate(R.layout.fragment_global_delete_modal, container, false)
     }
 

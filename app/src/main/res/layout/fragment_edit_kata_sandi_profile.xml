@@ -129,7 +129,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/light_500"
-                    android:clickable="true"
                     android:elevation="0dp"
                     app:cardCornerRadius="50dp"
                     app:cardElevation="0dp">
@@ -157,27 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                android:text="Password tidak boleh kosong"
-                android:textColor="@color/danger_900"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/passsword_rules_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Password harus mengandung setidaknya 1 huruf kapital"
-                android:textColor="@color/danger_900"
-                android:textSize="10sp"/>
-
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/passsword_rules_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins"
-                android:text="Password harus mengandung setidaknya 1 angka"
+                android:visibility="gone"
                 android:textColor="@color/danger_900"
                 android:textSize="10sp"/>
 

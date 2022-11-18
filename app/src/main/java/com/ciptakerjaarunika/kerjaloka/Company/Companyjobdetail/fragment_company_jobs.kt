@@ -42,12 +42,13 @@ class fragment_company_jobs : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         UpdateUI()
-        loading -= 1
-        LoadingDone()
+//        loading -= 1
+//        LoadingDone()
     }
 
 
     private fun assignAdapter(list: List<DataCount>): Companyjobs_adapter {
+
         return Companyjobs_adapter(list, object : JobDetail {
             override fun jobDetail(jobDetail: DataCount) {
                 replaceFragment(jobDetail)
@@ -65,7 +66,8 @@ class fragment_company_jobs : Fragment() {
             }
         })
     }
-    fun UpdateUI(){
+
+    fun UpdateUI() {
 
         binding.idFABAdd.setOnClickListener {
             val myIntent = Intent(view?.context, ManageJobActivity::class.java)
@@ -76,9 +78,8 @@ class fragment_company_jobs : Fragment() {
             startActivity(goToMainActivity)
         }
 
-        company_profile_api().MyJob(context){
-            if(it != null) {
-
+        company_profile_api().MyJob(context) {
+            if (it != null) {
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyle_company_jobs)
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity)
@@ -102,7 +103,7 @@ class fragment_company_jobs : Fragment() {
         mBundle.putString(fragment_company_job_active_page.EXTRA_DETAIL_JOB, jobData)
         jobDetailFragment.arguments = mBundle
         val mFragmentManager = parentFragmentManager
-        mFragmentManager.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction().apply {
             replace(
                 R.id.fragment_container,
                 jobDetailFragment,

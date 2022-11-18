@@ -82,6 +82,7 @@
                 android:fontFamily="@font/poppins"
                 android:hint="Masukkan email"
                 android:padding="14dp"
+                android:editable="false"
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:boxStrokeWidth="0dp"
@@ -137,7 +138,7 @@
         android:fontFamily="@font/poppins_medium"
         android:text="Simpan"
         android:textAllCaps="false"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:cornerRadius="100dp" />
 
 
