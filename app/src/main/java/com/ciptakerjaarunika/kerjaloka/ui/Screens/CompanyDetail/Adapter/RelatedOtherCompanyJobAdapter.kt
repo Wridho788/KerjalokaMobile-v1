@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.job
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Model.relatedOtherCompanyJobModel
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.IJobDetail
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
@@ -18,7 +17,10 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class RelatedOtherCompanyJobAdapter(private val listItem : List<job>?, private val iJobDetail: IJobDetail) :
+class RelatedOtherCompanyJobAdapter(
+    private val listItem: List<job>?,
+    private val iJobDetail: IJobDetail
+) :
     RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
@@ -40,6 +42,11 @@ class RelatedOtherCompanyJobAdapter(private val listItem : List<job>?, private v
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(3.9.toInt(), View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(1.2.toInt(), View.MeasureSpec.UNSPECIFIED)
+        )
+
         return ViewHolder(view)
     }
 
@@ -47,12 +54,22 @@ class RelatedOtherCompanyJobAdapter(private val listItem : List<job>?, private v
         val currentItem = listItem?.get(position)
         holder.relatedjobPosition.text = currentItem?.jobPosition
         holder.relatedjobCompany.text = currentItem?.company?.companyName
-        holder.relatedjobLocation.text = if(currentItem?.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem?.jobLocation?.get(0)?.label
+        holder.relatedjobLocation.text =
+            if (currentItem?.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem.jobLocation.get(
+                0
+            ).label
 
-        Glide.with(holder.itemView.context).load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).into(holder.relatedlogo)
+        Glide.with(holder.itemView.context)
+            .load(config().portAddress + "photo/Profile/" + currentItem.company.logo)
+            .into(holder.relatedlogo)
 
         holder.cardrelatedJob.setOnClickListener {
-            currentItem?.company?.companyNo?.let { it1 -> iJobDetail.onFragmentClick(it1, currentItem.jobNo) }
+            currentItem.company.companyNo.let { it1 ->
+                iJobDetail.onFragmentClick(
+                    it1,
+                    currentItem.jobNo
+                )
+            }
         }
 
 
@@ -95,6 +112,6 @@ class RelatedOtherCompanyJobAdapter(private val listItem : List<job>?, private v
     }
 
     override fun getItemCount(): Int {
-        return if(listItem == null) 0 else listItem.size
+        return if (listItem == null) 0 else listItem.size
     }
 }

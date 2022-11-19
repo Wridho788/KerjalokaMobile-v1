@@ -118,7 +118,7 @@ class JobDetailFragment(
 
                     if (activity != null && !activity!!.isDestroyed) {
                         Glide.with(this)
-                            .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
+                            .load(config().portAddress + "photo/Profile/" + it.data.company.logo)
                             .fitCenter().into(company_logo)
                     }
 
@@ -223,11 +223,12 @@ class JobDetailFragment(
                     val titleJob = it.data.jobPosition.toString()
                     val link = it.data.link
                     val job = it.data
+                    Log.d("link", link.toString())
                     toolbarShare.setOnClickListener {
                         val text =
                             "${job.company.companyName}\n" +
                                     "sedang membuka lowongan pekerjaan sebagai '${job.jobPosition}'.\n" +
-                                    "Lihat informasi selengkapnya ${job.link}"
+                                    "Lihat informasi selengkapnya ${link}"
                         val sendIntent: Intent = Intent().apply {
                             action = Intent.ACTION_SEND
                             putExtra(Intent.EXTRA_TITLE, job.jobPosition)
@@ -297,7 +298,15 @@ class JobDetailFragment(
                             }
                         }
                     }
+                } else {
+                    Toast.makeText(context, "Data Tidak Ditemukan", Toast.LENGTH_SHORT).show()
+                    view.findViewById<LinearLayout>(R.id.spinnerDetailPekerjaan).visibility = GONE
+                    fragmentManager?.popBackStack()
                 }
+//                else {
+//                    val intent = Intent(context, PageNotFoundActivity()::class.java)
+//                    startActivity(intent)
+//                }
             }
 
             report_job.setOnClickListener {

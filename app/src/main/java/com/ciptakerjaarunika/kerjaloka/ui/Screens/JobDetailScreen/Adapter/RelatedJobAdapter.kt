@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -19,6 +18,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 class RelatedJobAdapter(
     private val jobList: List<SearchJobModel>,
@@ -47,10 +47,10 @@ class RelatedJobAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
-        view.layoutParams= ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+//        view.layoutParams = ViewGroup.LayoutParams((parent.width * 0.7).toInt(),ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(3.9.toInt(), View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(1.2.toInt(), View.MeasureSpec.UNSPECIFIED));
         return ViewHolder(view)
     }
 
@@ -98,7 +98,7 @@ class RelatedJobAdapter(
         }
         holder.relatedJobDate.text = dateDiff()
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo)
+            .load(config().portAddress + "photo/Profile/" + currentItem.company.logo)
             .into(holder.relatedlogo)
 
         holder.cardrelatedJob.setOnClickListener {
