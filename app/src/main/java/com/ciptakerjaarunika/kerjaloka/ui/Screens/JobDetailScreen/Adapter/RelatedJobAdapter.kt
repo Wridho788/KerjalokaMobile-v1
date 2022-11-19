@@ -98,7 +98,7 @@ class RelatedJobAdapter(
         }
         holder.relatedJobDate.text = dateDiff()
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "photo/Profile/" + currentItem.company.logo)
+            .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo)
             .into(holder.relatedlogo)
 
         holder.cardrelatedJob.setOnClickListener {
