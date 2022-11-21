@@ -80,9 +80,9 @@ class AkunPage : Fragment() {
 
             val email = itemView.findViewById<EditText>(R.id.txt_email).text.toString()
             val password = itemView.findViewById<EditText>(R.id.txt_password).text.toString()
-            val errorMessage = view?.findViewById<TextView>(R.id.errorLoginMessage) as TextView
-            errorMessage.visibility = View.GONE
-            errorMessage.text = ""
+            val errorMessage = view?.findViewById<TextView>(R.id.errorLoginMessage)
+            errorMessage?.visibility = View.GONE
+            errorMessage?.text = ""
 
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
@@ -114,13 +114,11 @@ class AkunPage : Fragment() {
 
                     } else {
                         SessionManager(context).user = null
-                        errorMessage.visibility = View.VISIBLE
-                        errorMessage.text = it.message
+                        errorMessage?.visibility = View.VISIBLE
+                        errorMessage?.text = it.message
                     }
                     /*if(it != null && it.code == "252"){
-
                     SessionManager(context).access_token = it.userToken
-
                     var user = User(
                         userNo = it.userNo,
                         userFullname = it.userFullname,
@@ -176,16 +174,16 @@ class AkunPage : Fragment() {
         )
 
         val register = itemView.findViewById<TextView>(R.id.register)
-        register?.setOnClickListener(View.OnClickListener {
+        register?.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kerjaloka.com/register"))
             startActivity(intent)
-        })
+        }
 
         val forgotPswd = itemView.findViewById<TextView>(R.id.forgotPswd)
-        forgotPswd?.setOnClickListener(View.OnClickListener {
+        forgotPswd?.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://kerjaloka.com/recovery"))
             startActivity(intent)
-        })
+        }
 
     }
 
