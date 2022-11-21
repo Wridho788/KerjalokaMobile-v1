@@ -164,6 +164,7 @@ class AkunPage : Fragment() {
 
 
         }
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -188,19 +189,22 @@ class AkunPage : Fragment() {
     }
 
     private fun signIn() {
+        view?.findViewById<LinearLayout>(R.id.spinnerLogin)?.visibility = View.VISIBLE
         val signInIntent: Intent = mGoogleSignInClient!!.signInIntent
         startActivityForResult(signInIntent, Req_Code)
+        view?.findViewById<LinearLayout>(R.id.spinnerLogin)?.visibility = View.GONE
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == Req_Code) {
             try {
-
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleSignInResult(task)
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()
