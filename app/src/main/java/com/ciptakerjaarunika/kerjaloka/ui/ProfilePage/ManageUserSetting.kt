@@ -66,7 +66,7 @@ class ManageUserSetting : Fragment() {
 
         ProfileAPI().JobseekerGetProfileData(context) {
             discover.isChecked = it?.data?.users?.isDiscoverable ?: false
-//            newsletter.isChecked = it?.data?.users?.isNewsletter ?: false
+            newsletter.isChecked = it?.data?.users?.isNewsletter ?: false
 
             newsletter.setOnClickListener { it1 ->
                 if (newsletter.isChecked == true) {

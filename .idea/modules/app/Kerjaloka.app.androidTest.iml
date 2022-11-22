@@ -31,7 +31,7 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/f134efdda7997d82f5f2ca92ecd2f807/transformed/work-runtime-ktx-2.8.0-alpha01-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/e11e622dcb916f4a9690782015bc95cf/transformed/navigation-ui-2.3.5-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/63fcdd3217ca71ac5928ae6cbc53c0e3/transformed/jetified-react-native-screens-3.13.1-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/3da1cf5410cfba3aea0ebe7fbcb8e570/transformed/material-1.6.1-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/cfd14e3fe1470e307d9f39fed64d9d1b/transformed/material-1.8.0-alpha02-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5178a72f7cc75d2ff4f547327b2a2dc6/transformed/jetified-materialdatetimepicker-4.2.3-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/2ad3a307372ca6106e195089c5be182d/transformed/jetified-react-native-amplitude-2.7.0-jitsi-11642645-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/56aec00ac55a3d0e7772b8806249a7c4/transformed/jetified-react-native-google-signin-7.0.4-jitsi-11642645-api.jar</arg>
@@ -406,7 +406,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.loader:loader:1.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.lifecycle:lifecycle-livedata:2.5.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.arch.core:core-runtime:2.1.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.material:material:1.6.1@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.material:material:1.8.0-alpha02@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.cardview:cardview:1.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.coordinatorlayout:coordinatorlayout:1.2.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.constraintlayout:constraintlayout:2.1.4@aar" level="project" />
