@@ -84,7 +84,7 @@ class fragment_company_job_active_page : Fragment() {
 
         if (imgJob != null) {
             Glide.with(view!!.context)
-                .load(config().portAddress + "photo/Profile/" + SessionManager(context).user?.companyAdditional?.logo)
+                .load(config().portAddress + "/photo/Profile/" + SessionManager(context).user?.companyAdditional?.logo)
                 .fitCenter()
                 .into(imgJob)
         }

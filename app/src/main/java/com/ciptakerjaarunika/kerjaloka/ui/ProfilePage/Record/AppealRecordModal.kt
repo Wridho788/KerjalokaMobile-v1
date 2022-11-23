@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Record
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.R
@@ -18,8 +16,6 @@ import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.google.android.material.button.MaterialButton
 
 class AppealRecordModal(val recordNo: Int): SuperBottomSheetFragment() {
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
-
     var review: Review? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -63,7 +63,7 @@
                         android:gravity="center_vertical"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:paddingLeft="16dp">
+                        android:paddingStart="16dp">
 
                         <RatingBar
                             android:id="@+id/allRating"
@@ -72,9 +72,9 @@
                             android:numStars="5"
                             android:progressBackgroundTint="@color/trueGray_100"
                             android:progressTint="@color/danger_500"
-                            android:rating="2.5"
-                            android:scaleX="1"
-                            android:scaleY="1"
+                            android:rating="0"
+                            android:scaleX="0.5"
+                            android:scaleY="0.5"
                             android:stepSize="1"
                             style="@style/Widget.AppCompat.RatingBar.Small"/>
                         <TextView
@@ -129,10 +129,7 @@
                         tools:listitem="@layout/comp_review_card"/>
                 </LinearLayout>
             </ScrollView>
-
         </LinearLayout>
-
-
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

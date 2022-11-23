@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,15 +27,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class AppealReviewModal: SuperBottomSheetFragment() {
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
-    private var document : MultipartBody.Part? = null
-    private var file : File? = null
+class AppealReviewModal : SuperBottomSheetFragment() {
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private var document: MultipartBody.Part? = null
+    private var fileSupport: File? = null
     var review: Review? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    var AppealMessage = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,9 +48,10 @@ class AppealReviewModal: SuperBottomSheetFragment() {
                 val fileUri: Uri = data!!.data!!
                 val pathName = context?.let { it2 -> PathUtil().GetFilePath(fileUri, it2) }
 
-                val file = File(pathName?:"")
-                this.file = file
-                val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val file = File(pathName ?: "")
+                this.fileSupport = file
+                val requestFile: RequestBody =
+                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
                 btn_upload.text = file.name
                 document = MultipartBody.Part.createFormData("document", file.name, requestFile)
@@ -60,7 +60,7 @@ class AppealReviewModal: SuperBottomSheetFragment() {
 
 
         btn_upload.setOnClickListener {
-            var intent = Intent(Intent.ACTION_GET_CONTENT);
+            var intent = Intent(Intent.ACTION_GET_CONTENT)
             val mimeTypes = arrayOf(
                 "application/pdf",
                 "application/msword",
@@ -68,7 +68,7 @@ class AppealReviewModal: SuperBottomSheetFragment() {
                 "application/vnd.ms-excel",
                 "text/plain"
             )
-            intent.setType("*/*")
+            intent.type = "*/*"
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //                intent.type = if (mimeTypes.size === 1) mimeTypes[0] else "*/*"
 //                if (mimeTypes.size > 0) {
@@ -81,31 +81,53 @@ class AppealReviewModal: SuperBottomSheetFragment() {
 //                }
 //                intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
 //            }
-
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-            val requestIntent = Intent.createChooser(intent, "Choose a File");
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            val requestIntent = Intent.createChooser(intent, "Choose a File")
             activityResultLauncher.launch(requestIntent)
-
         }
+        txtAppeal.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-        if (arguments != null){
+            @SuppressLint("NotifyDataSetChanged")
+            override fun afterTextChanged(s: Editable) {
+                if (!txtAppeal.text.toString().isNullOrEmpty()) {
+                    AppealMessage = txtAppeal.text.toString()
+                }
+            }
+        })
+
+        if (arguments != null) {
             val descFromBundle = arguments?.getString(EXTRA_APPEAL_REVIEW)
             review = Gson().fromJson(descFromBundle, Review::class.java)
             val RatingBy = review?.userNo
-            val AppealMessage = txtAppeal.text.toString()
-                btnSend.setOnClickListener{
-                    if (RatingBy != null) {
-                        UserRatingAPI().SendAppeal(RatingBy, AppealMessage,file, context){
-                            if (it != null) {
-                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                                if(it.code==210) {
-                                    this.dismiss()
-                                }
+            btnSend.setOnClickListener {
+                if (RatingBy == null) {
+                    Toast.makeText(
+                        context,
+                        "Terjadi kesalahan yang tidak diketahui",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (AppealMessage.isEmpty()) {
+                    Toast.makeText(context, "Appeal message tidak boleh kosong", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (fileSupport == null) {
+                    Toast.makeText(context, "Silahkan unggah dokumen appeal", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    UserRatingAPI().SendAppeal(RatingBy, AppealMessage, fileSupport, context) {
+                        if (it != null) {
+                            Toast.makeText(
+                                context,
+                                "Permintaan Appeal Telah Berhasil, Silahkan Menunggu Approval dari Kerjaloka. Terima Kasih",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            if (it.code == 210) {
+                                this.dismiss()
                             }
                         }
-
                     }
+                }
             }
         }
     }

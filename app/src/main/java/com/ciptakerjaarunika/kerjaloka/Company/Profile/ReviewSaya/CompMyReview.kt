@@ -19,15 +19,14 @@ import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 
 
-
-class CompMyReview(val data: data?, private val CompanyNo: Long? = null): Fragment() {
-private var layoutManager: RecyclerView.LayoutManager? = null
-private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+class CompMyReview(val data: data?, private val CompanyNo: Long? = null) : Fragment() {
+//private var layoutManager: RecyclerView.LayoutManager? = null
+//private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,14 +39,14 @@ private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = nu
         val allRating = view.findViewById<RatingBar>(R.id.allRating)
         val sumRate = view.findViewById<TextView>(R.id.jumlah_review)
 
-        btn_revHistory.setOnClickListener{
+        btn_revHistory.setOnClickListener {
             replaceFragment(ReviewHistory())
         }
 
-        company_profile_api().CompMyReview(sortByNewest = false, context){
+        company_profile_api().CompMyReview(sortByNewest = false, context) {
             if (it != null) {
-            allRating.rating = it?.data?.userInfo?.rating?.toFloat()!!
-            sumRate.text = "${it?.data?.userInfo?.rating} dari 5"
+                allRating.rating = it.data.userInfo.rating.toFloat()
+                sumRate.text = "${it.data.userInfo.rating} dari 5"
                 recyclerCompReview?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = assignAdapter(it.data.reviewList)
@@ -59,10 +58,9 @@ private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = nu
         return view
     }
 
-    companion object {
+    companion object;
 
-    }
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()

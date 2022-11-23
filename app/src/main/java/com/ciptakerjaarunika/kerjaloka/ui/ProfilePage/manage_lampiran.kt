@@ -87,7 +87,7 @@ class manage_lampiran : Fragment(), iRefreshData {
                                         binding.btnRemoveResume.visibility = VISIBLE
                                         binding.btnRemoveResume.setOnClickListener {
                                             ProfileAPI().DeleteJobseekerResume(context) {
-                                                Toast.makeText(
+                                                 Toast.makeText(
                                                     context,
                                                     "Berhasil menghapus video resume",
                                                     Toast.LENGTH_SHORT
