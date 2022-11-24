@@ -50,6 +50,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/spinner"
@@ -62,7 +63,6 @@
     </LinearLayout>
 
     <TextView
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textAlignment="center"

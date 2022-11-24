@@ -17,8 +17,6 @@ import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.ReviewHistory
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentMyReviewPageBinding
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ReviewAdapter
-import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 
 class fragment_my_review_page : Fragment() {
@@ -27,10 +25,9 @@ class fragment_my_review_page : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMyReviewPageBinding.inflate((layoutInflater))
-        val view = binding.root;
-
+        val view = binding.root
         return view
     }
 
@@ -58,6 +55,7 @@ class fragment_my_review_page : Fragment() {
             }
         }
     }
+
     private fun assignAdapter(list: List<Review>): CompReviewAdapter? {
         return context?.let {
             CompReviewAdapter(it, list, object : AppealModal {
@@ -77,6 +75,7 @@ class fragment_my_review_page : Fragment() {
             })
         }
     }
+
     private fun seeHistory(){
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()

@@ -164,7 +164,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/poppins"
-                    android:text="12 Agustus 2022 pada 16:24"
                     android:textColor="@color/trueGray_300"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />

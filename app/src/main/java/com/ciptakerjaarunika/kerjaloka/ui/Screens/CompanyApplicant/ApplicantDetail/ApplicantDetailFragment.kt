@@ -198,7 +198,7 @@ class ApplicantDetailFragment(
         }
 
         Glide.with(this)
-            .load(config().portAddress + "/photo/Profile/" + applicantDetail.applicant.photo)
+            .load(config().portAddress + "photo/Profile/" + applicantDetail.applicant.photo)
             .fitCenter().into(binding.headerApplicantDetail.profileApplicant)
 
         binding.nameApplicant.text = applicantDetail.applicant.name

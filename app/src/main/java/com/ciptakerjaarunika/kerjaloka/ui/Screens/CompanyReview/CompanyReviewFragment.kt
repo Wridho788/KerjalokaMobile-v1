@@ -67,7 +67,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
                     companyName?.text = it.data.companyName
                     if (logo != null) {
                         Glide.with(this)
-                            .load(config().portAddress + "/photo/Profile/" + it.data.logo)
+                            .load(config().portAddress + "photo/Profile/" + it.data.logo)
                             .fitCenter().into(logo)
                     }
                     field?.text = it.data.field

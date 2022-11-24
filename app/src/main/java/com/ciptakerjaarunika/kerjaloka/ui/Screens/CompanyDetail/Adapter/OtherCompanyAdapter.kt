@@ -1,24 +1,16 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_browse_list
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.OnFragmentClickListener
 import com.google.android.material.card.MaterialCardView
 
@@ -46,15 +38,6 @@ class OtherCompanyAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job, null)
-        val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-
-        view.layoutParams = ConstraintLayout.LayoutParams(
-            (displayMetrics.widthPixels * 0.7).toInt(),
-            RecyclerView.LayoutParams.WRAP_CONTENT
-        )
         return ViewHolder(view)
     }
 
@@ -65,7 +48,7 @@ class OtherCompanyAdapter(
         holder.field.text = currentItem.field
         holder.location.text = currentItem.location.city + ", " + currentItem.location.province
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.logo).fitCenter()
             .into(holder.logo)
 
         holder.cardCompanyBrowse.setOnClickListener {

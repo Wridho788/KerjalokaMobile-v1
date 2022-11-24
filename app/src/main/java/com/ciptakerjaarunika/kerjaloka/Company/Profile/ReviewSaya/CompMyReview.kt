@@ -18,16 +18,7 @@ import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 
-
 class CompMyReview(val data: data?, private val CompanyNo: Long? = null) : Fragment() {
-//private var layoutManager: RecyclerView.LayoutManager? = null
-//private var adapterRec: RecyclerView.Adapter<CompReviewAdapter.ViewHolder>? = null
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

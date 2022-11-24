@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -95,7 +94,7 @@ class RelatedCompanyJobAdapter(
 
         holder.relatedJobDate.text = dateDiff()
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo)
+            .load(config().portAddress + "photo/Profile/" + currentItem.company.logo)
             .into(holder.relatedlogo)
 
         holder.cardrelatedJob.setOnClickListener {

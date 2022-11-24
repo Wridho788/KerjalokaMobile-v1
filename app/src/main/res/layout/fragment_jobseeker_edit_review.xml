@@ -23,7 +23,6 @@
 
         <TextView
             android:id="@+id/judul_bottom_sheet"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
@@ -64,7 +63,7 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Berikan Rating"
                         android:textColor="@color/black"
-                        android:textSize="16dp" />
+                        android:textSize="16sp" />
 
                     <RatingBar
                         android:id="@+id/ratingBar"
@@ -85,7 +84,7 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Kelebihan"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.ChipGroup
                         android:layout_width="match_parent"
@@ -190,7 +189,7 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Kekurangan"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.chip.ChipGroup
                         android:layout_width="match_parent"
@@ -295,7 +294,7 @@
                         android:fontFamily="@font/poppins_semibold"
                         android:text="Review"
                         android:textColor="@color/black"
-                        android:textSize="14dp" />
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/txt_review"
@@ -337,7 +336,7 @@
                 android:fontFamily="@font/poppins_medium"
                 android:text="Simpan"
                 android:textAllCaps="false"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 app:cornerRadius="100dp" />
         </LinearLayout>
     </RelativeLayout>
