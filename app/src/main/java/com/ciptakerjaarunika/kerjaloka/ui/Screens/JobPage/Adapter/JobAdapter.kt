@@ -122,7 +122,7 @@ class JobAdapter(
             holder.bookmarkedJob.visibility = GONE
         }
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.company.logo).fitCenter()
             .into(holder.logo)
         holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Screens.WantToKnowCompanyScreen.CompanyWantToKnowFragment">
+    tools:context=".ui.Screens.CompanyBrowse.CompanyBrowse">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,9 +17,22 @@
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_back"
-            app:title="Jelajah" />
+            app:navigationIcon="@drawable/ic_arrow_left_white"
+            app:title="Jelajah"
+            />
     </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/sectionTitle"
+        android:id="@+id/spinner"
+        android:gravity="center">
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -28,8 +41,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:paddingVertical="15dp">
+            android:layout_marginHorizontal="16dp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_browse_company_job"
