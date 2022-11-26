@@ -54,7 +54,7 @@ class CompanyVacanciesAdapter(
         holder.location.text = currentItem.location
 
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "photo/Profile/" + currentItem.logo).fitCenter()
+            .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
             .into(holder.logo)
 
         holder.cardCompanyBrowse.setOnClickListener {

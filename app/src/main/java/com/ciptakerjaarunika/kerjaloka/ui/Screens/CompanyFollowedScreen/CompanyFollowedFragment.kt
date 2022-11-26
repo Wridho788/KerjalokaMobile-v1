@@ -22,11 +22,6 @@ class CompanyFollowedFragment : Fragment(), OnFragmentClickListener {
     private var listFollowedJob: List<company_followed_list>? = null
     private var isLoading: Boolean = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = FragmentFollowedCompanyBinding.inflate(layoutInflater)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

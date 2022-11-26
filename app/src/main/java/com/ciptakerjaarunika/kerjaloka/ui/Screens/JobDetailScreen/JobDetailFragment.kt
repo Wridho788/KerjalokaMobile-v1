@@ -118,7 +118,7 @@ class JobDetailFragment(
 
                     if (activity != null && !activity!!.isDestroyed) {
                         Glide.with(this)
-                            .load(config().portAddress + "photo/Profile/" + it.data.company.logo)
+                            .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
                             .fitCenter().into(company_logo)
                     }
 

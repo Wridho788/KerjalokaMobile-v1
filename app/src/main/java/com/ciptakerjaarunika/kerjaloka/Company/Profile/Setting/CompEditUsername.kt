@@ -27,12 +27,13 @@ class CompEditUsername(val iRefreshData: iRefreshData) : Fragment() {
                 company_profile_api().ChangeUsername(username, context){
                     if (it != null){
                         fragmentManager?.popBackStack()
+
                         Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
             else{
-                Toast.makeText(activity, "Username boleh kosong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Username Tidak boleh kosong", Toast.LENGTH_SHORT).show()
             }
         }
         view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
