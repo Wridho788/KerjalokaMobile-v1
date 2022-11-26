@@ -6,12 +6,17 @@ plugins {
 
 android {
     signingConfigs {
-        release {}
+        release {
+//            storeFile file('/Users/imac24teal/Documents/NewkeystoreKerjaloka.jks')
+//            storePassword 'SuksesSelalu345'
+//            keyAlias 'alias'
+//            keyPassword 'SuksesSelalu345'
+        }
         debug {
-            storeFile file('/Users/imac24teal/Documents/keystoreKerjaloka.jks')
-            storePassword 'SuksesSelalu345'
-            keyAlias 'keyKerjaloka'
-            keyPassword 'SuksesSelalu345'
+//            storeFile file('/Users/imac24teal/Documents/NewkeystoreKerjaloka.jks')
+//            storePassword 'SuksesSelalu345'
+//            keyAlias 'alias'
+//            keyPassword 'SuksesSelalu345'
         }
     }
     compileSdk 32

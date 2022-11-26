@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyBrowseAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_browse_list
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.OnFragmentClickListener
 import com.google.android.material.card.MaterialCardView
 

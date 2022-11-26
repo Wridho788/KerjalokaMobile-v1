@@ -3,7 +3,6 @@ package com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
-import android.os.Message
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
@@ -73,47 +72,47 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
             var conRatingList = review?.conRating
 
             pro1.setOnClickListener {
-                if(con1.isChecked){con1.isChecked = false}
+                if(pro1.isChecked){pro1.isChecked = true}
             }
             pro2.setOnClickListener {
-                if(con2.isChecked){con2.isChecked = false}
+                if(pro2.isChecked){pro2.isChecked = true}
             }
             pro3.setOnClickListener {
-                if(con3.isChecked){con3.isChecked = false}
+                if(pro3.isChecked){pro3.isChecked = true}
             }
             pro4.setOnClickListener {
-                if(con4.isChecked){con4.isChecked = false}
+                if(pro4.isChecked){pro4.isChecked = true}
             }
             pro5.setOnClickListener {
-                if(con5.isChecked){con5.isChecked = false}
+                if(pro5.isChecked){pro5.isChecked = true}
             }
             pro6.setOnClickListener {
-                if(con6.isChecked){con6.isChecked = false}
+                if(pro6.isChecked){pro6.isChecked = true}
             }
             pro7.setOnClickListener {
-                if(con7.isChecked){con7.isChecked = false}
+                if(pro7.isChecked){pro7.isChecked = true}
             }
 
             con1.setOnClickListener {
-                if(pro1.isChecked){pro1.isChecked = false}
+                if(con1.isChecked){con1.isChecked = true}
             }
             con2.setOnClickListener {
-                if(pro2.isChecked){pro2.isChecked = false}
+                if(con2.isChecked){con2.isChecked = true}
             }
             con3.setOnClickListener {
-                if(pro3.isChecked){pro3.isChecked = false}
+                if(con3.isChecked){con3.isChecked = true}
             }
             con4.setOnClickListener {
-                if(pro4.isChecked){pro4.isChecked = false}
+                if(con4.isChecked){con4.isChecked = true}
             }
             con5.setOnClickListener {
-                if(pro5.isChecked){pro5.isChecked = false}
+                if(con5.isChecked){con5.isChecked = true}
             }
             con6.setOnClickListener {
-                if(pro6.isChecked){pro6.isChecked = false}
+                if(con6.isChecked){con6.isChecked = true}
             }
             con7.setOnClickListener {
-                if(pro7.isChecked){pro7.isChecked = false}
+                if(con7.isChecked){con7.isChecked = true}
             }
 
 
@@ -226,6 +225,8 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
             }
             else if(ConRating.size > 3){
                 showMessage("Pilih maksimal hanya 3 'kekurangan'")
+            } else if (Message.isEmpty() && Message.isNullOrEmpty()) {
+                showMessage("Pesan review tidak boleh kosong")
             }
             else if (UserNo != null) {
                 UsersAPI().SendReview(UserNo, Message, Rating, ProRating, ConRating, context){
@@ -246,9 +247,6 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
     }
-
-
-
     companion object {
         var EXTRA_EDIT_REVIEW = "extra_editReview"
     }

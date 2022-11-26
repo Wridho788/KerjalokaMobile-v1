@@ -68,7 +68,7 @@ class ProfilePage(var Page: Int) : Fragment() {
                 if (activity != null)
                     if (activity != null) {
                         Glide.with(view!!.context)
-                            .load(config().portAddress + "photo/Profile/" + response.data?.logo)
+                            .load(config().portAddress + "/photo/Profile/" + response.data?.logo)
                             .fitCenter()
                             .into(view!!.findViewById<ImageView>(R.id.compLogo))
                     }

@@ -8,6 +8,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -20,25 +21,23 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyPageBinding
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_browse_list
 import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_followed_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyBrowse.CompanyBrowse
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyBrowseAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyFollowedAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.Adapter.CompanyVacanciesAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.CompanySearchActivity
 
-class CompanyPage : Fragment(), OnFragmentClickListener{
-    private lateinit var binding : FragmentCompanyPageBinding
+class CompanyPage : Fragment(), OnFragmentClickListener {
+
+    private lateinit var binding: FragmentCompanyPageBinding
     private var isLoading: Boolean = true
     private var isFollowed: Boolean = true
     private val Context = this
-    private var listFollowedJob : List<company_followed_list>?= null
-    private var listSearchJob : List<company_browse_list>?= null
+    private var listFollowedJob: List<company_followed_list>? = null
+    private var listSearchJob: List<company_browse_list>? = null
     private var keyword: String? = ""
     private var hasSearch: Boolean = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     private fun getFollowedJobData() {
         CompanyFollowedAPI().CompanyGetFollowedJob(context) {
@@ -53,14 +52,18 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
 
                 if (it != null && it.data.size > 5) {
                     btn_see_more_job?.visibility = VISIBLE
+                    btn_see_more_job?.setOnClickListener {
+                        Toast.makeText(context, "Follow company", Toast.LENGTH_SHORT).show()
+                    }
                 }
-//                if (listFollowedJob?.size == 1) {
-//                    btn_see_more_job?.visibility = View.GONE
-//                }
                 recyclerViewFollowedCompany?.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter =
-                        CompanyFollowedAdapter(context, listFollowedJob!!.take(5), this@CompanyPage);
+                        CompanyFollowedAdapter(
+                            context,
+                            listFollowedJob!!.take(5),
+                            this@CompanyPage
+                        )
                 }
 
             }
@@ -68,9 +71,9 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
     }
 
     private fun getBrowserJobData() {
-        CompanyBrowseAPI().CompanyGetBrowserJob(context){
+        CompanyBrowseAPI().CompanyGetBrowserJob(context) {
             view?.findViewById<LinearLayout>(R.id.spinnerBrowse)?.visibility = GONE
-            if(it != null){
+            if (it != null) {
                 isLoading = false
                 listSearchJob = it.data
                 Log.d("response browse api", it.toString())
@@ -79,18 +82,18 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
                 val btn_see_more = view?.findViewById<LinearLayout>(R.id.btn_see_more_browse)
                 if (it != null && it.data.size > 5) {
                     btn_see_more?.visibility = VISIBLE
+                    btn_see_more?.setOnClickListener {
+                        changeFragment(CompanyBrowse())
+                    }
                 }
-//                if (listFollowedJob?.size == 0 && listFollowedJob?.size == 1) {
-//                    btn_see_more?.visibility = View.GONE
-//                }
                 recyclerViewCompanyBrowse?.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter = CompanyBrowseAdapter(context, listSearchJob!!.take(5), this@CompanyPage)
+                    adapter =
+                        CompanyBrowseAdapter(context, listSearchJob!!.take(5), this@CompanyPage)
                 }
             }
         }
     }
-
 
 
     override fun onCreateView(
@@ -98,9 +101,8 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCompanyPageBinding.inflate(layoutInflater)
-        return  binding.root
+        return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -129,20 +131,21 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
 
-        layout_search_company.setOnClickListener{
+        layout_search_company.setOnClickListener {
             val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
             ft.replace(R.id.fragment_container, CompanySearchActivity())
             ft.addToBackStack("companyPage")
             ft.commit()
         }
 
-        CompanyBrowseAPI().CompanyActiveHire(context){
-            view?.findViewById<LinearLayout>(R.id.spinnerVacancies)?.visibility = GONE
-            if(it != null){
-                val recyclerView = view?.findViewById<RecyclerView>(R.id.rv_vacancies_company)
-                val btn_see_more = view?.findViewById<LinearLayout>(R.id.btn_see_more)
+        CompanyBrowseAPI().CompanyActiveHire(context) {
+            view.findViewById<LinearLayout>(R.id.spinnerVacancies)?.visibility = GONE
+            if (it != null) {
+                val recyclerView = view.findViewById<RecyclerView>(R.id.rv_vacancies_company)
+                val btn_see_more = view.findViewById<LinearLayout>(R.id.btn_see_more)
                 if (it != null && it.data.size > 5) {
                     btn_see_more?.visibility = VISIBLE
+
                 }
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity)
@@ -152,12 +155,13 @@ class CompanyPage : Fragment(), OnFragmentClickListener{
         }
 
     }
-//    private fun back(){
-//        val fragmentTransaction = parentFragmentManager.beginTransaction()
-//        fragmentTransaction?.replace(id, HomePage(), "Home Page")
-//        fragmentTransaction?.commit()
-//    }
-    override fun onCompanyDetailPage(CompanyNo: Long){
+    fun changeFragment(Goto: Fragment) {
+        val fragmentTransaction = fragmentManager!!.beginTransaction()
+        fragmentTransaction.addToBackStack("Company Page")
+        fragmentTransaction.replace(R.id.fragment_container, Goto)
+        fragmentTransaction.commit()
+    }
+    override fun onCompanyDetailPage(CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container, CompanyDetailFragment(CompanyNo))
         ft.addToBackStack("companyPage")

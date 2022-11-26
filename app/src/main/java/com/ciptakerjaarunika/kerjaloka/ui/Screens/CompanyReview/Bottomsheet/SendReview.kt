@@ -4,35 +4,25 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.RatingBar
-import android.widget.RatingBar.OnRatingBarChangeListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.CategoryList
+import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.SendReviewAPI
-import com.ciptakerjaarunika.kerjaloka.enum.Role
-import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.conRatingList
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRating
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.proRatingList
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.send_Request
+import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-
 
 class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fragment) :
     SuperBottomSheetFragment() {
-    //    var proRating = null
-    var proRatingId = ArrayList<proRatingList>()
-    var conRatingid = ArrayList<conRatingList>()
+    var review: DataX? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,107 +31,216 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.layout_send_review, container, false)
-        val btn_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review)
-
-        val proRatingGrup = view.findViewById<ChipGroup>(R.id.chipGroupProRating)
-        val conRatingGrup = view.findViewById<ChipGroup>(R.id.chipGroupConRating)
-
-        val proratings = arrayOf(
-            proRating("Gaji dan Tunjangan", 1),
-            proRating("Tingkat Stress", 2),
-            proRating("Jumlah Pekerjaan", 3),
-            proRating("Manajemen", 4),
-            proRating("Lingkungan Kerja", 5),
-            proRating("Flexibilitas Waktu", 6),
-            proRating("Pengembangan Waktu", 7),
-        )
-
-        val conratings = arrayOf(
-            proRating("Gaji dan Tunjangan", 1),
-            proRating("Tingkat Stress", 2),
-            proRating("Jumlah Pekerjaan", 3),
-            proRating("Manajemen", 4),
-            proRating("Lingkungan Kerja", 5),
-            proRating("Flexibilitas Waktu", 6),
-            proRating("Pengembangan Waktu", 7),
-        )
-
-        proratings.forEach {
-            val chip = Chip(context)
-            chip.setChipBackgroundColorResource(R.color.white)
-            chip.chipStrokeWidth = 3f
-            chip.apply {
-                textSize = 12f
-                text = it.categoryName
-                id = it.categoryNo.toInt()
-                isChipIconVisible = false
-                isCloseIconVisible = false
-                isClickable = true
-                isCheckable = false
-                proRatingGrup.addView(chip as View)
-                chip.setOnClickListener {
-                    chip.setChipBackgroundColorResource(R.color.danger_100)
-                    chip.setChipStrokeColorResource(R.color.danger_500)
-                    chip.chipStrokeWidth = 7f
-                    var idPro = id.toLong()
-                    val idProRating = proRatingList(
-                        idPro
-                    )
-                    proRatingId.add(idProRating)
-                }
-
+        val ratingBar = view.findViewById<RatingBar>(R.id.ratingBar)
+        val txtComment = view.findViewById<EditText>(R.id.txt_review)
+        val btn_send_review = view.findViewById<MaterialButton>(R.id.sendReview)
+        val pro1 = view.findViewById<Chip>(R.id.pro1)
+        val pro2 = view.findViewById<Chip>(R.id.pro2)
+        val pro3 = view.findViewById<Chip>(R.id.pro3)
+        val pro4 = view.findViewById<Chip>(R.id.pro4)
+        val pro5 = view.findViewById<Chip>(R.id.pro5)
+        val pro6 = view.findViewById<Chip>(R.id.pro6)
+        val pro7 = view.findViewById<Chip>(R.id.pro7)
+        val con1 = view.findViewById<Chip>(R.id.con1)
+        val con2 = view.findViewById<Chip>(R.id.con2)
+        val con3 = view.findViewById<Chip>(R.id.con3)
+        val con4 = view.findViewById<Chip>(R.id.con4)
+        val con5 = view.findViewById<Chip>(R.id.con5)
+        val con6 = view.findViewById<Chip>(R.id.con6)
+        val con7 = view.findViewById<Chip>(R.id.con7)
+        var ProRating = ArrayList<CategoryList>()
+        var ConRating = ArrayList<CategoryList>()
+        pro1.setOnClickListener {
+            if (con1.isChecked) {
+                con1.isChecked = false
+            }
+        }
+        pro2.setOnClickListener {
+            if (con2.isChecked) {
+                con2.isChecked = false
+            }
+        }
+        pro3.setOnClickListener {
+            if (con3.isChecked) {
+                con3.isChecked = false
+            }
+        }
+        pro4.setOnClickListener {
+            if (con4.isChecked) {
+                con4.isChecked = false
+            }
+        }
+        pro5.setOnClickListener {
+            if (con5.isChecked) {
+                con5.isChecked = false
+            }
+        }
+        pro6.setOnClickListener {
+            if (con6.isChecked) {
+                con6.isChecked = false
+            }
+        }
+        pro7.setOnClickListener {
+            if (con7.isChecked) {
+                con7.isChecked = false
             }
         }
 
-
-        conratings.forEach {
-            val chipConRating = Chip(context)
-            chipConRating.setChipBackgroundColorResource(R.color.white)
-            chipConRating.chipStrokeWidth = 3f
-            chipConRating.apply {
-                textSize = 12f
-                text = it.categoryName
-                id = it.categoryNo.toInt()
-                isChipIconVisible = false
-                isCloseIconVisible = false
-                isClickable = true
-                isCheckable = false
-                conRatingGrup.addView(chipConRating as View)
-                chipConRating.setOnClickListener {
-                    chipConRating.setChipBackgroundColorResource(R.color.danger_100)
-                    chipConRating.setChipStrokeColorResource(R.color.danger_500)
-                    chipConRating.chipStrokeWidth = 7f
-                    var idCon = id.toLong()
-                    val idConRating = conRatingList(idCon)
-                    conRatingid.add(idConRating)
-                }
+        con1.setOnClickListener {
+            if (pro1.isChecked) {
+                pro1.isChecked = false
+            }
+        }
+        con2.setOnClickListener {
+            if (pro2.isChecked) {
+                pro2.isChecked = false
+            }
+        }
+        con3.setOnClickListener {
+            if (pro3.isChecked) {
+                pro3.isChecked = false
+            }
+        }
+        con4.setOnClickListener {
+            if (pro4.isChecked) {
+                pro4.isChecked = false
+            }
+        }
+        con5.setOnClickListener {
+            if (pro5.isChecked) {
+                pro5.isChecked = false
+            }
+        }
+        con6.setOnClickListener {
+            if (pro6.isChecked) {
+                pro6.isChecked = false
+            }
+        }
+        con7.setOnClickListener {
+            if (pro7.isChecked) {
+                pro7.isChecked = false
+            }
+        }
+        review?.proRating?.forEach {
+            if (it == "Disiplin" || it == "Gaji dan Tunjangan") {
+                pro1.isChecked = true
+            }
+            if (it == "Kemauan Bekerja" || it == "Tingkat Stress") {
+                pro2.isChecked = true
+            }
+            if (it == "Bekerja Keras" || it == "Jumlah Pekerjaan") {
+                pro3.isChecked = true
+            }
+            if (it == "Emosional" || it == "Manajemen") {
+                pro4.isChecked = true
+            }
+            if (it == "Etika" || it == "Lingkungan Pekerjaan") {
+                pro5.isChecked = true
+            }
+            if (it == "Bekerja Sama" || it == "Fleksibilitas Waktu") {
+                pro6.isChecked = true
+            }
+            if (it == "Kerapian" || it == "Pengembangan Karir") {
+                pro7.isChecked = true
+            }
+        }
+        review?.conRating?.forEach {
+            if (it == "Disiplin" || it == "Gaji dan Tunjangan") {
+                con1.isChecked = true
+            }
+            if (it == "Kemauan Bekerja" || it == "Tingkat Stress") {
+                con2.isChecked = true
+            }
+            if (it == "Bekerja Keras" || it == "Jumlah Pekerjaan") {
+                con3.isChecked = true
+            }
+            if (it == "Emosional" || it == "Manajemen") {
+                con4.isChecked = true
+            }
+            if (it == "Etika" || it == "Lingkungan Pekerjaan") {
+                con5.isChecked = true
+            }
+            if (it == "Bekerja Sama" || it == "Fleksibilitas Waktu") {
+                con6.isChecked = true
+            }
+            if (it == "Kerapian" || it == "Pengembangan Karir") {
+                con7.isChecked = true
             }
         }
 
         btn_send_review.setOnClickListener {
-            if (proRatingId.size > 3) {
-                Toast.makeText(
-                    context,
-                    "Anda hanya bisa memilih maksimal 3 kelebihan",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (proRatingId.size == 0) {
-                Toast.makeText(context, "Pilih minimal 1 kelebihan", Toast.LENGTH_SHORT).show()
-            } else if (conRatingid.size > 3) {
-                Toast.makeText(
-                    context,
-                    "Anda hanya bisa memilih maksimal 3 tantangan",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else if (conRatingid.size == 0) {
-                Toast.makeText(context, "Pilih minimal 1 tantangan", Toast.LENGTH_SHORT).show()
-            } else {
 
-                sendReview()
+            val Message = txtComment?.text.toString()
+            val Rating = ratingBar?.rating?.toInt()
+            var newPro = ArrayList<CategoryList>()
+            if (pro1.isChecked == true) {
+                newPro.add(CategoryList(1))
             }
-            Log.d("size pro rating", proRatingId.size.toString())
-            Log.d("size con rating", conRatingid.size.toString())
-
+            if (pro2.isChecked == true) {
+                newPro.add(CategoryList(2))
+            }
+            if (pro3.isChecked == true) {
+                newPro.add(CategoryList(3))
+            }
+            if (pro4.isChecked == true) {
+                newPro.add(CategoryList(4))
+            }
+            if (pro5.isChecked == true) {
+                newPro.add(CategoryList(5))
+            }
+            if (pro6.isChecked == true) {
+                newPro.add(CategoryList(6))
+            }
+            if (pro7.isChecked == true) {
+                newPro.add(CategoryList(7))
+            }
+            var newCon = ArrayList<CategoryList>()
+            if (con1.isChecked == true) {
+                newCon.add(CategoryList(1))
+            }
+            if (con2.isChecked == true) {
+                newCon.add(CategoryList(2))
+            }
+            if (con3.isChecked == true) {
+                newCon.add(CategoryList(3))
+            }
+            if (con4.isChecked == true) {
+                newCon.add(CategoryList(4))
+            }
+            if (con5.isChecked == true) {
+                newCon.add(CategoryList(5))
+            }
+            if (con6.isChecked == true) {
+                newCon.add(CategoryList(6))
+            }
+            if (con7.isChecked == true) {
+                newCon.add(CategoryList(7))
+            }
+            ProRating = newPro
+            ConRating = newCon
+            if (ProRating.size == 0) {
+                showMessage("Pilih minimal 1 kelebihan")
+            } else if (ConRating.size == 0) {
+                showMessage("Pilih minimal 1 kekurangan")
+            } else if (ProRating.size > 3) {
+                showMessage("Pilih maksimal hanya 3 kelebihan")
+            } else if (ConRating.size > 3) {
+                showMessage("Pilih maksimal hanya 3 'kekurangan'")
+            } else if (Message.isNullOrEmpty() && Message.isEmpty()) {
+                showMessage("Pesan review tidak boleh kosong")
+            } else {
+                UsersAPI().SendReview(CompanyNo, Message, Rating!!, ProRating, ConRating, context) {
+                    if (!it?.message.isNullOrEmpty()) {
+                        Toast.makeText(activity, it?.message, Toast.LENGTH_LONG).show()
+                    }
+                    if (it != null && it.code == 210) {
+                        this.dismiss()
+                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+                        ft.replace(fragmentId, GotoFragment, "companyReviewFragment")
+                        ft.commit()
+                    }
+                }
+            }
         }
         return view
     }
@@ -165,57 +264,9 @@ class SendReview(val CompanyNo: Long, val fragmentId: Int, val GotoFragment: Fra
     }
 
 
-    fun sendReview() {
-        val textReview = view?.findViewById<EditText>(R.id.insertreview)
-        val ratingBar = view?.findViewById<RatingBar>(R.id.RatingModal)
-        ratingBar?.onRatingBarChangeListener =
-            OnRatingBarChangeListener { ratingBar, nilai, b -> ratingBar.rating }
-        var isUser =
-            SessionManager(context).user?.roleNo == Role.Jobseekers.value
-        var isCompany = SessionManager(context).user?.roleNo == Role.Companies.value
-        if (ratingBar?.rating!!.toLong().toString().length == 0) {
-            Toast.makeText(context, "Pilih Rating Minimal 1", Toast.LENGTH_SHORT).show()
-        } else if (textReview?.text.toString().length == 0) {
-            Toast.makeText(context, "Pesan review tidak boleh kosong", Toast.LENGTH_SHORT).show()
-        } else {
-            if (isUser) {
-                SendReviewAPI().SendReviewPost(
-                    context, send_Request(
-                        CompanyNo,
-                        textReview?.text.toString(),
-                        ratingBar.rating.toLong(),
-                        proRatingId,
-                        conRatingid
-                    )
-                ) {
-                    if (it != null) {
-                        this.dismiss()
-                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                        ft.replace(fragmentId, GotoFragment, "companyReviewFragment")
-                        ft.commit()
-                    }
-                }
-
-            } else if (isCompany) {
-                SendReviewAPI().SendReviewCompanyPost(
-                    context,
-                    send_Request(
-                        CompanyNo,
-                        textReview?.text.toString(),
-                        ratingBar.rating.toLong(),
-                        proRatingId,
-                        conRatingid
-                    )
-                ) {
-                    if (it != null) {
-                        this.dismiss()
-                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                        ft.replace(fragmentId, GotoFragment, "jobseekerReviewFragment")
-                        ft.commit()
-                    }
-                }
-            }
+    fun showMessage(message: String?) {
+        if (!message.isNullOrEmpty()) {
+            Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
     }
-
 }

@@ -14,15 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "695482327328-iqhnsv42pam35ababnvg8uma8h67jhke.apps.googleusercontent.com",
+          "client_id": "695482327328-7hsa8me244n90drpevn2ek0qv1qa7q6i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ciptakerjaarunika.kerjaloka",
-            "certificate_hash": "45724252af3e8a9d3ed3b1dc2cfa54c110ee6cda"
+            "certificate_hash": "b601f0b8250c111e8c3598f5f531f62a7f6c4d23"
           }
         },
         {
-          "client_id": "695482327328-o3admn19s9fom2mvl5tt5nlmkjbg989r.apps.googleusercontent.com",
+          "client_id": "695482327328-pr9irannm6o3p9p4aqkg8fli0v8iqkc6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ciptakerjaarunika.kerjaloka",

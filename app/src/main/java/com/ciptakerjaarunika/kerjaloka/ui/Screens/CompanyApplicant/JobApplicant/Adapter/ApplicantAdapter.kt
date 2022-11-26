@@ -65,7 +65,7 @@ class ApplicantAdapter(
 //            holder.statusApplicant.setTextColor(Color.RED)
 //        }
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.applicant.photo)
+            .load(config().portAddress + "photo/Profile/" + currentItem.applicant.photo)
             .fitCenter()
             .into(holder.profileApplicant)
         if (currentItem.bookmarked == true) {

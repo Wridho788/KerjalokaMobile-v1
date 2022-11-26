@@ -29,7 +29,9 @@ class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragmen
         phoneText.text = phone
             val keyword = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
         btnSave.setOnClickListener {
-            if (keyword.length < 8) {
+            if (keyword.length == 0) {
+                Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
+            } else if (keyword.length == 8) {
                 Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
             } else {
                 company_profile_api().checkPhone(keyword, context) {

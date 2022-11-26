@@ -80,14 +80,13 @@ class manage_lampiran : Fragment(), iRefreshData {
                                     file.name,
                                     requestFile
                                 )
-
                                 ManageProfileAPI().UploadVideoResume(files, context) { res ->
                                     if (res?.data != null) {
                                         binding.videoResumeName.text = res.data.videoName
                                         binding.btnRemoveResume.visibility = VISIBLE
                                         binding.btnRemoveResume.setOnClickListener {
                                             ProfileAPI().DeleteJobseekerResume(context) {
-                                                Toast.makeText(
+                                                 Toast.makeText(
                                                     context,
                                                     "Berhasil menghapus video resume",
                                                     Toast.LENGTH_SHORT
@@ -147,7 +146,6 @@ class manage_lampiran : Fragment(), iRefreshData {
 //                }
 //            }
 //        }
-
         getData()
     }
 
@@ -157,7 +155,6 @@ class manage_lampiran : Fragment(), iRefreshData {
             binding.editLampiranPelamar.setOnClickListener{
                 replaceFragment(FragmentEditLampiran(documents?.data, this))
             }
-
             binding.spinnerDoc.visibility = GONE
             val recyclerView = view?.findViewById<RecyclerView>(R.id.RecyclerAttachment)
             recyclerView?.visibility = VISIBLE
@@ -171,12 +168,10 @@ class manage_lampiran : Fragment(), iRefreshData {
             if(activity != null) {
                 binding.spinnerResume.visibility = GONE
                 binding.uploadVideoResumeBtn.visibility = VISIBLE
-
                 binding.uploadVideoResumeBtn.setOnClickListener {
 //                    var intent = Intent(Intent.ACTION_GET_CONTENT);
 //                    intent.setType("*/*");
 //                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-//
 //                    val requestIntent = Intent.createChooser(intent, "Choose a Video");
 //                    activityResultLauncher.launch(requestIntent)
                     pickGallery()
@@ -186,8 +181,6 @@ class manage_lampiran : Fragment(), iRefreshData {
                     val resumeDoc = resume.data
                     oldestFile = resumeDoc.videoName;
                     binding.videoResumeName.text = resumeDoc.videoName
-
-
                     binding.btnRemoveResume.visibility = VISIBLE
                     binding.btnRemoveResume.setOnClickListener {
                         ProfileAPI().DeleteJobseekerResume(context) {
@@ -251,9 +244,7 @@ class manage_lampiran : Fragment(), iRefreshData {
         }
     }
 
-
     private fun replaceFragment(fragment: Fragment){
-
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.addToBackStack("")

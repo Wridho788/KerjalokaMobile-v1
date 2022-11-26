@@ -21,9 +21,9 @@ class SendReview : SuperBottomSheetFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.layout_send_review, container, false)
-        val ratingBar = view.findViewById<RatingBar>(R.id.RatingModal)
-        val btn_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review)
-        val textReview = view.findViewById<EditText>(R.id.insertreview)
+        val ratingBar = view.findViewById<RatingBar>(R.id.ratingBar)
+        val btn_send_review = view.findViewById<LinearLayout>(R.id.sendReview)
+        val textReview = view.findViewById<EditText>(R.id.txt_review)
 //        val ratingBar = view.findViewById<RatingBar>(R.id.RatingModal)
 //        val btn_send_review = view.findViewById<LinearLayout>(R.id.btn_send_review)
 //        val textReview = view.findViewById<EditText>(R.id.insertreview)

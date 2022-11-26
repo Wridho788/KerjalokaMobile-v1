@@ -11,5 +11,5 @@ data class UserInfo(
     @SerializedName("ownerPhoto")
     val ownerPhoto: String,
     @SerializedName("rating")
-    val rating: Int
+    val rating: Float
 )

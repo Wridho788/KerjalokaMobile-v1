@@ -20,6 +20,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchMoreJob.SearchMoreJobFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.general_search_model
@@ -42,7 +43,6 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         }
 
         binding = ActivitySearchBinding.inflate(layoutInflater)
-        Log.d("keyword", keyword.toString())
         if (keyword?.isNotEmpty() == true) {
             Search_Api().getGeneralSearchAsync(context, keyword) {
                 if (it != null) {
@@ -53,7 +53,11 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                     list = it.data
                     if (list?.jobList?.size!! < 5) {
                         binding.seeMoreJob.visibility = GONE
-                    } else binding.seeMoreJob.visibility = VISIBLE
+                    } else {
+
+                        binding.seeMoreJob.visibility = VISIBLE
+
+                    }
 
                     if (list?.companyList?.size!! < 5) {
                         binding.seeMoreCompany.visibility = GONE
@@ -127,11 +131,22 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                             list = it.data
                             if (list?.jobList?.size!! < 5) {
                                 binding.seeMoreJob.visibility = GONE
-                            } else binding.seeMoreJob.visibility = VISIBLE
+                            }
+                            else {
+                                binding.seeMoreJob.visibility = VISIBLE
+                                binding.seeMoreJob.setOnClickListener {
+                                    replaceFragment(SearchMoreJobFragment(query))
+                                }
+                            }
 
                             if (list?.companyList?.size!! < 5) {
                                 binding.seeMoreCompany.visibility = GONE
-                            } else binding.seeMoreCompany.visibility = VISIBLE
+                            }
+                            else {
+                                binding.seeMoreCompany.visibility = VISIBLE
+                                binding.seeMoreCompany.setOnClickListener {
+                                }
+                            }
 
                             binding.recycleJob.apply {
                                 layoutManager = LinearLayoutManager(context)
@@ -247,7 +262,6 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 
     override fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long) {
         replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))
-
     }
 
     override fun onFragmentCompanyDetailsClick(companyNo: Long) {
