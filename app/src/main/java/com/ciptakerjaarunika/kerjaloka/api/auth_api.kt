@@ -78,7 +78,6 @@ class AUTHAPI {
                             SessionManager(context).chatData = null
                         } else {
                             SessionManager(context).user = data.user
-
                             val account = Gson().toJson(data.account)
                             val additional = Gson().toJson(data.userAdditional)
                             if(data.user.roleNo == 4){

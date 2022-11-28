@@ -240,7 +240,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                 isCheckable = false
                 setOnClickListener { SearchJob(keyword) }
                 binding.apply {
-                    if (latestResultGrup.size > 7) {
+                    if (latestResultGrup.size > 8) {
                         latestResultGrup.removeViewAt(0)
                     }
                     chip.setOnClickListener {

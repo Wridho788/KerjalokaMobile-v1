@@ -22,6 +22,7 @@ import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Global.DeactivatedAccount
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -103,16 +104,26 @@ class AkunPage : Fragment() {
             AUTHAPI().Login(context, loginRequest) {
                 if (it != null) {
                     if (it.code == "252") {
-                        loadingDone()
-                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-                        val activity = activity as MainActivity
-                        SessionManager(context).access_token = it.userToken
-                        AUTHAPI().CheckLogin(context, activity) {
+                        var deactivated: Boolean = it.deactivated == false
+                        if (deactivated) {
                             loadingDone()
-                            activity.replaceFragment(AkunPage())
+                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                            val activity = activity as MainActivity
+                            SessionManager(context).access_token = it.userToken
+                            AUTHAPI().CheckLogin(context, activity) {
+                                loadingDone()
+                                activity.replaceFragment(AkunPage())
+                            }
+                        } else {
+                            loadingDone()
+//                            Toast.makeText(activity, "Akun Kamu Tidak Aktif, Silahkan Aktifkan Kembali", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(context, DeactivatedAccount::class.java)
+                            startActivity(intent)
                         }
 
+
                     } else {
+                        Log.d("auth", it.toString())
                         SessionManager(context).user = null
                         errorMessage?.visibility = View.VISIBLE
                         errorMessage?.text = it.message

@@ -192,9 +192,9 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
                     keyword
                 )
         }
-        if (SessionManager(context).latestCompanySearch!!.size > 10) {
+        if (SessionManager(context).latestCompanySearch!!.size > 8) {
             SessionManager(context).latestCompanySearch =
-                SessionManager(context).latestCompanySearch?.takeLast((10))
+                SessionManager(context).latestCompanySearch?.takeLast((8))
         }
         val latestSearch = SessionManager(context).latestCompanySearch?.reversed()
         if (latestSearch?.size != 0) {
@@ -210,7 +210,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
                 isClickable = true
                 isCheckable = false
                 binding.apply {
-                    if (latestResultGrup.size > 7) {
+                    if (latestResultGrup.size > 8) {
                         latestResultGrup.removeViewAt(0)
                     }
                 }

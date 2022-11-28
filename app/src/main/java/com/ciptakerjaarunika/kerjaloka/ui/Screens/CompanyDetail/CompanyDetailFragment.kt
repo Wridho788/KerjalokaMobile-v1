@@ -113,19 +113,21 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                     adapter = RelatedCompanyJobAdapter(it.data.job, Context)
                 }
                 val title = it.data.companyName
-//                val link = it.data.link
-//                Log.d("company link", link)
+                val link =
+                    "https://advance.kerjaloka.com/companies/" + CompanyNo + "/detail"
+
                 toolbarShare.setOnClickListener {
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
                         putExtra(Intent.EXTRA_TITLE, title)
-//                        putExtra(Intent.EXTRA_TEXT, link)
+                        putExtra(Intent.EXTRA_TEXT, link)
                         type = "text/plain"
                     }
 
                     val shareIntent = Intent.createChooser(sendIntent, null)
                     startActivity(shareIntent)
                 }
+
             }
 
         }
