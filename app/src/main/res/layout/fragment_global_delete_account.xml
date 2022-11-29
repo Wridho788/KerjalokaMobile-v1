@@ -73,9 +73,8 @@
             android:fontFamily="@font/poppins"
             android:hint="Ketik “Hapus” untuk menghapus akun"
             android:inputType="text|textCapSentences"
-            android:maxLength="15"
+            android:maxLength="5"
             android:padding="14dp"
-
             android:textColor="@color/black"
             android:textSize="12sp"
             app:boxStrokeWidth="0dp"

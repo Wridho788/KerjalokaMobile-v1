@@ -20,6 +20,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchMoreCompany.SearchMoreCompanyFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchMoreJob.SearchMoreJobFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchJobAdapter
@@ -145,6 +146,8 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                             else {
                                 binding.seeMoreCompany.visibility = VISIBLE
                                 binding.seeMoreCompany.setOnClickListener {
+
+                                    replaceFragment(SearchMoreCompanyFragment(query))
                                 }
                             }
 
@@ -274,13 +277,13 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
             if (it != null) {
                 if (it.code == 210) {
                     binding.recycleJob.adapter?.notifyDataSetChanged()
-                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Success Bookmarking", Toast.LENGTH_SHORT).show()
 
                     } else {
-                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Success Bookmarking", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Success Unbookmark", Toast.LENGTH_SHORT).show()
             }
         }
     }
