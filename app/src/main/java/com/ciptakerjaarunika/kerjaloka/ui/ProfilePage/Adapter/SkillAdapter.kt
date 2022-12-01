@@ -6,13 +6,12 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.enum.SkillScale
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerSkills
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iEditKemampuan
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skill
-import com.giphy.sdk.analytics.GiphyPingbacks.context
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
@@ -34,6 +33,10 @@ class SkillAdapter(private val skilItems: List<JobseekerSkills>, val context: Co
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Skill {
         val view = View.inflate(parent.context, R.layout.item_skills, null)
+        view.layoutParams = ConstraintLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return Skill(view)
     }
 

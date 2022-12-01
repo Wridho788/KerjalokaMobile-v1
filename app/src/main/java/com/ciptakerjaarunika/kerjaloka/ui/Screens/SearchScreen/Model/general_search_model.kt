@@ -8,6 +8,18 @@ data class search_model(
     val data: general_search_model,
 )
 
+data class top_search_model(
+    val code: Int,
+    val errorCode: Int,
+    val message: String,
+    val data: List<list_top_search>
+)
+
+data class list_top_search(
+    val keyword: String,
+    val count: Int,
+)
+
 data class general_search_model(
     val jobList : List<jobList>,
     val companyList : List<companyList>

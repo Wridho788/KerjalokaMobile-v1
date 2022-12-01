@@ -109,9 +109,7 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-//        activity?.onBackPressedDispatcher?.addCallback(this) {
-//            fragmentManager?.popBackStack()
-//        }
+        
         var user = SessionManager(context).user
         val layout_followed_company = view.findViewById<LinearLayout>(R.id.layout_followed_company)
         val layout_search_company = view.findViewById<LinearLayout>(R.id.search_company_btn)

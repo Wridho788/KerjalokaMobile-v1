@@ -17,7 +17,6 @@ import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.FilterIndustriAPI
-import com.ciptakerjaarunika.kerjaloka.api.FilterLocationAPI
 import com.ciptakerjaarunika.kerjaloka.api.FilterSizeCompanyAPI
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Adapter.IndustriAdapter
@@ -95,10 +94,10 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
             }
         }
 
-
-        FilterLocationAPI()
-        FilterIndustriAPI()
-        FilterSizeCompanyAPI()
+//
+//        FilterLocationAPI()
+//        FilterIndustriAPI()
+//        FilterSizeCompanyAPI()
         listIndustri.visibility = GONE
         listSizeCompany.visibility = GONE
 
@@ -130,11 +129,12 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
                     when (filterType) {
                         1 -> {
                             var temp = list_location.filter { data ->
-                                "${data.city}, ${data.province}".lowercase(Locale.getDefault()).contains(query)
+                                "${data.city}, ${data.province}".lowercase(Locale.getDefault())
+                                    .contains(query)
                             }
                             listView?.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                adapter = LocationAdapter(request.location, temp!!, context)
+                                adapter = LocationAdapter(request.location, temp, context)
                             }
                             listView?.adapter?.notifyDataSetChanged()
                         }
@@ -144,7 +144,7 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
                             }
                             listIndustri?.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                adapter = IndustriAdapter(request.industry, temp!!, context)
+                                adapter = IndustriAdapter(request.industry, temp, context)
                             }
                             listIndustri?.adapter?.notifyDataSetChanged()
                         }
@@ -165,6 +165,14 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
             request.size =
                 list_size_company.filter { data -> data.checked }.map { data -> data.sizeNo }
             updateData.searchCompany(request)
+            list_location = listOf()
+            list_industri = listOf()
+            list_size_company = listOf()
+
+            listView.adapter?.notifyDataSetChanged()
+            listIndustri.adapter?.notifyDataSetChanged()
+            listSizeCompany.adapter?.notifyDataSetChanged()
+
             this.dismiss()
         }
 
@@ -173,9 +181,45 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
             list_industri = listOf()
             list_size_company = listOf()
 
-            listView.adapter?.notifyDataSetChanged()
-            listIndustri.adapter?.notifyDataSetChanged()
-            listSizeCompany.adapter?.notifyDataSetChanged()
+//            DataAPI().GetLocations(context) {
+//                if (it != null) {
+//                    list_location = it
+//                    val thisActivity = this
+//                    listView.apply {
+//                        layoutManager = LinearLayoutManager(context)
+//                        adapter = LocationAdapter(request.location, list_location, context)
+//                        listView.adapter = adapter
+//                    }
+                    listView.adapter?.notifyDataSetChanged()
+//
+//                }
+//            }
+
+//            FilterIndustriAPI().getIndustriAsync(context) {
+//                if (it != null) {
+//                    list_industri = it
+//                    listIndustri.apply {
+//                        layoutManager = LinearLayoutManager(context)
+//                        adapter = IndustriAdapter(request.industry, list_industri, context)
+//                    }
+                    listIndustri.adapter?.notifyDataSetChanged()
+//
+//                }
+//            }
+
+//            FilterSizeCompanyAPI().getSizeIndustriAsync(context) {
+//                if (it != null) {
+//                    list_size_company = it
+//                    val thisActivity = this
+//                    listSizeCompany.apply {
+//                        layoutManager = LinearLayoutManager(context)
+//                        adapter = SizeCompanyAdapter(request.size, list_size_company, context)
+//                    }
+                    listSizeCompany.adapter?.notifyDataSetChanged()
+//
+//                }
+//            }
+
         }
 
         return view

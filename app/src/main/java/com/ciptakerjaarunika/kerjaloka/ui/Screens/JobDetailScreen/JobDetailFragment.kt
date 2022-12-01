@@ -68,10 +68,10 @@ class JobDetailFragment(
         val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark)
         RefreshData()
         binding.backButton.setOnClickListener {
-            fragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         toolbar.setNavigationOnClickListener {
-            fragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         toolbarBookmark.setOnClickListener {
             Toast.makeText(context, "Bookmark", Toast.LENGTH_SHORT).show()

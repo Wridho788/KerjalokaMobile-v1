@@ -9,6 +9,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
 import com.ciptakerjaarunika.kerjaloka.model.Data.Field
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
+import com.ciptakerjaarunika.kerjaloka.model.Profile.Jobseeker.JobseekerFreshgraduatedResponse
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import org.json.JSONObject
@@ -127,6 +128,32 @@ class ProfileAPI {
                 }
             }
         )
+    }
+
+    //Get Freshgraduate Jobseeker
+    interface jobseekerFreshgraduated {
+        @GET("jobseeker/profile/noexp")
+        fun getJobseekerFreshGraduated(): Call<JobseekerFreshgraduatedResponse>
+    }
+
+    fun GetJobseekerFreshGraduated(
+        context: Context?, onResult: (JobseekerFreshgraduatedResponse?) -> Unit
+    ) {
+       val retrofit = ServiceBuilder(context).GET(jobseekerFreshgraduated::class.java)
+       retrofit.getJobseekerFreshGraduated().enqueue(
+           object : Callback<JobseekerFreshgraduatedResponse> {
+               override fun onResponse(
+                   call: Call<JobseekerFreshgraduatedResponse>,
+                   response: Response<JobseekerFreshgraduatedResponse>
+               ) {
+                   onResult(response.body())
+               }
+
+               override fun onFailure(call: Call<JobseekerFreshgraduatedResponse>, t: Throwable) {
+                   onResult(null)
+               }
+           }
+       )
     }
 
     //Get Jobseeker Languages

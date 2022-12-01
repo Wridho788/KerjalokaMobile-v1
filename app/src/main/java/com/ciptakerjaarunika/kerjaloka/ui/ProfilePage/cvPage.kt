@@ -35,8 +35,8 @@ import com.google.android.material.chip.Chip
 
 class cvPage : Fragment(), iRefreshData, iCvPage {
     private var layoutManager: RecyclerView.LayoutManager? = null
-    private lateinit var binding : FragmentProfileCvBinding
-    private var loading = 4;
+    private lateinit var binding: FragmentProfileCvBinding
+    private var loading = 4
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,179 +52,199 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         GetData()
     }
 
-    private fun GetData(){
+    private fun GetData() {
         binding.chipGroup1.removeAllViews()
         binding.chipGroup2.removeAllViews()
         binding.chipGroup3.removeAllViews()
         binding.chipGroup4.removeAllViews()
         binding.chipGroup5.removeAllViews()
 
-            ProfileAPI().GetJobseekerSkills(context) { skills ->
-                loading -= 1;
+        ProfileAPI().GetJobseekerSkills(context) { skills ->
+            loading -= 1
+            LoadingDone()
+
+            ProfileAPI().GetJobseekerExperiences(context) { experiences ->
+                loading -= 1
                 LoadingDone()
-
-                ProfileAPI().GetJobseekerExperiences(context) { experiences ->
-                    loading -= 1;
-                    LoadingDone()
-
+                if (experiences?.data?.size != 0) {
+                    binding.layoutFreshgraduated.visibility = View.GONE
+                    binding.layoutExperience.visibility = View.VISIBLE
                     binding.recycleExp.apply {
                         layoutManager = LinearLayoutManager(activity)
-                        adapter = experiences?.data?.let { ExpAdapter(it, this@cvPage) }
+                        adapter = experiences?.data.let { ExpAdapter(it!!, this@cvPage) }
                     }
-                }
+                } else {
+                    binding.layoutExperience.visibility = GONE
+                    binding.layoutFreshgraduated.visibility = VISIBLE
+                    binding.checkFreshgraduated.isChecked = true
 
-                ProfileAPI().GetJobseekerEducations(context) { educations ->
-                    loading -= 1;
-                    LoadingDone()
-
-                    Log.d("edu", educations?.data.toString())
-
-                    binding.recycleEdu.apply {
-                        layoutManager = LinearLayoutManager(activity)
-                        adapter = educations?.data?.let { EduAdapter(it, this@cvPage) }
-                    }
-
-                }
-
-                ProfileAPI().GetJobseekerLanguages(context) { languages ->
-                    loading -= 1;
-                    LoadingDone()
-
-                    binding.recycleLang.apply {
-                        layoutManager = LinearLayoutManager(activity)
-                        adapter = languages?.data?.let { LanguageAdapter(false, it, null) }
-
-                    }
-
-                    if (skills?.data!!.size != 0) {
-                        skills?.data.forEach {
-                            if (it.scale == 1) {
-                                binding.skillLv1.visibility = VISIBLE
-                                if(context != null) {
-                                    val skil1Chip = Chip(context)
-                                    skil1Chip.setChipBackgroundColorResource(R.color.danger_100)
-                                    skil1Chip.apply {
-                                        textSize = 12f
-                                        text = it.skillName
-                                        isChipIconVisible = false
-                                        isCloseIconVisible = false
-                                        isClickable = true
-                                        isCheckable = false
-                                        view.apply {
-                                            binding.chipGroup1.addView(skil1Chip as View)
-                                        }
-                                    }
-                                }
-                            } else if (it.scale == 2) {
-                                binding.skillLv2.visibility = VISIBLE
-                                if(context != null) {
-                                    val skil2Chip = Chip(context)
-                                    skil2Chip.setChipBackgroundColorResource(R.color.danger_100)
-                                    skil2Chip.apply {
-                                        textSize = 12f
-                                        text = it.skillName
-                                        isChipIconVisible = false
-                                        isCloseIconVisible = false
-                                        isClickable = true
-                                        isCheckable = false
-                                        view.apply {
-                                            binding.chipGroup2.addView(skil2Chip as View)
-                                        }
-                                    }
-                                }
-                            } else if (it.scale == 3) {
-                                binding.skillLv3.visibility = VISIBLE
-                                if(context != null) {
-                                    val skil3Chip = Chip(context)
-                                    skil3Chip.setChipBackgroundColorResource(R.color.danger_100)
-                                    skil3Chip.apply {
-                                        textSize = 12f
-                                        text = it.skillName
-                                        isChipIconVisible = false
-                                        isCloseIconVisible = false
-                                        isClickable = true
-                                        isCheckable = false
-                                        view.apply {
-                                            binding.chipGroup3.addView(skil3Chip as View)
-                                        }
-                                    }
-                                }
-                            } else if (it.scale == 4) {
-                                binding.skillLv4.visibility = VISIBLE
-                                if(context != null) {
-                                    val skil4Chip = Chip(context)
-                                    skil4Chip.setChipBackgroundColorResource(R.color.danger_100)
-                                    skil4Chip.apply {
-                                        textSize = 12f
-                                        text = it.skillName
-                                        isChipIconVisible = false
-                                        isCloseIconVisible = false
-                                        isClickable = true
-                                        isCheckable = false
-                                        view.apply {
-                                            binding.chipGroup4.addView(skil4Chip as View)
-                                        }
-                                    }
-                                }
-                            } else if (it.scale == 5) {
-                                binding.skillLv5.visibility = VISIBLE
-                                if(context != null) {
-                                    val skil5Chip = Chip(context)
-                                    skil5Chip.setChipBackgroundColorResource(R.color.danger_100)
-                                    skil5Chip.apply {
-                                        textSize = 12f
-                                        text = it.skillName
-                                        isChipIconVisible = false
-                                        isCloseIconVisible = false
-                                        isClickable = true
-                                        isCheckable = false
-                                        view.apply {
-                                            binding.chipGroup5.addView(skil5Chip as View)
-                                        }
-                                    }
-                                }
+                    binding.checkFreshgraduated.setOnClickListener {
+                        ProfileAPI().GetJobseekerFreshGraduated(context){
+                            if (it != null) {
+                                binding.checkFreshgraduated.isChecked
+                                Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                                binding.layoutExperience.visibility = GONE
                             }
                         }
-                    } else {
-                        binding.nullSkill.visibility = VISIBLE
-                    }
-
-                    binding.editSkill.setOnClickListener {
-                        replaceFragment(edit_kemampuan(skills.data, this))
-                    }
-
-                    binding.seePapiResult.setOnClickListener {
-                        ProfileAPI().GetPapiKostick(context) { res ->
-                            if(res!=null) {
-                                val sheet = PapikostickResult(res.data)
-                                activity?.let { it1 ->
-                                    sheet.show(
-                                        it1.supportFragmentManager,
-                                        "DemoBottomSheetFragment"
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    binding.addExp.setOnClickListener {
-                        replaceFragment(manage_cv_edit_experience_page(null, this))
-                    }
-                    binding.addEdu.setOnClickListener {
-                        replaceFragment(fragment_manage_cv_edit_education_page(null, this))
-                    }
-                    binding.addLang.setOnClickListener {
-                        replaceFragment(
-                            EditBahasa(
-                                SessionManager(context).user!!.userNo,
-                                languages?.data,
-                                this
-                            )
-                        )
                     }
                 }
             }
 
+            ProfileAPI().GetJobseekerEducations(context) { educations ->
+                loading -= 1
+                LoadingDone()
+
+                Log.d("edu", educations?.data.toString())
+
+                binding.recycleEdu.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = educations?.data?.let { EduAdapter(it, this@cvPage) }
+                }
+
+            }
+
+            ProfileAPI().GetJobseekerLanguages(context) { languages ->
+                loading -= 1
+                LoadingDone()
+
+                binding.recycleLang.apply {
+                    layoutManager = LinearLayoutManager(activity)
+                    adapter = languages?.data?.let { LanguageAdapter(false, it, null) }
+
+                }
+
+                if (skills?.data!!.size != 0) {
+                    skills.data.forEach {
+                        if (it.scale == 1) {
+                            binding.skillLv1.visibility = VISIBLE
+                            if (context != null) {
+                                val skil1Chip = Chip(context)
+                                skil1Chip.setChipBackgroundColorResource(R.color.danger_100)
+                                skil1Chip.apply {
+                                    textSize = 12f
+                                    text = it.skillName
+                                    isChipIconVisible = false
+                                    isCloseIconVisible = false
+                                    isClickable = true
+                                    isCheckable = false
+                                    view.apply {
+                                        binding.chipGroup1.addView(skil1Chip as View)
+                                    }
+                                }
+                            }
+                        } else if (it.scale == 2) {
+                            binding.skillLv2.visibility = VISIBLE
+                            if (context != null) {
+                                val skil2Chip = Chip(context)
+                                skil2Chip.setChipBackgroundColorResource(R.color.danger_100)
+                                skil2Chip.apply {
+                                    textSize = 12f
+                                    text = it.skillName
+                                    isChipIconVisible = false
+                                    isCloseIconVisible = false
+                                    isClickable = true
+                                    isCheckable = false
+                                    view.apply {
+                                        binding.chipGroup2.addView(skil2Chip as View)
+                                    }
+                                }
+                            }
+                        } else if (it.scale == 3) {
+                            binding.skillLv3.visibility = VISIBLE
+                            if (context != null) {
+                                val skil3Chip = Chip(context)
+                                skil3Chip.setChipBackgroundColorResource(R.color.danger_100)
+                                skil3Chip.apply {
+                                    textSize = 12f
+                                    text = it.skillName
+                                    isChipIconVisible = false
+                                    isCloseIconVisible = false
+                                    isClickable = true
+                                    isCheckable = false
+                                    view.apply {
+                                        binding.chipGroup3.addView(skil3Chip as View)
+                                    }
+                                }
+                            }
+                        } else if (it.scale == 4) {
+                            binding.skillLv4.visibility = VISIBLE
+                            if (context != null) {
+                                val skil4Chip = Chip(context)
+                                skil4Chip.setChipBackgroundColorResource(R.color.danger_100)
+                                skil4Chip.apply {
+                                    textSize = 12f
+                                    text = it.skillName
+                                    isChipIconVisible = false
+                                    isCloseIconVisible = false
+                                    isClickable = true
+                                    isCheckable = false
+                                    view.apply {
+                                        binding.chipGroup4.addView(skil4Chip as View)
+                                    }
+                                }
+                            }
+                        } else if (it.scale == 5) {
+                            binding.skillLv5.visibility = VISIBLE
+                            if (context != null) {
+                                val skil5Chip = Chip(context)
+                                skil5Chip.setChipBackgroundColorResource(R.color.danger_100)
+                                skil5Chip.apply {
+                                    textSize = 12f
+                                    text = it.skillName
+                                    isChipIconVisible = false
+                                    isCloseIconVisible = false
+                                    isClickable = true
+                                    isCheckable = false
+                                    view.apply {
+                                        binding.chipGroup5.addView(skil5Chip as View)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    binding.nullSkill.visibility = VISIBLE
+                }
+
+                binding.editSkill.setOnClickListener {
+                    replaceFragment(edit_kemampuan(skills.data, this))
+                }
+
+                binding.seePapiResult.setOnClickListener {
+                    ProfileAPI().GetPapiKostick(context) { res ->
+                        if (res != null) {
+                            val sheet = PapikostickResult(res.data)
+                            activity?.let { it1 ->
+                                sheet.show(
+                                    it1.supportFragmentManager,
+                                    "DemoBottomSheetFragment"
+                                )
+                            }
+                        }
+                    }
+                }
+
+                binding.addExp.setOnClickListener {
+                    replaceFragment(manage_cv_edit_experience_page(null, this))
+                }
+                binding.addEdu.setOnClickListener {
+                    replaceFragment(fragment_manage_cv_edit_education_page(null, this))
+                }
+                binding.addLang.setOnClickListener {
+                    replaceFragment(
+                        EditBahasa(
+                            SessionManager(context).user!!.userNo,
+                            languages?.data,
+                            this
+                        )
+                    )
+                }
+
+            }
+        }
+
     }
+
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
@@ -234,78 +254,90 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     }
 
     override fun editExp(data: JobseekerExperiences) {
-        replaceFragment(manage_cv_edit_experience_page(
-            JobseekerExperienceRequest(
-                data.experienceNo,
-                SessionManager(context).user!!.userNo,
-                data.experienceCityNo,
-                data.experienceCompanyName,
-                data.experienceCompanyNo,
-                data.experienceDescription,
-                data.experienceEndedAt,
-                data.experienceBeginAt
-                ,data.experienceJobTypeNo
-                ,data.experiencePosition,
-                data.experienceSalary)
-        , this))
+        replaceFragment(
+            manage_cv_edit_experience_page(
+                JobseekerExperienceRequest(
+                    data.experienceNo,
+                    SessionManager(context).user!!.userNo,
+                    data.experienceCityNo,
+                    data.experienceCompanyName,
+                    data.experienceCompanyNo,
+                    data.experienceDescription,
+                    data.experienceEndedAt,
+                    data.experienceBeginAt, data.experienceJobTypeNo, data.experiencePosition,
+                    data.experienceSalary
+                ), this
+            )
+        )
     }
 
     override fun editEdu(data: JobseekerEducations) {
-        replaceFragment(fragment_manage_cv_edit_education_page(
-            JobseekerEducationsRequest(
-                data.jobseekerEducationNo,
-                SessionManager(context).user!!.userNo,
-                data.educationSchool,
-                data.educationBeginAt,
-                data.educationEndedAt,
-                data.educationMajorNo,
-                data.educationTitleNo,
-                data.educationCityNo,
-                data.gpa,
-                data.educationDescription), this))
+        replaceFragment(
+            fragment_manage_cv_edit_education_page(
+                JobseekerEducationsRequest(
+                    data.jobseekerEducationNo,
+                    SessionManager(context).user!!.userNo,
+                    data.educationSchool,
+                    data.educationBeginAt,
+                    data.educationEndedAt,
+                    data.educationMajorNo,
+                    data.educationTitleNo,
+                    data.educationCityNo,
+                    data.gpa,
+                    data.educationDescription
+                ), this
+            )
+        )
     }
 
     override fun deleteExp(data: JobseekerExperiences) {
         AlertDialog.Builder(context)
             .setMessage("Yakin ingin menghapus '${data.experiencePosition}'?")
             .setTitle("Konfirmasi menghapus")
-                            .setPositiveButton(android.R.string.ok, object : DialogInterface.OnClickListener {
-                                override fun onClick(dialog: DialogInterface, which: Int) {
-                                    ManageProfileAPI().JobseekerDeleteExperience(data.experienceNo, context){
-                                        if(it != null){
-                                            ProfileAPI().GetJobseekerExperiences(context) { experiences ->
-                                                binding.recycleExp.apply {
-                                                    layoutManager = LinearLayoutManager(activity)
-                                                    adapter = experiences?.data?.let { ExpAdapter(it, this@cvPage) }
-                                                }
-                                                Toast.makeText(activity, "Berhasil menghapus", Toast.LENGTH_SHORT).show()
-                                                dialog.dismiss()
-                                            }
+            .setPositiveButton(android.R.string.ok, object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface, which: Int) {
+                    ManageProfileAPI().JobseekerDeleteExperience(data.experienceNo, context) {
+                        if (it != null) {
+                            ProfileAPI().GetJobseekerExperiences(context) { experiences ->
+                                binding.recycleExp.apply {
+                                    layoutManager = LinearLayoutManager(activity)
+                                    adapter = experiences?.data?.let { ExpAdapter(it, this@cvPage) }
+                                }
+                                Toast.makeText(activity, "Berhasil menghapus", Toast.LENGTH_SHORT)
+                                    .show()
+                                GetData()
+                                dialog.dismiss()
+                            }
 
-                                        }
-                                    }
-                                }
-                            })
-                            .setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener{
-                                override fun onClick(dialog: DialogInterface, which: Int) {
-                                    dialog.dismiss()
-                                }
-                            }).create().show()
+                        }
+                    }
+                }
+            })
+            .setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface, which: Int) {
+                    dialog.dismiss()
+                }
+            }).create().show()
     }
+
     override fun deleteEducation(data: JobseekerEducations) {
         AlertDialog.Builder(context)
             .setMessage("Yakin ingin menghapus '${data.educationSchool}'?")
             .setTitle("Konfirmasi menghapus")
             .setPositiveButton(android.R.string.ok, object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface, which: Int) {
-                    ManageProfileAPI().JobseekerDeleteEducation(data.jobseekerEducationNo, context){
-                        if(it != null){
+                    ManageProfileAPI().JobseekerDeleteEducation(
+                        data.jobseekerEducationNo,
+                        context
+                    ) {
+                        if (it != null) {
                             ProfileAPI().GetJobseekerEducations(context) { edu ->
                                 binding.recycleExp.apply {
                                     layoutManager = LinearLayoutManager(activity)
                                     adapter = edu?.data?.let { EduAdapter(it, this@cvPage) }
                                 }
-                                Toast.makeText(activity, "Berhasil menghapus", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, "Berhasil menghapus", Toast.LENGTH_SHORT)
+                                    .show()
                                 dialog.dismiss()
                                 GetData()
                             }
@@ -314,14 +346,15 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                     }
                 }
             })
-            .setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener{
+            .setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface, which: Int) {
                     dialog.dismiss()
                 }
             }).create().show()
     }
-    fun LoadingDone(){
-        if(loading == 0){
+
+    fun LoadingDone() {
+        if (loading == 0) {
             binding.spinner.visibility = GONE
             binding.contentContainer.visibility = VISIBLE
         }
@@ -331,9 +364,10 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         GetData()
     }
 }
-interface iCvPage{
-    fun editExp(data : JobseekerExperiences)
-    fun editEdu(data : JobseekerEducations)
-    fun deleteExp(data : JobseekerExperiences)
-    fun deleteEducation(data : JobseekerEducations)
+
+interface iCvPage {
+    fun editExp(data: JobseekerExperiences)
+    fun editEdu(data: JobseekerEducations)
+    fun deleteExp(data: JobseekerExperiences)
+    fun deleteEducation(data: JobseekerEducations)
 }

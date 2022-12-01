@@ -14,23 +14,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseLanguageAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ChooseSkillAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iEditKemampuan
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.skill
 
 
 class ChooseSkill(val value: SkillFilter?, val skills : List<SkillFilter>, val iEditKemampuan: iEditKemampuan): SuperBottomSheetFragment(), iChooseSkill {
 
-    private var layoutManager: RecyclerView.LayoutManager? =null
-    private var adapter: RecyclerView.Adapter<ChooseSkillAdapter.chooseSkil>? = null
-    private lateinit var chooseSkilAdapter: ChooseSkillAdapter
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
         title.text = "Pilih Skill"
-
         return view
     }
 

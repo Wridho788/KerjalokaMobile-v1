@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Language
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.iChooseLanguage
-import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Model.language
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.iEditBahasa
 
 class ChooseLanguageAdapter(val languageNo : Int?, private val langList: List<Language>,val iEditBahasa: iEditBahasa,val iChooseLanguage: iChooseLanguage):
@@ -27,6 +27,10 @@ class ChooseLanguageAdapter(val languageNo : Int?, private val langList: List<La
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): chooseLang {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
+        view.layoutParams = ConstraintLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return chooseLang(view)
     }
 
