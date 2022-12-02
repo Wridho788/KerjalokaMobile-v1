@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
@@ -19,7 +19,6 @@ import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditBahasaBinding
 import com.ciptakerjaarunika.kerjaloka.model.Data.Language
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerLanguages
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.LanguageAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseLanguage
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.ChooseScore
@@ -118,13 +117,18 @@ class EditBahasa(var jobseekerNo : Long, var data : List<JobseekerLanguages>?, v
             }
         }
         binding.saveBtn.setOnClickListener {
-            ManageProfileAPI().JobseekerEditLanguages(data, context){
-                if(it != null) {
-                    Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
-                    back()
-                }
-                else{
-                    Toast.makeText(activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+            Log.d("bahasa", data.toString())
+            if (data?.size == 0) {
+                Toast.makeText(context, "Silahkan Pilih Bahasa", Toast.LENGTH_SHORT).show()
+            } else {
+                ManageProfileAPI().JobseekerEditLanguages(data, context){
+                    if(it != null) {
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                        back()
+                    }
+                    else{
+                        Toast.makeText(activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
