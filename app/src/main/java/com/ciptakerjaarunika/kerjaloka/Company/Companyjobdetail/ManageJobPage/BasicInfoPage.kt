@@ -20,45 +20,57 @@ import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobLocation
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.iManageExp
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.EditExpTypeJob
 
-class BasicInfoPage(var data : CompanyJobDetail, val updateData : iBasicInfoPage) : Fragment(), iUpdateJobBasicInfo, iManageExp{
+class BasicInfoPage(var data: CompanyJobDetail, val updateData: iBasicInfoPage) : Fragment(),
+    iUpdateJobBasicInfo, iManageExp {
 
     private lateinit var binding: FragmentJobBasicInfoBinding
-    private var jobTypes : List<JobTypeFilter> = listOf()
+    private var jobTypes: List<JobTypeFilter> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentJobBasicInfoBinding.inflate(layoutInflater)
-        return binding.root    }
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if(data?.jobPosition != null) binding.jobPositionTxt.setText(data?.jobPosition)
+        if (data.jobPosition != null) binding.jobPositionTxt.setText(data.jobPosition)
 
         binding.recycleLocation.apply {
-            layoutManager = LinearLayoutManager( context)
-            adapter = SelectedLocationAdapter( data.jobLocation, this@BasicInfoPage)
+            layoutManager = LinearLayoutManager(context)
+            adapter = SelectedLocationAdapter(data.jobLocation, this@BasicInfoPage)
         }
-        if(data?.jobSalaryMax != null) binding.salaryTxt.setText(data.jobSalaryMax.toString())
-        else if(data?.jobSalaryMin != null) binding.salaryTxt.setText(data.jobSalaryMin.toString())
+        if (data.jobSalaryMax != null) binding.salaryMaxTxt.setText(data.jobSalaryMax.toString())
+        else if (data.jobSalaryMin != null) binding.salaryMinTxt.setText(data.jobSalaryMin.toString())
 
-            DataAPI().GetLocations(context){ res->
-            if(res != null){
+        DataAPI().GetLocations(context) { res ->
+            if (res != null) {
                 binding.selectLocationBtn.setOnClickListener {
-                val sheet = LocationModal(data.jobLocation, res, this )
-                    activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+                    val sheet = LocationModal(data.jobLocation, res, this)
+                    activity?.let { it1 ->
+                        sheet.show(
+                            it1.supportFragmentManager,
+                            "DemoBottomSheetFragment"
+                        )
+                    }
                 }
             }
         }
-            DataAPI().GetJobTypes(context){ jobtypes ->
+        DataAPI().GetJobTypes(context) { jobtypes ->
             if (jobtypes != null) {
                 jobTypes = jobtypes
-                if(data.jobType != null) {
+                if (data.jobType != null) {
                     updateJobType(data.jobType!!.jobTypeNo)
                 }
                 binding.selectJobTypeBtn.setOnClickListener {
-                val sheet = EditExpTypeJob(data.jobType?.jobTypeNo, jobtypes, this)
-                    activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+                    val sheet = EditExpTypeJob(data.jobType?.jobTypeNo, jobtypes, this)
+                    activity?.let { it1 ->
+                        sheet.show(
+                            it1.supportFragmentManager,
+                            "DemoBottomSheetFragment"
+                        )
+                    }
                 }
             }
         }
@@ -73,17 +85,30 @@ class BasicInfoPage(var data : CompanyJobDetail, val updateData : iBasicInfoPage
             }
         })
 
-        binding.salaryTxt.addTextChangedListener(object : TextWatcher {
+        binding.salaryMinTxt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(p0: Editable?) {
-                if(binding.salaryTxt.text.toString().isNullOrEmpty()
-                    || binding.salaryTxt.text.toString().toInt() < 0){
-                    updateData.updateJobSalary(null)
-                }
-                else
-                    updateData.updateJobSalary(binding.salaryTxt.text.toString().toInt())
+                if (binding.salaryMinTxt.text.toString().isNullOrEmpty()
+                    || binding.salaryMinTxt.text.toString().toInt() < 0
+                ) {
+                    updateData.updateJobSalary(null, null)
+                } else
+                    updateData.updateJobSalary(binding.salaryMinTxt.text.toString().toInt(), binding.salaryMaxTxt.text.toString().toInt())
+            }
+        })
+        binding.salaryMaxTxt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (binding.salaryMaxTxt.text.toString().isNullOrEmpty()
+                    || binding.salaryMaxTxt.text.toString().toInt() < 0
+                ) {
+                    updateData.updateJobSalary(null,null)
+                } else
+                    updateData.updateJobSalary(binding.salaryMinTxt.text.toString().toInt(), binding.salaryMaxTxt.text.toString().toInt())
             }
         })
 
@@ -92,26 +117,30 @@ class BasicInfoPage(var data : CompanyJobDetail, val updateData : iBasicInfoPage
     override fun updateLocation(value: List<JobLocation>) {
         data.jobLocation = value
         binding.recycleLocation.apply {
-            layoutManager = LinearLayoutManager( context)
-            adapter = SelectedLocationAdapter( data.jobLocation, this@BasicInfoPage)
+            layoutManager = LinearLayoutManager(context)
+            adapter = SelectedLocationAdapter(data.jobLocation, this@BasicInfoPage)
         }
         binding.recycleLocation.adapter?.notifyDataSetChanged()
         updateData.updateJobLocation(value)
     }
 
-    override fun updateMonth(value: Int, type: String) {TODO("Not yet implemented")}
+    override fun updateMonth(value: Int, type: String) {
+        TODO("Not yet implemented")
+    }
 
-    override fun updateYear(value: Int, type: String) {TODO("Not yet implemented")}
+    override fun updateYear(value: Int, type: String) {
+        TODO("Not yet implemented")
+    }
 
     override fun updateJobType(value: Int) {
-        val currentValue = jobTypes.find { item -> item.jobTypeNo == value  }
-        data.jobType = JobType(currentValue!!.jobTypeName, currentValue!!.jobTypeNo)
+        val currentValue = jobTypes.find { item -> item.jobTypeNo == value }
+        data.jobType = JobType(currentValue!!.jobTypeName, currentValue.jobTypeNo)
 
-        binding.jobTypeTxt.text = data?.jobType!!.jobTypeName
+        binding.jobTypeTxt.text = data.jobType!!.jobTypeName
         updateData.updateJobType(data.jobType!!)
     }
 }
 
-interface iUpdateJobBasicInfo{
-    fun updateLocation(value : List<JobLocation>)
+interface iUpdateJobBasicInfo {
+    fun updateLocation(value: List<JobLocation>)
 }

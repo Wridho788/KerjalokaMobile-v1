@@ -185,9 +185,9 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
         JobDetailData.jobDescription = value
     }
 
-    override fun updateJobSalary(value: Int?) {
+    override fun updateJobSalary(value: Int?, valueMax: Int?) {
         JobDetailData.jobSalaryMin = value
-        JobDetailData.jobSalaryMax = value
+        JobDetailData.jobSalaryMax = valueMax
     }
 
     override fun updateJobType(value: JobType) {
@@ -285,7 +285,7 @@ interface iAddidiontalInfoPage {
 interface iBasicInfoPage {
     fun updateJobDescription(value: String)
     fun updateJobPosition(value: String)
-    fun updateJobSalary(value: Int??)
+    fun updateJobSalary(value: Int?, valueMax: Int?)
     fun updateJobType(jobTypeNo: JobType)
     fun updateJobLocation(value: List<JobLocation>)
 }

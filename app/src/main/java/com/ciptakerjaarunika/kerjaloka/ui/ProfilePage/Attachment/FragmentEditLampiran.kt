@@ -14,7 +14,6 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -54,12 +53,7 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
     private var documentNameError: Boolean = false
     private var processUpload = 0
 
-    val File.size get() = if (!exists()) 0.0 else length().toDouble()
-    val File.sizeInKb get() = size / 1024
-    val File.sizeInMb get() = sizeInKb / 1024
-
     @RequiresApi(Build.VERSION_CODES.O)
-
     private fun getPathFromUri(context: Context, contentUri: Uri): String {
         var cursor: Cursor? = null
         return try {
@@ -77,7 +71,7 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLampiranBinding.inflate(layoutInflater)
         val view = binding.root
         return view
@@ -214,8 +208,6 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
         binding.addDocumentBtn.setOnClickListener {
             binding.errorTxt.visibility = VISIBLE
             documentNameError = false
-
-
             if (binding.documentName.text.isNullOrEmpty()) {
                 documentNameError = true
                 binding.errorTxt.text = "Judul Dokumen tidak boleh kosong"
@@ -228,54 +220,39 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
                 binding.documentName.text = null
             } else {
                 binding.errorTxt.visibility = GONE
-
                 val fileSize = file?.length()?.toDouble()
-//                val k: Int = fileSize!!.toInt()
-//                val m: Double = k / 1024.0
-//                val dec = DecimalFormat("0.00")
-
                 val sizeInKb = fileSize?.div(1024)
                 val sizeInMb = sizeInKb?.div(1024)
-                Log.d("File Size ${sizeInKb} kb", sizeInKb.toString())
-                Log.d("File Size ${sizeInMb} mb", sizeInMb.toString())
+
                 if (sizeInMb != null) {
                     if (sizeInMb >= 25) {
-                        Toast.makeText(context, "file size out of limit", Toast.LENGTH_SHORT).show()
+                      Toast.makeText(context, "batas maksimal dokumen 25 Mb", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(context, "file size ${sizeInMb}", Toast.LENGTH_SHORT).show()
+                        dataList = dataList?.plus(
+                            Documents(
+                                file!!.name,
+                                binding.documentName.text.toString(),
+                                null,
+                                DocumentType.CV.value,
+                                SessionManager(context).user!!.userNo,
+                                document
+                            )
+                        )
+                        binding.recycleview.apply {
+                            layoutManager = LinearLayoutManager(activity)
+                            adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
+                        }
+                        binding.recycleview.adapter?.notifyDataSetChanged()
+
+                        document = null
+                        file = null
+                        binding.uploadDocumentBtn.text = "Upload Lampiran"
+                        binding.documentName.text = null
                     }
                 }
-//                if (m >= 0) {
-//                    Toast.makeText(context, "File Size ${dec.format(m)} mb", Toast.LENGTH_SHORT)
-//                        .show()
-//                } else if (m >= 25){
-//                    Log.d("File Size limit = 25mb :${dec.format(m)} mb", dec.format(m).toString())
-//                    Toast.makeText(context, "File Size ${dec.format(m)}", Toast.LENGTH_SHORT).show()
-//                } else {
-//                    Log.d("File Size ${dec.format(k)} kb", dec.format(k).toString())
-//                    Toast.makeText(context, "File Size ${dec.format(k)}", Toast.LENGTH_SHORT).show()
-//            }
 
-            dataList = dataList?.plus(
-                Documents(
-                    file!!.name,
-                    binding.documentName.text.toString(),
-                    null,
-                    DocumentType.CV.value,
-                    SessionManager(context).user!!.userNo,
-                    document
-                )
-            )
-            binding.recycleview.apply {
-                layoutManager = LinearLayoutManager(activity)
-                adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
-            }
-            binding.recycleview.adapter?.notifyDataSetChanged()
 
-            document = null
-            file = null
-            binding.uploadDocumentBtn.text = "Upload Lampiran"
-            binding.documentName.text = null
+
         }
     }
 }

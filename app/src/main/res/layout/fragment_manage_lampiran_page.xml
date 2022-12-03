@@ -12,9 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="ScrollViewCount">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -177,7 +179,7 @@
                                 android:fontFamily="@font/poppins"
                                 android:text="Unggah video resume kamu, video resume berguna untuk mempermudah mengevaluasi kompetensi dan bakat pelamar yang memiliki relevansi dengan apa yang benar-benar dibutuhkan oleh perusahaan."
                                 android:textColor="@color/black"
-                                android:textSize="12dp" />
+                                android:textSize="12sp" />
 
                             <LinearLayout
                                 android:id="@+id/spinnerResume"
@@ -222,7 +224,7 @@
                                         android:id="@+id/btn_remove_resume"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_alignParentRight="true"
+                                        android:layout_alignParentEnd="true"
                                         android:layout_centerVertical="true"
                                         android:src="@drawable/ic_close"
                                         android:visibility="gone"
@@ -269,9 +271,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:checkable="true"
-                    android:clickable="true"
-                    android:focusable="true"
                     app:cardCornerRadius="10dp"
                     app:strokeColor="@color/light_500"
                     app:strokeWidth="1dp">
@@ -414,7 +413,7 @@
                                                 android:paddingBottom="10dp"
                                                 android:text="Vaksin Kedua"
                                                 android:textColor="@color/black"
-                                                android:textSize="12dp" />
+                                                android:textSize="12sp" />
 
                                             <ImageView
                                                 android:id="@+id/vaccine2Status"

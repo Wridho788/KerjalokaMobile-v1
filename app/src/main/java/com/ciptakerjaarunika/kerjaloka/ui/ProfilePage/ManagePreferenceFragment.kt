@@ -6,7 +6,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -44,10 +43,7 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
         ProfileAPI().GetJobseekerField(context) { fields ->
             loading -= 1
             if (activity != null) {
-                if (loading == 0) {
-                    view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                    view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
-                }
+                LoadingDone()
                 binding.editMinat.setOnClickListener {
 //                    fields?.data = listOf()
                     binding.chipGroupMinat.removeAllViews()
@@ -84,10 +80,7 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
         ProfileAPI().GetJobseekerJobType(context) { jobTypes ->
             loading -= 1
             if (activity != null) {
-                if (loading == 0) {
-                    view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                    view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
-                }
+                LoadingDone()
                 binding.editTipePekerjaan.setOnClickListener {
 //                    jobTypes?.data = listOf()
                     binding.chipGroupTipePekerjaan.removeAllViews()
@@ -121,10 +114,7 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
         ProfileAPI().GetJobseekerSalaryExpected(context) { salary ->
             loading -= 1
             if (activity != null) {
-                if (loading == 0) {
-                    view!!.findViewById<LinearLayout>(R.id.spinnerPref).visibility = View.GONE
-                    view!!.findViewById<LinearLayout>(R.id.content_pref).visibility = View.VISIBLE
-                }
+                LoadingDone()
                 val expectedSalary = view!!.findViewById<TextView>(R.id.expectedSalary)
                 if (salary != null) {
                     if (salary.data != null) {
@@ -147,6 +137,13 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                     )
                 }
             }
+        }
+    }
+
+    fun LoadingDone() {
+        if (loading == 0) {
+         binding.spinnerPref.visibility = GONE
+            binding.contentPref.visibility = VISIBLE
         }
     }
 

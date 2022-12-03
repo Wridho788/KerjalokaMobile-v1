@@ -48,9 +48,13 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
         }
 
         CompanyOfficerJobsApi().CompanyOfficerJob(context) {
+            binding.spinner.visibility = View.VISIBLE
+            binding.contentContainer.visibility = View.GONE
             if (it != null) {
-                loading -= 1
-                LoadingDone()
+                binding.spinner.visibility = View.GONE
+                binding.contentContainer.visibility = View.VISIBLE
+//                loading -= 1
+//                LoadingDone()
                 listJob = it.data
                 Log.d("own", listJob.toString())
                 rv_applicantJob.apply {
