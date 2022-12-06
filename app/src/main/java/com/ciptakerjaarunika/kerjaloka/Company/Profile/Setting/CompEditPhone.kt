@@ -27,8 +27,9 @@ class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragmen
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveNewPhone)
 
         phoneText.text = phone
-            val keyword = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
+
         btnSave.setOnClickListener {
+        var keyword = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
             if (keyword.length == 0) {
                 Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
             } else if (keyword.length == 8) {

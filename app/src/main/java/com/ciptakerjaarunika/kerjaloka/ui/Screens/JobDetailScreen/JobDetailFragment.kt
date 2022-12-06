@@ -195,8 +195,8 @@ class JobDetailFragment(
                     }
                     createdOn.text = dateDiff()
 
-                    job_field.text =
-                        if (it.data.jobField != null) it.data.jobField.fieldName else ""
+//                    job_field.text =
+//                        if (it.data.jobField != null) it.data.jobField.fieldName else ""
                     job_role.text = if (it.data.jobRole != null) it.data.jobRole.jobRoleName else ""
 
                     var jobDesc = it.data.jobDescription

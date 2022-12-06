@@ -295,6 +295,8 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
     override fun SearchJobs() {
         this.hasSearch = true
         binding.searchResult.visibility = VISIBLE
+        binding.spinnerJobResult.visibility = VISIBLE
+
         binding.history.visibility = GONE
         page = 0
 
@@ -312,9 +314,10 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
         ) { res ->
             if (res != null) {
                 listData = res.data
+                binding.spinnerJobResult.visibility = GONE
                 Log.d("response search", listData.toString())
                 val appContext = this
-                binding.recycleJobs.visibility = VISIBLE
+                binding.layoutRecycleJobs.visibility = VISIBLE
                 binding.recycleJobs.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = JobAdapter(1, listData, context, appContext, this@SearchJob)

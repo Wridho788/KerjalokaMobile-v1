@@ -37,6 +37,8 @@ class ProfilePage(var Page: Int) : Fragment() {
 //            val myRev = view?.findViewById<MaterialButton>(R.id.myReview)
 //            val accSet = view?.findViewById<MaterialButton>(R.id.accSetting)
             if (response != null) {
+                binding.spinnerProfile.visibility = View.GONE
+                binding.profileComp.visibility = View.VISIBLE
                 val compName = view?.findViewById<TextView>(R.id.jsName1)
                 val username = view?.findViewById<TextView>(R.id.username)
 

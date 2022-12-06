@@ -154,19 +154,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/spinnerJobResult"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:visibility="gone">
 
-            <ProgressBar
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true" />
-        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -187,7 +175,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Hasil pencarian kamu:"
                     android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/query"
@@ -195,13 +183,28 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
                     android:textColor="@color/trueGray_50"
-                    android:textSize="10dp" />
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
                 <LinearLayout
+                    android:id="@+id/spinnerJobResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_recycle_jobs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:visibility="gone">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycle_jobs"

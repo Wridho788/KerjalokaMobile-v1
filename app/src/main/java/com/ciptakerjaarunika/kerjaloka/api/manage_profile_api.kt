@@ -394,7 +394,7 @@ class ManageProfileAPI {
                             val map = jObjError.getString("message")
                             Toast.makeText(
                                 context,
-                                "Username baru saja diganti, dan dapat diganti kembali jika sudah 30 hari",
+                                "Username already exists",
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {

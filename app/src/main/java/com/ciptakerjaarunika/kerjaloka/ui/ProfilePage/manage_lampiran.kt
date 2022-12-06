@@ -59,9 +59,6 @@ class manage_lampiran : Fragment(), iRefreshData {
                 .openGallery(
                     it,
                     DefaultSystemGalleryConfig.instance(
-                        // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
-                        // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
-                        // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
                         mimesType = DefaultGalleryMimes.customTypes("video/*") // multiType
                     )
                 )
@@ -93,10 +90,7 @@ class manage_lampiran : Fragment(), iRefreshData {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-                        Log.d("upload", fileVideo.toString())
-                        Log.d("upload files", files.toString())
                         ManageProfileAPI().UploadVideoResume(files, context) {
-                            Log.d("upload", it.toString())
                             binding.spinnerResume.visibility = VISIBLE
                             binding.uploadVideoResumeBtn.visibility = GONE
                             if (it != null) {
@@ -107,25 +101,25 @@ class manage_lampiran : Fragment(), iRefreshData {
                                     binding.spinnerResume.visibility = GONE
                                     binding.uploadVideoResumeBtn.visibility = VISIBLE
                                     binding.videoResumeName.text = it.data?.videoName
-
+                                }
+                                if (it.data != null) {
+                                    Log.d("upload", it.data.toString())
+                                    binding.videoResumeName.text = it.data.videoName
+                                    binding.btnRemoveResume.visibility = VISIBLE
+                                    binding.btnRemoveResume.setOnClickListener {
+                                        ProfileAPI().DeleteJobseekerResume(context) {
+                                            Toast.makeText(
+                                                context,
+                                                "Berhasil menghapus video resume",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            binding.videoResumeName.text = "Upload Video Resume"
+                                            binding.btnRemoveResume.visibility = GONE
+                                        }
+                                    }
                                 }
                             }
-//                            if (res?.data != null) {
-//                                Log.d("upload", res.toString())
-//                                binding.videoResumeName.text = res.data.videoName
-//                                binding.btnRemoveResume.visibility = VISIBLE
-//                                binding.btnRemoveResume.setOnClickListener {
-//                                    ProfileAPI().DeleteJobseekerResume(context) {
-//                                        Toast.makeText(
-//                                            context,
-//                                            "Berhasil menghapus video resume",
-//                                            Toast.LENGTH_SHORT
-//                                        ).show()
-//                                        binding.videoResumeName.text = "Upload Video Resume"
-//                                        binding.btnRemoveResume.visibility = GONE
-//                                    }
-//                                }
-//                            }
+
                         }
                     }
                 }

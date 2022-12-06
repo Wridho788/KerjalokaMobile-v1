@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -20,6 +21,8 @@ import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.api.users
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentAccountSettingBinding
+import com.ciptakerjaarunika.kerjaloka.enum.SocialMediaType
+import com.ciptakerjaarunika.kerjaloka.model.Data.socialMedia
 import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
@@ -28,7 +31,6 @@ import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -52,10 +54,10 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
         val firebaseAuth = FirebaseAuth.getInstance()
     }
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        mAuth = FirebaseAuth.getInstance()
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mAuth = FirebaseAuth.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,24 +68,12 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        AkunPage.mGoogleSignInClient = GoogleSignIn.getClient(
-            context!!,
-            gso
-        )
-
         users().CompanyGetUserData(context) {
             if (it != null) {
                 if (it.code == 200) {
 
                     binding.switchDiscoverable.isChecked = it.data.isDiscoverable
                     binding.switchNewsLetter.isChecked = it.data.isNewsletter
-//            Log.d("users", it.data.userGoogleId.toString())
-
                     if (it.data.userGoogleId.isNullOrEmpty()) {
                         binding.connect.strokeColor =
                             ColorStateList.valueOf(Color.parseColor("#FF6666"))
@@ -252,6 +242,7 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
     }
 
     private fun signIn() {
+
         val signInIntent: Intent = AkunPage.mGoogleSignInClient!!.signInIntent
         startActivityForResult(signInIntent, AkunPage.Req_Code)
     }
@@ -259,9 +250,10 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        binding.spinner.visibility = VISIBLE
         if (requestCode == AkunPage.Req_Code) {
             try {
-
+                binding.spinner.visibility = GONE
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleSignInResult(task)
@@ -290,7 +282,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         val currentDate = Date()
         val cal: Calendar = Calendar.getInstance()
-        // remove next line if you're always using the current time.
         cal.time = currentDate
         cal.add(Calendar.HOUR, +1)
         val oneHourBack: Date = cal.time
@@ -323,6 +314,37 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                         hash,
                         deviceToken = SessionManager(context).device_token
                     )
+                Log.d("googleRequest", googleRequest.toString())
+                ProfileAPI().GetSocialMediaCheck(context) {
+                    Log.d("SocialMedia", it.toString())
+                    if (it != null) {
+                        if (it.google == true) {
+                            Toast.makeText(
+                                context,
+                                "Akun Google Sudah Terdaftar pada Company Lain",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        } else {
+                            val user = SessionManager(context).user?.userNo
+                            val socialMedia = socialMedia(
+                                socialMediaConnectionNo = null,
+                                userNo = user!!,
+                                socialMediaNo = SocialMediaType.Google.value,
+                                accessToken = account.idToken.toString()
+                            )
+                            ProfileAPI().AddSocialMedia(context, socialMedia) {
+                                Log.d("SocialMedia", it.toString())
+                            }
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Terjadi kesalahan yang tidak diketahui",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
 //                AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
 //                    Log.d("google login", it.toString())
 //                    if (it != null)

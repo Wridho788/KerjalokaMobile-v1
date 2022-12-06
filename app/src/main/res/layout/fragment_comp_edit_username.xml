@@ -106,8 +106,18 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/danger_500"
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/errorMessage"
+                        android:visibility="gone"
+                        android:text="Username tidak boleh kosong"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
                         android:textSize="10sp"
+                        android:visibility="visible"
                         android:textColor="@color/trueGray_50"
                         android:text="Username hanya dapat diubah satu kali dalam sebulan."
                         android:layout_marginTop="5dp"
