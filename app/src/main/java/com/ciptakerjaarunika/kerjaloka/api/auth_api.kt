@@ -42,7 +42,7 @@ class AUTHAPI {
                         val data: String = response.errorBody()!!.string()
                         try {
                             val jObjError = JSONObject(data)
-                            val message = jObjError.getString("message")
+                            val message  = jObjError.getString("message")
                             val code = jObjError.getString("code")
                             onResult(LoginResponse(code.toString(),
                             message.toString()))
@@ -102,6 +102,7 @@ class AUTHAPI {
             }
         )
     }
+
 }
 
 class AUTHGOOGLEAPI{

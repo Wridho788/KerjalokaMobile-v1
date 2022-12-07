@@ -253,7 +253,14 @@ class ManageUserSetting : Fragment() {
                                 accessToken = account.idToken.toString()
                             )
                             ProfileAPI().AddSocialMedia(context, socialMedia) {
-                                Log.d("SocialMedia", it.toString())
+                                if (it != null) {
+                                    Log.d("SocialMedia", it.toString())
+                                    Toast.makeText(
+                                        context,
+                                        it.message.toString(),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
                         }
                     } else {

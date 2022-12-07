@@ -181,14 +181,14 @@ class UsersAPI{
                 ) {
                     if (response.body() != null) {
                         SessionManager(context).access_token = null
-                        SessionManager(context).user = null
+//                        SessionManager(context).user = null
                         onResult(response.body())
                     } else {
                         val data: String = response.errorBody()!!.string()
                         try {
                             val jObjError = JSONObject(data)
                             SessionManager(context).access_token = null
-                            SessionManager(context).user = null
+//                            SessionManager(context).user = null
                             val map = jObjError.getString("message")
                             Toast.makeText(
                                 context, map.toString(),

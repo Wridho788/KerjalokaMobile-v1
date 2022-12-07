@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobNearMe
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobBookmarkBinding
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
-import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobPage.IJobPage
@@ -21,7 +20,7 @@ import com.google.android.gms.location.LocationServices
 
 class JobNearmeFragment : Fragment(), IJobPage {
     private lateinit var binding: FragmentJobBookmarkBinding
-    private var listData : List<SearchJobModel> = listOf()
+    private var listData: List<SearchJobModel> = listOf()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
 
@@ -36,25 +35,29 @@ class JobNearmeFragment : Fragment(), IJobPage {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
         RefreshData()
 
     }
-    override fun RefreshData(){
+
+    override fun RefreshData() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
 
-            val latitude = it.latitude.toString()
-            val longtitude = it.longitude.toString()
+            var latitude = it.latitude.toString()
+            var longtitude = it.longitude.toString()
+            Log.d("lokasi latitude", latitude.toString())
+            Log.d("lokasi longtitude", longtitude.toString())
+
             JobAPI().getNearJob(latitude, longtitude, context) {
                 if (it != null) {
                     listData = it.data
                     binding.spinner.visibility = View.GONE
                     binding.recycleview.visibility = View.VISIBLE
 
-                    binding.recycleview?.apply {
+                    binding.recycleview.apply {
                         adapter = JobAdapter(1, listData, context, this@JobNearmeFragment, null)
                         layoutManager = LinearLayoutManager(activity)
                     }
@@ -70,9 +73,9 @@ class JobNearmeFragment : Fragment(), IJobPage {
         ft.commit()
     }
 
-    override fun BookmarkJob(ListNo : Int, JobNo: Long, Index: Int) {
+    override fun BookmarkJob(ListNo: Int, JobNo: Long, Index: Int) {
         JobAPI().BookmarkJob(JobNo, !listData[Index].bookmarked, context) {
-            if(it != null) {
+            if (it != null) {
                 if (it.code == 210) {
                     listData[Index].bookmarked = !listData[Index].bookmarked
                     this.RefreshData()

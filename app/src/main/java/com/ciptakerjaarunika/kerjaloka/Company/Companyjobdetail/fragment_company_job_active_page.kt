@@ -112,9 +112,20 @@ class fragment_company_job_active_page : Fragment() {
 //                    Log.d("analytic", it.toString())
 //                }
 //            }
+            val sdf = SimpleDateFormat("dd-MMMM-yyyy")
+
+            if (jobData?.createdOn != null) {
+                var dateInput = sdf.parse(jobData?.createdOn!!)
+                jobInput?.text = "Diubah pada : " + dateInput?.toString()
+            }
+
+            if (jobData?.expired != null) {
+                var dateExpired = sdf.parse(jobData?.expired!!)
+
+                jobExpired?.text = "Kadaluarsa : " + dateExpired?.toString()
+            }
+
             jobTitle?.text = jobData?.jobPosition
-            jobInput?.text = "Diubah pada : " + jobData?.createdOn
-            jobExpired?.text = "Kadaluarsa : " + jobData?.expired
             jobAuth?.text = "Oleh : " + jobData?.createdBy
 
             var location = ""
@@ -139,7 +150,7 @@ class fragment_company_job_active_page : Fragment() {
                     jobReq?.text = Html.fromHtml(jobData?.jobDescription)
                 }
             } else {
-                jobReq?.setText("")
+                jobReq?.text = ""
             }
             if (jobData?.jobSalaryMin != null && jobData?.jobSalaryMin != null) {
                 if (jobData?.jobSalaryMin == null) {

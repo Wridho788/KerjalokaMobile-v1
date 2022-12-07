@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.Global
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ciptakerjaarunika.kerjaloka.MainActivity
@@ -17,11 +18,15 @@ class DeactivatedAccount : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDeactivatedAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var context = baseContext
 
-        if (SessionManager(baseContext).user?.userNo!! != null) {
+        binding.spinnerLogin.visibility = View.VISIBLE
+
+        if (SessionManager(context).user != null) {
+            binding.spinnerLogin.visibility = View.GONE
             binding.btnLogout.setOnClickListener {
-                ProfileAPI().Logout(SessionManager(baseContext).device_token, baseContext) {
-                    val intent = Intent(baseContext, MainActivity::class.java)
+                ProfileAPI().Logout(SessionManager(context).device_token, context) {
+                    val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                 }
             }
@@ -34,10 +39,12 @@ class DeactivatedAccount : AppCompatActivity() {
             }
 
             binding.activated.setOnClickListener {
-                ProfileAPI().GetReactivateAccount(baseContext) {
+                binding.spinnerLogin.visibility = View.VISIBLE
+                ProfileAPI().GetReactivateAccount(context) {
                     if (it != null) {
-                        Toast.makeText(baseContext, "Reactivate Account", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(baseContext, MainActivity::class.java)
+                        binding.spinnerLogin.visibility = View.GONE
+                        Toast.makeText(context, "Reactivate Account", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(context, MainActivity::class.java)
                         startActivity(intent)
                     }
                 }
@@ -48,11 +55,9 @@ class DeactivatedAccount : AppCompatActivity() {
                 sheet.show(supportFragmentManager, "terminate")
             }
         } else {
-            val intent = Intent(baseContext, MainActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
         }
-
-
     }
 
 }

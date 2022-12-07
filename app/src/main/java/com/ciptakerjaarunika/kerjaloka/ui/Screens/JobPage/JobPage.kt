@@ -170,13 +170,18 @@ class JobPage : Fragment(), IJobPage {
     fun getNearJob() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
+            var latitude = it.latitude.toString()
+            var longitude = it.longitude.toString()
+            Log.d("lokasi latitude", latitude.toString())
+            Log.d("lokasi longtitude", longitude.toString())
+
             if (it != null) {
                 if (!it.latitude.toString().isNullOrEmpty() && !it.longitude.toString()
                         .isNullOrEmpty()
                 ) {
-                    nearJobDone()
-                    var latitude = it.latitude.toString()
-                    var longitude = it.longitude.toString()
+//                    nearJobDone()
+//                    var latitude = it.latitude.toString()
+//                    var longitude = it.longitude.toString()
                     JobAPI().getNearJob(latitude, longitude, context) {
                         nearJobDone()
                         if (it != null && it.data != null && it.data.size != 0) {
