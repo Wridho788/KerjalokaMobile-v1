@@ -65,7 +65,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/spinnerInterviw"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
@@ -78,7 +79,7 @@
             android:id="@+id/recyclerViewSection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
 
             tools:listitem="@layout/message_section" />
     </LinearLayout>

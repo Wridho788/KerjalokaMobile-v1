@@ -59,22 +59,23 @@ import java.io.File
 import java.util.*
 
 
-class ChatPage(var sectionName: String,
-               var sectionNo : Int?,
-               val jobNo : Long?,
-               val Receiver : Long,
-               val logo: String?,
-               val jobPosition : String?)
-    :  Fragment(), PositionOnBottom {
+class ChatPage(
+    var sectionName: String,
+    var sectionNo: Int?,
+    val jobNo: Long?,
+    val Receiver: Long,
+    val logo: String?,
+    val jobPosition: String?
+) : Fragment(), PositionOnBottom {
 
-    private var chatModel : chat_model? = null
-    private lateinit var recyclerView : RecyclerView;
+    private var chatModel: chat_model? = null
+    private lateinit var recyclerView: RecyclerView
     private lateinit var hubConnection: HubConnection
-    private var onBottom : Boolean = false;
-    private lateinit var binding : ActivityMainBinding
-    private var MY_CAMERA_REQUEST_CODE :Int = 100
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
-    private lateinit var activityResultCameraLauncher : ActivityResultLauncher<Intent>
+    private var onBottom: Boolean = false
+    private lateinit var binding: ActivityMainBinding
+    private var MY_CAMERA_REQUEST_CODE: Int = 100
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var activityResultCameraLauncher: ActivityResultLauncher<Intent>
     private lateinit var defaultImagePicker: BasicImagePicker
 
     private var downloadManager: DownloadManager? = null
@@ -85,9 +86,16 @@ class ChatPage(var sectionName: String,
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.bottomNavigationView.visibility = View.GONE
-        hubConnection = HubConnectionBuilder.create(config().portAddress+"/ws/chat").build()
-        if(SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
+        hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
+        if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
             hubConnection.start()
+            hubConnection.on(
+                "connected",
+                { res ->
+                    val userNo = SessionManager(context).user!!.userNo.toString()
+                    hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
+                }, String::class.java
+            )
         }
 
         initRxImagePicker()
@@ -96,6 +104,7 @@ class ChatPage(var sectionName: String,
     private fun initRxImagePicker() {
         defaultImagePicker = RxImagePicker.create(BasicImagePicker::class.java)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun pickGallery() {
         context?.let {
@@ -120,11 +129,9 @@ class ChatPage(var sectionName: String,
                 defaultImagePicker.openCamera(it)
                     .subscribe { result -> onPickUriSuccess(result.uri) }
             }
-        }
-        catch (e : Throwable){
+        } catch (e: Throwable) {
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-        }
-        catch (e : InterruptedException){
+        } catch (e: InterruptedException) {
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
         }
     }
@@ -133,10 +140,11 @@ class ChatPage(var sectionName: String,
     private fun onPickUriSuccess(uri: Uri) {
         val pathName = context?.let { getPathFromUri(it, uri) }
         Log.d("Path", pathName.toString())
-        if(pathName != null) {
+        if (pathName != null) {
             uploadImage(pathName)
         }
     }
+
     private fun getPathFromUri(context: Context, contentUri: Uri): String {
         var cursor: Cursor? = null
         return try {
@@ -151,16 +159,17 @@ class ChatPage(var sectionName: String,
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun uploadImage(imagePath : String){
+    private fun uploadImage(imagePath: String) {
 
-        val file = File(imagePath?:"")
+        val file = File(imagePath)
         val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-        val body: MultipartBody.Part = MultipartBody.Part.createFormData("photo", file.name, requestFile)
+        val body: MultipartBody.Part =
+            MultipartBody.Part.createFormData("photo", file.name, requestFile)
         InterviewAPI().UploadChatPhoto(context, body) { res ->
             if (res != null) {
-                if(res.code == 210){
+                if (res.code == 210) {
                     val sender = SessionManager(context).user!!.userNo.toString()
-                    val receiver = listOf<Long>(Receiver);
+                    val receiver = listOf<Long>(Receiver)
                     hubConnection.send(
                         "SendMessage",
                         sectionNo,
@@ -171,7 +180,7 @@ class ChatPage(var sectionName: String,
                         MessageType.ImageMessage.type.toString().toInt(),
                         res.data.resultFileName
                     )
-                } else{
+                } else {
                     Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -188,17 +197,17 @@ class ChatPage(var sectionName: String,
         val titlePage = itemView.findViewById<TextView>(R.id.title)
         titlePage.text = sectionName
 
-            val description = itemView.findViewById<TextView>(R.id.description)
-            description.text = jobPosition
+        val description = itemView.findViewById<TextView>(R.id.description)
+        description.text = jobPosition
 
         val backButton = itemView.findViewById<ImageButton>(R.id.backButton)
         val cameraButton = itemView.findViewById<ImageButton>(R.id.openCamera)
 
         val videoCallButton = itemView.findViewById<ImageButton>(R.id.video_call_btn)
-        videoCallButton?.setOnClickListener{
-            if(context!= null) {
+        videoCallButton?.setOnClickListener {
+            if (context != null) {
                 val roomId = SessionManager(context).user?.userNo.toString() + Receiver.toString()
-                val userInfo = JitsiMeetUserInfo();
+                val userInfo = JitsiMeetUserInfo()
 
                 userInfo.email = SessionManager(context).user?.email
                 userInfo.displayName = SessionManager(context).user?.userFullname
@@ -231,16 +240,19 @@ class ChatPage(var sectionName: String,
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val data = it.data
                 val fileUri: Uri? = data?.data
-                val pathName = fileUri?.let { it1 -> context?.let { it2 -> PathUtil().GetFilePath(it1, it2) } }
+                val pathName =
+                    fileUri?.let { it1 -> context?.let { it2 -> PathUtil().GetFilePath(it1, it2) } }
 
-                val file = File(pathName?:"")
-                val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                val body: MultipartBody.Part = MultipartBody.Part.createFormData("file", file.name, requestFile)
+                val file = File(pathName ?: "")
+                val requestFile: RequestBody =
+                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val body: MultipartBody.Part =
+                    MultipartBody.Part.createFormData("file", file.name, requestFile)
                 InterviewAPI().UploadChatFile(context, body) { res ->
                     if (res != null) {
-                        if(res.code == 210){
+                        if (res.code == 210) {
                             val sender = SessionManager(context).user!!.userNo.toString()
-                            val receiver = listOf<Long>(Receiver);
+                            val receiver = listOf<Long>(Receiver)
                             hubConnection.send(
                                 "SendMessage",
                                 sectionNo,
@@ -251,7 +263,7 @@ class ChatPage(var sectionName: String,
                                 MessageType.FileMessage.type.toString().toInt(),
                                 res.data.resultFileName
                             )
-                        } else{
+                        } else {
                             Toast.makeText(context, res.message, Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -259,31 +271,33 @@ class ChatPage(var sectionName: String,
             }
         }
 
-        cameraButton.setOnClickListener{
+        cameraButton.setOnClickListener {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED
-            ){
-                activity?.let { it1 -> ActivityCompat.requestPermissions(it1,listOf(Manifest.permission.CAMERA).toTypedArray(),
-                        id + context!!.resources.getInteger(R.integer.ChatPickCamera))
-                };
-            }
-            else {
+            ) {
+                activity?.let { it1 ->
+                    ActivityCompat.requestPermissions(
+                        it1, listOf(Manifest.permission.CAMERA).toTypedArray(),
+                        id + context!!.resources.getInteger(R.integer.ChatPickCamera)
+                    )
+                }
+            } else {
                 pickCamera()
             }
         }
 
 
-        if(activity != null) {
+        if (activity != null) {
             Glide.with(itemView.context)
                 .load(config().portAddress + "/photo/Profile/" + logo).fitCenter()
                 .into(itemView.findViewById<ImageView>(R.id.userPhoto))
         }
 
-        backButton.setOnClickListener{
+        backButton.setOnClickListener {
             var user = SessionManager(context).user
             val isCompany = user != null && user.roleNo == 2
 
-            if(isCompany) {
+            if (isCompany) {
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
                 InterviewAPI().CompanyGetInterviewList(context) {
                     if (it != null) {
@@ -298,10 +312,9 @@ class ChatPage(var sectionName: String,
                         }
                     }
                 }
-            }
-            else{
+            } else {
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,  InterviewPage(), "InterviewPage")
+                ft.replace(id, InterviewPage(), "InterviewPage")
                 ft.commit()
             }
 
@@ -311,7 +324,7 @@ class ChatPage(var sectionName: String,
             var user = SessionManager(context).user
             val isCompany = user != null && user.roleNo == 2
 
-            if(isCompany) {
+            if (isCompany) {
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
                 InterviewAPI().CompanyGetInterviewList(context) {
                     if (it != null) {
@@ -327,11 +340,10 @@ class ChatPage(var sectionName: String,
                         }
                     }
                 }
-            }
-            else{
-                hubConnection.stop();
+            } else {
+                hubConnection.stop()
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,  InterviewPage(), "InterviewPage")
+                ft.replace(id, InterviewPage(), "InterviewPage")
                 ft.commit()
             }
         }
@@ -354,13 +366,14 @@ class ChatPage(var sectionName: String,
                 hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
 
-            }, String::class.java)
+            }, String::class.java
+        )
 
         hubConnection.on(
             "incomingCall",
             { data ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id,  IncomingCallPage(data), "IncomingCall")
+                ft.replace(id, IncomingCallPage(data), "IncomingCall")
                 ft.addToBackStack("ChatPage")
                 ft.commit()
             },
@@ -375,8 +388,9 @@ class ChatPage(var sectionName: String,
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
                 activity?.runOnUiThread(Runnable {
                     recyclerView.adapter?.notifyDataSetChanged()
-                    if(onBottom) {
-                         recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
+                    if (onBottom) {
+                        recyclerView.adapter?.itemCount?.minus(1)
+                            ?.let { recyclerView.scrollToPosition(it) }
                     }
                 })
             },
@@ -386,16 +400,16 @@ class ChatPage(var sectionName: String,
         var LinearLayoutManager = LinearLayoutManager(activity)
         val thisContext = this
 
-        recyclerView?.apply {
+        recyclerView.apply {
             layoutManager = LinearLayoutManager
-            adapter = ChatAdapter( context, jobNo, Receiver, thisContext)
+            adapter = ChatAdapter(context, jobNo, Receiver, thisContext)
         }
 
-        recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
+        recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it) }
 
-        var message = itemView.findViewById<EditText>(R.id.txt_message);
-        var img_btnsend = itemView.findViewById<ImageView>(R.id.img_btnsend);
-        var btn_send = itemView.findViewById<CardView>(R.id.btn_send);
+        var message = itemView.findViewById<EditText>(R.id.txt_message)
+        var img_btnsend = itemView.findViewById<ImageView>(R.id.img_btnsend)
+        var btn_send = itemView.findViewById<CardView>(R.id.btn_send)
 
 
 //        Timer().scheduleAtFixedRate(object : TimerTask() {
@@ -405,112 +419,143 @@ class ChatPage(var sectionName: String,
 //                })
 //            }
 //        }, 0, 1000)
-                message.setOnClickListener(){
-                    Timer().schedule(object : TimerTask() {
-                        override fun run() {
-                            activity?.runOnUiThread(Runnable {
-                                recyclerView.adapter?.itemCount?.minus(1)
-                                    ?.let { recyclerView.scrollToPosition(it) };
-                            })
-                        }
-                    }, 300)
+        message.setOnClickListener {
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    activity?.runOnUiThread(Runnable {
+                        recyclerView.adapter?.itemCount?.minus(1)
+                            ?.let { recyclerView.scrollToPosition(it) }
+                    })
                 }
-                message.setOnFocusChangeListener { view, hasFocus ->
-                    if (hasFocus) {
-                        Timer().schedule(object : TimerTask() {
-                            override fun run() {
-                                activity?.runOnUiThread(Runnable {
-                                    recyclerView.adapter?.itemCount?.minus(1)
-                                        ?.let { recyclerView.scrollToPosition(it) };
-                                })
+            }, 300)
+        }
+        message.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                Timer().schedule(object : TimerTask() {
+                    override fun run() {
+                        activity?.runOnUiThread(Runnable {
+                            recyclerView.adapter?.itemCount?.minus(1)
+                                ?.let { recyclerView.scrollToPosition(it) }
+                        })
+                    }
+                }, 300)
+            }
+        }
+        btn_send.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+                != PackageManager.PERMISSION_GRANTED
+            ) {
+                activity?.let { it1 ->
+                    ActivityCompat.requestPermissions(
+                        it1, listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                        id + context!!.resources.getInteger(R.integer.ChatUploadFile)
+                    )
+                }
+            } else {
+                var intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = "*/*"
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
+
+                val requestIntent = Intent.createChooser(intent, "Choose a file")
+                activityResultLauncher.launch(requestIntent)
+            }
+        }
+        message.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun afterTextChanged(s: Editable) {
+                if (!message.text.toString().isNullOrEmpty() && !message.text.toString()
+                        .isNullOrBlank() && message.text.toString() != ""
+                ) {
+                    img_btnsend.setImageResource(R.drawable.icon_send)
+                    img_btnsend.rotation = -25f
+                    btn_send.setOnClickListener {
+                        val sender = SessionManager(context).user!!.userNo.toString()
+                        val message =
+                            itemView.findViewById<EditText>(R.id.txt_message).text.toString()
+
+                        val receiver = listOf<Long>(Receiver)
+                        if (!message.isNullOrEmpty() && !message.isNullOrBlank() && message != "") {
+                            Log.d("connection", hubConnection.connectionState.toString())
+                            if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
+                                hubConnection.start()
+                                hubConnection.on(
+                                    "connected",
+                                    { res ->
+                                        val userNo = SessionManager(context).user!!.userNo.toString()
+                                        hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
+                                    }, String::class.java
+                                )
+                                hubConnection.send(
+                                    "SendMessage",
+                                    sectionNo,
+                                    sender,
+                                    message,
+                                    receiver,
+                                    jobNo,
+                                    MessageType.NormalMessage.type.toString().toInt(),
+                                    null
+                                )
+                            } else {
+                                Toast.makeText(context, "InActive", Toast.LENGTH_SHORT).show()
                             }
-                        }, 300)
+//                            if (hubConnection.connectionState != HubConnectionState.CONNECTED){
+//
+//                            } else {
+//
+//                            }
+                            Timer().schedule(object : TimerTask() {
+                                override fun run() {
+                                    activity?.runOnUiThread(Runnable {
+                                        recyclerView.adapter?.itemCount?.minus(1)
+                                            ?.let { recyclerView.scrollToPosition(it) }
+                                    })
+                                }
+                            }, 500)
+                        }
+                        CLoseKeyboard()
+
+                        itemView.findViewById<EditText>(R.id.txt_message).text = null
+                        recyclerView.adapter?.notifyDataSetChanged()
+                    }
+                } else {
+                    img_btnsend.setImageResource(R.drawable.ic_attach_file)
+                    img_btnsend.rotation = 45f
+                    btn_send.setOnClickListener {
+                        if (ContextCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            )
+                            != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            activity?.let { it1 ->
+                                ActivityCompat.requestPermissions(
+                                    it1,
+                                    listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                                    id + context!!.resources.getInteger(R.integer.ChatUploadFile)
+                                )
+                            }
+                        } else {
+                            var intent = Intent(Intent.ACTION_GET_CONTENT)
+                            intent.type = "*/*"
+                            intent.addCategory(Intent.CATEGORY_OPENABLE)
+
+                            val requestIntent = Intent.createChooser(intent, "Choose a file")
+                            activityResultLauncher.launch(requestIntent)
+                        }
                     }
                 }
-                btn_send.setOnClickListener{
-                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED
-                    ){
-                        activity?.let { it1 ->
-                            ActivityCompat.requestPermissions(it1,listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
-                                id + context!!.resources.getInteger(R.integer.ChatUploadFile))
-                        };
-                    }
-                    else{
-                        var intent = Intent(Intent.ACTION_GET_CONTENT);
-                        intent.type = "*/*";
-                        intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-                        val requestIntent = Intent.createChooser(intent, "Choose a file");
-                        activityResultLauncher.launch(requestIntent)
-                    }
-                }
-                message.addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-
-                    @SuppressLint("NotifyDataSetChanged")
-                    override fun afterTextChanged(s: Editable) {
-                        if(!message.text.toString().isNullOrEmpty() && !message.text.toString().isNullOrBlank() && message.text.toString() != ""){
-                            img_btnsend.setImageResource(R.drawable.icon_send);
-                            img_btnsend.rotation=-25f
-                            btn_send.setOnClickListener{
-                                val sender = SessionManager(context).user!!.userNo.toString()
-                                val message = itemView.findViewById<EditText>(com.ciptakerjaarunika.kerjaloka.R.id.txt_message).text.toString()
-
-                                val receiver = listOf<Long>(Receiver);
-                                if(!message.isNullOrEmpty() && !message.isNullOrBlank() && message != "") {
-                                    hubConnection.send(
-                                        "SendMessage",
-                                        sectionNo,
-                                        sender,
-                                        message,
-                                        receiver,
-                                        jobNo,
-                                        MessageType.NormalMessage.type.toString().toInt(),
-                                        null
-                                    )
-                                    Timer().schedule(object : TimerTask() {
-                                        override fun run() {
-                                            activity?.runOnUiThread(Runnable {
-                                                recyclerView.adapter?.itemCount?.minus(1)?.let { recyclerView.scrollToPosition(it)};
-                                            })
-                                        }
-                                    }, 500)
-                                }
-                                CLoseKeyboard()
-
-                                itemView.findViewById<EditText>(R.id.txt_message).text = null
-                                recyclerView?.adapter?.notifyDataSetChanged()
-                            }
-                        }
-                        else{
-                            img_btnsend.setImageResource(R.drawable.ic_attach_file);
-                            img_btnsend.rotation=45f
-                            btn_send.setOnClickListener{
-                                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-                                    != PackageManager.PERMISSION_GRANTED
-                                ){
-                                    activity?.let { it1 ->
-                                        ActivityCompat.requestPermissions(it1,listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
-                                            id + context!!.resources.getInteger(R.integer.ChatUploadFile))
-                                    };
-                                }
-                                else{
-                                    var intent = Intent(Intent.ACTION_GET_CONTENT);
-                                    intent.type = "*/*";
-                                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-
-                                    val requestIntent = Intent.createChooser(intent, "Choose a file");
-                                    activityResultLauncher.launch(requestIntent)
-                                }
-                            }
-                        }
-                    }
-                })
+            }
+        })
     }
-    fun CLoseKeyboard(){
+
+    fun CLoseKeyboard() {
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
@@ -529,7 +574,10 @@ class ChatPage(var sectionName: String,
     override fun downloadFile(file: Messages) {
         Toast.makeText(context, "Downloading File...", Toast.LENGTH_SHORT).show()
 
-        Log.d("url","${config().portAddress}/chat/file/download?chatMessageNo=${file.chatMessageNo}&fileName=${file.fileName}")
+        Log.d(
+            "url",
+            "${config().portAddress}/chat/file/download?chatMessageNo=${file.chatMessageNo}&fileName=${file.fileName}"
+        )
         val request =
             DownloadManager.Request(
                 Uri.parse(
@@ -553,31 +601,30 @@ class ChatPage(var sectionName: String,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == id + context!!.resources.getInteger(R.integer.ChatUploadFile)) {
-            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
-                var intent = Intent(Intent.ACTION_GET_CONTENT);
-                intent.type = "*/*";
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
+        if (requestCode == id + context!!.resources.getInteger(R.integer.ChatUploadFile)) {
+            if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
+                var intent = Intent(Intent.ACTION_GET_CONTENT)
+                intent.type = "*/*"
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
 
-                val requestIntent = Intent.createChooser(intent, "Choose a file");
+                val requestIntent = Intent.createChooser(intent, "Choose a file")
                 activityResultLauncher.launch(requestIntent)
-            }
-            else{
+            } else {
                 Toast.makeText(activity, "Perlu akses untuk upload file", Toast.LENGTH_SHORT).show()
             }
-        }
-        else if(requestCode == id + context!!.resources.getInteger(R.integer.ChatPickCamera)) {
-            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
+        } else if (requestCode == id + context!!.resources.getInteger(R.integer.ChatPickCamera)) {
+            if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
                 pickCamera()
-            }
-            else{
-                Toast.makeText(activity, "Perlu akses untuk membuka Camera", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(activity, "Perlu akses untuk membuka Camera", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
 }
-interface PositionOnBottom{
-    fun isOnBottom(isOnBottom : Boolean)
-    fun downloadFile(fileName : Messages)
+
+interface PositionOnBottom {
+    fun isOnBottom(isOnBottom: Boolean)
+    fun downloadFile(fileName: Messages)
 }
 
