@@ -33,6 +33,7 @@ import java.util.*
 class company_interview_byjob(val SectionDetail: company_interview_list, val jobNo: Long?) :
     Fragment(), CellClickListener {
     private var isCompany: Boolean = true
+
     //    private var isLoading: Boolean = true
     private lateinit var recyclerView: RecyclerView
     private var Context = this
@@ -42,12 +43,11 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        hubConnection = HubConnectionBuilder.create(config().portAddress + "ws/chat").build()
-//        if (hubConnection.connectionState != null) {
+        hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
         if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
             hubConnection.start()
-            hubConnection.on("connected",
+            hubConnection.on(
+                "connected",
                 { res ->
                     binding.spinnerInterviewByJob.visibility = View.GONE
                     val userNo = SessionManager(context).user!!.userNo.toString()
@@ -55,9 +55,6 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
                 }, String::class.java
             )
         }
-//        } else {
-//            reconnect()
-//        }
     }
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
@@ -66,12 +63,12 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
             "getmessage", { res: chat_data ->
                 SessionManager(context).chatData = res
                 activity?.runOnUiThread {
-//                    binding.spinnerInterviewByJob.visibility = View.GONE
-//                    binding.recyclerViewSection.visibility = VISIBLE
+                    binding.spinnerInterviewByJob.visibility = View.GONE
+                    binding.recyclerViewSection.visibility = VISIBLE
 
                     binding.recyclerViewSection.adapter?.notifyDataSetChanged()
                 }
-                Log.d("hubConnection response chat", res.toString())
+                Log.d("hubConnesction response chat", res.toString())
             },
             chat_data::class.java
         )
@@ -134,10 +131,10 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
         })
 
         view?.findViewById<TextView>(R.id.titleToolbar)!!.text = SectionDetail.jobPosition
-        var backButton = view?.findViewById<ImageButton>(R.id.backButton) as ImageButton
-        backButton.visibility = VISIBLE
+        val backButton = view?.findViewById<ImageButton>(R.id.backButton)
+        backButton?.visibility = VISIBLE
 
-        backButton.setOnClickListener {
+        backButton?.setOnClickListener {
             hubConnection.stop()
             val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
             ft.replace(id, InterviewPage(), "InterviewPage")

@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         AUTHAPI().CheckLogin(baseContext, this) {
 
             var context = baseContext
-            hubConnection = HubConnectionBuilder.create(config().portAddress + "ws/chat").build()
+            hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
             if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
                 hubConnection.start()
 
@@ -92,7 +92,6 @@ class MainActivity : AppCompatActivity() {
                     "getmessage",
                     { res: chat_data ->
                         Log.d("getmessage Res", res.toString())
-
                         SessionManager(context).chatData = res
                     },
                     chat_data::class.java

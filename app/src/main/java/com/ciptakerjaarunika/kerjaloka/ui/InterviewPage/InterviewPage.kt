@@ -36,7 +36,6 @@ import com.microsoft.signalr.HubConnectionState
 import java.util.*
 
 class InterviewPage : Fragment(), CellClickListener {
-    // TODO: Rename and change types of parameters
     private var isCompany: Boolean = true
     private var Context = this
     private var recyclerView: RecyclerView? = null
@@ -45,26 +44,25 @@ class InterviewPage : Fragment(), CellClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        hubConnection = HubConnectionBuilder.create(config().portAddress + "ws/chat").build()
+        hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
         if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
             hubConnection.start()
         }
-
     }
 
     private fun getCompanyData() {
         view?.findViewById<TextView>(R.id.titleToolbar)!!.text = "Interview"
         view?.findViewById<ImageButton>(R.id.backButton)!!.visibility = GONE
         val spinner = view?.findViewById<LinearLayout>(R.id.spinnerInterviw)
-        var search = view?.findViewById<EditText>(R.id.searchInput)
+        val search = view?.findViewById<EditText>(R.id.searchInput)
         search?.hint = "Cari Lowongan"
 
         InterviewAPI().CompanyGetInterviewList(context) {
             if (it != null) {
                 if (it.data.size == 0) {
-                    spinner?.visibility = View.GONE
+                    spinner?.visibility = GONE
                 } else {
-                    spinner?.visibility = View.GONE
+                    spinner?.visibility = GONE
                     recyclerView?.apply {
                         layoutManager = LinearLayoutManager(activity)
                         adapter = company_interview_adapter(it.data, Context, context)
@@ -114,9 +112,9 @@ class InterviewPage : Fragment(), CellClickListener {
         super.onViewCreated(itemView, savedInstanceState)
         var user = SessionManager(context).user
 
-
-        var spinner = view?.findViewById<LinearLayout>(R.id.spinnerInterviw)
-        recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewSection)
+        val spinner = view?.findViewById<LinearLayout>(R.id.spinnerInterviw)
+        recyclerView = view?.findViewById(R.id.recyclerViewSection)
+        val layout_section = view?.findViewById<LinearLayout>(R.id.layout_section)
 
         hubConnection.on("connected",
             { res ->
@@ -133,11 +131,11 @@ class InterviewPage : Fragment(), CellClickListener {
                 Log.d("Chat data : ", res.toString())
                 SessionManager(context).chatData = res
 
-                activity?.runOnUiThread(Runnable {
+                activity?.runOnUiThread {
                     recyclerView?.adapter?.notifyDataSetChanged()
                     spinner?.visibility = GONE
-                    recyclerView?.visibility = VISIBLE
-                })
+                    layout_section?.visibility = VISIBLE
+                }
             },
             chat_data::class.java
         )

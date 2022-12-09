@@ -39,7 +39,10 @@ import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
-import com.ciptakerjaarunika.kerjaloka.model.Interview.*
+import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
+import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
+import com.ciptakerjaarunika.kerjaloka.model.Interview.incoming_call_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultGalleryMimes
 import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
@@ -68,7 +71,7 @@ class ChatPage(
     val jobPosition: String?
 ) : Fragment(), PositionOnBottom {
 
-    private var chatModel: chat_model? = null
+//    private var chatModel: chat_model? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var hubConnection: HubConnection
     private var onBottom: Boolean = false
@@ -347,10 +350,7 @@ class ChatPage(
                 ft.commit()
             }
         }
-
-
-        //recyclerView.scrollToPosition(section.Messages.size-1)
-        recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewChat) as RecyclerView
+        recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewChat)
 //        view?.setOnClickListener {
 //            CLoseKeyboard()
 //        }
@@ -359,9 +359,9 @@ class ChatPage(
 //            Log.d("CLick", "recyle")
 //            CLoseKeyboard()
 //        }
-        hubConnection.on("connected",
+        hubConnection.on(
+            "connected",
             { res ->
-                Log.d("Websocket Response : ", res.toString())
                 val userNo = SessionManager(context).user!!.userNo.toString()
                 hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
@@ -463,35 +463,25 @@ class ChatPage(
                 activityResultLauncher.launch(requestIntent)
             }
         }
-        message.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            message.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
 
-            @SuppressLint("NotifyDataSetChanged")
-            override fun afterTextChanged(s: Editable) {
-                if (!message.text.toString().isNullOrEmpty() && !message.text.toString()
-                        .isNullOrBlank() && message.text.toString() != ""
-                ) {
-                    img_btnsend.setImageResource(R.drawable.icon_send)
-                    img_btnsend.rotation = -25f
-                    btn_send.setOnClickListener {
-                        val sender = SessionManager(context).user!!.userNo.toString()
-                        val message =
-                            itemView.findViewById<EditText>(R.id.txt_message).text.toString()
+                @SuppressLint("NotifyDataSetChanged")
+                override fun afterTextChanged(s: Editable) {
+                    if (!message.text.toString().isNullOrEmpty() && !message.text.toString()
+                            .isNullOrBlank() && message.text.toString() != ""
+                    ) {
+                        img_btnsend.setImageResource(R.drawable.icon_send)
+                        img_btnsend.rotation = -25f
+                        btn_send.setOnClickListener {
+                            val sender = SessionManager(context).user!!.userNo.toString()
+                            val message =
+                                itemView.findViewById<EditText>(R.id.txt_message).text.toString()
 
-                        val receiver = listOf<Long>(Receiver)
-                        if (!message.isNullOrEmpty() && !message.isNullOrBlank() && message != "") {
-                            Log.d("connection", hubConnection.connectionState.toString())
-                            if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
-                                hubConnection.start()
-                                hubConnection.on(
-                                    "connected",
-                                    { res ->
-                                        val userNo = SessionManager(context).user!!.userNo.toString()
-                                        hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
-                                    }, String::class.java
-                                )
+                            val receiver = listOf<Long>(Receiver)
+                            if (!message.isNullOrEmpty() && !message.isNullOrBlank() && message != "") {
                                 hubConnection.send(
                                     "SendMessage",
                                     sectionNo,
@@ -502,57 +492,49 @@ class ChatPage(
                                     MessageType.NormalMessage.type.toString().toInt(),
                                     null
                                 )
-                            } else {
-                                Toast.makeText(context, "InActive", Toast.LENGTH_SHORT).show()
+                                Timer().schedule(object : TimerTask() {
+                                    override fun run() {
+                                        activity?.runOnUiThread(Runnable {
+                                            recyclerView.adapter?.itemCount?.minus(1)
+                                                ?.let { recyclerView.scrollToPosition(it) }
+                                        })
+                                    }
+                                }, 500)
                             }
-//                            if (hubConnection.connectionState != HubConnectionState.CONNECTED){
-//
-//                            } else {
-//
-//                            }
-                            Timer().schedule(object : TimerTask() {
-                                override fun run() {
-                                    activity?.runOnUiThread(Runnable {
-                                        recyclerView.adapter?.itemCount?.minus(1)
-                                            ?.let { recyclerView.scrollToPosition(it) }
-                                    })
-                                }
-                            }, 500)
+                            CLoseKeyboard()
+
+                            itemView.findViewById<EditText>(R.id.txt_message).text = null
+                            recyclerView.adapter?.notifyDataSetChanged()
                         }
-                        CLoseKeyboard()
-
-                        itemView.findViewById<EditText>(R.id.txt_message).text = null
-                        recyclerView.adapter?.notifyDataSetChanged()
-                    }
-                } else {
-                    img_btnsend.setImageResource(R.drawable.ic_attach_file)
-                    img_btnsend.rotation = 45f
-                    btn_send.setOnClickListener {
-                        if (ContextCompat.checkSelfPermission(
-                                requireContext(),
-                                Manifest.permission.READ_EXTERNAL_STORAGE
-                            )
-                            != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            activity?.let { it1 ->
-                                ActivityCompat.requestPermissions(
-                                    it1,
-                                    listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
-                                    id + context!!.resources.getInteger(R.integer.ChatUploadFile)
+                    } else {
+                        img_btnsend.setImageResource(R.drawable.ic_attach_file)
+                        img_btnsend.rotation = 45f
+                        btn_send.setOnClickListener {
+                            if (ContextCompat.checkSelfPermission(
+                                    requireContext(),
+                                    Manifest.permission.READ_EXTERNAL_STORAGE
                                 )
-                            }
-                        } else {
-                            var intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "*/*"
-                            intent.addCategory(Intent.CATEGORY_OPENABLE)
+                                != PackageManager.PERMISSION_GRANTED
+                            ) {
+                                activity?.let { it1 ->
+                                    ActivityCompat.requestPermissions(
+                                        it1,
+                                        listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                                        id + context!!.resources.getInteger(R.integer.ChatUploadFile)
+                                    )
+                                }
+                            } else {
+                                var intent = Intent(Intent.ACTION_GET_CONTENT)
+                                intent.type = "*/*"
+                                intent.addCategory(Intent.CATEGORY_OPENABLE)
 
-                            val requestIntent = Intent.createChooser(intent, "Choose a file")
-                            activityResultLauncher.launch(requestIntent)
+                                val requestIntent = Intent.createChooser(intent, "Choose a file")
+                                activityResultLauncher.launch(requestIntent)
+                            }
                         }
                     }
                 }
-            }
-        })
+            })
     }
 
     fun CLoseKeyboard() {
