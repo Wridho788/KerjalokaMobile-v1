@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.api.companyApplicant
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import org.json.JSONObject
@@ -145,6 +146,7 @@ fun InterviewSchedule(
 //
 //
 //                        )
+                        Log.d("error", message.toString())
                     } catch (e: Exception) {
                         Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                     }

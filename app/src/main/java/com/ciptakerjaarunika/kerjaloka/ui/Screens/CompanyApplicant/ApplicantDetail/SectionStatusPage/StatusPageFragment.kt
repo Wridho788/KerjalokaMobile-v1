@@ -1,6 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentStatusPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.UbahStatusFragment
 import java.util.*
+
 
 class StatusPageFragment(private val applicantNo: Long, private var applicationStatusNo: Int) :
     Fragment(), iStatusPage {
@@ -40,9 +43,9 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
         binding.btnStatus.setOnClickListener {
             ubahStatusModal()
         }
-        if (applicationStatusNo == ApplicanStatusType.ShortList.value){
+        if (applicationStatusNo == ApplicanStatusType.ShortList.value) {
             binding.statusChange.text = "Terpilih"
-        } else if (applicationStatusNo == ApplicanStatusType.Test.value){
+        } else if (applicationStatusNo == ApplicanStatusType.Test.value) {
             binding.statusChange.text = "Dalam Test"
         } else if (applicationStatusNo == ApplicanStatusType.Interview.value) {
             binding.statusChange.text = "Interview"
@@ -72,9 +75,9 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
         })
     }
 
-    fun ubahStatusModal(){
+    fun ubahStatusModal() {
         val sheet = UbahStatusFragment(this@StatusPageFragment)
-        activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "StatusFragment")}
+        activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "StatusFragment") }
     }
 
     override fun changeStatus(status: Int) {
@@ -82,10 +85,10 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
             binding.statusChange.text = "Terpilih"
             binding.sectionInterview.visibility = View.GONE
             binding.btnChangeStatus.setOnClickListener {
-                ShortlistStatus(context,applicantNo){
-                    if(it != null){
+                ShortlistStatus(context, applicantNo) {
+                    if (it != null) {
                         if (it.code == 210) {
-                             Log.d("response", it.toString())
+                            Log.d("response", it.toString())
                             activity?.onBackPressed()
                         }
                     }
@@ -95,8 +98,8 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
             binding.statusChange.text = "Dalam Test"
             binding.sectionInterview.visibility = View.GONE
             binding.btnChangeStatus.setOnClickListener {
-                TestStatus(context, applicantNo){
-                    if(it != null){
+                TestStatus(context, applicantNo) {
+                    if (it != null) {
                         if (it.code == 210) {
                             Log.d("response", it.toString())
                             activity?.onBackPressed()
@@ -107,10 +110,46 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
         } else if (status == ApplicanStatusType.Interview.value) {
             binding.statusChange.text = "Interview"
             binding.sectionInterview.visibility = View.VISIBLE
-            val locationInterview = binding.txtInputLocation.text.toString()
+            var locationInterview = binding.txtInputLocation.text.toString()
             val nameInterview = binding.txtInputInterviewer.text.toString()
             binding.btnChangeStatus.setOnClickListener {
+                val intents = Intent(Intent.ACTION_INSERT)
+                intents.data = CalendarContract.Events.CONTENT_URI
+                startActivity(intents)
 
+                val intent = Intent(Intent.ACTION_INSERT)
+                intent.type = "vnd.android.cursor.item/event"
+                intent.putExtra(CalendarContract.Events.TITLE, "Learn Android")
+                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Home suit home")
+                intent.putExtra(CalendarContract.Events.DESCRIPTION, "Download Examples")
+                // Setting dates
+
+                // Setting dates
+                val calDate = GregorianCalendar(2012, 10, 2)
+                intent.putExtra(
+                    CalendarContract.EXTRA_EVENT_BEGIN_TIME,
+                    calDate.timeInMillis
+                )
+                intent.putExtra(
+                    CalendarContract.EXTRA_EVENT_END_TIME,
+                    calDate.timeInMillis
+                )
+                // make it a full day event
+                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                // make it a recurring Event
+                intent.putExtra(
+                    CalendarContract.Events.RRULE,
+                    "FREQ=WEEKLY;COUNT=11;WKST=SU;BYDAY=TU,TH"
+                )
+                // Making it private and shown as busy
+                intent.putExtra(
+                    CalendarContract.Events.ACCESS_LEVEL,
+                    CalendarContract.Events.ACCESS_PRIVATE
+                )
+                intent.putExtra(
+                    CalendarContract.Events.AVAILABILITY,
+                    CalendarContract.Events.AVAILABILITY_BUSY
+                )
 //                val interviewSchedule = InterviewScheduleRequest(
 //                    applicantNo,
 //                )
@@ -128,8 +167,8 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
             binding.statusChange.text = "Diterima"
             binding.sectionInterview.visibility = View.GONE
             binding.btnChangeStatus.setOnClickListener {
-                AcceptedStatus(context, applicantNo){
-                    if(it != null){
+                AcceptedStatus(context, applicantNo) {
+                    if (it != null) {
                         if (it.code == 210) {
                             Log.d("response", it.toString())
                             activity?.onBackPressed()
@@ -141,8 +180,8 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
             binding.statusChange.text = "Ditolak"
             binding.sectionInterview.visibility = View.GONE
             binding.btnChangeStatus.setOnClickListener {
-                RejectedStatus(context, applicantNo){
-                    if(it != null){
+                RejectedStatus(context, applicantNo) {
+                    if (it != null) {
                         if (it.code == 210) {
                             Log.d("response", it.toString())
                             activity?.onBackPressed()
@@ -154,8 +193,8 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
             binding.statusChange.text = "CV Bank"
             binding.sectionInterview.visibility = View.GONE
             binding.btnChangeStatus.setOnClickListener {
-                CvbankStatus(context, applicantNo){
-                    if(it != null){
+                CvbankStatus(context, applicantNo) {
+                    if (it != null) {
                         if (it.code == 210) {
                             Log.d("response", it.toString())
                             activity?.onBackPressed()
@@ -173,6 +212,7 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
 
 
 }
-interface iStatusPage{
-   fun changeStatus(status: Int)
+
+interface iStatusPage {
+    fun changeStatus(status: Int)
 }

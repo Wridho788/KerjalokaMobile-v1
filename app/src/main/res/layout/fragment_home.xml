@@ -79,10 +79,15 @@
             <include
                 android:id="@+id/my_test_section"
                 layout="@layout/section_my_test" />
-
-            <include
+            <LinearLayout
                 android:id="@+id/my_interview_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+            <include
+                android:id="@+id/interviewSection"
                 layout="@layout/section_my_interview" />
+            </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
