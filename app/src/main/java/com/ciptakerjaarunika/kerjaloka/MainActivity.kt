@@ -44,7 +44,6 @@ import kotlin.Int
 import kotlin.IntArray
 import kotlin.String
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -83,14 +82,16 @@ class MainActivity : AppCompatActivity() {
                 hubConnection.on(
                     "connected",
                     { res ->
+                        Log.d("Connected Res", res)
                         val userNo = SessionManager(context).user!!.userNo.toString()
                         hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
                     }, String::class.java
                 )
 
-                hubConnection.on(
+                 hubConnection.on(
                     "getmessage",
                     { res: chat_data ->
+                        Log.d("getmessage Res", res.toString())
                         SessionManager(context).chatData = res
                     },
                     chat_data::class.java

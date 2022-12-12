@@ -23,12 +23,16 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.adapter.JobTestL
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.DataActiveJob
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
+import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.CompanyJobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 class fragment_company_job_active_page : Fragment() {
 
@@ -107,14 +111,25 @@ class fragment_company_job_active_page : Fragment() {
                 jobData = Gson().fromJson(descFromBundle, DataActiveJob::class.java)
             }
             Log.d("jobNo", jobData!!.jobNo.toString())
-//            CompanyJobAPI().GetCompanyAnalytic(context, 8, jobData?.jobNo!!){
-//                if (it != null) {
-//                    Log.d("analytic", it.toString())
-//                }
-//            }
+            CompanyJobAPI().GetCompanyAnalytic(context, 8, jobData?.jobNo!!.toLong()){
+                if (it != null) {
+                    Log.d("analytic", it.toString())
+                    jobView?.text = "${it.data.analytic.clickCount} views"
+                }
+            }
+
+            val localDateTime = LocalDateTime.parse(jobData?.createdOn.toString())
+            val localDateTimeExpired = LocalDateTime.parse(jobData?.expired.toString())
+
+            val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
+
+            val output = formatter.format(localDateTime)
+            val outputExpired = formatter.format(localDateTimeExpired)
+
+            jobInput?.text = "Diubah Pada : " + output.toString()
+            jobExpired?.text = "Kadaluarsa : " + outputExpired?.toString()
+
             jobTitle?.text = jobData?.jobPosition
-            jobInput?.text = "Diubah pada : " + jobData?.createdOn
-            jobExpired?.text = "Kadaluarsa : " + jobData?.expired
             jobAuth?.text = "Oleh : " + jobData?.createdBy
 
             var location = ""
@@ -124,11 +139,11 @@ class fragment_company_job_active_page : Fragment() {
                 location += "&#8226; ${it}<br/>"
                 listLocation = listOf(it)
             }
-            Log.d("location", listLocation.toString())
+//            Log.d("location", listLocation.toString())
             jobLoc?.text = Html.fromHtml(location)
 
-            jobView?.text = "0 views"
-            Log.d("jobdesc", jobData?.jobDescription.toString())
+
+//            Log.d("jobdesc", jobData?.jobDescription.toString())
             if (jobData?.jobDescription != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     jobReq?.text = Html.fromHtml(
@@ -139,7 +154,7 @@ class fragment_company_job_active_page : Fragment() {
                     jobReq?.text = Html.fromHtml(jobData?.jobDescription)
                 }
             } else {
-                jobReq?.setText("")
+                jobReq?.text = ""
             }
             if (jobData?.jobSalaryMin != null && jobData?.jobSalaryMin != null) {
                 if (jobData?.jobSalaryMin == null) {
@@ -209,7 +224,7 @@ class fragment_company_job_active_page : Fragment() {
             }
 
             val jobNo = jobData?.jobNo
-            Log.d("jobcity", jobData?.jobCity.toString())
+//            Log.d("jobcity", jobData?.jobCity.toString())
             draftJob?.setOnClickListener {
                 JobAPI().DraftJob(context, jobNo!!) {
                     if (it != null) {

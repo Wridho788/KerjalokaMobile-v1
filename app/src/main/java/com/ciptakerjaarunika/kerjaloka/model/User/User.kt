@@ -1,7 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.model.User
 
-import java.util.*
-
 data class User(
     var userNo: Long,
     var email: String,
@@ -16,6 +14,7 @@ data class User(
     var dataComplete: Boolean,
     var ownerStatus: Boolean?,
     var jobseekers: Jobseeker?,
+    val userGoogleId: String?,
     var authorized: Boolean?,
     var isDeleted: Boolean?,
     var isNewsletter: Boolean?,

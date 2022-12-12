@@ -4,11 +4,10 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewResponse
-import com.ciptakerjaarunika.kerjaloka.model.Data.CheckDocument
-import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
+import com.ciptakerjaarunika.kerjaloka.model.Data.*
 import com.ciptakerjaarunika.kerjaloka.model.Data.Field
-import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
+import com.ciptakerjaarunika.kerjaloka.model.Profile.Jobseeker.JobseekerFreshgraduatedResponse
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import org.json.JSONObject
@@ -44,7 +43,6 @@ class ProfileAPI {
             }
         )
     }
-
 
     //Get Jobseeker Skills
     interface jobseekerSkills {
@@ -127,6 +125,32 @@ class ProfileAPI {
                 }
             }
         )
+    }
+
+    //Get Freshgraduate Jobseeker
+    interface jobseekerFreshgraduated {
+        @GET("jobseeker/profile/noexp")
+        fun getJobseekerFreshGraduated(): Call<JobseekerFreshgraduatedResponse>
+    }
+
+    fun GetJobseekerFreshGraduated(
+        context: Context?, onResult: (JobseekerFreshgraduatedResponse?) -> Unit
+    ) {
+       val retrofit = ServiceBuilder(context).GET(jobseekerFreshgraduated::class.java)
+       retrofit.getJobseekerFreshGraduated().enqueue(
+           object : Callback<JobseekerFreshgraduatedResponse> {
+               override fun onResponse(
+                   call: Call<JobseekerFreshgraduatedResponse>,
+                   response: Response<JobseekerFreshgraduatedResponse>
+               ) {
+                   onResult(response.body())
+               }
+
+               override fun onFailure(call: Call<JobseekerFreshgraduatedResponse>, t: Throwable) {
+                   onResult(null)
+               }
+           }
+       )
     }
 
     //Get Jobseeker Languages
@@ -550,4 +574,68 @@ class ProfileAPI {
         )
     }
 
+    // Check Connection To Social Media
+    interface GetSocialMediaCheck {
+        @GET("users/connection/check")
+        fun getData(): Call<CheckSocialMediaResponse>
+    }
+
+    fun GetSocialMediaCheck(context: Context?, onResult: (CheckSocialMediaResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(GetSocialMediaCheck::class.java)
+
+        retrofit.getData().enqueue(
+            object : Callback<CheckSocialMediaResponse>{
+                override fun onResponse(
+                    call: Call<CheckSocialMediaResponse>,
+                    response: Response<CheckSocialMediaResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<CheckSocialMediaResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    // Add social media
+    interface AddSocialMediaCheck {
+        @POST("users/connection")
+        fun getData(@Body socialMedia: socialMedia): Call<AddSocialMediaResponse>
+    }
+
+    fun AddSocialMedia(context: Context?, socialMedia: socialMedia, onResult: (AddSocialMediaResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).POST(AddSocialMediaCheck::class.java)
+
+        retrofit.getData(socialMedia).enqueue(
+            object : Callback<AddSocialMediaResponse>{
+                override fun onResponse(
+                    call: Call<AddSocialMediaResponse>,
+                    response: Response<AddSocialMediaResponse>
+                ) {
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            Toast.makeText(
+                                context, map.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Log.d("response", response.toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<AddSocialMediaResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
 }

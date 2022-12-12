@@ -62,12 +62,9 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEditBasicInfoBinding.inflate(layoutInflater)
         val view = binding.root
-
-        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        Log.d("Currentdate", currentDate.toString())
         return view
     }
 
@@ -138,9 +135,9 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
                 dateValue = dates
                 if (dates == sdf) {
                     Toast.makeText(context, "true", Toast.LENGTH_SHORT).show()
-                } else Toast.makeText(context, "false", Toast.LENGTH_SHORT).show()
+                }
                 date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
-                Log.d("current", dates.toString())
+                Log.d("current", dateValue.toString())
                 binding.jsBirthDay.text = SimpleDateFormat("dd MMMM yyyy").format(dates)
             }
         }
@@ -250,12 +247,6 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
         calendar[Calendar.YEAR] = year
         return calendar.timeInMillis
     }
-
-//    @RequiresApi(Build.VERSION_CODES.O)
-//    private val calendarConstraints = CalendarConstraints.Builder().setOpenAt(
-//        dateValue?.time?: sdf.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))!!.time
-//    ).build()
-
     override fun updateGender(value: Char) {
         this.gender = value
         binding.jsGender.text = if (gender == 'M') "Laki-laki" else "Perempuan"
@@ -275,42 +266,59 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
         fragmentTransaction.commit()
     }
 
+    fun getCalculatedDate(dateFormat: String?, days: Int): String? {
+        val cal = Calendar.getInstance()
+        val s = SimpleDateFormat(dateFormat)
+        cal.add(Calendar.DATE, days)
+        return s.format(Date(cal.timeInMillis))
+    }
+
     private fun updateBasic() {
         var name = binding.jsName.text.toString()
         var noKtp = binding.jsKTP.text.toString()
+        var datePicker: String = date!!.toString()
+        val c = Calendar.getInstance()
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        val getCurrentDateTime = sdf.format(c.time)
+        var validateyear = getCalculatedDate("yyyy-MM-dd HH:mm", -6205)
         if (name.length == 0) {
             Toast.makeText(context, "Nama tidak boleh kosong", Toast.LENGTH_SHORT).show()
+        } else if (datePicker >= getCurrentDateTime) {
+            Toast.makeText(context, "Mohon masukkan tanggal lahir yang valid", Toast.LENGTH_SHORT)
+                .show()
+        } else if (datePicker >= validateyear.toString()) {
+            Toast.makeText(
+                context,
+                "Mohon masukkan tanggal lahir yang valid (Min 17 thn)",
+                Toast.LENGTH_SHORT
+            ).show()
         } else if (noKtp.length == 16) {
-            if (noKtp != data?.additionals?.ktp) {
-                ManageProfileAPI().EditBasicInfo(
-                    ManageProfileAPI.editBasicInfoRequest(
-                        name,
-                        noKtp,
-                        gender,
-                        binding.jsAddress.text.toString(),
-                        date,
-                        cityNo
-                    ), context
-                ) {
-                    if (it != null) {
-                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
-                            .show()
-                        back()
-                    } else {
-                        Toast.makeText(
-                            activity,
-                            "Terjadi kesalahan yang tidak diketahui",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+            ManageProfileAPI().EditBasicInfo(
+                ManageProfileAPI.editBasicInfoRequest(
+                    name,
+                    noKtp,
+                    gender,
+                    binding.jsAddress.text.toString(),
+                    date,
+                    cityNo
+                ), context
+            ) {
+                if (it != null) {
+                    Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
+                        .show()
+                    back()
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Terjadi kesalahan yang tidak diketahui",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            } else {
-                Toast.makeText(activity, "No KTP sudah terdaftar", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(
                 activity,
-                "Mohon masukkan nilai KTP asli",
+                "Terjadi kesalahan yang tidak diketahui",
                 Toast.LENGTH_SHORT
             ).show()
         }

@@ -163,7 +163,7 @@ class UsersAPI{
         )
     }
 
-    data class  deactivatedResponse(val code :Int, val message : String)
+    data class  deactivatedResponse(val code :String, val message : String)
     interface deactivatedAccount {
         @Headers("Content-Type: application/json", "Accept: application/json")
         @POST("users/account/deactivate")
@@ -181,19 +181,20 @@ class UsersAPI{
                 ) {
                     if (response.body() != null) {
                         SessionManager(context).access_token = null
-                        SessionManager(context).user = null
                         onResult(response.body())
                     } else {
                         val data: String = response.errorBody()!!.string()
+                        Log.d("deactivate res: ", data)
                         try {
                             val jObjError = JSONObject(data)
-                            SessionManager(context).access_token = null
-                            SessionManager(context).user = null
                             val map = jObjError.getString("message")
+                            val code = jObjError.getString("code")
                             Toast.makeText(
                                 context, map.toString(),
                                 Toast.LENGTH_LONG
                             ).show()
+                            onResult(deactivatedResponse(code, map.toString()))
+
                         } catch (e: Exception) {
                             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                         }

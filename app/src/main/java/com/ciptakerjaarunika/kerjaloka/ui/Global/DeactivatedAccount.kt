@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.Global
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ciptakerjaarunika.kerjaloka.MainActivity
@@ -17,42 +18,46 @@ class DeactivatedAccount : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDeactivatedAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        var context = baseContext
 
-        binding.btnLogout.setOnClickListener {
-            ProfileAPI().Logout(SessionManager(baseContext).device_token, baseContext) {
-                val intent = Intent(baseContext, MainActivity::class.java)
-                startActivity(intent)
-            }
-        }
+        binding.spinnerLogin.visibility = View.VISIBLE
 
-        binding.haloKerjaloka.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SENDTO)
-            intent.setData(Uri.parse("mailto:halo@kerjaloka.com"));
-            intent.putExtra(Intent.EXTRA_EMAIL,   "halo@kerjaloka.com");
-            startActivity(intent);
-        }
-
-        binding.activated.setOnClickListener{
-            ProfileAPI().GetReactivateAccount(baseContext) {
-                if (it != null) {
-                    Toast.makeText(baseContext, "Reactivate Account", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(baseContext, MainActivity::class.java)
+        if (SessionManager(context).user != null) {
+            binding.spinnerLogin.visibility = View.GONE
+            binding.btnLogout.setOnClickListener {
+                ProfileAPI().Logout(SessionManager(context).device_token, context) {
+                    val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                 }
             }
-        }
 
-        binding.deleteAcc.setOnClickListener {
-            val sheet = GlobalDeleteModal()
-            sheet.show(supportFragmentManager, "terminate")
-//            baseContext?.let { it1 ->
-//                sheet.show(
-//                    it1.parentfragment,
-//                    "ApplyJob"
-//                )
-//            }
-        }
+            binding.haloKerjaloka.setOnClickListener {
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("mailto:halo@kerjaloka.com")
+                intent.putExtra(Intent.EXTRA_EMAIL, "halo@kerjaloka.com")
+                startActivity(intent)
+            }
 
+            binding.activated.setOnClickListener {
+                binding.spinnerLogin.visibility = View.VISIBLE
+                ProfileAPI().GetReactivateAccount(context) {
+                    if (it != null) {
+                        binding.spinnerLogin.visibility = View.GONE
+                        Toast.makeText(context, "Reactivate Account", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(context, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
+
+            binding.deleteAcc.setOnClickListener {
+                val sheet = GlobalDeleteModal()
+                sheet.show(supportFragmentManager, "terminate")
+            }
+        } else {
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 }

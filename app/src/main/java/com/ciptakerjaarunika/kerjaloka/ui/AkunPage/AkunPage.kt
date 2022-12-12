@@ -21,7 +21,9 @@ import com.ciptakerjaarunika.kerjaloka.api.AUTHGOOGLEAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
+import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.Global.DeactivatedAccount
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.profilepage
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -103,61 +105,58 @@ class AkunPage : Fragment() {
             AUTHAPI().Login(context, loginRequest) {
                 if (it != null) {
                     if (it.code == "252") {
-                        loadingDone()
-                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-                        val activity = activity as MainActivity
-                        SessionManager(context).access_token = it.userToken
-                        AUTHAPI().CheckLogin(context, activity) {
+                        var deactivated: Boolean = it.deactivated == false
+                        if (deactivated) {
                             loadingDone()
-                            activity.replaceFragment(AkunPage())
+                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                            val activity = activity as MainActivity
+                            SessionManager(context).access_token = it.userToken
+                            AUTHAPI().CheckLogin(context, activity) {
+                                loadingDone()
+                                activity.replaceFragment(AkunPage())
+                            }
+                        } else {
+                            Log.d("token", it.toString())
+                            SessionManager(context).access_token = it.userToken
+                            var user = User(
+                                userNo = it.userNo!!,
+                                userFullname = it.userFullname!!,
+                                suspended = it.suspended!!,
+                                roleNo = it.userRole!!,
+                                photo = it.photo,
+                                deactivated = it.deactivated!!,
+                                dataComplete = it.dataComplete!!,
+                                ownerStatus = it.ownerStatus == true,
+                                authorized = it.ownerStatus == true,
+                                notice = it.notice,
+                                rolePrivileges = it.privilege,
+                                email =  email,
+                                emailHasVerified = null,
+                                isDeleted = null,
+                                isDiscoverable = false,
+                                isNewsletter = null,
+                                lastChangeUsername = null,
+                                username = "",
+                                company = null,
+                                companyAdditional = null,
+                                jobseekerAdditional = null,
+                                jobseekers = null,
+                                phone = "",
+                                userGoogleId = ""
+                            )
+                            SessionManager(context).user = user
+                            loadingDone()
+                            val intent = Intent(context, DeactivatedAccount::class.java)
+                            startActivity(intent)
                         }
 
+
                     } else {
+                        Log.d("auth", it.toString())
                         SessionManager(context).user = null
                         errorMessage?.visibility = View.VISIBLE
                         errorMessage?.text = it.message
                     }
-                    /*if(it != null && it.code == "252"){
-                    SessionManager(context).access_token = it.userToken
-                    var user = User(
-                        userNo = it.userNo,
-                        userFullname = it.userFullname,
-                        suspended = it.suspended,
-                        roleNo = it.userRole,
-                        photo = it.photo,
-                        deactivated = it.deactivated,
-                        dataComplete = it.dataComplete,
-                        ownerStatus = it.ownerStatus == true,
-                        authorized = it.ownerStatus == true,
-                        notice = it.notice,
-                        rolePrivileges = it.privilege,
-                        email =  email,
-                        emailHasVerified = null,
-                        isDeleted = null,
-                        isDiscoverable = false,
-                        isNewsletter = null,
-                        lastChangeUsername = null,
-                        username = "",
-                        company = null,
-                        companyAdditional = null,
-                        jobseekerAdditional = null,
-                        jobseekers = null,
-                        phone = "",
-                    );
-                    SessionManager(context).user = user
-
-                    val mainActivity = activity as MainActivity
-                    AUTHAPI().CheckLogin(mainActivity,mainActivity) {
-                        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                        ft.replace(id, AkunPage(), "Akun Page")
-                        ft.commit()
-                    }
-                }
-                else if (it != null) {
-                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-                        SessionManager(context).user = null
-                    }
-                }*/
                 }
             }
             loadingFailed()

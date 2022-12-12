@@ -110,13 +110,19 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
             val locationInterview = binding.txtInputLocation.text.toString()
             val nameInterview = binding.txtInputInterviewer.text.toString()
             binding.btnChangeStatus.setOnClickListener {
-              InterviewStatus(context, applicantNo){
-                  if (it != null){
-                      if (it.code == 210){
-                          activity?.onBackPressed()
-                      }
-                  }
-              }
+
+//                val interviewSchedule = InterviewScheduleRequest(
+//                    applicantNo,
+//                )
+
+//                InterviewSchedule(context,)
+//              InterviewStatus(context, applicantNo){
+//                  if (it != null){
+//                      if (it.code == 210){
+//                          activity?.onBackPressed()
+//                      }
+//                  }
+//              }
             }
         } else if (status == ApplicanStatusType.Accepted.value) {
             binding.statusChange.text = "Diterima"

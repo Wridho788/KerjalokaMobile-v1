@@ -37,6 +37,8 @@ class ProfilePage(var Page: Int) : Fragment() {
 //            val myRev = view?.findViewById<MaterialButton>(R.id.myReview)
 //            val accSet = view?.findViewById<MaterialButton>(R.id.accSetting)
             if (response != null) {
+                binding.spinnerProfile.visibility = View.GONE
+                binding.profileComp.visibility = View.VISIBLE
                 val compName = view?.findViewById<TextView>(R.id.jsName1)
                 val username = view?.findViewById<TextView>(R.id.username)
 
@@ -62,13 +64,13 @@ class ProfilePage(var Page: Int) : Fragment() {
                         }
                     }
                 }
-                compName?.text = response.data?.companyName
-                username?.text = response.data?.username
+                compName?.text = response.data.companyName
+                username?.text = response.data.username
 
                 if (activity != null)
                     if (activity != null) {
                         Glide.with(view!!.context)
-                            .load(config().portAddress + "/photo/Profile/" + response.data?.logo)
+                            .load(config().portAddress + "/photo/Profile/" + response.data.logo)
                             .fitCenter()
                             .into(view!!.findViewById<ImageView>(R.id.compLogo))
                     }

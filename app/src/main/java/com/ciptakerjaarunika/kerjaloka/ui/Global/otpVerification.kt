@@ -65,7 +65,7 @@ class otpVerification : Fragment() {
                             }
                         }
                     }
-                    Toast.makeText(context, "Resend phone", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Resend OTP", Toast.LENGTH_SHORT).show()
                 }
             } else if (description == "email") {
                 phoneTextView.text = descNewEmail

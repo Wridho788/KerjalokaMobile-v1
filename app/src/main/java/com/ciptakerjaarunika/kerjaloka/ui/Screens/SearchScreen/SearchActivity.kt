@@ -20,19 +20,23 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivitySearchBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchMoreCompany.SearchMoreCompanyFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchMoreJob.SearchMoreJobFragment
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Adapter.SearchJobAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.general_search_model
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.jobList
+import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.list_top_search
 import com.google.android.material.chip.Chip
 
 class SearchActivity : Fragment(), onFragmentTransactionList,
     onFragmentTransactionListCompany {
     private var list: general_search_model? = null
+    private var listTopSearch: List<list_top_search>? = null
     private var keyword: String? = ""
     private lateinit var binding: ActivitySearchBinding
     private var listBookmark: List<jobList> = listOf()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,6 +44,36 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
     ): View {
         if (SessionManager(context).latestGeneralSearch == null) {
             SessionManager(context).latestGeneralSearch = listOf()
+        }
+
+        Search_Api().getTopSearchAsync(context) {
+            if (it != null) {
+                if (it.code == 210) {
+                    binding.layoutTopSearchResults.isVisible = true
+                    listTopSearch = it.data
+                    if (listTopSearch?.size!! > 8) {
+                        listTopSearch = listTopSearch?.takeLast((8))
+                        listTopSearch?.forEach { data ->
+                            val chipTop = Chip(context)
+                            chipTop.setChipBackgroundColorResource(R.color.danger_100)
+                            chipTop.apply {
+                                textSize = 12f
+                                text = data.keyword.toString()
+                                isChipIconVisible = false
+                                isCloseIconVisible = false
+                                isClickable = true
+                                isCheckable = false
+                                binding.apply {
+                                    chipGroupTopSearch.addView(chipTop as View)
+//                                    if (chipGroupTopSearch.size > 8) {
+//                                        latestResultGrup.removeViewAt(0)
+//                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -104,7 +138,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                         latestResultGrup.addView(chip as View)
                     }
                 }
-                val chipTop = Chip(context)
+               /* val chipTop = Chip(context)
                 chipTop.setChipBackgroundColorResource(R.color.danger_100)
                 chipTop.apply {
                     textSize = 12f
@@ -113,15 +147,12 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                     isCloseIconVisible = false
                     isClickable = true
                     isCheckable = false
-//                    binding.apply {
-//                        chipGroupTopSearch.addView(chipTop as View)
-//                    }
-                }
+                }*/
             }
         } else {
             binding.layoutLatestSearchResults.isVisible = true
             binding.layoutResultSearch.isVisible = true
-            binding.layoutTopSearchResults.isVisible = false
+            binding.layoutTopSearchResults.isVisible = true
         }
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -131,8 +162,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                             list = it.data
                             if (list?.jobList?.size!! < 5) {
                                 binding.seeMoreJob.visibility = GONE
-                            }
-                            else {
+                            } else {
                                 binding.seeMoreJob.visibility = VISIBLE
                                 binding.seeMoreJob.setOnClickListener {
                                     replaceFragment(SearchMoreJobFragment(query))
@@ -141,10 +171,11 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 
                             if (list?.companyList?.size!! < 5) {
                                 binding.seeMoreCompany.visibility = GONE
-                            }
-                            else {
+                            } else {
                                 binding.seeMoreCompany.visibility = VISIBLE
                                 binding.seeMoreCompany.setOnClickListener {
+
+                                    replaceFragment(SearchMoreCompanyFragment(query))
                                 }
                             }
 
@@ -175,7 +206,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                 }
                 binding.layoutTopSearchResults.isVisible = false
                 binding.layoutResultSearch.isVisible = true
-                binding.layoutLatestSearchResults.isVisible = true
+                binding.layoutLatestSearchResults.isVisible = false
                 binding.resultSearchJob.text = query
                 return true
             }
@@ -240,7 +271,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                 isCheckable = false
                 setOnClickListener { SearchJob(keyword) }
                 binding.apply {
-                    if (latestResultGrup.size > 7) {
+                    if (latestResultGrup.size > 8) {
                         latestResultGrup.removeViewAt(0)
                     }
                     chip.setOnClickListener {
@@ -261,6 +292,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
     }
 
     override fun onFragmentTransactionListenerClick(companyNo: Long, jobNo: Long) {
+        keyword = ""
         replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))
     }
 
@@ -269,18 +301,17 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
     }
 
     override fun BookmarkJob(jobNo: Long, Index: Int) {
-            var bookmark = !list!!.jobList[Index].bookmarked
+        var bookmark = !list!!.jobList[Index].bookmarked
         JobAPI().BookmarkJob(jobNo, bookmark, context) {
             if (it != null) {
                 if (it.code == 210) {
                     binding.recycleJob.adapter?.notifyDataSetChanged()
-                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
-
-                    } else {
-                    Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Success Bookmarking", Toast.LENGTH_SHORT).show()
                 }
+                binding.recycleJob.adapter?.notifyDataSetChanged()
+
             } else {
-                Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Success Unbookmark", Toast.LENGTH_SHORT).show()
             }
         }
     }

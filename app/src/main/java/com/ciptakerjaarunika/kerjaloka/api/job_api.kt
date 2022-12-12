@@ -506,28 +506,31 @@ class JobAPI {
             }
         )
     }
-
+    data class jobRelatedResponse(
+        val code: Int,
+        val data: List<RelatedModel>
+    )
     interface getRelatedJOb {
         @GET("users/job/related")
-        fun getData(@Query("jobNo") jobNo: Long): Call<jobRecommendationResponse>
+        fun getData(@Query("jobNo") jobNo: Long): Call<jobRelatedResponse>
     }
 
     fun getRelatedJob(
         jobNo: Long,
         context: Context?,
-        onResult: (jobRecommendationResponse?) -> Unit
+        onResult: (jobRelatedResponse?) -> Unit
     ) {
         val retrofit = ServiceBuilder(context).GET(getRelatedJOb::class.java)
 
         retrofit.getData(jobNo).enqueue(
-            object : Callback<jobRecommendationResponse> {
-                override fun onFailure(call: Call<jobRecommendationResponse>, t: Throwable) {
+            object : Callback<jobRelatedResponse> {
+                override fun onFailure(call: Call<jobRelatedResponse>, t: Throwable) {
                     onResult(null)
                 }
 
                 override fun onResponse(
-                    call: Call<jobRecommendationResponse>,
-                    response: Response<jobRecommendationResponse>
+                    call: Call<jobRelatedResponse>,
+                    response: Response<jobRelatedResponse>
                 ) {
                     if (response.body()?.code == 210) {
                         onResult(response.body())

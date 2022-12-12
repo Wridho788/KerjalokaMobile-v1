@@ -16,7 +16,9 @@ import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company
 import com.ciptakerjaarunika.kerjaloka.Company.Package.company_package_list
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyDashboardBinding
+import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.CompanyNotification
@@ -25,6 +27,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.*
+import com.microsoft.signalr.HubConnection
+import com.microsoft.signalr.HubConnectionBuilder
+import com.microsoft.signalr.HubConnectionState
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,6 +41,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
     var label: String? = null
     var startDate: String? = null
     private lateinit var binding: ActivityCompanyDashboardBinding
+    private lateinit var hubConnection: HubConnection
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -69,13 +75,31 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             }
         }
 
-        company_profile_api().InterviewAmount(context) {
-            if (it != null) {
-                Log.d("total interview", it.toString())
-                jlhInterview.text = it.interview.toString() + " Orang"
-            } else {
-                jlhInterview.text = "0 Orang"
-            }
+//        company_profile_api().InterviewAmount(context) {
+//            if (it != null) {
+//                Log.d("total interview", it.toString())
+//                jlhInterview.text = it.interview.toString() + " Orang"
+//            } else {
+//                jlhInterview.text = "0 Orang"
+//            }
+//        }
+        hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
+        if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
+            hubConnection.start()
+            hubConnection.on(
+                "connected",
+                { res ->
+                    val userNo = SessionManager(context).user!!.userNo.toString()
+                    hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
+                }, String::class.java
+            )
+            hubConnection.on(
+                "getmessage", { res: chat_data ->
+                    SessionManager(context).chatData = res
+                    jlhInterview.text = "${res.sections[0].notRead} Orang"
+                },
+                chat_data::class.java
+            )
         }
 
         btnSeeInterview.setOnClickListener {
@@ -87,7 +111,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
         company_profile_api().MyJob(context) {
             var count = 0
-                Log.d("myjob", it.toString())
+            Log.d("myjob", it.toString())
             if (it != null) {
 
                 it.data.forEach {
@@ -106,9 +130,6 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             ft.commit()
         }
 
-//        btn_search.setOnClickListener {
-//            Toast.makeText(activity, "Go to Search Activity", Toast.LENGTH_SHORT).show()
-//        }
         if (SessionManager(context).user != null) {
             btn_notif.visibility = View.VISIBLE
             btn_notif.setOnClickListener {
@@ -151,7 +172,6 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
                 }
             }
         }
-
 
         img_btn_calendar2.setOnClickListener {
             val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker

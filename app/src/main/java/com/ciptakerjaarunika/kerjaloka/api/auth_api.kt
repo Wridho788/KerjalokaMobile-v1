@@ -42,7 +42,7 @@ class AUTHAPI {
                         val data: String = response.errorBody()!!.string()
                         try {
                             val jObjError = JSONObject(data)
-                            val message = jObjError.getString("message")
+                            val message  = jObjError.getString("message")
                             val code = jObjError.getString("code")
                             onResult(LoginResponse(code.toString(),
                             message.toString()))
@@ -78,7 +78,6 @@ class AUTHAPI {
                             SessionManager(context).chatData = null
                         } else {
                             SessionManager(context).user = data.user
-
                             val account = Gson().toJson(data.account)
                             val additional = Gson().toJson(data.userAdditional)
                             if(data.user.roleNo == 4){
@@ -103,6 +102,7 @@ class AUTHAPI {
             }
         )
     }
+
 }
 
 class AUTHGOOGLEAPI{

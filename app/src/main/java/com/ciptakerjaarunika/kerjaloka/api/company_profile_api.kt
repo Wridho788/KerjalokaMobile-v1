@@ -73,7 +73,7 @@ class company_profile_api {
                             val jObjError = JSONObject(data)
                             val map = jObjError.getString("message")
                             Toast.makeText(
-                                context, "Username baru saja diganti, dan dapat diganti kembali jika sudah 30 hari",
+                                context, "Username already exists",
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {

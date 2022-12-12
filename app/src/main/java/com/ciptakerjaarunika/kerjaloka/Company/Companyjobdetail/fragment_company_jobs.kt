@@ -68,7 +68,8 @@ class fragment_company_jobs : Fragment() {
     }
 
     fun UpdateUI() {
-
+        binding.spinner.visibility = View.VISIBLE
+        binding.contentContainer.visibility = View.GONE
         binding.idFABAdd.setOnClickListener {
             val myIntent = Intent(view?.context, ManageJobActivity::class.java)
             startActivity(myIntent)
@@ -80,6 +81,8 @@ class fragment_company_jobs : Fragment() {
 
         company_profile_api().MyJob(context) {
             if (it != null) {
+                binding.spinner.visibility = View.GONE
+                binding.contentContainer.visibility = View.VISIBLE
                 val recyclerView = view?.findViewById<RecyclerView>(R.id.recyle_company_jobs)
                 recyclerView?.apply {
                     layoutManager = LinearLayoutManager(activity)
@@ -89,12 +92,12 @@ class fragment_company_jobs : Fragment() {
         }
     }
 
-    fun LoadingDone() {
-        if (loading == 0) {
-            binding.spinner.visibility = View.GONE
-            binding.contentContainer.visibility = View.VISIBLE
-        }
-    }
+//    fun LoadingDone() {
+//        if (loading == 0) {
+//            binding.spinner.visibility = View.GONE
+//            binding.contentContainer.visibility = View.VISIBLE
+//        }
+//    }
 
     private fun replaceFragment(data: DataCount?) {
         val jobDetailFragment = fragment_company_job_active_page()

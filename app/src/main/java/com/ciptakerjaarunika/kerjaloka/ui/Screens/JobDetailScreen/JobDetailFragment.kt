@@ -68,10 +68,10 @@ class JobDetailFragment(
         val toolbarBookmark = view.findViewById<ImageView>(R.id.toolbar_bookmark)
         RefreshData()
         binding.backButton.setOnClickListener {
-            fragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         toolbar.setNavigationOnClickListener {
-            fragmentManager?.popBackStack()
+            activity?.onBackPressed()
         }
         toolbarBookmark.setOnClickListener {
             Toast.makeText(context, "Bookmark", Toast.LENGTH_SHORT).show()
@@ -195,8 +195,8 @@ class JobDetailFragment(
                     }
                     createdOn.text = dateDiff()
 
-                    job_field.text =
-                        if (it.data.jobField != null) it.data.jobField.fieldName else ""
+//                    job_field.text =
+//                        if (it.data.jobField != null) it.data.jobField.fieldName else ""
                     job_role.text = if (it.data.jobRole != null) it.data.jobRole.jobRoleName else ""
 
                     var jobDesc = it.data.jobDescription

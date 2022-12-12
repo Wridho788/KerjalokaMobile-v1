@@ -394,7 +394,7 @@ class ManageProfileAPI {
                             val map = jObjError.getString("message")
                             Toast.makeText(
                                 context,
-                                "Username baru saja diganti, dan dapat diganti kembali jika sudah 30 hari",
+                                "Username already exists",
                                 Toast.LENGTH_LONG
                             ).show()
                         } catch (e: Exception) {
@@ -685,7 +685,24 @@ class ManageProfileAPI {
                     call: Call<uploadVideoResumeResponse>,
                     response: Response<uploadVideoResumeResponse>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            Toast.makeText(
+                                context,
+                                map,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+
+                        Log.d("response", response.toString())
+                    }
                 }
             }
         )

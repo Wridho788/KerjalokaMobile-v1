@@ -31,6 +31,8 @@ class profilepage(var Page: Int) : Fragment() {
         binding = FragmentJobseekerProfilePageBinding.inflate(layoutInflater)
         ProfileAPI().JobseekerGetProfileData(context) { response ->
             if (response?.data != null) {
+                binding.spinnerProfile.visibility = GONE
+                binding.profileLl.visibility = VISIBLE
                 if (response.data.users.roleNo == 4) {
                     response.data.users.photo = response.data.additionals.photo
                     response.data.users.jobseekerAdditional = response.data.additionals
@@ -39,8 +41,7 @@ class profilepage(var Page: Int) : Fragment() {
             }
 
             lifecycleScope.launchWhenResumed {
-                binding.spinnerProfile.visibility = GONE
-                binding.profileContent.visibility = VISIBLE
+
                 viewpagerAdapter =
                     viewpagerAdapter(response?.data, parentFragmentManager, lifecycle)
                 with(binding) {

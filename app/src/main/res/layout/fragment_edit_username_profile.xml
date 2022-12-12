@@ -103,13 +103,14 @@
                         android:maxLength="50"
                         android:padding="8dp"
                         android:textColor="@color/black"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
 
                 </com.google.android.material.card.MaterialCardView>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
+                    android:textSize="12sp"
                     android:textColor="@color/danger_500"
                     android:layout_marginBottom="20dp"
                     android:id="@+id/errorMessage"

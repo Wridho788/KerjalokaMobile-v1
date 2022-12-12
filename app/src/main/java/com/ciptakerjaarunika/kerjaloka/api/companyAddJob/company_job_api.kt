@@ -2,8 +2,11 @@ package com.ciptakerjaarunika.kerjaloka.api.companyAddJob
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.getJobResponse
+import com.ciptakerjaarunika.kerjaloka.model.Data.CompanyAnalytic
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,29 +39,34 @@ class CompanyJobAPI {
         )
     }
 
-    data class CompanyAnalytic(
-        val code: Int,
-        val message: String,
-        val data: itemAnalytic
-    )
-
-    data class itemAnalytic(
-        val viewCount: Int,
-    )
-
     interface getCompanyAnalytic {
         @GET("users/analytic/get")
-        fun getCompanyAnalytic(@Query("analyticItemType") analyticItemType: Int, @Query("jobNo") jobNo: Long): Call<CompanyAnalytic>
+        fun getCompanyAnalytic(@Query("analyticItemType") analyticItemType: Int, @Query("itemNo") itemNo: Long): Call<CompanyAnalytic>
     }
-    fun GetCompanyAnalytic(context: Context?, analyticItemType: Int,jobNo: Long, onResult: (CompanyAnalytic?) -> Unit) {
+    fun GetCompanyAnalytic(context: Context?, analyticItemType: Int,itemNo: Long, onResult: (CompanyAnalytic?) -> Unit) {
         val retrofit = ServiceBuilder(context).GET(getCompanyAnalytic::class.java)
-        retrofit.getCompanyAnalytic(analyticItemType, jobNo).enqueue(
+        retrofit.getCompanyAnalytic(analyticItemType, itemNo).enqueue(
             object : Callback<CompanyAnalytic> {
                 override fun onResponse(
                     call: Call<CompanyAnalytic>,
                     response: Response<CompanyAnalytic>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            Toast.makeText(
+                                context, map.toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Log.d("response", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<CompanyAnalytic>, t: Throwable) {

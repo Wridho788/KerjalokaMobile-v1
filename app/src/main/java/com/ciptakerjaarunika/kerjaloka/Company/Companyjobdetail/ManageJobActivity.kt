@@ -18,15 +18,15 @@ import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.*
 import com.google.gson.Gson
 
 class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoPage, iConfirmPage {
-    private var JobDetailData : CompanyJobDetail = CompanyJobDetail(
-        null,null,null, listOf(), null,null,
+    private var JobDetailData: CompanyJobDetail = CompanyJobDetail(
+        null, null, null, listOf(), null, null,
         null, listOf(), null, null, null, null, null, null, listOf(), listOf(),
         listOf(), listOf(), null, null, null, null
-    );
+    )
 
     private lateinit var binding: ActivityAddJobBinding
 
-    private var page = 1;
+    private var page = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +37,14 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
         val bundle = intent.extras
         val jobNo = Gson().fromJson(bundle?.getString("jobNo"), Long::class.java)
 
-        if(jobNo != null){
-            JobAPI().GetCompanyJobDetail(jobNo, baseContext){
-                if(!it.data.isEmpty())
-                {
-                    JobDetailData =  it.data[0]
+        if (jobNo != null) {
+            JobAPI().GetCompanyJobDetail(jobNo, baseContext) {
+                if (!it.data.isEmpty()) {
+                    JobDetailData = it.data[0]
                     updatePage()
                 }
             }
-        }else{
+        } else {
             updatePage()
         }
         binding.prevBtn.setOnClickListener {
@@ -61,32 +60,29 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
         }
 
         binding.btnPostingPekerjaan.setOnClickListener {
-            if(JobDetailData?.jobPosition.isNullOrEmpty()){
+            if (JobDetailData.jobPosition.isNullOrEmpty()) {
                 page = 1
                 updatePage()
                 showMessage("Posisi lowongan tidak boleh kosong")
-            }
-            else if(JobDetailData?.jobLocation?.isEmpty() == true){
+            } else if (JobDetailData.jobLocation?.isEmpty() == true) {
                 page = 1
                 updatePage()
                 showMessage("Lokasi lowongan tidak boleh kosong")
-            }
-            else if(JobDetailData?.jobType == null){
+            } else if (JobDetailData.jobType == null) {
                 page = 1
                 updatePage()
                 showMessage("Tipe pekerjaan tidak boleh kosong")
-            }
-            else if(JobDetailData?.jobSkills?.isEmpty() == true){
+            } else if (JobDetailData.jobSkills?.isEmpty() == true) {
                 page = 2
                 updatePage()
                 showMessage("Skill tidak boleh kosong")
-            }
-            else{
+            } else {
                 SendJob()
             }
         }
     }
-    fun showMessage(message : String){
+
+    fun showMessage(message: String) {
         Toast.makeText(baseContext, message, Toast.LENGTH_SHORT).show()
     }
 
@@ -94,76 +90,86 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
     @SuppressLint("LogNotTimber")
     fun SendJob() {
         try {
-                AddJobAPI().SendJob(
-                    baseContext,
-                    addJobRequest(
-                        JobDetailData.jobNo?.toLong(),
-                        JobDetailData.jobPosition,
-                        JobDetailData.jobLocation,
-                         JobDetailData.jobType!!.jobTypeNo,
-                         JobDetailData.jobSalaryMin,
-                         JobDetailData.jobSalaryMax,
-                         JobDetailData.jobSkills,
-                         JobDetailData.jobTitle,
-                         JobDetailData.jobField?.fieldNo,
-                         JobDetailData.jobRole?.fieldNo,
-                         JobDetailData.jobMinExperience,
-                        JobDetailData.jobExperienceLevel?.experienceLevelNo,
-                         JobDetailData.jobDescription,
-                         JobDetailData.jobTest,
-                         JobDetailData.jobShortQuestion,
-                         false
-                    )
-                ) {
-                    if (it != null) {
-                        if (it.code == "210") {
-                            finish()
-                        } else {
-                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                        }
+            AddJobAPI().SendJob(
+                baseContext,
+                addJobRequest(
+                    JobDetailData.jobNo?.toLong(),
+                    JobDetailData.jobPosition,
+                    JobDetailData.jobLocation,
+                    JobDetailData.jobType!!.jobTypeNo,
+                    JobDetailData.jobSalaryMin,
+                    JobDetailData.jobSalaryMax,
+                    JobDetailData.jobSkills,
+                    JobDetailData.jobTitle,
+                    JobDetailData.jobField?.fieldNo,
+                    JobDetailData.jobRole?.fieldNo,
+                    JobDetailData.jobMinExperience,
+                    JobDetailData.jobExperienceLevel?.experienceLevelNo,
+                    JobDetailData.jobDescription,
+                    JobDetailData.jobTest,
+                    JobDetailData.jobShortQuestion,
+                    false
+                )
+            ) {
+                if (it != null) {
+                    if (it.code == "210") {
+                        finish()
                     } else {
-                        Toast.makeText(this, "err", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                     }
+                } else {
+                    Toast.makeText(this, "err", Toast.LENGTH_SHORT).show()
                 }
+            }
         } catch (e: IllegalStateException) {
             Log.d("addJobErr", e.toString())
         }
     }
 
 
-    fun nextPage(){
-        if(page < 5) {
-            this.page += 1;
+    fun nextPage() {
+        if (page < 5) {
+            this.page += 1
             updatePage()
         }
     }
-    fun prevPage(){
-        if(page > 1) {
-            this.page -= 1;
+
+    fun prevPage() {
+        if (page > 1) {
+            this.page -= 1
             updatePage()
 
         }
     }
-    fun updatePage(){
+
+    fun updatePage() {
         binding.prevBtn.elevation = 10F
         binding.nextBtn.elevation = 10F
         binding.prevBtn.setStrokeColorResource(R.color.danger_500)
         binding.nextBtn.setStrokeColorResource(R.color.danger_500)
-        when(page){
-            1->{
+        when (page) {
+            1 -> {
                 binding.prevBtn.elevation = 0F
                 binding.prevBtn.setStrokeColorResource(R.color.danger_300)
-                replaceFragment(BasicInfoPage(JobDetailData, this))}
-            2->{ replaceFragment(AdditionalInfoPage(JobDetailData, this))}
-            3->{replaceFragment(DescriptionPage( JobDetailData.jobDescription,this))}
-            4->{replaceFragment(TestPage(JobDetailData, this))}
-            5->{
+                replaceFragment(BasicInfoPage(JobDetailData, this))
+            }
+            2 -> {
+                replaceFragment(AdditionalInfoPage(JobDetailData, this))
+            }
+            3 -> {
+                replaceFragment(DescriptionPage(JobDetailData.jobDescription, this))
+            }
+            4 -> {
+                replaceFragment(TestPage(JobDetailData, this))
+            }
+            5 -> {
                 binding.nextBtn.elevation = 0F
                 binding.nextBtn.setStrokeColorResource(R.color.danger_300)
                 replaceFragment(ShortQuestionPage(JobDetailData, this))
             }
         }
     }
+
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = this.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -172,54 +178,56 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
     }
 
     override fun updateJobPosition(value: String) {
-        JobDetailData?.jobPosition = value
+        JobDetailData.jobPosition = value
     }
 
     override fun updateJobDescription(value: String) {
-        JobDetailData?.jobDescription = value
-    }
-    override fun updateJobSalary(value: Int?) {
-        JobDetailData?.jobSalaryMin = value
-        JobDetailData?.jobSalaryMax = value
+        JobDetailData.jobDescription = value
     }
 
-    override fun updateJobType(value : JobType) {
-        JobDetailData?.jobType = value
+    override fun updateJobSalary(value: Int?, valueMax: Int?) {
+        JobDetailData.jobSalaryMin = value
+        JobDetailData.jobSalaryMax = valueMax
+    }
+
+    override fun updateJobType(value: JobType) {
+        JobDetailData.jobType = value
     }
 
     override fun updateJobLocation(value: List<JobLocation>) {
-        JobDetailData?.jobLocation = value
+        JobDetailData.jobLocation = value
     }
+
     override fun updateJobTitle(value: List<JobTitle>) {
-        JobDetailData?.jobTitle = value
+        JobDetailData.jobTitle = value
     }
 
     override fun updateSkill(value: List<JobSkill>) {
-        JobDetailData?.jobSkills = value
+        JobDetailData.jobSkills = value
     }
 
     override fun updateField(value: JobField) {
-        JobDetailData?.jobField = value
+        JobDetailData.jobField = value
     }
 
     override fun updateRole(value: JobRole) {
-        JobDetailData?.jobRole = value
+        JobDetailData.jobRole = value
     }
 
     override fun updateMinExperience(value: Int?) {
-        JobDetailData?.jobMinExperience = value
+        JobDetailData.jobMinExperience = value
     }
 
     override fun updateExperienceLevel(value: JobExperienceLevel) {
-        JobDetailData?.jobExperienceLevel = value
+        JobDetailData.jobExperienceLevel = value
     }
 
     override fun updateJobTest(value: List<JobTest>) {
-        JobDetailData?.jobTest = value
+        JobDetailData.jobTest = value
     }
 
     override fun updateJobShortQuestion(value: List<JobShortQuestion>) {
-        JobDetailData?.jobShortQuestion = value
+        JobDetailData.jobShortQuestion = value
     }
 
     override fun deletePage() {
@@ -263,25 +271,26 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
     }
 }
 
-interface iAddidiontalInfoPage{
-    fun updateSkill(value : List<JobSkill>)
-    fun updateJobTitle(value : List<JobTitle>)
-    fun updateField(value : JobField)
-    fun updateRole(value : JobRole)
-    fun updateMinExperience(value : Int?)
-    fun updateExperienceLevel(value : JobExperienceLevel)
-    fun updateJobTest(value : List<JobTest>)
-    fun updateJobShortQuestion(value : List<JobShortQuestion>)
-}
-interface iBasicInfoPage{
-    fun updateJobDescription(value : String)
-    fun updateJobPosition(value : String)
-    fun updateJobSalary(value : Int??)
-    fun updateJobType(jobTypeNo : JobType)
-    fun updateJobLocation(value : List<JobLocation>)
+interface iAddidiontalInfoPage {
+    fun updateSkill(value: List<JobSkill>)
+    fun updateJobTitle(value: List<JobTitle>)
+    fun updateField(value: JobField)
+    fun updateRole(value: JobRole)
+    fun updateMinExperience(value: Int?)
+    fun updateExperienceLevel(value: JobExperienceLevel)
+    fun updateJobTest(value: List<JobTest>)
+    fun updateJobShortQuestion(value: List<JobShortQuestion>)
 }
 
-interface iConfirmPage{
+interface iBasicInfoPage {
+    fun updateJobDescription(value: String)
+    fun updateJobPosition(value: String)
+    fun updateJobSalary(value: Int?, valueMax: Int?)
+    fun updateJobType(jobTypeNo: JobType)
+    fun updateJobLocation(value: List<JobLocation>)
+}
+
+interface iConfirmPage {
     fun deletePage()
     fun draftJob()
 }

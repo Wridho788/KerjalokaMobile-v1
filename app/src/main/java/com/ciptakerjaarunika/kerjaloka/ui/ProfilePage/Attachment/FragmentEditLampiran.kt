@@ -44,16 +44,16 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 
-class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRefreshData?) : Fragment(), iEditLampiran {
+class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRefreshData?) :
+    Fragment(), iEditLampiran {
     private lateinit var binding: FragmentLampiranBinding
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
-    private var document : MultipartBody.Part? = null
-    private var file : File? = null
-    private var documentNameError : Boolean = false
-    private var processUpload = 0;
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private var document: MultipartBody.Part? = null
+    private var file: File? = null
+    private var documentNameError: Boolean = false
+    private var processUpload = 0
 
     @RequiresApi(Build.VERSION_CODES.O)
-
     private fun getPathFromUri(context: Context, contentUri: Uri): String {
         var cursor: Cursor? = null
         return try {
@@ -71,22 +71,24 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentLampiranBinding.inflate(layoutInflater)
         val view = binding.root
-        return view;
+        return view
     }
 
     fun getPDFPath(uri: Uri?): String? {
-        val cursor: Cursor? = context?.contentResolver?.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, arrayOf("_data"), "_id=?",
-            arrayOf(DocumentsContract.getDocumentId(uri).split(":")[1]), null)
+        val cursor: Cursor? = context?.contentResolver?.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, arrayOf("_data"), "_id=?",
+            arrayOf(DocumentsContract.getDocumentId(uri).split(":")[1]), null
+        )
         val column_index = cursor?.getColumnIndexOrThrow("_data")
         cursor?.moveToFirst()
-        return column_index?.let { cursor?.getString(it) }
+        return column_index?.let { cursor.getString(it) }
     }
 
-    fun SelectFile(){
-        var intent = Intent(Intent.ACTION_GET_CONTENT);
+    fun SelectFile() {
+        var intent = Intent(Intent.ACTION_GET_CONTENT)
         val mimeTypes = arrayOf(
             "image/*",
             "application/pdf",
@@ -108,10 +110,10 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
             intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
         }
 
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-        val requestIntent = Intent.createChooser(intent, "Choose a File");
+        val requestIntent = Intent.createChooser(intent, "Choose a File")
         activityResultLauncher.launch(requestIntent)
     }
 
@@ -119,10 +121,10 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
         super.onViewCreated(view, savedInstanceState)
 
         binding.recycleview.apply {
-            layoutManager   = LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(activity)
             adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
         }
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             back()
         }
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -137,10 +139,11 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
                 val fileUri: Uri = data!!.data!!
                 val pathName = context?.let { it1 -> PathUtil().GetFilePath(fileUri, it1) }
                 if (pathName != null) {
-                    val file = File(pathName ?: "")
+                    val file = File(pathName)
                     this.file = file
-                    val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
 
+                    val requestFile: RequestBody =
+                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
                     binding.uploadDocumentBtn.text = file.name
                     document = MultipartBody.Part.createFormData("document", file.name, requestFile)
                 } else {
@@ -155,136 +158,155 @@ class FragmentEditLampiran(var dataList : List<Documents>?,val iRefreshData: iRe
 
             @SuppressLint("NotifyDataSetChanged")
             override fun afterTextChanged(s: Editable) {
-                if(!binding.documentName.text.toString().isNullOrEmpty()){
-                    if(documentNameError){
-                    binding.errorTxt.visibility = GONE}
+                if (!binding.documentName.text.toString().isNullOrEmpty()) {
+                    if (documentNameError) {
+                        binding.errorTxt.visibility = GONE
+                    }
                 }
             }
         })
         binding.uploadDocumentBtn.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
                 != PackageManager.PERMISSION_GRANTED
-            ){
+            ) {
                 this.activity?.let { it1 ->
-                    ActivityCompat.requestPermissions(it1,
-                        listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(), id + context!!.resources.getInteger(R.integer.LampiranUploadFile))
-                };
-            }
-            else{
+                    ActivityCompat.requestPermissions(
+                        it1,
+                        listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                        id + context!!.resources.getInteger(R.integer.LampiranUploadFile)
+                    )
+                }
+            } else {
                 SelectFile()
             }
         }
 
         binding.saveBtn.setOnClickListener {
-            var processUpload = dataList?.filter { data-> data.documentFile != null }!!.size
+            var processUpload = dataList?.filter { data -> data.documentFile != null }!!.size
 
-            if(processUpload != 0) {
-                dataList?.filter { data-> data.documentFile != null }!!.forEach { data ->
-                        ManageProfileAPI().JobseekerUploadDocument(context, data.documentFile!!) {
-                            if (it != null) {
-                                if (it.documentName != null) {
-                                    processUpload -= 1;
-                                    data.documentFileName = it.documentName.toString()
-                                    EditLampiran(processUpload)
-                                } else {
-                                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                                }
+            if (processUpload != 0) {
+                dataList?.filter { data -> data.documentFile != null }!!.forEach { data ->
+                    ManageProfileAPI().JobseekerUploadDocument(context, data.documentFile!!) {
+                        if (it != null) {
+                            if (it.documentName != null) {
+                                processUpload -= 1
+                                data.documentFileName = it.documentName.toString()
+                                EditLampiran(processUpload)
+                            } else {
+                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                             }
                         }
+                    }
                 }
-            }
-            else{
+            } else {
                 EditLampiran(processUpload)
             }
         }
         binding.addDocumentBtn.setOnClickListener {
             binding.errorTxt.visibility = VISIBLE
             documentNameError = false
-
-            if(binding.documentName.text.isNullOrEmpty()){
+            if (binding.documentName.text.isNullOrEmpty()) {
                 documentNameError = true
                 binding.errorTxt.text = "Judul Dokumen tidak boleh kosong"
-            }
-            else if(document == null){
+            } else if (document == null) {
                 binding.errorTxt.text = "Upload lampiran terlebih dahulu"
-            }
-            else if(dataList!!.any { data-> data.documentFileName == file!!.name }){
+            } else if (dataList!!.any { data -> data.documentFileName == file!!.name }) {
                 binding.errorTxt.text = "Tidak dapat menambahkan file yang sama"
                 document = null
                 file = null
-                binding.documentName.text = null;
-            }
-            else {
+                binding.documentName.text = null
+            } else {
                 binding.errorTxt.visibility = GONE
-                dataList = dataList?.plus(
-                    Documents(
-                        file!!.name,
-                        binding.documentName.text.toString(),
-                        null,
-                        DocumentType.CV.value,
-                        SessionManager(context).user!!.userNo,
-                        document
-                    )
-                )
-                binding.recycleview.apply {
-                    layoutManager   = LinearLayoutManager(activity)
-                    adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
-                }
-                binding.recycleview.adapter?.notifyDataSetChanged()
+                val fileSize = file?.length()?.toDouble()
+                val sizeInKb = fileSize?.div(1024)
+                val sizeInMb = sizeInKb?.div(1024)
 
-                document = null
-                file = null
-                binding.uploadDocumentBtn.text = "Upload Lampiran"
-                binding.documentName.text = null;
-            }
-        }
-    }
-    fun EditLampiran(totalProcess : Int){
-        if(totalProcess == 0){
-            ManageProfileAPI().JobseekerEditLampiran(dataList, context){
-                if(it != null && context != null) {
-                    Toast.makeText(context, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
-                    back()
-                }
-                else{
-                    Toast.makeText(context, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-    private fun back(){
-        fragmentManager?.popBackStack()
-        iRefreshData!!.refresh()
-    }
+                if (sizeInMb != null) {
+                    if (sizeInMb >= 25) {
+                      Toast.makeText(context, "batas maksimal dokumen 25 Mb", Toast.LENGTH_SHORT).show()
+                    } else {
+                        dataList = dataList?.plus(
+                            Documents(
+                                file!!.name,
+                                binding.documentName.text.toString(),
+                                null,
+                                DocumentType.CV.value,
+                                SessionManager(context).user!!.userNo,
+                                document
+                            )
+                        )
+                        binding.recycleview.apply {
+                            layoutManager = LinearLayoutManager(activity)
+                            adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
+                        }
+                        binding.recycleview.adapter?.notifyDataSetChanged()
 
-    override fun delete(value: Documents) {
-        dataList = dataList?.toMutableList()?.apply {
-            remove(value)
-        }
-        binding.recycleview.apply {
-            layoutManager   = LinearLayoutManager(activity)
-            adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
-        }
-        binding.recycleview.adapter?.notifyDataSetChanged()
-    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == id + context!!.resources.getInteger(R.integer.LampiranUploadFile)) {
-            if(grantResults.contains(PackageManager.PERMISSION_GRANTED)){
-                SelectFile()
-            }
-            else{
-                Toast.makeText(activity, "Perlu akses untuk upload file", Toast.LENGTH_SHORT).show()
-            }
+                        document = null
+                        file = null
+                        binding.uploadDocumentBtn.text = "Upload Lampiran"
+                        binding.documentName.text = null
+                    }
+                }
+
+
+
         }
     }
+}
+
+fun EditLampiran(totalProcess: Int) {
+    if (totalProcess == 0) {
+        ManageProfileAPI().JobseekerEditLampiran(dataList, context) {
+            if (it != null && context != null) {
+                Toast.makeText(context, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                back()
+            } else {
+                Toast.makeText(
+                    context,
+                    "Terjadi kesalahan yang tidak diketahui",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+}
+
+private fun back() {
+    fragmentManager?.popBackStack()
+    iRefreshData!!.refresh()
+}
+
+override fun delete(value: Documents) {
+    dataList = dataList?.toMutableList()?.apply {
+        remove(value)
+    }
+    binding.recycleview.apply {
+        layoutManager = LinearLayoutManager(activity)
+        adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
+    }
+    binding.recycleview.adapter?.notifyDataSetChanged()
+}
+
+override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode == id + context!!.resources.getInteger(R.integer.LampiranUploadFile)) {
+        if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
+            SelectFile()
+        } else {
+            Toast.makeText(activity, "Perlu akses untuk upload file", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
 
 }
 
-interface iEditLampiran{
-    fun delete(value : Documents)
+interface iEditLampiran {
+    fun delete(value: Documents)
 }

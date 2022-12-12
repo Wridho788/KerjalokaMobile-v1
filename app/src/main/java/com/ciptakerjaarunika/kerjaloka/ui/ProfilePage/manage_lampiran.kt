@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -41,17 +42,16 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 class manage_lampiran : Fragment(), iRefreshData {
-    private lateinit var binding : FragmentManageLampiranPageBinding
-    private lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
-    private var oldestFile : String? = null;
+    private lateinit var binding: FragmentManageLampiranPageBinding
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private var oldestFile: String? = null
     private lateinit var defaultImagePicker: BasicImagePicker
+    private var fileVideo: File? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     private fun initRxImagePicker() {
         defaultImagePicker = RxImagePicker.create(BasicImagePicker::class.java)
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun pickGallery() {
         context?.let {
@@ -59,47 +59,76 @@ class manage_lampiran : Fragment(), iRefreshData {
                 .openGallery(
                     it,
                     DefaultSystemGalleryConfig.instance(
-                        // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
-                        // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
-                        // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
                         mimesType = DefaultGalleryMimes.customTypes("video/*") // multiType
                     )
                 )
                 .subscribe { result -> onPickUriSuccess(result.uri) }
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onPickUriSuccess(uri: Uri) {
         val pathName = context?.let { getPathFromUri(it, uri) }
-        if(pathName != null) {
-            val file = File(pathName ?: "")
-                 if(file != null) {
-                     val requestFile: RequestBody = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                     val files = MultipartBody.Part.createFormData(
-                                    "files",
-                                    file.name,
-                                    requestFile
-                                )
-                                ManageProfileAPI().UploadVideoResume(files, context) { res ->
-                                    if (res?.data != null) {
-                                        binding.videoResumeName.text = res.data.videoName
-                                        binding.btnRemoveResume.visibility = VISIBLE
-                                        binding.btnRemoveResume.setOnClickListener {
-                                            ProfileAPI().DeleteJobseekerResume(context) {
-                                                 Toast.makeText(
-                                                    context,
-                                                    "Berhasil menghapus video resume",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                binding.videoResumeName.text = "Upload Video Resume"
-                                                binding.btnRemoveResume.visibility = GONE
-                                            }
+        if (pathName != null) {
+            val file = File(pathName)
+            if (file != null) {
+                val requestFile: RequestBody =
+                    file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+                val files = MultipartBody.Part.createFormData(
+                    "files",
+                    file.name,
+                    requestFile
+                )
+                this.fileVideo = file
+                val m = (fileVideo?.length()?.toDouble()!! / 1024.0 / 1024.0)
+
+                if (m != null) {
+                    if (m >= 100) {
+                        Toast.makeText(
+                            context,
+                            "batas maksimal video resume 100 Mb",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        ManageProfileAPI().UploadVideoResume(files, context) {
+                            binding.spinnerResume.visibility = VISIBLE
+                            binding.uploadVideoResumeBtn.visibility = GONE
+                            if (it != null) {
+                                binding.spinnerResume.visibility = VISIBLE
+                                binding.uploadVideoResumeBtn.visibility = GONE
+                                if (it.code == 210) {
+                                    Log.d("upload video resume", it.data.toString())
+                                    binding.spinnerResume.visibility = GONE
+                                    binding.uploadVideoResumeBtn.visibility = VISIBLE
+                                    binding.videoResumeName.text = it.data?.videoName
+                                }
+                                if (it.data != null) {
+                                    Log.d("upload", it.data.toString())
+                                    binding.videoResumeName.text = it.data.videoName
+                                    binding.btnRemoveResume.visibility = VISIBLE
+                                    binding.btnRemoveResume.setOnClickListener {
+                                        ProfileAPI().DeleteJobseekerResume(context) {
+                                            Toast.makeText(
+                                                context,
+                                                "Berhasil menghapus video resume",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            binding.videoResumeName.text = "Upload Video Resume"
+                                            binding.btnRemoveResume.visibility = GONE
                                         }
                                     }
                                 }
+                            }
+
+                        }
+                    }
+                }
+
+
             }
         }
     }
+
     private fun getPathFromUri(context: Context, contentUri: Uri): String {
         var cursor: Cursor? = null
         return try {
@@ -118,41 +147,19 @@ class manage_lampiran : Fragment(), iRefreshData {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentManageLampiranPageBinding.inflate(layoutInflater)
-        return binding.root;
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRxImagePicker()
-
-//        activityResultLauncher = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()
-//        ) {
-//            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
-//                val data = it.data
-//                val fileUri: Uri = data!!.data!!
-//                val path = PathUtil().getRealPath(context!!, fileUri)
-//                val file: File? = File(path?:"")
-//                if(file != null){
-//                    val requestFile: RequestBody =
-//                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-//                    val files = MultipartBody.Part.createFormData("files", file.name, requestFile)
-//
-//                    ManageProfileAPI().UploadVideoResume(files, context){res->
-//                        if(res?.data != null){
-//                            binding.videoResumeName.text = res.data.videoName
-//                        }
-//                    }
-//                }
-//            }
-//        }
         getData()
     }
 
-    fun getData(){
-        ProfileAPI().GetJobseekerDocuments(context){ documents ->
+    fun getData() {
+        ProfileAPI().GetJobseekerDocuments(context) { documents ->
             binding.editLampiranPelamar.visibility = VISIBLE
-            binding.editLampiranPelamar.setOnClickListener{
+            binding.editLampiranPelamar.setOnClickListener {
                 replaceFragment(FragmentEditLampiran(documents?.data, this))
             }
             binding.spinnerDoc.visibility = GONE
@@ -164,8 +171,8 @@ class manage_lampiran : Fragment(), iRefreshData {
 
 
 
-        ProfileAPI().GetJobseekerResume(context){ resume ->
-            if(activity != null) {
+        ProfileAPI().GetJobseekerResume(context) { resume ->
+            if (activity != null) {
                 binding.spinnerResume.visibility = GONE
                 binding.uploadVideoResumeBtn.visibility = VISIBLE
                 binding.uploadVideoResumeBtn.setOnClickListener {
@@ -179,7 +186,7 @@ class manage_lampiran : Fragment(), iRefreshData {
 
                 if (resume?.data != null) {
                     val resumeDoc = resume.data
-                    oldestFile = resumeDoc.videoName;
+                    oldestFile = resumeDoc.videoName
                     binding.videoResumeName.text = resumeDoc.videoName
                     binding.btnRemoveResume.visibility = VISIBLE
                     binding.btnRemoveResume.setOnClickListener {
@@ -197,54 +204,56 @@ class manage_lampiran : Fragment(), iRefreshData {
             }
         }
 
-        ProfileAPI().GetJobseekerDocumentVaccine(context){vaccine->
+        ProfileAPI().GetJobseekerDocumentVaccine(context) { vaccine ->
 
-            if(activity != null){
-            binding.spinnerVac.visibility = GONE
-            binding.vaccineContainer.visibility = VISIBLE
-            binding.editStatusVaksinPelamar.visibility = VISIBLE
+            if (activity != null) {
+                binding.spinnerVac.visibility = GONE
+                binding.vaccineContainer.visibility = VISIBLE
+                binding.editStatusVaksinPelamar.visibility = VISIBLE
 
-            if(vaccine != null) {
-                binding.editStatusVaksinPelamar.setOnClickListener {
-                    replaceFragment(
-                        fragment_editlampiran_upload_vaksin(vaccine.data
-                            .filter { doc ->
-                                doc.documentType == DocumentType.Vaccine1.value ||
-                                        doc.documentType == DocumentType.Vaccine2.value ||
-                                        doc.documentType == DocumentType.Vaccine3.value
-                            }, this)
-                    )
-                }
-            }
-            if(vaccine != null && vaccine.data.size != 0) {
-                for (doc in vaccine.data) {
-                    var vaccineLogo: ImageView = view!!.findViewById(R.id.vaccine1Status);
-                    if (doc.documentType == DocumentType.Vaccine1.value) {
-                        vaccineLogo = view!!.findViewById(R.id.vaccine1Status)
-                    } else if (doc.documentType == DocumentType.Vaccine2.value) {
-                        vaccineLogo = view!!.findViewById(R.id.vaccine2Status)
-                    } else if (doc.documentType == DocumentType.Vaccine3.value) {
-                        vaccineLogo = view!!.findViewById(R.id.vaccine3Status)
-                    }
-
-                    when (doc.documentStatus) {
-                        VerifyStatus.Accept.value -> {
-                            vaccineLogo.setImageResource(R.drawable.ic_vaccine_approve)
-                        }
-                        VerifyStatus.Reject.value -> {
-                            vaccineLogo.setImageResource(R.drawable.ic_vaccine_reject)
-                        }
-                        VerifyStatus.Pending.value -> {
-                            vaccineLogo.setImageResource(R.drawable.ic_vaccine_pending)
-                        }
+                if (vaccine != null) {
+                    binding.editStatusVaksinPelamar.setOnClickListener {
+                        replaceFragment(
+                            fragment_editlampiran_upload_vaksin(
+                                vaccine.data
+                                    .filter { doc ->
+                                        doc.documentType == DocumentType.Vaccine1.value ||
+                                                doc.documentType == DocumentType.Vaccine2.value ||
+                                                doc.documentType == DocumentType.Vaccine3.value
+                                    }, this
+                            )
+                        )
                     }
                 }
-            }
+                if (vaccine != null && vaccine.data.size != 0) {
+                    for (doc in vaccine.data) {
+                        var vaccineLogo: ImageView = view!!.findViewById(R.id.vaccine1Status)
+                        if (doc.documentType == DocumentType.Vaccine1.value) {
+                            vaccineLogo = view!!.findViewById(R.id.vaccine1Status)
+                        } else if (doc.documentType == DocumentType.Vaccine2.value) {
+                            vaccineLogo = view!!.findViewById(R.id.vaccine2Status)
+                        } else if (doc.documentType == DocumentType.Vaccine3.value) {
+                            vaccineLogo = view!!.findViewById(R.id.vaccine3Status)
+                        }
+
+                        when (doc.documentStatus) {
+                            VerifyStatus.Accept.value -> {
+                                vaccineLogo.setImageResource(R.drawable.ic_vaccine_approve)
+                            }
+                            VerifyStatus.Reject.value -> {
+                                vaccineLogo.setImageResource(R.drawable.ic_vaccine_reject)
+                            }
+                            VerifyStatus.Pending.value -> {
+                                vaccineLogo.setImageResource(R.drawable.ic_vaccine_pending)
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.addToBackStack("")

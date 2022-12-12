@@ -217,7 +217,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/poppins"
-                    android:text="Tambah Kemampuan"
+                    android:text="Tambah Bahasa"
                     android:textAllCaps="false"
                     android:textSize="14sp"
                     app:cornerRadius="100dp"

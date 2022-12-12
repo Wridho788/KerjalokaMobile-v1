@@ -19,16 +19,13 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
 
-//class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
-//
-//
 class company_interview_byjob_adapter
-
-    (private val dataSet: company_interview_list,
-     private val cellClickListener: com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.Company.CellClickListener,
-     private val jobNo : Long?,
-     private val context : Context,
-     private val jobPosition : String?,
+    (
+    private val dataSet: company_interview_list,
+    private val cellClickListener: CellClickListener,
+    private val jobNo: Long?,
+    private val context: Context,
+    private val jobPosition: String?,
 ) :
     RecyclerView.Adapter<company_interview_byjob_adapter.ViewHolder>() {
 
@@ -36,9 +33,9 @@ class company_interview_byjob_adapter
         val userPhoto: ImageView
         val sectionName: TextView
         val lastMessage: TextView
-        val lastMessageOn : TextView
-        val notRead : TextView
-        val logo : ImageView
+        val lastMessageOn: TextView
+        val notRead: TextView
+        val logo: ImageView
 
         init {
             // Define click listener for the ViewHolder's View.
@@ -60,58 +57,54 @@ class company_interview_byjob_adapter
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
         viewHolder.sectionName.text = dataSet.interviewer[position].jobseekerName
         Glide.with(viewHolder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + dataSet.interviewer[position].photo).fitCenter()
+            .load(config().portAddress + "/photo/Profile/" + dataSet.interviewer[position].photo)
+            .fitCenter()
             .into(viewHolder.logo)
 
         viewHolder.lastMessage.text = ""
         viewHolder.lastMessageOn.text = ""
 
         val chatData = SessionManager(context).chatData
-        if(chatData!= null) {
-            val currentSection = chatData.sections?.find {
+        if (chatData != null) {
+            val currentSection = chatData.sections.find {
                 it.jobNo == jobNo &&
                         it.receiver.contains(dataSet.interviewer[position].userNo)
             }
 
-            if(currentSection != null) {
+            if (currentSection != null) {
                 viewHolder.notRead.text = currentSection.notRead.toString()
-                viewHolder.notRead.visibility = if(currentSection.notRead != 0) View.VISIBLE else View.GONE
+                viewHolder.notRead.visibility =
+                    if (currentSection.notRead != 0) View.VISIBLE else View.GONE
 
                 viewHolder.lastMessageOn.text =
-                    DateUtils().GetLastMessageOn(currentSection.messages?.last()?.createdOn?: "")
+                    DateUtils().GetLastMessageOn(currentSection.messages.last()?.createdOn ?: "")
 
                 viewHolder.lastMessage.text =
-                    currentSection.messages?.last()?.message
+                    currentSection.messages.last()?.message
 
                 viewHolder.itemView.setOnClickListener {
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
-                        currentSection.sectionNo ,jobNo, dataSet.interviewer[position].userNo,
+                        currentSection.sectionNo, jobNo, dataSet.interviewer[position].userNo,
                         dataSet.interviewer[position].photo,
                         jobPosition
                     )
                 }
-            }
-            else{
+            } else {
                 viewHolder.itemView.setOnClickListener {
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
-                        null,  jobNo, dataSet.interviewer[position].userNo,
+                        null, jobNo, dataSet.interviewer[position].userNo,
                         dataSet.interviewer[position].photo,
                         jobPosition
                     )
                 }
             }
-        }
-        else{
+        } else {
             viewHolder.itemView.setOnClickListener {
                 cellClickListener.goToChatPage(
                     dataSet.interviewer[position].jobseekerName,
@@ -122,7 +115,8 @@ class company_interview_byjob_adapter
             }
         }
     }
-    public fun LocalDateTime.dateToString(format: String): String {
+
+    fun LocalDateTime.dateToString(format: String): String {
         val dateFormatter = SimpleDateFormat(format, Locale.getDefault())
         return dateFormatter.format(this)
     }

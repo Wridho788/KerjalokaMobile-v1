@@ -1,7 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model
 
-
 import com.google.gson.annotations.SerializedName
+
 
 data class JobField(
     @SerializedName("fieldName")
