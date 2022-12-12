@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -68,13 +67,10 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
 
                     binding.recyclerViewSection.adapter?.notifyDataSetChanged()
                 }
-                Log.d("hubConnesction response chat", res.toString())
+//                Log.d("hubConnesction response chat", res.toString())
             },
             chat_data::class.java
         )
-//        binding.spinnerInterviewByJob.visibility = GONE
-//        binding.layoutSection.visibility = VISIBLE
-        Log.d("sectionDetail", SectionDetail.toString())
         binding.recyclerViewSection.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = company_interview_byjob_adapter(
@@ -85,8 +81,6 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
                 SectionDetail.jobPosition
             )
         }
-
-
         val search = view?.findViewById<EditText>(R.id.searchInput)
         search!!.hint = "Cari Pelamar"
 

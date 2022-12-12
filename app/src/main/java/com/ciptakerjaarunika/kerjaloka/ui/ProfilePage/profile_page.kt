@@ -32,7 +32,7 @@ class profilepage(var Page: Int) : Fragment() {
         ProfileAPI().JobseekerGetProfileData(context) { response ->
             if (response?.data != null) {
                 binding.spinnerProfile.visibility = GONE
-                binding.profileContent.visibility = VISIBLE
+                binding.profileLl.visibility = VISIBLE
                 if (response.data.users.roleNo == 4) {
                     response.data.users.photo = response.data.additionals.photo
                     response.data.users.jobseekerAdditional = response.data.additionals

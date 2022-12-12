@@ -133,7 +133,7 @@ class JobPage : Fragment(), IJobPage {
                 } else if (it?.data?.size != 0) {
                     binding.emptyBookmarkJob.visibility = VISIBLE
                 } else {
-                    binding.emptyBookmarkJob.visibility = View.GONE
+                    binding.emptyBookmarkJob.visibility = GONE
                 }
             }
         } else {
@@ -170,18 +170,13 @@ class JobPage : Fragment(), IJobPage {
     fun getNearJob() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
-            var latitude = it.latitude.toString()
-            var longitude = it.longitude.toString()
-            Log.d("lokasi latitude", latitude.toString())
-            Log.d("lokasi longtitude", longitude.toString())
-
             if (it != null) {
                 if (!it.latitude.toString().isNullOrEmpty() && !it.longitude.toString()
                         .isNullOrEmpty()
                 ) {
-//                    nearJobDone()
-//                    var latitude = it.latitude.toString()
-//                    var longitude = it.longitude.toString()
+                    nearJobDone()
+                    var latitude = it.latitude.toString()
+                    var longitude = it.longitude.toString()
                     JobAPI().getNearJob(latitude, longitude, context) {
                         nearJobDone()
                         if (it != null && it.data != null && it.data.size != 0) {
@@ -199,11 +194,10 @@ class JobPage : Fragment(), IJobPage {
                             binding.emptyNearJob.visibility = VISIBLE
                             binding.btnSeeNearMe.visibility = GONE
                         }
-
                     }
                 }
             } else {
-                nearJobDone()
+                binding.spinnerNear.visibility = GONE
                 binding.emptyNearJob.visibility = VISIBLE
             }
         }
@@ -234,7 +228,6 @@ class JobPage : Fragment(), IJobPage {
                             }
                             binding.nearmeJob.adapter?.notifyDataSetChanged()
                             this.RefreshData()
-
                         }
                         3 -> {
                             listBookmark[Index].bookmarked = !listBookmark[Index].bookmarked
@@ -246,14 +239,11 @@ class JobPage : Fragment(), IJobPage {
                             this.RefreshData()
                         }
                     }
-
                 } else {
                     Toast.makeText(context, it.Message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
-
-
     }
 
 
