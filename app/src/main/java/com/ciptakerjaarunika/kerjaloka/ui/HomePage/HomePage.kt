@@ -119,10 +119,14 @@ class HomePage : Fragment(), OnFragmentClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
+        val layoutRecommendation = view.findViewById<LinearLayout>(R.id.layout_recommendation)
+        val spinner  = view.findViewById<LinearLayout>(R.id.spinnerRecommendation)
 
         val Context = this
         JobAPI().getJobRecommendation(false,context) {
             if (it != null) {
+                layoutRecommendation.visibility = View.VISIBLE
+                spinner.visibility = View.GONE
                 listJob = it.data
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)

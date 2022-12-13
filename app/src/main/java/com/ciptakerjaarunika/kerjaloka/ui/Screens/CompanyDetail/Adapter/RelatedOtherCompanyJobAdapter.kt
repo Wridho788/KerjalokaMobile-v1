@@ -42,8 +42,9 @@ class RelatedOtherCompanyJobAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
+
         view.measure(
-            View.MeasureSpec.makeMeasureSpec(3.9.toInt(), View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(9.9.toInt(), View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(1.2.toInt(), View.MeasureSpec.UNSPECIFIED)
         )
 
