@@ -36,6 +36,7 @@ data class application(
 data class applicant(
     val jobseekerNo: Long,
     val name: String,
+    val email: String,
     val location: locationApplicant,
     val photo: String,
     val preferenceJobType: List<preferenceJobType>,

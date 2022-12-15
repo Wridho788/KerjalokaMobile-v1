@@ -42,8 +42,6 @@ class fragment_company_jobs : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         UpdateUI()
-//        loading -= 1
-//        LoadingDone()
     }
 
 

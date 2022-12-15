@@ -142,10 +142,6 @@ fun InterviewSchedule(
                         val jObjError = JSONObject(data)
                         val message  = jObjError.getString("message")
                         val code = jObjError.getString("code")
-//                        onResult(
-//
-//
-//                        )
                         Log.d("error", message.toString())
                     } catch (e: Exception) {
                         Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()

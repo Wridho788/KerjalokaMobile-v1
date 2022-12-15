@@ -201,6 +201,8 @@ class ApplicantDetailFragment(
             .load(config().portAddress + "photo/Profile/" + applicantDetail.applicant.photo)
             .fitCenter().into(binding.headerApplicantDetail.profileApplicant)
 
+//        Log.d("email applicant", applicantDetail.applicant.email.toString())
+
         binding.nameApplicant.text = applicantDetail.applicant.name
         binding.headerApplicantDetail.applicantName.text = applicantDetail.applicant.name
         binding.headerApplicantDetail.applicantLocation.text =
@@ -393,6 +395,8 @@ class ApplicantDetailFragment(
             id,
             StatusPageFragment(
                 applicantDetail.application.applicationNo,
+                applicantDetail.applicant.name,
+                applicantDetail.applicant.email,
                 applicantDetail.application.applicationStatusNo
             ),
             "ChangeStatus"

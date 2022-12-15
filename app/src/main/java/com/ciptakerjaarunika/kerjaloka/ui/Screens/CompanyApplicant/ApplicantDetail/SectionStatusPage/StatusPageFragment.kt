@@ -1,25 +1,71 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage
 
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.provider.CalendarContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyApplicant.*
+import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentStatusPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
+import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
+import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
+import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageUserSetting
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.UbahStatusFragment
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.messaging.FirebaseMessaging
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
-
-class StatusPageFragment(private val applicantNo: Long, private var applicationStatusNo: Int) :
-    Fragment(), iStatusPage {
+class StatusPageFragment(
+    private val applicantNo: Long,
+    var applicantName: String,
+    var applicantEmail: String,
+    private var applicationStatusNo: Int
+) :
+    Fragment(), iStatusPage, TimePickerDialog.OnTimeSetListener {
     private lateinit var binding: FragmentStatusPageBinding
     lateinit var datePicker: DatePickerHelper
+    lateinit var timePicker: TimePicker
+    private var googleToken: String = ""
+    var dateInterview = ""
+    var emailAttendess = applicantEmail
+    var startInterview = ""
+    var endInterview = ""
+    var expired = ""
+    companion object {
+        var mGoogleSignInClient: GoogleSignInClient? = null
+        private var mAuth: FirebaseAuth? = null
+        val Req_Code: Int = 123
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mAuth = FirebaseAuth.getInstance()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,12 +73,14 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
     ): View {
         binding = FragmentStatusPageBinding.inflate(layoutInflater)
         val view = binding.root
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         datePicker = DatePickerHelper(context!!)
+
         binding.btnBackStatus.setOnClickListener {
             activity?.onBackPressed()
         }
@@ -67,10 +115,13 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
         val y = cal.get(Calendar.YEAR)
         datePicker.showDialog(d, m, y, object : DatePickerHelper.Callback {
             override fun onDateSelected(dayofMonth: Int, month: Int, year: Int) {
-                val dayStr = if (dayofMonth < 10) "0${dayofMonth}" else "${dayofMonth}"
+                val dayStr = i f (dayofMonth < 10) "0${dayofMonth}" else "${dayofMonth}"
                 val mon = month + 1
                 val monthStr = if (mon < 10) "0${mon}" else "${mon}"
-                binding.textDate.text = "${dayStr}-${monthStr}-${year}"
+                var datePick = "$dayStr-$monthStr-$year"
+                dateInterview = "$datePick"
+                Log.d("dateInterview", dateInterview.toString())
+                binding.textDate.text = "$dateInterview"
             }
         })
     }
@@ -78,6 +129,87 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
     fun ubahStatusModal() {
         val sheet = UbahStatusFragment(this@StatusPageFragment)
         activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "StatusFragment") }
+    }
+
+    private fun signIn() {
+        val signInIntent: Intent = AkunPage.mGoogleSignInClient!!.signInIntent
+        startActivityForResult(signInIntent, AkunPage.Req_Code)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AkunPage.Req_Code) {
+            try {
+                view?.findViewById<LinearLayout>(R.id.spinnerLogin)?.visibility = View.GONE
+                val task: Task<GoogleSignInAccount> =
+                    GoogleSignIn.getSignedInAccountFromIntent(data)
+                handleSignInResult(task)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
+        try {
+            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
+            if (account != null) {
+                UpdateUI(account)
+            }
+        } catch (e: ApiException) {
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+            Log.d("err", "handleSignInResult:" + e.toString())
+        }
+    }
+
+    private fun UpdateUI(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        val currentDate = Date()
+        val cal: Calendar = Calendar.getInstance()
+        cal.time = currentDate
+        cal.add(Calendar.HOUR, +1)
+        val oneHourBack: Date = cal.time
+        this.expired = currentDate.toString()
+
+        ManageUserSetting.firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Login.SavedPreference.setEmail(context!!, account.email.toString())
+                    Login.SavedPreference.setUsername(context!!, account.displayName.toString())
+                    val text = "${account.idToken}${config().authKey}${4}"
+                    val crypt = MessageDigest.getInstance("MD5")
+                    crypt.update(text.toByteArray())
+                    val hash = BigInteger(1, crypt.digest()).toString(16)
+                    fun md5(str: String): ByteArray =
+                        MessageDigest.getInstance("MD5").digest(str.toByteArray(Charsets.UTF_8))
+                    Log.d("Crypt", hash)
+
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            return@OnCompleteListener
+                        }
+                        val token = task.result
+                        SessionManager(context).device_token = token
+
+                    })
+
+                    val googleRequest =
+                        GoogleLoginRequest(
+                            account.idToken.toString(),
+                            oneHourBack.toString(),
+                            hash,
+                            deviceToken = SessionManager(context).device_token
+                        )
+                    Log.d("googleRequest status", googleRequest.toString())
+                    this.googleToken = googleRequest.token
+
+
+                }
+            }
     }
 
     override fun changeStatus(status: Int) {
@@ -110,51 +242,114 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
         } else if (status == ApplicanStatusType.Interview.value) {
             binding.statusChange.text = "Interview"
             binding.sectionInterview.visibility = View.VISIBLE
-            var locationInterview = binding.txtInputLocation.text.toString()
-            val nameInterview = binding.txtInputInterviewer.text.toString()
             binding.btnChangeStatus.setOnClickListener {
-                val intents = Intent(Intent.ACTION_INSERT)
-                intents.data = CalendarContract.Events.CONTENT_URI
-                startActivity(intents)
+                var locationInterview = binding.txtInputLocation.text.toString()
+                val nameInterview = binding.txtInputInterviewer.text.toString()
+                if (locationInterview.toString().isNullOrEmpty()) {
+                    Toast.makeText(context, "Silahkan Isi Lokasi Interview", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (nameInterview.toString().isNullOrEmpty()) {
+                    Toast.makeText(context, "Silahkan Isi Nama Interviewer", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (dateInterview.toString().isNullOrEmpty()) {
+                    Toast.makeText(context, "Silahkan Atur Jadwal Interview", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (googleToken.toString().isNullOrEmpty()) {
+                    signIn()
+                } else {
+                    var listEmail = ArrayList<email>()
+                    listEmail.add(email(emailAttendess))
 
-                val intent = Intent(Intent.ACTION_INSERT)
-                intent.type = "vnd.android.cursor.item/event"
-                intent.putExtra(CalendarContract.Events.TITLE, "Learn Android")
-                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Home suit home")
-                intent.putExtra(CalendarContract.Events.DESCRIPTION, "Download Examples")
-                // Setting dates
+                    var datetimeStart = "${dateInterview} ${startInterview}"
+                    var datetimeEnd = "${dateInterview} ${endInterview}"
+                    val pattern = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")
+                    val localDateTime = LocalDateTime.parse(datetimeStart, pattern)
+                    val localDateTimeEnd = LocalDateTime.parse(datetimeEnd, pattern)
 
+                    var end = end(
+                        "${localDateTimeEnd.toString()}", "Asia/Jakarta"
+                    )
+                    var start = start(
+                        "${localDateTime.toString()}", "Asia/Jakarta"
+                    )
+                    var listoverride = ArrayList<override>()
+                    var override = override(
+                        24 * 60
+                    )
+                    listoverride.add(override)
+                    var reminder = reminder(
+                        listoverride,
+                        useDefault = false
+                    )
+
+                    var calenderEvents = calenderEvent(
+                        attendees = listEmail,
+                        description = "A Chance To Know More About Company",
+                        end = end,
+                        start = start,
+                        guestsCanInviteOthers = false,
+                        guestsCanModify = false,
+                        location = locationInterview.toString(),
+                        reminder = reminder,
+                        summary = "${SessionManager(context).user?.company?.companyName} Mengundang kamu untuk Interview, (${applicantName})"
+                    )
+
+                    var interviewSchedule = InterviewScheduleRequest(
+                        applicantNo,
+                        calenderEvents,
+                        expired,
+                        googleToken
+                    )
+                    InterviewSchedule(context, interviewSchedule) {
+                        Log.d("interviewSchedule", it.toString())
+
+                    }
+
+                }
+
+
+                Log.d("InterviewLocation", locationInterview)
+                Log.d("InterviewName", nameInterview)
+                Log.d("InterviewDate", dateInterview)
+
+//                val intents = Intent(Intent.ACTION_INSERT)
+//                intents.data = CalendarContract.Events.CONTENT_URI
+//                startActivity(intents)
+//                val intent = Intent(Intent.ACTION_INSERT)
+//                intent.type = "vnd.android.cursor.item/event"
+//                intent.putExtra(CalendarContract.Events.TITLE, "Learn Android")
+//                intent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Home suit home")
+//                intent.putExtra(CalendarContract.Events.DESCRIPTION, "Download Examples")
                 // Setting dates
-                val calDate = GregorianCalendar(2012, 10, 2)
-                intent.putExtra(
-                    CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-                    calDate.timeInMillis
-                )
-                intent.putExtra(
-                    CalendarContract.EXTRA_EVENT_END_TIME,
-                    calDate.timeInMillis
-                )
-                // make it a full day event
-                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
-                // make it a recurring Event
-                intent.putExtra(
-                    CalendarContract.Events.RRULE,
-                    "FREQ=WEEKLY;COUNT=11;WKST=SU;BYDAY=TU,TH"
-                )
-                // Making it private and shown as busy
-                intent.putExtra(
-                    CalendarContract.Events.ACCESS_LEVEL,
-                    CalendarContract.Events.ACCESS_PRIVATE
-                )
-                intent.putExtra(
-                    CalendarContract.Events.AVAILABILITY,
-                    CalendarContract.Events.AVAILABILITY_BUSY
-                )
+//                val calDate = GregorianCalendar(2012, 10, 2)
+//                intent.putExtra(
+//                    CalendarContract.EXTRA_EVENT_BEGIN_TIME,
+//                    calDate.timeInMillis
+//                )
+//                intent.putExtra(
+//                    CalendarContract.EXTRA_EVENT_END_TIME,
+//                    calDate.timeInMillis
+//                )
+//                // make it a full day event
+//                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+//                // make it a recurring Event
+//                intent.putExtra(
+//                    CalendarContract.Events.RRULE,
+//                    "FREQ=WEEKLY;COUNT=11;WKST=SU;BYDAY=TU,TH"
+//                )
+//                // Making it private and shown as busy
+//                intent.putExtra(
+//                    CalendarContract.Events.ACCESS_LEVEL,
+//                    CalendarContract.Events.ACCESS_PRIVATE
+//                )
+//                intent.putExtra(
+//                    CalendarContract.Events.AVAILABILITY,
+//                    CalendarContract.Events.AVAILABILITY_BUSY
+//                )
 //                val interviewSchedule = InterviewScheduleRequest(
 //                    applicantNo,
 //                )
 
-//                InterviewSchedule(context,)
 //              InterviewStatus(context, applicantNo){
 //                  if (it != null){
 //                      if (it.code == 210){
@@ -208,6 +403,49 @@ class StatusPageFragment(private val applicantNo: Long, private var applicationS
         binding.btnDatePicker.setOnClickListener {
             showDatePickerDialog()
         }
+
+        binding.btnTimePicker.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                var timeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
+                this.startInterview = timeFormatter
+                Log.d("Interview Start", startInterview)
+                binding.textBegin.text = timeFormatter.toString()
+
+            }
+            TimePickerDialog(
+                context,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
+        }
+
+        binding.btnTimePickerEnd.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                var endTimeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
+                this.endInterview = endTimeFormatter.toString()
+                Log.d("Interview end", endTimeFormatter.toString())
+                binding.textEnd.text = endTimeFormatter.toString()
+            }
+            TimePickerDialog(
+                context,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
+        }
+    }
+
+    override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
+        TODO("Not yet implemented")
     }
 
 

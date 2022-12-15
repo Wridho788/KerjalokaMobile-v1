@@ -4,7 +4,6 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.model.Interview.conmpany_interview_list_api
@@ -104,8 +103,9 @@ class InterviewAPI {
                 ) {
                     Log.d("Response Code : ", response.code().toString())
                     if (response.code() == 401) {
+                        Log.d("Response Code : ", response.toString())
 //                        mainActivity.showLogin(InterviewPage(), "interview")
-                        Toast.makeText(context, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(context, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
                     } else {
                         onResult(response.body())
                     }
