@@ -19,7 +19,6 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentStatusPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.ApplicanStatusType
 import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.ui.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.ui.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageUserSetting
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionStatusPage.BottomSheet.UbahStatusFragment
@@ -35,8 +34,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class StatusPageFragment(
@@ -55,10 +52,14 @@ class StatusPageFragment(
     var startInterview = ""
     var endInterview = ""
     var expired = ""
+
+
     companion object {
         var mGoogleSignInClient: GoogleSignInClient? = null
         private var mAuth: FirebaseAuth? = null
         val Req_Code: Int = 123
+        val firebaseAuth = FirebaseAuth.getInstance()
+
     }
 
 
@@ -73,7 +74,6 @@ class StatusPageFragment(
     ): View {
         binding = FragmentStatusPageBinding.inflate(layoutInflater)
         val view = binding.root
-
         return view
     }
 
@@ -115,13 +115,15 @@ class StatusPageFragment(
         val y = cal.get(Calendar.YEAR)
         datePicker.showDialog(d, m, y, object : DatePickerHelper.Callback {
             override fun onDateSelected(dayofMonth: Int, month: Int, year: Int) {
-                val dayStr = i f (dayofMonth < 10) "0${dayofMonth}" else "${dayofMonth}"
+
+                val dayStr = if (dayofMonth < 10) "0${dayofMonth}" else "${dayofMonth}"
+                var expiredOn = "${year}-${month}-${dayofMonth}"
                 val mon = month + 1
                 val monthStr = if (mon < 10) "0${mon}" else "${mon}"
                 var datePick = "$dayStr-$monthStr-$year"
-                dateInterview = "$datePick"
+                dateInterview = expiredOn.toString()
                 Log.d("dateInterview", dateInterview.toString())
-                binding.textDate.text = "$dateInterview"
+                binding.textDate.text = "$datePick"
             }
         })
     }
@@ -132,14 +134,22 @@ class StatusPageFragment(
     }
 
     private fun signIn() {
-        val signInIntent: Intent = AkunPage.mGoogleSignInClient!!.signInIntent
-        startActivityForResult(signInIntent, AkunPage.Req_Code)
+
+        if (mGoogleSignInClient != null) {
+            val signInIntent: Intent = mGoogleSignInClient!!.signInIntent
+            startActivityForResult(signInIntent, Req_Code)
+        } else {
+            Log.d("googleSign", mGoogleSignInClient!!.signInIntent.toString())
+            Toast.makeText(context, "Membutuhkan Google SignIn", Toast.LENGTH_SHORT).show()
+//            val signInIntent: Intent = AkunPage.mGoogleSignInClient!!.signInIntent
+//            startActivityForResult(signInIntent, AkunPage.Req_Code)
+        }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AkunPage.Req_Code) {
+        if (requestCode == Req_Code) {
             try {
                 view?.findViewById<LinearLayout>(R.id.spinnerLogin)?.visibility = View.GONE
                 val task: Task<GoogleSignInAccount> =
@@ -245,14 +255,25 @@ class StatusPageFragment(
             binding.btnChangeStatus.setOnClickListener {
                 var locationInterview = binding.txtInputLocation.text.toString()
                 val nameInterview = binding.txtInputInterviewer.text.toString()
-                if (locationInterview.toString().isNullOrEmpty()) {
-                    Toast.makeText(context, "Silahkan Isi Lokasi Interview", Toast.LENGTH_SHORT)
+                if (dateInterview.toString().isNullOrEmpty()) {
+                    Toast.makeText(context, "Silahkan Atur Jadwal Interview", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (dateInterview.toString().isNullOrEmpty()) {
+                    Toast.makeText(
+                        context,
+                        "Silahkan Atur Jadwal Interview",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 } else if (nameInterview.toString().isNullOrEmpty()) {
                     Toast.makeText(context, "Silahkan Isi Nama Interviewer", Toast.LENGTH_SHORT)
                         .show()
-                } else if (dateInterview.toString().isNullOrEmpty()) {
-                    Toast.makeText(context, "Silahkan Atur Jadwal Interview", Toast.LENGTH_SHORT)
+                } else if (locationInterview.toString().isNullOrEmpty()) {
+                    Toast.makeText(
+                        context,
+                        "Silahkan Isi Lokasi Interview",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 } else if (googleToken.toString().isNullOrEmpty()) {
                     signIn()
@@ -260,17 +281,13 @@ class StatusPageFragment(
                     var listEmail = ArrayList<email>()
                     listEmail.add(email(emailAttendess))
 
-                    var datetimeStart = "${dateInterview} ${startInterview}"
-                    var datetimeEnd = "${dateInterview} ${endInterview}"
-                    val pattern = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")
-                    val localDateTime = LocalDateTime.parse(datetimeStart, pattern)
-                    val localDateTimeEnd = LocalDateTime.parse(datetimeEnd, pattern)
-
+                    var datetimeStart = "${dateInterview}T${startInterview}:00.007Z"
+                    var datetimeEnd = "${dateInterview}T${endInterview}:00.007Z"
                     var end = end(
-                        "${localDateTimeEnd.toString()}", "Asia/Jakarta"
+                        "$datetimeEnd", "Asia/Jakarta"
                     )
                     var start = start(
-                        "${localDateTime.toString()}", "Asia/Jakarta"
+                        "$datetimeStart", "Asia/Jakarta"
                     )
                     var listoverride = ArrayList<override>()
                     var override = override(
@@ -302,7 +319,6 @@ class StatusPageFragment(
                     )
                     InterviewSchedule(context, interviewSchedule) {
                         Log.d("interviewSchedule", it.toString())
-
                     }
 
                 }
@@ -406,15 +422,16 @@ class StatusPageFragment(
 
         binding.btnTimePicker.setOnClickListener {
             val cal = Calendar.getInstance()
-            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, minute)
-                var timeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
-                this.startInterview = timeFormatter
-                Log.d("Interview Start", startInterview)
-                binding.textBegin.text = timeFormatter.toString()
+            val timeSetListener =
+                TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                    cal.set(Calendar.HOUR_OF_DAY, hour)
+                    cal.set(Calendar.MINUTE, minute)
+                    var timeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
+                    this.startInterview = timeFormatter
+                    Log.d("Interview Start", startInterview)
+                    binding.textBegin.text = timeFormatter.toString()
 
-            }
+                }
             TimePickerDialog(
                 context,
                 timeSetListener,
@@ -426,14 +443,15 @@ class StatusPageFragment(
 
         binding.btnTimePickerEnd.setOnClickListener {
             val cal = Calendar.getInstance()
-            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, minute)
-                var endTimeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
-                this.endInterview = endTimeFormatter.toString()
-                Log.d("Interview end", endTimeFormatter.toString())
-                binding.textEnd.text = endTimeFormatter.toString()
-            }
+            val timeSetListener =
+                TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                    cal.set(Calendar.HOUR_OF_DAY, hour)
+                    cal.set(Calendar.MINUTE, minute)
+                    var endTimeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
+                    this.endInterview = endTimeFormatter.toString()
+                    Log.d("Interview end", endTimeFormatter.toString())
+                    binding.textEnd.text = endTimeFormatter.toString()
+                }
             TimePickerDialog(
                 context,
                 timeSetListener,
