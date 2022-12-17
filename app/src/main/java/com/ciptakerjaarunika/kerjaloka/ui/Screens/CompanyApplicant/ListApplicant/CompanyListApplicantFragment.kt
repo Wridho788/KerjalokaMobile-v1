@@ -48,13 +48,9 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
         }
 
         CompanyOfficerJobsApi().CompanyOfficerJob(context) {
-            binding.spinner.visibility = View.VISIBLE
-            binding.contentContainer.visibility = View.GONE
+            Loading()
             if (it != null) {
-                binding.spinner.visibility = View.GONE
-                binding.contentContainer.visibility = View.VISIBLE
-//                loading -= 1
-//                LoadingDone()
+                LoadingDone()
                 listJob = it.data
                 Log.d("own", listJob.toString())
                 rv_applicantJob.apply {
@@ -77,11 +73,14 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
 
     }
 
+    fun Loading() {
+        binding.spinner.visibility = View.VISIBLE
+        binding.contentContainer.visibility = View.GONE
+    }
+
     fun LoadingDone() {
-        if (loading == 0) {
-            binding.spinner.visibility = View.GONE
-            binding.contentContainer.visibility = View.VISIBLE
-        }
+        binding.spinner.visibility = View.GONE
+        binding.contentContainer.visibility = View.VISIBLE
     }
 
     override fun goToListJobApplicant(JobNo: Long) {

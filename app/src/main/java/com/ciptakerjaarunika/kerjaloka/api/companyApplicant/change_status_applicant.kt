@@ -71,7 +71,7 @@ interface interviewStatus {
 }
 
 interface PostInterviewStatus {
-    @POST("/company/interviewSchedule")
+    @POST("company/interviewSchedule")
     fun postInterviewSchedule(@Body interviewScheduleRequest: InterviewScheduleRequest): Call<statusResponse>
 }
 
