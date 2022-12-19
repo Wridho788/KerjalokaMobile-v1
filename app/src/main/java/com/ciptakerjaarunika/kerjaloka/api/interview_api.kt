@@ -84,6 +84,36 @@ class InterviewAPI {
         )
     }
 
+    fun GetInterviewList(
+        context: Context?,
+        onResult: (jobseeker_interview_list_api?) -> Unit
+    ) {
+        val retrofit = ServiceBuilder(context).GET(JobseekerGetInterviewList::class.java)
+
+        retrofit.getInterviewList().enqueue(
+            object : Callback<jobseeker_interview_list_api> {
+                override fun onFailure(call: Call<jobseeker_interview_list_api>, t: Throwable) {
+                    Log.d("error", t.toString())
+                    onResult(null)
+                }
+
+                override fun onResponse(
+                    call: Call<jobseeker_interview_list_api>,
+                    response: Response<jobseeker_interview_list_api>
+                ) {
+                    Log.d("Response Code : ", response.code().toString())
+                    if (response.code() == 401) {
+                        Log.d("Response Code : ", response.toString())
+//                        mainActivity.showLogin(InterviewPage(), "interview")
+//                        Toast.makeText(context, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+                    } else {
+                        onResult(response.body())
+                    }
+                }
+            }
+        )
+    }
+
 
     interface UploadChatPhoto {
         @Multipart

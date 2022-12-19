@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyDetail.Adapter
 
 import android.annotation.SuppressLint
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -41,12 +42,8 @@ class RelatedOtherCompanyJobAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
-        view.measure(
-            View.MeasureSpec.makeMeasureSpec(3.9.toInt(), View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(1.2.toInt(), View.MeasureSpec.UNSPECIFIED)
-        )
-
+//        val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
+        val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_job_related, parent, false)
         return ViewHolder(view)
     }
 

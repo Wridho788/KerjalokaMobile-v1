@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.Adapter
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -46,11 +47,9 @@ class RelatedJobAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
-//        view.layoutParams = ViewGroup.LayoutParams((parent.width * 0.7).toInt(),ViewGroup.LayoutParams.WRAP_CONTENT)
-        view.measure(
-            View.MeasureSpec.makeMeasureSpec(3.9.toInt(), View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(1.2.toInt(), View.MeasureSpec.UNSPECIFIED));
+//        val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
+        val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_job_related, parent, false)
+
         return ViewHolder(view)
     }
 

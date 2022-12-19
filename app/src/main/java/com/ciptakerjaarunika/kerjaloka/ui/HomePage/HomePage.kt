@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.ui.HomePage
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -15,12 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.fragment_company_jobs
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentHomeBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Adapter.RecommendationJobAdapter
+import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Notification
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.ui.Screens.JobDetailScreen.JobDetailFragment
@@ -64,6 +67,25 @@ class HomePage : Fragment(), OnFragmentClickListener {
             ft.addToBackStack("")
             ft.commit()
         }
+
+        binding.myInterviewSection.visibility = View.GONE
+        InterviewAPI().GetInterviewList(context) {
+            if (it != null) {
+                Log.d("Interview jobseeker", it.toString())
+                if (it.code == 210 && it.data.size != 0) {
+                    binding.myInterviewSection.visibility = View.VISIBLE
+                    binding.interviewSection.btnSeeAllInterview.setOnClickListener {
+                        onInterviewsPage()
+                    }
+                    it.data.forEach {
+                        interview ->
+                        binding.interviewSection.titleJobInterview.setText(interview.jobPosition.toString())
+                        binding.interviewSection.companyName.setText(interview.companyName.toString())
+                    }
+                }
+            }
+        }
+
         if(SessionManager(context).user != null){
             btn_notif.visibility = VISIBLE
             btn_notif.setOnClickListener {
@@ -97,10 +119,14 @@ class HomePage : Fragment(), OnFragmentClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
+        val layoutRecommendation = view.findViewById<LinearLayout>(R.id.layout_recommendation)
+        val spinner  = view.findViewById<LinearLayout>(R.id.spinnerRecommendation)
 
         val Context = this
         JobAPI().getJobRecommendation(false,context) {
             if (it != null) {
+                layoutRecommendation.visibility = View.VISIBLE
+                spinner.visibility = View.GONE
                 listJob = it.data
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)
@@ -122,6 +148,13 @@ class HomePage : Fragment(), OnFragmentClickListener {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.addToBackStack("")
         ft.replace(id, CompanyPage(), "")
+        ft.commit()
+    }
+
+    override fun onInterviewsPage() {
+        val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
+        ft.addToBackStack("")
+        ft.replace(id, InterviewPage(), "")
         ft.commit()
     }
 
@@ -159,4 +192,5 @@ interface OnFragmentClickListener {
     fun onJobPage()
     fun onCompanyJobPage()
     fun bookmarkJob(list : List<SearchJobModel>)
+    fun onInterviewsPage()
 }

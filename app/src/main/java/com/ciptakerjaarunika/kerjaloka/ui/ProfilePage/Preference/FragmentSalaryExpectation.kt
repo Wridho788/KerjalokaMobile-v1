@@ -1,6 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Preference
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +17,7 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSalaryExpectationBind
 class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: iRefreshData) :
     Fragment() {
     private lateinit var binding: FragmentSalaryExpectationBinding
-
+    var salary: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,49 +36,31 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: i
             back()
         }
 
-        binding.saveBtn.setOnClickListener {
-            val value =
-                if (binding.salaryExpectationTxt.text.isNullOrEmpty() || binding.salaryExpectationTxt.text.toString()
-                        .toInt() == 0
-                ) null
-                else binding.salaryExpectationTxt.text.toString().toInt()
-            if (value != null
-            ) {
-                if (value.toLong() < 10000000000) {
-                    ManageProfileAPI().EditSalaryExpectation(value.toInt(), context) {
-                        if (it != null) {
-                            Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
-                                .show()
-                            back()
-                        } else {
-                            Toast.makeText(
-                                activity,
-                                "Terjadi kesalahan yang tidak diketahui",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                } else {
-                    ManageProfileAPI().EditSalaryExpectation(
-                        binding.salaryExpectationTxt.text.toString().toInt(), context
-                    ) {
-                        if (it != null) {
-                            Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
-                                .show()
-                            back()
-                        } else {
-                            Toast.makeText(
-                                activity,
-                                "Terjadi kesalahan yang tidak diketahui",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
+        binding.salaryExpectationTxt.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (binding.salaryExpectationTxt.text.toString().toLong() > 10000000000) {
+                    Toast.makeText(
+                        context,
+                        "Ekspektasi Gaji Tidak Boleh Melebihi 10 Miliar",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            } else {
-                ManageProfileAPI().EditSalaryExpectation(
-                    0, context
-                ) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (binding.salaryExpectationTxt.text.toString().toLong() < 10000000000) {
+                    salary = binding.salaryExpectationTxt.text.toString()
+                } else if (binding.salaryExpectationTxt.text.toString().isNullOrEmpty()) {
+                    Toast.makeText(context, "Silahkan Isi Ekspektasi Gaji", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        binding.saveBtn.setOnClickListener {
+            if (!salary.toString().isNullOrEmpty()
+            ) {
+                ManageProfileAPI().EditSalaryExpectation(salary.toInt(), context) {
                     if (it != null) {
                         Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
                             .show()
@@ -89,6 +73,8 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: i
                         ).show()
                     }
                 }
+            } else {
+                Toast.makeText(context, "Silahkan Isi Ekspektasi Gaji", Toast.LENGTH_SHORT).show()
             }
         }
     }

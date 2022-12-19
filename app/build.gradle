@@ -25,8 +25,8 @@ android {
         applicationId "com.ciptakerjaarunika.kerjaloka"
         minSdk 23
         targetSdk 32
-        versionCode 6
-        versionName "1.0.0.4"
+        versionCode 7
+        versionName "1.0.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
