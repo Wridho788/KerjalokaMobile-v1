@@ -416,8 +416,6 @@ class StatusPageFragment(
 //                        Toast.LENGTH_SHORT
 //                    ).show()
 //                }
-
-
 //                val interviewSchedule = InterviewScheduleRequest(
 //                    applicantNo,
 //                )

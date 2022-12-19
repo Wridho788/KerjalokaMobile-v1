@@ -137,8 +137,6 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
                     btn_arrow.setImageResource(R.drawable.ic_arrow_up)
                 }
             }
-
-
         }
     }
 
