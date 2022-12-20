@@ -29,7 +29,7 @@
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
                     android:id="@+id/back_btn"
                     app:cornerRadius="100sp"
                     app:icon="@drawable/ic_arrow_left_red"
@@ -98,7 +98,8 @@
                     android:maxLines="10"
                     android:paddingHorizontal="15dp"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:importantForAutofill="no" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -134,7 +135,8 @@
                     style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                     android:paddingHorizontal="15dp"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="TextViewEdits" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -209,7 +211,8 @@
                     style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                     android:paddingHorizontal="15dp"
                     android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText,TextViewEdits" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -278,7 +281,8 @@
                                 style="@style/Widget.AppCompat.Spinner.DropDown.ActionBar"
                                 android:paddingHorizontal="15dp"
                                 android:textColor="@color/black"
-                                android:textSize="12sp"/>
+                                android:textSize="12sp"
+                                tools:ignore="HardcodedText,TextViewEdits,TooDeepLayout" />
                         </com.google.android.material.card.MaterialCardView>
 
                     </LinearLayout>
@@ -475,13 +479,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@color/light_300"
-                    android:hint="Masukkan skor GPA kamu (1-100)"
+                    android:ems="10"
+                    android:hint="Masukkan skor GPA kamu (1-100) atau (1,0)"
                     android:inputType="number|phone|textPassword"
                     android:maxLength="3"
-                    android:ems="10"
                     android:paddingHorizontal="10dp"
                     android:textColor="@color/black"
-                    android:textSize="12sp"/>
+                    android:textColorHint="#546E7A"
+                    android:textSize="12sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <TextView

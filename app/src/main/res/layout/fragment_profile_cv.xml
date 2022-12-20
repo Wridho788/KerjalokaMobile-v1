@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ProgressBar
                     style="?android:attr/progressBarStyleLarge"
@@ -37,7 +37,79 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/card_background_filled"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight=".8"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Simpan profile sebagai CV"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/card_background"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:id="@+id/link_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_edittext"
+                            android:fontFamily="@font/poppins"
+                            android:hint="Tidak Ada Link"
+                            android:padding="5dp"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/generateLink"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:backgroundTint="@color/white"
+                            android:fontFamily="@font/poppins"
+                            android:paddingHorizontal="30dp"
+                            android:text="Generate"
+                            android:textColor="@color/danger_500"
+                            android:textSize="12sp"
+                            app:cornerRadius="100dp"
+                            app:strokeColor="@color/danger_500"
+                            app:strokeWidth="1dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/saveCV"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/poppins"
+                    android:paddingHorizontal="30dp"
+                    android:text="Simpan"
+                    android:textColor="@color/danger_500"
+                    android:textSize="12sp"
+                    app:cornerRadius="100dp"
+                    app:strokeColor="@color/danger_500"
+                    app:strokeWidth="1dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

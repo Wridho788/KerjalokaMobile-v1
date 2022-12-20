@@ -50,6 +50,37 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         GetData()
+        ProfileAPI().GetGeneratedLink(context) {
+            if (it != null) {
+                if (it.code == 210) {
+                    binding.linkText.text = it.data
+                    binding.generateLink.text = "Revoke"
+                    binding.generateLink.setOnClickListener {
+                        ProfileAPI().GetRevokedLink(context) {
+                            if (it != null) {
+                                LoadingDone()
+                                GetData()
+                            }
+                        }
+                    }
+                } else if (it.code == 460) {
+                    binding.generateLink.text = "Generate"
+                    binding.linkText.text = "Tidak Ada Link"
+                    binding.generateLink.setOnClickListener {
+                        ProfileAPI().GetGeneratedLink(context) {
+                            if (it != null) {
+                                binding.linkText.text = it.data
+                                binding.generateLink.text = "Revoke"
+                            }
+                        }
+                    }
+                }
+                else {
+                   Toast.makeText(context, "Terjadi Kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
     }
 
     private fun GetData() {
@@ -79,7 +110,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                     binding.checkFreshgraduated.isChecked = true
 
                     binding.checkFreshgraduated.setOnClickListener {
-                        ProfileAPI().GetJobseekerFreshGraduated(context){
+                        ProfileAPI().GetJobseekerFreshGraduated(context) {
                             if (it != null) {
                                 binding.checkFreshgraduated.isChecked
                                 Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
