@@ -9,7 +9,6 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,10 +39,6 @@ class HomePage : Fragment(), OnFragmentClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentHomeBinding.inflate(layoutInflater)
-
-    }
-
-    private fun setContentView(root: ConstraintLayout) {
     }
 
     override fun onCreateView(
@@ -51,8 +46,15 @@ class HomePage : Fragment(), OnFragmentClickListener {
         savedInstanceState: Bundle?
     ): View {
         val view = binding.root
-        if(SessionManager(context).user != null) {
-            view.findViewById<TextView>(R.id.greeting_txt).text = SessionManager(context).user?.userFullname!!.split(" ")[0]
+        if (SessionManager(context).user != null) {
+            view.findViewById<TextView>(R.id.greeting_txt).text =
+                SessionManager(context).user?.userFullname!!.split(" ")[0]
+        }
+        binding.swipeToRefresh.setColorSchemeColors(R.color.danger_500)
+        binding.swipeToRefresh.setOnRefreshListener {
+            GetInterviewList()
+            GetJobRecommendation()
+            binding.swipeToRefresh.isRefreshing = false
         }
         val btn_search = view.findViewById<LinearLayout>(R.id.btn_search)
         val btn_notif = view.findViewById<MaterialButton>(R.id.notif_btn)
@@ -69,24 +71,10 @@ class HomePage : Fragment(), OnFragmentClickListener {
         }
 
         binding.myInterviewSection.visibility = View.GONE
-        InterviewAPI().GetInterviewList(context) {
-            if (it != null) {
-                Log.d("Interview jobseeker", it.toString())
-                if (it.code == 210 && it.data.size != 0) {
-                    binding.myInterviewSection.visibility = View.VISIBLE
-                    binding.interviewSection.btnSeeAllInterview.setOnClickListener {
-                        onInterviewsPage()
-                    }
-                    it.data.forEach {
-                        interview ->
-                        binding.interviewSection.titleJobInterview.setText(interview.jobPosition.toString())
-                        binding.interviewSection.companyName.setText(interview.companyName.toString())
-                    }
-                }
-            }
-        }
+        GetInterviewList()
+        GetJobRecommendation()
 
-        if(SessionManager(context).user != null){
+        if (SessionManager(context).user != null) {
             btn_notif.visibility = VISIBLE
             btn_notif.setOnClickListener {
                 val intent = Intent(activity, Notification::class.java)
@@ -94,11 +82,11 @@ class HomePage : Fragment(), OnFragmentClickListener {
             }
         }
 
-        if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value){
+        if (SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value) {
             btn_job.setOnClickListener {
                 onJobPage()
             }
-        }  else {
+        } else {
             btn_job.setOnClickListener {
                 onCompanyJobPage()
             }
@@ -116,26 +104,45 @@ class HomePage : Fragment(), OnFragmentClickListener {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
-        val layoutRecommendation = view.findViewById<LinearLayout>(R.id.layout_recommendation)
-        val spinner  = view.findViewById<LinearLayout>(R.id.spinnerRecommendation)
-
-        val Context = this
-        JobAPI().getJobRecommendation(false,context) {
+    fun GetInterviewList() {
+        InterviewAPI().GetInterviewList(context) {
+            binding.myInterviewSection.visibility = View.GONE
             if (it != null) {
-                layoutRecommendation.visibility = View.VISIBLE
-                spinner.visibility = View.GONE
+                Log.d("Interview jobseeker", it.toString())
+                if (it.code == 210 && it.data.size != 0) {
+                    binding.myInterviewSection.visibility = VISIBLE
+                    binding.interviewSection.btnSeeAllInterview.setOnClickListener {
+                        onInterviewsPage()
+                    }
+                    it.data.forEach { interview ->
+                        binding.interviewSection.titleJobInterview.text =
+                            interview.jobPosition.toString()
+                        binding.interviewSection.companyName.text = interview.companyName.toString()
+                    }
+                }
+            }
+        }
+    }
+
+    fun GetJobRecommendation() {
+        val Context = this
+
+        JobAPI().getJobRecommendation(false, context) {
+            binding.spinnerRecommendation.visibility = VISIBLE
+            if (it != null) {
+                binding.spinnerRecommendation.visibility = View.GONE
+                binding.layoutRecommendation.visibility = VISIBLE
+
                 listJob = it.data
-                recyclerView.apply {
+                binding.recyclerViewRecommendationJobs.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    recyclerView.layoutManager = layoutManager
+                    binding.recyclerViewRecommendationJobs.layoutManager = layoutManager
                     adapter = RecommendationJobAdapter(context, listJob, Context)
                 }
             }
         }
     }
+
 
     override fun onFragmentClick(JobNo: Long, CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
@@ -172,15 +179,15 @@ class HomePage : Fragment(), OnFragmentClickListener {
         fragmentTransaction.commit()
     }
 
-    override fun bookmarkJob(list : List<SearchJobModel>) {
+    override fun bookmarkJob(list: List<SearchJobModel>) {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view_recommendation_jobs)
         listJob = list
 
-                recyclerView?.apply {
-                    layoutManager = LinearLayoutManager(activity)
-                    recyclerView.layoutManager = layoutManager
-                    adapter = RecommendationJobAdapter(context, listJob, this@HomePage)
-                }
+        recyclerView?.apply {
+            layoutManager = LinearLayoutManager(activity)
+            recyclerView.layoutManager = layoutManager
+            adapter = RecommendationJobAdapter(context, listJob, this@HomePage)
+        }
         recyclerView?.adapter?.notifyDataSetChanged()
     }
 
@@ -191,6 +198,6 @@ interface OnFragmentClickListener {
     fun onCompanyPage()
     fun onJobPage()
     fun onCompanyJobPage()
-    fun bookmarkJob(list : List<SearchJobModel>)
+    fun bookmarkJob(list: List<SearchJobModel>)
     fun onInterviewsPage()
 }

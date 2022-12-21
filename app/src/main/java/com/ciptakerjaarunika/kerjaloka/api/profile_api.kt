@@ -651,6 +651,29 @@ class ProfileAPI {
         val data: String
     )
 
+    interface getCvLink {
+        @GET("/jobseeker/cv/getCvLink")
+        fun getCVLink(): Call<generatedLinkResponse>
+    }
+
+    fun GetCvLink(context: Context?, onResult: (generatedLinkResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(getCvLink::class.java)
+        retrofit.getCVLink().enqueue(
+            object : Callback<generatedLinkResponse> {
+                override fun onResponse(
+                    call: Call<generatedLinkResponse>,
+                    response: Response<generatedLinkResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<generatedLinkResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
     interface getGeneratedLink {
         @GET("/jobseeker/cv/generateLink")
         fun getLink(): Call<generatedLinkResponse>
@@ -665,7 +688,25 @@ class ProfileAPI {
                     call: Call<generatedLinkResponse>,
                     response: Response<generatedLinkResponse>
                 ) {
-                    onResult(response.body())
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            val code = jObjError.getString("code")
+                            Log.d("response error body", map.toString())
+//                            onResult(generatedLinkResponse(code.toInt(), 0, map, ""))
+//                            Toast.makeText(
+//                                context, map.toString(),
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Log.d("response", response.toString())
+                    }
                 }
 
                 override fun onFailure(call: Call<generatedLinkResponse>, t: Throwable) {
@@ -698,5 +739,5 @@ class ProfileAPI {
                 }
             }
         )
-                            }
+    }
 }

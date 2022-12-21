@@ -38,49 +38,25 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     private lateinit var binding: FragmentProfileCvBinding
     private var loading = 4
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileCvBinding.inflate(layoutInflater)
         val view = binding.root
+        binding.swipeToRefresh.setColorSchemeColors(R.color.danger_500)
+        binding.swipeToRefresh.setOnRefreshListener {
+            GetData()
+            binding.swipeToRefresh.isRefreshing = false
+        }
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         GetData()
-        ProfileAPI().GetGeneratedLink(context) {
-            if (it != null) {
-                if (it.code == 210) {
-                    binding.linkText.text = it.data
-                    binding.generateLink.text = "Revoke"
-                    binding.generateLink.setOnClickListener {
-                        ProfileAPI().GetRevokedLink(context) {
-                            if (it != null) {
-                                LoadingDone()
-                                GetData()
-                            }
-                        }
-                    }
-                } else if (it.code == 460) {
-                    binding.generateLink.text = "Generate"
-                    binding.linkText.text = "Tidak Ada Link"
-                    binding.generateLink.setOnClickListener {
-                        ProfileAPI().GetGeneratedLink(context) {
-                            if (it != null) {
-                                binding.linkText.text = it.data
-                                binding.generateLink.text = "Revoke"
-                            }
-                        }
-                    }
-                }
-                else {
-                   Toast.makeText(context, "Terjadi Kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
-                }
-            }
 
-        }
     }
 
     private fun GetData() {
@@ -89,7 +65,6 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         binding.chipGroup3.removeAllViews()
         binding.chipGroup4.removeAllViews()
         binding.chipGroup5.removeAllViews()
-
         ProfileAPI().GetJobseekerSkills(context) { skills ->
             loading -= 1
             LoadingDone()
@@ -273,7 +248,41 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
 
             }
         }
+        ProfileAPI().GetCvLink(context) {
+                if (it?.code == 210) {
+                    binding.linkText.text = it.data
+                    binding.generateLink.text = "Revoke"
+                    binding.generateLink.setOnClickListener {
+                        RevokedLink()
+                    }
+                } else {
+                    binding.linkText.text = "Tidak Ada Link"
+                    binding.generateLink.text = "Generate"
+                    binding.generateLink.setOnClickListener {
+                        GenerateLink()
+                    }
+                }
+        }
+    }
 
+    fun GenerateLink() {
+        ProfileAPI().GetGeneratedLink(context) {
+            if (it?.code == 210) {
+                binding.linkText.text = it.data
+                binding.generateLink.text = "Revoke"
+                GetData()
+            }
+        }
+    }
+
+    fun RevokedLink() {
+        ProfileAPI().GetRevokedLink(context) {
+            if (it?.code == 210) {
+                binding.linkText.text = "Tidak ada Link"
+                binding.generateLink.text = "Generate"
+                GetData()
+            }
+        }
     }
 
     private fun replaceFragment(fragment: Fragment) {

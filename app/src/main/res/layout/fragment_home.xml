@@ -57,113 +57,118 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:ignore="ScrollViewCount">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginVertical="16dp"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/find_category_section"
-                layout="@layout/section_find_category" />
-
-            <include
-                android:id="@+id/my_test_section"
-                layout="@layout/section_my_test" />
+            tools:ignore="ScrollViewCount">
 
             <LinearLayout
-                android:id="@+id/my_interview_section"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:orientation="vertical">
 
                 <include
-                    android:id="@+id/interviewSection"
-                    layout="@layout/section_my_interview" />
-            </LinearLayout>
+                    android:id="@+id/find_category_section"
+                    layout="@layout/section_find_category" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                tools:ignore="UselessParent">
+                <include
+                    android:id="@+id/my_test_section"
+                    layout="@layout/section_my_test" />
 
                 <LinearLayout
-                    android:id="@+id/title_recommendation_section"
+                    android:id="@+id/my_interview_section"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:visibility="gone">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/recommandation_job"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/btn_see_all_recommendation_jobs"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="@string/see_all"
-                        android:textColor="@color/danger_500"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                    <include
+                        android:id="@+id/interviewSection"
+                        layout="@layout/section_my_interview" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/spinnerRecommendation"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title_recommendation_section">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
 
-                    <ProgressBar
-                        style="?android:attr/progressBarStyleLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/layout_recommendation"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title_recommendation_section">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view_recommendation_jobs"
+                    <LinearLayout
+                        android:id="@+id/title_recommendation_section"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:itemCount="5"
-                        tools:listitem="@layout/item_card_recommendation_job" />
-                </LinearLayout>
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/recommandation_job"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
 
-    </androidx.core.widget.NestedScrollView>
+                        <TextView
+                            android:id="@+id/btn_see_all_recommendation_jobs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/see_all"
+                            android:textColor="@color/danger_500"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/spinnerRecommendation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/title_recommendation_section">
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleLarge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/layout_recommendation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/title_recommendation_section">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_view_recommendation_jobs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:itemCount="5"
+                            tools:listitem="@layout/item_card_recommendation_job" />
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
