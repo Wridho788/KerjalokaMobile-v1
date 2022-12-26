@@ -71,12 +71,10 @@ class ChatPage(
     val jobPosition: String?
 ) : Fragment(), PositionOnBottom {
 
-//    private var chatModel: chat_model? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var hubConnection: HubConnection
     private var onBottom: Boolean = false
     private lateinit var binding: ActivityMainBinding
-    private var MY_CAMERA_REQUEST_CODE: Int = 100
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var activityResultCameraLauncher: ActivityResultLauncher<Intent>
     private lateinit var defaultImagePicker: BasicImagePicker

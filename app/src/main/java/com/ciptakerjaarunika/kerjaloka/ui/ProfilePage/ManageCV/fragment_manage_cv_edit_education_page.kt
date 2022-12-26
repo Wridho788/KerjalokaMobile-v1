@@ -24,8 +24,6 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ModalEdit.*
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.manage_profile.iEditBasic
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
-import java.text.DecimalFormat
-import java.text.NumberFormat
 import java.util.*
 
 
@@ -181,50 +179,20 @@ class fragment_manage_cv_edit_education_page(
                 )
             }
         }
-
         binding.masukkanSkorGpa.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun afterTextChanged(s: Editable) {
-                binding.masukkanSkorGpa.removeTextChangedListener(this)
-                try {
-                    var originalString: String = s.toString()
-                    val longval: Long
-                    if (originalString.contains(",")) {
-                        originalString = originalString.replace(",".toRegex(), "")
-                    }
-                    longval = originalString.toLong()
-                    val formatter: DecimalFormat =
-                        NumberFormat.getInstance(Locale.US) as DecimalFormat
-                    formatter.applyPattern("#,##")
-                    val formattedString: String = formatter.format(longval)
-
-                    binding.masukkanSkorGpa.text.toString()
-                    binding.masukkanSkorGpa.setSelection(binding.masukkanSkorGpa.text.length)
-
-                } catch (nfe: NumberFormatException) {
-                    nfe.printStackTrace()
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var value = binding.masukkanSkorGpa.text.toString()
+                if (!value.isEmpty()) {
+                    gpa = value.toDouble()
+                } else {
+                    gpa = 0.0
                 }
-                binding.masukkanSkorGpa.addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        var value = binding.masukkanSkorGpa.text.toString()
-                        if (!value.isEmpty()) {
-                            gpa = value.toDouble()
-                        } else {
-                            gpa = 0.0
-                        }
+            }
 
-//                        gpa = binding.masukkanSkorGpa.text.toString().toDouble()
-                    }
-
-                    override fun afterTextChanged(p0: Editable?) {
-                    }
-                })
+            override fun afterTextChanged(p0: Editable?) {
             }
         })
-
         binding.saveBtn.setOnClickListener {
             if (binding.masukkanSekolahUniversitas.text.isNullOrEmpty()) {
                 showError("Nama Sekolah/Universitas tidak boleh kosong")

@@ -81,21 +81,50 @@
                                 android:textColor="@color/black"
                                 android:textSize="12sp" />
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/generateLink"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:backgroundTint="@color/white"
-                                android:fontFamily="@font/poppins"
-                                android:paddingHorizontal="30dp"
-                                android:text="Generate"
-                                android:textColor="@color/danger_500"
-                                android:textSize="12sp"
-                                app:cornerRadius="100dp"
-                                app:strokeColor="@color/danger_500"
-                                app:strokeWidth="1dp" />
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/generateLink"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/white"
+                                    android:fontFamily="@font/poppins"
+                                    android:paddingHorizontal="30dp"
+                                    android:text="Generate"
+                                    android:textColor="@color/danger_500"
+                                    android:textSize="12sp"
+                                    app:cornerRadius="100dp"
+                                    app:strokeColor="@color/danger_500"
+                                    app:strokeWidth="1dp" />
+
+                                <LinearLayout
+                                    android:id="@+id/layout_btn_copy_link"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:gravity="end"
+                                    android:visibility="gone">
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/salin_link"
+                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/poppins"
+                                        android:paddingHorizontal="30dp"
+                                        android:text="Salin"
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp"
+                                        app:cornerRadius="100dp"
+                                        app:strokeColor="@color/danger_500"
+                                        app:strokeWidth="1dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
                         </LinearLayout>
                     </LinearLayout>
 

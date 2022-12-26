@@ -25,6 +25,8 @@ class BasicInfoPage(var data: CompanyJobDetail, val updateData: iBasicInfoPage) 
 
     private lateinit var binding: FragmentJobBasicInfoBinding
     private var jobTypes: List<JobTypeFilter> = listOf()
+    var salaryMin: String = "0"
+    var salaryMax: String = "0"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,7 +77,6 @@ class BasicInfoPage(var data: CompanyJobDetail, val updateData: iBasicInfoPage) 
             }
         }
 
-
         binding.jobPositionTxt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -87,28 +88,45 @@ class BasicInfoPage(var data: CompanyJobDetail, val updateData: iBasicInfoPage) 
 
         binding.salaryMinTxt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var value = binding.salaryMinTxt.text.toString()
+                if (!value.isEmpty()) {
+                    salaryMin = value
+                    updateData.updateJobSalary(salaryMin.toInt(), salaryMax.toInt())
+                } else {
+                    salaryMin = "0"
+                    updateData.updateJobSalary(salaryMin.toInt(), salaryMax.toInt())
 
-            override fun afterTextChanged(p0: Editable?) {
-                if (binding.salaryMinTxt.text.toString().isNullOrEmpty()
-                    || binding.salaryMinTxt.text.toString().toInt() < 0
-                ) {
-                    updateData.updateJobSalary(null, null)
-                } else
-                    updateData.updateJobSalary(binding.salaryMinTxt.text.toString().toInt(), binding.salaryMaxTxt.text.toString().toInt())
+                }
             }
+
+            override fun afterTextChanged(p0: Editable?) {}
         })
+
         binding.salaryMaxTxt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var value = binding.salaryMaxTxt.text.toString()
+                if (!value.isEmpty()) {
+                    salaryMax = value
+                    updateData.updateJobSalary(salaryMin.toInt(), salaryMax.toInt())
+
+                } else {
+                    salaryMax = "0"
+                    updateData.updateJobSalary(salaryMin.toInt(), salaryMax.toInt())
+                }
+            }
 
             override fun afterTextChanged(p0: Editable?) {
-                if (binding.salaryMaxTxt.text.toString().isNullOrEmpty()
-                    || binding.salaryMaxTxt.text.toString().toInt() < 0
-                ) {
-                    updateData.updateJobSalary(null,null)
-                } else
-                    updateData.updateJobSalary(binding.salaryMinTxt.text.toString().toInt(), binding.salaryMaxTxt.text.toString().toInt())
+//                if (binding.salaryMaxTxt.text.toString().isNullOrEmpty()
+//                    || binding.salaryMaxTxt.text.toString().toInt() < 0
+//                ) {
+//                    updateData.updateJobSalary(null, null)
+//                } else
+//                    updateData.updateJobSalary(
+//                        binding.salaryMinTxt.text.toString().toInt(),
+//                        binding.salaryMaxTxt.text.toString().toInt()
+//                    )
             }
         })
 

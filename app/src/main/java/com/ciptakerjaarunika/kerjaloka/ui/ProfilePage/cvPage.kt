@@ -1,8 +1,21 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
+import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.AlertDialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.DialogInterface
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +23,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,13 +46,21 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.edit_kemampuan
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.fragment_manage_cv_edit_education_page
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.manage_cv_edit_experience_page
 import com.google.android.material.chip.Chip
-
+import java.io.File
+import java.io.FileOutputStream
 
 class cvPage : Fragment(), iRefreshData, iCvPage {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var binding: FragmentProfileCvBinding
     private var loading = 4
 
+
+    var pageHeight = 1120
+    var pageWidth = 792
+
+    lateinit var bmp: Bitmap
+    lateinit var scaledbmp: Bitmap
+    var PERMISSION_CODE = 101
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,10 +76,111 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         return view
     }
 
+    fun checkPermissions(): Boolean {
+        var writeStoragePermission = ContextCompat.checkSelfPermission(
+            context!!,
+            WRITE_EXTERNAL_STORAGE
+        )
+        var readStoragePermission = ContextCompat.checkSelfPermission(
+            context!!,
+            READ_EXTERNAL_STORAGE
+        )
+        return writeStoragePermission == PackageManager.PERMISSION_GRANTED
+                && readStoragePermission == PackageManager.PERMISSION_GRANTED
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         GetData()
+        // on below line we are checking permission
+        if (checkPermissions()) {
+            // if permission is granted we are displaying a toast message.
+            Toast.makeText(context, "Permissions Granted..", Toast.LENGTH_SHORT).show()
+        } else {
+            // if the permission is not granted
+            // we are calling request permission method.
+            requestPermission()
+        }
+        binding.saveCV.setOnClickListener {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                // on below line we are calling generate
+                // PDF method to generate our PDF file.
+                generateCvPdf()
+            }
 
+        }
+    }
+
+    fun requestPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                activity?.let { it ->
+                    ActivityCompat.requestPermissions(
+                        it,
+                        listOf(Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray(),
+                        id + 204
+                    )
+                }
+            } else {
+                Toast.makeText(context, "Permission denied", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_CODE) {
+            if (grantResults.size > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1]
+                    == PackageManager.PERMISSION_GRANTED
+                ) {
+                    Log.d("permission Granted", "Permission granted")
+                } else {
+                    Toast.makeText(context, "Permission Denied..", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    fun generateCvPdf() {
+        var pdfDocument: PdfDocument = PdfDocument()
+        var paint: Paint = Paint()
+        var title: Paint = Paint()
+        var myPageInfo: PdfDocument.PageInfo? =
+            PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
+
+        var myPage: PdfDocument.Page = pdfDocument.startPage(myPageInfo)
+        var canvas: Canvas = myPage.canvas
+        canvas.drawText("A portal for IT professionals.", 209F, 100F, title)
+        title.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
+        title.textSize = 15F
+        title.textAlign = Paint.Align.CENTER
+        canvas.drawText("This is sample document which we have created.", 396F, 560F, title)
+
+        pdfDocument.finishPage(myPage)
+        val file: File = File(Environment.getExternalStorageDirectory(), "GFG.pdf")
+        try {
+            pdfDocument.writeTo(FileOutputStream(file))
+            Toast.makeText(context, "PDF file generated..", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("err", e.toString())
+            Toast.makeText(context, "Fail to generate PDF file..", Toast.LENGTH_SHORT)
+                .show()
+        }
+        pdfDocument.close()
     }
 
     private fun GetData() {
@@ -73,8 +197,8 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                 loading -= 1
                 LoadingDone()
                 if (experiences?.data?.size != 0) {
-                    binding.layoutFreshgraduated.visibility = View.GONE
-                    binding.layoutExperience.visibility = View.VISIBLE
+                    binding.layoutFreshgraduated.visibility = GONE
+                    binding.layoutExperience.visibility = VISIBLE
                     binding.recycleExp.apply {
                         layoutManager = LinearLayoutManager(activity)
                         adapter = experiences?.data.let { ExpAdapter(it!!, this@cvPage) }
@@ -248,20 +372,30 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
 
             }
         }
+
         ProfileAPI().GetCvLink(context) {
-                if (it?.code == 210) {
-                    binding.linkText.text = it.data
-                    binding.generateLink.text = "Revoke"
-                    binding.generateLink.setOnClickListener {
-                        RevokedLink()
-                    }
-                } else {
-                    binding.linkText.text = "Tidak Ada Link"
-                    binding.generateLink.text = "Generate"
-                    binding.generateLink.setOnClickListener {
-                        GenerateLink()
-                    }
+            if (it?.code == 210) {
+                binding.linkText.text = it.data
+                binding.generateLink.text = "Revoke"
+                binding.layoutBtnCopyLink.visibility = VISIBLE
+                var clipboard =
+                    requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clipData = ClipData.newPlainText("CV Link", it.data)
+
+                binding.salinLink.setOnClickListener {
+                    clipboard.setPrimaryClip(clipData)
                 }
+                binding.generateLink.setOnClickListener {
+                    RevokedLink()
+                }
+            } else {
+                binding.linkText.text = "Tidak Ada Link"
+                binding.generateLink.text = "Generate"
+                binding.layoutBtnCopyLink.visibility = GONE
+                binding.generateLink.setOnClickListener {
+                    GenerateLink()
+                }
+            }
         }
     }
 

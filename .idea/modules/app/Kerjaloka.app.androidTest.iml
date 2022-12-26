@@ -18,8 +18,8 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/1475e40a9b2db24083b5f4de93f69dc9/transformed/espresso-core-3.4.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/af4759aa97f1a2e808934cc301633a7f/transformed/jetified-SuperBottomSheet-2.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/710173eb678c4c90b86bd46245679d51/transformed/jetified-expandablelayout-1.0.7-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/0a71f9c7a84b85cf37af6b50a1826d2d/transformed/jetified-jitsi-meet-sdk-6.1.0-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/3f9de1eb76991f359f379451fad7b028/transformed/jetified-react-native-giphy-1.7.0-jitsi-11642645-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/e836b04205798dc598e7f7dc5da87ac1/transformed/jetified-jitsi-meet-sdk-6.0.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/f4266913a5f582e31c284f4372769e22/transformed/jetified-react-native-giphy-1.7.0-jitsi-11101599-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/c4f260fd599de51542aa2ad803e915ad/transformed/jetified-ui-2.1.16-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/70c9c2eb50b11f717a6fdd1a7452b1be/transformed/jetified-viewbinding-7.2.2-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/e419cf4713b4269864c1f0d19a3fb1a1/transformed/navigation-fragment-ktx-2.3.5-api.jar</arg>
@@ -30,34 +30,36 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/dd3de4091eb5569b80d269d19e356c9c/transformed/jetified-lifecycle-viewmodel-ktx-2.5.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/f134efdda7997d82f5f2ca92ecd2f807/transformed/work-runtime-ktx-2.8.0-alpha01-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/e11e622dcb916f4a9690782015bc95cf/transformed/navigation-ui-2.3.5-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/63fcdd3217ca71ac5928ae6cbc53c0e3/transformed/jetified-react-native-screens-3.13.1-jitsi-11642645-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/8ebe8737c159bb22919098c2748b827c/transformed/jetified-react-native-screens-3.13.1-jitsi-11101599-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/cfd14e3fe1470e307d9f39fed64d9d1b/transformed/material-1.8.0-alpha02-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5178a72f7cc75d2ff4f547327b2a2dc6/transformed/jetified-materialdatetimepicker-4.2.3-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/2ad3a307372ca6106e195089c5be182d/transformed/jetified-react-native-amplitude-2.7.0-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/56aec00ac55a3d0e7772b8806249a7c4/transformed/jetified-react-native-google-signin-7.0.4-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/88b39eb132b3defaf2628ad10a502b57/transformed/jetified-react-native-async-storage-1.15.14-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/241d9bf77a0c45073234f9a59bd4423e/transformed/jetified-react-native-background-timer-2.4.1-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/3139ca021258c2990cc61a381e29b003/transformed/jetified-react-native-calendar-events-2.2.0-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/8f4120f871efc305ca5f78019df2ee1c/transformed/jetified-react-native-community_clipboard-1.5.1-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/54fc741b34dd5ebf418ae0b13dd87e86/transformed/jetified-react-native-community_netinfo-7.1.7-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/9c28815e0ebbf925bc1b9a630eed8c94/transformed/jetified-react-native-default-preference-1.4.4-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/a4cded5f4c7d09a81bd1b46c14ae9e89/transformed/jetified-react-native-device-info-8.4.8-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/22698b6dff1c5107e08506b45c2b388e/transformed/jetified-react-native-gesture-handler-2.1.0-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/449e556670b990072763e285ce6cf769/transformed/jetified-react-native-get-random-values-1.7.2-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/ce0d9d049150c7b3457d4352122d7ab3/transformed/jetified-react-native-immersive-2.0.0-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/80da01ea2342add5a4df688f181e777a/transformed/jetified-react-native-keep-awake-4.0.0-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/a8d05e35b380445fc61c0597546f8332/transformed/jetified-react-native-masked-view_masked-view-0.2.6-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/e88abad75a32b35d6a3f6f0f25ddd478/transformed/jetified-react-native-pager-view-5.4.9-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/708d679d862d6da3b1c622f42fca9711/transformed/jetified-react-native-performance-2.1.0-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/afdf01039218b3b8d8e2d8b2a0aea721/transformed/jetified-react-native-safe-area-context-3.3.2-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/1e010f57c8bc27c24e687d26daa59629/transformed/jetified-react-native-slider-4.1.12-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/106c2ff7795613bb7e5360e4eea098bf/transformed/jetified-react-native-sound-0.11.1-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/c4ba1af84e56f241f56a0e6efabe406f/transformed/jetified-react-native-splash-screen-3.3.0-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/ea0f4b3dab359802f4adb8994f145e42/transformed/jetified-react-native-svg-12.4.3-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/4d768ac57666679906ed71badf2f169a/transformed/jetified-react-native-video-6.0.0-alpha.1-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/9a05892c46c6b74d229dee8f2631a539/transformed/jetified-react-native-webrtc-1.100.1-jitsi-11642645-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/3b71ca1f02cd8b4f9455390ca5c62c90/transformed/jetified-react-native-webview-11.15.1-jitsi-11642645-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/e614492420aaef8d07a2745532b748ef/transformed/jetified-react-native-amplitude-2.7.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/33485de0765a17515fd51aae2b8142fe/transformed/jetified-react-native-device-info-8.4.8-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/042fa97bb5f3ca38bd3bc20380f2977f/transformed/jetified-react-native-google-signin-7.0.4-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/8458465307bf18f71159a35687865aca/transformed/jetified-react-native-async-storage-1.15.14-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/d740b16859e9c8011c576eab8f6b76ac/transformed/jetified-react-native-background-timer-2.4.1-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/eb178952070cf5e294dd3b79bb78f859/transformed/jetified-react-native-calendar-events-2.2.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/b0a760db65d58fc554ba4d0f422f9755/transformed/jetified-react-native-community_clipboard-1.5.1-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/23fce976fa412b33d73804f15c505a7b/transformed/jetified-react-native-community_netinfo-7.1.7-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/e5a9d5ad17b32580988acc53d4e70716/transformed/jetified-react-native-default-preference-1.4.4-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/0b63e24ddfe4c9142bc27e5edcdb01dd/transformed/jetified-react-native-gesture-handler-2.1.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/7565ebca453052dc8fc9ebda9ae78ede/transformed/jetified-react-native-get-random-values-1.7.2-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/dc46798d97c2444aa4c3d4d0cf989aba/transformed/jetified-react-native-immersive-2.0.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/0f2205d679ae7f0a54e8287423e4e564/transformed/jetified-react-native-keep-awake-4.0.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/0fd1208a2aceecc6a900599640f5a43e/transformed/jetified-react-native-masked-view_masked-view-0.2.6-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/9bec619564d7d94dc16220a3a1c7552a/transformed/jetified-react-native-pager-view-5.4.9-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/6c0ac23c02fd64d146742c8185056719/transformed/jetified-react-native-performance-2.1.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/5ce713007d16644041bbccb6e8896826/transformed/jetified-react-native-reanimated-1.13.4-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/dc879c5782b51d126945ca1c46707305/transformed/jetified-react-native-safe-area-context-3.3.2-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/5bfb7146d251ffc91aef89a65103533c/transformed/jetified-react-native-slider-4.1.12-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/63c69cb510522c6a3282d1aa39f97d7e/transformed/jetified-react-native-sound-0.11.1-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/e89b7c0a331abbd85e216d35258b849e/transformed/jetified-react-native-splash-screen-3.3.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/1546bd479eb7d38340c5838bff4824f8/transformed/jetified-react-native-svg-12.1.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/36845774a72f595cfecf66fff747ba1e/transformed/jetified-react-native-video-5.2.0-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/76578650ab39aa48fdcb7a4fe6b488c3/transformed/jetified-react-native-webrtc-1.100.1-jitsi-11101599-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/19f346e524fc9e954183f55a715c86a9/transformed/jetified-react-native-webview-11.15.1-jitsi-11101599-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/f6c78308d63a22a005d9eeb97dc5ba4d/transformed/jetified-react-native-0.68.1-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/6cd9b634afbec0daa169c87b506ed796/transformed/jetified-android-scalablevideoview-v1.0.4-jitpack-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/ba0c6328b09ecc77d5aca6d567d5a567/transformed/jetified-lottie-3.1.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/29c29c58af44374c2309bd2cd8331730/transformed/appcompat-1.5.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/3e932b8d6ce4181cb6f383468fdcd2b4/transformed/jetified-firebase-auth-ktx-21.0.7-api.jar</arg>
@@ -134,10 +136,9 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/7afbe840bbbf20dbacf605d111c3e4d7/transformed/loader-1.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/92167738608ea32fadd2cbe9535e68b1/transformed/viewpager-1.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/472a7a5406d828f09b97055f202dd233/transformed/customview-1.1.0-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/71a494c11a810d4f11d2ae1978f6275f/transformed/jetified-exoplayer-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/7b9db454c6c806e8393d568607ad3a4c/transformed/jetified-exoplayer-ui-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/bdd3dce3a93e1515378b4a35901ed22a/transformed/media-1.4.3-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/6df67507025764085ba8bbe54c2cc09a/transformed/webkit-1.4.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/db2368eda353c9eaeff29df267361002/transformed/jetified-exoplayer-ui-2.16.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/bdd3dce3a93e1515378b4a35901ed22a/transformed/media-1.4.3-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/27c1b4ad28c7d9648fd16d1e61342359/transformed/core-1.8.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/0d0260ebd97d66d29820de58806dbe46/transformed/cursoradapter-1.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/b5c8e954c05431d16a8c37f232d181b4/transformed/cardview-1.0.0-api.jar</arg>
@@ -185,7 +186,6 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/515349d59bfc39fc62dfd63bb4a44713/transformed/jetified-AnyChart-Android-1.1.2-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/ada9a78fa0546996190d26cbe2766965/transformed/jetified-retrofit-2.9.0.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/9ac60c2673e9d2472c8e70bd9005b434/transformed/jetified-imagepipeline-okhttp3-2.5.0-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/cf0fc12e78e62771fbed9d0e27ad8b8d/transformed/jetified-extension-okhttp-2.17.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/05cd4d5e71224e761c0d56bda351f40e/transformed/jetified-okhttp-4.9.2.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/55b42980f94cf025b68e398b23289458/transformed/jetified-prettytime-4.0.4.Final.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/79e5afb29706476bfa90d28f842ffe07/transformed/jetified-signalr-3.0.0-preview4-19216-03.jar</arg>
@@ -218,9 +218,9 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/470587c3c4c3847276c9acbc3d02a022/transformed/jetified-error_prone_annotations-2.9.0.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/1edf96a3fba09e48fbae5f28de20f366/transformed/jetified-kotlin-stdlib-common-1.7.10.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/5543667519a1919cbba3b5e8ddbbeee7/transformed/jetified-annotations-16.0.1.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/09d828a3574003b8f7e0085757aae5e1/transformed/jetified-exoplayer-core-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/20a9d048db3b02eae5011fe0bd642f9c/transformed/jetified-exoplayer-common-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/6bb4060ffa3c42e3a57d54daa8f1e812/transformed/jetified-guava-31.0.1-android.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/933b3bf091b062fbf9ca2e068ebcd25e/transformed/jetified-exoplayer-core-2.16.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/82c3d21ccdb5f73793cd0bdff8223940/transformed/jetified-exoplayer-common-2.16.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/628b56c5444c95cc3d5523922c5f113b/transformed/jetified-guava-27.1-android.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/88a4c1b74cc65d692034c5ade4c1887d/transformed/jetified-listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/b98bb1f2ecb8018c2d08cf560f24da73/transformed/jetified-firebase-annotations-16.1.0.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/2215c458e8b4b694259f3b2eb2c762da/transformed/jetified-reactive-streams-1.0.2.jar</arg>
@@ -252,15 +252,11 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/a92c7fe4dbca311b0455b6a750129e00/transformed/jetified-animated-webp-2.5.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/3de83d9441cd0043d65fea1a8a4459e7/transformed/jetified-webpsupport-2.5.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/7a9bd87559051cd821e43da9f3df4086/transformed/jetified-dec-0.1.2.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/fcf751e34b9dac62ce8a014ec3b0027d/transformed/jetified-exoplayer-database-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/17b9a75d53e3ccb37ad98d4bac08884f/transformed/jetified-exoplayer-datasource-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/6f6c668ce0ddf144df09752dfc625c83/transformed/jetified-exoplayer-decoder-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/3a020cecfc7942bedddad50ecfbed834/transformed/jetified-exoplayer-extractor-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/67fdd3505900f89b7fc78eab2a6fc61d/transformed/jetified-exoplayer-dash-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/00d51962d9569139e6abb3878df18a96/transformed/jetified-exoplayer-hls-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/c333e26498101ed61625fa379d3f9334/transformed/jetified-exoplayer-rtsp-2.17.1-api.jar</arg>
-                <arg>$USER_HOME$/.gradle/caches/transforms-3/247993b431e0b66c040bb4704a076e8d/transformed/jetified-exoplayer-smoothstreaming-2.17.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/0a57d7c3512347988505106dac379c4d/transformed/jetified-imagepipeline-base-2.5.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/4357ae1250f25e2975a31592f0f9547a/transformed/jetified-exoplayer-datasource-2.16.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/19dd65b8b006af5938fb89018f88e0ca/transformed/jetified-exoplayer-decoder-2.16.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/8c0d0c5b722d22083fc9190202587f22/transformed/jetified-exoplayer-extractor-2.16.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/b3c3240940801d7d3ce535d098fab864/transformed/jetified-exoplayer-database-2.16.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/49d86929f37b480ce67453755a41e41f/transformed/jetified-failureaccess-1.0.1.jar</arg>
                 <arg>$USER_HOME$/Library/Android/sdk/platforms/android-32/android.jar</arg>
                 <arg>$USER_HOME$/Library/Android/sdk/build-tools/30.0.3/core-lambda-stubs.jar</arg>
@@ -369,7 +365,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.7.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-parcelize-runtime:1.4.20" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.4.20" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:guava:31.0.1-android" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:guava:27.1-android" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:failureaccess:1.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.brotli:dec:0.1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.5.0" level="project" />
@@ -490,7 +486,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: it.sephiroth.android.library.imagezoom:imagezoom:2.3.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.qingmei2.rximagepicker:rximagepicker_support_wechat:2.5.6@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.github.qingmei2.rximagepicker:rximagepicker_support_zhihu:2.5.6@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.jitsi.react:jitsi-meet-sdk:6.1.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jitsi.react:jitsi-meet-sdk:6.0.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native:0.68.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.autofill:autofill:1.1.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:fresco:2.5.0@aar" level="project" />
@@ -511,57 +507,53 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:animated-gif:2.5.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.jakewharton.timber:timber:4.7.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup.duktape:duktape-android:1.3.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-amplitude:2.7.0-jitsi-11642645@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-amplitude:2.7.0-jitsi-11101599@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.amplitude:android-sdk:2.34.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-giphy:1.7.0-jitsi-11642645@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-device-info:8.4.8-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.android.installreferrer:installreferrer:1.1.2@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-iid:17.0.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-google-signin:7.0.4-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-auth:20.3.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-auth-base:18.0.4@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-async-storage:1.15.14-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-background-timer:2.4.1-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-calendar-events:2.2.0-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-community_clipboard:1.5.1-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-community_netinfo:7.1.7-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-default-preference:1.4.4-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-gesture-handler:2.1.0-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-get-random-values:1.7.2-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-giphy:1.7.0-jitsi-11101599@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.giphy.sdk:ui:2.1.16@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.airbnb.android:lottie:3.1.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-core:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-common:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-datasource:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-decoder:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-extractor:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-database:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-ui:2.17.1@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-core:2.16.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-common:2.16.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-datasource:2.16.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-decoder:2.16.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-extractor:2.16.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-database:2.16.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-ui:2.16.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.media:media:1.4.3@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:animated-base:2.5.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:animated-drawable:2.5.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:animated-webp:2.5.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.fresco:webpsupport:2.5.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-google-signin:7.0.4-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-auth:20.3.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-auth-base:18.0.4@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-async-storage:1.15.14-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-background-timer:2.4.1-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-calendar-events:2.2.0-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-community_clipboard:1.5.1-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-community_netinfo:7.1.7-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-default-preference:1.4.4-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-device-info:8.4.8-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.android.installreferrer:installreferrer:1.1.2@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-iid:17.0.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-gesture-handler:2.1.0-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-get-random-values:1.7.2-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-immersive:2.0.0-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-keep-awake:4.0.0-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-masked-view_masked-view:0.2.6-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-pager-view:5.4.9-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-performance:2.1.0-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-safe-area-context:3.3.2-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-screens:3.13.1-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-slider:4.1.12-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-sound:0.11.1-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-splash-screen:3.3.0-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-svg:12.4.3-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-video:6.0.0-alpha.1-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-dash:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-hls:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-rtsp:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:exoplayer-smoothstreaming:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.exoplayer:extension-okhttp:2.17.1@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-webrtc:1.100.1-jitsi-11642645@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-webview:11.15.1-jitsi-11642645@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-immersive:2.0.0-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-keep-awake:4.0.0-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-masked-view_masked-view:0.2.6-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-pager-view:5.4.9-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-performance:2.1.0-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-reanimated:1.13.4-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-safe-area-context:3.3.2-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-screens:3.13.1-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-slider:4.1.12-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-sound:0.11.1-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-splash-screen:3.3.0-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-svg:12.1.0-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-video:5.2.0-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.github.MatrixFrog:android-scalablevideoview:v1.0.4-jitpack@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-webrtc:1.100.1-jitsi-11101599@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.react:react-native-webview:11.15.1-jitsi-11101599@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.webkit:webkit:1.4.0@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.work:work-runtime-ktx:2.8.0-alpha01@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.work:work-runtime:2.8.0-alpha01@aar" level="project" />
