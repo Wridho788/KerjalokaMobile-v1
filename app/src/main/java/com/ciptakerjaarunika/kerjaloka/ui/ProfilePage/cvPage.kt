@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.ui.ProfilePage
 
-import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.AlertDialog
@@ -9,10 +8,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Typeface
+import android.graphics.*
 import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.os.Environment
@@ -48,19 +44,37 @@ import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.ManageCV.manage_cv_edit_ex
 import com.google.android.material.chip.Chip
 import java.io.File
 import java.io.FileOutputStream
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class cvPage : Fragment(), iRefreshData, iCvPage {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var binding: FragmentProfileCvBinding
     private var loading = 4
-
-
     var pageHeight = 1120
     var pageWidth = 792
 
     lateinit var bmp: Bitmap
     lateinit var scaledbmp: Bitmap
     var PERMISSION_CODE = 101
+
+    var jobseekername: String? = ""
+    var jobseekerPhone: String? = ""
+    var jobseekerdob: String? = ""
+    var jobseekergender: String? = ""
+    var jobseekeraddress: String? = ""
+    var jobseekercityname: String? = ""
+    var jobseekerstate: String? = ""
+    var jobseekerktp: String? = ""
+    var jobseekerAboutme: String? = ""
+    var jobseekerMaritalstatus: String? = ""
+    var jobseekerReligion: String? = ""
+    var jobseekerEthnic: String? = ""
+    var jobseekerResidence: String? = ""
+    var jobseekerplaceofbirth: String? = ""
+    var jobseekerpostalcode: String? = ""
+    var jobseekertelegramid: String? = ""
+    var jobseekerInstagramId: String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,58 +91,81 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     }
 
     fun checkPermissions(): Boolean {
-        var writeStoragePermission = ContextCompat.checkSelfPermission(
-            context!!,
-            WRITE_EXTERNAL_STORAGE
-        )
         var readStoragePermission = ContextCompat.checkSelfPermission(
             context!!,
             READ_EXTERNAL_STORAGE
         )
-        return writeStoragePermission == PackageManager.PERMISSION_GRANTED
-                && readStoragePermission == PackageManager.PERMISSION_GRANTED
+        var writeStoragePermission = ContextCompat.checkSelfPermission(
+            context!!, WRITE_EXTERNAL_STORAGE
+        )
+        return readStoragePermission == PackageManager.PERMISSION_GRANTED && writeStoragePermission == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         GetData()
-        // on below line we are checking permission
-        if (checkPermissions()) {
-            // if permission is granted we are displaying a toast message.
-            Toast.makeText(context, "Permissions Granted..", Toast.LENGTH_SHORT).show()
-        } else {
-            // if the permission is not granted
-            // we are calling request permission method.
-            requestPermission()
-        }
+        bmp = BitmapFactory.decodeResource(resources, R.drawable.ic_company)
+        scaledbmp = Bitmap.createScaledBitmap(bmp, 140, 140, false)
         binding.saveCV.setOnClickListener {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-                // on below line we are calling generate
-                // PDF method to generate our PDF file.
+            if (checkPermissions()) {
+                Toast.makeText(context, "Sedang Diproses..", Toast.LENGTH_SHORT).show()
                 generateCvPdf()
+            } else {
+                requestPermission()
+            }
+        }
+        ProfileAPI().JobseekerGetProfileData(context) { response ->
+            if (response?.data != null) {
+                Log.d("jobseekerGetProfileData", response.data.toString())
+                this.jobseekername = if(response.data.users.userFullname.isNullOrEmpty()) "-" else response.data.users.userFullname
+                this.jobseekerPhone = if (response.data.users.phone.isNullOrEmpty()) "-" else response.data.users.phone
+                this.jobseekerktp = if (response.data.additionals.ktp.isNullOrEmpty()) "-" else response.data.additionals.ktp
+                if (response.data.jobseeker.jobseekerGender.toString() == "M") {
+                    this.jobseekergender = "Pria"
+                } else this.jobseekergender = "Wanita"
+                this.jobseekeraddress = if(response.data.additionals.jobseekerCurrentAddress.isNullOrEmpty()) "-" else response.data.additionals.jobseekerCurrentAddress
+                var dob = getDateValue(response.data.jobseeker.dateOfBirth)
+                this.jobseekerdob = dob.toString()
+                this.jobseekercityname = if(response.data.city.cityName.isNullOrEmpty()) "-" else response.data.city.cityName
+                this.jobseekerstate = if(response.data.country.countryName.isNullOrEmpty()) "-" else response.data.country.countryName
+                this.jobseekerAboutme = if(response.data.additionals.jobseekerAbout.isNullOrEmpty()) "-" else response.data.additionals.jobseekerAbout
+                this.jobseekerMaritalstatus = if(response.data.marital.maritalName.isNullOrEmpty()) "-" else response.data.marital.maritalName
+                this.jobseekerReligion = if(response.data.religion.religionName.isNullOrEmpty()) "-" else response.data.religion.religionName
+                this.jobseekerEthnic = if (response.data.additionals.ethnics.isNullOrEmpty()) "-" else response.data.additionals.ethnics
+                this.jobseekerResidence = if(response.data.resident.residentName.isNullOrEmpty()) "-" else response.data.resident.residentName
+                this.jobseekerplaceofbirth = if (response.data.additionals.placeOfBirth.isNullOrEmpty()) "-" else response.data.additionals.placeOfBirth
+                this.jobseekerpostalcode = if (response.data.additionals.postalCode.isNullOrEmpty()) "-" else response.data.additionals.postalCode
+                this.jobseekertelegramid = if (response.data.additionals.telegramId.isNullOrEmpty()) "-" else response.data.additionals.telegramId
+                this.jobseekerInstagramId = if (response.data.additionals.instagramId.isNullOrEmpty()) "-" else response.data.additionals.instagramId
             }
 
         }
     }
 
+    fun getDateValue(value: String): String? {
+        var formatDate = LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        return formatDate
+    }
+
     fun requestPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                WRITE_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE
+                    READ_EXTERNAL_STORAGE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 activity?.let { it ->
                     ActivityCompat.requestPermissions(
                         it,
-                        listOf(Manifest.permission.WRITE_EXTERNAL_STORAGE).toTypedArray(),
-                        id + 204
+                        listOf(WRITE_EXTERNAL_STORAGE).toTypedArray(),
+                        id + 101
                     )
                 }
+                generateCvPdf()
             } else {
                 Toast.makeText(context, "Permission denied", Toast.LENGTH_LONG).show()
             }
@@ -146,6 +183,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1]
                     == PackageManager.PERMISSION_GRANTED
                 ) {
+                    generateCvPdf()
                     Log.d("permission Granted", "Permission granted")
                 } else {
                     Toast.makeText(context, "Permission Denied..", Toast.LENGTH_SHORT).show()
@@ -155,30 +193,102 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     }
 
     fun generateCvPdf() {
-        var pdfDocument: PdfDocument = PdfDocument()
-        var paint: Paint = Paint()
-        var title: Paint = Paint()
+
+        var pdfDocument = PdfDocument()
+        var paint = Paint()
+        var title = Paint()
+        var subtitle = Paint()
+        var text = Paint()
+
+        paint.color = Color.WHITE
+
         var myPageInfo: PdfDocument.PageInfo? =
             PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
-
         var myPage: PdfDocument.Page = pdfDocument.startPage(myPageInfo)
         var canvas: Canvas = myPage.canvas
-        canvas.drawText("A portal for IT professionals.", 209F, 100F, title)
-        title.typeface = Typeface.defaultFromStyle(Typeface.NORMAL)
-        title.textSize = 15F
-        title.textAlign = Paint.Align.CENTER
-        canvas.drawText("This is sample document which we have created.", 396F, 560F, title)
+//        canvas.drawBitmap(scaledbmp, 56F, 40F, paint)
+        title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        subtitle.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        text.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+
+        title.textSize = 20F
+        subtitle.textSize = 15F
+        text.textSize = 13F
+
+        title.isFakeBoldText = true
+        title.color = ContextCompat.getColor(context!!, R.color.black)
+        subtitle.color = ContextCompat.getColor(context!!, R.color.black)
+        text.color = ContextCompat.getColor(context!!, R.color.black)
+
+//        basic info
+        canvas.drawText("Informasi Dasar", 50F, 110F, title)
+        canvas.drawText("Nama", 50F, 210F, subtitle)
+        canvas.drawText(jobseekername.toString(), 50F, 230F, text)
+
+        canvas.drawText("Nomor Telepon", 50F, 280F, subtitle)
+        canvas.drawText(jobseekerPhone.toString(), 50F, 300F, text)
+
+        canvas.drawText("KTP", 50F, 350F, subtitle)
+        canvas.drawText(jobseekerktp.toString(), 50F, 370F, text)
+
+        canvas.drawText("Jenis Kelamin", 50F, 420F, subtitle)
+        canvas.drawText(jobseekergender.toString(), 50F, 440F, text)
+
+        canvas.drawText("Alamat", 400F, 210F, subtitle)
+        canvas.drawText(jobseekeraddress.toString(), 400F, 230F, subtitle)
+
+        canvas.drawText("Tanggal Lahir", 400F, 280F, subtitle)
+        canvas.drawText(jobseekerdob.toString(), 400F, 300F, text)
+
+        canvas.drawText("Kota", 400F, 350F, subtitle)
+        canvas.drawText(jobseekercityname.toString(), 400F, 370F, text)
+
+        canvas.drawText("Negara", 400F, 420F, subtitle)
+        canvas.drawText(jobseekerstate.toString(), 400F, 440F, text)
+
+//        about me
+        canvas.drawText("Tentang Saya", 50F, 550F, title)
+        canvas.drawText("Beri tahu tentang dirimu supaya kamu lebih dikenal oleh perusahaan", 50F, 600F, subtitle)
+        canvas.drawText(jobseekerAboutme.toString(), 50F, 620F, text)
+
+        // additional information
+        canvas.drawText("Informasi Tambahan", 50F, 680F, title)
+        canvas.drawText("Status Pernikahan", 50F, 730F, subtitle)
+        canvas.drawText(jobseekerMaritalstatus.toString(), 50F, 750F, text)
+
+        canvas.drawText("Kewarganegaraan", 50F, 800F, subtitle)
+        canvas.drawText(jobseekerResidence.toString(), 50F, 820F, text)
+
+        canvas.drawText("Tempat Lahir", 50F, 870F, subtitle)
+        canvas.drawText(jobseekerplaceofbirth.toString(), 50F, 890F, text)
+
+        canvas.drawText("Telegram ID", 50F, 940F, subtitle)
+        canvas.drawText(jobseekertelegramid.toString(), 50F, 960F, text)
+
+        canvas.drawText("Kode Pos", 400F, 730F, subtitle)
+        canvas.drawText(jobseekerpostalcode.toString(), 400F, 750F, subtitle)
+
+        canvas.drawText("Suku", 400F, 800F, subtitle)
+        canvas.drawText(jobseekerEthnic.toString(), 400F, 820F, text)
+
+        canvas.drawText("Agama", 400F, 870F, subtitle)
+        canvas.drawText(jobseekerReligion.toString(), 400F, 890F, text)
+
+        canvas.drawText("Instagram ID", 400F, 940F, subtitle)
+        canvas.drawText(jobseekerInstagramId.toString(), 400F, 960F, text)
 
         pdfDocument.finishPage(myPage)
-        val file: File = File(Environment.getExternalStorageDirectory(), "GFG.pdf")
+        val file =
+            File(Environment.getExternalStorageDirectory().absolutePath + "/Download")
+        var fileName = "CV.pdf"
+        var files = File(file, fileName)
         try {
-            pdfDocument.writeTo(FileOutputStream(file))
-            Toast.makeText(context, "PDF file generated..", Toast.LENGTH_SHORT).show()
+            pdfDocument.writeTo(FileOutputStream(files))
+            Toast.makeText(context, "CV Berhasil Di Unduh", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.d("err", e.toString())
-            Toast.makeText(context, "Fail to generate PDF file..", Toast.LENGTH_SHORT)
-                .show()
+            Log.d("error writing", e.toString())
+            Toast.makeText(context, "Fail to generate PDF file..", Toast.LENGTH_SHORT).show()
         }
         pdfDocument.close()
     }
@@ -223,9 +333,6 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
             ProfileAPI().GetJobseekerEducations(context) { educations ->
                 loading -= 1
                 LoadingDone()
-
-                Log.d("edu", educations?.data.toString())
-
                 binding.recycleEdu.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = educations?.data?.let { EduAdapter(it, this@cvPage) }
@@ -236,7 +343,6 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
             ProfileAPI().GetJobseekerLanguages(context) { languages ->
                 loading -= 1
                 LoadingDone()
-
                 binding.recycleLang.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = languages?.data?.let { LanguageAdapter(false, it, null) }

@@ -18,7 +18,6 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.viewpagerAdapter
 import com.google.android.material.button.MaterialButton
 
-
 class profilepage(var Page: Int) : Fragment() {
     private lateinit var binding: FragmentJobseekerProfilePageBinding
     private lateinit var viewpagerAdapter: viewpagerAdapter
