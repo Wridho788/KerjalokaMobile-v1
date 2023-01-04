@@ -151,7 +151,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
             }
         } else {
             binding.layoutLatestSearchResults.isVisible = true
-            binding.layoutResultSearch.isVisible = true
+            binding.layoutResultSearch.isVisible = false
             binding.layoutTopSearchResults.isVisible = true
         }
         binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

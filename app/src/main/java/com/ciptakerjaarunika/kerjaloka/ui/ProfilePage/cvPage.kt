@@ -29,10 +29,7 @@ import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfileCvBinding
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducations
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducationsRequest
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
-import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperiences
+import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.EduAdapter
 import com.ciptakerjaarunika.kerjaloka.ui.ProfilePage.Adapter.ExpAdapter
@@ -53,7 +50,6 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     private var loading = 4
     var pageHeight = 1120
     var pageWidth = 792
-
     lateinit var bmp: Bitmap
     lateinit var scaledbmp: Bitmap
     var PERMISSION_CODE = 101
@@ -75,6 +71,10 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     var jobseekerpostalcode: String? = ""
     var jobseekertelegramid: String? = ""
     var jobseekerInstagramId: String? = ""
+
+    var skills: List<JobseekerSkills>? = listOf()
+    var experience: List<JobseekerExperiences>? = listOf()
+    var education: List<JobseekerEducations>? = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -117,33 +117,49 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         ProfileAPI().JobseekerGetProfileData(context) { response ->
             if (response?.data != null) {
                 Log.d("jobseekerGetProfileData", response.data.toString())
-                this.jobseekername = if(response.data.users.userFullname.isNullOrEmpty()) "-" else response.data.users.userFullname
-                this.jobseekerPhone = if (response.data.users.phone.isNullOrEmpty()) "-" else response.data.users.phone
-                this.jobseekerktp = if (response.data.additionals.ktp.isNullOrEmpty()) "-" else response.data.additionals.ktp
+                this.jobseekername =
+                    if (response.data.users.userFullname.isNullOrEmpty()) "-" else response.data.users.userFullname
+                this.jobseekerPhone =
+                    if (response.data.users.phone.isNullOrEmpty()) "-" else response.data.users.phone
+                this.jobseekerktp =
+                    if (response.data.additionals.ktp.isNullOrEmpty()) "-" else response.data.additionals.ktp
                 if (response.data.jobseeker.jobseekerGender.toString() == "M") {
                     this.jobseekergender = "Pria"
                 } else this.jobseekergender = "Wanita"
-                this.jobseekeraddress = if(response.data.additionals.jobseekerCurrentAddress.isNullOrEmpty()) "-" else response.data.additionals.jobseekerCurrentAddress
+                this.jobseekeraddress =
+                    if (response.data.additionals.jobseekerCurrentAddress.isNullOrEmpty()) "-" else response.data.additionals.jobseekerCurrentAddress
                 var dob = getDateValue(response.data.jobseeker.dateOfBirth)
                 this.jobseekerdob = dob.toString()
-                this.jobseekercityname = if(response.data.city.cityName.isNullOrEmpty()) "-" else response.data.city.cityName
-                this.jobseekerstate = if(response.data.country.countryName.isNullOrEmpty()) "-" else response.data.country.countryName
-                this.jobseekerAboutme = if(response.data.additionals.jobseekerAbout.isNullOrEmpty()) "-" else response.data.additionals.jobseekerAbout
-                this.jobseekerMaritalstatus = if(response.data.marital.maritalName.isNullOrEmpty()) "-" else response.data.marital.maritalName
-                this.jobseekerReligion = if(response.data.religion.religionName.isNullOrEmpty()) "-" else response.data.religion.religionName
-                this.jobseekerEthnic = if (response.data.additionals.ethnics.isNullOrEmpty()) "-" else response.data.additionals.ethnics
-                this.jobseekerResidence = if(response.data.resident.residentName.isNullOrEmpty()) "-" else response.data.resident.residentName
-                this.jobseekerplaceofbirth = if (response.data.additionals.placeOfBirth.isNullOrEmpty()) "-" else response.data.additionals.placeOfBirth
-                this.jobseekerpostalcode = if (response.data.additionals.postalCode.isNullOrEmpty()) "-" else response.data.additionals.postalCode
-                this.jobseekertelegramid = if (response.data.additionals.telegramId.isNullOrEmpty()) "-" else response.data.additionals.telegramId
-                this.jobseekerInstagramId = if (response.data.additionals.instagramId.isNullOrEmpty()) "-" else response.data.additionals.instagramId
+                this.jobseekercityname =
+                    if (response.data.city.cityName.isNullOrEmpty()) "-" else response.data.city.cityName
+                this.jobseekerstate =
+                    if (response.data.country.countryName.isNullOrEmpty()) "-" else response.data.country.countryName
+                this.jobseekerAboutme =
+                    if (response.data.additionals.jobseekerAbout.isNullOrEmpty()) "-" else response.data.additionals.jobseekerAbout
+                this.jobseekerMaritalstatus =
+                    if (response.data.marital.maritalName.isNullOrEmpty()) "-" else response.data.marital.maritalName
+                this.jobseekerReligion =
+                    if (response.data.religion.religionName.isNullOrEmpty()) "-" else response.data.religion.religionName
+                this.jobseekerEthnic =
+                    if (response.data.additionals.ethnics.isNullOrEmpty()) "-" else response.data.additionals.ethnics
+                this.jobseekerResidence =
+                    if (response.data.resident.residentName.isNullOrEmpty()) "-" else response.data.resident.residentName
+                this.jobseekerplaceofbirth =
+                    if (response.data.additionals.placeOfBirth.isNullOrEmpty()) "-" else response.data.additionals.placeOfBirth
+                this.jobseekerpostalcode =
+                    if (response.data.additionals.postalCode.isNullOrEmpty()) "-" else response.data.additionals.postalCode
+                this.jobseekertelegramid =
+                    if (response.data.additionals.telegramId.isNullOrEmpty()) "-" else response.data.additionals.telegramId
+                this.jobseekerInstagramId =
+                    if (response.data.additionals.instagramId.isNullOrEmpty()) "-" else response.data.additionals.instagramId
             }
 
         }
     }
 
     fun getDateValue(value: String): String? {
-        var formatDate = LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+        var formatDate =
+            LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
         return formatDate
     }
 
@@ -193,35 +209,53 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     }
 
     fun generateCvPdf() {
-
         var pdfDocument = PdfDocument()
         var paint = Paint()
+
+        val bitmap = Bitmap.createBitmap(100, 50, Bitmap.Config.ARGB_8888)
+        val canvasBitmap = Canvas(bitmap)
+        canvasBitmap.drawColor(Color.RED)
+
+        var header = Paint()
         var title = Paint()
         var subtitle = Paint()
         var text = Paint()
+        var drawiLine = Paint()
+        drawiLine.color = Color.GRAY
+        drawiLine.style = Paint.Style.STROKE
+        drawiLine.strokeWidth = 8F
+        drawiLine.isAntiAlias = true
+        val offset = 50
+        drawiLine.color = Color.WHITE
 
-        paint.color = Color.WHITE
 
+        header.textAlign
+        header.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        subtitle.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        text.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+
+        header.isFakeBoldText = true
+        title.isFakeBoldText = true
+        header.color = ContextCompat.getColor(context!!, R.color.black)
+        title.color = ContextCompat.getColor(context!!, R.color.black)
+        subtitle.color = ContextCompat.getColor(context!!, R.color.black)
+        text.color = ContextCompat.getColor(context!!, R.color.danger_700)
+
+        header.textSize = 30F
+        title.textSize = 20F
+        subtitle.textSize = 15F
+        text.textSize = 13F
+
+//         page 1
         var myPageInfo: PdfDocument.PageInfo? =
             PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
         var myPage: PdfDocument.Page = pdfDocument.startPage(myPageInfo)
         var canvas: Canvas = myPage.canvas
 //        canvas.drawBitmap(scaledbmp, 56F, 40F, paint)
-        title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-        subtitle.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-        text.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-
-        title.textSize = 20F
-        subtitle.textSize = 15F
-        text.textSize = 13F
-
-        title.isFakeBoldText = true
-        title.color = ContextCompat.getColor(context!!, R.color.black)
-        subtitle.color = ContextCompat.getColor(context!!, R.color.black)
-        text.color = ContextCompat.getColor(context!!, R.color.black)
-
+        canvas.drawText("Profile", 380F, 80F, header)
 //        basic info
-        canvas.drawText("Informasi Dasar", 50F, 110F, title)
+        canvas.drawText("Informasi Dasar", 50F, 140F, title)
         canvas.drawText("Nama", 50F, 210F, subtitle)
         canvas.drawText(jobseekername.toString(), 50F, 230F, text)
 
@@ -235,7 +269,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         canvas.drawText(jobseekergender.toString(), 50F, 440F, text)
 
         canvas.drawText("Alamat", 400F, 210F, subtitle)
-        canvas.drawText(jobseekeraddress.toString(), 400F, 230F, subtitle)
+        canvas.drawText(jobseekeraddress.toString(), 400F, 230F, text)
 
         canvas.drawText("Tanggal Lahir", 400F, 280F, subtitle)
         canvas.drawText(jobseekerdob.toString(), 400F, 300F, text)
@@ -245,16 +279,23 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
 
         canvas.drawText("Negara", 400F, 420F, subtitle)
         canvas.drawText(jobseekerstate.toString(), 400F, 440F, text)
+        canvas.drawLine(50f, 460F, 720F, 460f, paint)
 
 //        about me
-        canvas.drawText("Tentang Saya", 50F, 550F, title)
-        canvas.drawText("Beri tahu tentang dirimu supaya kamu lebih dikenal oleh perusahaan", 50F, 600F, subtitle)
-        canvas.drawText(jobseekerAboutme.toString(), 50F, 620F, text)
+        canvas.drawText("Tentang Saya", 50F, 500F, title)
+        canvas.drawText(
+            "Beri tahu tentang dirimu supaya kamu lebih dikenal oleh perusahaan",
+            50F,
+            550F,
+            subtitle
+        )
+        canvas.drawText(jobseekerAboutme.toString(), 50F, 580F, text)
+        canvas.drawLine(50f, 600F, 720F, 600f, paint)
 
         // additional information
-        canvas.drawText("Informasi Tambahan", 50F, 680F, title)
-        canvas.drawText("Status Pernikahan", 50F, 730F, subtitle)
-        canvas.drawText(jobseekerMaritalstatus.toString(), 50F, 750F, text)
+        canvas.drawText("Informasi Tambahan", 50F, 650F, title)
+        canvas.drawText("Status Pernikahan", 50F, 700F, subtitle)
+        canvas.drawText(jobseekerMaritalstatus.toString(), 50F, 720F, text)
 
         canvas.drawText("Kewarganegaraan", 50F, 800F, subtitle)
         canvas.drawText(jobseekerResidence.toString(), 50F, 820F, text)
@@ -278,6 +319,62 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         canvas.drawText(jobseekerInstagramId.toString(), 400F, 960F, text)
 
         pdfDocument.finishPage(myPage)
+//      page 2
+        var myPageInfo2: PdfDocument.PageInfo? =
+            PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
+        var myPage2: PdfDocument.Page = pdfDocument.startPage(myPageInfo2)
+        var canvas2: Canvas = myPage2.canvas
+//        CV
+        canvas2.drawText("CV", 380F, 80F, header)
+        canvas2.drawText("Skill", 50F, 140F, title)
+        canvas2.drawText("Amateur", 50F, 190F, title)
+        if (skills != null) {
+            skills!!.forEach {
+                if (it.scale == 1) {
+                    canvas2.drawText(it.skillName, 50F, 210F, text)
+                }
+            }
+        }
+        canvas2.drawText("Beginner", 50F, 240F, title)
+        if (skills != null) {
+            skills!!.forEach {
+                if (it.scale == 2) {
+                    canvas2.drawText(it.skillName, 50F, 260F, text)
+                }
+            }
+        }
+        canvas2.drawText("Intermediate", 50F, 290F, title)
+        if (skills != null) {
+            skills!!.forEach {
+                if (it.scale == 3) {
+                    canvas2.drawText(it.skillName, 50F, 310F, text)
+                }
+            }
+        }
+
+        canvas2.drawText("Advance", 50F, 340F, title)
+        if (skills != null) {
+            skills!!.forEach {
+                if (it.scale == 4) {
+                    canvas2.drawText(it.skillName, 50F, 360F, text)
+                }
+            }
+        }
+        canvas2.drawText("Professional", 50F, 390F, title)
+        if (skills != null) {
+            skills!!.forEach {
+                if (it.scale == 5) {
+                    canvas2.drawText(it.skillName, 50F, 410F, text)
+                }
+            }
+        }
+        canvas2.drawText("Pengalaman", 50F, 470F, title)
+
+
+
+
+
+        pdfDocument.finishPage(myPage2)
         val file =
             File(Environment.getExternalStorageDirectory().absolutePath + "/Download")
         var fileName = "CV.pdf"
@@ -302,6 +399,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         ProfileAPI().GetJobseekerSkills(context) { skills ->
             loading -= 1
             LoadingDone()
+            this.skills = skills?.data
 
             ProfileAPI().GetJobseekerExperiences(context) { experiences ->
                 loading -= 1

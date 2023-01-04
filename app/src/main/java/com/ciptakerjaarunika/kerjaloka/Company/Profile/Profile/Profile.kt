@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.R
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Profile(val data: data?) : Fragment() {
 
@@ -29,7 +31,11 @@ class Profile(val data: data?) : Fragment() {
         txtcompAddress.text = data?.companyAddress
         txtcompPhone.text = data?.phone
         txtCEO.text = data?.companyCeo
-        txtsince.text = data?.foundedAt
+        if (!data?.foundedAt.isNullOrEmpty() && !data?.foundedAt.isNullOrBlank()) {
+            val parse = LocalDateTime.parse(data?.foundedAt).format(DateTimeFormatter.ofPattern("dd MMMM YYYY")).toString()
+            txtsince.text = parse.toString()
+
+        }
         txtcompField.text = data?.field?.fieldName
         txtcompSize.text = data?.size?.sizeName
         txtcompDesc.text = data?.companyDescription

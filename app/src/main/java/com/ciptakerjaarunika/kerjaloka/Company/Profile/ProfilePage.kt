@@ -28,14 +28,8 @@ class ProfilePage(var Page: Int) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        val view = inflater.inflate(R.layout.fragment_profile_page, container, false)
         binding = FragmentProfilePageBinding.inflate(layoutInflater)
         company_profile_api().CompanyGetProfileData(context) { response ->
-//            val cParent = view?.findViewById<LinearLayout>(R.id.profileLl2)
-//            val content = view?.findViewById<ViewPager2>(R.id.Comp_profileContent)
-//            val mProfile = view?.findViewById<MaterialButton>(R.id.manageProfile)
-//            val myRev = view?.findViewById<MaterialButton>(R.id.myReview)
-//            val accSet = view?.findViewById<MaterialButton>(R.id.accSetting)
             if (response != null) {
                 binding.spinnerProfile.visibility = View.GONE
                 binding.profileComp.visibility = View.VISIBLE

@@ -142,8 +142,6 @@ class fragment_company_job_active_page : Fragment() {
 //            Log.d("location", listLocation.toString())
             jobLoc?.text = Html.fromHtml(location)
 
-
-//            Log.d("jobdesc", jobData?.jobDescription.toString())
             if (jobData?.jobDescription != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     jobReq?.text = Html.fromHtml(
