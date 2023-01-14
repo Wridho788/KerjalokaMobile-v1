@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_500"
     android:orientation="vertical"
-    tools:context=".ui.ProfilePage.profilepage">
+    tools:context=".viewmodel.Jobseeker.ProfilePage.profilepage">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mainToolbar"

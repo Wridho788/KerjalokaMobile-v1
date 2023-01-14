@@ -3,8 +3,8 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.search_model
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.SearchScreen.Model.top_search_model
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.Model.search_model
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.Model.top_search_model
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

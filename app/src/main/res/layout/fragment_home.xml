@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.HomePage.HomePage">
+    tools:context=".viewmodel.Jobseeker.HomePage.HomePage">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/home_appBarLayout"

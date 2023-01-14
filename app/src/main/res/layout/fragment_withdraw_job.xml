@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.LamaranPage.fragment_withdraw_job">
+    tools:context=".viewmodel.Jobseeker.LamaranPage.fragment_withdraw_job">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

@@ -7,7 +7,7 @@
     android:layout_centerInParent="true"
     android:orientation="vertical"
     android:background="@color/light_500"
-    tools:context=".ui.ProfilePage.Attachment.FragmentEditLampiran">
+    tools:context=".viewmodel.Jobseeker.ProfilePage.Attachment.FragmentEditLampiran">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/mainAppbar"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.ProfilePage.ManageCV.edit_kemampuan">
+    tools:context=".viewmodel.Jobseeker.ProfilePage.ManageCV.edit_kemampuan">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/mainAppbar"

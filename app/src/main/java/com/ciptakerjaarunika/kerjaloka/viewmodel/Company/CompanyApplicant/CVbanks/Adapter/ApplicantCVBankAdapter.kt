@@ -1,0 +1,82 @@
+package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.CVbanks.Adapter
+
+import android.content.Context
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.CVbanks.iCvBankInterface
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.Model.applicantModel
+import com.google.android.material.card.MaterialCardView
+
+class ApplicantCVBankAdapter(
+    private val context: Context,
+    private val applicantModel: List<applicantModel>?,
+    private val iCVBankAdapter: iCvBankInterface
+) :
+    RecyclerView.Adapter<ApplicantCVBankAdapter.ViewHolder>() {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var nameApplicant: TextView
+        var locationApplicant: TextView
+        var statusApplicant: TextView
+        var profileApplicant: ImageView
+        var pinImage: ImageView
+        var cardApplicant: MaterialCardView
+
+        init {
+            nameApplicant = itemView.findViewById(R.id.name_applicant)
+            locationApplicant = itemView.findViewById(R.id.location_applicant)
+            statusApplicant = itemView.findViewById(R.id.status_applicant_text)
+            profileApplicant = itemView.findViewById(R.id.logo_applicant)
+            pinImage = itemView.findViewById(R.id.img_pin)
+            cardApplicant = itemView.findViewById(R.id.card_applicant)
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = View.inflate(parent.context, R.layout.item_applicant, null)
+        val lp = RecyclerView.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        view.layoutParams = lp
+        return ViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val currentItem = applicantModel!![position]
+        holder.nameApplicant.text = currentItem.applicant.name
+        if (currentItem.applicant.location != null) {
+            holder.locationApplicant.text =
+                currentItem.applicant.location.city + ", " + currentItem.applicant.location.province
+        } else if (currentItem.applicant.location == null) {
+            holder.locationApplicant.text = ""
+        } else {
+            holder.locationApplicant.text = ""
+        }
+//        val status = currentItem.publish
+//        if (status == true) {
+//            holder.statusApplicant.text = "Qualified"
+//            holder.statusApplicant.setTextColor(R.color.green_300)
+//        } else {
+//            holder.statusApplicant.text = "Not Qualified"
+//            holder.statusApplicant.setTextColor(Color.RED)
+//        }
+        Glide.with(holder.itemView.context)
+            .load(config().portAddress + "/photo/Profile/" + currentItem.applicant.photo)
+            .fitCenter()
+            .into(holder.profileApplicant)
+
+        holder.cardApplicant.setOnClickListener {
+            iCVBankAdapter.goToJobApplicant(currentItem.application.jobNo, currentItem.application.jobseekerNo)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return applicantModel!!.size
+    }
+}

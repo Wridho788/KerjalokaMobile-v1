@@ -1,10 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.model.Job
 
-import com.ciptakerjaarunika.kerjaloka.model.User.Company
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.companies
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.job
-import java.util.*
-
 data class myApplicationsResponse(
     val data :  List<ApplicationData>,
 )

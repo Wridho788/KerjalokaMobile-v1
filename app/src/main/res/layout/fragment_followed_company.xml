@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.Screens.CompanyFollowedScreen.CompanyFollowedFragment">
+    tools:context=".viewmodel.Jobseeker.CompanyFollowedScreen.CompanyFollowedFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

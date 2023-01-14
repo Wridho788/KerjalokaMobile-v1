@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".ui.InterviewPage.Company.company_interview_byjob">
+    tools:context=".viewmodel.Jobseeker.InterviewPage.Company.company_interview_byjob">
 
     <LinearLayout
         android:layout_width="match_parent"

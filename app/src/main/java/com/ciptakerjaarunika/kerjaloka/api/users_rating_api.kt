@@ -2,15 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ChangeUsernameRequest
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.CategoryList
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.RatingSendedResponse
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.appealReviewRequest
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.editReviewRequest
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ratingSended_response
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.NotificationPage.Model.notifResponse
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

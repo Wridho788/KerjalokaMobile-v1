@@ -5,7 +5,7 @@ import com.ciptakerjaarunika.kerjaloka.entity.Camera
 import com.ciptakerjaarunika.kerjaloka.entity.CameraResult
 import com.ciptakerjaarunika.kerjaloka.entity.Gallery
 import com.ciptakerjaarunika.kerjaloka.entity.ProxyProviders
-import com.ciptakerjaarunika.kerjaloka.ui.Gallery.DefaultSystemGalleryConfig
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery.DefaultSystemGalleryConfig
 import io.reactivex.Observable
 import java.lang.reflect.Proxy
 

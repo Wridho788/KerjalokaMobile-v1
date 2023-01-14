@@ -3,7 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewResponse
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.ReviewResponse
 import com.ciptakerjaarunika.kerjaloka.model.Data.*
 import com.ciptakerjaarunika.kerjaloka.model.Data.Field
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*

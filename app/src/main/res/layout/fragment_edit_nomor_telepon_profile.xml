@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AkunPage.fragment_edit_nomor_telepon_profile"
+    tools:context=".viewmodel.AkunPage.fragment_edit_nomor_telepon_profile"
     android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout

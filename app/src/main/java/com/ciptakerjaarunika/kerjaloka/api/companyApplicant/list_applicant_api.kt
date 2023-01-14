@@ -3,7 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api.companyApplicant
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.JobApplicant.Model.listApplicantResponse
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.Model.listApplicantResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

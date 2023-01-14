@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/activity_search"
     android:theme="@style/Theme.Kerjaloka.NoActionBar"
-    tools:context=".ui.Screens.SearchScreen.SearchActivity">
+    tools:context=".viewmodel.Jobseeker.SearchScreen.SearchActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

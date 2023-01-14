@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerConfiguration
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerView
 import com.ciptakerjaarunika.kerjaloka.`interface`.IRxImagePickerSchedulers
-import com.ciptakerjaarunika.kerjaloka.ui.Camera.ActivityPickerViewController
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Camera.ActivityPickerViewController
 import io.reactivex.*
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method

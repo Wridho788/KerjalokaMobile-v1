@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_500"
     android:orientation="vertical"
-    tools:context=".Company.Profile.ProfilePage">
+    tools:context=".viewmodel.Company.Profile.ProfilePage">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mainToolbar"

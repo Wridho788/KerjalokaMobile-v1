@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="?attr/fullscreenBackgroundColor"
     android:theme="@style/Theme.Kerjaloka.NoActionBar"
-    tools:context=".ui.Screens.PageNotFoundActivity">
+    tools:context=".viewmodel.Screens.PageNotFoundActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

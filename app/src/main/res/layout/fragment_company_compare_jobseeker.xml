@@ -5,7 +5,7 @@
     android:id="@+id/compareCompany"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Screens.CompanyCompareJobseeker.CompanyCompareJobseekerFragment">
+    tools:context=".viewmodel.Screens.CompanyCompareJobseeker.CompanyCompareJobseekerFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

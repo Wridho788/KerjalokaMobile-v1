@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    tools:context=".ui.Screens.JobPage.JobPage"
+    tools:context=".viewmodel.Jobseeker.JobPage.JobPage"
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout

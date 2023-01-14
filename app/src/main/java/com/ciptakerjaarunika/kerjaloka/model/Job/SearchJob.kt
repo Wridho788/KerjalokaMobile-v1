@@ -1,8 +1,8 @@
 package com.ciptakerjaarunika.kerjaloka.model.Job
 
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.*
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
-import com.ciptakerjaarunika.kerjaloka.ui.HomePage.Model.jobLocation
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.*
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage.Model.jobLocation
 import java.math.BigDecimal
 
 data class SearchJobResponse(

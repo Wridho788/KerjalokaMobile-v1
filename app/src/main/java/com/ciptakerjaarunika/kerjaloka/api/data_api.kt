@@ -2,15 +2,12 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
-import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.company_detail_model
 import com.ciptakerjaarunika.kerjaloka.model.Data.*
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.location_model
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 class DataAPI {

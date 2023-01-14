@@ -1,7 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.entity
 
 import androidx.annotation.IdRes
-import com.ciptakerjaarunika.kerjaloka.ui.Gallery.BasicGalleryFragment
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery.BasicGalleryFragment
 import kotlin.reflect.KClass
 
 /**
