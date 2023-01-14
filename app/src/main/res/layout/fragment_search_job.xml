@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.Screens.JobSearch.SearchJob">
+    tools:context=".viewmodel.Jobseeker.JobSearch.SearchJob">
 
     <LinearLayout
         android:layout_width="match_parent"

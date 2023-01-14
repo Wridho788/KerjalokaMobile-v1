@@ -3,7 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api.companyAddJob
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.getJobResponse
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.getJobResponse
 import com.ciptakerjaarunika.kerjaloka.model.Data.CompanyAnalytic
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import org.json.JSONObject

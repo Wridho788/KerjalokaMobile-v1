@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".Company.Profile.Profile.Profile">
+    tools:context=".viewmodel.Company.Profile.Profile.Profile">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

@@ -2,8 +2,8 @@ package com.ciptakerjaarunika.kerjaloka.api.companyApplicant
 
 import android.content.Context
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentResponse
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.send_comment
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentResponse
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.send_comment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

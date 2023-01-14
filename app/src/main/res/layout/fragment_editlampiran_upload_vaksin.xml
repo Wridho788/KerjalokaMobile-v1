@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin">
+    tools:context=".viewmodel.Jobseeker.ProfilePage.Attachment.fragment_editlampiran_upload_vaksin">
 
     <LinearLayout
         android:layout_width="match_parent"

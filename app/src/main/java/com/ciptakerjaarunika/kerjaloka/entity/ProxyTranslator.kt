@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerConfiguration
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerView
-import com.ciptakerjaarunika.kerjaloka.ui.Camera.ActivityPickerViewController
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Camera.ActivityPickerViewController
 import java.lang.NullPointerException
 import java.lang.reflect.Method
 import kotlin.reflect.KClass

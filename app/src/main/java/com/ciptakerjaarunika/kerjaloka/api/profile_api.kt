@@ -3,7 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ReviewSaya.Model.ReviewResponse
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.ReviewResponse
 import com.ciptakerjaarunika.kerjaloka.model.Data.*
 import com.ciptakerjaarunika.kerjaloka.model.Data.Field
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
@@ -136,21 +136,21 @@ class ProfileAPI {
     fun GetJobseekerFreshGraduated(
         context: Context?, onResult: (JobseekerFreshgraduatedResponse?) -> Unit
     ) {
-       val retrofit = ServiceBuilder(context).GET(jobseekerFreshgraduated::class.java)
-       retrofit.getJobseekerFreshGraduated().enqueue(
-           object : Callback<JobseekerFreshgraduatedResponse> {
-               override fun onResponse(
-                   call: Call<JobseekerFreshgraduatedResponse>,
-                   response: Response<JobseekerFreshgraduatedResponse>
-               ) {
-                   onResult(response.body())
-               }
+        val retrofit = ServiceBuilder(context).GET(jobseekerFreshgraduated::class.java)
+        retrofit.getJobseekerFreshGraduated().enqueue(
+            object : Callback<JobseekerFreshgraduatedResponse> {
+                override fun onResponse(
+                    call: Call<JobseekerFreshgraduatedResponse>,
+                    response: Response<JobseekerFreshgraduatedResponse>
+                ) {
+                    onResult(response.body())
+                }
 
-               override fun onFailure(call: Call<JobseekerFreshgraduatedResponse>, t: Throwable) {
-                   onResult(null)
-               }
-           }
-       )
+                override fun onFailure(call: Call<JobseekerFreshgraduatedResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
     }
 
     //Get Jobseeker Languages
@@ -584,7 +584,7 @@ class ProfileAPI {
         val retrofit = ServiceBuilder(context).GET(GetSocialMediaCheck::class.java)
 
         retrofit.getData().enqueue(
-            object : Callback<CheckSocialMediaResponse>{
+            object : Callback<CheckSocialMediaResponse> {
                 override fun onResponse(
                     call: Call<CheckSocialMediaResponse>,
                     response: Response<CheckSocialMediaResponse>
@@ -605,11 +605,15 @@ class ProfileAPI {
         fun getData(@Body socialMedia: socialMedia): Call<AddSocialMediaResponse>
     }
 
-    fun AddSocialMedia(context: Context?, socialMedia: socialMedia, onResult: (AddSocialMediaResponse?) -> Unit) {
+    fun AddSocialMedia(
+        context: Context?,
+        socialMedia: socialMedia,
+        onResult: (AddSocialMediaResponse?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).POST(AddSocialMediaCheck::class.java)
 
         retrofit.getData(socialMedia).enqueue(
-            object : Callback<AddSocialMediaResponse>{
+            object : Callback<AddSocialMediaResponse> {
                 override fun onResponse(
                     call: Call<AddSocialMediaResponse>,
                     response: Response<AddSocialMediaResponse>
@@ -633,6 +637,104 @@ class ProfileAPI {
                 }
 
                 override fun onFailure(call: Call<AddSocialMediaResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    // generate link
+    data class generatedLinkResponse(
+        val code: Int,
+        val errorCode: Int,
+        val message: String,
+        val data: String
+    )
+
+    interface getCvLink {
+        @GET("/jobseeker/cv/getCvLink")
+        fun getCVLink(): Call<generatedLinkResponse>
+    }
+
+    fun GetCvLink(context: Context?, onResult: (generatedLinkResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(getCvLink::class.java)
+        retrofit.getCVLink().enqueue(
+            object : Callback<generatedLinkResponse> {
+                override fun onResponse(
+                    call: Call<generatedLinkResponse>,
+                    response: Response<generatedLinkResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<generatedLinkResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+    interface getGeneratedLink {
+        @GET("/jobseeker/cv/generateLink")
+        fun getLink(): Call<generatedLinkResponse>
+    }
+
+    fun GetGeneratedLink(context: Context?, onResult: (generatedLinkResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(getGeneratedLink::class.java)
+
+        retrofit.getLink().enqueue(
+            object : Callback<generatedLinkResponse> {
+                override fun onResponse(
+                    call: Call<generatedLinkResponse>,
+                    response: Response<generatedLinkResponse>
+                ) {
+                    if (response.body() != null) {
+                        onResult(response.body())
+                    } else {
+                        val data: String = response.errorBody()!!.string()
+                        try {
+                            val jObjError = JSONObject(data)
+                            val map = jObjError.getString("message")
+                            val code = jObjError.getString("code")
+                            Log.d("response error body", map.toString())
+//                            onResult(generatedLinkResponse(code.toInt(), 0, map, ""))
+//                            Toast.makeText(
+//                                context, map.toString(),
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        } catch (e: Exception) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                        Log.d("response", response.toString())
+                    }
+                }
+
+                override fun onFailure(call: Call<generatedLinkResponse>, t: Throwable) {
+                    onResult(null)
+                }
+            }
+        )
+    }
+
+
+    interface getRevokedLink {
+        @GET("\t/jobseeker/cv/delete")
+        fun getDeleteLink(): Call<generatedLinkResponse>
+    }
+
+    fun GetRevokedLink(context: Context?, onResult: (generatedLinkResponse?) -> Unit) {
+        val retrofit = ServiceBuilder(context).GET(getRevokedLink::class.java)
+
+        retrofit.getDeleteLink().enqueue(
+            object : Callback<generatedLinkResponse> {
+                override fun onResponse(
+                    call: Call<generatedLinkResponse>,
+                    response: Response<generatedLinkResponse>
+                ) {
+                    onResult(response.body())
+                }
+
+                override fun onFailure(call: Call<generatedLinkResponse>, t: Throwable) {
                     onResult(null)
                 }
             }

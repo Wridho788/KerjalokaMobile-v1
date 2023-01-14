@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.NotificationPage.CompanyNotification"
+    tools:context=".viewmodel.NotificationPage.CompanyNotification"
     android:theme="@style/Theme.Kerjaloka.ActionBar"
     android:orientation="vertical">
 

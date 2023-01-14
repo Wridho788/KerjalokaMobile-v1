@@ -1,7 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.entity
 
 import androidx.annotation.IdRes
-import com.ciptakerjaarunika.kerjaloka.ui.Camera.BasicCameraFragment
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Camera.BasicCameraFragment
 import kotlin.reflect.KClass
 
 /**

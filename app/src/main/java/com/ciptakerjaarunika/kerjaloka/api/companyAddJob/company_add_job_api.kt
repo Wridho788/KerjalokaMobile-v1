@@ -3,8 +3,8 @@ package com.ciptakerjaarunika.kerjaloka.api.companyAddJob
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.addJobRequest
-import com.ciptakerjaarunika.kerjaloka.Company.Companyjobdetail.model.addJobResponse
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.addJobRequest
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.addJobResponse
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import org.json.JSONObject
 import retrofit2.Call

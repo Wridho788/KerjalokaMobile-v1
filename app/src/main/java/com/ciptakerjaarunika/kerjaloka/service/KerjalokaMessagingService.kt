@@ -1,34 +1,22 @@
 package com.ciptakerjaarunika.kerjaloka.service
 
-import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
-import android.app.PendingIntent.FLAG_MUTABLE
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.provider.Settings
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.fragment.app.FragmentTransaction
-import com.beust.klaxon.Json
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallActivity
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.IncomingCallPage
-import com.dropbox.core.DbxSdkVersion.Version
-import com.giphy.sdk.analytics.GiphyPingbacks.context
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.IncomingCallActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import okhttp3.internal.notify
 
 class KerjalokaMessagingService() :FirebaseMessagingService() {
     private var playRingtone : MediaPlayer? = null;

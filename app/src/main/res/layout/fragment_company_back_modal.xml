@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Company.Companyjobdetail.fragment_company_back_modal">
+    tools:context=".viewmodel.Company.Companyjobdetail.fragment_company_back_modal">
 
     <FrameLayout
         android:layout_width="match_parent"

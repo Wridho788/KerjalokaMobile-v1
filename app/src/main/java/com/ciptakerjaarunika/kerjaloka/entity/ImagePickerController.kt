@@ -1,15 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.entity
 
 import android.app.Activity
-import androidx.annotation.IdRes
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerConfiguration
-import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerView
-import com.ciptakerjaarunika.kerjaloka.ui.Camera.ActivityPickerViewController
-import io.reactivex.*
-import java.lang.reflect.InvocationHandler
-import java.lang.reflect.Method
-import java.util.concurrent.Callable
-import kotlin.reflect.KClass
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Camera.ActivityPickerViewController
+
 class ImagePickerController(private val configProvider: ConfigProvider) {
 
     fun display() {

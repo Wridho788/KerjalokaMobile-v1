@@ -1,0 +1,97 @@
+package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Setting
+
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.otpVerification
+import com.google.android.material.button.MaterialButton
+
+class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+        val view = inflater.inflate(R.layout.fragment_comp_edit_phone, container, false)
+        val phoneText = view.findViewById<TextView>(R.id.comp_phone)
+        val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveNewPhone)
+
+        phoneText.text = phone
+
+        btnSave.setOnClickListener {
+        var keyword = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
+            if (keyword.length == 0) {
+                Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
+            } else if (keyword.length == 8) {
+                Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
+            } else {
+                company_profile_api().checkPhone(keyword, context) {
+                    if (it != null) {
+                        if (it == false) {
+                            company_profile_api().ChangeNumber(keyword, context) { it1 ->
+                                if (it1?.code == 210) {
+                                    replaceFragment(otpVerification(), it1.token, phone, keyword)
+                                }
+                            }
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Phone number already exists",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    }
+                }
+            }
+        }
+
+        view.findViewById<MaterialButton>(R.id.back_btn).setOnClickListener {
+            fragmentManager?.popBackStack()
+            iRefreshData.refresh()
+        }
+
+        return view
+    }
+
+    companion object;
+
+    @SuppressLint("RestrictedApi")
+    private fun replaceFragment(
+        fragment: Fragment,
+        token: String?,
+        phone: String?,
+        newPhone: String?
+    ) {
+        val otpVerificationFragment = otpVerification()
+        val mBundle = Bundle()
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION_PHONE, phone)
+        mBundle.putString(otpVerification.EXTRA_DESCRIPTION_NEW_PHONE, newPhone)
+
+        otpVerificationFragment.arguments = mBundle
+        otpVerificationFragment.description = "phone"
+        val mFragmentManager = parentFragmentManager
+        mFragmentManager.beginTransaction().apply {
+            replace(
+                R.id.fragment_container,
+                otpVerificationFragment,
+                otpVerification::class.java.simpleName
+            )
+            addToBackStack(null)
+            commit()
+
+        }
+    }
+
+}

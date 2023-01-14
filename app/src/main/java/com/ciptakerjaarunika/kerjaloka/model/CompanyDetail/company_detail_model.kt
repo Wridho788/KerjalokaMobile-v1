@@ -1,6 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.model.CompanyDetail
 
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.reviewList
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyReview.Model.reviewList
 
 
 data class company_detail_model(

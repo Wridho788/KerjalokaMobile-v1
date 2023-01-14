@@ -10,7 +10,7 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.conmpany_interview_list_a
 import com.ciptakerjaarunika.kerjaloka.model.Interview.jobseeker_interview_list_api
 import com.ciptakerjaarunika.kerjaloka.model.Interview.returnUploadChatPhotoApi
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.InterviewPage.InterviewPage
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.InterviewPage
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback

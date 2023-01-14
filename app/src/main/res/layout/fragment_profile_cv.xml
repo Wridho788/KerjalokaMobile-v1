@@ -8,434 +8,542 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="ScrollViewCount">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            tools:ignore="ScrollViewCount">
 
             <LinearLayout
-                android:id="@+id/spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:visibility="visible">
-
-                <ProgressBar
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/content_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/card_background"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:gravity="center"
+                    android:visibility="gone">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ProgressBar
+                        style="?android:attr/progressBarStyleLarge"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".8"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Kemampuan"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/editSkill"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".2"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Edit"
-                            android:textAlignment="center"
-                            android:textColor="@color/danger_500"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/nullSkill"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="-"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/skillGroup"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:id="@+id/skillLv1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:text="Amateur"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <com.google.android.material.chip.ChipGroup
-                                android:id="@+id/chipGroup1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/skillLv2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:text="Beginner"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <com.google.android.material.chip.ChipGroup
-                                android:id="@+id/chipGroup2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/skillLv3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:text="Intermediate"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <com.google.android.material.chip.ChipGroup
-                                android:id="@+id/chipGroup3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/skillLv4"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:text="Advance"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <com.google.android.material.chip.ChipGroup
-                                android:id="@+id/chipGroup4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/skillLv5"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:text="Professional"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
-
-                            <com.google.android.material.chip.ChipGroup
-                                android:id="@+id/chipGroup5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="10dp"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
+                        android:layout_centerHorizontal="true" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/content_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/card_background"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:visibility="visible">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".8"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:text="Hasil Tes PAPI Kostick"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/card_background_filled"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".8"
-                        android:fontFamily="@font/poppins"
-                        android:text="Hasil dari Tes PAPI Kostick terakhir kamu akan otomatis tersimpan disini"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_weight=".8"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Simpan profile sebagai CV"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/card_background"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:id="@+id/link_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_edittext"
+                                android:fontFamily="@font/poppins"
+                                android:hint="Tidak Ada Link"
+                                android:padding="5dp"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/generateLink"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/white"
+                                    android:fontFamily="@font/poppins"
+                                    android:paddingHorizontal="30dp"
+                                    android:text="Generate"
+                                    android:textColor="@color/danger_500"
+                                    android:textSize="12sp"
+                                    app:cornerRadius="100dp"
+                                    app:strokeColor="@color/danger_500"
+                                    app:strokeWidth="1dp" />
+
+                                <LinearLayout
+                                    android:id="@+id/layout_btn_copy_link"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:gravity="end"
+                                    android:visibility="gone">
+
+                                    <com.google.android.material.button.MaterialButton
+                                        android:id="@+id/salin_link"
+                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/poppins"
+                                        android:paddingHorizontal="30dp"
+                                        android:text="Salin"
+                                        android:textColor="@color/white"
+                                        android:textSize="12sp"
+                                        app:cornerRadius="100dp"
+                                        app:strokeColor="@color/danger_500"
+                                        app:strokeWidth="1dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/seePapiResult"
+                        android:id="@+id/saveCV"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
                         android:backgroundTint="@color/white"
                         android:fontFamily="@font/poppins"
-                        android:text="Lihat Hasil"
+                        android:paddingHorizontal="30dp"
+                        android:text="Simpan"
                         android:textColor="@color/danger_500"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         app:cornerRadius="100dp"
                         app:strokeColor="@color/danger_500"
                         app:strokeWidth="1dp" />
 
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/card_background"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".8"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Pengalaman"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/addExp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".2"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Edit"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/danger_500"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_freshgraduated"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <CheckBox
-                            android:id="@+id/check_freshgraduated"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/txt_still_working"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/check_freshgraduated"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/poppins"
-                            android:singleLine="true"
-                            android:text="Saya belum memiliki pengalaman / Freshgraduate"
-                            android:textColor="@android:color/background_dark"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_experience"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/card_background"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:padding="10dp">
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycleExp"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            tools:itemCount="3"
-                            tools:listitem="@layout/card_experience" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".8"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Kemampuan"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/editSkill"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Edit"
+                                android:textAlignment="center"
+                                android:textColor="@color/danger_500"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/nullSkill"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="-"
+                                android:textColor="@color/black"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/skillGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:id="@+id/skillLv1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Amateur"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/chipGroup1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/skillLv2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Beginner"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/chipGroup2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/skillLv3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Intermediate"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/chipGroup3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/skillLv4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Advance"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/chipGroup4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/skillLv5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Professional"
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp" />
+
+                                <com.google.android.material.chip.ChipGroup
+                                    android:id="@+id/chipGroup5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="10dp"
+                                    android:paddingLeft="16dp"
+                                    android:paddingRight="16dp" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
                     </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/card_background"
-                    android:orientation="vertical"
-                    android:padding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/card_background"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight=".8"
                             android:fontFamily="@font/poppins_semibold"
-                            android:text="Edukasi"
+                            android:text="Hasil Tes PAPI Kostick"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/addEdu"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".2"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Add New"
-                            android:textAlignment="textEnd"
+                            android:layout_weight=".8"
+                            android:fontFamily="@font/poppins"
+                            android:text="Hasil dari Tes PAPI Kostick terakhir kamu akan otomatis tersimpan disini"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/seePapiResult"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/white"
+                            android:fontFamily="@font/poppins"
+                            android:text="Lihat Hasil"
                             android:textColor="@color/danger_500"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            app:cornerRadius="100dp"
+                            app:strokeColor="@color/danger_500"
+                            app:strokeWidth="1dp" />
+
+
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/layout_rv_edu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/card_background"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".8"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Pengalaman"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/addExp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Edit"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/danger_500"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_freshgraduated"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <CheckBox
+                                android:id="@+id/check_freshgraduated"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/txt_still_working"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/check_freshgraduated"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/poppins"
+                                android:singleLine="true"
+                                android:text="Saya belum memiliki pengalaman / Freshgraduate"
+                                android:textColor="@android:color/background_dark"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_experience"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycleExp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                tools:itemCount="3"
+                                tools:listitem="@layout/card_experience" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/card_background"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".8"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Edukasi"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/addEdu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Add New"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/danger_500"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_rv_edu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recycleEdu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:itemCount="1"
+                                tools:listitem="@layout/card_education" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/card_background"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".8"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Bahasa"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/addLang"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:text="Edit"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/danger_500"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recycleEdu"
+                            android:id="@+id/recycleLang"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             tools:itemCount="1"
-                            tools:listitem="@layout/card_education" />
+                            tools:listitem="@layout/card_language_main" />
                     </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/card_background"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".8"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Bahasa"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/addLang"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".2"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="Edit"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/danger_500"
-                            android:textSize="14sp" />
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycleLang"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:itemCount="1"
-                        tools:listitem="@layout/card_language_main" />
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </LinearLayout>

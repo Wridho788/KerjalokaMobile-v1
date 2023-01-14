@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.Screens.JobDetailScreen.JobDetailFragment">
+    tools:context=".viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

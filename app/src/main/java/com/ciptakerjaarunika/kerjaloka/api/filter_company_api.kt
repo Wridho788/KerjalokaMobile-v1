@@ -3,9 +3,9 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.industri_model
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.location_model
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanySearch.Model.size_company_model
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Model.industri_model
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Model.location_model
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Model.size_company_model
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

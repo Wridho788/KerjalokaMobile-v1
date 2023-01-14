@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".Company.Companyjobdetail.ManageJobPage.BasicInfoPage">
+    tools:context=".viewmodel.Company.Companyjobdetail.ManageJobPage.BasicInfoPage">
 
     <TextView
         android:layout_width="match_parent"

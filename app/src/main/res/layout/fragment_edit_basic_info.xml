@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.ProfilePage.manage_profile.EditBasicInfo">
+    tools:context=".viewmodel.Jobseeker.ProfilePage.manage_profile.EditBasicInfo">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/mainAppbar"

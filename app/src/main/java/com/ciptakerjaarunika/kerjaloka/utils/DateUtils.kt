@@ -1,21 +1,11 @@
 package com.ciptakerjaarunika.kerjaloka.utils
 
 import android.os.Build
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.ui.LamaranPage.Model.ApplicantModel
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.time.Duration.Companion.minutes
 
 class DateUtils {
      open fun GetDayName(value: Int): String {

@@ -7,7 +7,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -36,13 +37,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.Screens.PageNotFoundActivity"
+            android:name=".viewmodel.Screens.PageNotFoundActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_page_not_found"
             android:theme="@style/Theme.Kerjaloka.Fullscreen" />
         <activity
-            android:name=".ui.Global.DeactivatedAccount"
+            android:name=".viewmodel.Components.DeactivatedAccount"
             android:exported="false" />
 
         <meta-data
@@ -63,18 +64,18 @@
             android:resource="@color/danger_500" />
 
         <activity
-            android:name=".Company.Companyjobdetail.ManageJobActivity"
+            android:name=".viewmodel.Company.Companyjobdetail.ManageJobActivity"
             android:exported="false"
             android:label="@string/title_activity_add_job"
             android:theme="@style/Theme.Kerjaloka.NoActionBar" />
         <activity
-            android:name=".ui.NotificationPage.Notification"
+            android:name=".viewmodel.Jobseeker.NotificationPage.Notification"
             android:exported="true" />
         <activity
-            android:name=".ui.NotificationPage.CompanyNotification"
+            android:name=".viewmodel.NotificationPage.CompanyNotification"
             android:exported="true" />
         <activity
-            android:name=".ui.Screens.JobSearch.SearchJob"
+            android:name=".viewmodel.Jobseeker.JobSearch.SearchJob"
             android:exported="true"
             tools:ignore="Instantiatable" /> <!-- <activity -->
         <!-- android:name=".ui.ProfilePage.modal_edit_interest_layout" -->
@@ -90,11 +91,11 @@
         -->
         <!-- android:exported="true" /> -->
         <activity
-            android:name=".ui.WelcomingPage.OnBoarding.OnBoarding"
+            android:name=".viewmodel.WelcomingPage.OnBoarding.OnBoarding"
             android:exported="true"
             android:theme="@style/Theme.Kerjaloka.NoActionBar" />
         <activity
-            android:name=".ui.WelcomingPage.SplashScreen.SplashScreen"
+            android:name=".viewmodel.WelcomingPage.SplashScreen.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -104,7 +105,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.InterviewPage.IncomingCallActivity"
+            android:name=".viewmodel.Jobseeker.InterviewPage.IncomingCallActivity"
             android:exported="true"
             tools:ignore="Instantiatable" />
         <activity

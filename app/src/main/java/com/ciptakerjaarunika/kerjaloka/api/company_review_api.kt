@@ -2,9 +2,9 @@ package com.ciptakerjaarunika.kerjaloka.api
 
 import android.content.Context
 import android.util.Log
-import com.ciptakerjaarunika.kerjaloka.Company.Profile.ratingSended_response
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ratingSended_response
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
-import com.ciptakerjaarunika.kerjaloka.ui.Screens.CompanyReview.Model.*
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyReview.Model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

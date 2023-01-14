@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:theme="@style/Theme.Kerjaloka.ActionBar"
-    tools:context=".ui.NotificationPage.CompanyNotification">
+    tools:context=".viewmodel.NotificationPage.CompanyNotification">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/mainAppbar"
