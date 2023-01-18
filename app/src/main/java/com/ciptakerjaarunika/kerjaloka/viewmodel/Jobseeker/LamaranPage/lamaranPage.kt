@@ -12,30 +12,48 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.model.Job.ApplicationData
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.LoginPage.Login
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class LamaranPage : Fragment(), LamaranCellClickListener {
 
-    private var layoutManager:RecyclerView.LayoutManager?=null
-    private var adapter: RecyclerView.Adapter<Application.ViewHolder>? = null
-    private var param1: String? = null
-    private var param2: String? = null
+    @AddTrace(name="onLamaranPageTrace", enabled = true)
+    class ItemCache{
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun lamaranPageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("lamaran_page_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lamaranPageTrace()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_lamaran, container, false)
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {

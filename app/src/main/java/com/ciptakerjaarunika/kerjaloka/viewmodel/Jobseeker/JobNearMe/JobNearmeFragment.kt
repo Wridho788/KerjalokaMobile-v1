@@ -9,20 +9,48 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobBookmarkBinding
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.IJobPage
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class JobNearmeFragment : Fragment(), IJobPage {
     private lateinit var binding: FragmentJobBookmarkBinding
     private var listData: List<SearchJobModel> = listOf()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    @AddTrace(name = "onJobNearmeTrace", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun jobNearmeTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("job_nearme_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        jobNearmeTrace()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

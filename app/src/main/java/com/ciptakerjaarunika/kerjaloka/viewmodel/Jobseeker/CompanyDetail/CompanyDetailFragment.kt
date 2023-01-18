@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.ui.contextmenu.Item
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyBrowseAPI
@@ -32,10 +33,38 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyScreen.OnFragm
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
     OnFragmentCompanyDetailListener, OnFragmentClickListener {
     private lateinit var binding: FragmentCompanyDetailBinding
+
+    @AddTrace(name="onCompanyDetailTrace", enabled = true)
+    class ItemCache{
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun CompanyDetailTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("company_detail_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        CompanyDetailTrace()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -10,16 +10,45 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobRecommendationBinding
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.IJobPage
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class JobRecommendationFragment : Fragment(), IJobPage {
     private lateinit var binding: FragmentJobRecommendationBinding
     private var listData: List<SearchJobModel> = listOf()
+
+    @AddTrace(name="onJobRecommendationTrace", enabled = true)
+    class ItemCache{
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun JobRecommendationTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("company_search_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        JobRecommendationTrace()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

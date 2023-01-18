@@ -13,6 +13,7 @@ import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSearchJobBinding
@@ -22,6 +23,9 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDe
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.IJobPage
 import com.google.android.material.chip.Chip
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 
 class SearchJob : Fragment(), IJobPage, iSearchJob {
@@ -39,9 +43,33 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
     private var keyword: String? = ""
     private var hasSearch: Boolean = false
 
-
     var list = ArrayList<SearchModel>()
     private lateinit var binding: FragmentSearchJobBinding
+
+    @AddTrace(name = "onSearchJobTrace", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun searchPageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("search_page_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        searchPageTrace()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

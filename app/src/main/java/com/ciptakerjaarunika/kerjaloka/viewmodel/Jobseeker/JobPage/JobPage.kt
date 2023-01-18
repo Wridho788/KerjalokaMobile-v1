@@ -17,20 +17,24 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobPageBinding
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobBookmark.JobBookmarkFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobNearMe.JobNearmeFragment
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.Adapter.JobAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobRecommendation.JobRecommendationFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobSearch.SearchJob
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class JobPage : Fragment(), IJobPage {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -39,6 +43,31 @@ class JobPage : Fragment(), IJobPage {
     private var listNear: List<SearchJobModel> = listOf()
     private var listBookmark: List<SearchJobModel> = listOf()
     private lateinit var binding: FragmentJobPageBinding
+
+    @AddTrace(name = "onJobPageTrace", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun jobPageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("job_page_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        jobPageTrace()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

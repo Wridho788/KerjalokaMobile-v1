@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
+import android.content.ClipData.Item
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -44,10 +45,13 @@ import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.model.Interview.incoming_call_model
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery.DefaultGalleryMimes
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery.DefaultSystemGalleryConfig
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.Company.company_interview_byjob
-import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -78,13 +82,31 @@ class ChatPage(
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var activityResultCameraLauncher: ActivityResultLauncher<Intent>
     private lateinit var defaultImagePicker: BasicImagePicker
-
     private var downloadManager: DownloadManager? = null
 
+    @AddTrace(name = "onChatPage", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun chatPageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("job_detail_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        chatPageTrace()
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.bottomNavigationView.visibility = View.GONE
         hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
@@ -461,78 +483,78 @@ class ChatPage(
                 activityResultLauncher.launch(requestIntent)
             }
         }
-            message.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+        message.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
 
-                @SuppressLint("NotifyDataSetChanged")
-                override fun afterTextChanged(s: Editable) {
-                    if (!message.text.toString().isNullOrEmpty() && !message.text.toString()
-                            .isNullOrBlank() && message.text.toString() != ""
-                    ) {
-                        img_btnsend.setImageResource(R.drawable.icon_send)
-                        img_btnsend.rotation = -25f
-                        btn_send.setOnClickListener {
-                            val sender = SessionManager(context).user!!.userNo.toString()
-                            val message =
-                                itemView.findViewById<EditText>(R.id.txt_message).text.toString()
+            @SuppressLint("NotifyDataSetChanged")
+            override fun afterTextChanged(s: Editable) {
+                if (!message.text.toString().isNullOrEmpty() && !message.text.toString()
+                        .isNullOrBlank() && message.text.toString() != ""
+                ) {
+                    img_btnsend.setImageResource(R.drawable.icon_send)
+                    img_btnsend.rotation = -25f
+                    btn_send.setOnClickListener {
+                        val sender = SessionManager(context).user!!.userNo.toString()
+                        val message =
+                            itemView.findViewById<EditText>(R.id.txt_message).text.toString()
 
-                            val receiver = listOf<Long>(Receiver)
-                            if (!message.isNullOrEmpty() && !message.isNullOrBlank() && message != "") {
-                                hubConnection.send(
-                                    "SendMessage",
-                                    sectionNo,
-                                    sender,
-                                    message,
-                                    receiver,
-                                    jobNo,
-                                    MessageType.NormalMessage.type.toString().toInt(),
-                                    null
-                                )
-                                Timer().schedule(object : TimerTask() {
-                                    override fun run() {
-                                        activity?.runOnUiThread(Runnable {
-                                            recyclerView.adapter?.itemCount?.minus(1)
-                                                ?.let { recyclerView.scrollToPosition(it) }
-                                        })
-                                    }
-                                }, 500)
-                            }
-                            CLoseKeyboard()
-
-                            itemView.findViewById<EditText>(R.id.txt_message).text = null
-                            recyclerView.adapter?.notifyDataSetChanged()
-                        }
-                    } else {
-                        img_btnsend.setImageResource(R.drawable.ic_attach_file)
-                        img_btnsend.rotation = 45f
-                        btn_send.setOnClickListener {
-                            if (ContextCompat.checkSelfPermission(
-                                    requireContext(),
-                                    Manifest.permission.READ_EXTERNAL_STORAGE
-                                )
-                                != PackageManager.PERMISSION_GRANTED
-                            ) {
-                                activity?.let { it1 ->
-                                    ActivityCompat.requestPermissions(
-                                        it1,
-                                        listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
-                                        id + context!!.resources.getInteger(R.integer.ChatUploadFile)
-                                    )
+                        val receiver = listOf<Long>(Receiver)
+                        if (!message.isNullOrEmpty() && !message.isNullOrBlank() && message != "") {
+                            hubConnection.send(
+                                "SendMessage",
+                                sectionNo,
+                                sender,
+                                message,
+                                receiver,
+                                jobNo,
+                                MessageType.NormalMessage.type.toString().toInt(),
+                                null
+                            )
+                            Timer().schedule(object : TimerTask() {
+                                override fun run() {
+                                    activity?.runOnUiThread(Runnable {
+                                        recyclerView.adapter?.itemCount?.minus(1)
+                                            ?.let { recyclerView.scrollToPosition(it) }
+                                    })
                                 }
-                            } else {
-                                var intent = Intent(Intent.ACTION_GET_CONTENT)
-                                intent.type = "*/*"
-                                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                            }, 500)
+                        }
+                        CLoseKeyboard()
 
-                                val requestIntent = Intent.createChooser(intent, "Choose a file")
-                                activityResultLauncher.launch(requestIntent)
+                        itemView.findViewById<EditText>(R.id.txt_message).text = null
+                        recyclerView.adapter?.notifyDataSetChanged()
+                    }
+                } else {
+                    img_btnsend.setImageResource(R.drawable.ic_attach_file)
+                    img_btnsend.rotation = 45f
+                    btn_send.setOnClickListener {
+                        if (ContextCompat.checkSelfPermission(
+                                requireContext(),
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            )
+                            != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            activity?.let { it1 ->
+                                ActivityCompat.requestPermissions(
+                                    it1,
+                                    listOf(Manifest.permission.READ_EXTERNAL_STORAGE).toTypedArray(),
+                                    id + context!!.resources.getInteger(R.integer.ChatUploadFile)
+                                )
                             }
+                        } else {
+                            var intent = Intent(Intent.ACTION_GET_CONTENT)
+                            intent.type = "*/*"
+                            intent.addCategory(Intent.CATEGORY_OPENABLE)
+
+                            val requestIntent = Intent.createChooser(intent, "Choose a file")
+                            activityResultLauncher.launch(requestIntent)
                         }
                     }
                 }
-            })
+            }
+        })
     }
 
     fun CLoseKeyboard() {

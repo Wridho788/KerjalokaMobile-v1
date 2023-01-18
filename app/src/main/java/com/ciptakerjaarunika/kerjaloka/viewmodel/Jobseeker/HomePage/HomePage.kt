@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
@@ -21,23 +22,47 @@ import com.ciptakerjaarunika.kerjaloka.enum.Role
 import com.ciptakerjaarunika.kerjaloka.model.Job.SearchJobModel
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.fragment_company_jobs
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyScreen.CompanyPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage.Adapter.RecommendationJobAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.JobPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobRecommendation.JobRecommendationFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.SearchActivity
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.NotificationPage.Notification
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.SearchActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class HomePage : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentHomeBinding
     private var listJob: List<SearchJobModel>? = null
 
+    @AddTrace(name="onHomePageJobseekerTrace", enabled = true)
+    class ItemCache{
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun HomepageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("home_page_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        HomepageTrace()
         binding = FragmentHomeBinding.inflate(layoutInflater)
     }
 

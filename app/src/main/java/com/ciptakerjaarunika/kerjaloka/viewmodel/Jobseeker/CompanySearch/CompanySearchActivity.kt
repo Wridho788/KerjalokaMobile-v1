@@ -54,6 +54,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
         }
         myTrace.stop()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -92,20 +93,6 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
                         binding.searchBar.setQuery(data.toString(), true)
                     }
                 }
-//                val chipTop = Chip(context)
-//                chipTop.setChipBackgroundColorResource(R.color.danger_100)
-//                chipTop.apply {
-//                    textSize = 12f
-//                    text = it.toString()
-//                    id = int
-//                    isChipIconVisible = false
-//                    isCloseIconVisible = false
-//                    isClickable = true
-//                    isCheckable = true
-//                    binding.apply {
-//                        chipGroupTopSearch.addView(chipTop as View)
-//                    }
-//                }
             }
         } else {
             binding.layoutLatestSearchResults.isVisible = true

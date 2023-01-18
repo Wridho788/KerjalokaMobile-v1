@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyFollowedAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentFollowedCompanyBinding
@@ -15,12 +16,40 @@ import com.ciptakerjaarunika.kerjaloka.model.CompanyPage.company_followed_list
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyDetail.CompanyDetailFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyScreen.Adapter.CompanyFollowedAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyScreen.OnFragmentClickListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 
 class CompanyFollowedFragment : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentFollowedCompanyBinding
     private var listFollowedJob: List<company_followed_list>? = null
     private var isLoading: Boolean = true
+
+    @AddTrace(name = "onCompanyFollowedTrace", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun companyFollowedTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("company_followed_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        companyFollowedTrace()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,14 +62,12 @@ class CompanyFollowedFragment : Fragment(), OnFragmentClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-
         getFollowedJobData()
     }
 

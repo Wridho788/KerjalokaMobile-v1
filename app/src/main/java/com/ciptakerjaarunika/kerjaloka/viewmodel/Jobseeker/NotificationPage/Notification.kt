@@ -5,10 +5,14 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityNotificationBinding
 import com.ciptakerjaarunika.kerjaloka.viewmodel.NotificationPage.Model.CompanyNotificationModel
 import com.ciptakerjaarunika.kerjaloka.viewmodel.NotificationPage.item.CompanyItemSectionDecoration
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class Notification : AppCompatActivity() {
 
@@ -18,8 +22,29 @@ class Notification : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationBinding
     private var notificationsList : List<CompanyNotificationModel> = listOf()
 
+    @AddTrace(name="onNotificationPageTrace", enabled = true)
+    class ItemCache{
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun NotificationTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("notification_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        NotificationTrace()
         binding = ActivityNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val thisActivity = this

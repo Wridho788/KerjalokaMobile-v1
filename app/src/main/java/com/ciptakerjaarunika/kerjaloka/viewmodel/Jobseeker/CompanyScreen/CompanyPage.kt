@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyBrowseAPI
 import com.ciptakerjaarunika.kerjaloka.api.CompanyFollowedAPI
@@ -27,6 +28,9 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyScreen.Adapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyScreen.Adapter.CompanyFollowedAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyScreen.Adapter.CompanyVacanciesAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.CompanySearchActivity
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class CompanyPage : Fragment(), OnFragmentClickListener {
 
@@ -38,6 +42,31 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
     private var listSearchJob: List<company_browse_list>? = null
     private var keyword: String? = ""
     private var hasSearch: Boolean = false
+
+    @AddTrace(name = "onCompanyPage", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun companyPageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("company_review_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        companyPageTrace()
+    }
 
     private fun getFollowedJobData() {
         CompanyFollowedAPI().CompanyGetFollowedJob(context) {
@@ -94,7 +123,6 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
             }
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

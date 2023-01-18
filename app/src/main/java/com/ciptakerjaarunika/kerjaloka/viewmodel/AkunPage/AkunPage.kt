@@ -13,7 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ProfilePage
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
@@ -23,9 +23,10 @@ import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.LoginRequest
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ProfilePage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.DeactivatedAccount
-import com.ciptakerjaarunika.kerjaloka.viewmodel.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.profilepage
+import com.ciptakerjaarunika.kerjaloka.viewmodel.LoginPage.Login
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -36,11 +37,13 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
-
 
 class AkunPage : Fragment() {
 
@@ -51,9 +54,30 @@ class AkunPage : Fragment() {
         val firebaseAuth = FirebaseAuth.getInstance()
     }
 
+    @AddTrace(name="onAkunPageTrace", enabled = true)
+    class ItemCache{
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun AkunPageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("akun_page_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
+        AkunPageTrace()
     }
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {

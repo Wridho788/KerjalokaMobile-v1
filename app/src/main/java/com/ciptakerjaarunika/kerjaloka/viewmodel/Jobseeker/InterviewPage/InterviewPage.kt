@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
@@ -30,6 +31,9 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.Company
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.Company.company_interview_byjob
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.Jobseeker.jobseeker_interview_adapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.LoginPage.Login
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -41,9 +45,29 @@ class InterviewPage : Fragment(), CellClickListener {
     private var recyclerView: RecyclerView? = null
     private lateinit var hubConnection: HubConnection
 
+    @AddTrace(name="onInterviewPageTrace", enabled = true)
+    class ItemCache{
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun InterviewPageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("interview_page_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        InterviewPageTrace()
         hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
         if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
             hubConnection.start()

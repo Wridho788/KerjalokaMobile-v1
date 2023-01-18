@@ -18,6 +18,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
@@ -38,7 +39,10 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.*
@@ -54,14 +58,34 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         val firebaseAuth = FirebaseAuth.getInstance()
     }
 
+    @AddTrace(name = "onLoginPageTrace", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun loginPageTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("login_page_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
+        loginPageTrace()
     }
 
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        // Configure Google Sign In inside onCreate mentod
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -214,7 +238,8 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                     handleSignInResult(task)
                 } catch (e: ApiException) {
                     Log.d("error", e.toString())
-                    Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()                }
+                    Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
