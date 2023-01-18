@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.api.Search_Api
@@ -28,6 +29,9 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.Model.ge
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.Model.jobList
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.Model.list_top_search
 import com.google.android.material.chip.Chip
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class SearchActivity : Fragment(), onFragmentTransactionList,
     onFragmentTransactionListCompany {
@@ -36,7 +40,25 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
     private var keyword: String? = ""
     private lateinit var binding: ActivitySearchBinding
     private var listBookmark: List<jobList> = listOf()
+    @AddTrace(name = "onTraceSearchActivity", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
 
+    fun basicTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("search_activity_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,6 +67,8 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         if (SessionManager(context).latestGeneralSearch == null) {
             SessionManager(context).latestGeneralSearch = listOf()
         }
+
+        basicTrace()
 
         Search_Api().getTopSearchAsync(context) {
             if (it != null) {

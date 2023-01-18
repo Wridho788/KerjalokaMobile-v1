@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.ui.contextmenu.Item
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
@@ -29,13 +30,16 @@ import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobDetailBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage.Model.rJobDetailModel
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyDetail.Adapter.RelatedOtherCompanyJobAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage.Model.rJobDetailModel
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.Adapter.RelatedJobAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.BottomSheet.ApplyJob
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.BottomSheet.ReportJob
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -49,6 +53,27 @@ class JobDetailFragment(
     private var jobBookmark = false
     private var currentJob: rJobDetailModel? = null
 
+    @AddTrace(name = "onJobDetailTrace", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun jobDetailTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("job_detail_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     @SuppressWarnings("deprecation")
@@ -58,6 +83,7 @@ class JobDetailFragment(
     ): View? {
         binding = FragmentJobDetailBinding.inflate(layoutInflater)
         val view = binding.root
+        jobDetailTrace()
         return view
     }
 

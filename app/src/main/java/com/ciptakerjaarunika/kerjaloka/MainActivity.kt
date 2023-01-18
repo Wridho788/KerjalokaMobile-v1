@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.api.AUTHAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
@@ -24,9 +25,9 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ListApplicant.CompanyListApplicantFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.DeactivatedAccount
 import com.ciptakerjaarunika.kerjaloka.viewmodel.HomePage.CompanyDashboard
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.IncomingCallPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.InterviewPage
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage.HomePage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.LamaranPage.LamaranPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.LoginPage.Login
 import com.google.android.gms.tasks.OnCompleteListener
@@ -35,6 +36,8 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -51,15 +54,35 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hubConnection: HubConnection
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
+    @AddTrace(name = "onCreateTrace", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+    fun MainActivityTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("main_activity_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firebaseAnalytics = Firebase.analytics
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
-            Log.d("id", FirebaseAnalytics.Param.ITEM_ID)
-            Log.d("name", FirebaseAnalytics.Param.ITEM_NAME)
-            Log.d("image", FirebaseAnalytics.Param.CONTENT_TYPE)
+            Log.d("analytic_id", FirebaseAnalytics.Param.ITEM_ID)
+            Log.d("analytic_name", FirebaseAnalytics.Param.ITEM_NAME)
+            Log.d("analytic_image", FirebaseAnalytics.Param.CONTENT_TYPE)
         }
+        MainActivityTrace()
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -88,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                     }, String::class.java
                 )
 
-                 hubConnection.on(
+                hubConnection.on(
                     "getmessage",
                     { res: chat_data ->
                         Log.d("getmessage Res", res.toString())
@@ -133,7 +156,7 @@ class MainActivity : AppCompatActivity() {
                     context
                 ).user?.company != null)
 
-            if (SessionManager(context).user !=null && SessionManager(context).user?.deactivated!! == true) {
+            if (SessionManager(context).user != null && SessionManager(context).user?.deactivated!! == true) {
                 val intent = Intent(baseContext, DeactivatedAccount::class.java)
                 startActivity(intent)
             } else {

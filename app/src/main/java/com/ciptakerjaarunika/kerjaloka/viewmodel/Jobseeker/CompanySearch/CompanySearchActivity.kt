@@ -13,6 +13,7 @@ import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.CompanySearchAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanySearchBinding
@@ -22,6 +23,9 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Adapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Bottomsheet.FilterCompany
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Model.searchCompanyRequest
 import com.google.android.material.chip.Chip
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 
 class CompanySearchActivity : Fragment(), iSearchCompany {
     private var searchModel: searchCompanyRequest =
@@ -31,12 +35,32 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
     private var keyword: String? = ""
     private lateinit var binding: ActivityCompanySearchBinding
 
+    @AddTrace(name="onCompanySearchActivityTrace", enabled = true)
+    class ItemCache{
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun CompanySearchTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("company_search_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = ActivityCompanySearchBinding.inflate(layoutInflater)
+        CompanySearchTrace()
         binding.btnBack.setOnClickListener {
             fragmentManager?.popBackStack()
         }
