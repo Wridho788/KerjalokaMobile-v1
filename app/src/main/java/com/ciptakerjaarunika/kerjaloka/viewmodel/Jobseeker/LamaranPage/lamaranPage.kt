@@ -71,9 +71,8 @@ class LamaranPage : Fragment(), LamaranCellClickListener {
             JobAPI().GetMyAPplications(context) {
                 if (it != null) {
                     itemView.findViewById<LinearLayout>(R.id.spinnerLamaran).visibility = GONE
-
                     val recyclerView =
-                        itemView.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+                        itemView.findViewById<RecyclerView>(R.id.recyclerView);
 
                     recyclerView.visibility = VISIBLE
                     recyclerView.apply {

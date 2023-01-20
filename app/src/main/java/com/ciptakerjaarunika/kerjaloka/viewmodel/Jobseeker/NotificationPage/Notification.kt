@@ -57,8 +57,6 @@ class Notification : AppCompatActivity() {
         }
         initList()
         reload()
-
-
     }
 
 

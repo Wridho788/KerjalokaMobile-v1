@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             return null
         }
     }
+
     fun MainActivityTrace() {
         val cache = ItemCache()
         val myTrace = Firebase.performance.newTrace("main_activity_trace")
@@ -83,7 +84,6 @@ class MainActivity : AppCompatActivity() {
             Log.d("analytic_image", FirebaseAnalytics.Param.CONTENT_TYPE)
         }
         MainActivityTrace()
-
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 return@OnCompleteListener
@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         AUTHAPI().CheckLogin(baseContext, this) {
 
             var context = baseContext
@@ -135,12 +134,6 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-
-//            window.decorView.setOnApplyWindowInsetsListener { view, insets ->
-//                val insetsCompat = toWindowInsetsCompat(insets, view)
-//                binding.bottomNavigationView.isGone = true
-//                view.onApplyWindowInsets(insets)
-//            }
             window.decorView.viewTreeObserver.addOnGlobalFocusChangeListener { oldView, newView ->
                 val imm =
                     baseContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
