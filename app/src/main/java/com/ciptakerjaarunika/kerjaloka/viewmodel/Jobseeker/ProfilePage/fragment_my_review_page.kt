@@ -9,18 +9,47 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anychart.ui.contextmenu.Item
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentMyReviewPageBinding
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter.CompReviewAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Listener.AppealModal
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.AppealReviewModal
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.ReviewHistory
-import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
-import com.ciptakerjaarunika.kerjaloka.databinding.FragmentMyReviewPageBinding
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.ktx.performance
+import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
 
 class fragment_my_review_page : Fragment() {
     private lateinit var binding : FragmentMyReviewPageBinding
+
+    @AddTrace(name = "onReviewPageTrace", enabled = true)
+    class ItemCache {
+        fun fetch(name: String): Item? {
+            return null
+        }
+    }
+
+    fun myReviewTrace() {
+        val cache = ItemCache()
+        val myTrace = Firebase.performance.newTrace("my_review_page_trace")
+        myTrace.start()
+        val item = cache.fetch("item")
+        if (item != null) {
+            myTrace.incrementMetric("item_cache_hit", 1)
+        } else {
+            myTrace.incrementMetric("item_cache_miss", 1)
+        }
+        myTrace.stop()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        myReviewTrace()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

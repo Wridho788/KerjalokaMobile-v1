@@ -73,6 +73,12 @@ class JobDetailFragment(
         myTrace.stop()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        jobDetailTrace()
+
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
@@ -83,7 +89,6 @@ class JobDetailFragment(
     ): View? {
         binding = FragmentJobDetailBinding.inflate(layoutInflater)
         val view = binding.root
-        jobDetailTrace()
         return view
     }
 

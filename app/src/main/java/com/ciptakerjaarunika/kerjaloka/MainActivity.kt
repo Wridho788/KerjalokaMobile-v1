@@ -38,6 +38,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
+import com.instabug.library.Instabug
+import com.instabug.library.invocation.InstabugInvocationEvent
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -46,6 +48,7 @@ import kotlin.Array
 import kotlin.Int
 import kotlin.IntArray
 import kotlin.String
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -74,15 +77,23 @@ class MainActivity : AppCompatActivity() {
         myTrace.stop()
     }
 
+//    init {
+
+//    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         firebaseAnalytics = Firebase.analytics
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
             Log.d("analytic_id", FirebaseAnalytics.Param.ITEM_ID)
             Log.d("analytic_name", FirebaseAnalytics.Param.ITEM_NAME)
             Log.d("analytic_image", FirebaseAnalytics.Param.CONTENT_TYPE)
         }
+        Instabug.Builder(application, "0f18f4933ee2994d9e2d30309e7e213b")
+            .setInvocationEvents(InstabugInvocationEvent.SHAKE, InstabugInvocationEvent.FLOATING_BUTTON)
+            .build()
         MainActivityTrace()
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {

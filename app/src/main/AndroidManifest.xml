@@ -59,10 +59,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/kerjaloka_logo_small" />
-        <!--
- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more.
-        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/danger_500" />
@@ -82,18 +78,6 @@
             android:name=".viewmodel.Jobseeker.JobSearch.SearchJob"
             android:exported="true"
             tools:ignore="Instantiatable" /> <!-- <activity -->
-        <!-- android:name=".ui.ProfilePage.modal_edit_interest_layout" -->
-        <!-- android:exported="false" /> -->
-        <!-- <activity -->
-        <!--
-            android:name=".ui.MyTestList.TestList"
-                    android:exported="true">
-                </activity>
-
-                <activity
-                    android:name=".ui.ProfilePage.profile_page"
-        -->
-        <!-- android:exported="true" /> -->
         <activity
             android:name=".viewmodel.WelcomingPage.OnBoarding.OnBoarding"
             android:exported="true"

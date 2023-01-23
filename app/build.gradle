@@ -137,7 +137,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.1.1')
     // Add the dependency for the Performance Monitoring library
     implementation 'com.google.firebase:firebase-perf-ktx:20.3.0'
-
-
+    //Instabug Dependency
+    implementation 'com.instabug.library:instabug:11.7.0'
+    implementation "com.instabug.library:instabug-apm:11.7.0"
 }
 
