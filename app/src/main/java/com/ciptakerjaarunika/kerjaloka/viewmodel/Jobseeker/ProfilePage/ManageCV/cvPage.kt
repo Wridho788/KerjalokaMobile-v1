@@ -81,8 +81,8 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     var experience: List<JobseekerExperiences>? = listOf()
     var education: List<JobseekerEducations>? = listOf()
 
-    @AddTrace(name="onCvPageTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onCvPageTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -148,11 +148,11 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
             if (response?.data != null) {
                 Log.d("jobseekerGetProfileData", response.data.toString())
                 this.jobseekername =
-                    if (response.data.users.userFullname.isNullOrEmpty()) "-" else response.data.users.userFullname
+                    if (response.data.users.userFullname == null) "-" else response.data.users.userFullname
                 this.jobseekerPhone =
-                    if (response.data.users.phone.isNullOrEmpty()) "-" else response.data.users.phone
+                    if (response.data.users.phone == null) "-" else response.data.users.phone
                 this.jobseekerktp =
-                    if (response.data.additionals.ktp.isNullOrEmpty()) "-" else response.data.additionals.ktp
+                    if (response.data.additionals.ktp == null) "-" else response.data.additionals.ktp
                 if (response.data.jobseeker.jobseekerGender.toString() == "M") {
                     this.jobseekergender = "Pria"
                 } else this.jobseekergender = "Wanita"
@@ -161,27 +161,27 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                 var dob = getDateValue(response.data.jobseeker.dateOfBirth)
                 this.jobseekerdob = dob.toString()
                 this.jobseekercityname =
-                    if (response.data.city.cityName.isNullOrEmpty()) "-" else response.data.city.cityName
+                    if (response.data.city == null) "-" else response.data.city.cityName
                 this.jobseekerstate =
-                    if (response.data.country.countryName.isNullOrEmpty()) "-" else response.data.country.countryName
+                    if (response.data.country == null) "-" else response.data.country.countryName
                 this.jobseekerAboutme =
-                    if (response.data.additionals.jobseekerAbout.isNullOrEmpty()) "-" else response.data.additionals.jobseekerAbout
+                    if (response.data.additionals.jobseekerAbout == null) "-" else response.data.additionals.jobseekerAbout
                 this.jobseekerMaritalstatus =
-                    if (response.data.marital.maritalName.isNullOrEmpty()) "-" else response.data.marital.maritalName
+                    if (response.data.marital == null) "-" else response.data.marital.maritalName
                 this.jobseekerReligion =
-                    if (response.data.religion.religionName.isNullOrEmpty()) "-" else response.data.religion.religionName
+                    if (response.data.religion == null) "-" else response.data.religion.religionName
                 this.jobseekerEthnic =
-                    if (response.data.additionals.ethnics.isNullOrEmpty()) "-" else response.data.additionals.ethnics
+                    if (response.data.additionals.ethnics == null) "-" else response.data.additionals.ethnics
                 this.jobseekerResidence =
-                    if (response.data.resident.residentName.isNullOrEmpty()) "-" else response.data.resident.residentName
+                    if (response.data.resident == null) "-" else response.data.resident.residentName
                 this.jobseekerplaceofbirth =
-                    if (response.data.additionals.placeOfBirth.isNullOrEmpty()) "-" else response.data.additionals.placeOfBirth
+                    if (response.data.additionals.placeOfBirth == null) "-" else response.data.additionals.placeOfBirth
                 this.jobseekerpostalcode =
-                    if (response.data.additionals.postalCode.isNullOrEmpty()) "-" else response.data.additionals.postalCode
+                    if (response.data.additionals.postalCode == null) "-" else response.data.additionals.postalCode
                 this.jobseekertelegramid =
-                    if (response.data.additionals.telegramId.isNullOrEmpty()) "-" else response.data.additionals.telegramId
+                    if (response.data.additionals.telegramId == null) "-" else response.data.additionals.telegramId
                 this.jobseekerInstagramId =
-                    if (response.data.additionals.instagramId.isNullOrEmpty()) "-" else response.data.additionals.instagramId
+                    if (response.data.additionals.instagramId == null) "-" else response.data.additionals.instagramId
             }
 
         }

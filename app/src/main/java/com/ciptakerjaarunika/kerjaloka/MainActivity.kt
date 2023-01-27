@@ -10,6 +10,7 @@ import android.widget.EditText
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -38,8 +39,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
+import com.instabug.apm.APM
 import com.instabug.library.Instabug
-import com.instabug.library.invocation.InstabugInvocationEvent
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -48,7 +49,6 @@ import kotlin.Array
 import kotlin.Int
 import kotlin.IntArray
 import kotlin.String
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -77,13 +77,18 @@ class MainActivity : AppCompatActivity() {
         myTrace.stop()
     }
 
-//    init {
-
-//    }
+    override fun onResume() {
+        super.onResume()
+        APM.setColdAppLaunchEnabled(true)
+        APM.setHotAppLaunchEnabled(true)
+        APM.setFragmentSpansEnabled(true)
+        APM.setScreenLoadingEnabled(true)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         firebaseAnalytics = Firebase.analytics
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
@@ -92,7 +97,6 @@ class MainActivity : AppCompatActivity() {
             Log.d("analytic_image", FirebaseAnalytics.Param.CONTENT_TYPE)
         }
         Instabug.Builder(application, "0f18f4933ee2994d9e2d30309e7e213b")
-            .setInvocationEvents(InstabugInvocationEvent.SHAKE, InstabugInvocationEvent.FLOATING_BUTTON)
             .build()
         MainActivityTrace()
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -213,6 +217,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        APM.endAppLaunch();
+    }
     private var MY_CAMERA_REQUEST_CODE = 100
 
     override fun onRequestPermissionsResult(

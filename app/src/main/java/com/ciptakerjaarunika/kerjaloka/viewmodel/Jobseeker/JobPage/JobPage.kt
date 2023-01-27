@@ -35,6 +35,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
+import com.instabug.apm.APM
 
 class JobPage : Fragment(), IJobPage {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -67,6 +68,7 @@ class JobPage : Fragment(), IJobPage {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         jobPageTrace()
+        APM.setFragmentSpansEnabled(true)
     }
 
     override fun onCreateView(

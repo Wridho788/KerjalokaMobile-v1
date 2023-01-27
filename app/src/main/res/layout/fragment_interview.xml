@@ -61,7 +61,21 @@
             <include
                 android:id="@+id/search"
                 layout="@layout/search_component" />
-
+            <LinearLayout
+                android:id="@+id/layout_nothing_interview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Tidak Ada Interview.."
+                    android:textAlignment="center"
+                    android:paddingVertical="30dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/spinnerInterviw"
                 android:layout_width="match_parent"

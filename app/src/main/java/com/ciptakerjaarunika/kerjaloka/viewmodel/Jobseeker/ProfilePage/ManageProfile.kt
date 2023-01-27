@@ -1,20 +1,23 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.EditAboutMe
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.EditAddInfo
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.EditBasicInfo
-import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 
-class ManageProfile(val data : JobseekerProfile?) : Fragment() {
+class ManageProfile(val data: JobseekerProfile?) : Fragment() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,35 +48,43 @@ class ManageProfile(val data : JobseekerProfile?) : Fragment() {
         txt_jsName.text = data?.jobseeker?.jobseekerName
         txt_phoneNumber.text = data?.users?.phone
         txt_KTP.text = data?.additionals?.ktp
-        if(data?.jobseeker?.jobseekerGender == 'M') txt_gender.text = "Laki-Laki"
+        if (data?.jobseeker?.jobseekerGender == 'M') txt_gender.text = "Laki-Laki"
         else txt_gender.text = "Perempuan"
-        txt_alamat.text = if(data?.additionals?.jobseekerCurrentAddress.isNullOrEmpty()) "-" else data?.additionals?.jobseekerCurrentAddress
-        txt_dob.text = DateUtils().GetDateValueWithFormat(data?.jobseeker?.dateOfBirth, "dd MMMM yyyy")
-        txt_city.text = data?.city?.cityName
-        txt_country.text = data?.country?.countryName
-        txt_aboutMe.text = data?.additionals?.jobseekerAbout
-        txt_Marital.text = data?.marital?.maritalName
-        txt_citizen.text = data?.resident?.residentName
-        txt_pob.text = data?.additionals?.placeOfBirth
-        txt_postalCode.text = data?.additionals?.postalCode
-        txt_ethnic.text = data?.additionals?.ethnics
-        txt_Religion.text = data?.religion?.religionName
-        txt_TeleID.text = if(data?.additionals?.telegramId.isNullOrEmpty()) "-" else data?.additionals?.telegramId
-        txt_InstaID.text = if(data?.additionals?.instagramId.isNullOrEmpty()) "-" else data?.additionals?.instagramId
+        txt_alamat.text =
+            if (data?.additionals?.jobseekerCurrentAddress.isNullOrEmpty()) "-" else data?.additionals?.jobseekerCurrentAddress
+        txt_dob.text =
+            DateUtils().GetDateValueWithFormat(data?.jobseeker?.dateOfBirth, "dd MMMM yyyy")
+        txt_city.text = if (data?.city != null) data.city.cityName else "-"
+        txt_country.text = if (data?.country != null) data.country.countryName else "-"
+        txt_aboutMe.text =
+            if (data?.additionals?.jobseekerAbout != null) data.additionals.jobseekerAbout else "-"
+        txt_Marital.text = if (data?.marital != null) data.marital.maritalName else "-"
+        txt_citizen.text = if (data?.resident != null) data.resident.residentName else "-"
+        txt_pob.text =
+            if (data?.additionals?.placeOfBirth != null) data.additionals.placeOfBirth else "-"
+        txt_postalCode.text =
+            if (data?.additionals?.postalCode != null) data.additionals.postalCode else "-"
+        txt_ethnic.text =
+            if (data?.additionals?.ethnics != null) data.additionals.ethnics else "-"
+        txt_Religion.text = if (data?.religion != null) data.religion.religionName else "-"
+        txt_TeleID.text =
+            if (data?.additionals?.telegramId.isNullOrEmpty()) "-" else data?.additionals?.telegramId
+        txt_InstaID.text =
+            if (data?.additionals?.instagramId.isNullOrEmpty()) "-" else data?.additionals?.instagramId
 
         editBasic?.setOnClickListener {
-          replaceFragment(EditBasicInfo(data))
+            replaceFragment(EditBasicInfo(data))
         }
-        btn_edAboutMe?.setOnClickListener{
+        btn_edAboutMe?.setOnClickListener {
             replaceFragment(EditAboutMe(data))
         }
-        btn_edAddInfo?.setOnClickListener{
+        btn_edAddInfo?.setOnClickListener {
             replaceFragment(EditAddInfo(data))
         }
         return view
     }
 
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
 
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()

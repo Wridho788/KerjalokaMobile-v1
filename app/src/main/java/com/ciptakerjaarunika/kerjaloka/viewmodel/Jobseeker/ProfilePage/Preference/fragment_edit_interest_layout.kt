@@ -20,9 +20,12 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.MinatAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.profilepage
 
-class fragment_edit_interest_layout(val jobseekerFields: List<Field>?, val iRefreshData: iRefreshData) : Fragment() {
+class fragment_edit_interest_layout(
+    val jobseekerFields: List<Field>?,
+    val iRefreshData: iRefreshData
+) : Fragment() {
     private lateinit var binding: FragmentEditInterestLayoutBinding
-    private var fields : List<FieldFilter> = listOf()
+    private var fields: List<FieldFilter> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +44,7 @@ class fragment_edit_interest_layout(val jobseekerFields: List<Field>?, val iRefr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             back()
         }
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -75,7 +78,7 @@ class fragment_edit_interest_layout(val jobseekerFields: List<Field>?, val iRefr
                             }
                             binding.recycleview.adapter?.notifyDataSetChanged()
                         } else {
-                            var temp = fields?.filter { f ->
+                            var temp = fields.filter { f ->
                                 f.fieldName.toLowerCase().contains(keyword)
                             }
                             binding.recycleview.apply {
@@ -90,21 +93,25 @@ class fragment_edit_interest_layout(val jobseekerFields: List<Field>?, val iRefr
             }
         }
         binding.saveBtn.setOnClickListener {
-           val selected = fields.filter { data-> data.checked }.map {
-               it -> JobseekerFields(SessionManager(context).user!!.userNo, it.fieldNo)
-           }
-            ManageProfileAPI().JobseekerEditFields(selected, context){
-                if(it != null) {
+            val selected = fields.filter { data -> data.checked }.map { it ->
+                JobseekerFields(SessionManager(context).user!!.userNo, it.fieldNo)
+            }
+            ManageProfileAPI().JobseekerEditFields(selected, context) {
+                if (it != null) {
                     Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
                     back()
-                }
-                else{
-                    Toast.makeText(activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        activity,
+                        "Terjadi kesalahan yang tidak diketahui",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
-    private fun back(){
+
+    private fun back() {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
         fragmentTransaction.replace(id, profilepage(2), "Profile Page")
         fragmentTransaction.commit()

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +27,7 @@ class profilepage(var Page: Int) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentJobseekerProfilePageBinding.inflate(layoutInflater)
         ProfileAPI().JobseekerGetProfileData(context) { response ->
             if (response?.data != null) {
@@ -98,6 +99,7 @@ class profilepage(var Page: Int) : Fragment() {
     }
 
 
+    @SuppressLint("UseCompatLoadingForColorStateLists")
     fun updatePage() {
         val content = view?.findViewById<ViewPager2>(R.id.profileContent)
         content?.currentItem = Page

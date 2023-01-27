@@ -35,6 +35,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
+import com.instabug.apm.APM
 
 class HomePage : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentHomeBinding
@@ -71,6 +72,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
         savedInstanceState: Bundle?
     ): View {
         val view = binding.root
+        APM.setFragmentSpansEnabled(true)
         if (SessionManager(context).user != null) {
             view.findViewById<TextView>(R.id.greeting_txt).text =
                 SessionManager(context).user?.userFullname!!.split(" ")[0]

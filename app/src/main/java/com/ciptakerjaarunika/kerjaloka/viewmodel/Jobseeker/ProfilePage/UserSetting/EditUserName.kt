@@ -16,7 +16,7 @@ import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.profilepage
 
 class EditUserName() : Fragment() {
-    private lateinit var binding : FragmentEditUsernameProfileBinding
+    private lateinit var binding: FragmentEditUsernameProfileBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,7 +28,7 @@ class EditUserName() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.inputTxt.setText(SessionManager(context).user?.username)
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             back()
         }
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -54,19 +54,24 @@ class EditUserName() : Fragment() {
         binding.saveBtn.setOnClickListener {
             if (binding.inputTxt.text.toString().isNullOrEmpty()) {
                 binding.errorMessage.visibility = View.VISIBLE
-            } else{
-                ManageProfileAPI().JobseekerChangeUsername(binding.inputTxt.text.toString(), context){
-                    if (it!= null){
+            } else {
+                ManageProfileAPI().JobseekerChangeUsername(
+                    binding.inputTxt.text.toString(),
+                    context
+                ) {
+                    if (it != null) {
                         fragmentManager?.popBackStack()
-                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
         }
     }
-    private fun back(){
+
+    private fun back() {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
-        fragmentTransaction?.replace(id, profilepage(6), "Profile Page")
-        fragmentTransaction?.commit()
+        fragmentTransaction.replace(id, profilepage(6), "Profile Page")
+        fragmentTransaction.commit()
     }
 }

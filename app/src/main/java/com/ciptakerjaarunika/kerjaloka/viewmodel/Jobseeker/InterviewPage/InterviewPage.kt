@@ -185,46 +185,63 @@ class InterviewPage : Fragment(), CellClickListener {
             search!!.hint = "Cari Perusahaan"
             val mainActivity = activity as MainActivity
             InterviewAPI().JobseekerGetInterviewList(context, mainActivity) {
+
                 if (it != null) {
-                    recyclerView?.apply {
-                        layoutManager = LinearLayoutManager(activity)
-                        adapter = jobseeker_interview_adapter(it.data, context, Context)
-                    }
-                    search.addTextChangedListener(object : TextWatcher {
-                        override fun beforeTextChanged(
-                            p0: CharSequence?,
-                            p1: Int,
-                            p2: Int,
-                            p3: Int
-                        ) {
+                    if (it.data.size == 0) {
+                        spinner?.visibility = GONE
+                        view?.findViewById<LinearLayout>(R.id.layout_nothing_interview)!!.visibility = VISIBLE
+                    } else {
+                        spinner?.visibility = GONE
+                        recyclerView?.apply {
+                            layoutManager = LinearLayoutManager(activity)
+                            adapter = jobseeker_interview_adapter(it.data, context, Context)
                         }
-
-                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-                        @SuppressLint("NotifyDataSetChanged")
-                        override fun afterTextChanged(s: Editable) {
-                            if (!search.text.toString().isNullOrEmpty() && !search.text.toString()
-                                    .isNullOrBlank() && search.text.toString() != ""
+                        search.addTextChangedListener(object : TextWatcher {
+                            override fun beforeTextChanged(
+                                p0: CharSequence?,
+                                p1: Int,
+                                p2: Int,
+                                p3: Int
                             ) {
-                                recyclerView?.apply {
-                                    layoutManager = LinearLayoutManager(activity)
-                                    adapter = jobseeker_interview_adapter(it.data.filter { list ->
-                                        list.jobPosition.lowercase(Locale.getDefault())
-                                            .contains(
-                                                search.text.toString()
-                                                    .lowercase(Locale.getDefault()))
-                                    }, context, this@InterviewPage)
-                                }
-                                recyclerView?.adapter?.notifyDataSetChanged()
-                            } else {
-                                recyclerView?.apply {
-                                    layoutManager = LinearLayoutManager(activity)
-                                    adapter = jobseeker_interview_adapter(it.data, context, Context)
-                                }
-                                recyclerView?.adapter?.notifyDataSetChanged()
                             }
-                        }
-                    })
+
+                            override fun onTextChanged(
+                                p0: CharSequence?,
+                                p1: Int,
+                                p2: Int,
+                                p3: Int
+                            ) {
+                            }
+
+                            @SuppressLint("NotifyDataSetChanged")
+                            override fun afterTextChanged(s: Editable) {
+                                if (!search.text.toString()
+                                        .isNullOrEmpty() && !search.text.toString()
+                                        .isNullOrBlank() && search.text.toString() != ""
+                                ) {
+                                    recyclerView?.apply {
+                                        layoutManager = LinearLayoutManager(activity)
+                                        adapter =
+                                            jobseeker_interview_adapter(it.data.filter { list ->
+                                                list.jobPosition.lowercase(Locale.getDefault())
+                                                    .contains(
+                                                        search.text.toString()
+                                                            .lowercase(Locale.getDefault())
+                                                    )
+                                            }, context, this@InterviewPage)
+                                    }
+                                    recyclerView?.adapter?.notifyDataSetChanged()
+                                } else {
+                                    recyclerView?.apply {
+                                        layoutManager = LinearLayoutManager(activity)
+                                        adapter =
+                                            jobseeker_interview_adapter(it.data, context, Context)
+                                    }
+                                    recyclerView?.adapter?.notifyDataSetChanged()
+                                }
+                            }
+                        })
+                    }
                 }
             }
         } else if (user == null) {
