@@ -2,13 +2,13 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.WelcomingPage.OnBoarding
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import me.relex.circleindicator.CircleIndicator3
-import android.util.Log
 import java.lang.Boolean
 
 
@@ -18,17 +18,13 @@ class OnBoarding : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_on_boarding2)
-
 //        val settings = getSharedPreferences("prefs", 0)
 //        val editor = settings.edit()
 //        editor.putBoolean("firstRun", true)
 //        editor.commit()
-//
 //        val intent = Intent(this, MainActivity::class.java)
 //        startActivity(intent)
-
         val btn_Skip = findViewById<TextView>(R.id.textSkip)
-
         btn_Skip.setOnClickListener{
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -49,10 +45,7 @@ class OnBoarding : AppCompatActivity() {
         }
     }
 
-
-
     private fun setOnBoardingItems(){
-
         onboardingItemsAdapter = OnBoardingItemAdapter(
             listOf(
                 OnBoardingItem(

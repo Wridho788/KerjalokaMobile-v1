@@ -49,6 +49,12 @@ android {
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'instabug-apm'
 
+Instabug {
+    APM {
+        fragmentSpansEnabled true
+        debugEnabled true
+    }
+}
 
 dependencies {
     implementation 'me.relex:circleindicator:2.1.6'

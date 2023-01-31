@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "695482327328-mocnko1ohtlsa8b1dakk52r1rcgq8ruu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ciptakerjaarunika.kerjaloka",
+            "certificate_hash": "3bce3ccbebefe1d85e1f87d870f36521da16f915"
+          }
+        },
+        {
           "client_id": "695482327328-pr9irannm6o3p9p4aqkg8fli0v8iqkc6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
