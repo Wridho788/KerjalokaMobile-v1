@@ -29,7 +29,7 @@ class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-//        checkTheme()
+        checkTheme()
 
         val backgroundImg : LinearLayout = findViewById(R.id.onBoard)
         val sideAnimation = AnimationUtils.loadAnimation( this,R.anim.slide)

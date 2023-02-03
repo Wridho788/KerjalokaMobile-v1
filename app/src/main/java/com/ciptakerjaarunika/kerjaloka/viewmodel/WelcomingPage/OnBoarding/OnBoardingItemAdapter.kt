@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
-
-
-
 data class OnBoardingItem(
     val id: Int,
     val onboardingImage: Int,
@@ -27,14 +24,11 @@ class OnBoardingItemAdapter(private val onboardingItems: List<OnBoardingItem>) :
     RecyclerView.Adapter<OnBoardingItemAdapter.OnBoarding>() {
 
     inner class OnBoarding(view: View, context: Context) : RecyclerView.ViewHolder(view) {
-
         private val imageOnBoarding = view.findViewById<ImageView>(R.id.imageOnBoarding)
         private val Title = view.findViewById<TextView>(R.id.Title)
         private val Description = view.findViewById<TextView>(R.id.Description)
         private val Mulai = view.findViewById<MaterialButton>(R.id.mulai)
         private val anim = AnimationUtils.loadAnimation( context, R.anim.slide)
-
-
 
         fun bind(onboardingItem: OnBoardingItem) {
             imageOnBoarding.setImageResource(onboardingItem.onboardingImage)
@@ -56,22 +50,10 @@ class OnBoardingItemAdapter(private val onboardingItems: List<OnBoardingItem>) :
                 }
                 break
             }while (
-                onboardingItem.id>-1
+                onboardingItem.id >-1
             )
 
         }
-
-//        do{
-//            if(onboardingItem.id==4){
-//                Mulai.isVisible=true
-//                Mulai.startAnimation(anim)
-//            }
-//            else{
-//                Mulai.isVisible=false
-//            }
-//            Mulai.isVisible=false
-//        }
-//        while (onboardingItem.id<5)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBoarding {

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -67,6 +68,7 @@ class HomePage : Fragment(), OnFragmentClickListener {
         binding = FragmentHomeBinding.inflate(layoutInflater)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

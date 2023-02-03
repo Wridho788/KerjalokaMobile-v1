@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Kerjaloka" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Kerjaloka" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/danger_500</item>
         <item name="colorPrimaryVariant">@color/danger_500</item>
@@ -10,8 +10,15 @@
         <item name="colorSecondaryVariant">@color/danger_500</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.Kerjaloka.Dark" parent="ThemeOverlay.AppCompat.DayNight">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/danger_500</item>
+        <item name="colorOnPrimary">@color/danger_500</item>
     </style>
 
     <style name="Theme.Kerjaloka.NoActionBar">
@@ -26,7 +33,7 @@
 
     <style name="Theme.Kerjaloka.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.Kerjaloka.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.Kerjaloka.PopupOverlay" parent="ThemeOverlay.AppCompat.DayNight" />
 
     <style name="Circular">
         <item name="cornerSize">50%</item>
