@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Listener.ShowModalHistory
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Model.Data
-import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 
@@ -41,8 +41,6 @@ class myPackageAdapter(private val context: Context, private val PackageList: Li
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): myPackage {
         val view = View.inflate(parent.context, R.layout.comp_package_card, null)
 //        val btn_seeHistory = view.findViewById<MaterialButton>(R.id.btn_pckHistory)
-
-
         return myPackage(view)
     }
 
@@ -53,7 +51,25 @@ class myPackageAdapter(private val context: Context, private val PackageList: Li
         holder.credit.text=currentItem.packageX.packageCredit.toString()
         holder.startOn.text=currentItem.startOn
         holder.exp.text=currentItem.expiredOn
-
+/*
+*    public enum PackageTypes
+    {
+        [Description("Job Posting")]
+        JobPosting = 1,
+        [Description("Search CV")]
+        SearchCV = 2,
+        [Description("Test")]
+        Test = 3,
+        [Description("Certification")]
+        Certification = 4,
+        [Description("Featured Company")]
+        FeaturedCompany = 5,
+        [Description("Lokalearning")]
+        Lokalearning = 6,
+        [Description("Promotion")]
+        Promotion = 7,
+    }
+* */
         holder.seeHistory.setOnClickListener {
             listener.showDetail(currentItem)
         }

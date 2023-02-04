@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         APM.setColdAppLaunchEnabled(true)
-        APM.setHotAppLaunchEnabled(true)
         APM.setFragmentSpansEnabled(true)
         APM.setScreenLoadingEnabled(true)
     }
@@ -88,7 +87,6 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         firebaseAnalytics = Firebase.analytics
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
             Log.d("analytic_id", FirebaseAnalytics.Param.ITEM_ID)
@@ -99,6 +97,8 @@ class MainActivity : AppCompatActivity() {
         Instabug.Builder(application, "0f18f4933ee2994d9e2d30309e7e213b").setSdkDebugLogsLevel(
             LogLevel.VERBOSE)
             .build()
+        Instabug.enable()
+
         MainActivityTrace()
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
