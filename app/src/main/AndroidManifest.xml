@@ -71,12 +71,12 @@
         <activity
             android:name=".viewmodel.NotificationPage.CompanyNotification"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.Kerjaloka"/>
         <activity
             android:name=".viewmodel.Jobseeker.JobSearch.SearchJob"
             android:exported="true"
             tools:ignore="Instantiatable"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/> <!-- <activity -->
+            android:theme="@style/Theme.Kerjaloka"/> <!-- <activity -->
         <activity
             android:name=".viewmodel.WelcomingPage.OnBoarding.OnBoarding"
             android:exported="true"
@@ -95,7 +95,7 @@
             android:name=".viewmodel.Jobseeker.InterviewPage.IncomingCallActivity"
             android:exported="true"
             tools:ignore="Instantiatable"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.Kerjaloka"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

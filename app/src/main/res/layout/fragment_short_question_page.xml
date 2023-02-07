@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Company.Companyjobdetail.ManageJobPage.fragment_company_add_jobs_5">
+    tools:context=".viewmodel.Company.Companyjobdetail.ManageJobActivity">
 
     <LinearLayout
         android:id="@+id/layout_info"
@@ -60,8 +60,10 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             app:cardCornerRadius="10dp"
-            app:strokeColor="@color/light_500"
-            app:strokeWidth="1dp">
+            android:backgroundTint="@color/light_300"
+            app:strokeColor="@color/gray_400"
+            app:strokeWidth="1dp"
+            app:cardElevation="0dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,6 +82,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="40dp"
+                    android:backgroundTint="@color/light_300"
+                    app:strokeColor="@color/gray_400"
+                    app:strokeWidth="1dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout
@@ -125,7 +130,10 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
+                    android:backgroundTint="@color/light_300"
                     app:cardCornerRadius="40dp"
+                    app:strokeColor="@color/gray_400"
+                    app:strokeWidth="1dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout

@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Adapter.myPackageAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Listener.ShowModalHistory
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Model.Data
-import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.google.gson.Gson
 
 class company_package_list : Fragment() {
@@ -33,7 +33,7 @@ class company_package_list : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         company_profile_api().CompanyGetPackageData(context) {
-            if (it != null) {
+             if (it != null) {
                 val recyclerView = view.findViewById<RecyclerView>(R.id.myPackageRecycler)
                 layoutManager = LinearLayoutManager(activity)
                 recyclerView.layoutManager = layoutManager

@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter.viewpagerCompAdapter
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfilePageBinding
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter.viewpagerCompAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.DeactivatedAccount
 import com.google.android.material.button.MaterialButton
 
@@ -64,7 +64,7 @@ class ProfilePage(var Page: Int) : Fragment() {
                 if (activity != null)
                     if (activity != null) {
                         Glide.with(view!!.context)
-                            .load(config().portAddress + "/photo/Profile/" + response.data.logo)
+                            .load(config().portAddress + "photo/Profile/" + response.data.logo)
                             .fitCenter()
                             .into(view!!.findViewById<ImageView>(R.id.compLogo))
                     }

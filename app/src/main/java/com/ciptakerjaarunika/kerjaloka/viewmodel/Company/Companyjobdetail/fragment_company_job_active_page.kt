@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +60,7 @@ class fragment_company_job_active_page : Fragment() {
         UpdateUI()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun UpdateUI() {
         val jobTitle = view?.findViewById<TextView>(R.id.company_job_title)
         val jobInput = view?.findViewById<TextView>(R.id.company_job_input)

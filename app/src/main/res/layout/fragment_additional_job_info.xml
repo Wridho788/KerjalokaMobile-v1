@@ -63,7 +63,10 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
+                    android:backgroundTint="@color/light_300"
                     app:cardCornerRadius="40dp"
+                    app:strokeColor="@color/gray_400"
+                    app:strokeWidth="1dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout
@@ -128,7 +131,10 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
+                    android:backgroundTint="@color/light_300"
                     app:cardCornerRadius="40dp"
+                    app:strokeColor="@color/gray_400"
+                    app:strokeWidth="1dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout
@@ -192,7 +198,10 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
+                    android:backgroundTint="@color/light_300"
                     app:cardCornerRadius="40dp"
+                    app:strokeColor="@color/gray_400"
+                    app:strokeWidth="1dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout
@@ -251,7 +260,10 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
+                    android:backgroundTint="@color/light_300"
                     app:cardCornerRadius="40dp"
+                    app:strokeColor="@color/gray_400"
+                    app:strokeWidth="1dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout
@@ -310,7 +322,10 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
+                    android:backgroundTint="@color/light_300"
                     app:cardCornerRadius="40dp"
+                    app:strokeColor="@color/gray_400"
+                    app:strokeWidth="1dp"
                     app:cardElevation="0dp">
 
                     <RelativeLayout
@@ -370,7 +385,10 @@
                     android:focusable="true"
                     app:boxStrokeWidth="0dp"
                     app:boxStrokeWidthFocused="0dp"
+                    android:backgroundTint="@color/light_300"
                     app:cardCornerRadius="40dp"
+                    app:strokeColor="@color/gray_400"
+                    app:strokeWidth="1dp"
                     app:cardElevation="0dp">
 
                     <LinearLayout

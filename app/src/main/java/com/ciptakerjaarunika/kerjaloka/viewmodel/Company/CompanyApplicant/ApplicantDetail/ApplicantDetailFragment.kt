@@ -1,8 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ApplicantDetail
 
+import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -10,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,8 +35,8 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.CVbank
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.Model.jobApplicantHistory
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.iJobApplicant
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Screens.CompanyCompareJobseeker.CompanyCompareJobseekerFragment
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.JobseekerReview.JobseekerReviewFragment
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Screens.CompanyCompareJobseeker.CompanyCompareJobseekerFragment
 import com.google.android.material.chip.Chip
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -60,6 +63,8 @@ class ApplicantDetailFragment(
         return view
     }
 
+    @SuppressLint("ResourceType")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

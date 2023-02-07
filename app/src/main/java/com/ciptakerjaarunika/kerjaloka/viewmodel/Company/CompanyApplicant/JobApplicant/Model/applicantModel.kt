@@ -3,12 +3,22 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobAp
 import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.rating
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ApplicantDetail.SectionKomentar.Model.CommentModel
 
-
 data class listApplicantResponse(
     val code: Int,
-    val errorCode: Int,
-    val message: String,
-    val data: List<applicantModel>
+    val data: List<applicantModel>,
+    val unprocessCount: Int? = 0,
+    val shortlistCount: Int? = 0,
+    val testCount: Int? = 0,
+    val interviewCount: Int? = 0,
+    val cvbankCount: Int? = 0,
+    val acceptedCount: Int? = 0,
+    val rejectedCount: Int? = 0,
+    val jobList: List<jobListapplicantModel>
+)
+
+data class jobListapplicantModel(
+    val jobNo: String,
+    val jobPosition: String,
 )
 
 data class applicantModel(

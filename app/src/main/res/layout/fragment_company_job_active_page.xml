@@ -99,7 +99,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:cardCornerRadius="10dp"
-                app:strokeColor="@color/light_500"
+                app:strokeColor="@color/gray_400"
                 app:strokeWidth="1dp">
 
                 <LinearLayout

@@ -13,30 +13,35 @@ import retrofit2.http.POST
 
 class CompanyListApplicantAPI {
     data class getApplicantRequest(
-        val jobNo: Long,
-        val answer: List<String>
+        val jobNo: String,
+        val answer: List<String>?,
+        val applyStatus: Int?,
+        val sortType: Int?,
+        val cityNo: Int?,
+        val gender: List<Char>?,
+        val education: List<Int>?,
+        val experience: List<Int>?,
+        val maxSalary: Int?,
     )
 
     interface CompanyListApplicantAPI {
         @Headers(
-            "Content-Type: application/json",
-            "Accept: application/json"
+            "Content-Type: application/json", "Accept: application/json"
         )
         @POST("/company/officer/job/{JobNo}/application")
         fun getListApplicant(@Body filter: getApplicantRequest): Call<listApplicantResponse>
     }
 
     fun GetListApplicantPost(
-        context: Context?,
-        JobNo: Long,
-        onResult: (listApplicantResponse?) -> Unit
+        context: Context?, JobNo: String, onResult: (listApplicantResponse?) -> Unit
     ) {
         val retrofit = ServiceBuilder(context).POST(CompanyListApplicantAPI::class.java)
-        retrofit.getListApplicant(getApplicantRequest(JobNo, listOf())).enqueue(
-            object : Callback<listApplicantResponse> {
+        retrofit.getListApplicant(getApplicantRequest(JobNo, listOf(), 1, null,null, listOf(), listOf(),
+            listOf(),null
+        ))
+            .enqueue(object : Callback<listApplicantResponse> {
                 override fun onResponse(
-                    call: Call<listApplicantResponse>,
-                    response: Response<listApplicantResponse>
+                    call: Call<listApplicantResponse>, response: Response<listApplicantResponse>
                 ) {
                     onResult(response.body())
                 }
@@ -45,7 +50,6 @@ class CompanyListApplicantAPI {
                     Log.d("error", t.toString())
                     onResult(null)
                 }
-            }
-        )
+            })
     }
 }

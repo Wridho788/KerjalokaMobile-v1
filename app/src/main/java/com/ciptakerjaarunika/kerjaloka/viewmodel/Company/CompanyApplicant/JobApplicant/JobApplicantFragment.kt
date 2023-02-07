@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -47,6 +50,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val logo = view.findViewById<ImageView>(R.id.logo_company_applicant)
         val title_job = view.findViewById<TextView>(R.id.job_title_applicant)
@@ -71,7 +75,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
 
                 if(activity != null) {
                     Glide.with(this)
-                        .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
+                        .load(config().portAddress + "photo/Profile/" + it.data.company.logo)
                         .fitCenter().into(logo)
                 }
                 if (it.data.jobLocation.size > 1) {
@@ -96,6 +100,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
                     return dateFormat.parse(date)!!
                 }
 
+                @RequiresApi(Build.VERSION_CODES.O)
                 fun dateDiff(): String {
                     val date1 = GetDateValue(time).time
                     val date2 = GetDateValue(now).time
@@ -151,7 +156,8 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
         val totalRejectedText = view?.findViewById<TextView>(R.id.totalRejectedText)
         val totalCVbanksText = view?.findViewById<TextView>(R.id.totalCVbanksText)
         val btn_cvBanks = view?.findViewById<LinearLayout>(R.id.btn_cv_banks)
-        CompanyListApplicantAPI().GetListApplicantPost(context, JobNo) {
+        Log.d("jobno", JobNo.toString())
+        CompanyListApplicantAPI().GetListApplicantPost(context, JobNo.toString()) {
             if (it != null) {
                 loading -= 1
                 LoadingDone()

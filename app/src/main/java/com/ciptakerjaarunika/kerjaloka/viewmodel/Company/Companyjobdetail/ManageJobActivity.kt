@@ -6,16 +6,15 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.BottomSheetConfirm
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.*
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.addJobRequest
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.AddJobAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityAddJobBinding
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.*
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.BottomSheetConfirm
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.*
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.addJobRequest
 import com.google.gson.Gson
 
 class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoPage, iConfirmPage {
@@ -33,7 +32,6 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
         super.onCreate(savedInstanceState)
         binding = ActivityAddJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         val bundle = intent.extras
         val jobNo = Gson().fromJson(bundle?.getString("jobNo"), Long::class.java)

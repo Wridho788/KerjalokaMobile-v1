@@ -1,12 +1,14 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter
 
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Listener.JobDetail
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.DataCount
@@ -50,6 +52,7 @@ class Companyjobs_adapter(private val joblist: List<DataCount>, private val list
         return ViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = joblist[position]
 //        var logoComp = SessionManager(context).user?.companyAdditional?.logo

@@ -137,12 +137,13 @@ class CompanyItemSectionDecoration(
     private fun drawSectionView(canvas: Canvas, text: String, top: Int, mark: String){
         val view = CompanySectionViewHolder(context)
         view.setDate(text, mark)
-
+        val paint = Paint()
+        paint.setColor(Color.WHITE);
         val bitmap = getViewGroupBitmap(view)
         val bitmapCanvas = Canvas(bitmap)
         view.draw(bitmapCanvas)
 
-        canvas.drawBitmap(bitmap, 0f, top.toFloat(), null)
+        canvas.drawBitmap(bitmap, 0f, top.toFloat(), paint)
     }
 
     private fun getViewGroupBitmap(viewGroup: ViewGroup): Bitmap{

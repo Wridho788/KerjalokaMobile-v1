@@ -49,7 +49,7 @@ class KomentarApplicantFragment(
                 send_comment(jobseekerNo, binding.etReportJob.text.toString())
             ) {
                 if (it != null) {
-                    CompanyListApplicantAPI().GetListApplicantPost(context, jobNo) {
+                    CompanyListApplicantAPI().GetListApplicantPost(context, jobNo.toString()) {
                         res ->
                         if(res?.data != null){
                             val currentData = res.data.find {

@@ -17,14 +17,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="40dp"
-            android:layout_height="5dp"
-            android:layout_gravity="center"
+        <ImageView
+            android:layout_width="70dp"
+            android:id="@+id/btn_bottom_sheet"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bottom_sheet_1"
+            android:scaleType="centerCrop"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/black"
-            app:cardCornerRadius="100dp"
-            app:cardElevation="0dp" />
+            android:layout_gravity="center|top"/>
 
         <TextView
             android:layout_width="match_parent"

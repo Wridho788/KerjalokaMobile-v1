@@ -65,7 +65,7 @@ class CVbanks : Fragment(), iCvBankInterface {
     }
 
     override fun goToJobApplicant(jobNo: Long, jobseekerNo: Long) {
-        CompanyListApplicantAPI().GetListApplicantPost(context, jobNo) {
+        CompanyListApplicantAPI().GetListApplicantPost(context, jobNo.toString()) {
             if (it != null) {
                 list = it.data
                 var temp  = list!!.find { data -> data.applicant.jobseekerNo == jobseekerNo }
