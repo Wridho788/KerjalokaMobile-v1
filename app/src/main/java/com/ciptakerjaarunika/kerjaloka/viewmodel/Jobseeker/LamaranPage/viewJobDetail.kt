@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.LamaranPage
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -37,6 +39,7 @@ class viewJobDetail(val JobNo: Long,val CompanyNo: Long,val applicationData: App
         super.onCreate(savedInstanceState)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,7 +63,7 @@ class viewJobDetail(val JobNo: Long,val CompanyNo: Long,val applicationData: App
 
                 context?.let { it1 ->
                     Glide.with(it1)
-                        .load(config().portAddress + "/photo/Profile/" + job.company.logo)
+                        .load(config().portAddress + "photo/Profile/" + job.company.logo)
                         .into(Logo)
                 }
                 ApplyDate.text = DateUtils().GetDateValueWithFormat(applicationData?.application?.applyOn, "dd MMM yyyy")

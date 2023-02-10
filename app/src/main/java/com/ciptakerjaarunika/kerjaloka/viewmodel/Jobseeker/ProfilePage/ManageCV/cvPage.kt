@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -10,6 +11,7 @@ import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.graphics.pdf.PdfDocument
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -19,6 +21,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -26,10 +29,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anychart.ui.contextmenu.Item
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentProfileCvBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.model.Profile.*
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.EduAdapter
@@ -106,6 +109,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         cvPageTrace()
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -131,6 +135,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         return readStoragePermission == PackageManager.PERMISSION_GRANTED && writeStoragePermission == PackageManager.PERMISSION_GRANTED
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         GetData()
@@ -187,6 +192,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getDateValue(value: String): String? {
         var formatDate =
             LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))

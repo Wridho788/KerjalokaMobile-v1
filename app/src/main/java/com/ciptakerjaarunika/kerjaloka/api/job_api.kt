@@ -3,12 +3,12 @@ package com.ciptakerjaarunika.kerjaloka.api
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.JobResponses
 import com.ciptakerjaarunika.kerjaloka.model.Job.*
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.CompanyJobDetailResponse
 import com.ciptakerjaarunika.kerjaloka.model.Test.JobShortQuestions
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.JobResponses
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage.Model.rJobDetailResponse
 import org.json.JSONObject
 import retrofit2.Call
@@ -584,7 +584,7 @@ class JobAPI {
 
 
     data class ApplyJobResponse(
-        val code: String,
+        val code: Int,
         val message: String
     )
 

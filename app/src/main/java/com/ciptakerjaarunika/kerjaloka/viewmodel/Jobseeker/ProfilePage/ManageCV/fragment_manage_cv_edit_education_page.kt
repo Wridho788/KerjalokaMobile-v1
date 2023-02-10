@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV
 
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
@@ -33,12 +35,16 @@ class fragment_manage_cv_edit_education_page(
 ) : Fragment(), iEditBasic, iManageExp,
     iUpdateMajor, iUpdateTitle {
     private lateinit var binding: FragmentManageCvEditEducationPageBinding
+    @RequiresApi(Build.VERSION_CODES.O)
     private var beginMonth: Int? =
         data?.educationBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt() }
+    @RequiresApi(Build.VERSION_CODES.O)
     private var endedMonth: Int? =
         data?.educationEndedAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt() }
+    @RequiresApi(Build.VERSION_CODES.O)
     private var beginYear: Int? =
         data?.educationBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "yyyy").toInt() }
+    @RequiresApi(Build.VERSION_CODES.O)
     private var endedYear: Int? =
         data?.educationEndedAt?.let { DateUtils().GetDateValueWithFormat(it, "yyyy").toInt() }
     private var locations: List<LocationFilter> = listOf()
@@ -65,6 +71,7 @@ class fragment_manage_cv_edit_education_page(
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

@@ -50,7 +50,7 @@ class Application(
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         Glide.with(context)
-            .load(config().portAddress + "/photo/Profile/" + data[position].job.company.logo)
+            .load(config().portAddress + "photo/Profile/" + data[position].job.company.logo)
             .into(viewHolder.CompanyLogo)
         viewHolder.Jobposition.text = data[position].job.jobPosition
         viewHolder.CompanyName.text = data[position].job.company.companyName

@@ -109,6 +109,8 @@
                     android:backgroundTint="@color/light_500"
                     android:clickable="true"
                     android:elevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/gray_400"
                     app:cardCornerRadius="50dp"
                     app:cardElevation="0dp">
 
@@ -136,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins"
-                android:text="Kami akan mengirimkan kode OTP ke email kamu."
+                android:text="Kami akan mengirimkan kode OTP ke Nomor Telepon kamu."
                 android:textColor="@color/trueGray_300"
                 android:textSize="10sp"/>
 

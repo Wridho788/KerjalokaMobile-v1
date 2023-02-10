@@ -126,7 +126,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                 company_name.text = it.data.companyName
                 company_phone.text = it.data.phone
                 Glide.with(this)
-                    .load(config().portAddress + "/photo/Profile/" + it.data.logo)
+                    .load(config().portAddress + "photo/Profile/" + it.data.logo)
                     .fitCenter().into(company_logo)
                 company_about.text = it.data.companyDescription
                 company_location.text = "${it.data.location.city}, ${it.data.location.province}"

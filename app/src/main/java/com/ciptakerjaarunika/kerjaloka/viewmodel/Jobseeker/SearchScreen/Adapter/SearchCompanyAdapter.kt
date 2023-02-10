@@ -52,7 +52,7 @@ class SearchCompanyAdapter(
         holder.cardCompany.setOnClickListener { onFragmentTransactionListCompany.onFragmentCompanyDetailsClick(currentItem.companyNo)
         }
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.logo).fitCenter()
             .into(holder.logo)
     }
 

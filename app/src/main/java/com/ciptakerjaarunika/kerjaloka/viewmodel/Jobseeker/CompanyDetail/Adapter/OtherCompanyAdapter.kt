@@ -48,7 +48,7 @@ class OtherCompanyAdapter(
         holder.field.text = currentItem.field
         holder.location.text = currentItem.location.city + ", " + currentItem.location.province
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.logo).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.logo).fitCenter()
             .into(holder.logo)
 
         holder.cardCompanyBrowse.setOnClickListener {

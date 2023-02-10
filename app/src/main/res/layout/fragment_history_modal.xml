@@ -8,7 +8,6 @@
     android:paddingBottom="50dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-
     <ImageView
         android:layout_width="70dp"
         android:id="@+id/btn_bottom_sheet"

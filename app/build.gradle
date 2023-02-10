@@ -6,7 +6,12 @@ plugins {
 
 android {
     signingConfigs {
-        release {}
+        release {
+            storeFile file('/Users/imac24teal/Documents/NewkeystoreKerjaloka.jks')
+            storePassword 'SuksesSelalu345'
+            keyAlias 'upload'
+            keyPassword 'SuksesSelalu345'
+        }
         debug {}
     }
     compileSdk 32
@@ -15,18 +20,18 @@ android {
         applicationId "com.ciptakerjaarunika.kerjaloka"
         minSdk 23
         targetSdk 32
-        versionCode 7
-        versionName "1.0.0.5"
-
+        versionCode 23
+        versionName "1.0.0.23"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.debug
+        signingConfig signingConfigs.release
+
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
         create("customDebugType") {
             debuggable = true

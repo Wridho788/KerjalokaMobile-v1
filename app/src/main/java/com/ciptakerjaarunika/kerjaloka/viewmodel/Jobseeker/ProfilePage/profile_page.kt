@@ -89,7 +89,7 @@ class profilepage(var Page: Int) : Fragment() {
                 binding.profile.username.text = user?.username
                 if (activity != null) {
                     Glide.with(context!!)
-                        .load(config().portAddress + "/photo/Profile/" + user?.photo).circleCrop()
+                        .load(config().portAddress + "photo/Profile/" + user?.photo).circleCrop()
                         .into(binding.profile.userPhoto)
                 }
             }

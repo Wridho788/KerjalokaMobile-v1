@@ -11,9 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="ScrollViewCount">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/spinnerPref"
@@ -43,13 +45,13 @@
                     android:paddingRight="16dp"
                     tools:ignore="UselessParent">
 
-                    <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_minat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:cardCornerRadius="10dp"
-                        app:strokeColor="@color/light_500"
+                        app:strokeColor="@color/gray_400"
                         app:strokeWidth="1dp">
 
                         <LinearLayout
@@ -131,13 +133,13 @@
                     android:paddingRight="16dp"
                     tools:ignore="UselessParent">
 
-                    <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_tipe_pekerjaan1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:cardCornerRadius="10dp"
-                        app:strokeColor="@color/light_500"
+                        app:strokeColor="@color/gray_400"
                         app:strokeWidth="1dp">
 
                         <LinearLayout
@@ -154,7 +156,7 @@
 
                                 <TextView
                                     android:id="@+id/tipe_pekerjaan"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/poppins_semibold"
@@ -215,13 +217,13 @@
                     android:paddingRight="16dp"
                     tools:ignore="UselessParent">
 
-                    <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.google.android.material.card.MaterialCardView
                         android:id="@+id/card_tipe_pekerjaan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:cardCornerRadius="10dp"
-                        app:strokeColor="@color/light_500"
+                        app:strokeColor="@color/gray_400"
                         app:strokeWidth="1dp">
 
                         <LinearLayout

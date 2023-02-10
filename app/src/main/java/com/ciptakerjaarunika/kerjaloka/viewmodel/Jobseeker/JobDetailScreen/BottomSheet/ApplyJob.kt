@@ -38,8 +38,6 @@ class ApplyJob(val job : rJobDetailModel?, var jobShortQuestions: List<JobShortQ
         val reasonApply = view?.findViewById<EditText>(R.id.reason_apply_txt)
         var thisModal = this
 
-
-
         if(job != null){
             var tests : List<ApplicationTests> = listOf()
             var shortAnswer : List<JobShortAnswer> = listOf()
@@ -64,7 +62,7 @@ class ApplyJob(val job : rJobDetailModel?, var jobShortQuestions: List<JobShortQ
                             var answer : String = ""
                             short.choice.forEach {
                                 choices += JobShortAnswerChoices(
-                                    short.shortQuestionNo,
+                                    it.shortQuestionChoiceNo.toLong(),
                                     it.isSelected,
                                     it.choice
                                 )
@@ -87,7 +85,7 @@ class ApplyJob(val job : rJobDetailModel?, var jobShortQuestions: List<JobShortQ
                                 shortQuestionAnswer = shortAnswer), context
                         ){
                             if (it != null) {
-                                if (it?.code == "210") {
+                                if (it.code == 210) {
                                     thisModal
                                     iJobDetail.RefreshData()
                                 } else {
@@ -115,7 +113,7 @@ class ApplyJob(val job : rJobDetailModel?, var jobShortQuestions: List<JobShortQ
                         listOf()), context
                     ){
                         if (it != null) {
-                            if (it?.code == "210") {
+                            if (it?.code == 210) {
                                 thisModal.dismiss()
                                 iJobDetail.RefreshData()
                             } else {

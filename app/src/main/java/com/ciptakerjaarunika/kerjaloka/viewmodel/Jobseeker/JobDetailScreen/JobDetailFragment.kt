@@ -113,6 +113,7 @@ class JobDetailFragment(
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun RefreshData() {
         val view = view
         if (view != null) {
@@ -149,7 +150,7 @@ class JobDetailFragment(
 
                     if (activity != null && !activity!!.isDestroyed) {
                         Glide.with(this)
-                            .load(config().portAddress + "/photo/Profile/" + it.data.company.logo)
+                            .load(config().portAddress + "photo/Profile/" + it.data.company.logo)
                             .fitCenter().into(company_logo)
                     }
 
@@ -206,6 +207,7 @@ class JobDetailFragment(
                         return dateFormat.parse(date)
                     }
 
+                    @RequiresApi(Build.VERSION_CODES.O)
                     fun dateDiff(): String {
                         val date1 = GetDateValue(time).time
                         val date2 = GetDateValue(now).time
@@ -251,7 +253,7 @@ class JobDetailFragment(
                     //                    adapter = RelatedJobAdapter(it.data.job, Context)
                     //                }
 
-                    val titleJob = it.data.jobPosition.toString()
+                    val titleJob = it.data.jobPosition
                     val link = it.data.link
                     val job = it.data
                     Log.d("link", link.toString())

@@ -12,18 +12,16 @@ import android.widget.TextView
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.fragment_company_jobs
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.company_package_list
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityCompanyDashboardBinding
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.fragment_company_jobs
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.company_package_list
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.InterviewPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.NotificationPage.CompanyNotification
-import com.github.mikephil.charting.charts.BarLineChartBase
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.*
@@ -113,7 +111,6 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             var count = 0
             Log.d("myjob", it.toString())
             if (it != null) {
-
                 it.data.forEach {
                     if (it.publish == true) {
                         count++
@@ -216,11 +213,11 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             .build()
     }
 
-    class DayAxisValueFormatter(private val chart: BarLineChartBase<*>) : ValueFormatter() {
-        override fun getFormattedValue(value: Float): String {
-            return "your text $value"
-        }
-    }
+//    class DayAxisValueFormatter(private val chart: BarLineChartBase<*>) : ValueFormatter() {
+//        override fun getFormattedValue(value: Float): String {
+//            return "your text $value"
+//        }
+//    }
 
     fun getLongAsDate(year: Int, month: Int, date: Int): Long {
         val calendar: Calendar = GregorianCalendar()
@@ -229,7 +226,6 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         calendar[Calendar.YEAR] = year
         return calendar.timeInMillis
     }
-
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         TODO("Not yet implemented")

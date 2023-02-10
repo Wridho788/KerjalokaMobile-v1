@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "695482327328-7hsa8me244n90drpevn2ek0qv1qa7q6i.apps.googleusercontent.com",
+          "client_id": "695482327328-017bbbpjc97uvgki4pt7jdv5e27b8k1t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ciptakerjaarunika.kerjaloka",
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "695482327328-mocnko1ohtlsa8b1dakk52r1rcgq8ruu.apps.googleusercontent.com",
+          "client_id": "695482327328-3kfq9607t31v34rib4luisntsjs55sr4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ciptakerjaarunika.kerjaloka",
@@ -30,19 +30,11 @@
           }
         },
         {
-          "client_id": "695482327328-pr9irannm6o3p9p4aqkg8fli0v8iqkc6.apps.googleusercontent.com",
+          "client_id": "695482327328-q139huv5547v1fij23t850oo31gjfkfe.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ciptakerjaarunika.kerjaloka",
-            "certificate_hash": "26e9992b5763668c8710288adb5856b24f2f5a27"
-          }
-        },
-        {
-          "client_id": "695482327328-rqfvnn5p0iadsrfnkrsscpetstecb1nl.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.ciptakerjaarunika.kerjaloka",
-            "certificate_hash": "6e2f6865a470b1bc74402afcf6f8618e7f2d08f7"
+            "certificate_hash": "60e61539fcb3294fd772c7d954def32b3c529829"
           }
         },
         {

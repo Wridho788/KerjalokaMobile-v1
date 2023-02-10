@@ -54,6 +54,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private var dateValue: Date? = if (data?.jobseeker?.dateOfBirth == null) null
     else DateUtils().GetDateValue(data.jobseeker.dateOfBirth)
+    @RequiresApi(Build.VERSION_CODES.O)
     private var date: String? = if (data?.jobseeker?.dateOfBirth == null) null
     else DateUtils().GetDateValueWithFormat(data.jobseeker.dateOfBirth, "yyyy-MM-dd HH:mm")
 
@@ -107,7 +108,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
             back()
         }
         Glide.with(context!!)
-            .load(config().portAddress + "/photo/Profile/" + data?.additionals?.photo)
+            .load(config().portAddress + "photo/Profile/" + data?.additionals?.photo)
             .into(binding.profileImg)
 
         binding.jsName.setText(data?.jobseeker?.jobseekerName)
@@ -273,6 +274,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
         return s.format(Date(cal.timeInMillis))
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateBasic() {
         var name = binding.jsName.text.toString()
         var noKtp = binding.jsKTP.text.toString()

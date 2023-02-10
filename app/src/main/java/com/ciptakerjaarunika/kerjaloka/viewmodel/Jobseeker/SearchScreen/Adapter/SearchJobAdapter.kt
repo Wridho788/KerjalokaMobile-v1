@@ -52,6 +52,7 @@ class SearchJobAdapter(
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
         view.layoutParams = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -64,7 +65,7 @@ class SearchJobAdapter(
         holder.jobCompany.text = currentItem.companyName
         holder.jobLocation.text = currentItem.jobLocations[0].location
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.photo).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.photo).fitCenter()
             .into(holder.logo)
         holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 

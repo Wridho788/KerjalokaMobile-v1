@@ -113,12 +113,12 @@
                         android:textColor="@color/dark_100"
                         android:textSize="14sp" />
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7sp"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/gray_400"
                         app:cardCornerRadius="@dimen/edittext_radius"
                         app:cardElevation="0dp">
                         <LinearLayout
@@ -140,7 +140,7 @@
                                 app:boxStrokeWidth="0dp"
                                 app:boxStrokeWidthFocused="0dp" />
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -159,14 +159,14 @@
                         android:textColor="@color/dark_100"
                         android:textSize="14sp" />
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7sp"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
                         app:cardCornerRadius="@dimen/edittext_radius"
-                        app:cardElevation="0dp">
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/gray_400"
+                        app:strokeWidth="1dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                                 app:boxStrokeWidth="0dp"
                                 app:boxStrokeWidthFocused="0dp" />
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -206,14 +206,14 @@
                         android:textColor="@color/dark_100"
                         android:textSize="14sp" />
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7sp"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
                         app:cardCornerRadius="@dimen/edittext_radius"
-                        app:cardElevation="0dp">
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/gray_400">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -235,7 +235,7 @@
                                 app:boxStrokeWidth="0dp"
                                 app:boxStrokeWidthFocused="0dp" />
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -254,14 +254,14 @@
                         android:textColor="@color/dark_100"
                         android:textSize="14sp" />
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7sp"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
                         app:cardCornerRadius="@dimen/edittext_radius"
-                        app:cardElevation="0dp">
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/gray_400"
+                        app:strokeWidth="1dp">
 
                         <EditText
                             android:id="@+id/jsAddress"
@@ -276,7 +276,7 @@
                             android:textSize="12sp"
                             app:boxStrokeWidth="0dp"
                             app:boxStrokeWidthFocused="0dp" />
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -295,14 +295,14 @@
                         android:textColor="@color/dark_100"
                         android:textSize="14sp" />
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7sp"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
                         app:cardCornerRadius="@dimen/edittext_radius"
-                        app:cardElevation="0dp">
+                        app:cardElevation="0dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="@color/gray_400">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -331,7 +331,7 @@
                                 android:tint="@color/trueGray_50"
                                 tools:ignore="UseAppTint" />
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -350,14 +350,14 @@
                         android:textColor="@color/dark_100"
                         android:textSize="14sp" />
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7sp"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
                         app:cardCornerRadius="@dimen/edittext_radius"
-                        app:cardElevation="0dp">
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/gray_400"
+                        app:strokeWidth="1dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -379,7 +379,7 @@
                                 app:boxStrokeWidth="0dp"
                                 app:boxStrokeWidthFocused="0dp" />
                         </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

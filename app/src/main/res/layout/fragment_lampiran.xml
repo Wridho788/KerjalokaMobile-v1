@@ -66,12 +66,14 @@
                 android:text="Judul Dokumen"
                 android:textColor="@color/black"
                 android:textSize="14dp" />
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 app:cardCornerRadius="20dp"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/gray_400">
                 <EditText
                     android:id="@+id/documentName"
                     android:layout_width="match_parent"
@@ -83,7 +85,7 @@
                     android:hint="Masukkan nama dokumen"
                     android:inputType="text"
                     android:textSize="10sp" />
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

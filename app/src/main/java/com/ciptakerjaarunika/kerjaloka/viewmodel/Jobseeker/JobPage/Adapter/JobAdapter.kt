@@ -3,11 +3,13 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage.Adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -71,6 +73,7 @@ class JobAdapter(
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = rJobList[position]
         holder.jobPosition.text = currentItem.jobPosition
@@ -122,7 +125,7 @@ class JobAdapter(
             holder.bookmarkedJob.visibility = GONE
         }
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.company.logo).fitCenter()
             .into(holder.logo)
         holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 

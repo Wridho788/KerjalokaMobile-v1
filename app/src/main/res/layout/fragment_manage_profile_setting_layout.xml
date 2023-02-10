@@ -8,19 +8,19 @@
     android:orientation="vertical"
     tools:context=".viewmodel.AkunPage.fragment_manage_profile_setting_layout">
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/spinnerLogin"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_marginVertical="15dp"-->
-<!--        android:gravity="center"-->
-<!--        android:visibility="gone">-->
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/spinnerLogin"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_marginVertical="15dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:visibility="gone">-->
 
-<!--        <ProgressBar-->
-<!--            style="?android:attr/progressBarStyleLarge"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content" />-->
-<!--    </LinearLayout>-->
+    <!--        <ProgressBar-->
+    <!--            style="?android:attr/progressBarStyleLarge"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content" />-->
+    <!--    </LinearLayout>-->
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/light_500"
+                    app:strokeColor="@color/gray_400"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -123,7 +123,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/light_500"
+                    app:strokeColor="@color/gray_400"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -196,7 +196,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/light_500"
+                    app:strokeColor="@color/gray_400"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -268,7 +268,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/light_500"
+                    app:strokeColor="@color/gray_400"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -341,7 +341,7 @@
                     android:clickable="false"
                     android:focusable="false"
                     app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/light_500"
+                    app:strokeColor="@color/gray_400"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -409,7 +409,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/light_500"
+                    app:strokeColor="@color/gray_400"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -426,7 +426,7 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/poppins_semibold"
@@ -437,7 +437,8 @@
                             <Switch
                                 android:id="@+id/switchDiscoverable"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                tools:ignore="UseSwitchCompatOrMaterialXml" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -477,7 +478,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     app:cardCornerRadius="10dp"
-                    app:strokeColor="@color/light_500"
+                    app:strokeColor="@color/gray_400"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -539,7 +540,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:cardCornerRadius="10dp"
-                app:strokeColor="@color/light_500"
+                app:strokeColor="@color/gray_400"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -598,7 +599,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:cardCornerRadius="10dp"
-                app:strokeColor="@color/light_500"
+                app:strokeColor="@color/gray_400"
                 app:strokeWidth="1dp">
 
                 <LinearLayout

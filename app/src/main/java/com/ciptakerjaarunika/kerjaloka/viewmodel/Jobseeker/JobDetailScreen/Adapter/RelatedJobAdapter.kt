@@ -20,13 +20,11 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
 class RelatedJobAdapter(
     private val jobList: List<RelatedModel>,
     private val onFragmentClickListener: IJobDetail
 ) :
     RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>() {
-
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
@@ -47,7 +45,6 @@ class RelatedJobAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-//        val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
         val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_job_related, parent, false)
 
         return ViewHolder(view)
@@ -97,7 +94,7 @@ class RelatedJobAdapter(
         }
         holder.relatedJobDate.text = dateDiff()
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.company.logo)
+            .load(config().portAddress + "photo/Profile/" + currentItem.company.logo)
             .into(holder.relatedlogo)
 
         holder.cardrelatedJob.setOnClickListener {
