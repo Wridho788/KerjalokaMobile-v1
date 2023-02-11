@@ -39,8 +39,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
 import com.instabug.apm.APM
-import com.instabug.library.Instabug
-import com.instabug.library.LogLevel
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -79,9 +77,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        APM.setColdAppLaunchEnabled(true)
-        APM.setFragmentSpansEnabled(true)
-        APM.setScreenLoadingEnabled(true)
+//        APM.setColdAppLaunchEnabled(true)
+//        APM.setFragmentSpansEnabled(true)
+//        APM.setScreenLoadingEnabled(true)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -94,10 +92,10 @@ class MainActivity : AppCompatActivity() {
             Log.d("analytic_image", FirebaseAnalytics.Param.CONTENT_TYPE)
         }
         // initiate instabug builder
-        Instabug.Builder(application, "0f18f4933ee2994d9e2d30309e7e213b").setSdkDebugLogsLevel(
-            LogLevel.VERBOSE)
-            .build()
-        Instabug.enable()
+//        Instabug.Builder(application, "0f18f4933ee2994d9e2d30309e7e213b").setSdkDebugLogsLevel(
+//            LogLevel.VERBOSE)
+//            .build()
+//        Instabug.enable()
 
         MainActivityTrace()
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
