@@ -52,6 +52,7 @@ class AkunPage : Fragment() {
         private var mAuth: FirebaseAuth? = null
         val Req_Code: Int = 123
         val firebaseAuth = FirebaseAuth.getInstance()
+        private var isLoading: Boolean = true
     }
 
     @AddTrace(name="onAkunPageTrace", enabled = true)
@@ -240,7 +241,10 @@ class AkunPage : Fragment() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
+            view?.findViewById<LinearLayout>(R.id.spinnerLogin)?.visibility = View.VISIBLE
             if (account != null) {
+                isLoading = false
+                view?.findViewById<LinearLayout>(R.id.spinnerLogin)?.visibility = View.GONE
                 UpdateUI(account)
             }
         } catch (e: ApiException) {

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -20,20 +21,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
-import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditBasicInfoBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery.DefaultGalleryMimes
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery.DefaultSystemGalleryConfig
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.EditGender
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.profilepage
-import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.qingmei2.rximagepicker_extension.utils.PathUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -54,6 +55,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private var dateValue: Date? = if (data?.jobseeker?.dateOfBirth == null) null
     else DateUtils().GetDateValue(data.jobseeker.dateOfBirth)
+
     @RequiresApi(Build.VERSION_CODES.O)
     private var date: String? = if (data?.jobseeker?.dateOfBirth == null) null
     else DateUtils().GetDateValueWithFormat(data.jobseeker.dateOfBirth, "yyyy-MM-dd HH:mm")
@@ -61,8 +63,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     private lateinit var defaultImagePicker: BasicImagePicker
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditBasicInfoBinding.inflate(layoutInflater)
         val view = binding.root
@@ -70,6 +71,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     }
 
 
+    @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -118,17 +120,13 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
 
         if (data?.jobseeker?.dateOfBirth != null) {
             binding.jsBirthDay.text = DateUtils().GetDateValueWithFormat(
-                data.jobseeker.dateOfBirth,
-                "dd MMMM yyyy"
+                data.jobseeker.dateOfBirth, "dd MMMM yyyy"
             )
         }
         binding.jsBirthDay.setOnClickListener {
 
-            val datePicker = MaterialDatePicker
-                .Builder
-                .datePicker()
-                .setTitleText("Pilih tanggal lahir")
-                .build()
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker().setTitleText("Pilih tanggal lahir").build()
 
             datePicker.show(requireActivity().supportFragmentManager, "materialDatePicker")
             datePicker.addOnPositiveButtonClickListener {
@@ -154,8 +152,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
             val sheet = EditGender(gender, this)
             activity?.let { it1 ->
                 sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
+                    it1.supportFragmentManager, "DemoBottomSheetFragment"
                 )
             }
         }
@@ -164,8 +161,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
             val sheet = EditCity(cityNo, locations, this)
             activity?.let { it1 ->
                 sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
+                    it1.supportFragmentManager, "DemoBottomSheetFragment"
                 )
             }
         }
@@ -191,17 +187,14 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun pickGallery() {
         context?.let {
-            defaultImagePicker
-                .openGallery(
-                    it,
-                    DefaultSystemGalleryConfig.instance(
+            defaultImagePicker.openGallery(
+                    it, DefaultSystemGalleryConfig.instance(
                         // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
                         // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
                         // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
                         mimesType = DefaultGalleryMimes.customTypes("image/*") // multiType
                     )
-                )
-                .subscribe { result -> onPickUriSuccess(result.uri) }
+                ).subscribe { result -> onPickUriSuccess(result.uri) }
         }
     }
 
@@ -248,6 +241,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
         calendar[Calendar.YEAR] = year
         return calendar.timeInMillis
     }
+
     override fun updateGender(value: Char) {
         this.gender = value
         binding.jsGender.text = if (gender == 'M') "Laki-laki" else "Perempuan"
@@ -274,6 +268,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
         return s.format(Date(cal.timeInMillis))
     }
 
+    @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateBasic() {
         var name = binding.jsName.text.toString()
@@ -290,38 +285,30 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
                 .show()
         } else if (datePicker >= validateyear.toString()) {
             Toast.makeText(
-                context,
-                "Mohon masukkan tanggal lahir yang valid (Min 17 thn)",
-                Toast.LENGTH_SHORT
+                context, "Mohon masukkan tanggal lahir yang valid (Min 17 thn)", Toast.LENGTH_SHORT
             ).show()
         } else if (noKtp.length == 16) {
             ManageProfileAPI().EditBasicInfo(
                 ManageProfileAPI.editBasicInfoRequest(
-                    name,
-                    noKtp,
-                    gender,
-                    binding.jsAddress.text.toString(),
-                    date,
-                    cityNo
+                    name, noKtp, gender, binding.jsAddress.text.toString(), date, cityNo
                 ), context
             ) {
                 if (it != null) {
-                    Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
                     back()
                 } else {
                     Toast.makeText(
-                        activity,
-                        "Terjadi kesalahan yang tidak diketahui",
-                        Toast.LENGTH_SHORT
+                        activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT
                     ).show()
                 }
             }
+        } else if (noKtp.length == 0) {
+            Toast.makeText(activity, "Mohon masukkan nilai KTP asli", Toast.LENGTH_SHORT).show()
+        } else if (noKtp.length < 16) {
+            Toast.makeText(activity, "Mohon masukkan nilai KTP asli", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(
-                activity,
-                "Terjadi kesalahan yang tidak diketahui",
-                Toast.LENGTH_SHORT
+                activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT
             ).show()
         }
     }

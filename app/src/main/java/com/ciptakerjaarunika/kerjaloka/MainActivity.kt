@@ -38,7 +38,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
-import com.instabug.apm.APM
+//import com.instabug.apm.APM
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        APM.endAppLaunch();
+//        APM.endAppLaunch();
     }
     private var MY_CAMERA_REQUEST_CODE = 100
 

@@ -2,6 +2,7 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +39,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
-import com.instabug.apm.APM
+//import com.instabug.apm.APM
 
 class JobPage : Fragment(), IJobPage {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -70,7 +72,7 @@ class JobPage : Fragment(), IJobPage {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         jobPageTrace()
-        APM.setFragmentSpansEnabled(true)
+//        APM.setFragmentSpansEnabled(true)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -203,6 +205,23 @@ class JobPage : Fragment(), IJobPage {
 
     fun getNearJob() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
+        if (ActivityCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
             if (it != null) {
                 if (!it.latitude.toString().isNullOrEmpty() && !it.longitude.toString()
