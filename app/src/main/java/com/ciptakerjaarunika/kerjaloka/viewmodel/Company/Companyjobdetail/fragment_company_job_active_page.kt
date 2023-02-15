@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -19,14 +20,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.JobSQListAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.JobTestListAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.DataActiveJob
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.CompanyJobAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.JobSQListAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.JobTestListAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.DataActiveJob
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
@@ -43,6 +44,7 @@ class fragment_company_job_active_page : Fragment() {
     private var layoutManager1: RecyclerView.LayoutManager? = null
     private var sqadapter: RecyclerView.Adapter<JobSQListAdapter.ViewHolder>? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
         JobAPI().getJob(context) {
@@ -55,11 +57,13 @@ class fragment_company_job_active_page : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         UpdateUI()
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     fun UpdateUI() {
         val jobTitle = view?.findViewById<TextView>(R.id.company_job_title)
@@ -128,7 +132,7 @@ class fragment_company_job_active_page : Fragment() {
             val output = formatter.format(localDateTime)
             val outputExpired = formatter.format(localDateTimeExpired)
 
-            jobInput?.text = "Diubah Pada : " + output.toString()
+            jobInput?.text = "Diubah Pada : $output"
             jobExpired?.text = "Kadaluarsa : " + outputExpired?.toString()
 
             jobTitle?.text = jobData?.jobPosition
@@ -224,7 +228,6 @@ class fragment_company_job_active_page : Fragment() {
             }
 
             val jobNo = jobData?.jobNo
-//            Log.d("jobcity", jobData?.jobCity.toString())
             draftJob?.setOnClickListener {
                 JobAPI().DraftJob(context, jobNo!!) {
                     if (it != null) {

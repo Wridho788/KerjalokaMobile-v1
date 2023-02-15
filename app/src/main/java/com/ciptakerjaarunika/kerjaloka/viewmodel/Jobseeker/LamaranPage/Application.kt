@@ -56,9 +56,9 @@ class Application(
         viewHolder.CompanyName.text = data[position].job.company.companyName
         viewHolder.CompanyAddress.text =
             "${data[position].job.company.location.city}, ${data[position].job.company.location.province}"
-//        if (data[position].tests != null) {
-//            viewHolder.TestTaken.text = data[position].tests.filter { item -> item.testResult != null }.size.toString()
-//        } else viewHolder.TestTaken.text = ""
+        if (data[position].tests != null) {
+            viewHolder.TestTaken.text = data[position].tests.filter { item -> item.testResult != null }.size.toString()
+        } else viewHolder.TestTaken.text = ""
         viewHolder.TotalTest.text = data[position].tests.size.toString()
         if (data[position].tests.isEmpty()) {
             viewHolder.TestContainer.visibility = GONE

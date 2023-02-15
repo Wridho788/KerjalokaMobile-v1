@@ -149,7 +149,7 @@ class JobAPI {
                     call: Call<myApplicationsResponse>,
                     response: Response<myApplicationsResponse>
                 ) {
-                    onResult(response.body())
+                     onResult(response.body())
                 }
             }
         )

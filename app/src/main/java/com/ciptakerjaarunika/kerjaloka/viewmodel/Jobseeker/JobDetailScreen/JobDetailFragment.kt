@@ -93,6 +93,7 @@ class JobDetailFragment(
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
@@ -146,7 +147,6 @@ class JobDetailFragment(
                     view.findViewById<NestedScrollView>(R.id.job_detail_container).visibility =
                         VISIBLE
                     jobBookmark = it.data.bookmarked == true
-
 
                     if (activity != null && !activity!!.isDestroyed) {
                         Glide.with(this)
