@@ -1,6 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage
 
-
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
@@ -22,14 +21,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
-import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageLampiranPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
 import com.ciptakerjaarunika.kerjaloka.enum.VerifyStatus
+import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery.DefaultGalleryMimes
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery.DefaultSystemGalleryConfig
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.DocumentAdapter
@@ -123,8 +122,6 @@ class manage_lampiran : Fragment(), iRefreshData {
                         }
                     }
                 }
-
-
             }
         }
     }
@@ -150,12 +147,14 @@ class manage_lampiran : Fragment(), iRefreshData {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRxImagePicker()
         getData()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getData() {
         ProfileAPI().GetJobseekerDocuments(context) { documents ->
             binding.editLampiranPelamar.visibility = VISIBLE
@@ -169,18 +168,11 @@ class manage_lampiran : Fragment(), iRefreshData {
             recyclerView?.adapter = documents?.data?.let { DocumentAdapter(it) }
         }
 
-
-
         ProfileAPI().GetJobseekerResume(context) { resume ->
             if (activity != null) {
                 binding.spinnerResume.visibility = GONE
                 binding.uploadVideoResumeBtn.visibility = VISIBLE
                 binding.uploadVideoResumeBtn.setOnClickListener {
-//                    var intent = Intent(Intent.ACTION_GET_CONTENT);
-//                    intent.setType("*/*");
-//                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-//                    val requestIntent = Intent.createChooser(intent, "Choose a Video");
-//                    activityResultLauncher.launch(requestIntent)
                     pickGallery()
                 }
 
@@ -205,7 +197,6 @@ class manage_lampiran : Fragment(), iRefreshData {
         }
 
         ProfileAPI().GetJobseekerDocumentVaccine(context) { vaccine ->
-
             if (activity != null) {
                 binding.spinnerVac.visibility = GONE
                 binding.vaccineContainer.visibility = VISIBLE
@@ -261,6 +252,7 @@ class manage_lampiran : Fragment(), iRefreshData {
         fragmentTransaction?.commit()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun refresh() {
         getData()
     }

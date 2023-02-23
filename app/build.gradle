@@ -52,14 +52,14 @@ android {
     }
 }
 apply plugin: 'com.google.gms.google-services'
-//apply plugin: 'instabug-apm'
+apply plugin: 'instabug-apm'
 
-//Instabug {
-//    APM {
-//        fragmentSpansEnabled true
-//        debugEnabled true
-//    }
-//}
+Instabug {
+    APM {
+        fragmentSpansEnabled true
+        debugEnabled true
+    }
+}
 
 dependencies {
     implementation 'me.relex:circleindicator:2.1.6'
@@ -145,6 +145,6 @@ dependencies {
     // Add the dependency for the Performance Monitoring library
     implementation 'com.google.firebase:firebase-perf-ktx:20.3.0'
     //Instabug Dependency
-//    implementation 'com.instabug.library:instabug:11.7.0'
-//    implementation "com.instabug.library:instabug-apm:11.7.0"
+    implementation 'com.instabug.library:instabug:11.7.0'
+    implementation "com.instabug.library:instabug-apm:11.7.0"
 }

@@ -1,4 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +9,10 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Listener.ShowModal
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Listener.ShowModal
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.DataX
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -48,6 +49,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
         return ViewHolder(view)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = ratingData[position]
         holder.creator.text = currentItem.userFullName
@@ -55,7 +57,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
         holder.ratBar.rating = currentItem.rating.toFloat()
 
         Glide.with(context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.raterPhoto).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.raterPhoto).fitCenter()
             .into(holder.logo)
 
         if(currentItem.approved) {

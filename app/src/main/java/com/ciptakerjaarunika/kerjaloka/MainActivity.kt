@@ -38,23 +38,19 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
-//import com.instabug.apm.APM
+import com.instabug.apm.APM
+import com.instabug.library.Instabug
+import com.instabug.library.LogLevel
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
 import com.microsoft.signalr.HubConnectionState
-import java.lang.Boolean
-import kotlin.Array
-import kotlin.Int
-import kotlin.IntArray
 import kotlin.String
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var hubConnection: HubConnection
     private lateinit var firebaseAnalytics: FirebaseAnalytics
-
     @AddTrace(name = "onCreateTrace", enabled = true)
     class ItemCache {
         fun fetch(name: String): Item? {
@@ -77,9 +73,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        APM.setColdAppLaunchEnabled(true)
-//        APM.setFragmentSpansEnabled(true)
-//        APM.setScreenLoadingEnabled(true)
+        APM.setColdAppLaunchEnabled(true)
+        APM.setFragmentSpansEnabled(true)
+        APM.setScreenLoadingEnabled(true)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -92,10 +88,10 @@ class MainActivity : AppCompatActivity() {
             Log.d("analytic_image", FirebaseAnalytics.Param.CONTENT_TYPE)
         }
         // initiate instabug builder
-//        Instabug.Builder(application, "0f18f4933ee2994d9e2d30309e7e213b").setSdkDebugLogsLevel(
-//            LogLevel.VERBOSE)
-//            .build()
-//        Instabug.enable()
+        Instabug.Builder(application, "0f18f4933ee2994d9e2d30309e7e213b").setSdkDebugLogsLevel(
+            LogLevel.VERBOSE
+        ).build()
+        Instabug.enable()
 
         MainActivityTrace()
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -116,8 +112,7 @@ class MainActivity : AppCompatActivity() {
                 hubConnection.start()
 
                 hubConnection.on(
-                    "connected",
-                    { res ->
+                    "connected", { res ->
                         Log.d("Connected Res", res)
                         val userNo = SessionManager(context).user!!.userNo.toString()
                         hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
@@ -125,26 +120,20 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 hubConnection.on(
-                    "getmessage",
-                    { res: chat_data ->
+                    "getmessage", { res: chat_data ->
                         Log.d("getmessage Res", res.toString())
                         SessionManager(context).chatData = res
-                    },
-                    chat_data::class.java
+                    }, chat_data::class.java
                 )
                 hubConnection.on(
-                    "incomingCall",
-                    { data ->
+                    "incomingCall", { data ->
                         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
                         ft.replace(
-                            R.id.fragment_container,
-                            IncomingCallPage(data),
-                            "IncomingCall"
+                            R.id.fragment_container, IncomingCallPage(data), "IncomingCall"
                         )
                         ft.addToBackStack("Main")
                         ft.commit()
-                    },
-                    incoming_call_model::class.java
+                    }, incoming_call_model::class.java
                 )
             }
 
@@ -152,8 +141,7 @@ class MainActivity : AppCompatActivity() {
                 val imm =
                     baseContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 if (newView !is EditText) imm.hideSoftInputFromWindow(
-                    (oldView ?: newView)?.windowToken
-                        ?: window.attributes.token,
+                    (oldView ?: newView)?.windowToken ?: window.attributes.token,
                     0 // or HIDE_IMPLICIT_ONLY
                 )
             }
@@ -212,39 +200,37 @@ class MainActivity : AppCompatActivity() {
         editor.commit()
 
         val firstRun = settings.getBoolean("firstRun", true)
-        Log.d("TAG1", "firstRun: " + Boolean.valueOf(firstRun).toString())
-
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
-//        APM.endAppLaunch();
-    }
     private var MY_CAMERA_REQUEST_CODE = 100
-
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         supportFragmentManager.fragments.find { a ->
-            a.id == requestCode - baseContext.resources.getInteger(R.integer.LampiranUploadFile) ||
-                    a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatPickCamera) ||
-                    a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatUploadFile) ||
-                    a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 1) ||
-                    a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 2) ||
-                    a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 3)
+            a.id == requestCode - baseContext.resources.getInteger(R.integer.LampiranUploadFile) || a.id == requestCode - baseContext.resources.getInteger(
+                R.integer.ChatPickCamera
+            ) || a.id == requestCode - baseContext.resources.getInteger(R.integer.ChatUploadFile) || a.id == requestCode - (baseContext.resources.getInteger(
+                R.integer.UploadVaccine
+            ) + 1) || a.id == requestCode - (baseContext.resources.getInteger(R.integer.UploadVaccine) + 2) || a.id == requestCode - (baseContext.resources.getInteger(
+                R.integer.UploadVaccine
+            ) + 3)
         }?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onBackPressed() {
+        val a = Intent(Intent.ACTION_MAIN)
+        a.addCategory(Intent.CATEGORY_HOME)
+        a.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(a)
     }
 
     open fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container, fragment)
-        fragmentTransaction.commitAllowingStateLoss();
-//        fragmentTransaction.commit()
+        fragmentTransaction.commitAllowingStateLoss()
     }
 
     open fun showLogin(Goto: Fragment, nameFragment: String) {

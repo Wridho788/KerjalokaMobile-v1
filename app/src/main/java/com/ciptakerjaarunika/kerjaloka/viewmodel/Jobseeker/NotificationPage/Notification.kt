@@ -82,12 +82,11 @@ class Notification : AppCompatActivity() {
     }
 
     private fun reload() {
-        UsersAPI().GetNotification(this) {
+        UsersAPI().GetNotification(this) { it ->
             if(it?.data != null) {
                 binding.spinner.visibility = GONE
                 binding.notifContainer.visibility = VISIBLE
-                val list = it?.data?.sortedByDescending { it.createdOn }
-//            val list = dummyData(0, 20)
+                val list = it.data.sortedByDescending { it.createdOn }
                 binding.notifContainer.post {
                     adapter.reload(list as MutableList<CompanyNotificationModel>)
                 }
@@ -100,7 +99,6 @@ class Notification : AppCompatActivity() {
             binding.spinner.visibility = GONE
             binding.notifContainer.visibility = VISIBLE
             val list = it?.data?.sortedByDescending { it.createdOn }
-//            val list = dummyData(adapter.itemCount, 15)
             binding.notifContainer.post {
                 adapter.loadMore(list as MutableList<CompanyNotificationModel>)
             }

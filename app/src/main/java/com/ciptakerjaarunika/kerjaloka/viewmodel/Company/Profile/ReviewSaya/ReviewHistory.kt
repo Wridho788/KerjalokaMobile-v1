@@ -52,13 +52,6 @@ class ReviewHistory : Fragment(), iRefreshData {
         return view
     }
 
-//    private fun replaceFragment(fragment: Fragment) {
-//        val fragmentTransaction = parentFragmentManager.beginTransaction()
-//        fragmentTransaction.replace(R.id.fragment_container, fragment)
-//        fragmentTransaction.addToBackStack(null)
-//        fragmentTransaction.commit()
-//    }
-
     private fun refreshData() {
         UsersAPI().CompSendedReview(SortByNewest = false, context) {
             binding.spinner.visibility = GONE

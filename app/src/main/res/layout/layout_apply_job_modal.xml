@@ -27,7 +27,7 @@
         android:paddingTop="8dp"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="16dp">
+        android:textSize="16sp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,11 +40,11 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
                 android:layout_marginTop="8dp"
-                android:paddingBottom="16dp"
+                android:paddingBottom="16sp"
                 android:text="Alasan Melamar"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 />
             <View
                 android:layout_width="match_parent"
@@ -60,14 +60,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mengapa tertarik dengan pekerjaan ini"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="16sp"
                 android:textSize="14sp"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/black"/>
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="16sp"
                 android:padding="8dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/reason_apply_txt"
@@ -79,14 +79,14 @@
                 android:scrollbars="vertical"
                 android:fontFamily="@font/poppins"
                 android:hint="Masukkan alasan Anda melamar"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/short_question_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="16sp"
                 android:visibility="gone"
                 android:orientation="vertical">
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pertanyaan {n}"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/black"
                     android:layout_marginVertical="10dp"/>
@@ -103,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Soal Pertanyaan"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:fontFamily="@font/poppins"
                     android:layout_marginVertical="5dp"
                     android:textColor="@color/black"/>
@@ -111,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Jawaban Kamu :"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:layout_marginVertical="10dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:textColor="@color/black"/>
@@ -134,7 +134,7 @@
                     android:fontFamily="@font/poppins"
                     android:scrollbars="vertical"
                     android:hint="Masukkan alasan Anda melamar"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -150,10 +150,10 @@
         android:backgroundTint="@color/danger_500"
         android:fontFamily="@font/poppins_bold"
         android:text="Lamar"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="16sp"
         android:layout_marginVertical="15dp"
         android:textAllCaps="false"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:cornerRadius="100dp"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="346dp" />

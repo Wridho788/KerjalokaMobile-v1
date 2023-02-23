@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSalaryExpectationBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 
 
 class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: iRefreshData) :
@@ -52,15 +52,15 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: i
                 if (binding.salaryExpectationTxt.text.toString().toLong() < 10000000000) {
                     salary = binding.salaryExpectationTxt.text.toString()
                 } else if (binding.salaryExpectationTxt.text.toString().isNullOrEmpty()) {
-                    Toast.makeText(context, "Silahkan Isi Ekspektasi Gaji", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Silahkan Isi Ekspektasi Gaji", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         })
 
         binding.saveBtn.setOnClickListener {
-            if (!salary.toString().isNullOrEmpty()
-            ) {
-                ManageProfileAPI().EditSalaryExpectation(salary.toInt(), context) {
+            if (salary.length === 0) {
+                ManageProfileAPI().EditSalaryExpectation(0, context) {
                     if (it != null) {
                         Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
                             .show()
@@ -74,7 +74,19 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: i
                     }
                 }
             } else {
-                Toast.makeText(context, "Silahkan Isi Ekspektasi Gaji", Toast.LENGTH_SHORT).show()
+                ManageProfileAPI().EditSalaryExpectation(salary.toInt(), context) {
+                    if (it != null) {
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT)
+                            .show()
+                        back()
+                    } else {
+                        Toast.makeText(
+                            activity,
+                            "Terjadi kesalahan yang tidak diketahui",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
         }
     }

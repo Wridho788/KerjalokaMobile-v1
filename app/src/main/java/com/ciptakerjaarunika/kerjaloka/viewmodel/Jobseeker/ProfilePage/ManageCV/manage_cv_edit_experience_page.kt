@@ -1,77 +1,75 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditExperiencePageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Month
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerExperienceRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
+import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.ChooseMonth
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.ChooseYear
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.EditCity
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.EditExpTypeJob
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iEditBasic
-import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.time.LocalDateTime
 import java.util.*
 
-
 class manage_cv_edit_experience_page(
-    var data: JobseekerExperienceRequest?,
-    val iRefreshData: iRefreshData
+    var data: JobseekerExperienceRequest?, val iRefreshData: iRefreshData
 ) : Fragment(), iEditBasic, iManageExp {
     private lateinit var binding: FragmentManageCvEditExperiencePageBinding
     private var locations: List<LocationFilter> = listOf()
     private var jobTypes: List<JobTypeFilter> = listOf()
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private var beginMonth: Int? =
         data?.experienceBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt() }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private var endedMonth: Int? =
         data?.experienceEndedAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt() }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+
     private var beginYear: Int? =
         data?.experienceBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "yyyy").toInt() }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+
     private var endedYear: Int? =
         data?.experienceEndedAt?.let { DateUtils().GetDateValueWithFormat(it, "yyyy").toInt() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentManageCvEditExperiencePageBinding.inflate(layoutInflater)
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (data == null) {
             data = JobseekerExperienceRequest(
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null, null, null,
-                null
+                null, null, null, null, null, null, null, null, null, null, null
             )
             binding.mainToolbar.title = "Tambah pengalaman"
         }
@@ -84,7 +82,7 @@ class manage_cv_edit_experience_page(
 
         var timeNow =
             DateUtils().GetDateValueWithFormat(LocalDateTime.now().toString(), "yyyy-MM-dd HH:mm")
-        Log.d("timeNow", timeNow.toString())
+//        Log.d("timeNow", timeNow.toString())
         binding.masukkanJlhGaji.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
@@ -93,11 +91,10 @@ class manage_cv_edit_experience_page(
 
                 try {
                     var originalString: String = arg0.toString()
-                    val longval: Long
                     if (originalString.contains(",")) {
                         originalString = originalString.replace(",".toRegex(), "")
                     }
-                    longval = originalString.toLong()
+                    val longval: Long = originalString.toLong()
                     val formatter: DecimalFormat =
                         NumberFormat.getInstance(Locale.US) as DecimalFormat
                     formatter.applyPattern("#,###,###,###")
@@ -105,7 +102,7 @@ class manage_cv_edit_experience_page(
 
                     //setting text after format to EditText
                     binding.masukkanJlhGaji.setText(formattedString)
-                    binding.masukkanJlhGaji.setSelection(binding.masukkanJlhGaji.getText().length)
+                    binding.masukkanJlhGaji.setSelection(binding.masukkanJlhGaji.text.length)
                 } catch (nfe: NumberFormatException) {
                     nfe.printStackTrace()
                 }
@@ -124,8 +121,7 @@ class manage_cv_edit_experience_page(
                     val sheet = EditExpTypeJob(data?.jobTypeNo, jobTypes, this)
                     activity?.let { it1 ->
                         sheet.show(
-                            it1.supportFragmentManager,
-                            "DemoBottomSheetFragment"
+                            it1.supportFragmentManager, "DemoBottomSheetFragment"
                         )
                     }
                 }
@@ -151,8 +147,7 @@ class manage_cv_edit_experience_page(
             val sheet = EditCity(data?.experienceCityNo, locations, this)
             activity?.let { it1 ->
                 sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
+                    it1.supportFragmentManager, "DemoBottomSheetFragment"
                 )
             }
         }
@@ -161,8 +156,7 @@ class manage_cv_edit_experience_page(
             val sheet = ChooseMonth(if (beginMonth != null) beginMonth else null, "begin", this)
             activity?.let { it1 ->
                 sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
+                    it1.supportFragmentManager, "DemoBottomSheetFragment"
                 )
             }
         }
@@ -170,8 +164,7 @@ class manage_cv_edit_experience_page(
             val sheet = ChooseMonth(if (endedMonth != null) endedMonth else null, "ended", this)
             activity?.let { it1 ->
                 sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
+                    it1.supportFragmentManager, "DemoBottomSheetFragment"
                 )
             }
         }
@@ -180,8 +173,7 @@ class manage_cv_edit_experience_page(
             val sheet = ChooseYear("begin", if (beginYear != null) beginYear else null, this)
             activity?.let { it1 ->
                 sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
+                    it1.supportFragmentManager, "DemoBottomSheetFragment"
                 )
             }
         }
@@ -189,8 +181,7 @@ class manage_cv_edit_experience_page(
             val sheet = ChooseYear("ended", if (endedYear != null) endedYear else null, this)
             activity?.let { it1 ->
                 sheet.show(
-                    it1.supportFragmentManager,
-                    "DemoBottomSheetFragment"
+                    it1.supportFragmentManager, "DemoBottomSheetFragment"
                 )
             }
         }
@@ -217,18 +208,23 @@ class manage_cv_edit_experience_page(
             } else if (endedYear == null && endedMonth != null) {
                 showError("Tahun Mulai tidak boleh kosong")
             } else if (endedMonth != null && Date(endedYear!!, endedMonth!!, 1) < Date(
-                    beginYear!!,
-                    beginMonth!!,
-                    1
+                    beginYear!!, beginMonth!!, 1
                 )
             ) {
                 showError("Tanggal berakhir harus lebih besar dari tanggal mulai")
             } else if (beginYear != null && beginYear.toString() >= timeNow) {
-                showError( "Tanggal tidak boleh melebihi tanggal hari ini")
-                Log.d("beginyear ${beginYear != null && beginYear.toString() >= timeNow}", beginYear.toString())
+                showError("Tanggal tidak boleh melebihi tanggal hari ini")
+//                Log.d(
+//                    "beginyear ${beginYear != null && beginYear.toString() >= timeNow}",
+//                    beginYear.toString()
+//                )
             } else if (binding.checkStillWorking.isChecked) {
-                binding.pilihBulanBerakhir.setAllowClickWhenDisabled(true)
-                binding.pilihBulanBerakhir.setAllowClickWhenDisabled(true)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    binding.pilihBulanBerakhir.setAllowClickWhenDisabled(true)
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    binding.pilihBulanBerakhir.setAllowClickWhenDisabled(true)
+                }
                 endedMonth = null
                 endedYear = null
                 var beginAt = "${beginYear}-${String.format("%02d", beginMonth)}-01T00:00:00"
@@ -240,35 +236,30 @@ class manage_cv_edit_experience_page(
                         binding.pilihPerusahaan.text.toString(),
                         null,
                         binding.masukkanDeskrPekerjaan.text.toString(),
-                        if(endedMonth == null) null else DateUtils().GetDateValueWithFormat(null, "yyyy-MM-dd HH:mm"),
+                        if (endedMonth == null) null else DateUtils().GetDateValueWithFormat(
+                            null, "yyyy-MM-dd HH:mm"
+                        ),
                         DateUtils().GetDateValueWithFormat(beginAt, "yyyy-MM-dd HH:mm"),
                         data!!.jobTypeNo,
                         binding.pilihPosisi.text.toString(),
-                        if(binding.masukkanJlhGaji.text.isNullOrEmpty()) null else binding.masukkanJlhGaji.text.toString().toBigDecimal()
-                    ),
-                    context
-                ){
+                        if (binding.masukkanJlhGaji.text.isNullOrEmpty()) null else binding.masukkanJlhGaji.text.toString()
+                            .toBigDecimal()
+                    ), context
+                ) {
                     if (it != null) {
-                        if(it.code.toString() == "210"){
-                            showError(if(data!!.jobseekerExperienceNo != null) "Berhasil mengubah data" else "Berhasil menambah data")
+                        if (it.code.toString() == "210") {
+                            showError(if (data!!.jobseekerExperienceNo != null) "Berhasil mengubah data" else "Berhasil menambah data")
                             back()
-                        }
-                        else{
+                        } else {
                             showError(it.message)
                         }
-                    }
-                    else{
+                    } else {
                         showError("Terjadi kesalahan yang tidak diketahui")
                     }
                 }
-            }
-
-            else if (endedMonth != null && endedMonth.toString() >= timeNow) {
+            } else if (endedMonth != null && endedMonth.toString() >= timeNow) {
                 showError("Tanggal tidak boleh melebihi tanggal hari ini")
             }
-//            else if(binding.masukkanJlhGaji.text.isNullOrEmpty()){
-//                showError("Gaji tidak boleh kosong")
-//            }
             else {
                 var endedAt = "${endedYear}-${String.format("%02d", endedMonth)}-01T00:00:00"
                 var beginAt = "${beginYear}-${String.format("%02d", beginMonth)}-01T00:00:00"
@@ -281,24 +272,24 @@ class manage_cv_edit_experience_page(
                         binding.pilihPerusahaan.text.toString(),
                         null,
                         binding.masukkanDeskrPekerjaan.text.toString(),
-                        if(endedMonth == null) null else DateUtils().GetDateValueWithFormat(endedAt, "yyyy-MM-dd HH:mm"),
+                        if (endedMonth == null) null else DateUtils().GetDateValueWithFormat(
+                            endedAt, "yyyy-MM-dd HH:mm"
+                        ),
                         DateUtils().GetDateValueWithFormat(beginAt, "yyyy-MM-dd HH:mm"),
                         data!!.jobTypeNo,
                         binding.pilihPosisi.text.toString(),
-                        if(binding.masukkanJlhGaji.text.isNullOrEmpty()) null else binding.masukkanJlhGaji.text.toString().toBigDecimal()
-                    ),
-                    context
-                ){
+                        if (binding.masukkanJlhGaji.text.isNullOrEmpty()) null else binding.masukkanJlhGaji.text.toString()
+                            .toBigDecimal()
+                    ), context
+                ) {
                     if (it != null) {
-                        if(it.code.toString() == "210"){
-                            showError(if(data!!.jobseekerExperienceNo != null) "Berhasil mengubah data" else "Berhasil menambah data")
+                        if (it.code.toString() == "210") {
+                            showError(if (data!!.jobseekerExperienceNo != null) "Berhasil mengubah data" else "Berhasil menambah data")
                             back()
-                        }
-                        else{
+                        } else {
                             showError(it.message)
                         }
-                    }
-                    else{
+                    } else {
                         showError("Terjadi kesalahan yang tidak diketahui")
                     }
                 }
@@ -324,16 +315,19 @@ class manage_cv_edit_experience_page(
         iRefreshData.refresh()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun updateCity(cityNo: Int?) {
         if (cityNo != null) {
             this.data?.experienceCityNo = cityNo
         }
         var currentLocation = locations.find { loc -> loc.locationsNo == cityNo }
         if (currentLocation != null) {
-            binding.pilihLokasiPerusahaan.setText("${currentLocation.city}, ${currentLocation.province}")
+            binding.pilihLokasiPerusahaan.text =
+                "${currentLocation.city}, ${currentLocation.province}"
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun updateMonth(value: Int, type: String) {
         val monthTxt = Month.values().find { month -> month.value == value }?.description
         when (type) {
@@ -348,6 +342,7 @@ class manage_cv_edit_experience_page(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun updateYear(value: Int, type: String) {
         when (type) {
             "begin" -> {
