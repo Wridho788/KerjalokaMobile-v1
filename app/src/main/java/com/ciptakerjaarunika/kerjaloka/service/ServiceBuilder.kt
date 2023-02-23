@@ -16,14 +16,6 @@ class ServiceBuilder(context: Context?) {
     private var access_token: String = SessionManager(context).access_token.toString()
     private var body: RequestBody? = null
 
-//    constructor(url : String){
-//        this.url = url
-//    }
-//    constructor(url : String, sendData : RequestBody?){
-//        this.url = url
-//        this.body = sendData
-//    }
-
     private val clientGet = OkHttpClient.Builder().apply {
         addInterceptor(
             Interceptor { chain ->
@@ -55,8 +47,6 @@ class ServiceBuilder(context: Context?) {
             Interceptor { chain ->
                 val builder = chain.request().newBuilder()
                 builder.header("Authorization", access_token)
-//                Log.d("res", builder.toString())
-//                builder.method("POST", body)
                 return@Interceptor chain.proceed(builder.build())
             }
         )
@@ -70,8 +60,6 @@ class ServiceBuilder(context: Context?) {
             .addConverterFactory(GsonConverterFactory.create())
             .client(clientGet)
             .build()
-//        Log.d("Builder Client Get : ", clientGet.toString())
-
         return retrofit.create(service)
     }
 
@@ -92,16 +80,4 @@ class ServiceBuilder(context: Context?) {
             .build()
         return retrofit.create(service)
     }
-
-
-//    private var client = OkHttpClient.Builder().build()
-//    fun GET(): Response {
-//            val request = Request.Builder()
-//                .url(url)
-//                .addHeader("Authorization", access_token)
-//                .get()
-//                .build()
-//
-//        return client.newCall(request).execute();
-//    }
 }

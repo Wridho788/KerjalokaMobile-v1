@@ -20,23 +20,13 @@ import com.google.firebase.messaging.RemoteMessage
 
 class KerjalokaMessagingService() :FirebaseMessagingService() {
     private var playRingtone : MediaPlayer? = null;
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onMessageReceived(message: RemoteMessage) {
         if(message?.notification != null) {
             if (message.notification!!.title != "IncomingCall") {
-//                if(ActivityManager.RunningAppProcessInfo().importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND){
                     generateNotification(message.notification!!.title!!, message.notification!!.body!!, false)
-//                }
             }
-//            else{
-//                if(ActivityManager.RunningAppProcessInfo().importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND){
-//                    generateNotification(message.notification!!.title!!, message.notification!!.body!!, true)
-//
-////
-////                    val intentToMain = Intent(baseContext, MainActivity::class.java)
-////                    intentToMain.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-////                    startActivity(intentToMain)
-//                }
-//            }
+
         }
     }
     // Generate the notification
@@ -73,7 +63,4 @@ class KerjalokaMessagingService() :FirebaseMessagingService() {
         }
         notificationManager.notify(0, builder.build())
     }
-
-    // Attach the notification created with the custom layout
-    // Show the notification
 }

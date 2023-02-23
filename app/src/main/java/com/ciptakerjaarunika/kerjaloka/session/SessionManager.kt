@@ -1,30 +1,20 @@
 package com.ciptakerjaarunika.kerjaloka.session
 
-import MessageListener
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.provider.Settings
-import android.util.Log
-import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
 import com.ciptakerjaarunika.kerjaloka.model.User.*
 import com.google.gson.Gson
-import com.microsoft.signalr.Action1
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionState
 import okhttp3.*
-import okio.ByteString
-import okio.ByteString.Companion.decodeHex
-import java.io.Serializable
-import java.security.AccessController.getContext
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class SessionManager (context: Context?) : ISessionManager{
    private val appContext : Context? =  context?.applicationContext
-
     companion object{
         const val SHARED_PREF_NAME = "com.ciptakerjaarunika.kerjaloka"
         const val ACCESS_TOKEN = "access_token"
@@ -65,6 +55,7 @@ class SessionManager (context: Context?) : ISessionManager{
         set(value) {setData(LatestGeneralSearch, Gson().toJson(value))}
 
     override var deviceId: String = ""
+        @SuppressLint("HardwareIds")
         get() = Settings.Secure.getString(appContext?.contentResolver,
             Settings.Secure.ANDROID_ID);
 
@@ -103,25 +94,21 @@ class SessionManager (context: Context?) : ISessionManager{
         getSharedPreference()?.edit()?.clear()?.apply()
     }
 
+    @SuppressLint("CheckResult")
     override fun refreshChat(hubConnection: HubConnection) {
         if(SessionManager(appContext).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED){
-            Log.d("HubConnection", "ReConnect")
             hubConnection.start().doOnComplete {
-                Log.d("HubConnection", "Refresh Message")
-
                 hubConnection.send("RefreshMessage", SessionManager(appContext).user!!.userNo.toString())
             }
         }
         else {
-            Log.d("HubConnection", "Refresh Message")
-
             hubConnection.send("RefreshMessage", SessionManager(appContext).user!!.userNo.toString())
         }
     }
+    @SuppressLint("CheckResult")
     override fun readSectionMessage(hubConnection: HubConnection, sectionNo : Int?) {
         if(sectionNo != null) {
             if (SessionManager(appContext).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
-                Log.d("HubConnection", "ReConnect")
                 hubConnection.start().doOnComplete { hubConnection.send("ReadSectionMessage",sectionNo.toString())}
             } else {
                 hubConnection.send("ReadSectionMessage",sectionNo.toString())

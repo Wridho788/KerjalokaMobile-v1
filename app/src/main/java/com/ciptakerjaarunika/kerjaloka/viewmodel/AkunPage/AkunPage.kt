@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.AkunPage
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -48,6 +49,7 @@ import java.util.*
 class AkunPage : Fragment() {
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         var mGoogleSignInClient: GoogleSignInClient? = null
         private var mAuth: FirebaseAuth? = null
         val Req_Code: Int = 123
@@ -174,10 +176,7 @@ class AkunPage : Fragment() {
                             val intent = Intent(context, DeactivatedAccount::class.java)
                             startActivity(intent)
                         }
-
-
                     } else {
-                        Log.d("auth", it.toString())
                         SessionManager(context).user = null
                         errorMessage?.visibility = View.VISIBLE
                         errorMessage?.text = it.message
@@ -185,8 +184,6 @@ class AkunPage : Fragment() {
                 }
             }
             loadingFailed()
-
-
         }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -250,7 +247,6 @@ class AkunPage : Fragment() {
         } catch (e: ApiException) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
             e.printStackTrace()
-            Log.d("err", "handleSignInResult:" + e.toString())
         }
     }
 
@@ -267,15 +263,12 @@ class AkunPage : Fragment() {
             if (task.isSuccessful) {
                 Login.SavedPreference.setEmail(context!!, account.email.toString())
                 Login.SavedPreference.setUsername(context!!, account.displayName.toString())
-
                 val text = "${account.idToken}${config().authKey}${4}"
                 val crypt = MessageDigest.getInstance("MD5")
                 crypt.update(text.toByteArray())
                 val hash = BigInteger(1, crypt.digest()).toString(16)
                 fun md5(str: String): ByteArray =
                     MessageDigest.getInstance("MD5").digest(str.toByteArray(Charsets.UTF_8))
-                Log.d("Crypt", hash)
-
                 FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         return@OnCompleteListener
@@ -292,7 +285,6 @@ class AkunPage : Fragment() {
                         deviceToken = SessionManager(context).device_token
                     )
                 AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
-                    Log.d("google login", it.toString())
                     if (it != null)
                         if (it.code == "252") {
                             SessionManager(context).access_token = it.userToken
