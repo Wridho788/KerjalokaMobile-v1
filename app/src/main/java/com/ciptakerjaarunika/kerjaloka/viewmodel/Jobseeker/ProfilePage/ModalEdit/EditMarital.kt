@@ -29,15 +29,13 @@ class EditMarital(private val maritalNo : Int?, val listMarital : List<Marital>,
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)
-                adapter = listMarital?.let { it1 -> EditMaritalAdapter(maritalNo, it1, iUpdateAdditional, this@EditMarital) }
+                adapter = listMarital.let { it1 -> EditMaritalAdapter(maritalNo, it1, iUpdateAdditional, this@EditMarital) }
             }
     }
 

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,8 +36,8 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
     private var keyword: String? = ""
     private lateinit var binding: ActivityCompanySearchBinding
 
-    @AddTrace(name="onCompanySearchActivityTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onCompanySearchActivityTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -56,9 +57,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = ActivityCompanySearchBinding.inflate(layoutInflater)
         CompanySearchTrace()
@@ -66,7 +65,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
             fragmentManager?.popBackStack()
         }
 
-        binding.spinnerResult.visibility = View.GONE
+        binding.spinnerResult.visibility = GONE
 
         if (SessionManager(context).latestCompanySearch == null) {
             SessionManager(context).latestCompanySearch = listOf()
@@ -154,6 +153,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
         this.keyword = keyword
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun searchCompany() {
         hasSearch = true
         binding.layoutLatestSearchResults.visibility = GONE
@@ -171,9 +171,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
                             binding.searchCompanyJob.apply {
                                 layoutManager = LinearLayoutManager(context)
                                 adapter = CompanySearchAdapter(
-                                    it.data,
-                                    context,
-                                    this@CompanySearchActivity
+                                    it.data, context, this@CompanySearchActivity
                                 )
                             }
                         } else {
@@ -209,7 +207,7 @@ class CompanySearchActivity : Fragment(), iSearchCompany {
         }
         val latestSearch = SessionManager(context).latestCompanySearch?.reversed()
         if (latestSearch?.size != 0) {
-            binding.latestResultGrup.visibility = View.VISIBLE
+            binding.latestResultGrup.visibility = VISIBLE
             binding.latestResultGrup.removeAllViews()
             val chip = Chip(context)
             chip.setChipBackgroundColorResource(R.color.danger_100)

@@ -1,4 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter
+
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -8,29 +9,31 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Listener.AppealModal
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.config.config
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Listener.AppealModal
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.Review
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class CompReviewAdapter(private val context: Context, private val reviewList: List<Review>, private val listener: AppealModal):
+class CompReviewAdapter(
+    private val context: Context,
+    private val reviewList: List<Review>,
+    private val listener: AppealModal
+) :
     RecyclerView.Adapter<CompReviewAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
-        //        var reviewTime: TextView
         var Desc: TextView
-        var proChip : ChipGroup
-        var conChip : ChipGroup
-        var ratBar : RatingBar
-        var appeal : MaterialButton
-        var logo : ImageView
+        var proChip: ChipGroup
+        var conChip: ChipGroup
+        var ratBar: RatingBar
+        var appeal: MaterialButton
+        var logo: ImageView
 
         init {
             creator = itemView.findViewById(R.id.nama_jobseeker)
-//            reviewTime = itemView.findViewById(R.id.record_page_date)
             Desc = itemView.findViewById(R.id.reviewDesc)
             proChip = itemView.findViewById(R.id.chipGroup_kelebihan)
             conChip = itemView.findViewById(R.id.chipGroup_kekurangan)
@@ -42,8 +45,10 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.comp_review_card, null)
-        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
+        view.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 
@@ -53,7 +58,7 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
         holder.Desc.text = currentItem.comment
         holder.ratBar.rating = currentItem.rating.toFloat()
 
-        holder.appeal.setOnClickListener{
+        holder.appeal.setOnClickListener {
             listener.appealModal(currentItem)
         }
 
@@ -61,7 +66,7 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
             .load(config().portAddress + "/photo/Profile/" + currentItem.raterPhoto).fitCenter()
             .into(holder.logo)
 
-        if (currentItem.conRating.isNotEmpty()){
+        if (currentItem.conRating.isNotEmpty()) {
             currentItem.conRating.forEach {
                 val chip = Chip(holder.conChip.context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
@@ -78,7 +83,7 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
                 }
             }
         }
-        if (currentItem.proRating.isNotEmpty()){
+        if (currentItem.proRating.isNotEmpty()) {
             currentItem.proRating.forEach {
                 val chip = Chip(holder.proChip.context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
@@ -99,9 +104,8 @@ class CompReviewAdapter(private val context: Context, private val reviewList: Li
     }
 
 
-
     override fun getItemCount(): Int {
-        return reviewList?.size ?:0
+        return reviewList.size
     }
 
 }

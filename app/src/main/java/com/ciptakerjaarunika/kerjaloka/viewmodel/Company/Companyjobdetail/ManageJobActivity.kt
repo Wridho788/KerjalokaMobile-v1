@@ -19,9 +19,28 @@ import com.google.gson.Gson
 
 class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoPage, iConfirmPage {
     private var JobDetailData: CompanyJobDetail = CompanyJobDetail(
-        null, null, null, listOf(), null, null,
-        null, listOf(), null, null, null, null, null, null, listOf(), listOf(),
-        listOf(), listOf(), null, null, null, null
+        null,
+        null,
+        null,
+        listOf(),
+        null,
+        null,
+        null,
+        listOf(),
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        listOf(),
+        listOf(),
+        listOf(),
+        listOf(),
+        null,
+        null,
+        null,
+        null
     )
 
     private lateinit var binding: ActivityAddJobBinding
@@ -63,7 +82,7 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
                 page = 1
                 updatePage()
                 showMessage("Posisi lowongan tidak boleh kosong")
-            } else if (JobDetailData.jobLocation?.isEmpty() == true) {
+            } else if (JobDetailData.jobLocation.isEmpty() == true) {
                 page = 1
                 updatePage()
                 showMessage("Lokasi lowongan tidak boleh kosong")
@@ -71,7 +90,7 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
                 page = 1
                 updatePage()
                 showMessage("Tipe pekerjaan tidak boleh kosong")
-            } else if (JobDetailData.jobSkills?.isEmpty() == true) {
+            } else if (JobDetailData.jobSkills.isEmpty() == true) {
                 page = 2
                 updatePage()
                 showMessage("Skill tidak boleh kosong")
@@ -90,8 +109,7 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
     fun SendJob() {
         try {
             AddJobAPI().SendJob(
-                baseContext,
-                addJobRequest(
+                baseContext, addJobRequest(
                     JobDetailData.jobNo?.toLong(),
                     JobDetailData.jobPosition,
                     JobDetailData.jobLocation,
@@ -236,8 +254,7 @@ class ManageJobActivity : AppCompatActivity(), iBasicInfoPage, iAddidiontalInfoP
     override fun draftJob() {
         try {
             AddJobAPI().draftJob(
-                baseContext,
-                addJobRequest(
+                baseContext, addJobRequest(
                     JobDetailData.jobNo?.toLong(),
                     JobDetailData.jobPosition,
                     JobDetailData.jobLocation,

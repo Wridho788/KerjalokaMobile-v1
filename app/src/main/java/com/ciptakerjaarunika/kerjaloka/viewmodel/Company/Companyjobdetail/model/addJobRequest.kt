@@ -7,15 +7,14 @@ import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobLocation
 data class addJobResponse(
     val code: String,
     val message: String,
-    )
+)
 
 data class getJobResponse(
-    val code: String,
-    val data: List<ResponseCompanyJobs>
+    val code: String, val data: List<ResponseCompanyJobs>
 )
 
 data class addJobRequest(
-    var JobNo : Long?,
+    var JobNo: Long?,
     var Position: String? = "",
     var Location: List<JobLocation>,
     var JobType: Int?,
@@ -85,7 +84,7 @@ data class ResponseCompanyJobs(
 )
 
 
-data class JobTestRequest (
+data class JobTestRequest(
     val jobTestNo: Long,
     val jobNo: Long,
     val testNo: Long,

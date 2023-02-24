@@ -11,14 +11,17 @@ import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.iTitle
 
-class ChooseTitleAdapter(val value: Int?, private val titleList: List<Title>, val iUpdateTitle: iUpdateTitle,val iTitle : iTitle):
-    RecyclerView.Adapter<ChooseTitleAdapter.chooseTitle>()
-{
+class ChooseTitleAdapter(
+    val value: Int?,
+    private val titleList: List<Title>,
+    val iUpdateTitle: iUpdateTitle,
+    val iTitle: iTitle
+) : RecyclerView.Adapter<ChooseTitleAdapter.chooseTitle>() {
 
     inner class chooseTitle(view: View) : RecyclerView.ViewHolder(view) {
 
         var item: TextView
-        var container : LinearLayout
+        var container: LinearLayout
 
         init {
             item = view.findViewById(R.id.item_modal)
@@ -29,8 +32,7 @@ class ChooseTitleAdapter(val value: Int?, private val titleList: List<Title>, va
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): chooseTitle {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
         val lp = RecyclerView.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         view.layoutParams = lp
         return chooseTitle(view)
@@ -38,9 +40,9 @@ class ChooseTitleAdapter(val value: Int?, private val titleList: List<Title>, va
 
     override fun onBindViewHolder(holder: chooseTitle, position: Int) {
         val currentItem = titleList[position]
-        holder.item.text= currentItem.titleName
+        holder.item.text = currentItem.titleName
 
-        if(currentItem.titleNo == value){
+        if (currentItem.titleNo == value) {
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
             holder.container.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT

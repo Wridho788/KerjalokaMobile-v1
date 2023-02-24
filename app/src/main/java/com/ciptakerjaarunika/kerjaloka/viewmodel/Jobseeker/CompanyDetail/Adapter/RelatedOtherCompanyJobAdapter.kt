@@ -1,11 +1,13 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyDetail.Adapter
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
@@ -19,10 +21,8 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RelatedOtherCompanyJobAdapter(
-    private val listItem: List<job>?,
-    private val iJobDetail: IJobDetail
-) :
-    RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>() {
+    private val listItem: List<job>?, private val iJobDetail: IJobDetail
+) : RecyclerView.Adapter<RelatedOtherCompanyJobAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
         var relatedlogo: ImageView
@@ -42,8 +42,8 @@ class RelatedOtherCompanyJobAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-//        val view = View.inflate(parent.context, R.layout.item_card_job_related, null)
-        val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_job_related, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_card_job_related, parent, false)
         return ViewHolder(view)
     }
 
@@ -63,8 +63,7 @@ class RelatedOtherCompanyJobAdapter(
         holder.cardrelatedJob.setOnClickListener {
             currentItem.company.companyNo.let { it1 ->
                 iJobDetail.onFragmentClick(
-                    it1,
-                    currentItem.jobNo
+                    it1, currentItem.jobNo
                 )
             }
         }
@@ -88,6 +87,7 @@ class RelatedOtherCompanyJobAdapter(
             return dateFormat.parse(date)
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun dateDiff(): String {
             val date1 = GetDateValue(time).time
             val date2 = GetDateValue(now).time

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Preference
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +10,17 @@ import androidx.activity.addCallback
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditInterestLayoutBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.model.Data.Field
 import com.ciptakerjaarunika.kerjaloka.model.Data.FieldFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerFields
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.MinatAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.profilepage
+import java.util.*
 
 class fragment_edit_interest_layout(
     val jobseekerFields: List<Field>?,
@@ -70,7 +72,7 @@ class fragment_edit_interest_layout(
                     }
 
                     override fun onQueryTextChange(newText: String?): Boolean {
-                        val keyword = newText.toString().toLowerCase()
+                        val keyword = newText.toString().lowercase(Locale.getDefault())
                         if (keyword.isNullOrEmpty()) {
                             binding.recycleview.apply {
                                 layoutManager = LinearLayoutManager(activity)
@@ -79,15 +81,15 @@ class fragment_edit_interest_layout(
                             binding.recycleview.adapter?.notifyDataSetChanged()
                         } else {
                             var temp = fields.filter { f ->
-                                f.fieldName.toLowerCase().contains(keyword)
+                                f.fieldName.lowercase(Locale.getDefault()).contains(keyword)
                             }
                             binding.recycleview.apply {
                                 layoutManager = LinearLayoutManager(activity)
-                                adapter = MinatAdapter(temp!!)
+                                adapter = MinatAdapter(temp)
                             }
                             binding.recycleview.adapter?.notifyDataSetChanged()
                         }
-                        return true;
+                        return true
                     }
                 })
             }
@@ -96,16 +98,18 @@ class fragment_edit_interest_layout(
             val selected = fields.filter { data -> data.checked }.map { it ->
                 JobseekerFields(SessionManager(context).user!!.userNo, it.fieldNo)
             }
-            ManageProfileAPI().JobseekerEditFields(selected, context) {
-                if (it != null) {
-                    Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
-                    back()
-                } else {
-                    Toast.makeText(
-                        activity,
-                        "Terjadi kesalahan yang tidak diketahui",
-                        Toast.LENGTH_SHORT
-                    ).show()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ManageProfileAPI().JobseekerEditFields(selected, context) {
+                    if (it != null) {
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                        back()
+                    } else {
+                        Toast.makeText(
+                            activity,
+                            "Terjadi kesalahan yang tidak diketahui",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }

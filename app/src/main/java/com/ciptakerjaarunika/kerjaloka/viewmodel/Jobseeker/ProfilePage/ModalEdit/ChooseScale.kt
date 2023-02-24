@@ -16,14 +16,11 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.C
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV.iEditKemampuan
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Model.scale
 
-
-class ChooseScale(val value : Int?, val iEditKemampuan: iEditKemampuan) : SuperBottomSheetFragment(),
+class ChooseScale(val value: Int?, val iEditKemampuan: iEditKemampuan) : SuperBottomSheetFragment(),
     iChooseScale {
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
@@ -36,7 +33,6 @@ class ChooseScale(val value : Int?, val iEditKemampuan: iEditKemampuan) : SuperB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val list = ArrayList<scale>()
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -52,16 +48,15 @@ class ChooseScale(val value : Int?, val iEditKemampuan: iEditKemampuan) : SuperB
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun close() {
         this.dismiss()
     }
 }
-interface iChooseScale{
+
+interface iChooseScale {
     fun close()
 }

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Gallery
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerConfiguration
@@ -19,16 +20,14 @@ class DefaultSystemGalleryConfig private constructor(
     }
 
     companion object {
-
         fun instance(mimesType: DefaultGalleryMimes): DefaultSystemGalleryConfig =
             DefaultSystemGalleryConfig(
                 mimesType = mimesType
             )
 
-        fun defaultInstance(): DefaultSystemGalleryConfig =
-            DefaultSystemGalleryConfig(
-                mimesType = DefaultGalleryMimes.imageOnly()
-            )
+        fun defaultInstance(): DefaultSystemGalleryConfig = DefaultSystemGalleryConfig(
+            mimesType = DefaultGalleryMimes.imageOnly()
+        )
     }
 }
 
@@ -38,10 +37,10 @@ sealed class DefaultGalleryMimes {
 
     abstract class BaseMimesType : DefaultGalleryMimes() {
 
+        @SuppressLint("ObsoleteSdkInt")
         override fun getIntent(): Intent =
             when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                true -> Intent(Intent.ACTION_PICK)
-                    .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+                true -> Intent(Intent.ACTION_PICK).addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
                 false -> Intent(Intent.ACTION_GET_CONTENT)
             }.apply {
                 putExtra(Intent.EXTRA_LOCAL_ONLY, true)

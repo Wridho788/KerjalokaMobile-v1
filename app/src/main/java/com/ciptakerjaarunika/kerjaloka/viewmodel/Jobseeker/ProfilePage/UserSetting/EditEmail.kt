@@ -35,8 +35,7 @@ class EditEmail : Fragment() {
                     Toast.makeText(context, "Email tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 } else if (email.isEmailValid()) {
                     company_profile_api().checkNewEmail(
-                        email,
-                        context
+                        email, context
                     ) { checkResponse ->
                         company_profile_api().ChangeEmail(email, context) { changeEmail ->
                             if (changeEmail?.code == 210) {
@@ -49,7 +48,7 @@ class EditEmail : Fragment() {
                             }
                         }
                     }
-                }else {
+                } else {
                     Toast.makeText(context, "Email Tidak Valid", Toast.LENGTH_SHORT).show()
                 }
 
@@ -67,8 +66,7 @@ class EditEmail : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_edit_email_profile, container, false)
         return view
@@ -81,10 +79,7 @@ class EditEmail : Fragment() {
 
     @SuppressLint("RestrictedApi")
     private fun replaceFragment(
-        fragment: Fragment,
-        token: String?,
-        email: String?,
-        newEmail: String?
+        fragment: Fragment, token: String?, email: String?, newEmail: String?
     ) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()
@@ -97,9 +92,7 @@ class EditEmail : Fragment() {
         val mFragmentManager = parentFragmentManager
         mFragmentManager.beginTransaction().apply {
             replace(
-                id,
-                otpVerificationFragment,
-                otpVerification::class.java.simpleName
+                id, otpVerificationFragment, otpVerification::class.java.simpleName
             )
             addToBackStack(null)
             commit()

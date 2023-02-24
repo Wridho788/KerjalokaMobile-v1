@@ -41,15 +41,14 @@ class SearchJobAdapter(private val rJobList: List<rJobModel>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
-        view.layoutParams= ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+        view.layoutParams = ConstraintLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return rJobList?.size ?: 0
+        return rJobList.size
     }
 
 
@@ -61,107 +60,9 @@ class SearchJobAdapter(private val rJobList: List<rJobModel>) :
         holder.timeUploadApplicant.text = currentItem.createdOn
         Glide.with(holder.itemView.context).load(currentItem.logo).fitCenter().into(holder.logo)
 
-        holder.bookmarkedJob.setOnClickListener {
-//            when (currentItem.jobNo) {
-//                1 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 1 telah di bookmark",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-////                    val intent = Intent(it.context, CityActivity::class.java)
-////                    intent.putExtra("currentItem", currentItem)
-////                    it.context.startActivity(intent)
-//                }
-//                2 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 2 telah di bookmark",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-////                     holder.bookmarkedJob.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp)
-//                }
-//                3 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 3 telah di bookmark",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                4 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 4 telah di bookmark",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-
-        }
-        holder.shareableJob.setOnClickListener {
-//            when (currentItem.jobNo) {
-//                1 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 1 telah di share",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                2 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 2 telah di share",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                3 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 3 telah di share",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                4 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 4 telah di share",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-        }
-        holder.cardRecommendationJob.setOnClickListener {
-//            when (currentItem.jobNo) {
-//                1 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 1 telah di klik",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                2 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 2 telah di klik",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                3 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 3 telah di klik",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                4 -> {
-//                    Toast.makeText(
-//                        holder.itemView.context,
-//                        "Job 4 telah di klik",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-        }
+        holder.bookmarkedJob.setOnClickListener {}
+        holder.shareableJob.setOnClickListener {}
+        holder.cardRecommendationJob.setOnClickListener {}
     }
 
 }

@@ -3,7 +3,6 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Components
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,38 +28,21 @@ class GlobalDeleteModal : SuperBottomSheetFragment() {
             override fun afterTextChanged(p0: Editable?) {
                 if (edit_konfirmasi.text.toString().isNullOrEmpty()) {
                     Toast.makeText(
-                        context,
-                        "Kolom Konfirmasi Tidak boleh kosong",
-                        Toast.LENGTH_SHORT
+                        context, "Kolom Konfirmasi Tidak boleh kosong", Toast.LENGTH_SHORT
                     ).show()
-                    Log.d(
-                        "konfirmasi text, ${edit_konfirmasi.text}, Kolom Konfirmasi Tidak boleh kosong",
-                        edit_konfirmasi.text.toString()
-                    )
+
                 } else if (edit_konfirmasi.text.toString()
                         .lowercase(Locale.getDefault()) == "hapus" && edit_konfirmasi.text.toString() != "Hapus"
                 ) {
                     Toast.makeText(
-                        context,
-                        "Mohon Perhatikan Penggunaan Kapitalisasi",
-                        Toast.LENGTH_SHORT
+                        context, "Mohon Perhatikan Penggunaan Kapitalisasi", Toast.LENGTH_SHORT
                     ).show()
-                    Log.d(
-                        "konfirmasi text, ${edit_konfirmasi.text}, Mohon Perhatikan Penggunaan Kapitalisasi",
-                        edit_konfirmasi.text.toString()
-                    )
+
 
                 } else if (edit_konfirmasi.text.toString() != "Hapus") {
                     Toast.makeText(
-                        context,
-                        "Kata yang kamu masukkan tidak valid",
-                        Toast.LENGTH_SHORT
+                        context, "Kata yang kamu masukkan tidak valid", Toast.LENGTH_SHORT
                     ).show()
-                    Log.d(
-                        "konfirmasi text, ${edit_konfirmasi.text}, Kata yang kamu masukkan tidak valid",
-                        edit_konfirmasi.text.toString()
-                    )
-
                 } else {
                     konfimasi_text = edit_konfirmasi.text.toString()
                 }
@@ -71,7 +53,7 @@ class GlobalDeleteModal : SuperBottomSheetFragment() {
         btn_konfirmasi.setOnClickListener {
             ProfileAPI().GetDeactivatedAccount(context) {
                 if (it != null) {
-                    Log.d("terminate", it.toString())
+                    Toast.makeText(context, "Berhasil Deactivate Account", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -79,8 +61,7 @@ class GlobalDeleteModal : SuperBottomSheetFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_global_delete_account, container, false)

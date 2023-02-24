@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchMoreJob
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.ciptakerjaarunika.kerjaloka.api.Search_Api
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSearchMoreJobBinding
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchMoreJob.Adapter.SearchMoreJobAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.JobDetailFragment
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchMoreJob.Adapter.SearchMoreJobAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.Model.jobList
 
 class SearchMoreJobFragment(var query: String) : Fragment(), OnFragmentClickListener {
@@ -67,6 +68,7 @@ class SearchMoreJobFragment(var query: String) : Fragment(), OnFragmentClickList
         replaceFragment(JobDetailFragment(JobNo = jobNo, CompanyNo = companyNo))
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun BookmarkJob(jobNo: Long, Index: Int) {
         var bookmark = !list!![Index].bookmarked
         JobAPI().BookmarkJob(jobNo, bookmark, context) {
@@ -85,6 +87,7 @@ class SearchMoreJobFragment(var query: String) : Fragment(), OnFragmentClickList
     }
 
 }
+
 interface OnFragmentClickListener {
     fun onJobDetailPage(companyNo: Long, jobNo: Long)
     fun BookmarkJob(jobNo: Long, Index: Int)

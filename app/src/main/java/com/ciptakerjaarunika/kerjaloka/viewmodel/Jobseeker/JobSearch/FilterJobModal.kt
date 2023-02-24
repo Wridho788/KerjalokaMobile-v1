@@ -31,6 +31,7 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobSearch.Adapter.Job
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobSearch.Adapter.SkillAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
+import java.util.*
 
 class FilterJobModal(
     val iSearchJob: iSearchJob,
@@ -41,43 +42,41 @@ class FilterJobModal(
     val salaryMinParent: Int?,
     val salaryMaxParent: Int?
 ) : SuperBottomSheetFragment() {
-    private var locations : List<LocationFilter>? = listOf()
-    private var job_types : List<JobTypeFilter>? = listOf()
-    private var skills : List<SkillFilter>? = listOf()
-    private var experienceLevel : List<ExperienceLevelFilter>? = listOf()
-    private var salaryMin : Int? = null
-    private var salaryMax : Int? = null
+    private var locations: List<LocationFilter>? = listOf()
+    private var job_types: List<JobTypeFilter>? = listOf()
+    private var skills: List<SkillFilter>? = listOf()
+    private var experienceLevel: List<ExperienceLevelFilter>? = listOf()
+    private var salaryMin: Int? = null
+    private var salaryMax: Int? = null
+    private var filterNo: Int = 1
+    private var loadingData = 4
 
-    private var filterNo : Int = 1
-
-    private var loadingData = 4;
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.layout_filter_job, container, false)
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
-
+    @SuppressLint("ResourceAsColor")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("SalaryMin", salaryMinParent.toString())
-
-        view.findViewById<Chip>(R.id.location).setOnClickListener{ChangeList(1)}
-        view.findViewById<Chip>(R.id.job_type).setOnClickListener{ChangeList(2)}
-        view.findViewById<Chip>(R.id.skill).setOnClickListener{ChangeList(3)}
-        view.findViewById<Chip>(R.id.experience).setOnClickListener{ChangeList(4)}
-        view.findViewById<Chip>(R.id.salary).setOnClickListener{ChangeList(5)}
-        view.findViewById<TextView>(R.id.btn_clear_filter).setOnClickListener{
+        view.findViewById<Chip>(R.id.location).setOnClickListener { ChangeList(1) }
+        view.findViewById<Chip>(R.id.job_type).setOnClickListener { ChangeList(2) }
+        view.findViewById<Chip>(R.id.skill).setOnClickListener { ChangeList(3) }
+        view.findViewById<Chip>(R.id.experience).setOnClickListener { ChangeList(4) }
+        view.findViewById<Chip>(R.id.salary).setOnClickListener { ChangeList(5) }
+        view.findViewById<TextView>(R.id.btn_clear_filter).setOnClickListener {
             ClearList()
         }
         var searchInput = view.findViewById<SearchView>(R.id.search_filter)
 
-        DataAPI().GetLocations(context){res ->
-            loadingData -= 1;
+        DataAPI().GetLocations(context) { res ->
+            loadingData -= 1
             locations = res
             var recycle = view.findViewById<RecyclerView>(R.id.list_filter)
-
             recycle.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = FilterLocationAdapter(locations!!, context)
@@ -86,18 +85,18 @@ class FilterJobModal(
             loadingDone()
         }
 
-        DataAPI().GetJobTypes(context){res ->
-            loadingData -= 1;
+        DataAPI().GetJobTypes(context) { res ->
+            loadingData -= 1
             job_types = res
             loadingDone()
         }
-        DataAPI().GetSkill(context){res ->
-            loadingData -= 1;
+        DataAPI().GetSkill(context) { res ->
+            loadingData -= 1
             skills = res
             loadingDone()
         }
-        DataAPI().GetExperienceLevel(context){res ->
-            loadingData -= 1;
+        DataAPI().GetExperienceLevel(context) { res ->
+            loadingData -= 1
             experienceLevel = res
             loadingDone()
         }
@@ -107,7 +106,6 @@ class FilterJobModal(
         salaryMin_txt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
             override fun afterTextChanged(s: Editable) {
                 salaryMin = salaryMin_txt.text.toString().toIntOrNull()
             }
@@ -123,22 +121,38 @@ class FilterJobModal(
         })
 
 
-        view.findViewById<Chip>(R.id.salary).setOnClickListener{ChangeList(5)}
-        view.findViewById<MaterialButton>(R.id.btn_konfirmasi).setOnClickListener{
-            var selectedLocation : List<Int> = listOf()
-            locations?.forEach { data-> if(data.checked == true){selectedLocation += data.locationsNo}  }
+        view.findViewById<Chip>(R.id.salary).setOnClickListener { ChangeList(5) }
+        view.findViewById<MaterialButton>(R.id.btn_konfirmasi).setOnClickListener {
+            var selectedLocation: List<Int> = listOf()
+            locations?.forEach { data ->
+                if (data.checked == true) {
+                    selectedLocation += data.locationsNo
+                }
+            }
             iSearchJob.updateLocationSelected(selectedLocation)
 
-            var selectedJobType : List<Int> = listOf()
-            job_types?.forEach { data-> if(data.checked == true){selectedJobType += data.jobTypeNo}  }
+            var selectedJobType: List<Int> = listOf()
+            job_types?.forEach { data ->
+                if (data.checked == true) {
+                    selectedJobType += data.jobTypeNo
+                }
+            }
             iSearchJob.updateJobTypeSelected(selectedJobType)
 
-            var selectedSkill : List<Int> = listOf()
-            skills?.forEach { data-> if(data.checked == true){selectedSkill += data.skillNo}  }
+            var selectedSkill: List<Int> = listOf()
+            skills?.forEach { data ->
+                if (data.checked == true) {
+                    selectedSkill += data.skillNo
+                }
+            }
             iSearchJob.updateSkillSelected(selectedSkill)
 
-            var selectedExperienceLevel : List<Int> = listOf()
-            experienceLevel?.forEach { data-> if(data.checked == true){selectedExperienceLevel += data.experienceLevelNo}  }
+            var selectedExperienceLevel: List<Int> = listOf()
+            experienceLevel?.forEach { data ->
+                if (data.checked == true) {
+                    selectedExperienceLevel += data.experienceLevelNo
+                }
+            }
             iSearchJob.updateExperienceSelected(selectedExperienceLevel)
 
             iSearchJob.updateSalaryMin(salaryMin)
@@ -147,23 +161,24 @@ class FilterJobModal(
             iSearchJob.SearchJobs()
             this.dismiss()
         }
-        var recycle = view?.findViewById<RecyclerView>(R.id.list_filter)
+        var recycle = view.findViewById<RecyclerView>(R.id.list_filter)
 
         searchInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
                 Log.d("Input", newText.toString())
-                val keyword = newText.toString().toLowerCase()
+                val keyword = newText.toString().lowercase(Locale.getDefault())
                 if (newText.isNullOrEmpty()) {
                     ChangeList(filterNo)
                 } else {
                     when (filterNo) {
                         1 -> {
                             var temp = locations?.filter { data ->
-                                "${data.city}, ${data.province}".toLowerCase().contains(keyword)
+                                "${data.city}, ${data.province}".lowercase(Locale.getDefault()).contains(keyword)
                             }
                             recycle?.apply {
                                 layoutManager = LinearLayoutManager(context)
@@ -172,7 +187,9 @@ class FilterJobModal(
                             recycle?.adapter?.notifyDataSetChanged()
                         }
                         2 -> {
-                            var temp = job_types?.filter{ data -> data.jobTypeName.toLowerCase().contains(keyword) }
+                            var temp = job_types?.filter { data ->
+                                data.jobTypeName.lowercase(Locale.getDefault()).contains(keyword)
+                            }
                             recycle?.apply {
                                 layoutManager = LinearLayoutManager(context)
                                 adapter = JobTypeAdapter(temp!!, context)
@@ -180,7 +197,9 @@ class FilterJobModal(
                             recycle?.adapter?.notifyDataSetChanged()
                         }
                         3 -> {
-                            var temp = skills?.filter{ data -> data.skillName.toLowerCase().contains(keyword) }
+                            var temp = skills?.filter { data ->
+                                data.skillName.lowercase(Locale.getDefault()).contains(keyword)
+                            }
                             recycle?.apply {
                                 layoutManager = LinearLayoutManager(context)
                                 adapter = SkillAdapter(temp!!, context)
@@ -188,7 +207,9 @@ class FilterJobModal(
                             recycle?.adapter?.notifyDataSetChanged()
                         }
                         4 -> {
-                            var temp = experienceLevel?.filter{ data -> data.experienceLevelName.toLowerCase().contains(keyword) }
+                            var temp = experienceLevel?.filter { data ->
+                                data.experienceLevelName.lowercase(Locale.getDefault()).contains(keyword)
+                            }
                             recycle?.apply {
                                 layoutManager = LinearLayoutManager(context)
                                 adapter = ExperienceLevelAdapter(temp!!, context)
@@ -197,12 +218,13 @@ class FilterJobModal(
                         }
                     }
                 }
-                return true;
+                return true
             }
         })
     }
 
-    fun ChangeList(filterType : Int){
+    @SuppressLint("CutPasteId", "NotifyDataSetChanged")
+    fun ChangeList(filterType: Int) {
         var recycle = view?.findViewById<RecyclerView>(R.id.list_filter)
         val salaryContainer = view?.findViewById<LinearLayout>(R.id.salary_filter_container)
         salaryContainer?.visibility = GONE
@@ -210,80 +232,81 @@ class FilterJobModal(
         view?.findViewById<SearchView>(R.id.search_filter)?.visibility = VISIBLE
         this.filterNo = filterType
 
-        when(filterType){
-            1 ->{
+        when (filterType) {
+            1 -> {
                 recycle?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = FilterLocationAdapter(locations!!, context)
                 }
                 recycle?.adapter?.notifyDataSetChanged()
             }
-            2 ->{
+            2 -> {
                 recycle?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = JobTypeAdapter(job_types!!, context)
                 }
                 recycle?.adapter?.notifyDataSetChanged()
             }
-            3 ->{
+            3 -> {
                 recycle?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = SkillAdapter(skills!!, context)
                 }
                 recycle?.adapter?.notifyDataSetChanged()
             }
-            4 ->{
+            4 -> {
                 recycle?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = ExperienceLevelAdapter(experienceLevel!!, context)
                 }
                 recycle?.adapter?.notifyDataSetChanged()
             }
-            5->{
+            5 -> {
                 salaryContainer?.visibility = VISIBLE
                 view?.findViewById<SearchView>(R.id.search_filter)?.visibility = GONE
                 view?.findViewById<RecyclerView>(R.id.list_filter)?.visibility = GONE
-//                view?.findViewById<EditText>(R.id.min_salary)?.text = salaryMin
             }
 
         }
     }
-    fun ClearList(){
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun ClearList() {
         var recycle = view?.findViewById<RecyclerView>(R.id.list_filter)
-        when(filterNo){
-            1 ->{
-                locations?.forEach { data-> data.checked = false }
+        when (filterNo) {
+            1 -> {
+                locations?.forEach { data -> data.checked = false }
                 recycle?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = FilterLocationAdapter(locations!!, context)
                 }
                 recycle?.adapter?.notifyDataSetChanged()
             }
-            2 ->{
-                job_types?.forEach { data-> data.checked = false }
+            2 -> {
+                job_types?.forEach { data -> data.checked = false }
                 recycle?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = JobTypeAdapter(job_types!!, context)
                 }
                 recycle?.adapter?.notifyDataSetChanged()
             }
-            3 ->{
-                skills?.forEach { data-> data.checked = false }
+            3 -> {
+                skills?.forEach { data -> data.checked = false }
                 recycle?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = SkillAdapter(skills!!, context)
                 }
                 recycle?.adapter?.notifyDataSetChanged()
             }
-            4 ->{
-                experienceLevel?.forEach { data-> data.checked = false }
+            4 -> {
+                experienceLevel?.forEach { data -> data.checked = false }
                 recycle?.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = ExperienceLevelAdapter(experienceLevel!!, context)
                 }
                 recycle?.adapter?.notifyDataSetChanged()
             }
-            5->{
+            5 -> {
                 salaryMin = null
                 salaryMax = null
                 view?.findViewById<EditText>(R.id.min_salary)?.text = null
@@ -300,68 +323,39 @@ class FilterJobModal(
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
-    /*
-    override fun updateLocations(location : LocationFilter) {
-        val indexOf =  locationSelected.indexOfFirst { loc -> loc.locationsNo == location.locationsNo && location.checked == false }
-        if(locationSelected.size == 0 || locationSelected.any{loc -> loc.locationsNo == location.locationsNo} == false){
-            locationSelected += location
-        }
-        else if(indexOf >= 0){
-            locationSelected = locationSelected.drop(indexOf)
-        }
-        var selected: List<Int> = listOf()
-        locationSelected.filter { data-> data.checked == true }.forEach {
-            selected += it.locationsNo
-        }
-
-        locations!!.forEach {
-            if(location.locationsNo == it.locationsNo && location.checked == true){
-                it.checked = true
-                Log.d("Loc", location.toString())
-            }
-        }
-
-        Log.d("Locations : ", locations?.filter { loc -> loc.checked == true }.toString())
-        //iSearchJob.updateLocationSelected(selected)
-    }
-    */
-
-
-    fun loadingDone(){
-        if(loadingData ==0){
+    fun loadingDone() {
+        if (loadingData == 0) {
             Log.d("SalaryMin", salaryMinParent.toString())
 
             salaryMin = salaryMinParent
             salaryMax = salaryMaxParent
-            if(salaryMin!= null) {
+            if (salaryMin != null) {
                 view?.findViewById<EditText>(R.id.min_salary)?.setText(salaryMin.toString())
             }
-            if(salaryMax != null) {
+            if (salaryMax != null) {
                 view?.findViewById<EditText>(R.id.max_salary)?.setText(salaryMax.toString())
             }
             locations?.forEach {
-                if(locationParent.any { item-> it.locationsNo == item }){
+                if (locationParent.any { item -> it.locationsNo == item }) {
                     it.checked = true
                 }
             }
             job_types?.forEach {
-                if(jobTypeParent.any { item-> it.jobTypeNo == item }){
+                if (jobTypeParent.any { item -> it.jobTypeNo == item }) {
                     it.checked = true
                 }
             }
             skills?.forEach {
-                if(skillParent.any { item-> it.skillNo == item }){
+                if (skillParent.any { item -> it.skillNo == item }) {
                     it.checked = true
                 }
             }
             experienceLevel?.forEach {
-                if(experienceLevelParent.any { item-> it.experienceLevelNo == item }){
+                if (experienceLevelParent.any { item -> it.experienceLevelNo == item }) {
                     it.checked = true
                 }
             }

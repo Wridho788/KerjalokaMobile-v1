@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,21 +9,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.BottomSheetShortCategory
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.ShortQuestion_adapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.iAddidiontalInfoPage
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.short_question_api
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentShortQuestionPageBinding
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestion
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestionCategory
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.CompanyJobDetail
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.BottomSheetShortCategory
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.ShortQuestion_adapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.iAddidiontalInfoPage
+import java.util.*
 
-class ShortQuestionPage(val data : CompanyJobDetail,val iAddidiontalInfoPage: iAddidiontalInfoPage) : Fragment(),
+class ShortQuestionPage(
+    val data: CompanyJobDetail,
+    val iAddidiontalInfoPage: iAddidiontalInfoPage
+) : Fragment(),
     iUpdatePage5 {
     private var short_question_list: List<ShortQuestion>? = null
     private lateinit var binding: FragmentShortQuestionPageBinding
-    var categoryNo : Long? = null
+    var categoryNo: Long? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,15 +47,19 @@ class ShortQuestionPage(val data : CompanyJobDetail,val iAddidiontalInfoPage: iA
                     adapter =
                         ShortQuestion_adapter(
                             data.jobShortQuestion,
-                            short_question_list!!, iAddidiontalInfoPage)
+                            short_question_list!!, iAddidiontalInfoPage
+                        )
                 }
 
                 binding.search.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
+                    @SuppressLint("NotifyDataSetChanged")
                     override fun afterTextChanged(p0: Editable?) {
-                        if(binding.search.text.toString().isNullOrEmpty() ||binding.search.text.toString().isNullOrBlank()){
+                        if (binding.search.text.toString()
+                                .isNullOrEmpty() || binding.search.text.toString().isNullOrBlank()
+                        ) {
                             var temp = it.data.filter { item ->
                                 categoryNo == null || item.shortQuestionCategoryNo == categoryNo
                             }
@@ -58,23 +67,26 @@ class ShortQuestionPage(val data : CompanyJobDetail,val iAddidiontalInfoPage: iA
                                 layoutManager = LinearLayoutManager(activity)
                                 adapter = ShortQuestion_adapter(
                                     data.jobShortQuestion,
-                                    temp!!,
+                                    temp,
                                     iAddidiontalInfoPage
                                 )
                             }
                             binding.listShortQuestions.adapter?.notifyDataSetChanged()
-                        }
-                        else {
+                        } else {
                             var temp = it.data.filter { item ->
                                 (categoryNo == null || item.shortQuestionCategoryNo == categoryNo)
-                                        && (binding.search.text.toString().isNullOrBlank() || binding.search.text.toString().isNullOrEmpty()||
-                                        item.shortQuestion.toLowerCase().contains(binding.search.text.toString().toLowerCase()))
+                                        && (binding.search.text.toString()
+                                    .isNullOrBlank() || binding.search.text.toString()
+                                    .isNullOrEmpty() ||
+                                        item.shortQuestion.lowercase(Locale.getDefault())
+                                            .contains(binding.search.text.toString()
+                                                .lowercase(Locale.getDefault())))
                             }
                             binding.listShortQuestions.apply {
                                 layoutManager = LinearLayoutManager(activity)
                                 adapter = ShortQuestion_adapter(
                                     data.jobShortQuestion,
-                                    temp!!,
+                                    temp,
                                     iAddidiontalInfoPage
                                 )
                             }
@@ -94,28 +106,29 @@ class ShortQuestionPage(val data : CompanyJobDetail,val iAddidiontalInfoPage: iA
 
     override fun updateCategory(category: ShortQuestionCategory?) {
         categoryNo = category?.shortQuestionCategoryNo
-        if(category != null){
+        if (category != null) {
             binding.categoryTxt.text = category.categoryName
             binding.actionCategory.setImageResource(R.drawable.ic_close)
             binding.actionCategory.setOnClickListener {
                 updateCategory(null)
             }
-        }
-        else{
+        } else {
             binding.categoryTxt.text = "Pilih Kategori"
             binding.actionCategory.setImageResource(R.drawable.ic_chevron_down)
             binding.actionCategory.setOnClickListener {
                 categoryModal()
             }
         }
-        var temp= short_question_list?.filter { item->
+        var temp = short_question_list?.filter { item ->
             (categoryNo == null || item.shortQuestionCategoryNo == categoryNo)
-                && (binding.search.text.toString().isNullOrBlank() || binding.search.text.toString().isNullOrEmpty()||
-                    item.shortQuestion.toLowerCase().contains(binding.search.text.toString().toLowerCase()))
+                    && (binding.search.text.toString()
+                .isNullOrBlank() || binding.search.text.toString().isNullOrEmpty() ||
+                    item.shortQuestion.lowercase(Locale.getDefault())
+                        .contains(binding.search.text.toString().lowercase(Locale.getDefault())))
         }
         binding.listShortQuestions.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ShortQuestion_adapter( data.jobShortQuestion, temp!!, iAddidiontalInfoPage )
+            adapter = ShortQuestion_adapter(data.jobShortQuestion, temp!!, iAddidiontalInfoPage)
         }
         binding.listShortQuestions.adapter?.notifyDataSetChanged()
     }

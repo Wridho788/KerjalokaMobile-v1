@@ -1,15 +1,11 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.JobseekerReview.Model
 
 data class review_response(
-    val code: Int,
-    val errorCode: Int?,
-    val message: String?,
-    val data: company_reviews
+    val code: Int, val errorCode: Int?, val message: String?, val data: company_reviews
 )
 
 data class company_reviews(
-    val userInfo: userInfo,
-    val reviewList: List<reviewList>
+    val userInfo: userInfo, val reviewList: List<reviewList>
 )
 
 data class userInfo(
@@ -21,8 +17,8 @@ data class userInfo(
 
 data class reviewList(
     val userFullName: String,
-    val userNo :  Long,
-    val userRole :  Long,
+    val userNo: Long,
+    val userRole: Long,
     val comment: String,
     val rating: Float,
     val ratingAt: String,
@@ -30,13 +26,6 @@ data class reviewList(
     val approvedOn: String,
     val proRating: List<String>,
     val conRating: List<String>
-)
-
-data class send_review_response(
-    val code: Int,
-    val errorCode: Int?,
-    val message: String?,
-    val data: send
 )
 
 data class send(

@@ -22,8 +22,8 @@ import com.google.firebase.perf.metrics.AddTrace
 class CompanyVacanciesFragment : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentCompanyVacanciesBinding
 
-    @AddTrace(name="onCompanyVacanciesTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onCompanyVacanciesTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -49,8 +49,7 @@ class CompanyVacanciesFragment : Fragment(), OnFragmentClickListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentCompanyVacanciesBinding.inflate(layoutInflater)
         val view = binding.root
@@ -59,14 +58,11 @@ class CompanyVacanciesFragment : Fragment(), OnFragmentClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-
         CompanyBrowseAPI().CompanyActiveHire(context) {
             binding.spinner.visibility = View.GONE
             if (it != null) {

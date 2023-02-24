@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ApplicantDetail.SectionKomentar
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,21 +17,21 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.Applic
 
 class KomentarApplicantFragment(
     private var comment: List<CommentModel>,
-    private val applicantNo : Long,
+    private val applicantNo: Long,
     private val jobseekerNo: Long,
     private val jobNo: Long,
 ) : Fragment() {
     private lateinit var binding: FragmentKomentarApplicantBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentKomentarApplicantBinding.inflate(layoutInflater)
         val view = binding.root
         return view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnBack.setOnClickListener {
@@ -44,16 +45,16 @@ class KomentarApplicantFragment(
 
         binding.btnSendComment.setOnClickListener {
             CommentAPI().SendCommentPost(
-                context,
-                jobseekerNo,
-                send_comment(jobseekerNo, binding.etReportJob.text.toString())
+                context, jobseekerNo, send_comment(jobseekerNo, binding.etReportJob.text.toString())
             ) {
                 if (it != null) {
-                    CompanyListApplicantAPI().GetListApplicantPost(context, jobNo.toString()) {
-                        res ->
-                        if(res?.data != null){
-                            val currentData = res.data.find {
-                                data-> data.application.applicationNo == applicantNo
+                    CompanyListApplicantAPI().GetListApplicantPost(
+                        context,
+                        jobNo.toString()
+                    ) { res ->
+                        if (res?.data != null) {
+                            val currentData = res.data.find { data ->
+                                data.application.applicationNo == applicantNo
                             }
                             binding.etReportJob.setText("")
                             binding.rvCommentApplicant.apply {

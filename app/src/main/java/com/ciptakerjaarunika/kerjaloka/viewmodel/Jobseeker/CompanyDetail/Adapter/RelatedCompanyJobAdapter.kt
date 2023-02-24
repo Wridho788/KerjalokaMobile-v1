@@ -22,10 +22,7 @@ import java.util.*
 class RelatedCompanyJobAdapter(
     private val companyJobList: List<job>,
     private val onFragmentClickListener: OnFragmentCompanyDetailListener?
-) :
-    RecyclerView.Adapter<RelatedCompanyJobAdapter.ViewHolder>() {
-
-
+) : RecyclerView.Adapter<RelatedCompanyJobAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
         var relatedlogo: ImageView
@@ -55,8 +52,8 @@ class RelatedCompanyJobAdapter(
         val currentItem = companyJobList[position]
         holder.relatedjobPosition.text = currentItem.jobPosition
         holder.relatedjobCompany.text = currentItem.company.companyName
-        holder.relatedjobLocation.text = if(currentItem.jobLocation.size > 1) "Banyak lokasi" else currentItem.jobLocation[0].label
-
+        holder.relatedjobLocation.text =
+            if (currentItem.jobLocation.size > 1) "Banyak lokasi" else currentItem.jobLocation[0].label
         val SECOND = 1
         val MINUTE = 60 * SECOND
         val HOUR = 60 * MINUTE
@@ -87,7 +84,7 @@ class RelatedCompanyJobAdapter(
                 diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
                 diff < 2 * DAY -> "Kemarin"
                 diff < WEEK -> "${diff / DAY} Hari Lalu"
-                else ->LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
             }
 
         }

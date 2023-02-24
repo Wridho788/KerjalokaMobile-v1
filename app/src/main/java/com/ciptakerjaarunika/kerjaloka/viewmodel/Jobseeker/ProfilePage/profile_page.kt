@@ -25,8 +25,7 @@ class profilepage(var Page: Int) : Fragment() {
     private var loading: Int = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentJobseekerProfilePageBinding.inflate(layoutInflater)
         ProfileAPI().JobseekerGetProfileData(context) { response ->
@@ -39,9 +38,7 @@ class profilepage(var Page: Int) : Fragment() {
                 }
                 SessionManager(context).user = response.data.users
             }
-
             lifecycleScope.launchWhenResumed {
-
                 viewpagerAdapter =
                     viewpagerAdapter(response?.data, parentFragmentManager, lifecycle)
                 with(binding) {

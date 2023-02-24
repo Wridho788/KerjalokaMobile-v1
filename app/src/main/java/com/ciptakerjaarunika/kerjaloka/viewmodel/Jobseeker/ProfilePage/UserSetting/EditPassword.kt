@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.UserSetting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,9 @@ import com.google.android.material.button.MaterialButton
 
 class EditPassword : Fragment() {
 
+    @SuppressLint("CutPasteId")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_kata_sandi_profile, container, false)
@@ -47,30 +48,21 @@ class EditPassword : Fragment() {
                     "Kata Sandi Harus Berisi Huruf Kapital"
             } else if (newpassword != confPass.text.toString()) {
                 Toast.makeText(
-                    context,
-                    "Konfirmasi sandi tidak sama dengan password baru",
-                    Toast.LENGTH_SHORT
+                    context, "Konfirmasi sandi tidak sama dengan password baru", Toast.LENGTH_SHORT
                 ).show()
             } else if (newpassword == password) {
                 Toast.makeText(
-                    context,
-                    "Kata sandi tidak boleh sama dengan sebelumnya",
-                    Toast.LENGTH_SHORT
+                    context, "Kata sandi tidak boleh sama dengan sebelumnya", Toast.LENGTH_SHORT
                 ).show()
             } else {
                 company_profile_api().ChangePassword(
-                    password,
-                    newpassword,
-                    context
+                    password, newpassword, context
                 ) {
                     if (it != null) {
                         if (it.code == "210") {
                             Toast.makeText(
-                                activity,
-                                "Berhasil Mengubah Password",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+                                activity, "Berhasil Mengubah Password", Toast.LENGTH_SHORT
+                            ).show()
                             fragmentManager?.popBackStack()
                             view?.findViewById<TextView>(R.id.password_rules_1)?.visibility =
                                 View.GONE

@@ -61,31 +61,23 @@ data class add_Info(
 )
 
 data class listCity(
-    val city: String,
-    val country: String,
-    val locationsNo: Int,
-    val province: String
+    val city: String, val country: String, val locationsNo: Int, val province: String
 )
 
 data class city(
-    val cityName: String = "Kota Medan",
-    val cityNo: Int = 479,
-    val cityProvinceNo: Int = 25
+    val cityName: String = "Kota Medan", val cityNo: Int = 479, val cityProvinceNo: Int = 25
 )
 
 data class country(
-    val countryName: String = "Indonesia",
-    val countryNo: Int = 192
+    val countryName: String = "Indonesia", val countryNo: Int = 192
 )
 
 data class maritalStatus(
-    val maritalNo: Int,
-    val maritalName: String
+    val maritalNo: Int, val maritalName: String
 )
 
 data class marital(
-    val maritalName: String = "Belum Menikah",
-    val maritalNo: Int = 1
+    val maritalName: String = "Belum Menikah", val maritalNo: Int = 1
 )
 
 data class province(
@@ -95,45 +87,35 @@ data class province(
 )
 
 data class religion(
-    val religionName: String = "Protestan",
-    val religionNo: Int = 2
+    val religionName: String = "Protestan", val religionNo: Int = 2
 )
 
 data class skill(
-    val skillName: String,
-    val skillNo: Int
+    val skillName: String, val skillNo: Int
 )
 
 data class scale(
-    val scaleName: String,
-    val scaleNo: Int
+    val scaleName: String, val scaleNo: Int
 )
 
 data class religionList(
-    val religionName: String,
-    val religionNo: Int
+    val religionName: String, val religionNo: Int
 )
 
 data class residentList(
-    val residentName: String,
-    val residentNo: Int
+    val residentName: String, val residentNo: Int
 )
 
 data class resident(
-    val residentName: String = "Warga Negara Asli",
-    val residentNo: Int = 1
+    val residentName: String = "Warga Negara Asli", val residentNo: Int = 1
 )
 
 data class typeJob(
-    val typeJob: String,
-    val typeNo: Int
+    val typeJob: String, val typeNo: Int
 )
 
 data class skills(
-    val jobseekerNo: Long,
-    val scale: Int,
-    val skillName: String,
-    val skillNo: Int
+    val jobseekerNo: Long, val scale: Int, val skillName: String, val skillNo: Int
 )
 
 data class gender(
@@ -142,8 +124,7 @@ data class gender(
 )
 
 data class month(
-    val id: Int,
-    val month: String
+    val id: Int, val month: String
 )
 
 data class year(
@@ -151,18 +132,15 @@ data class year(
 )
 
 data class majors(
-    val majorName: String,
-    val majorNo: Int
+    val majorName: String, val majorNo: Int
 )
 
 data class title(
-    val id: Int,
-    val Title: String
+    val id: Int, val Title: String
 )
 
 data class language(
-    val languageName: String,
-    val languageNo: Int
+    val languageName: String, val languageNo: Int
 )
 
 data class score(
@@ -247,14 +225,10 @@ data class proRat(
 )
 
 data class field(
-    val fieldName: String,
-    val fieldNo: Int,
-    val jobseekerNo: Long
+    val fieldName: String, val fieldNo: Int, val jobseekerNo: Long
 )
 
 data class jobtype(
-    val jobTypeName: String,
-    val jobTypeNo: Int,
-    val jobseekerNo: Long
+    val jobTypeName: String, val jobTypeNo: Int, val jobseekerNo: Long
 )
 

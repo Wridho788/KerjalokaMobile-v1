@@ -4,9 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentActivity
+import com.ciptakerjaarunika.kerjaloka.entity.CameraResult
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerConfiguration
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerView
-import com.ciptakerjaarunika.kerjaloka.entity.CameraResult
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Camera.BaseSystemPickerFragment
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -16,9 +16,11 @@ class BasicGalleryFragment : BaseSystemPickerFragment(), ICustomPickerView {
 
     private var mDefaultSystemGalleryConfig: DefaultSystemGalleryConfig? = null
 
-    override fun display(fragmentActivity: FragmentActivity,
-                         @IdRes viewContainer: Int,
-                         configuration: ICustomPickerConfiguration?) {
+    override fun display(
+        fragmentActivity: FragmentActivity,
+        @IdRes viewContainer: Int,
+        configuration: ICustomPickerConfiguration?
+    ) {
         injectConfigurations(configuration)
 
         val fragmentManager = fragmentActivity.supportFragmentManager
@@ -57,7 +59,10 @@ class BasicGalleryFragment : BaseSystemPickerFragment(), ICustomPickerView {
 
         val mTemp = mDefaultSystemGalleryConfig ?: DefaultSystemGalleryConfig.defaultInstance()
         mTemp.apply {
-            startActivityForResult(this.systemIntent(), BaseSystemPickerFragment.GALLERY_REQUEST_CODE)
+            startActivityForResult(
+                this.systemIntent(),
+                GALLERY_REQUEST_CODE
+            )
         }
     }
 

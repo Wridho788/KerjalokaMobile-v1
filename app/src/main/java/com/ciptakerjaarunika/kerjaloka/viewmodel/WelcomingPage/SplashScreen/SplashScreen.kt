@@ -14,8 +14,8 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.WelcomingPage.OnBoarding.OnBoar
 class SplashScreen : AppCompatActivity() {
 
     fun checkTheme() {
-        val nightModeFlags: Int = application.getResources().getConfiguration().uiMode and
-                Configuration.UI_MODE_NIGHT_MASK
+        val nightModeFlags: Int = application.resources
+            .configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         when (nightModeFlags) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 Log.d("Night", "Night theme flags")
@@ -26,19 +26,20 @@ class SplashScreen : AppCompatActivity() {
         }
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         checkTheme()
 
-        val backgroundImg : LinearLayout = findViewById(R.id.onBoard)
-        val sideAnimation = AnimationUtils.loadAnimation( this,R.anim.slide)
+        val backgroundImg: LinearLayout = findViewById(R.id.onBoard)
+        val sideAnimation = AnimationUtils.loadAnimation(this, R.anim.slide)
 
         backgroundImg.startAnimation(sideAnimation)
 
-        Handler(). postDelayed({
-          startActivity(Intent(this,OnBoarding::class.java))
+        Handler().postDelayed({
+            startActivity(Intent(this, OnBoarding::class.java))
             finish()
-        },3000)
+        }, 3000)
     }
 }

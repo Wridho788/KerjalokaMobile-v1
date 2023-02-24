@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -42,8 +43,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
     private var list: List<applicantModel>? = null
     private var loading = 1
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentJobApplicantBinding.inflate(layoutInflater)
         val view = binding.root
@@ -73,7 +73,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
             if (it != null) {
                 title_job.text = it.data.jobPosition
 
-                if(activity != null) {
+                if (activity != null) {
                     Glide.with(this)
                         .load(config().portAddress + "photo/Profile/" + it.data.company.logo)
                         .fitCenter().into(logo)
@@ -92,6 +92,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
                 var time = it.data.createdOn
                 val now = LocalDateTime.now().toString()
 
+                @SuppressLint("SimpleDateFormat")
                 fun GetDateValue(value: String): Date {
                     val temp = value.split("T")
                     val time = temp[1].split(":")
@@ -133,7 +134,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
 
 
         btn_expand.setOnClickListener {
-            if (layout_content_info != null ){
+            if (layout_content_info != null) {
                 if (layout_content_info.isVisible == isVisible) {
                     layout_content_info.visibility = View.GONE
                     btn_arrow.setImageResource(R.drawable.ic_arrow_down)
@@ -145,6 +146,7 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun getRefreshData() {
         val rv_applicant = view?.findViewById<RecyclerView>(R.id.rv_list_applicant)
         val totalApplicantText = view?.findViewById<TextView>(R.id.totalPelamarText)
@@ -156,7 +158,6 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
         val totalRejectedText = view?.findViewById<TextView>(R.id.totalRejectedText)
         val totalCVbanksText = view?.findViewById<TextView>(R.id.totalCVbanksText)
         val btn_cvBanks = view?.findViewById<LinearLayout>(R.id.btn_cv_banks)
-        Log.d("jobno", JobNo.toString())
         CompanyListApplicantAPI().GetListApplicantPost(context, JobNo.toString()) {
             if (it != null) {
                 loading -= 1
@@ -167,35 +168,35 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
                     adapter = ApplicantAdapter(list!!, this@JobApplicantFragment)
                 }
                 val totalApplicant = list!!.size
-                totalApplicantText?.text = totalApplicant.toString() + " Orang"
+                totalApplicantText?.text = "$totalApplicant Orang"
 
                 val newApplicant =
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Applied.value }.size
-                pelamarBaruText?.text = newApplicant.toString() + " Orang"
+                pelamarBaruText?.text = "$newApplicant Orang"
 
                 val shortList =
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.ShortList.value }.size
-                totalPelamarTerpilih?.text = shortList.toString() + " Orang"
+                totalPelamarTerpilih?.text = "$shortList Orang"
 
                 val testList =
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Test.value }.size
-                totalTestingText?.text = testList.toString() + " Orang"
+                totalTestingText?.text = "$testList Orang"
 
                 val interviewList =
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Interview.value }.size
-                totalInterviewText?.text = interviewList.toString() + " Orang"
+                totalInterviewText?.text = "$interviewList Orang"
 
                 val totalAcceptedList =
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Accepted.value }.size
-                totalDiterimaText?.text = totalAcceptedList.toString() + " Orang"
+                totalDiterimaText?.text = "$totalAcceptedList Orang"
 
                 val totalRejectedList =
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.Rejected.value }.size
-                totalRejectedText?.text = totalRejectedList.toString() + " Orang"
+                totalRejectedText?.text = "$totalRejectedList Orang"
 
                 val cvBanksList =
                     list!!.filter { it.application.applicationStatusNo == ApplicanStatusType.CVBank.value }.size
-                totalCVbanksText?.text = cvBanksList.toString() + " Orang"
+                totalCVbanksText?.text = "$cvBanksList Orang"
                 btn_cvBanks?.setOnClickListener {
                     if (cvBanksList == 0) {
                         Toast.makeText(context, "CV Bank 0", Toast.LENGTH_SHORT).show()
@@ -219,7 +220,11 @@ class JobApplicantFragment(private val JobNo: Long) : Fragment(), iJobApplicant,
 
     override fun goToApplicantDetail(applicantDetail: applicantModel) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-        ft.replace(id, ApplicantDetailFragment ( applicantDetail, this, null), "company applicant detail")
+        ft.replace(
+            id,
+            ApplicantDetailFragment(applicantDetail, this, null),
+            "company applicant detail"
+        )
         ft.addToBackStack("CompanyApplicantDetail")
         ft.commit()
     }
@@ -230,5 +235,4 @@ interface iJobApplicant {
     fun getRefreshData()
 }
 
-interface iCvBankInterface{
-}
+interface iCvBankInterface

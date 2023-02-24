@@ -16,48 +16,52 @@ import com.github.mikephil.charting.data.RadarDataSet
 import com.github.mikephil.charting.data.RadarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
-class PapikostikResultFragment :  SuperBottomSheetFragment() {
+class PapikostikResultFragment : SuperBottomSheetFragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_papikostick_result_company_applicant, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
+        return inflater.inflate(
+            R.layout.fragment_papikostick_result_company_applicant,
+            container,
+            false
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val score =1
+        val score = 1
         val papikostick_chart = view.findViewById<RadarChart>(R.id.papi_result_company_applicant)
         val radarEntry = ArrayList<RadarEntry>()
-        radarEntry.add(RadarEntry(score.toFloat()));
-        radarEntry.add(RadarEntry(3F));
-        radarEntry.add(RadarEntry(4F));
-        radarEntry.add(RadarEntry(2F));
-        radarEntry.add(RadarEntry(1F));
-        radarEntry.add(RadarEntry(score.toFloat()));
-        radarEntry.add(RadarEntry(3F));
-        radarEntry.add(RadarEntry(4F));
-        radarEntry.add(RadarEntry(2F));
-        radarEntry.add(RadarEntry(1F));
-        radarEntry.add(RadarEntry(score.toFloat()));
-        radarEntry.add(RadarEntry(3F));
-        radarEntry.add(RadarEntry(4F));
-        radarEntry.add(RadarEntry(2F));
-        radarEntry.add(RadarEntry(1F));
-        radarEntry.add(RadarEntry(score.toFloat()));
-        radarEntry.add(RadarEntry(3F));
-        radarEntry.add(RadarEntry(4F));
-        radarEntry.add(RadarEntry(2F));
-        radarEntry.add(RadarEntry(1F));
+        radarEntry.add(RadarEntry(score.toFloat()))
+        radarEntry.add(RadarEntry(3F))
+        radarEntry.add(RadarEntry(4F))
+        radarEntry.add(RadarEntry(2F))
+        radarEntry.add(RadarEntry(1F))
+        radarEntry.add(RadarEntry(score.toFloat()))
+        radarEntry.add(RadarEntry(3F))
+        radarEntry.add(RadarEntry(4F))
+        radarEntry.add(RadarEntry(2F))
+        radarEntry.add(RadarEntry(1F))
+        radarEntry.add(RadarEntry(score.toFloat()))
+        radarEntry.add(RadarEntry(3F))
+        radarEntry.add(RadarEntry(4F))
+        radarEntry.add(RadarEntry(2F))
+        radarEntry.add(RadarEntry(1F))
+        radarEntry.add(RadarEntry(score.toFloat()))
+        radarEntry.add(RadarEntry(3F))
+        radarEntry.add(RadarEntry(4F))
+        radarEntry.add(RadarEntry(2F))
+        radarEntry.add(RadarEntry(1F))
 
-        val color = context?.let { ContextCompat.getColor(it, R.color.danger_500) };
+        val color = context?.let { ContextCompat.getColor(it, R.color.danger_500) }
 
         val radarDataSet = RadarDataSet(radarEntry, null)
         radarDataSet.lineWidth = 2f
         radarDataSet.valueTextSize = 14f
-        color?.let { radarDataSet.setColor(it) }
+        color?.let { radarDataSet.color = it }
 
         val radarData = RadarData()
         radarData.addDataSet(radarDataSet)
@@ -101,10 +105,8 @@ class PapikostikResultFragment :  SuperBottomSheetFragment() {
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
 

@@ -9,13 +9,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.ExpLevelAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.ExperienceLevelFilter
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobExperienceLevel
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.ExpLevelAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 
-class ExperienceLevelModal(var data : Int?, val dataList: List<ExperienceLevelFilter>,private val updateData: iUpdateJobAdditionalInfo) : SuperBottomSheetFragment(),
+class ExperienceLevelModal(
+    var data: Int?,
+    val dataList: List<ExperienceLevelFilter>,
+    private val updateData: iUpdateJobAdditionalInfo
+) : SuperBottomSheetFragment(),
     iUpdateExperienceLevel {
 
     override fun onCreateView(
@@ -48,6 +52,7 @@ class ExperienceLevelModal(var data : Int?, val dataList: List<ExperienceLevelFi
     @SuppressLint("Range")
     override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
 }
-interface iUpdateExperienceLevel{
-    fun updateExperienceLevel(value : JobExperienceLevel)
+
+interface iUpdateExperienceLevel {
+    fun updateExperienceLevel(value: JobExperienceLevel)
 }

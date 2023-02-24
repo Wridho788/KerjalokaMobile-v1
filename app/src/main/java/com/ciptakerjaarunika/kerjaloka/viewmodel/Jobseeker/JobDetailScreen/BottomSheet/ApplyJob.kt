@@ -106,8 +106,6 @@ class ApplyJob(
                 }
             } else {
                 action_button?.setOnClickListener {
-//                job.jobShortQuestion.forEach { test->
-//                }
                     JobAPI().ApplyJob(
                         job.jobNo, ApplyJobRequest(
                             message = reasonApply?.text.toString(), tests = tests, listOf()
@@ -134,10 +132,10 @@ class ApplyJob(
         }
     }
 
+    @SuppressLint("CutPasteId")
     fun changeQuestion() {
 
         val action_button = view?.findViewById<MaterialButton>(R.id.action_button)
-
         view?.findViewById<LinearLayout>(R.id.reason_container)?.visibility = GONE
         view?.findViewById<LinearLayout>(R.id.short_question_container)?.visibility = VISIBLE
         view?.findViewById<EditText>(R.id.essay_answer)?.visibility = GONE
@@ -149,12 +147,9 @@ class ApplyJob(
         }
         if (jobShortQuestions.any()) {
             view?.findViewById<TextView>(R.id.quesion_no)?.text = "Pertanyaan ${questionNo}"
-
             val index = questionNo - 1
-
             val currentQuestion = jobShortQuestions[index]
             view?.findViewById<TextView>(R.id.choice_question)?.text = currentQuestion.shortQuestion
-
             if (currentQuestion.questionType == QuestinoType.Essay.value) {
                 view?.findViewById<EditText>(R.id.essay_answer)?.visibility = VISIBLE
             } else if (currentQuestion.questionType == QuestinoType.MultipleAnswer.value || currentQuestion.questionType == QuestinoType.MultipleChoice.value) {

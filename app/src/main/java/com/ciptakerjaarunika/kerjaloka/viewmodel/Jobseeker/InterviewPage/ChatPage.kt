@@ -16,7 +16,6 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,11 +34,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
-import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.api.InterviewAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.BasicImagePicker
+import com.ciptakerjaarunika.kerjaloka.`interface`.RxImagePicker
 import com.ciptakerjaarunika.kerjaloka.model.Interview.MessageType
 import com.ciptakerjaarunika.kerjaloka.model.Interview.Messages
 import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_data
@@ -162,7 +161,6 @@ class ChatPage(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onPickUriSuccess(uri: Uri) {
         val pathName = context?.let { getPathFromUri(it, uri) }
-        Log.d("Path", pathName.toString())
         if (pathName != null) {
             uploadImage(pathName)
         }
@@ -211,6 +209,7 @@ class ChatPage(
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
@@ -371,14 +370,6 @@ class ChatPage(
             }
         }
         recyclerView = itemView.findViewById<RecyclerView>(R.id.recyclerViewChat)
-//        view?.setOnClickListener {
-//            CLoseKeyboard()
-//        }
-//        recyclerView.isClickable = true;
-//        recyclerView.setOnClickListener{
-//            Log.d("CLick", "recyle")
-//            CLoseKeyboard()
-//        }
         hubConnection.on(
             "connected",
             { res ->
@@ -404,7 +395,6 @@ class ChatPage(
             "getmessage",
             { res: chat_data ->
                 SessionManager(context).chatData = res
-                Log.d("Message", res.toString())
                 hubConnection.send("ReadSectionMessage", sectionNo.toString())
                 activity?.runOnUiThread(Runnable {
                     recyclerView.adapter?.notifyDataSetChanged()
@@ -432,13 +422,6 @@ class ChatPage(
         var btn_send = itemView.findViewById<CardView>(R.id.btn_send)
 
 
-//        Timer().scheduleAtFixedRate(object : TimerTask() {
-//            override fun run() {
-//                activity?.runOnUiThread(Runnable {
-//                    recyclerView.adapter?.notifyDataSetChanged()
-//                })
-//            }
-//        }, 0, 1000)
         message.setOnClickListener {
             Timer().schedule(object : TimerTask() {
                 override fun run() {
@@ -488,7 +471,7 @@ class ChatPage(
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
 
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint("NotifyDataSetChanged", "CutPasteId")
             override fun afterTextChanged(s: Editable) {
                 if (!message.text.toString().isNullOrEmpty() && !message.text.toString()
                         .isNullOrBlank() && message.text.toString() != ""
@@ -575,11 +558,6 @@ class ChatPage(
 
     override fun downloadFile(file: Messages) {
         Toast.makeText(context, "Downloading File...", Toast.LENGTH_SHORT).show()
-
-        Log.d(
-            "url",
-            "${config().portAddress}/chat/file/download?chatMessageNo=${file.chatMessageNo}&fileName=${file.fileName}"
-        )
         val request =
             DownloadManager.Request(
                 Uri.parse(
@@ -616,7 +594,9 @@ class ChatPage(
             }
         } else if (requestCode == id + context!!.resources.getInteger(R.integer.ChatPickCamera)) {
             if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
-                pickCamera()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    pickCamera()
+                }
             } else {
                 Toast.makeText(activity, "Perlu akses untuk membuka Camera", Toast.LENGTH_SHORT)
                     .show()

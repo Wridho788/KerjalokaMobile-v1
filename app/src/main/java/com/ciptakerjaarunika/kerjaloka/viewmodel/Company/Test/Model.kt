@@ -1,11 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Test
 
 data class testResponse(
-    val code: Int,
-    val data: List<Test>
+    val code: Int, val data: List<Test>
 )
 
-data class Test (
+data class Test(
     val testNo: Long,
     val testName: String,
     val testDuration: Long,
@@ -25,7 +24,7 @@ data class Test (
     val price: Any? = null
 )
 
-data class Question (
+data class Question(
     val questionNo: Long,
     val question: String,
     val type: Long,

@@ -1,10 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Model
 
 data class search_company_response(
-    val code: Int,
-    val errorCode: Int?,
-    val message: String?,
-    val data: List<search_company_model>
+    val code: Int, val errorCode: Int?, val message: String?, val data: List<search_company_model>
 )
 
 data class search_company_model(
@@ -13,7 +10,7 @@ data class search_company_model(
     val field: String,
     val logo: String,
     val location: location,
-    val followed : Boolean
+    val followed: Boolean
 )
 
 data class location(

@@ -9,7 +9,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.FieldFilter
 
 
-class MinatAdapter(var dataList: List<FieldFilter>):
+class MinatAdapter(var dataList: List<FieldFilter>) :
     RecyclerView.Adapter<MinatAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var fielName: TextView
@@ -30,7 +30,7 @@ class MinatAdapter(var dataList: List<FieldFilter>):
         val currentItem = dataList[position]
         holder.fielName.text = currentItem.fieldName
         holder.checkBox.isChecked = currentItem.checked == true
-        holder.checkBox.setOnClickListener{
+        holder.checkBox.setOnClickListener {
             currentItem.checked = holder.checkBox.isChecked
             dataList[position].checked = holder.checkBox.isChecked
         }

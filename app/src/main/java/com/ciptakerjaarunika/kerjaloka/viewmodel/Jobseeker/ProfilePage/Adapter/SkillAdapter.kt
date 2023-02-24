@@ -15,14 +15,15 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV.
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class SkillAdapter(private val skilItems: List<JobseekerSkills>, val context: Context,val iEditKemampuan: iEditKemampuan):
-    RecyclerView.Adapter<SkillAdapter.Skill>()
-{
+class SkillAdapter(
+    private val skilItems: List<JobseekerSkills>,
+    val context: Context,
+    val iEditKemampuan: iEditKemampuan
+) : RecyclerView.Adapter<SkillAdapter.Skill>() {
     inner class Skill(view: View) : RecyclerView.ViewHolder(view) {
-
         var container: LinearLayout
-        var skillName : TextView
-        var chipGroup : ChipGroup
+        var skillName: TextView
+        var chipGroup: ChipGroup
 
         init {
             container = view.findViewById(R.id.container)
@@ -34,21 +35,17 @@ class SkillAdapter(private val skilItems: List<JobseekerSkills>, val context: Co
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Skill {
         val view = View.inflate(parent.context, R.layout.item_skills, null)
         view.layoutParams = ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         return Skill(view)
     }
 
     override fun onBindViewHolder(holder: Skill, position: Int) {
-
         val currentItems = skilItems.filter { skill -> skill.scale == position + 1 }
-        if(currentItems.size == 0){
+        if (currentItems.size == 0) {
             holder.container.visibility = GONE
-        }
-        else{
-            holder.skillName.setText(SkillScale.values().find { scale -> scale.value == position+1 }?.description)
-
+        } else {
+            holder.skillName.text = SkillScale.values().find { scale -> scale.value == position + 1 }?.description
             currentItems.forEach { skill ->
                 val skil1Chip = Chip(context)
                 skil1Chip.setChipBackgroundColorResource(R.color.danger_100)
@@ -63,13 +60,12 @@ class SkillAdapter(private val skilItems: List<JobseekerSkills>, val context: Co
                     }
                     isCheckable = false
                     holder.apply {
-                        chipGroup?.addView(skil1Chip as View)
+                        chipGroup.addView(skil1Chip as View)
                     }
                 }
             }
 
         }
-//        holder.item.text= currentItem.skillName
     }
 
     override fun getItemCount(): Int {

@@ -17,32 +17,30 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.EditCityAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iEditBasic
+import java.util.*
 
-class EditCity(private val cityNo : Int?,private val locations : List<LocationFilter>,private val iEditBasic: iEditBasic) : SuperBottomSheetFragment(),
-    iCity {
+class EditCity(
+    private val cityNo: Int?,
+    private val locations: List<LocationFilter>,
+    private val iEditBasic: iEditBasic
+) : SuperBottomSheetFragment(), iCity {
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-
-
         var searchInput = view.findViewById<SearchView>(R.id.search_filter)
         searchInput.visibility = VISIBLE
-
         searchInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
             }
-
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
-                val keyword = newText.toString().toLowerCase()
+                val keyword = newText.toString().lowercase(Locale.getDefault())
                 if (keyword.isNullOrEmpty()) {
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -50,29 +48,28 @@ class EditCity(private val cityNo : Int?,private val locations : List<LocationFi
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 } else {
-                    var temp = locations?.filter { data ->
-                        "${data.city}, ${data.province}".toLowerCase().contains(keyword)
+                    var temp = locations.filter { data ->
+                        "${data.city}, ${data.province}".lowercase(Locale.getDefault()).contains(keyword)
                     }
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
-                        adapter = temp?.let {
-                            EditCityAdapter(cityNo,
-                                it, iEditBasic, this@EditCity)
+                        adapter = temp.let {
+                            EditCityAdapter(
+                                cityNo, it, iEditBasic, this@EditCity
+                            )
                         }
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
-                return true;
+                return true
             }
         })
         title.text = "Pilih Kota Domisili"
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
@@ -88,10 +85,8 @@ class EditCity(private val cityNo : Int?,private val locations : List<LocationFi
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun close() {
@@ -99,6 +94,6 @@ class EditCity(private val cityNo : Int?,private val locations : List<LocationFi
     }
 }
 
-interface iCity{
+interface iCity {
     fun close()
 }

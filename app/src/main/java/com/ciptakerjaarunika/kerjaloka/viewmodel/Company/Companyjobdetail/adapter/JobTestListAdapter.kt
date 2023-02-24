@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.JobTest
 import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.JobTest
 
 class JobTestListAdapter(private val testList: List<JobTest>) :
     RecyclerView.Adapter<JobTestListAdapter.ViewHolder>() {

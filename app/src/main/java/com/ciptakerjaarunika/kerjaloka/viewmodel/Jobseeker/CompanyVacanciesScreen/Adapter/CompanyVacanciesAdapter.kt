@@ -33,8 +33,7 @@ class CompanyVacanciesAdapter(private val companyVacanciesModel: List<companyVac
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job, null)
         view.layoutParams = ConstraintLayout.LayoutParams(
-            RecyclerView.LayoutParams.MATCH_PARENT,
-            RecyclerView.LayoutParams.WRAP_CONTENT
+            RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT
         )
         return ViewHolder(view)
 
@@ -51,37 +50,27 @@ class CompanyVacanciesAdapter(private val companyVacanciesModel: List<companyVac
             when (currentItem.jobNo) {
                 1 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 1 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 1 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
                 2 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 2 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 2 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
                 3 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 3 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 3 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
                 4 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 4 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 4 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
                 5 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 5 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 5 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
             }

@@ -15,9 +15,16 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.E
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iUpdateAdditional
 
 
-class EditReligion(private val religionNo : Int?, val religionList : List<Religion>, val iUpdateAdditional: iUpdateAdditional): SuperBottomSheetFragment(),
-    iReligion {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+class EditReligion(
+    private val religionNo: Int?,
+    val religionList: List<Religion>,
+    val iUpdateAdditional: iUpdateAdditional
+) : SuperBottomSheetFragment(), iReligion {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
@@ -26,17 +33,22 @@ class EditReligion(private val religionNo : Int?, val religionList : List<Religi
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = religionList?.let { it1 -> EditReligionAdapter(religionNo, it1, iUpdateAdditional, this@EditReligion) }
+            adapter = religionList.let { it1 ->
+                EditReligionAdapter(
+                    religionNo,
+                    it1,
+                    iUpdateAdditional,
+                    this@EditReligion
+                )
+            }
         }
     }
-
 
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
@@ -49,6 +61,7 @@ class EditReligion(private val religionNo : Int?, val religionList : List<Religi
         this.dismiss()
     }
 }
-interface iReligion{
+
+interface iReligion {
     fun close()
 }

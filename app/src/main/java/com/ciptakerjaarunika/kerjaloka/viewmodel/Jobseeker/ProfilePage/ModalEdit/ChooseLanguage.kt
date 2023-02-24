@@ -16,17 +16,19 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Language
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.ChooseLanguageAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.ProfilePage.iEditBahasa
+import java.util.*
 
 
-class ChooseLanguage(val languageNo : Int?, val languages : List<Language>,val iEditBahasa: iEditBahasa) : SuperBottomSheetFragment(),
-    iChooseLanguage {
+class ChooseLanguage(
+    val languageNo: Int?,
+    val languages: List<Language>,
+    val iEditBahasa: iEditBahasa
+) : SuperBottomSheetFragment(), iChooseLanguage {
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<ChooseLanguageAdapter.chooseLang>? = null
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
@@ -35,8 +37,6 @@ class ChooseLanguage(val languageNo : Int?, val languages : List<Language>,val i
 
         return view
     }
-
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,25 +55,36 @@ class ChooseLanguage(val languageNo : Int?, val languages : List<Language>,val i
                 return true
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
-                val keyword = newText.toString().toLowerCase()
+                val keyword = newText.toString().lowercase(Locale.getDefault())
                 if (keyword.isNullOrEmpty()) {
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
-                        adapter = ChooseLanguageAdapter(languageNo, languages, iEditBahasa, this@ChooseLanguage)
+                        adapter = ChooseLanguageAdapter(
+                            languageNo,
+                            languages,
+                            iEditBahasa,
+                            this@ChooseLanguage
+                        )
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 } else {
-                    var temp = languages?.filter { data ->
-                        data.languageName.toLowerCase().contains(keyword)
+                    var temp = languages.filter { data ->
+                        data.languageName.lowercase(Locale.getDefault()).contains(keyword)
                     }
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
-                        adapter = ChooseLanguageAdapter(languageNo, temp!!, iEditBahasa, this@ChooseLanguage)
+                        adapter = ChooseLanguageAdapter(
+                            languageNo,
+                            temp!!,
+                            iEditBahasa,
+                            this@ChooseLanguage
+                        )
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
-                return true;
+                return true
             }
         })
     }
@@ -86,16 +97,15 @@ class ChooseLanguage(val languageNo : Int?, val languages : List<Language>,val i
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun close() {
         this.dismiss()
     }
 }
-interface iChooseLanguage{
+
+interface iChooseLanguage {
     fun close()
 }

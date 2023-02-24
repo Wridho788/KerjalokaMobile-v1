@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Interview.company_interview_list
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.CellClickListener
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.CellClickListener
 
 class company_interview_adapter(
     private val dataSet: List<company_interview_list>,
@@ -27,6 +27,7 @@ class company_interview_adapter(
         val applicantCount: TextView
         val lastMessageOn: TextView
         val notRead: TextView
+
         init {
             jobName = view.findViewById(R.id.sectionName)
             applicantCount = view.findViewById(R.id.applicantCount)
@@ -60,12 +61,10 @@ class company_interview_adapter(
                 viewHolder.notRead.visibility = if (currentSection.notRead != 0) VISIBLE else GONE
 
                 viewHolder.lastMessageOn.text =
-                    DateUtils().GetLastMessageOn(currentSection.messages.last()?.createdOn ?: "")
-//                    currentSection.messages?.last()?.createdOn?.dateToString("HH:mm") ?: ""
+                    DateUtils().GetLastMessageOn(currentSection.messages.last().createdOn)
                 viewHolder.lastMessageOn.visibility = VISIBLE
             }
         }
-//        viewHolder.lastMessageOn.text = dataSet[position].Messages[dataSet[position].Messages.count()-1].CreatedOn.dateToString("HH:mm")
         viewHolder.itemView.setOnClickListener {
             cellClickListener.companyInterviewClick(dataSet[position], dataSet[position].jobNo)
         }

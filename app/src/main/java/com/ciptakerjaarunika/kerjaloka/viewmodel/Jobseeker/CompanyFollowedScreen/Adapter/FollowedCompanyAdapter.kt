@@ -12,7 +12,8 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyFollowedScreen.Model.FollowedCompanyModel
 import com.google.android.material.card.MaterialCardView
 
-class FollowedCompanyAdapter(private val followedCompanyModel: List<FollowedCompanyModel>) : RecyclerView.Adapter<FollowedCompanyAdapter.ViewHolder>() {
+class FollowedCompanyAdapter(private val followedCompanyModel: List<FollowedCompanyModel>) :
+    RecyclerView.Adapter<FollowedCompanyAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobPosition: TextView
         var logo: ImageView
@@ -32,10 +33,9 @@ class FollowedCompanyAdapter(private val followedCompanyModel: List<FollowedComp
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job, null)
         view.layoutParams = ConstraintLayout.LayoutParams(
-            RecyclerView.LayoutParams.MATCH_PARENT,
-            RecyclerView.LayoutParams.WRAP_CONTENT
+            RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT
         )
-        return ViewHolder(view);
+        return ViewHolder(view)
 
     }
 
@@ -46,41 +46,31 @@ class FollowedCompanyAdapter(private val followedCompanyModel: List<FollowedComp
         holder.jobLocation.text = currentItem.jobLocation
         Glide.with(holder.itemView.context).load(currentItem.logo).fitCenter().into(holder.logo)
 
-        holder.cardCompanyFollower.setOnClickListener{
+        holder.cardCompanyFollower.setOnClickListener {
             when (currentItem.jobNo) {
                 1 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 1 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 1 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
                 2 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 2 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 2 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
                 3 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 3 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 3 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
                 4 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 4 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 4 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
                 5 -> {
                     Toast.makeText(
-                        holder.itemView.context,
-                        "Job 5 telah di klik",
-                        Toast.LENGTH_SHORT
+                        holder.itemView.context, "Job 5 telah di klik", Toast.LENGTH_SHORT
                     ).show()
                 }
             }

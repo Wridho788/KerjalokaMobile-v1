@@ -11,11 +11,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.CategoryShortQuestionAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.short_question_category
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestionCategory
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.CategoryShortQuestionAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 
 class BottomSheetShortCategory(val iUpdatePage5: iUpdatePage5) : SuperBottomSheetFragment(),
     iChooseCategory {

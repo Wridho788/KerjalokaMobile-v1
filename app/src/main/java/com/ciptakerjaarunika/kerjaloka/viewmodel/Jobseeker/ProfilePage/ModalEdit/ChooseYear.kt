@@ -31,17 +31,15 @@ class ChooseYear(val type:String, val value: Int?, val iManageExp: iManageExp): 
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var list : List<Int> = listOf()
         val now = LocalDate.now().year
-
-        for (i in now - 100..now){
-            list +=  i
-        }
+//
+//        for (i in now - 100..now){
+//            list +=  i
+//        }
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         recyclerView.apply {
@@ -49,7 +47,6 @@ class ChooseYear(val type:String, val value: Int?, val iManageExp: iManageExp): 
             adapter = ChooseYearAdapter(type,value, list.sortedDescending(), iManageExp, this@ChooseYear)
         }
     }
-
 
     override fun isSheetAlwaysExpanded(): Boolean {
         return true

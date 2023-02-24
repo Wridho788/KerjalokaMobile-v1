@@ -4,12 +4,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.iChooseCategory
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestionCategory
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.iChooseCategory
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 
-class CategoryShortQuestionAdapter(private var dataset: List<ShortQuestionCategory>?, val iChooseCategory: iChooseCategory, val iUpdatePage5: iUpdatePage5) : RecyclerView.Adapter<CategoryShortQuestionAdapter.ViewHolder?>() {
+class CategoryShortQuestionAdapter(
+    private var dataset: List<ShortQuestionCategory>?,
+    val iChooseCategory: iChooseCategory,
+    val iUpdatePage5: iUpdatePage5
+) : RecyclerView.Adapter<CategoryShortQuestionAdapter.ViewHolder?>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtCategory: TextView
 
@@ -24,7 +28,7 @@ class CategoryShortQuestionAdapter(private var dataset: List<ShortQuestionCatego
     }
 
     override fun getItemCount(): Int {
-        return  dataset!!.size
+        return dataset!!.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

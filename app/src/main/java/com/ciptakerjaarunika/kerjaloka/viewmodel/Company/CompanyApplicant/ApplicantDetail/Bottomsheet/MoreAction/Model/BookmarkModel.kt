@@ -17,5 +17,5 @@ data class BookmarkModel(
 
 data class send_bookmark(
     val jobNo: Long,
-    val jobseekerNo:Long,
+    val jobseekerNo: Long,
 )

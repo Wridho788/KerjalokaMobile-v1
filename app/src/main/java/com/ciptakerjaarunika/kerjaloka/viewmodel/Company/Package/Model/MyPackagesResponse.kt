@@ -4,8 +4,5 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Model
 import com.google.gson.annotations.SerializedName
 
 data class MyPackagesResponse(
-    @SerializedName("code")
-    val code: String,
-    @SerializedName("data")
-    val `data`: List<Data>
+    @SerializedName("code") val code: String, @SerializedName("data") val `data`: List<Data>
 )

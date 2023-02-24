@@ -2,7 +2,6 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.JobseekerReview.Adapte
 
 import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,10 +46,9 @@ class JobseekerReviewAdapter(private val reviewList: List<reviewList>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card_review, null)
         val lp = RecyclerView.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        view.setLayoutParams(lp)
+        view.layoutParams = lp
 
         return ViewHolder(view)
     }
@@ -61,7 +59,7 @@ class JobseekerReviewAdapter(private val reviewList: List<reviewList>) :
         holder.companyName.text = currentItem.userFullName
         holder.comment.text = currentItem.comment
         val proRating = currentItem.proRating
-        proRating.forEach{
+        proRating.forEach {
             val chip = Chip(holder.chipProRating.context)
             chip.setChipBackgroundColorResource(R.color.danger_100)
             chip.apply {
@@ -77,7 +75,7 @@ class JobseekerReviewAdapter(private val reviewList: List<reviewList>) :
             }
         }
         val conRating = currentItem.conRating
-        conRating.forEach{
+        conRating.forEach {
             val chip = Chip(holder.chipConRating.context)
             chip.setChipBackgroundColorResource(R.color.danger_100)
             chip.apply {
@@ -94,7 +92,7 @@ class JobseekerReviewAdapter(private val reviewList: List<reviewList>) :
         }
         holder.ratingBar.rating = currentItem.rating
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile" + currentItem.raterPhoto).fitCenter()
+            .load(config().portAddress + "photo/Profile" + currentItem.raterPhoto).fitCenter()
             .into(holder.picture)
 
         val SECOND = 1
@@ -102,9 +100,7 @@ class JobseekerReviewAdapter(private val reviewList: List<reviewList>) :
         val HOUR = 60 * MINUTE
         val DAY = 24 * HOUR
         val WEEK = 7 * DAY
-
         var time = currentItem.ratingAt
-        Log.d("time", time.toString())
         val now = LocalDateTime.now().toString()
 
         @SuppressLint("SimpleDateFormat")
@@ -129,7 +125,8 @@ class JobseekerReviewAdapter(private val reviewList: List<reviewList>) :
                 diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
                 diff < 2 * DAY -> "Kemarin"
                 diff < WEEK -> "${diff / DAY} Hari Lalu"
-                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd MMMM yyyy 'pada' h:mm "))
+                else -> LocalDateTime.parse(time)
+                    .format(DateTimeFormatter.ofPattern("dd MMMM yyyy 'pada' h:mm "))
             }
         }
         holder.ratingAt.text = dateDiff()

@@ -38,8 +38,7 @@ class SearchCompanyAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_job, null)
         view.layoutParams = ConstraintLayout.LayoutParams(
-            RecyclerView.LayoutParams.MATCH_PARENT,
-            RecyclerView.LayoutParams.WRAP_CONTENT
+            RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT
         )
         return ViewHolder(view)
     }
@@ -49,7 +48,8 @@ class SearchCompanyAdapter(
         holder.companyName.text = currentItem.companyName
         holder.fieldName.text = currentItem.fieldName
         holder.locationText.text = currentItem.locationText
-        holder.cardCompany.setOnClickListener { onFragmentTransactionListCompany.onFragmentCompanyDetailsClick(currentItem.companyNo)
+        holder.cardCompany.setOnClickListener {
+            onFragmentTransactionListCompany.onFragmentCompanyDetailsClick(currentItem.companyNo)
         }
         Glide.with(holder.itemView.context)
             .load(config().portAddress + "photo/Profile/" + currentItem.logo).fitCenter()

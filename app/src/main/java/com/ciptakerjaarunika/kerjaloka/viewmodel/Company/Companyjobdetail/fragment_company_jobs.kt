@@ -8,16 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Listener.JobDetail
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.Companyjobs_adapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.DataCount
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.ResponseCompanyJobs
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyJobsBinding
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Listener.JobDetail
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.Companyjobs_adapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.DataCount
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.ResponseCompanyJobs
 import com.google.gson.Gson
-
 
 class fragment_company_jobs : Fragment() {
 
@@ -89,13 +88,6 @@ class fragment_company_jobs : Fragment() {
             }
         }
     }
-
-//    fun LoadingDone() {
-//        if (loading == 0) {
-//            binding.spinner.visibility = View.GONE
-//            binding.contentContainer.visibility = View.VISIBLE
-//        }
-//    }
 
     private fun replaceFragment(data: DataCount?) {
         val jobDetailFragment = fragment_company_job_active_page()

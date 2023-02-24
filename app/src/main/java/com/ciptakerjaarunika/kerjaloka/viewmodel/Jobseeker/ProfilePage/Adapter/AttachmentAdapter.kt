@@ -10,12 +10,12 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Attachment.iEditLampiran
 
 
-class AttachmentAdapter(var dataList: List<Documents>, val iEditLampiran: iEditLampiran):
+class AttachmentAdapter(var dataList: List<Documents>, val iEditLampiran: iEditLampiran) :
     RecyclerView.Adapter<AttachmentAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var fielName: TextView
         var documentName: TextView
-        var deleteButton : ImageView
+        var deleteButton: ImageView
 
         init {
             fielName = itemView.findViewById(R.id.fileName)
@@ -36,11 +36,6 @@ class AttachmentAdapter(var dataList: List<Documents>, val iEditLampiran: iEditL
         holder.deleteButton.setOnClickListener {
             iEditLampiran.delete(currentItem)
         }
-//        holder.checkBox.isChecked = currentItem.checked == true
-//        holder.checkBox.setOnClickListener{
-//            currentItem.checked = holder.checkBox.isChecked
-//            dataList[position].checked = holder.checkBox.isChecked
-//        }
     }
 
     override fun getItemCount(): Int {

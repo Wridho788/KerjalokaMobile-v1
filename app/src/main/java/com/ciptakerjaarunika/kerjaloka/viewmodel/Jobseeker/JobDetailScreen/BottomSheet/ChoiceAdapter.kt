@@ -10,8 +10,8 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.enum.QuestinoType
 import com.ciptakerjaarunika.kerjaloka.model.Test.ShortQuestionChoices
 
-class ChoiceAdapter(private var choice : List<ShortQuestionChoices>, private val questionType : Int) : RecyclerView.Adapter<ChoiceAdapter.ViewHolder>() {
-
+class ChoiceAdapter(private var choice: List<ShortQuestionChoices>, private val questionType: Int) :
+    RecyclerView.Adapter<ChoiceAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var filterTxt: TextView
         var choiceContainer: LinearLayout
@@ -32,24 +32,19 @@ class ChoiceAdapter(private var choice : List<ShortQuestionChoices>, private val
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = choice[position]
         holder.filterTxt.text = currentItem.choice
-        holder.checkBox.setOnClickListener{
-            if(questionType == QuestinoType.MultipleChoice.value){
+        holder.checkBox.setOnClickListener {
+            if (questionType == QuestinoType.MultipleChoice.value) {
                 choice[position].isSelected = true
                 choice.forEach {
-                    if(it.shortQuestionChoiceNo != currentItem.shortQuestionChoiceNo){
+                    if (it.shortQuestionChoiceNo != currentItem.shortQuestionChoiceNo) {
                         it.isSelected = false
                     }
                 }
-            }
-            else{
+            } else {
                 choice[position].isSelected = !currentItem.isSelected
             }
         }
         holder.checkBox.isChecked = currentItem.isSelected
-
-//        holder.cardrelatedJob.setOnClickListener {
-//            onFragmentClickListener.onFragmentClick()
-//        }
     }
 
     override fun getItemCount(): Int {

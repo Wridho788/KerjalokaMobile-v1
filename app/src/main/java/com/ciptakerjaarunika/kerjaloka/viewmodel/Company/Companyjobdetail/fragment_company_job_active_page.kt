@@ -35,7 +35,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
 class fragment_company_job_active_page : Fragment() {
 
     var jobData: DataActiveJob? = null
@@ -95,8 +94,7 @@ class fragment_company_job_active_page : Fragment() {
         if (imgJob != null) {
             Glide.with(view!!.context)
                 .load(config().portAddress + "photo/Profile/" + SessionManager(context).user?.companyAdditional?.logo)
-                .fitCenter()
-                .into(imgJob)
+                .fitCenter().into(imgJob)
         }
 
 
@@ -112,12 +110,11 @@ class fragment_company_job_active_page : Fragment() {
         if (arguments != null) {
 
             if (jobData == null) {
-                val descFromBundle =
-                    arguments?.getString(EXTRA_DETAIL_JOB)
+                val descFromBundle = arguments?.getString(EXTRA_DETAIL_JOB)
                 jobData = Gson().fromJson(descFromBundle, DataActiveJob::class.java)
             }
             Log.d("jobNo", jobData!!.jobNo.toString())
-            CompanyJobAPI().GetCompanyAnalytic(context, 8, jobData?.jobNo!!.toLong()){
+            CompanyJobAPI().GetCompanyAnalytic(context, 8, jobData?.jobNo!!.toLong()) {
                 if (it != null) {
                     Log.d("analytic", it.toString())
                     jobView?.text = "${it.data.analytic.clickCount} views"
@@ -145,14 +142,12 @@ class fragment_company_job_active_page : Fragment() {
                 location += "&#8226; ${it}<br/>"
                 listLocation = listOf(it)
             }
-//            Log.d("location", listLocation.toString())
             jobLoc?.text = Html.fromHtml(location)
 
             if (jobData?.jobDescription != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     jobReq?.text = Html.fromHtml(
-                        jobData?.jobDescription,
-                        Html.FROM_HTML_MODE_COMPACT
+                        jobData?.jobDescription, Html.FROM_HTML_MODE_COMPACT
                     )
                 } else {
                     jobReq?.text = Html.fromHtml(jobData?.jobDescription)
@@ -191,7 +186,7 @@ class fragment_company_job_active_page : Fragment() {
             if (jobData?.createdOn != null) {
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
                 sdf.timeZone = TimeZone.getTimeZone("GMT+7")
-                val time: Long = sdf.parse(jobData?.createdOn.toString()).time
+                val time: Long = sdf.parse(jobData?.createdOn.toString())!!.time
                 val now = System.currentTimeMillis()
                 val ago = DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS)
                 jobtime?.text = ago
@@ -257,8 +252,7 @@ class fragment_company_job_active_page : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_company_job_active_page, container, false)

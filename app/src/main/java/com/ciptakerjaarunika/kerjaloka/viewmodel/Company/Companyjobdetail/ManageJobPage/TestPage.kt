@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.TestAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.iAddidiontalInfoPage
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.TestList
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentTestJobPageBinding
 import com.ciptakerjaarunika.kerjaloka.model.Data.TestJob
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.CompanyJobDetail
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter.TestAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.iAddidiontalInfoPage
 
-class TestPage(val data: CompanyJobDetail, val updateData : iAddidiontalInfoPage) : Fragment() {
+class TestPage(val data: CompanyJobDetail, val updateData: iAddidiontalInfoPage) : Fragment() {
     private lateinit var binding: FragmentTestJobPageBinding
     private var list: List<TestJob>? = null
     var getTestJob: List<TestJob>? = listOf()

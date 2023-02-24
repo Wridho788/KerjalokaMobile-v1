@@ -2,14 +2,15 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.Appli
 
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.provider.CalendarContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
@@ -39,14 +40,12 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
 class StatusPageFragment(
     private val applicantNo: Long,
     var applicantName: String,
     var applicantEmail: String,
     private var applicationStatusNo: Int
-) :
-    Fragment(), iStatusPage, TimePickerDialog.OnTimeSetListener {
+) : Fragment(), iStatusPage, TimePickerDialog.OnTimeSetListener {
     private lateinit var binding: FragmentStatusPageBinding
     lateinit var datePicker: DatePickerHelper
     lateinit var timePicker: TimePicker
@@ -64,15 +63,13 @@ class StatusPageFragment(
         val firebaseAuth = FirebaseAuth.getInstance()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mAuth = FirebaseAuth.getInstance()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentStatusPageBinding.inflate(layoutInflater)
         val view = binding.root
@@ -80,13 +77,10 @@ class StatusPageFragment(
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(Scope(Scopes.DRIVE_APPFOLDER))
             .requestServerAuthCode(getString(R.string.default_web_client_id))
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+            .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(
-            context!!,
-            gso
+            context!!, gso
         )
         return view
     }
@@ -148,11 +142,9 @@ class StatusPageFragment(
     }
 
     private fun signIn() {
-
         if (mGoogleSignInClient != null) {
             signInIntent()
         } else {
-            Log.d("googleSign", mGoogleSignInClient!!.signInIntent.toString())
             Toast.makeText(context, "Membutuhkan Google SignIn", Toast.LENGTH_SHORT).show()
             signInIntent()
         }
@@ -161,21 +153,9 @@ class StatusPageFragment(
     fun signInIntent() {
         val signInIntent: Intent = mGoogleSignInClient!!.signInIntent
         startActivityForResult(signInIntent, Req_Code)
-//        if (!GoogleSignIn.hasPermissions(
-//                GoogleSignIn.getLastSignedInAccount(getActivity()!!),
-//                Drive.SCOPE_APPFOLDER)) {
-//            GoogleSignIn.requestPermissions(
-//                MyExampleActivity.this,
-//                RC_REQUEST_PERMISSION_SUCCESS_CONTINUE_FILE_CREATION,
-//                GoogleSignIn.getLastSignedInAccount(getActivity()),
-//                Drive.SCOPE_APPFOLDER);
-//        }
-        //        else {
-//            saveToDriveAppFolder();
-//        }
-
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -183,20 +163,7 @@ class StatusPageFragment(
             try {
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
-//                if (!GoogleSignIn.hasPermissions(
-//                        GoogleSignIn.getLastSignedInAccount(getContext()!!), Scopes.DRIVE_APPFOLDER
-//                    )
-//                ) {
-//
-//                    GoogleSignIn.requestPermissions(
-//                        context,
-//                        Req_Code,
-//                        GoogleSignIn.getLastSignedInAccount(context!!),
-//                        Scopes.DRIVE_APPFOLDER
-//                    )
-//                }
                 handleSignInResult(task)
-
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(context, "Google Sign In Failed", Toast.LENGTH_SHORT).show()
@@ -204,6 +171,7 @@ class StatusPageFragment(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
@@ -219,6 +187,7 @@ class StatusPageFragment(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun UpdateUI(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         val currentDate = Date()
@@ -230,74 +199,32 @@ class StatusPageFragment(
         val odt = OffsetDateTime.parse(oneHourBack.toString(), dtfInput)
         this.expired = odt.toString()
 
-        firebaseAuth.signInWithCredential(credential)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val text = "${account.idToken}${config().authKey}${4}"
-                    val crypt = MessageDigest.getInstance("MD5")
-                    crypt.update(text.toByteArray())
-                    val hash = BigInteger(1, crypt.digest()).toString(16)
-//                    fun md5(str: String): ByteArray =
-//                        MessageDigest.getInstance("MD5").digest(str.toByteArray(Charsets.UTF_8))
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val text = "${account.idToken}${config().authKey}${4}"
+                val crypt = MessageDigest.getInstance("MD5")
+                crypt.update(text.toByteArray())
+                val hash = BigInteger(1, crypt.digest()).toString(16)
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        return@OnCompleteListener
+                    }
+                    val token = task.result
+                    SessionManager(context).device_token = token
 
-                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                        if (!task.isSuccessful) {
-                            return@OnCompleteListener
-                        }
-                        val token = task.result
-                        SessionManager(context).device_token = token
+                })
 
-                    })
-
-                    val googleRequest =
-                        GoogleLoginRequest(
-                            account.idToken.toString(),
-                            oneHourBack.toString(),
-                            hash,
-                            deviceToken = SessionManager(context).device_token
-                        )
-                    Log.d("googleRequest status", googleRequest.toString())
-                    this.googleToken = googleRequest.token
+                val googleRequest = GoogleLoginRequest(
+                    account.idToken.toString(),
+                    oneHourBack.toString(),
+                    hash,
+                    deviceToken = SessionManager(context).device_token
+                )
+                this.googleToken = googleRequest.token
 
 
-                }
             }
-    }
-
-    private fun intentEvenetCalender() {
-        val intent = Intent(Intent.ACTION_INSERT)
-        intent.data = CalendarContract.Events.CONTENT_URI
-        startActivity(intent)
-
-        intent.type = "vnd.android.cursor.item/event"
-        intent.putExtra(CalendarContract.Events.TITLE, "Learn Android")
-        intent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Home suit home")
-        intent.putExtra(CalendarContract.Events.DESCRIPTION, "Download Examples")
-        val calDate = GregorianCalendar(2012, 10, 2)
-        intent.putExtra(
-            CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-            calDate.timeInMillis
-        )
-        intent.putExtra(
-            CalendarContract.EXTRA_EVENT_END_TIME,
-            calDate.timeInMillis
-        )
-        // make it a full day event
-        intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
-        // make it a recurring Event
-        intent.putExtra(
-            CalendarContract.Events.RRULE,
-            "FREQ=WEEKLY;COUNT=11;WKST=SU;BYDAY=TU,TH"
-        )
-        // Making it private and shown as busy
-        intent.putExtra(
-            CalendarContract.Events.ACCESS_LEVEL,
-            CalendarContract.Events.ACCESS_PRIVATE
-        )
-        intent.putExtra(
-            CalendarContract.Events.AVAILABILITY,
-            CalendarContract.Events.AVAILABILITY_BUSY
-        )
+        }
     }
 
     override fun changeStatus(status: Int) {
@@ -308,7 +235,6 @@ class StatusPageFragment(
                 ShortlistStatus(context, applicantNo) {
                     if (it != null) {
                         if (it.code == 210) {
-                            Log.d("response", it.toString())
                             activity?.onBackPressed()
                         }
                     }
@@ -321,7 +247,6 @@ class StatusPageFragment(
                 TestStatus(context, applicantNo) {
                     if (it != null) {
                         if (it.code == 210) {
-                            Log.d("response", it.toString())
                             activity?.onBackPressed()
                         }
                     }
@@ -338,95 +263,23 @@ class StatusPageFragment(
                         .show()
                 } else if (dateInterview.toString().isNullOrEmpty()) {
                     Toast.makeText(
-                        context,
-                        "Silahkan Atur Jadwal Interview",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                        context, "Silahkan Atur Jadwal Interview", Toast.LENGTH_SHORT
+                    ).show()
                 } else if (nameInterview.toString().isNullOrEmpty()) {
                     Toast.makeText(context, "Silahkan Isi Nama Interviewer", Toast.LENGTH_SHORT)
                         .show()
                 } else if (locationInterview.toString().isNullOrEmpty()) {
                     Toast.makeText(
-                        context,
-                        "Silahkan Isi Lokasi Interview",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                        context, "Silahkan Isi Lokasi Interview", Toast.LENGTH_SHORT
+                    ).show()
                 }
-//                else if (googleToken.toString().isNullOrEmpty()) {
-//                    signIn()
-//                    var listEmail = ArrayList<email>()
-//                    listEmail.add(email(emailAttendess))
-//
-//                    var datetimeStart = "${dateInterview}T${startInterview}:00.007Z"
-//                    var datetimeEnd = "${dateInterview}T${endInterview}:00.007Z"
-//                    var end = end(
-//                        "$datetimeEnd", "Asia/Jakarta"
-//                    )
-//                    var start = start(
-//                        "$datetimeStart", "Asia/Jakarta"
-//                    )
-//                    var listoverride = ArrayList<override>()
-//                    var override = override(
-//                        24 * 60
-//                    )
-//                    listoverride.add(override)
-//                    var reminder = reminder(
-//                        listoverride,
-//                        useDefault = false
-//                    )
-//
-//                    var calenderEvents = calenderEvent(
-//                        attendees = listEmail,
-//                        description = "A Chance To Know More About Company",
-//                        end = end,
-//                        start = start,
-//                        guestsCanInviteOthers = false,
-//                        guestsCanModify = false,
-//                        location = locationInterview.toString(),
-//                        reminder = reminder,
-//                        summary = "${SessionManager(context).user?.company?.companyName} Mengundang kamu untuk Interview, (${applicantName})"
-//                    )
-//
-//                    var interviewSchedule = InterviewScheduleRequest(
-//                        applicantNo,
-//                        calenderEvents,
-//                        expired,
-//                        googleToken
-//                    )
-//                    InterviewSchedule(context, interviewSchedule) {
-//                        Log.d("interviewSchedule", it.toString())
-//                        if (it != null) {
-//                            if (it.code == 210) {
-//                                Toast.makeText(
-//                                    context,
-//                                    "Berhasil Mengubah Status",
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
-//                                intentEvenetCalender()
-//                            }
-//                        }
-//                    }
-//
-//                } else {
-//                    Toast.makeText(
-//                        context,
-//                        "Terjadi Kesalahan yang tidak diketahui",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//                val interviewSchedule = InterviewScheduleRequest(
-//                    applicantNo,
-//                )
-
-              InterviewStatus(context, applicantNo){
-                  if (it != null){
-                      if (it.code == 210){
-                          activity?.onBackPressed()
-                      }
-                  }
-              }
+                InterviewStatus(context, applicantNo) {
+                    if (it != null) {
+                        if (it.code == 210) {
+                            activity?.onBackPressed()
+                        }
+                    }
+                }
             }
         } else if (status == ApplicanStatusType.Accepted.value) {
             binding.statusChange.text = "Diterima"
@@ -435,7 +288,6 @@ class StatusPageFragment(
                 AcceptedStatus(context, applicantNo) {
                     if (it != null) {
                         if (it.code == 210) {
-                            Log.d("response", it.toString())
                             activity?.onBackPressed()
                         }
                     }
@@ -448,7 +300,6 @@ class StatusPageFragment(
                 RejectedStatus(context, applicantNo) {
                     if (it != null) {
                         if (it.code == 210) {
-                            Log.d("response", it.toString())
                             activity?.onBackPressed()
                         }
                     }
@@ -461,7 +312,6 @@ class StatusPageFragment(
                 CvbankStatus(context, applicantNo) {
                     if (it != null) {
                         if (it.code == 210) {
-                            Log.d("response", it.toString())
                             activity?.onBackPressed()
                         }
                     }
@@ -476,16 +326,15 @@ class StatusPageFragment(
 
         binding.btnTimePicker.setOnClickListener {
             val cal = Calendar.getInstance()
-            val timeSetListener =
-                TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                    cal.set(Calendar.HOUR_OF_DAY, hour)
-                    cal.set(Calendar.MINUTE, minute)
-                    var timeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
-                    this.startInterview = timeFormatter
-                    Log.d("Interview Start", startInterview)
-                    binding.textBegin.text = timeFormatter.toString()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                var timeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
+                this.startInterview = timeFormatter
+                Log.d("Interview Start", startInterview)
+                binding.textBegin.text = timeFormatter.toString()
 
-                }
+            }
             TimePickerDialog(
                 context,
                 timeSetListener,
@@ -497,15 +346,13 @@ class StatusPageFragment(
 
         binding.btnTimePickerEnd.setOnClickListener {
             val cal = Calendar.getInstance()
-            val timeSetListener =
-                TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                    cal.set(Calendar.HOUR_OF_DAY, hour)
-                    cal.set(Calendar.MINUTE, minute)
-                    var endTimeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
-                    this.endInterview = endTimeFormatter.toString()
-                    Log.d("Interview end", endTimeFormatter.toString())
-                    binding.textEnd.text = endTimeFormatter.toString()
-                }
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                var endTimeFormatter = SimpleDateFormat("HH:mm").format(cal.time)
+                this.endInterview = endTimeFormatter.toString()
+                binding.textEnd.text = endTimeFormatter.toString()
+            }
             TimePickerDialog(
                 context,
                 timeSetListener,

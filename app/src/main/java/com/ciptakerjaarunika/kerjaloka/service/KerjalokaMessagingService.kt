@@ -18,19 +18,25 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.Incomin
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-class KerjalokaMessagingService() :FirebaseMessagingService() {
-    private var playRingtone : MediaPlayer? = null;
+class KerjalokaMessagingService : FirebaseMessagingService() {
+    private var playRingtone: MediaPlayer? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onMessageReceived(message: RemoteMessage) {
-        if(message?.notification != null) {
+        if (message.notification != null) {
             if (message.notification!!.title != "IncomingCall") {
-                    generateNotification(message.notification!!.title!!, message.notification!!.body!!, false)
+                generateNotification(
+                    message.notification!!.title!!,
+                    message.notification!!.body!!,
+                    false
+                )
             }
 
         }
     }
+
     // Generate the notification
-    fun getRemoteView(title: String, message: String):RemoteViews{
+    fun getRemoteView(title: String, message: String): RemoteViews {
         val remoteViews = RemoteViews(config().channelName, R.layout.notification)
         remoteViews.setTextViewText(R.id.title_notification, title)
         remoteViews.setTextViewText(R.id.message_notification, message)
@@ -38,27 +44,30 @@ class KerjalokaMessagingService() :FirebaseMessagingService() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun generateNotification(title : String, message :String, isCall : Boolean){
-            var intent : Intent?  = null
-        if(!isCall) {
+    fun generateNotification(title: String, message: String, isCall: Boolean) {
+        var intent: Intent? = null
+        if (!isCall) {
             intent = Intent(this, MainActivity::class.java)
-        }else{
+        } else {
             intent = Intent(this, IncomingCallActivity::class.java)
         }
 
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_IMMUTABLE)
-        var builder : NotificationCompat.Builder = NotificationCompat.Builder(this, config().channelId)
-            .setSmallIcon(R.drawable.kerjaloka_logo_small)
-            .setAutoCancel(true)
-            .setVibrate(longArrayOf(1000, 1000))
-            .setOnlyAlertOnce(true)
-            .setContentIntent(pendingIntent)
-            .setContent(getRemoteView(title, message))
+        var builder: NotificationCompat.Builder =
+            NotificationCompat.Builder(this, config().channelId)
+                .setSmallIcon(R.drawable.kerjaloka_logo_small).setAutoCancel(true)
+                .setVibrate(longArrayOf(1000, 1000)).setOnlyAlertOnce(true)
+                .setContentIntent(pendingIntent).setContent(getRemoteView(title, message))
 
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val notificationChannel = NotificationChannel(config().channelId, config().channelName, NotificationManager.IMPORTANCE_HIGH)
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                config().channelId,
+                config().channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
             notificationManager.createNotificationChannel(notificationChannel)
         }
         notificationManager.notify(0, builder.build())

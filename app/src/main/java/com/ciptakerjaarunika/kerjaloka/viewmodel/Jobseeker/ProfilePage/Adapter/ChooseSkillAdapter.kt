@@ -12,14 +12,17 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV.iEditKemampuan
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.iChooseSkill
 
-class ChooseSkillAdapter(val value : SkillFilter?, private val skilItems: List<SkillFilter>, val iEditKemampuan: iEditKemampuan, val iChooseSkill: iChooseSkill):
-    RecyclerView.Adapter<ChooseSkillAdapter.chooseSkil>()
-{
+class ChooseSkillAdapter(
+    val value: SkillFilter?,
+    private val skilItems: List<SkillFilter>,
+    val iEditKemampuan: iEditKemampuan,
+    val iChooseSkill: iChooseSkill
+) : RecyclerView.Adapter<ChooseSkillAdapter.chooseSkil>() {
 
     inner class chooseSkil(view: View) : RecyclerView.ViewHolder(view) {
 
         var item: TextView
-        var container : LinearLayout
+        var container: LinearLayout
 
         init {
             item = view.findViewById(R.id.item_modal)
@@ -30,23 +33,22 @@ class ChooseSkillAdapter(val value : SkillFilter?, private val skilItems: List<S
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): chooseSkil {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
         view.layoutParams = ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         return chooseSkil(view)
     }
 
     override fun onBindViewHolder(holder: chooseSkil, position: Int) {
         val currentItem = skilItems[position]
-        holder.item.text= currentItem.skillName
+        holder.item.text = currentItem.skillName
 
-        if(value == currentItem){
+        if (value == currentItem) {
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
             holder.container.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
             )
         }
-        holder.item.setOnClickListener{
+        holder.item.setOnClickListener {
             iEditKemampuan.updateSkill(currentItem)
             iChooseSkill.close()
         }

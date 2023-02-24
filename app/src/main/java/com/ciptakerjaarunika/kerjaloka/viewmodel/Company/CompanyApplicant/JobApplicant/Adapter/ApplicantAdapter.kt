@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.Adapter
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -45,6 +46,7 @@ class ApplicantAdapter(
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = applicantModel!![position]
         holder.nameApplicant.text = currentItem.applicant.name
@@ -56,14 +58,6 @@ class ApplicantAdapter(
         } else {
             holder.locationApplicant.text = ""
         }
-//        val status = currentItem.publish
-//        if (status == true) {
-//            holder.statusApplicant.text = "Qualified"
-//            holder.statusApplicant.setTextColor(R.color.green_300)
-//        } else {
-//            holder.statusApplicant.text = "Not Qualified"
-//            holder.statusApplicant.setTextColor(Color.RED)
-//        }
         Glide.with(holder.itemView.context)
             .load(config().portAddress + "photo/Profile/" + currentItem.applicant.photo)
             .fitCenter()
@@ -71,8 +65,6 @@ class ApplicantAdapter(
         if (currentItem.bookmarked == true) {
             holder.pinImage.setImageResource(R.drawable.ic_pin)
         }
-
-
         holder.cardApplicant.setOnClickListener {
             onFragmentClickListener?.goToApplicantDetail(currentItem)
         }

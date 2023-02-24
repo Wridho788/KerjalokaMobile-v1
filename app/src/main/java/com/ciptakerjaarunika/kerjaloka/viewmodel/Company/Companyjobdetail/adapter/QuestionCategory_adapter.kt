@@ -1,21 +1,27 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.enum.QuestionType
 import com.ciptakerjaarunika.kerjaloka.model.Data.ShortQuestion
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdatePage5
 import com.google.android.material.card.MaterialCardView
 
-class QuestionCategory_adapter(private val shortQuestionList: List<ShortQuestion>, val iUpdatePage5: iUpdatePage5, val shortQuestionCategoryNo: Long) : RecyclerView.Adapter<QuestionCategory_adapter.ViewHolder>() {
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
+class QuestionCategory_adapter(
+    private val shortQuestionList: List<ShortQuestion>,
+    val iUpdatePage5: iUpdatePage5,
+    val shortQuestionCategoryNo: Long
+) : RecyclerView.Adapter<QuestionCategory_adapter.ViewHolder>() {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var questionType: TextView
         var question: TextView
         var cardShortQuestion: MaterialCardView
+
         init {
             questionType = view.findViewById(R.id.question_type)
             question = view.findViewById(R.id.question)
@@ -24,7 +30,8 @@ class QuestionCategory_adapter(private val shortQuestionList: List<ShortQuestion
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.section_company_add_jobs_5, null)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.section_company_add_jobs_5, null)
         val lp = RecyclerView.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -32,6 +39,8 @@ class QuestionCategory_adapter(private val shortQuestionList: List<ShortQuestion
         view.layoutParams = lp
         return ViewHolder(view)
     }
+
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = shortQuestionList[position]
         if (shortQuestionCategoryNo == currentItem.shortQuestionCategoryNo) {
@@ -61,7 +70,7 @@ class QuestionCategory_adapter(private val shortQuestionList: List<ShortQuestion
     }
 
     override fun getItemCount(): Int {
-        return shortQuestionList.filter { it -> shortQuestionCategoryNo == it.shortQuestionCategoryNo}.size
+        return shortQuestionList.filter { it -> shortQuestionCategoryNo == it.shortQuestionCategoryNo }.size
     }
 }
 

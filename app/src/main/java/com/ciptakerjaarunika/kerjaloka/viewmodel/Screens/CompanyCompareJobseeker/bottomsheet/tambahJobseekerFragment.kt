@@ -14,13 +14,8 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Screens.CompanyCompareJobseeker
 
 class tambahJobseekerFragment : SuperBottomSheetFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_tambah_jobseeker, container, false)
     }
@@ -29,49 +24,19 @@ class tambahJobseekerFragment : SuperBottomSheetFragment() {
         super.onViewCreated(view, savedInstanceState)
         val list = ArrayList<AddJobseekerModel>()
         val list1 = AddJobseekerModel(
-            1,
-            "Jhon doe",
-            "Medan",
-            "IT",
-            "Medan",
-            "S1",
-            "UPH"
+            1, "Jhon doe", "Medan", "IT", "Medan", "S1", "UPH"
         )
         val list2 = AddJobseekerModel(
-            2,
-            "Jhon doe",
-            "Medan",
-            "IT",
-            "Medan",
-            "S1",
-            "UPH"
+            2, "Jhon doe", "Medan", "IT", "Medan", "S1", "UPH"
         )
         val list3 = AddJobseekerModel(
-            3,
-            "Jhon doe",
-            "Medan",
-            "IT",
-            "Medan",
-            "S1",
-            "UPH"
+            3, "Jhon doe", "Medan", "IT", "Medan", "S1", "UPH"
         )
         val list4 = AddJobseekerModel(
-            4,
-            "Jhon doe",
-            "Medan",
-            "IT",
-            "Medan",
-            "S1",
-            "UPH"
+            4, "Jhon doe", "Medan", "IT", "Medan", "S1", "UPH"
         )
         val list5 = AddJobseekerModel(
-            5,
-            "Jhon doe",
-            "Medan",
-            "IT",
-            "Medan",
-            "S1",
-            "UPH"
+            5, "Jhon doe", "Medan", "IT", "Medan", "S1", "UPH"
         )
 
         list.add(list1)

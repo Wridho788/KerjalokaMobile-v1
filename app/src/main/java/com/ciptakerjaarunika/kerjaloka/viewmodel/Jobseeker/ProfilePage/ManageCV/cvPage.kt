@@ -111,8 +111,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileCvBinding.inflate(layoutInflater)
         val view = binding.root
@@ -126,8 +125,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
 
     fun checkPermissions(): Boolean {
         var readStoragePermission = ContextCompat.checkSelfPermission(
-            context!!,
-            READ_EXTERNAL_STORAGE
+            context!!, READ_EXTERNAL_STORAGE
         )
         var writeStoragePermission = ContextCompat.checkSelfPermission(
             context!!, WRITE_EXTERNAL_STORAGE
@@ -151,7 +149,6 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         }
         ProfileAPI().JobseekerGetProfileData(context) { response ->
             if (response?.data != null) {
-                Log.d("jobseekerGetProfileData", response.data.toString())
                 this.jobseekername =
                     if (response.data.users.userFullname == null) "-" else response.data.users.userFullname
                 this.jobseekerPhone =
@@ -188,7 +185,6 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                 this.jobseekerInstagramId =
                     if (response.data.additionals.instagramId == null) "-" else response.data.additionals.instagramId
             }
-
         }
     }
 
@@ -199,22 +195,18 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         return formatDate
     }
 
-    fun requestPermission() {
+    private fun requestPermission() {
         if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                WRITE_EXTERNAL_STORAGE
+                requireContext(), WRITE_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    READ_EXTERNAL_STORAGE
+                    requireContext(), READ_EXTERNAL_STORAGE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 activity?.let { it ->
                     ActivityCompat.requestPermissions(
-                        it,
-                        listOf(WRITE_EXTERNAL_STORAGE).toTypedArray(),
-                        id + 101
+                        it, listOf(WRITE_EXTERNAL_STORAGE).toTypedArray(), id + 101
                     )
                 }
                 generateCvPdf()
@@ -224,17 +216,14 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_CODE) {
             if (grantResults.size > 0) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1]
-                    == PackageManager.PERMISSION_GRANTED
-                ) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     generateCvPdf()
                     Log.d("permission Granted", "Permission granted")
                 } else {
@@ -247,11 +236,9 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     fun generateCvPdf() {
         var pdfDocument = PdfDocument()
         var paint = Paint()
-
         val bitmap = Bitmap.createBitmap(100, 50, Bitmap.Config.ARGB_8888)
         val canvasBitmap = Canvas(bitmap)
         canvasBitmap.drawColor(Color.RED)
-
         var header = Paint()
         var title = Paint()
         var subtitle = Paint()
@@ -263,8 +250,6 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
         drawiLine.isAntiAlias = true
         val offset = 50
         drawiLine.color = Color.WHITE
-
-
         header.textAlign
         header.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
@@ -411,8 +396,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
 
 
         pdfDocument.finishPage(myPage2)
-        val file =
-            File(Environment.getExternalStorageDirectory().absolutePath + "/Download")
+        val file = File(Environment.getExternalStorageDirectory().absolutePath + "/Download")
         var fileName = "CV.pdf"
         var files = File(file, fileName)
         try {
@@ -586,8 +570,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                             val sheet = PapikostickResult(res.data)
                             activity?.let { it1 ->
                                 sheet.show(
-                                    it1.supportFragmentManager,
-                                    "DemoBottomSheetFragment"
+                                    it1.supportFragmentManager, "DemoBottomSheetFragment"
                                 )
                             }
                         }
@@ -603,9 +586,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                 binding.addLang.setOnClickListener {
                     replaceFragment(
                         EditBahasa(
-                            SessionManager(context).user!!.userNo,
-                            languages?.data,
-                            this
+                            SessionManager(context).user!!.userNo, languages?.data, this
                         )
                     )
                 }
@@ -678,7 +659,9 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                     data.experienceCompanyNo,
                     data.experienceDescription,
                     data.experienceEndedAt,
-                    data.experienceBeginAt, data.experienceJobTypeNo, data.experiencePosition,
+                    data.experienceBeginAt,
+                    data.experienceJobTypeNo,
+                    data.experiencePosition,
                     data.experienceSalary
                 ), this
             )
@@ -726,8 +709,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                         }
                     }
                 }
-            })
-            .setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener {
+            }).setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface, which: Int) {
                     dialog.dismiss()
                 }
@@ -735,14 +717,12 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
     }
 
     override fun deleteEducation(data: JobseekerEducations) {
-        AlertDialog.Builder(context)
-            .setMessage("Yakin ingin menghapus '${data.educationSchool}'?")
+        AlertDialog.Builder(context).setMessage("Yakin ingin menghapus '${data.educationSchool}'?")
             .setTitle("Konfirmasi menghapus")
             .setPositiveButton(android.R.string.ok, object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface, which: Int) {
                     ManageProfileAPI().JobseekerDeleteEducation(
-                        data.jobseekerEducationNo,
-                        context
+                        data.jobseekerEducationNo, context
                     ) {
                         if (it != null) {
                             ProfileAPI().GetJobseekerEducations(context) { edu ->
@@ -759,8 +739,7 @@ class cvPage : Fragment(), iRefreshData, iCvPage {
                         }
                     }
                 }
-            })
-            .setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener {
+            }).setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface, which: Int) {
                     dialog.dismiss()
                 }

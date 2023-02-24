@@ -14,24 +14,27 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.google.android.material.button.MaterialButton
 
-class ReportJob(val JobNo : Long) : SuperBottomSheetFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+class ReportJob(val JobNo: Long) : SuperBottomSheetFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.modal_report_layout, container, false)
-        view.findViewById<MaterialButton>(R.id.reportJobBtn).setOnClickListener{
+        view.findViewById<MaterialButton>(R.id.reportJobBtn).setOnClickListener {
             val message = view.findViewById<EditText>(R.id.reportMessage)?.text.toString()
 
-            if(!message.isNullOrEmpty()) {
+            if (!message.isNullOrEmpty()) {
                 JobAPI().ReportJob(JobNo, message, context) {
-                    if(it!= null) {
+                    if (it != null) {
                         Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-                        if (it?.code == 210) {
+                        if (it.code == 210) {
                             this.dismiss()
                         }
                     }
                 }
-            }
-            else{
+            } else {
                 Toast.makeText(activity, "Pesan tidak boleh kosong", Toast.LENGTH_SHORT).show()
             }
         }
@@ -41,13 +44,12 @@ class ReportJob(val JobNo : Long) : SuperBottomSheetFragment() {
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
     }
+
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun isSheetCancelableOnTouchOutside(): Boolean {

@@ -1,9 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.model.Job
 
-import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.job
-import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.location
 import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.locationCompany
-import com.ciptakerjaarunika.kerjaloka.model.CompanyDetail.rating
 import com.ciptakerjaarunika.kerjaloka.model.Data.Country
 import java.math.BigDecimal
 

@@ -10,11 +10,8 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Setting.Account
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.data
 
 class viewpagerCompAdapter(
-    val data: data?,
-    fragmentManager: FragmentManager,
-    lifecycle: Lifecycle
-) :
-    FragmentStateAdapter(fragmentManager, lifecycle) {
+    val data: data?, fragmentManager: FragmentManager, lifecycle: Lifecycle
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
         return 3
     }

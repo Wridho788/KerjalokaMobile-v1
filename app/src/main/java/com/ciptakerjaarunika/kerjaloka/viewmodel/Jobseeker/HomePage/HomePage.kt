@@ -3,7 +3,6 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -36,14 +35,14 @@ import com.google.android.material.card.MaterialCardView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
-//import com.instabug.apm.APM
+import com.instabug.apm.APM
 
 class HomePage : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentHomeBinding
     private var listJob: List<SearchJobModel>? = null
 
-    @AddTrace(name="onHomePageJobseekerTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onHomePageJobseekerTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -70,11 +69,10 @@ class HomePage : Fragment(), OnFragmentClickListener {
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val view = binding.root
-//        APM.setFragmentSpansEnabled(true)
+        APM.setFragmentSpansEnabled(true)
         if (SessionManager(context).user != null) {
             view.findViewById<TextView>(R.id.greeting_txt).text =
                 SessionManager(context).user?.userFullname!!.split(" ")[0]
@@ -137,7 +135,6 @@ class HomePage : Fragment(), OnFragmentClickListener {
         InterviewAPI().GetInterviewList(context) {
             binding.myInterviewSection.visibility = View.GONE
             if (it != null) {
-                Log.d("Interview jobseeker", it.toString())
                 if (it.code == 210 && it.data.isNotEmpty()) {
                     binding.myInterviewSection.visibility = VISIBLE
                     binding.interviewSection.btnSeeAllInterview.setOnClickListener {

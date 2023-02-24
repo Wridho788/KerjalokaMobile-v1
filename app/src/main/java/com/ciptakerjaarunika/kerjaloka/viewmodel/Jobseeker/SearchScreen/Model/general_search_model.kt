@@ -9,10 +9,7 @@ data class search_model(
 )
 
 data class top_search_model(
-    val code: Int,
-    val errorCode: Int,
-    val message: String,
-    val data: List<list_top_search>
+    val code: Int, val errorCode: Int, val message: String, val data: List<list_top_search>
 )
 
 data class list_top_search(
@@ -21,8 +18,7 @@ data class list_top_search(
 )
 
 data class general_search_model(
-    val jobList : List<jobList>,
-    val companyList : List<companyList>
+    val jobList: List<jobList>, val companyList: List<companyList>
 )
 
 data class jobList(

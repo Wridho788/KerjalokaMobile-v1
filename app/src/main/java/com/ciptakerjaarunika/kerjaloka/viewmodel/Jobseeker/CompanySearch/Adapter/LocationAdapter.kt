@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 
-class LocationAdapter(var value : List<Int>,var dataSet: List<LocationFilter>, val context: Context) :
-    RecyclerView.Adapter<LocationAdapter.ViewHolder?>() {
+class LocationAdapter(
+    var value: List<Int>,
+    var dataSet: List<LocationFilter>,
+    val context: Context
+) : RecyclerView.Adapter<LocationAdapter.ViewHolder?>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var txtLocation: TextView
@@ -31,11 +35,12 @@ class LocationAdapter(var value : List<Int>,var dataSet: List<LocationFilter>, v
         return dataSet.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataSet[position]
         holder.txtLocation.text = "${currentItem.city}, ${currentItem.province}"
-        holder.checkBox.isChecked = value.any { data ->  data == currentItem.locationsNo}
-        holder.checkBox.setOnClickListener{
+        holder.checkBox.isChecked = value.any { data -> data == currentItem.locationsNo }
+        holder.checkBox.setOnClickListener {
             currentItem.checked = holder.checkBox.isChecked
             dataSet[position].checked = holder.checkBox.isChecked
         }

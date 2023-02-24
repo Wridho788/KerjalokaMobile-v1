@@ -10,14 +10,13 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Model.size_company_model
 
 class SizeCompanyAdapter(
-    var value : List<Int>,
-    var dataSet: List<size_company_model>,
-    val context: Context
+    var value: List<Int>, var dataSet: List<size_company_model>, val context: Context
 ) : RecyclerView.Adapter<SizeCompanyAdapter.ViewHolder?>() {
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var txtSizename: TextView
         var checkbox: CheckBox
+
         init {
             txtSizename = itemView.findViewById(R.id.txt_sizeName)
             checkbox = itemView.findViewById(R.id.checkBox_size)
@@ -36,8 +35,8 @@ class SizeCompanyAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataSet[position]
         holder.txtSizename.text = currentItem.sizeName
-        holder.checkbox.isChecked = value.any { data -> data == currentItem.sizeNo}
-        holder.checkbox.setOnClickListener{
+        holder.checkbox.isChecked = value.any { data -> data == currentItem.sizeNo }
+        holder.checkbox.setOnClickListener {
             currentItem.checked = holder.checkbox.isChecked
             dataSet[position].checked = holder.checkbox.isChecked
         }

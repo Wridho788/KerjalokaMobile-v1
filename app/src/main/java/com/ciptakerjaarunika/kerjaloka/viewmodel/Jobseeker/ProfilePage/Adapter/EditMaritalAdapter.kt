@@ -11,12 +11,15 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.Marital
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.iMarital
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iUpdateAdditional
 
-class EditMaritalAdapter(val maritalNo : Int?, private val listStatus: List<Marital>, val iUpdateAdditional: iUpdateAdditional, val iMarital: iMarital):
-    RecyclerView.Adapter<EditMaritalAdapter.EditMarital>()
-{
-    inner class EditMarital(view: View): RecyclerView.ViewHolder(view){
+class EditMaritalAdapter(
+    val maritalNo: Int?,
+    private val listStatus: List<Marital>,
+    val iUpdateAdditional: iUpdateAdditional,
+    val iMarital: iMarital
+) : RecyclerView.Adapter<EditMaritalAdapter.EditMarital>() {
+    inner class EditMarital(view: View) : RecyclerView.ViewHolder(view) {
         var item: TextView
-        var container : LinearLayout
+        var container: LinearLayout
 
         init {
             item = view.findViewById(R.id.item_modal)
@@ -26,15 +29,18 @@ class EditMaritalAdapter(val maritalNo : Int?, private val listStatus: List<Mari
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditMarital {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
-        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return EditMarital(view)
     }
 
     override fun onBindViewHolder(holder: EditMarital, position: Int) {
         val currentItem = listStatus[position]
-        holder.item.text= currentItem.maritalName
+        holder.item.text = currentItem.maritalName
 
-        if(currentItem.maritalNo == maritalNo){
+        if (currentItem.maritalNo == maritalNo) {
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
         }
         holder.container.setOnClickListener {

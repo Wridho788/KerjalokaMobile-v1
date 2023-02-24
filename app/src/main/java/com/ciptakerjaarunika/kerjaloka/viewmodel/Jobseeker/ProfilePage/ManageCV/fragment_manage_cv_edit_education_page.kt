@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -11,21 +12,21 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
-import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
-import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManageCvEditEducationPageBinding
 import com.ciptakerjaarunika.kerjaloka.enum.Month
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
+import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
+import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateTitle
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Data.Major
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerEducationsRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iEditBasic
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.*
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iEditBasic
 import java.util.*
 
 
@@ -35,15 +36,19 @@ class fragment_manage_cv_edit_education_page(
 ) : Fragment(), iEditBasic, iManageExp,
     iUpdateMajor, iUpdateTitle {
     private lateinit var binding: FragmentManageCvEditEducationPageBinding
+
     @RequiresApi(Build.VERSION_CODES.O)
     private var beginMonth: Int? =
         data?.educationBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt() }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private var endedMonth: Int? =
         data?.educationEndedAt?.let { DateUtils().GetDateValueWithFormat(it, "MM").toInt() }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private var beginYear: Int? =
         data?.educationBeginAt?.let { DateUtils().GetDateValueWithFormat(it, "yyyy").toInt() }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private var endedYear: Int? =
         data?.educationEndedAt?.let { DateUtils().GetDateValueWithFormat(it, "yyyy").toInt() }
@@ -274,13 +279,11 @@ class fragment_manage_cv_edit_education_page(
     }
 
     private fun back() {
-//        val fragmentTransaction = parentFragmentManager.beginTransaction()
-//        fragmentTransaction?.replace(id, profilepage(0), "Profile Page")
-//        fragmentTransaction?.commit()
         fragmentManager?.popBackStack()
         iRefreshData.refresh()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun updateCity(cityNo: Int?) {
         if (cityNo != null) {
             this.data?.educationCityNo = cityNo
@@ -295,11 +298,15 @@ class fragment_manage_cv_edit_education_page(
         val monthTxt = Month.values().find { month -> month.value == value }?.description
         when (type) {
             "begin" -> {
-                beginMonth = value
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    beginMonth = value
+                }
                 binding.pilihBulanMulai.text = monthTxt
             }
             "ended" -> {
-                endedMonth = value
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    endedMonth = value
+                }
                 binding.pilihBulanBerakhir.text = monthTxt
             }
         }
@@ -308,11 +315,15 @@ class fragment_manage_cv_edit_education_page(
     override fun updateYear(value: Int, type: String) {
         when (type) {
             "begin" -> {
-                beginYear = value
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    beginYear = value
+                }
                 binding.pilihTahunMulai.text = value.toString()
             }
             "ended" -> {
-                endedYear = value
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    endedYear = value
+                }
                 binding.pilihTahunBerakhir.text = value.toString()
             }
         }

@@ -15,11 +15,10 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditUsernameProfileBi
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.profilepage
 
-class EditUserName() : Fragment() {
+class EditUserName : Fragment() {
     private lateinit var binding: FragmentEditUsernameProfileBinding
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditUsernameProfileBinding.inflate(layoutInflater)
         return binding.root
@@ -56,8 +55,7 @@ class EditUserName() : Fragment() {
                 binding.errorMessage.visibility = View.VISIBLE
             } else {
                 ManageProfileAPI().JobseekerChangeUsername(
-                    binding.inputTxt.text.toString(),
-                    context
+                    binding.inputTxt.text.toString(), context
                 ) {
                     if (it != null) {
                         fragmentManager?.popBackStack()

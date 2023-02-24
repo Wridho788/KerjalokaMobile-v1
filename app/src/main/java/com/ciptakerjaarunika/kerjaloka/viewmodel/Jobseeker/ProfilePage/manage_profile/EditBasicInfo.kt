@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +58,6 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     @RequiresApi(Build.VERSION_CODES.O)
     private var date: String? = if (data?.jobseeker?.dateOfBirth == null) null
     else DateUtils().GetDateValueWithFormat(data.jobseeker.dateOfBirth, "yyyy-MM-dd HH:mm")
-
     private lateinit var defaultImagePicker: BasicImagePicker
 
     override fun onCreateView(
@@ -136,7 +134,6 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
                     Toast.makeText(context, "true", Toast.LENGTH_SHORT).show()
                 }
                 date = SimpleDateFormat("yyyy-MM-dd HH:mm").format(dates)
-                Log.d("current", dateValue.toString())
                 binding.jsBirthDay.text = SimpleDateFormat("dd MMMM yyyy").format(dates)
             }
         }
@@ -188,13 +185,13 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
     private fun pickGallery() {
         context?.let {
             defaultImagePicker.openGallery(
-                    it, DefaultSystemGalleryConfig.instance(
-                        // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
-                        // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
-                        // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
-                        mimesType = DefaultGalleryMimes.customTypes("image/*") // multiType
-                    )
-                ).subscribe { result -> onPickUriSuccess(result.uri) }
+                it, DefaultSystemGalleryConfig.instance(
+                    // mimesType = DefaultGalleryMimes.videoOnly()     // only video files
+                    // mimesType = DefaultGalleryMimes.imageOnly()     // only image files, default options.
+                    // mimesType = DefaultGalleryMimes.audioOnly()     // only audio files
+                    mimesType = DefaultGalleryMimes.customTypes("image/*") // multiType
+                )
+            ).subscribe { result -> onPickUriSuccess(result.uri) }
         }
     }
 
@@ -247,6 +244,7 @@ class EditBasicInfo(val data: JobseekerProfile?) : Fragment(), iEditBasic {
         binding.jsGender.text = if (gender == 'M') "Laki-laki" else "Perempuan"
     }
 
+    @SuppressLint("SetTextI18n")
     override fun updateCity(cityNo: Int?) {
         this.cityNo = cityNo
         var currentLocation = locations.find { loc -> loc.locationsNo == cityNo }

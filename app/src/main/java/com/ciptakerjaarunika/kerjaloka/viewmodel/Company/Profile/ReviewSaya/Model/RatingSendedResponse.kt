@@ -5,14 +5,10 @@ import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
 
 data class RatingSendedResponse(
-    @SerializedName("code")
-    var code: Int,
-    @SerializedName("data")
-    var `data`: List<DataX>,
-    @SerializedName("errorCode")
-    var errorCode: Int,
-    @SerializedName("message")
-    var message: String
+    @SerializedName("code") var code: Int,
+    @SerializedName("data") var `data`: List<DataX>,
+    @SerializedName("errorCode") var errorCode: Int,
+    @SerializedName("message") var message: String
 )
 
 data class editReviewRequest(
@@ -24,11 +20,9 @@ data class editReviewRequest(
 )
 
 data class appealReviewRequest(
-    var RatingBy: Long,
-    var Message: String,
-    var File: MultipartBody.Part
+    var RatingBy: Long, var Message: String, var File: MultipartBody.Part
 )
 
-data class CategoryList (
-    val categoryNo : Int
-        )
+data class CategoryList(
+    val categoryNo: Int
+)

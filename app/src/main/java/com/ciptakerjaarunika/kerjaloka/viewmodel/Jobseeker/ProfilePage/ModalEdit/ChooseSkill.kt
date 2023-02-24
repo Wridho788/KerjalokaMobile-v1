@@ -16,22 +16,26 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.ChooseSkillAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV.iEditKemampuan
+import java.util.*
 
 
-class ChooseSkill(val value: SkillFilter?, val skills : List<SkillFilter>, val iEditKemampuan: iEditKemampuan): SuperBottomSheetFragment(),
-    iChooseSkill {
+class ChooseSkill(
+    val value: SkillFilter?,
+    val skills: List<SkillFilter>,
+    val iEditKemampuan: iEditKemampuan
+) : SuperBottomSheetFragment(), iChooseSkill {
 
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
         title.text = "Pilih Skill"
         return view
     }
-
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,14 +47,13 @@ class ChooseSkill(val value: SkillFilter?, val skills : List<SkillFilter>, val i
 
         var searchInput = view.findViewById<SearchView>(R.id.search_filter)
         searchInput.visibility = View.VISIBLE
-
         searchInput.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
             }
-
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
-                val keyword = newText.toString().toLowerCase()
+                val keyword = newText.toString().lowercase(Locale.getDefault())
                 if (keyword.isNullOrEmpty()) {
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -59,8 +62,8 @@ class ChooseSkill(val value: SkillFilter?, val skills : List<SkillFilter>, val i
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 } else {
-                    var temp = skills?.filter { data ->
-                        data.skillName.toLowerCase().contains(keyword)
+                    var temp = skills.filter { data ->
+                        data.skillName.lowercase(Locale.getDefault()).contains(keyword)
                     }
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -69,12 +72,11 @@ class ChooseSkill(val value: SkillFilter?, val skills : List<SkillFilter>, val i
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
-                return true;
+                return true
             }
         })
 
     }
-
 
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
@@ -83,10 +85,8 @@ class ChooseSkill(val value: SkillFilter?, val skills : List<SkillFilter>, val i
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun close() {
@@ -95,6 +95,7 @@ class ChooseSkill(val value: SkillFilter?, val skills : List<SkillFilter>, val i
 
 
 }
-interface iChooseSkill{
+
+interface iChooseSkill {
     fun close()
 }

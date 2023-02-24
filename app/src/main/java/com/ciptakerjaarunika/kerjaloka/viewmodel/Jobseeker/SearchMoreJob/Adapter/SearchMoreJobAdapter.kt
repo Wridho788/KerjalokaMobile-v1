@@ -3,6 +3,7 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchMoreJob.Adapte
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -27,8 +28,7 @@ class SearchMoreJobAdapter(
     private val jobList: List<jobList>,
     private val context: Context,
     private val onFragmentClickListener: OnFragmentClickListener
-) :
-    RecyclerView.Adapter<SearchMoreJobAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<SearchMoreJobAdapter.ViewHolder>() {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var jobPosition: TextView
         var jobLocation: TextView
@@ -53,13 +53,11 @@ class SearchMoreJobAdapter(
     }
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+        parent: ViewGroup, viewType: Int
     ): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
         view.layoutParams = ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         return ViewHolder(view)
     }
@@ -71,7 +69,7 @@ class SearchMoreJobAdapter(
         holder.jobCompany.text = currentItem.companyName
         holder.jobLocation.text = currentItem.jobLocations[0].location
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.photo).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.photo).fitCenter()
             .into(holder.logo)
         holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 
@@ -79,8 +77,6 @@ class SearchMoreJobAdapter(
             holder.bookmarkedJob.visibility = View.GONE
         }
         holder.bookmarkedJob.setOnClickListener {
-//            onFragmentClickListener.BookmarkJob(currentItem.jobNo, position)
-
         }
 
         val SECOND = 1
@@ -90,7 +86,11 @@ class SearchMoreJobAdapter(
         val WEEK = 7 * DAY
 
         var time = currentItem.createdOn
-        val now = LocalDateTime.now().toString()
+        val now = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime.now().toString()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
 
         fun GetDateValue(value: String): Date {
             val temp = value.split("T")
@@ -113,8 +113,7 @@ class SearchMoreJobAdapter(
                 diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
                 diff < 2 * DAY -> "Kemarin"
                 diff < WEEK -> "${diff / DAY} Hari Lalu"
-                else -> LocalDateTime.parse(time)
-                    .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
             }
 
         }
@@ -131,7 +130,7 @@ class SearchMoreJobAdapter(
             ContextCompat.startActivity(context, shareIntent, null)
         }
         holder.cardJob.setOnClickListener {
-            onFragmentClickListener.onJobDetailPage(currentItem.companyNo,currentItem.jobNo)
+            onFragmentClickListener.onJobDetailPage(currentItem.companyNo, currentItem.jobNo)
         }
     }
 

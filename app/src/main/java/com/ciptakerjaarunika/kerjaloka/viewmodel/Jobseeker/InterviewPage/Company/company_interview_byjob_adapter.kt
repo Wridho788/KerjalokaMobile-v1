@@ -26,8 +26,7 @@ class company_interview_byjob_adapter
     private val jobNo: Long?,
     private val context: Context,
     private val jobPosition: String?,
-) :
-    RecyclerView.Adapter<company_interview_byjob_adapter.ViewHolder>() {
+) : RecyclerView.Adapter<company_interview_byjob_adapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val userPhoto: ImageView
@@ -50,7 +49,6 @@ class company_interview_byjob_adapter
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.message_section, viewGroup, false)
 
@@ -62,8 +60,7 @@ class company_interview_byjob_adapter
         viewHolder.sectionName.text = dataSet.interviewer[position].jobseekerName
         Glide.with(viewHolder.itemView.context)
             .load(config().portAddress + "/photo/Profile/" + dataSet.interviewer[position].photo)
-            .fitCenter()
-            .into(viewHolder.logo)
+            .fitCenter().into(viewHolder.logo)
 
         viewHolder.lastMessage.text = ""
         viewHolder.lastMessageOn.text = ""
@@ -71,8 +68,7 @@ class company_interview_byjob_adapter
         val chatData = SessionManager(context).chatData
         if (chatData != null) {
             val currentSection = chatData.sections.find {
-                it.jobNo == jobNo &&
-                        it.receiver.contains(dataSet.interviewer[position].userNo)
+                it.jobNo == jobNo && it.receiver.contains(dataSet.interviewer[position].userNo)
             }
 
             if (currentSection != null) {
@@ -81,15 +77,16 @@ class company_interview_byjob_adapter
                     if (currentSection.notRead != 0) View.VISIBLE else View.GONE
 
                 viewHolder.lastMessageOn.text =
-                    DateUtils().GetLastMessageOn(currentSection.messages.last()?.createdOn ?: "")
+                    DateUtils().GetLastMessageOn(currentSection.messages.last().createdOn)
 
-                viewHolder.lastMessage.text =
-                    currentSection.messages.last()?.message
+                viewHolder.lastMessage.text = currentSection.messages.last().message
 
                 viewHolder.itemView.setOnClickListener {
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
-                        currentSection.sectionNo, jobNo, dataSet.interviewer[position].userNo,
+                        currentSection.sectionNo,
+                        jobNo,
+                        dataSet.interviewer[position].userNo,
                         dataSet.interviewer[position].photo,
                         jobPosition
                     )
@@ -98,7 +95,9 @@ class company_interview_byjob_adapter
                 viewHolder.itemView.setOnClickListener {
                     cellClickListener.goToChatPage(
                         dataSet.interviewer[position].jobseekerName,
-                        null, jobNo, dataSet.interviewer[position].userNo,
+                        null,
+                        jobNo,
+                        dataSet.interviewer[position].userNo,
                         dataSet.interviewer[position].photo,
                         jobPosition
                     )
@@ -108,7 +107,9 @@ class company_interview_byjob_adapter
             viewHolder.itemView.setOnClickListener {
                 cellClickListener.goToChatPage(
                     dataSet.interviewer[position].jobseekerName,
-                    null, jobNo, dataSet.interviewer[position].userNo,
+                    null,
+                    jobNo,
+                    dataSet.interviewer[position].userNo,
                     dataSet.interviewer[position].photo,
                     jobPosition
                 )
@@ -121,7 +122,6 @@ class company_interview_byjob_adapter
         return dateFormatter.format(this)
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.interviewer.size
 
 }

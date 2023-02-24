@@ -1,10 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.NotificationPage.Model
 
 data class notifResponse(
-    val code : Int,
-    val data : List<CompanyNotificationModel>,
-    val errorCode: Int,
-    val message: String
+    val code: Int, val data: List<CompanyNotificationModel>, val errorCode: Int, val message: String
 )
 
 data class CompanyNotificationModel(
@@ -17,4 +14,4 @@ data class CompanyNotificationModel(
     val message: String,
     val url: String
 
-    )
+)

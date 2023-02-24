@@ -13,14 +13,19 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.TitleAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobTitle
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.TitleAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 import com.google.android.material.button.MaterialButton
+import java.util.*
 
-class TitleModal(var data : List<JobTitle>, private val dataList : List<Title>, private val updateData: iUpdateJobAdditionalInfo) : SuperBottomSheetFragment(),
+class TitleModal(
+    var data: List<JobTitle>,
+    private val dataList: List<Title>,
+    private val updateData: iUpdateJobAdditionalInfo
+) : SuperBottomSheetFragment(),
     iUpdateJobTitle {
 
     override fun onCreateView(
@@ -47,8 +52,9 @@ class TitleModal(var data : List<JobTitle>, private val dataList : List<Title>, 
                 return true
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
-                val keyword = newText.toString().toLowerCase()
+                val keyword = newText.toString().lowercase(Locale.getDefault())
                 if (keyword.isNullOrEmpty()) {
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -56,8 +62,8 @@ class TitleModal(var data : List<JobTitle>, private val dataList : List<Title>, 
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 } else {
-                    var temp = dataList?.filter { data ->
-                        "${data.titleName}".toLowerCase().contains(keyword)
+                    var temp = dataList.filter { data ->
+                        data.titleName.lowercase(Locale.getDefault()).contains(keyword)
                     }
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -65,7 +71,7 @@ class TitleModal(var data : List<JobTitle>, private val dataList : List<Title>, 
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
-                return true;
+                return true
             }
         })
 
@@ -86,7 +92,7 @@ class TitleModal(var data : List<JobTitle>, private val dataList : List<Title>, 
         (context as Activity?)!!.windowManager
             .defaultDisplay
             .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun updateJobTitle(value: List<JobTitle>) {
@@ -94,6 +100,6 @@ class TitleModal(var data : List<JobTitle>, private val dataList : List<Title>, 
     }
 }
 
-interface iUpdateJobTitle{
-    fun updateJobTitle(value : List<JobTitle>)
+interface iUpdateJobTitle {
+    fun updateJobTitle(value: List<JobTitle>)
 }

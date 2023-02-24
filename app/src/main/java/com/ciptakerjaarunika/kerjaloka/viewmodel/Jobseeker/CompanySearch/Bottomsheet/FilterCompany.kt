@@ -39,9 +39,7 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.layout_filter_company, container, false)
@@ -56,8 +54,7 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
         val btn_hapus = view.findViewById<TextView>(R.id.btn_hapus_check)
 
         view.layoutParams = RecyclerView.LayoutParams(
-            RecyclerView.LayoutParams.MATCH_PARENT,
-            RecyclerView.LayoutParams.WRAP_CONTENT
+            RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT
         )
 
         DataAPI().GetLocations(context) {
@@ -140,7 +137,7 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
                         }
                         2 -> {
                             var temp = list_industri.filter { data ->
-                                "${data.fieldName}".lowercase(Locale.getDefault()).contains(query)
+                                data.fieldName.lowercase(Locale.getDefault()).contains(query)
                             }
                             listIndustri?.apply {
                                 layoutManager = LinearLayoutManager(context)
@@ -180,46 +177,9 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
             list_location = listOf()
             list_industri = listOf()
             list_size_company = listOf()
-
-//            DataAPI().GetLocations(context) {
-//                if (it != null) {
-//                    list_location = it
-//                    val thisActivity = this
-//                    listView.apply {
-//                        layoutManager = LinearLayoutManager(context)
-//                        adapter = LocationAdapter(request.location, list_location, context)
-//                        listView.adapter = adapter
-//                    }
-                    listView.adapter?.notifyDataSetChanged()
-//
-//                }
-//            }
-
-//            FilterIndustriAPI().getIndustriAsync(context) {
-//                if (it != null) {
-//                    list_industri = it
-//                    listIndustri.apply {
-//                        layoutManager = LinearLayoutManager(context)
-//                        adapter = IndustriAdapter(request.industry, list_industri, context)
-//                    }
-                    listIndustri.adapter?.notifyDataSetChanged()
-//
-//                }
-//            }
-
-//            FilterSizeCompanyAPI().getSizeIndustriAsync(context) {
-//                if (it != null) {
-//                    list_size_company = it
-//                    val thisActivity = this
-//                    listSizeCompany.apply {
-//                        layoutManager = LinearLayoutManager(context)
-//                        adapter = SizeCompanyAdapter(request.size, list_size_company, context)
-//                    }
-                    listSizeCompany.adapter?.notifyDataSetChanged()
-//
-//                }
-//            }
-
+            listView.adapter?.notifyDataSetChanged()
+            listIndustri.adapter?.notifyDataSetChanged()
+            listSizeCompany.adapter?.notifyDataSetChanged()
         }
 
         return view
@@ -232,9 +192,7 @@ class FilterCompany(var request: searchCompanyRequest, val updateData: iSearchCo
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.8).toInt()
     }
 

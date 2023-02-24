@@ -4,12 +4,8 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Mod
 import com.google.gson.annotations.SerializedName
 
 data class ReviewResponse(
-    @SerializedName("code")
-    val code: Int,
-    @SerializedName("data")
-    val `data`: Data,
-    @SerializedName("errorCode")
-    val errorCode: Int,
-    @SerializedName("message")
-    val message: String
+    @SerializedName("code") val code: Int,
+    @SerializedName("data") val `data`: Data,
+    @SerializedName("errorCode") val errorCode: Int,
+    @SerializedName("message") val message: String
 )

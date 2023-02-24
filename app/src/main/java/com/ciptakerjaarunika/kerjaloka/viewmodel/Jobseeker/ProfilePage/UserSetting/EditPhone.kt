@@ -36,7 +36,7 @@ class EditPhone(var phone: String) : Fragment() {
             back()
         }
         btnSave.setOnClickListener {
-        var keyword = newPhone.text.toString()
+            var keyword = newPhone.text.toString()
             if (keyword.length == 0) {
                 Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
             } else if (keyword.length == 8) {
@@ -52,11 +52,8 @@ class EditPhone(var phone: String) : Fragment() {
                             }
                         } else {
                             Toast.makeText(
-                                context,
-                                "Phone number already exists",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
+                                context, "Phone number already exists", Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
@@ -66,10 +63,8 @@ class EditPhone(var phone: String) : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_nomor_telepon_profile, container, false)
         return view
     }
@@ -80,10 +75,7 @@ class EditPhone(var phone: String) : Fragment() {
 
     @SuppressLint("RestrictedApi")
     private fun replaceFragment(
-        fragment: Fragment,
-        token: String?,
-        phone: String?,
-        newPhone: String?
+        fragment: Fragment, token: String?, phone: String?, newPhone: String?
     ) {
         val otpVerificationFragment = otpVerification()
         val mBundle = Bundle()

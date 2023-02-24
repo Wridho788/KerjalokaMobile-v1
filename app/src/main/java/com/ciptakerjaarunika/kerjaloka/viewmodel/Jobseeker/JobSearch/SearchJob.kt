@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobSearch
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,7 +34,6 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
     private var takeData = 25
     private var isSearching = false
     private var listData: List<SearchJobModel> = listOf()
-
     private var locationSelected: List<Int> = listOf()
     private var skillSelected: List<Int> = listOf()
     private var jobTypeSelected: List<Int> = listOf()
@@ -42,7 +42,6 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
     private var salaryMax: Int? = null
     private var keyword: String? = ""
     private var hasSearch: Boolean = false
-
     var list = ArrayList<SearchModel>()
     private lateinit var binding: FragmentSearchJobBinding
 
@@ -72,8 +71,7 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchJobBinding.inflate(layoutInflater)
         binding.backBtn.setOnClickListener {
@@ -213,13 +211,13 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
 
     }
 
+    @SuppressLint("NotConstructor")
     fun SearchJob(keyword: String?) {
         if (keyword?.isNotEmpty() == true) {
             newChips(keyword)
         }
         binding.query.text = keyword
         this.keyword = keyword
-
         SearchJobs()
     }
 
@@ -258,7 +256,6 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
     }
 
     override fun RefreshData() {
-
     }
 
     override fun GoToJobDetail(JobNo: Long, CompanyNo: Long?) {
@@ -268,6 +265,7 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
         ft.commit()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun BookmarkJob(ListNo: Int, JobNo: Long, Index: Int) {
         JobAPI().BookmarkJob(JobNo, !listData[Index].bookmarked, context) {
             if (it != null) {
@@ -281,6 +279,7 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun nextPage() {
         if (!isSearching) {
             isSearching = true
@@ -320,6 +319,7 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun SearchJobs() {
         this.hasSearch = true
         binding.searchResult.visibility = VISIBLE
@@ -343,7 +343,6 @@ class SearchJob : Fragment(), IJobPage, iSearchJob {
             if (res != null) {
                 listData = res.data
                 binding.spinnerJobResult.visibility = GONE
-                Log.d("response search", listData.toString())
                 val appContext = this
                 binding.layoutRecycleJobs.visibility = VISIBLE
                 binding.recycleJobs.apply {

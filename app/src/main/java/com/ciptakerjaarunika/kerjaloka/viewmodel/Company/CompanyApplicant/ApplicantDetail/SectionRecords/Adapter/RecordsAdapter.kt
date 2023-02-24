@@ -24,10 +24,9 @@ class RecordsAdapter(private val recordsModel: List<RecordsModel>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_record, null)
         val lp = RecyclerView.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        view.setLayoutParams(lp)
+        view.layoutParams = lp
         return ViewHolder(view)
     }
 

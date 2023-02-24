@@ -1,7 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyReview
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,13 +20,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anychart.ui.contextmenu.Item
 import com.bumptech.glide.Glide
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.CanSendReview
 import com.ciptakerjaarunika.kerjaloka.api.CompanyDetailAPI
 import com.ciptakerjaarunika.kerjaloka.api.CompanyReviewAPI
 import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentCompanyReviewBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.EditMyReview
@@ -44,7 +46,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
 
     private lateinit var binding: FragmentCompanyReviewBinding
 
-    @AddTrace(name="onCompanyReviewTrace", enabled = true)
+    @AddTrace(name = "onCompanyReviewTrace", enabled = true)
     class ItemCache {
         fun fetch(name: String): Item? {
             return null
@@ -77,6 +79,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     fun refreshData() {
         val companyName = view?.findViewById<TextView>(R.id.company_name)
         val logo = view?.findViewById<ImageView>(R.id.company_logo)
@@ -159,18 +162,18 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
 
                         view?.findViewById<TextView>(R.id.myReviewText)?.text =
                             it.data.ownRatingComment
-                        view?.findViewById<TextView>(R.id.myReviewAt)?.text = "${
-                            DateUtils().GetDateValueWithFormat(
-                                it.data.ownRatingAt,
-                                "dd MMMM yyyy"
-                            )
-                        } pada " +
-                                "${
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            view?.findViewById<TextView>(R.id.myReviewAt)?.text = "${
+                                DateUtils().GetDateValueWithFormat(
+                                    it.data.ownRatingAt,
+                                    "dd MMMM yyyy"
+                                )
+                            } pada " +
                                     DateUtils().GetDateValueWithFormat(
                                         it.data.ownRatingAt,
                                         "hh:mm"
                                     )
-                                }"
+                        }
 
                         view?.findViewById<MaterialButton>(R.id.btn_Edit)
                             ?.setOnClickListener { btn ->
@@ -241,7 +244,7 @@ class CompanyReviewFragment(private val CompanyNo: Long? = null) : Fragment(), i
             CanSendReview().getSendReviewAsync(context, CompanyNo) {
                 if (it != null) {
                     if (it.data.canSend == true) {
-                        layout_send_review?.visibility = View.VISIBLE
+                        layout_send_review?.visibility = VISIBLE
                         layout_send_review?.setOnClickListener {
                             sendReviewModal(CompanyNo)
                         }

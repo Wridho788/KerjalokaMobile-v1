@@ -20,7 +20,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
 
-
 class CompanyFollowedFragment : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentFollowedCompanyBinding
     private var listFollowedJob: List<company_followed_list>? = null
@@ -52,8 +51,7 @@ class CompanyFollowedFragment : Fragment(), OnFragmentClickListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFollowedCompanyBinding.inflate(layoutInflater)
         val view = binding.root
@@ -79,12 +77,9 @@ class CompanyFollowedFragment : Fragment(), OnFragmentClickListener {
                 listFollowedJob = it.data
                 binding.rvFollowedCompanyJob.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter =
-                        CompanyFollowedAdapter(
-                            context,
-                            listFollowedJob!!,
-                            this@CompanyFollowedFragment
-                        )
+                    adapter = CompanyFollowedAdapter(
+                        context, listFollowedJob!!, this@CompanyFollowedFragment
+                    )
                 }
 
             }

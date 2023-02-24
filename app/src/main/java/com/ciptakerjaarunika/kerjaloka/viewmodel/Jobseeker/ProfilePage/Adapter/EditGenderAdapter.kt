@@ -11,14 +11,17 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.iGender
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iEditBasic
 
-class EditGenderAdapter(val value :Char?, private val genderItems: List<GenderModel>, private val iEditBasic: iEditBasic, private val iGender: iGender):
-    RecyclerView.Adapter<EditGenderAdapter.EditGender>()
-{
+class EditGenderAdapter(
+    val value: Char?,
+    private val genderItems: List<GenderModel>,
+    private val iEditBasic: iEditBasic,
+    private val iGender: iGender
+) : RecyclerView.Adapter<EditGenderAdapter.EditGender>() {
 
     inner class EditGender(view: View) : RecyclerView.ViewHolder(view) {
 
         var item: TextView
-        var container : LinearLayout
+        var container: LinearLayout
 
         init {
             item = view.findViewById(R.id.item_modal)
@@ -33,9 +36,9 @@ class EditGenderAdapter(val value :Char?, private val genderItems: List<GenderMo
 
     override fun onBindViewHolder(holder: EditGender, position: Int) {
         val currentItem = genderItems[position]
-        holder.item.text= currentItem.Description
+        holder.item.text = currentItem.Description
 
-        if(currentItem.value == value){
+        if (currentItem.value == value) {
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
         }
         holder.container.setOnClickListener {

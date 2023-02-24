@@ -15,9 +15,9 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.Applic
 
 class UbahStatusFragment(val iStatusPage: iStatusPage) : SuperBottomSheetFragment() {
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ubah_status, container, false)
     }
@@ -65,15 +65,14 @@ class UbahStatusFragment(val iStatusPage: iStatusPage) : SuperBottomSheetFragmen
 
 
     }
+
     override fun getCornerRadius() = 20f
 
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
 

@@ -1,7 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Preference
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +9,10 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditJobtypeLayoutBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobType
 import com.ciptakerjaarunika.kerjaloka.model.Data.JobTypeFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerJobTypes
@@ -54,8 +54,6 @@ class FragmentEditJobType(var dataList: List<JobType>?, val iRefreshData: iRefre
                     item.jobTypeNo
                 )
             }
-            Log.d("requestData", requestData.toString())
-
             ManageProfileAPI().JobseekerEditJobTypes(requestData, context) {
                 if (it != null) {
                     Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
@@ -71,7 +69,7 @@ class FragmentEditJobType(var dataList: List<JobType>?, val iRefreshData: iRefre
         }
     }
 
-    fun getData(){
+    fun getData() {
         DataAPI().GetJobTypes(context) { data ->
             if (data != null) {
                 jobTypes = data.map { item ->
@@ -98,6 +96,7 @@ class FragmentEditJobType(var dataList: List<JobType>?, val iRefreshData: iRefre
         iRefreshData.refresh()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun refreshRecyCleview() {
         binding.recycleview.apply {
             layoutManager = LinearLayoutManager(activity)

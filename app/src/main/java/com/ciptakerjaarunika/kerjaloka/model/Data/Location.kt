@@ -15,9 +15,9 @@ data class LocationFilter(
     var checked: Boolean?
 )
 
-data class sendLocation(
-    val jobNo: Long,
-    val cityNo: Int,
-    val jobLangitude: String,
-    val jobLatitude: String,
-)
+//data class sendLocation(
+//    val jobNo: Long,
+//    val cityNo: Int,
+//    val jobLangitude: String,
+//    val jobLatitude: String,
+//)

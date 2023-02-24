@@ -15,11 +15,10 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
 
-class CompanyCompareJobseekerFragment : Fragment(), OnFragmentClickListener{
+class CompanyCompareJobseekerFragment : Fragment(), OnFragmentClickListener {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_company_compare_jobseeker, container, false)
     }
@@ -50,6 +49,7 @@ class CompanyCompareJobseekerFragment : Fragment(), OnFragmentClickListener{
 
         }
     }
+
     override fun goToResult() {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, ResultCompareFragment(), "ResultCompare")

@@ -10,9 +10,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Listener.JobDetail
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.DataCount
-import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -55,11 +55,7 @@ class Companyjobs_adapter(private val joblist: List<DataCount>, private val list
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = joblist[position]
-//        var logoComp = SessionManager(context).user?.companyAdditional?.logo
-////        Log.d("logo", logoComp.toString())
-//        Glide.with(holder.imageJob)
-//            .load(config().portAddress + "/photo/Profile/" + SessionManager(context).user?.companyAdditional?.logo).fitCenter()
-//            .into(holder.imageJob)
+
         holder.jobTitle.text = currentItem.jobPosition
         if (!currentItem.createdOn.isNullOrEmpty() && !currentItem.createdOn.isNullOrEmpty()) {
 
@@ -67,7 +63,7 @@ class Companyjobs_adapter(private val joblist: List<DataCount>, private val list
                 .format(DateTimeFormatter.ofPattern("dd MMMM YYYY")).toString()
             holder.jobInput.text = createdOn
         } else holder.jobInput.text = ""
-        if (!currentItem.expired.isNullOrEmpty() && !currentItem.expired.isNullOrBlank()) {
+        if (!currentItem.expired.isNullOrEmpty() && !currentItem.expired.isBlank()) {
             val expired = LocalDateTime.parse(currentItem.expired)
                 .format(DateTimeFormatter.ofPattern("dd MMMM YYYY")).toString()
             holder.jobExpired.text = expired

@@ -48,7 +48,6 @@ import java.security.MessageDigest
 import java.util.*
 import kotlin.text.Charsets.UTF_8
 
-
 class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
 
     companion object {
@@ -87,12 +86,10 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
+            .requestIdToken(getString(R.string.default_web_client_id)).requestEmail()
             .build()// getting the value of gso inside the GoogleSigninClient
         mGoogleSignInClient = GoogleSignIn.getClient(
-            context!!,
-            gso
+            context!!, gso
         )// initialize the firebaseAuth variable firebaseAuth= FirebaseAuth.getInstance()
         val btn_login_google = itemView.findViewById<MaterialButton>(R.id.btn_LoginGoogle)
 
@@ -129,8 +126,8 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                     it?.let { it1 -> Log.d("Login Res", it1.message) }
                     if (it != null) {
                         if (it.code == "252") {
-                            spinnerLogin.visibility = View.VISIBLE
-                            loginForm.visibility = View.GONE
+                            spinnerLogin.visibility = VISIBLE
+                            loginForm.visibility = GONE
                             SessionManager(context).access_token = it.userToken
                             val mainActivity = activity as MainActivity
                             AUTHAPI().CheckLogin(context, mainActivity) {
@@ -152,54 +149,7 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                             errorMessage.text = it.message
                         }
                     }
-                    /*if (it != null && it.code == "252") {
 
-                        SessionManager(context).access_token = it.userToken
-                        var User = User(
-                            userNo = it.userNo,
-                            userFullname = it.userFullname,
-                            suspended = it.suspended,
-                            roleNo = it.userRole,
-                            photo = it.photo,
-                            deactivated = it.deactivated,
-                            dataComplete = it.dataComplete,
-                            ownerStatus = it.ownerStatus == true,
-                            authorized = it.ownerStatus == true,
-                            notice = it.notice,
-                            rolePrivileges = it.privilege,
-                            email = email,
-                            emailHasVerified = null,
-                            isDeleted = null,
-                            isNewsletter = null,
-                            lastChangeUsername = null,
-                            username = "",
-                            company = null,
-                            companyAdditional = null,
-                            jobseekerAdditional = null,
-                            jobseekers = null,
-                            phone = "",
-                            isDiscoverable = null
-                        )
-
-                        SessionManager(context).user = User
-                        val mainActivity = activity as MainActivity
-                        AUTHAPI().CheckLogin(context, mainActivity) {
-                            if(nameFragment != "lamaran" || SessionManager(context).user == null || SessionManager(context).user?.roleNo == Role.Jobseekers.value){
-                                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                                    ft.replace(id, Goto,"")
-                                    ft.commit()
-                            }
-                            else if (nameFragment == "lamaran" && SessionManager(context).user?.roleNo == Role.Companies.value || SessionManager(context).user?.company != null
-                            ) {
-                                    val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                                    ft.replace(id, CompanyListApplicantFragment(),"")
-                                    ft.commit()
-                            }
-                        }
-                    } else if (it != null) {
-                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-                        SessionManager(context).user = null
-                    }*/
                 }
             }
         }
@@ -264,7 +214,6 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         val currentDate = Date()
         val cal: Calendar = Calendar.getInstance()
-        // remove next line if you're always using the current time.
         cal.time = currentDate
         cal.add(Calendar.HOUR, +1)
         val oneHourBack: Date = cal.time
@@ -273,14 +222,12 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
             if (task.isSuccessful) {
                 SavedPreference.setEmail(context!!, account.email.toString())
                 SavedPreference.setUsername(context!!, account.displayName.toString())
-
                 val text = "${account.idToken}${config().authKey}${4}"
                 val crypt = MessageDigest.getInstance("MD5")
                 crypt.update(text.toByteArray())
                 val hash = BigInteger(1, crypt.digest()).toString(16)
                 fun md5(str: String): ByteArray =
                     MessageDigest.getInstance("MD5").digest(str.toByteArray(UTF_8))
-                Log.d("Crypt", hash)
                 FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         return@OnCompleteListener
@@ -289,43 +236,34 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
                     SessionManager(context).device_token = token
                 })
 
-                val googleRequest =
-                    GoogleLoginRequest(
-                        account.idToken.toString(),
-                        oneHourBack.toString(),
-                        hash,
-                        deviceToken = SessionManager(context).device_token
-                    )
+                val googleRequest = GoogleLoginRequest(
+                    account.idToken.toString(),
+                    oneHourBack.toString(),
+                    hash,
+                    deviceToken = SessionManager(context).device_token
+                )
                 AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
                     Log.d("google login", it.toString())
-                    if (it != null)
-                        if (it.code == "252") {
-                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                    if (it != null) if (it.code == "252") {
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
 
-                            SessionManager(context).access_token = it.userToken
-                            val mainActivity = activity as MainActivity
+                        SessionManager(context).access_token = it.userToken
+                        val mainActivity = activity as MainActivity
 
-                            AUTHAPI().CheckLogin(context, mainActivity) {
-                                mainActivity.replaceFragment(Goto)
-                            }
-                        } else {
-//                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-                            SessionManager(context).user = null
+                        AUTHAPI().CheckLogin(context, mainActivity) {
+                            mainActivity.replaceFragment(Goto)
                         }
+                    } else {
+                        SessionManager(context).user = null
+                    }
                 }
             }
-//                val intent = Intent(context, MainActivity::class.java)
-//                startActivity(intent)
-//                finish()
-
-
         }
     }
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.activity_login, container, false)
@@ -350,17 +288,13 @@ class Login(val Goto: Fragment, val nameFragment: String) : Fragment() {
 
         fun setEmail(context: Context, email: String) {
             editor(
-                context,
-                EMAIL,
-                email
+                context, EMAIL, email
             )
         }
 
         fun setUsername(context: Context, username: String) {
             editor(
-                context,
-                USERNAME,
-                username
+                context, USERNAME, username
             )
         }
 

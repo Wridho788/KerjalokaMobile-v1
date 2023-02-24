@@ -45,8 +45,8 @@ class InterviewPage : Fragment(), CellClickListener {
     private var recyclerView: RecyclerView? = null
     private lateinit var hubConnection: HubConnection
 
-    @AddTrace(name="onInterviewPageTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onInterviewPageTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -93,10 +93,7 @@ class InterviewPage : Fragment(), CellClickListener {
                     }
                     search?.addTextChangedListener(object : TextWatcher {
                         override fun beforeTextChanged(
-                            p0: CharSequence?,
-                            p1: Int,
-                            p2: Int,
-                            p3: Int
+                            p0: CharSequence?, p1: Int, p2: Int, p3: Int
                         ) {
                         }
 
@@ -110,8 +107,7 @@ class InterviewPage : Fragment(), CellClickListener {
                                 recyclerView?.apply {
                                     layoutManager = LinearLayoutManager(activity)
                                     adapter = company_interview_adapter(it.data.filter { list ->
-                                        list.jobPosition.lowercase(Locale.getDefault())
-                                            .contains(
+                                        list.jobPosition.lowercase(Locale.getDefault()).contains(
                                                 search.text.toString()
                                                     .lowercase(Locale.getDefault())
                                             )
@@ -132,6 +128,7 @@ class InterviewPage : Fragment(), CellClickListener {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         var user = SessionManager(context).user
@@ -140,8 +137,8 @@ class InterviewPage : Fragment(), CellClickListener {
         recyclerView = view?.findViewById(R.id.recyclerViewSection)
         val layout_section = view?.findViewById<LinearLayout>(R.id.layout_section)
 
-        hubConnection.on("connected",
-            { res ->
+        hubConnection.on(
+            "connected", { res ->
                 Log.d("Websocket Response : ", res.toString())
                 val userNo = SessionManager(context).user!!.userNo.toString()
 
@@ -150,9 +147,7 @@ class InterviewPage : Fragment(), CellClickListener {
         )
 
         hubConnection.on(
-            "getmessage",
-            { res: chat_data ->
-                Log.d("Chat data : ", res.toString())
+            "getmessage", { res: chat_data ->
                 SessionManager(context).chatData = res
 
                 activity?.runOnUiThread {
@@ -160,18 +155,15 @@ class InterviewPage : Fragment(), CellClickListener {
                     spinner?.visibility = GONE
                     layout_section?.visibility = VISIBLE
                 }
-            },
-            chat_data::class.java
+            }, chat_data::class.java
         )
         hubConnection.on(
-            "incomingCall",
-            { data ->
+            "incomingCall", { data ->
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
                 ft.replace(id, IncomingCallPage(data), "IncomingCall")
                 ft.addToBackStack("InterviewPage")
                 ft.commit()
-            },
-            incoming_call_model::class.java
+            }, incoming_call_model::class.java
         )
 
 
@@ -189,7 +181,8 @@ class InterviewPage : Fragment(), CellClickListener {
                 if (it != null) {
                     if (it.data.size == 0) {
                         spinner?.visibility = GONE
-                        view?.findViewById<LinearLayout>(R.id.layout_nothing_interview)!!.visibility = VISIBLE
+                        view?.findViewById<LinearLayout>(R.id.layout_nothing_interview)!!.visibility =
+                            VISIBLE
                     } else {
                         spinner?.visibility = GONE
                         recyclerView?.apply {
@@ -198,18 +191,12 @@ class InterviewPage : Fragment(), CellClickListener {
                         }
                         search.addTextChangedListener(object : TextWatcher {
                             override fun beforeTextChanged(
-                                p0: CharSequence?,
-                                p1: Int,
-                                p2: Int,
-                                p3: Int
+                                p0: CharSequence?, p1: Int, p2: Int, p3: Int
                             ) {
                             }
 
                             override fun onTextChanged(
-                                p0: CharSequence?,
-                                p1: Int,
-                                p2: Int,
-                                p3: Int
+                                p0: CharSequence?, p1: Int, p2: Int, p3: Int
                             ) {
                             }
 
@@ -256,7 +243,6 @@ class InterviewPage : Fragment(), CellClickListener {
         hubConnection.stop()
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(id, company_interview_byjob(SectionDetail, jobNo), "ChatFragment")
-//        ft.addToBackStack("interview_perjob")
         ft.commit()
     }
 
@@ -271,19 +257,14 @@ class InterviewPage : Fragment(), CellClickListener {
         hubConnection.stop()
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(
-            id,
-            ChatPage(sectionName, sectionNo, jobNo, receiver, logo, jobPosition),
-            "ChatFragment"
+            id, ChatPage(sectionName, sectionNo, jobNo, receiver, logo, jobPosition), "ChatFragment"
         )
-//        ft.addToBackStack("SectionMessage")
         ft.commit()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_interview, container, false)
     }
 }

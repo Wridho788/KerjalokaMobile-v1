@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,16 +10,17 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter.CompReviewAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Listener.AppealModal
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.data
-import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 
 class CompMyReview(val data: data?, private val CompanyNo: Long? = null) : Fragment() {
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,8 +50,6 @@ class CompMyReview(val data: data?, private val CompanyNo: Long? = null) : Fragm
 
         return view
     }
-
-    companion object;
 
     private fun replaceFragment(fragment: Fragment) {
 

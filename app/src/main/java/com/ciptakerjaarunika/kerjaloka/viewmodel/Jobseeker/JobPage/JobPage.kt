@@ -1,11 +1,11 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobPage
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -39,8 +39,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
-//import com.instabug.apm.APM
-
+import com.instabug.apm.APM
 class JobPage : Fragment(), IJobPage {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var activityResultLauncher: ActivityResultLauncher<Array<String>>
@@ -72,13 +71,12 @@ class JobPage : Fragment(), IJobPage {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         jobPageTrace()
-//        APM.setFragmentSpansEnabled(true)
+        APM.setFragmentSpansEnabled(true)
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentJobPageBinding.inflate(layoutInflater)
         val view = binding.root
@@ -86,21 +84,17 @@ class JobPage : Fragment(), IJobPage {
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-//        val callback: OnBackPressedCallback =
-//            object : OnBackPressedCallback(true /* enabled by default */) {
-//                override fun handleOnBackPressed() {
-//                    fragmentManager?.popBackStack()
-//                }
-//            }
-//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
             when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) ||
-                        permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false)
-                -> {
+                permissions.getOrDefault(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    false
+                ) || permissions.getOrDefault(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    false
+                ) -> {
                     getNearJob()
                 }
                 else -> {
@@ -115,8 +109,7 @@ class JobPage : Fragment(), IJobPage {
         }
         activityResultLauncher.launch(
             arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
             )
         )
         return view
@@ -159,7 +152,6 @@ class JobPage : Fragment(), IJobPage {
             JobAPI().getBookmarkedJob(context) {
                 bookmarkedDone()
                 if (it?.data != null) {
-                    Log.d("bookmarked", it.data.toString())
                     listBookmark = it.data.take(5)
                     binding.btnSeeBookmarked.visibility = if (it.data.size <= 5) GONE else VISIBLE
                     binding.bookmaredJob.apply {
@@ -206,20 +198,11 @@ class JobPage : Fragment(), IJobPage {
     fun getNearJob() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         if (ActivityCompat.checkSelfPermission(
-                activity!!,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                activity!!, Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                activity!!,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                activity!!, Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
@@ -257,6 +240,7 @@ class JobPage : Fragment(), IJobPage {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun BookmarkJob(ListType: Int, JobNo: Long, Index: Int) {
         JobAPI().BookmarkJob(JobNo, !listRecommendation[Index].bookmarked, context) {
             if (it != null) {

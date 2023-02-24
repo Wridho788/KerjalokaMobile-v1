@@ -5,21 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.DataX
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.DataX
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 
-
 class DeleteReviewModal : SuperBottomSheetFragment() {
     var review: DataX? = null
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,13 +20,13 @@ class DeleteReviewModal : SuperBottomSheetFragment() {
         val btnDelete = view.findViewById<MaterialButton>(R.id.delete)
         val btnCancel = view.findViewById<MaterialButton>(R.id.cancel)
 
-        if (arguments!=null){
+        if (arguments != null) {
             val descFromBundle = arguments?.getString(EXTRA_DELETE_REVIEW)
             review = Gson().fromJson(descFromBundle, DataX::class.java)
-            btnDelete.setOnClickListener{
-                review?.userRatingNo?.let { it1 -> UsersAPI().DeleteSendedReview(it1, context){} }
+            btnDelete.setOnClickListener {
+                review?.userRatingNo?.let { it1 -> UsersAPI().DeleteSendedReview(it1, context) {} }
             }
-            btnCancel.setOnClickListener{
+            btnCancel.setOnClickListener {
                 this.dismiss()
             }
         }

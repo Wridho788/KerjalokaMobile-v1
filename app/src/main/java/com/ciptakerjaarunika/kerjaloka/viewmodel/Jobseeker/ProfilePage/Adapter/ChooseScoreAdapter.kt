@@ -11,13 +11,16 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.iChooseScore
 import com.ciptakerjaarunika.kerjaloka.viewmodel.ProfilePage.iEditBahasa
 
-class ChooseScoreAdapter(val type: String, val value : Int?,val iEditBahasa: iEditBahasa,val iChooseScore: iChooseScore):
-    RecyclerView.Adapter<ChooseScoreAdapter.chooseScore>()
-{
+class ChooseScoreAdapter(
+    val type: String,
+    val value: Int?,
+    val iEditBahasa: iEditBahasa,
+    val iChooseScore: iChooseScore
+) : RecyclerView.Adapter<ChooseScoreAdapter.chooseScore>() {
 
-    inner class chooseScore(view: View): RecyclerView.ViewHolder(view){
+    inner class chooseScore(view: View) : RecyclerView.ViewHolder(view) {
         var item: TextView
-        var container : LinearLayout
+        var container: LinearLayout
 
         init {
             item = view.findViewById(R.id.item_modal)
@@ -28,8 +31,7 @@ class ChooseScoreAdapter(val type: String, val value : Int?,val iEditBahasa: iEd
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): chooseScore {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
         view.layoutParams = ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         return chooseScore(view)
     }
@@ -38,14 +40,14 @@ class ChooseScoreAdapter(val type: String, val value : Int?,val iEditBahasa: iEd
         var currentValue = position + 1
         holder.item.text = currentValue.toString()
 
-        if(currentValue == value){
+        if (currentValue == value) {
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
         }
         holder.container.setOnClickListener {
-            if(type == "written"){
+            if (type == "written") {
                 iEditBahasa.updateScoreTulisan(currentValue)
                 iChooseScore.close()
-            }else{
+            } else {
                 iEditBahasa.updateScoreLisan(currentValue)
                 iChooseScore.close()
             }

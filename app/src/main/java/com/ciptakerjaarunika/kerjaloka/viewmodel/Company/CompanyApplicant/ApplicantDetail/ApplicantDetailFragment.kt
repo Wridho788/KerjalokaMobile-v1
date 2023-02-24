@@ -44,9 +44,9 @@ import java.time.format.DateTimeFormatter
 
 class ApplicantDetailFragment(
     private val applicantDetail: applicantModel,
-    val iJobApplicant: iJobApplicant?, iCvBankInterface: iCvBankInterface?
-) : Fragment(),
-    OnFragmentClickListener {
+    val iJobApplicant: iJobApplicant?,
+    iCvBankInterface: iCvBankInterface?
+) : Fragment(), OnFragmentClickListener {
 
     private lateinit var binding: FragmentApplicantDetailBinding
     private lateinit var application: applicantModel
@@ -55,15 +55,14 @@ class ApplicantDetailFragment(
     private var downLoadId: Long = 0
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentApplicantDetailBinding.inflate(layoutInflater)
         val view = binding.root
         return view
     }
 
-    @SuppressLint("ResourceType")
+    @SuppressLint("ResourceType", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -98,15 +97,13 @@ class ApplicantDetailFragment(
                     .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
                 if (endingAt != null) {
                     if (endingAt[0].experienceEndedAt != null) {
-                        val beginEndYear =
-                            LocalDateTime.parse(endingAt[0].experienceEndedAt)
-                                .format(DateTimeFormatter.ofPattern("MMMM yyyy "))
+                        val beginEndYear = LocalDateTime.parse(endingAt[0].experienceEndedAt)
+                            .format(DateTimeFormatter.ofPattern("MMMM yyyy "))
                         binding.headerApplicantDetail.experienceJobText.text =
                             beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
                         binding.headerApplicantDetail.experienceYearText.text =
                             "$beginYear - $beginEndYear"
-                    }
-                    else {
+                    } else {
                         binding.headerApplicantDetail.experienceYearText.text =
                             "$beginYear - Sekarang"
                     }
@@ -114,8 +111,7 @@ class ApplicantDetailFragment(
                 } else {
                     binding.headerApplicantDetail.experienceJobText.text =
                         beginat[0].experiencePosition + " - " + endingAt[0].experienceCompanyName
-                    binding.headerApplicantDetail.experienceYearText.text =
-                        "$beginYear - Sekarang"
+                    binding.headerApplicantDetail.experienceYearText.text = "$beginYear - Sekarang"
                 }
             }
         } else {
@@ -129,13 +125,11 @@ class ApplicantDetailFragment(
                 val educationBegin = education.sortedByDescending { item -> item.educationBeginAt }
                 val educationEnded = education.sortedByDescending { item -> item.educationEndedAt }
 
-                val beginYearEducation =
-                    LocalDateTime.parse(educationBegin[0].educationBeginAt)
-                        .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                val beginYearEducation = LocalDateTime.parse(educationBegin[0].educationBeginAt)
+                    .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
                 if (educationEnded != null) {
-                    val endedYearEducation =
-                        LocalDateTime.parse(educationEnded[0].educationEndedAt)
-                            .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                    val endedYearEducation = LocalDateTime.parse(educationEnded[0].educationEndedAt)
+                        .format(DateTimeFormatter.ofPattern("MMMM yyyy"))
                     binding.headerApplicantDetail.educationYearText.text =
                         "$beginYearEducation - $endedYearEducation"
 
@@ -156,9 +150,7 @@ class ApplicantDetailFragment(
         }
 
         val vaccinated = applicantDetail.applicant.documents.filter { item ->
-            item.documentTypeNo == DocumentType.Vaccine3.value ||
-                    item.documentTypeNo == DocumentType.Vaccine2.value ||
-                    item.documentTypeNo == DocumentType.Vaccine1.value
+            item.documentTypeNo == DocumentType.Vaccine3.value || item.documentTypeNo == DocumentType.Vaccine2.value || item.documentTypeNo == DocumentType.Vaccine1.value
         }
 
         if (vaccinated != null) {
@@ -178,7 +170,6 @@ class ApplicantDetailFragment(
                     "Jobseeker ini belum melakukan vaksinasi atau belum melengkapi status vaksinasi"
             }
         } else {
-            Log.d("vaccinated", "Not Vaccine")
             binding.iconVaccine.setImageResource(R.drawable.ic_vaccine_reject)
             binding.vaccineStatus.text =
                 "Jobseeker ini belum melakukan vaksinasi atau belum melengkapi status vaksinasi"
@@ -186,13 +177,11 @@ class ApplicantDetailFragment(
 
         if (applicantDetail.applicant.record != null) {
             val recordlist = applicantDetail.applicant.record.map { it.name }
-            Log.d("record", recordlist.toString())
         } else {
             binding.layoutRecord.visibility = View.GONE
         }
 
         if (applicantDetail.papiKostickResult != null) {
-            Log.d("papikostik", "papikostick_result")
             binding.btnLihatHasilTesApplicant.setOnClickListener {
                 goToPapikostikModal()
             }
@@ -206,7 +195,6 @@ class ApplicantDetailFragment(
             .load(config().portAddress + "photo/Profile/" + applicantDetail.applicant.photo)
             .fitCenter().into(binding.headerApplicantDetail.profileApplicant)
 
-//        Log.d("email applicant", applicantDetail.applicant.email.toString())
 
         binding.nameApplicant.text = applicantDetail.applicant.name
         binding.headerApplicantDetail.applicantName.text = applicantDetail.applicant.name
@@ -343,38 +331,27 @@ class ApplicantDetailFragment(
     }
 
     fun downloadCV(fileName: String, documentName: String) {
-        val request =
-            DownloadManager.Request(
-                Uri.parse(
-                    "${config().portAddress}/document/download?fileName=${fileName}&documentName=${documentName}"
-                )
+        val request = DownloadManager.Request(
+            Uri.parse(
+                "${config().portAddress}/document/download?fileName=${fileName}&documentName=${documentName}"
             )
-        request.setTitle(documentName)
-            .setDescription("File is downloading...")
+        )
+        request.setTitle(documentName).setDescription("File is downloading...")
             .setDestinationInExternalFilesDir(
-                context,
-                Environment.DIRECTORY_DOWNLOADS, fileName
-            )
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                context, Environment.DIRECTORY_DOWNLOADS, fileName
+            ).setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
         downLoadId = downloadManager!!.enqueue(request)
     }
 
     override fun goToCommentApplicant(
-        commentList: List<CommentModel>,
-        jobseekerNo: Long,
-        jobNo: Long
+        commentList: List<CommentModel>, jobseekerNo: Long, jobNo: Long
     ) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(
-            id,
-            KomentarApplicantFragment(
-                commentList,
-                applicantDetail.application.applicationNo,
-                jobseekerNo,
-                jobNo
-            ),
-            "CommentApplicant"
+            id, KomentarApplicantFragment(
+                commentList, applicantDetail.application.applicationNo, jobseekerNo, jobNo
+            ), "CommentApplicant"
         )
         ft.addToBackStack("CommentApplicant")
         ft.commit()
@@ -397,14 +374,12 @@ class ApplicantDetailFragment(
     override fun goToChangeStatus() {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(
-            id,
-            StatusPageFragment(
+            id, StatusPageFragment(
                 applicantDetail.application.applicationNo,
                 applicantDetail.applicant.name,
                 applicantDetail.applicant.email,
                 applicantDetail.application.applicationStatusNo
-            ),
-            "ChangeStatus"
+            ), "ChangeStatus"
         )
         ft.addToBackStack("ChangeStatus")
         ft.commit()

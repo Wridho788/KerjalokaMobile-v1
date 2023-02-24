@@ -9,21 +9,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanySearch.Model.industri_model
 
-class IndustriAdapter(var value : List<Int>, var dataSet: List<industri_model>, val context: Context) :
-    RecyclerView.Adapter<IndustriAdapter.ViewHolder?>(){
+class IndustriAdapter(
+    var value: List<Int>,
+    var dataSet: List<industri_model>,
+    val context: Context
+) : RecyclerView.Adapter<IndustriAdapter.ViewHolder?>() {
 
-        inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-            var txtFieldname: TextView
-            var checkbox: CheckBox
-
-            init {
-                txtFieldname = itemView.findViewById(R.id.txt_fieldname)
-                checkbox = itemView.findViewById(R.id.checkBox_industri)
-            }
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var txtFieldname: TextView
+        var checkbox: CheckBox
+        init {
+            txtFieldname = itemView.findViewById(R.id.txt_fieldname)
+            checkbox = itemView.findViewById(R.id.checkBox_industri)
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.item_industri,null)
+        val view = View.inflate(parent.context, R.layout.item_industri, null)
         return ViewHolder(view)
     }
 
@@ -34,8 +36,8 @@ class IndustriAdapter(var value : List<Int>, var dataSet: List<industri_model>, 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataSet[position]
         holder.txtFieldname.text = currentItem.fieldName
-        holder.checkbox.isChecked = value.any { data -> data == currentItem.fieldNo}
-        holder.checkbox.setOnClickListener{
+        holder.checkbox.isChecked = value.any { data -> data == currentItem.fieldNo }
+        holder.checkbox.setOnClickListener {
             currentItem.checked = holder.checkbox.isChecked
             dataSet[position].checked = holder.checkbox.isChecked
         }

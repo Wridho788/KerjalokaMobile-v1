@@ -1,7 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyScreen
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -87,12 +87,9 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
                 }
                 recyclerViewFollowedCompany?.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter =
-                        CompanyFollowedAdapter(
-                            context,
-                            listFollowedJob!!.take(5),
-                            this@CompanyPage
-                        )
+                    adapter = CompanyFollowedAdapter(
+                        context, listFollowedJob!!.take(5), this@CompanyPage
+                    )
                 }
 
             }
@@ -105,7 +102,6 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
             if (it != null) {
                 isLoading = false
                 listSearchJob = it.data
-                Log.d("response browse api", it.toString())
                 val recyclerViewCompanyBrowse =
                     view?.findViewById<RecyclerView>(R.id.rv_browse_company)
                 val btn_see_more = view?.findViewById<LinearLayout>(R.id.btn_see_more_browse)
@@ -125,19 +121,19 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCompanyPageBinding.inflate(layoutInflater)
         return binding.root
     }
 
+    @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.backButton.setOnClickListener {
             fragmentManager?.popBackStack()
         }
-        
+
         var user = SessionManager(context).user
         val layout_followed_company = view.findViewById<LinearLayout>(R.id.layout_followed_company)
         val layout_search_company = view.findViewById<LinearLayout>(R.id.search_company_btn)
@@ -145,7 +141,7 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
             view.findViewById<RecyclerView>(R.id.rv_vacancies_company)
 
         if (user == null) {
-            layout_followed_company.visibility = View.GONE
+            layout_followed_company.visibility = GONE
         }
         isFollowed = user != null && user.roleNo == 4
         if (isFollowed) {
@@ -181,12 +177,14 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
         }
 
     }
+
     fun changeFragment(Goto: Fragment) {
         val fragmentTransaction = fragmentManager!!.beginTransaction()
         fragmentTransaction.addToBackStack("Company Page")
         fragmentTransaction.replace(R.id.fragment_container, Goto)
         fragmentTransaction.commit()
     }
+
     override fun onCompanyDetailPage(CompanyNo: Long) {
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container, CompanyDetailFragment(CompanyNo))

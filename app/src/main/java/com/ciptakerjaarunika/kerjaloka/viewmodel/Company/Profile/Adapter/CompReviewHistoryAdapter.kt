@@ -1,4 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
@@ -17,22 +18,23 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class CompReviewHistoryAdapter(private val context: Context, private val ratingData: List<DataX>, private val listener: ShowModal):
-    RecyclerView.Adapter<CompReviewHistoryAdapter.ViewHolder>() {
+class CompReviewHistoryAdapter(
+    private val context: Context,
+    private val ratingData: List<DataX>,
+    private val listener: ShowModal
+) : RecyclerView.Adapter<CompReviewHistoryAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
-        //        var reviewTime: TextView
         var Desc: TextView
-        var proChip : ChipGroup
-        var conChip : ChipGroup
-        var ratBar : RatingBar
-        var edit : MaterialButton
-        var delete : MaterialButton
-        var logo : ImageView
+        var proChip: ChipGroup
+        var conChip: ChipGroup
+        var ratBar: RatingBar
+        var edit: MaterialButton
+        var delete: MaterialButton
+        var logo: ImageView
 
         init {
             creator = itemView.findViewById(R.id.nama_jobseeker)
-//            reviewTime = itemView.findViewById(R.id.record_page_date)
             Desc = itemView.findViewById(R.id.reviewDesc)
             proChip = itemView.findViewById(R.id.chipGroup_kelebihan)
             conChip = itemView.findViewById(R.id.chipGroup_kekurangan)
@@ -45,7 +47,10 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.review_history_card, null)
-        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 
@@ -56,26 +61,24 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
         holder.Desc.text = currentItem.comment
         holder.ratBar.rating = currentItem.rating.toFloat()
 
-        Glide.with(context)
-            .load(config().portAddress + "photo/Profile/" + currentItem.raterPhoto).fitCenter()
-            .into(holder.logo)
+        Glide.with(context).load(config().portAddress + "photo/Profile/" + currentItem.raterPhoto)
+            .fitCenter().into(holder.logo)
 
-        if(currentItem.approved) {
+        if (currentItem.approved) {
             holder.edit.setOnClickListener {
                 listener.showDetail(currentItem)
             }
-        }
-        else{
+        } else {
             holder.edit.setStrokeColorResource(R.color.light_500)
             holder.edit.setTextColor(com.giphy.sdk.ui.R.color.material_on_background_disabled)
             holder.edit.isEnabled = false
         }
 
-        holder.delete.setOnClickListener{
+        holder.delete.setOnClickListener {
             listener.showDelete(currentItem)
         }
 
-        if (currentItem.conRating.isNotEmpty()){
+        if (currentItem.conRating.isNotEmpty()) {
             currentItem.conRating.forEach {
                 val chip = Chip(holder.conChip.context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
@@ -92,7 +95,7 @@ class CompReviewHistoryAdapter(private val context: Context, private val ratingD
                 }
             }
         }
-        if (currentItem.proRating.isNotEmpty()){
+        if (currentItem.proRating.isNotEmpty()) {
             currentItem.proRating.forEach {
                 val chip = Chip(holder.proChip.context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)

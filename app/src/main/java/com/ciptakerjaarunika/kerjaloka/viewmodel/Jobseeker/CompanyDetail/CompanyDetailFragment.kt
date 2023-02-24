@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyDetail
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -41,8 +42,8 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
     OnFragmentCompanyDetailListener, OnFragmentClickListener {
     private lateinit var binding: FragmentCompanyDetailBinding
 
-    @AddTrace(name="onCompanyDetailTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onCompanyDetailTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -66,9 +67,9 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         CompanyDetailTrace()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCompanyDetailBinding.inflate(layoutInflater)
         val view = binding.root
@@ -93,7 +94,6 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
             view.findViewById<RecyclerView>(R.id.recycler_view_company_recommendation_jobs)
 
         val Context = this
-
         CompanyDetailAPI().getCompanyDetailAsync(context, CompanyNo) { it ->
             binding.spinner.visibility = GONE
             binding.contentContainer.visibility = VISIBLE
@@ -105,9 +105,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                 }
                 btn_follow.setOnClickListener { btn ->
                     CompanyDetailAPI().ManageFollowCompany(
-                        it.data.followed,
-                        CompanyNo,
-                        context
+                        it.data.followed, CompanyNo, context
                     ) { res ->
                         if (res != null && (res.code == "210" || res.code == 210)) {
                             Toast.makeText(activity, res.message, Toast.LENGTH_SHORT).show()
@@ -121,12 +119,9 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                         }
                     }
                 }
-
-
                 company_name.text = it.data.companyName
                 company_phone.text = it.data.phone
-                Glide.with(this)
-                    .load(config().portAddress + "photo/Profile/" + it.data.logo)
+                Glide.with(this).load(config().portAddress + "photo/Profile/" + it.data.logo)
                     .fitCenter().into(company_logo)
                 company_about.text = it.data.companyDescription
                 company_location.text = "${it.data.location.city}, ${it.data.location.province}"
@@ -134,7 +129,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                 company_type.text = it.data.field
 
                 txt_rating_company.text =
-                    if (it.data.rating.ratingList.size == 0) "-" else it.data.rating.ratingValue.toString()
+                    if (it.data.rating.ratingList.isEmpty()) "-" else it.data.rating.ratingValue.toString()
                 txt_follower.text = it.data.followers.toString()
                 rv_recommendations_job.apply {
                     layoutManager =
@@ -142,9 +137,7 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                     adapter = RelatedCompanyJobAdapter(it.data.job, Context)
                 }
                 val title = it.data.companyName
-                val link =
-                    "https://advance.kerjaloka.com/companies/" + CompanyNo + "/detail"
-
+                val link = "https://advance.kerjaloka.com/companies/" + CompanyNo + "/detail"
                 toolbarShare.setOnClickListener {
                     val sendIntent: Intent = Intent().apply {
                         action = Intent.ACTION_SEND
@@ -164,7 +157,6 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         btn_review.setOnClickListener {
             goToCompanyReview(CompanyNo)
         }
-
         return view
     }
 
@@ -172,7 +164,6 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         val toolbar = view.findViewById<MaterialToolbar>(R.id.toolbar)
         var recyclerView = view.findViewById(R.id.recycler_view_company_other_job) as RecyclerView
-
         binding.toolbar.setNavigationOnClickListener {
             fragmentManager?.popBackStack()
         }
@@ -187,11 +178,6 @@ class CompanyDetailFragment(private val CompanyNo: Long) : Fragment(),
                 if (companyList.size == 0) {
                     view.findViewById<LinearLayout>(R.id.otherCompanyContainer).visibility = GONE
                 }
-
-//                recyclerView?.apply {
-//                    layoutManager = LinearLayoutManager(activity)
-//                    adapter = CompanyVacanciesAdapter(context, companyList, this@CompanyDetailFragment)
-//                }
                 recyclerView.apply {
                     layoutManager =
                         LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)

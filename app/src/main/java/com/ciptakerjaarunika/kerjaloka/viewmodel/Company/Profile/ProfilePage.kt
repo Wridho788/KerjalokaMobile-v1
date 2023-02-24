@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,14 +20,12 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter.viewpag
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.DeactivatedAccount
 import com.google.android.material.button.MaterialButton
 
-
 class ProfilePage(var Page: Int) : Fragment() {
     private lateinit var binding: FragmentProfilePageBinding
     private lateinit var viewpagerAdapter: viewpagerCompAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfilePageBinding.inflate(layoutInflater)
         company_profile_api().CompanyGetProfileData(context) { response ->
@@ -61,13 +60,11 @@ class ProfilePage(var Page: Int) : Fragment() {
                 compName?.text = response.data.companyName
                 username?.text = response.data.username
 
-                if (activity != null)
-                    if (activity != null) {
-                        Glide.with(view!!.context)
-                            .load(config().portAddress + "photo/Profile/" + response.data.logo)
-                            .fitCenter()
-                            .into(view!!.findViewById<ImageView>(R.id.compLogo))
-                    }
+                if (activity != null) if (activity != null) {
+                    Glide.with(view!!.context)
+                        .load(config().portAddress + "photo/Profile/" + response.data.logo)
+                        .fitCenter().into(view!!.findViewById<ImageView>(R.id.compLogo))
+                }
             } else {
                 val intent = Intent(context, DeactivatedAccount::class.java)
                 startActivity(intent)
@@ -76,6 +73,7 @@ class ProfilePage(var Page: Int) : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("UseCompatLoadingForColorStateLists")
     fun updatePage() {
         val content = view?.findViewById<ViewPager2>(R.id.Comp_profileContent)
         content?.currentItem = Page

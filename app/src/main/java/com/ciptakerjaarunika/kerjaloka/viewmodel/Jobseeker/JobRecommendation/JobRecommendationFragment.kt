@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobRecommendation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,8 +26,8 @@ class JobRecommendationFragment : Fragment(), IJobPage {
     private lateinit var binding: FragmentJobRecommendationBinding
     private var listData: List<SearchJobModel> = listOf()
 
-    @AddTrace(name="onJobRecommendationTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onJobRecommendationTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -51,8 +52,7 @@ class JobRecommendationFragment : Fragment(), IJobPage {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentJobRecommendationBinding.inflate(layoutInflater)
         val view = binding.root
@@ -74,7 +74,6 @@ class JobRecommendationFragment : Fragment(), IJobPage {
                 listData = it.data
                 binding.spinner.visibility = GONE
                 binding.recycleview.visibility = VISIBLE
-
                 binding.recycleview.apply {
                     adapter = JobAdapter(1, listData, context, this@JobRecommendationFragment, null)
                     layoutManager = LinearLayoutManager(activity)
@@ -90,6 +89,7 @@ class JobRecommendationFragment : Fragment(), IJobPage {
         ft.commit()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun BookmarkJob(ListNo: Int, JobNo: Long, Index: Int) {
         JobAPI().BookmarkJob(JobNo, !listData[Index].bookmarked, context) {
             if (it != null) {

@@ -12,33 +12,33 @@ import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.Toast
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
+import com.ciptakerjaarunika.kerjaloka.enum.Role
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
+import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Adapter.myPackageAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Listener.ShowModalHistory
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.Model.Data
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Package.history_modal
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.CategoryList
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.DataX
-import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
-import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
-import com.ciptakerjaarunika.kerjaloka.enum.Role
-import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.gson.Gson
 
-class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment() {
-
+class EditMyReview(val iRefreshData: iRefreshData) : SuperBottomSheetFragment() {
     var review: DataX? = null
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return if (SessionManager(context).user?.roleNo == Role.Jobseekers.value)
-            inflater.inflate(R.layout.fragment_jobseeker_edit_review, container, false)
-        else
-            inflater.inflate(R.layout.fragment_edit_my_review, container, false)
+        return if (SessionManager(context).user?.roleNo == Role.Jobseekers.value) inflater.inflate(
+            R.layout.fragment_jobseeker_edit_review,
+            container,
+            false
+        )
+        else inflater.inflate(R.layout.fragment_edit_my_review, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,47 +72,75 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
             var conRatingList = review?.conRating
 
             pro1.setOnClickListener {
-                if(pro1.isChecked){pro1.isChecked = true}
+                if (pro1.isChecked) {
+                    pro1.isChecked = true
+                }
             }
             pro2.setOnClickListener {
-                if(pro2.isChecked){pro2.isChecked = true}
+                if (pro2.isChecked) {
+                    pro2.isChecked = true
+                }
             }
             pro3.setOnClickListener {
-                if(pro3.isChecked){pro3.isChecked = true}
+                if (pro3.isChecked) {
+                    pro3.isChecked = true
+                }
             }
             pro4.setOnClickListener {
-                if(pro4.isChecked){pro4.isChecked = true}
+                if (pro4.isChecked) {
+                    pro4.isChecked = true
+                }
             }
             pro5.setOnClickListener {
-                if(pro5.isChecked){pro5.isChecked = true}
+                if (pro5.isChecked) {
+                    pro5.isChecked = true
+                }
             }
             pro6.setOnClickListener {
-                if(pro6.isChecked){pro6.isChecked = true}
+                if (pro6.isChecked) {
+                    pro6.isChecked = true
+                }
             }
             pro7.setOnClickListener {
-                if(pro7.isChecked){pro7.isChecked = true}
+                if (pro7.isChecked) {
+                    pro7.isChecked = true
+                }
             }
 
             con1.setOnClickListener {
-                if(con1.isChecked){con1.isChecked = true}
+                if (con1.isChecked) {
+                    con1.isChecked = true
+                }
             }
             con2.setOnClickListener {
-                if(con2.isChecked){con2.isChecked = true}
+                if (con2.isChecked) {
+                    con2.isChecked = true
+                }
             }
             con3.setOnClickListener {
-                if(con3.isChecked){con3.isChecked = true}
+                if (con3.isChecked) {
+                    con3.isChecked = true
+                }
             }
             con4.setOnClickListener {
-                if(con4.isChecked){con4.isChecked = true}
+                if (con4.isChecked) {
+                    con4.isChecked = true
+                }
             }
             con5.setOnClickListener {
-                if(con5.isChecked){con5.isChecked = true}
+                if (con5.isChecked) {
+                    con5.isChecked = true
+                }
             }
             con6.setOnClickListener {
-                if(con6.isChecked){con6.isChecked = true}
+                if (con6.isChecked) {
+                    con6.isChecked = true
+                }
             }
             con7.setOnClickListener {
-                if(con7.isChecked){con7.isChecked = true}
+                if (con7.isChecked) {
+                    con7.isChecked = true
+                }
             }
 
 
@@ -162,7 +190,6 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
                     con7.isChecked = true
                 }
             }
-//            ratingBar.onRatingBarChangeListener = RatingBar.OnRatingBarChangeListener{ ratingBar, nilai, b -> ratingBar.rating}
         }
         btn_Send.setOnClickListener {
             val Message = txtComment.text.toString()
@@ -214,26 +241,22 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
             }
             ProRating = newPro
             ConRating = newCon
-            if(ProRating.size == 0){
+            if (ProRating.size == 0) {
                 showMessage("Pilih minimal 1 kelebihan")
-            }
-            else if(ConRating.size == 0){
+            } else if (ConRating.size == 0) {
                 showMessage("Pilih minimal 1 kekurangan")
-            }
-            else if(ProRating.size > 3){
+            } else if (ProRating.size > 3) {
                 showMessage("Pilih maksimal hanya 3 kelebihan")
-            }
-            else if(ConRating.size > 3){
+            } else if (ConRating.size > 3) {
                 showMessage("Pilih maksimal hanya 3 'kekurangan'")
             } else if (Message.isEmpty() && Message.isNullOrEmpty()) {
                 showMessage("Pesan review tidak boleh kosong")
-            }
-            else if (UserNo != null) {
-                UsersAPI().SendReview(UserNo, Message, Rating, ProRating, ConRating, context){
-                    if(!it?.message.isNullOrEmpty()) {
+            } else if (UserNo != null) {
+                UsersAPI().SendReview(UserNo, Message, Rating, ProRating, ConRating, context) {
+                    if (!it?.message.isNullOrEmpty()) {
                         Toast.makeText(activity, it?.message, Toast.LENGTH_LONG).show()
                     }
-                    if(it!= null && it.code == 210){
+                    if (it != null && it.code == 210) {
                         iRefreshData.refresh()
                         this.dismiss()
                     }
@@ -242,11 +265,12 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
         }
     }
 
-    fun showMessage(message : String?){
-        if(!message.isNullOrEmpty()) {
+    fun showMessage(message: String?) {
+        if (!message.isNullOrEmpty()) {
             Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
         }
     }
+
     companion object {
         var EXTRA_EDIT_REVIEW = "extra_editReview"
     }
@@ -255,11 +279,9 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
         return myPackageAdapter(requireContext(), list, object : ShowModalHistory {
             override fun showDetail(pack: Data) {
                 val sheet = history_modal()
-                Log.d("data", pack.orderNo.toString())
                 activity?.let { it1 ->
                     sheet.show(
-                        it1.supportFragmentManager,
-                        "DemoBottomSheetFragment"
+                        it1.supportFragmentManager, "DemoBottomSheetFragment"
                     )
                 }
             }
@@ -274,9 +296,7 @@ class EditMyReview(val iRefreshData : iRefreshData) : SuperBottomSheetFragment()
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 }

@@ -24,28 +24,29 @@ import com.ciptakerjaarunika.kerjaloka.utils.DateUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-//class interview_adapter:RecyclerView.Adapter<interview_adapter.ViewHolder>() {
-//
-//
 class ChatAdapter
-    (private val context: Context, private val jobNo : Long?, private val receiver : Long, val positionOnBottom : PositionOnBottom) :
-    RecyclerView.Adapter<ChatAdapter.ViewHolder>(){
+    (
+    private val context: Context,
+    private val jobNo: Long?,
+    private val receiver: Long,
+    val positionOnBottom: PositionOnBottom
+) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
     private val Right1 = 1
     private val Right2 = 2
     private val Left1 = 3
     private val Left2 = 4
-    private val UserNo :Long? = SessionManager(context).user?.userNo
-    private var messagesGroup : Map<String ,List<Messages>>? = null;
-    private var indexHeader : List<HeaderMessages> = listOf();
+    private val UserNo: Long? = SessionManager(context).user?.userNo
+    private var messagesGroup: Map<String, List<Messages>>? = null
+    private var indexHeader: List<HeaderMessages> = listOf()
 
-    private data class HeaderMessages(val Header : String, val Index : Int)
+    private data class HeaderMessages(val Header: String, val Index: Int)
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
     }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val message: TextView?
         val photoMessage: ImageView?
@@ -54,9 +55,9 @@ class ChatAdapter
         val createdOn: TextView?
         val timeContainer: LinearLayout?
         val header: TextView?
-        val headerContainer : LinearLayout?
-        val fileContainer : LinearLayout?
-        val fileName : TextView?
+        val headerContainer: LinearLayout?
+        val fileContainer: LinearLayout?
+        val fileName: TextView?
 
         init {
             message = view.findViewById(R.id.message)
@@ -71,51 +72,40 @@ class ChatAdapter
             fileName = view.findViewById(R.id.fileName)
         }
     }
-    /*
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getHeader(){
-        for(message in currentSection!!.messages){
-            var header = DateUtils().GetHeaderMessage(message.createdOn)
-            var exist = headerList.find { header -> header == header }
-            if(exist != null) {
-                headerList += header
-            }
-        }
-    }
-    */
 
     // determine which layout to use for the row
     override fun getItemViewType(position: Int): Int {
-            val currentSection = SessionManager(context).chatData!!.sections?.find {
-                it.jobNo == jobNo && it.receiver.contains(receiver)
-            }
-            var dataSet = currentSection!!.messages
+        val currentSection = SessionManager(context).chatData!!.sections.find {
+            it.jobNo == jobNo && it.receiver.contains(receiver)
+        }
+        var dataSet = currentSection!!.messages
 
-            var founded = indexHeader?.find { head-> head.Index == position } != null
-            var viewSelected = Right1
-            if (dataSet[position].createdBy == UserNo && (founded || (position == 0 || dataSet[position-1].createdBy != UserNo))) {
-                viewSelected = Right1
-            } else if (dataSet[position].createdBy == UserNo && (position == 0 || dataSet[position-1].createdBy == UserNo)) {
-                viewSelected = Right2
-            } else if (dataSet[position].createdBy != UserNo && (founded || (position == 0 || dataSet[position-1].createdBy != dataSet[position].createdBy))) {
-                viewSelected = Left1
-            } else{
-                viewSelected = Left2
-            }
-            return viewSelected
+        var founded = indexHeader.find { head -> head.Index == position } != null
+        var viewSelected = Right1
+        if (dataSet[position].createdBy == UserNo && (founded || (position == 0 || dataSet[position - 1].createdBy != UserNo))) {
+            viewSelected = Right1
+        } else if (dataSet[position].createdBy == UserNo && (position == 0 || dataSet[position - 1].createdBy == UserNo)) {
+            viewSelected = Right2
+        } else if (dataSet[position].createdBy != UserNo && (founded || (position == 0 || dataSet[position - 1].createdBy != dataSet[position].createdBy))) {
+            viewSelected = Left1
+        } else {
+            viewSelected = Left2
+        }
+        return viewSelected
     }
 
     // Create new views (invoked by the layout manager)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
-        val currentSection = SessionManager(context).chatData!!.sections?.find {
+        val currentSection = SessionManager(context).chatData!!.sections.find {
             it.jobNo == jobNo && it.receiver.contains(receiver)
         }
-        messagesGroup = currentSection!!.messages.groupBy { item -> DateUtils().GetHeaderMessage(item.createdOn) }
+        messagesGroup =
+            currentSection!!.messages.groupBy { item -> DateUtils().GetHeaderMessage(item.createdOn) }
 
         var index = 0
-        if(messagesGroup != null) {
+        if (messagesGroup != null) {
             indexHeader = listOf()
             for (header in messagesGroup!!) {
                 indexHeader += (HeaderMessages(header.key, index))
@@ -125,19 +115,16 @@ class ChatAdapter
 
         var view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.message_right1, viewGroup, false)
-        if(viewType == Right1){
+        if (viewType == Right1) {
             view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.message_right1, viewGroup, false)
-        }
-        else if(viewType == Right2){
+        } else if (viewType == Right2) {
             view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.message_right2, viewGroup, false)
-        }
-        else if(viewType == Left1){
+        } else if (viewType == Left1) {
             view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.message_left1, viewGroup, false)
-        }
-        else{
+        } else {
             view = LayoutInflater.from(viewGroup.context)
                 .inflate(R.layout.message_left2, viewGroup, false)
         }
@@ -147,23 +134,23 @@ class ChatAdapter
     // Replace the contents of a view (invoked by the layout manager)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        positionOnBottom.isOnBottom(position == (itemCount -1))
+        positionOnBottom.isOnBottom(position == (itemCount - 1))
 
-        val currentSection = SessionManager(context).chatData!!.sections?.find {
+        val currentSection = SessionManager(context).chatData!!.sections.find {
             it.jobNo == jobNo && it.receiver.contains(receiver)
         }
-        if(currentSection != null) {
-            if(viewHolder.header != null){
-                viewHolder.header.text = indexHeader?.find { head-> head.Index == position }?.Header
+        if (currentSection != null) {
+            if (viewHolder.header != null) {
+                viewHolder.header.text =
+                    indexHeader.find { head -> head.Index == position }?.Header
             }
             var dataSet = currentSection.messages
 
-            if(indexHeader.any()){
-                var founded = indexHeader.find { head-> head.Index == position } != null
-                if(founded){
+            if (indexHeader.any()) {
+                var founded = indexHeader.find { head -> head.Index == position } != null
+                if (founded) {
                     viewHolder.headerContainer?.visibility = VISIBLE
-                }
-                else{
+                } else {
                     viewHolder.headerContainer?.visibility = GONE
                 }
             }
@@ -171,50 +158,55 @@ class ChatAdapter
             viewHolder.fileContainer?.visibility = GONE
             viewHolder.photoContainer?.visibility = GONE
 
-            if(dataSet!![position].messageType == MessageType.NormalMessage.type.toString().toInt()){
+            if (dataSet[position].messageType == MessageType.NormalMessage.type.toString()
+                    .toInt()
+            ) {
                 viewHolder.message?.visibility = VISIBLE
-                viewHolder.message?.text = dataSet!![position].message
-                viewHolder.messageContainer?.setPadding(50,20,50,20)
+                viewHolder.message?.text = dataSet[position].message
+                viewHolder.messageContainer?.setPadding(50, 20, 50, 20)
                 viewHolder.messageContainer?.isEnabled = false
-            }
-            else if(dataSet!![position].messageType == MessageType.ImageMessage.type.toString().toInt()){
-                viewHolder.messageContainer?.setOnClickListener{
+            } else if (dataSet[position].messageType == MessageType.ImageMessage.type.toString()
+                    .toInt()
+            ) {
+                viewHolder.messageContainer?.setOnClickListener {
 //                    Toast.makeText(context, "Message has clicked", Toast.LENGTH_SHORT).show()
                 }
-                viewHolder.messageContainer?.setPadding(10,10,10,10)
+                viewHolder.messageContainer?.setPadding(10, 10, 10, 10)
                 viewHolder.photoContainer?.visibility = VISIBLE
-                if(viewHolder.photoMessage != null) {
-                   Glide.with(context)
-                        .load(config().portAddress + "/photo/Chat/" + dataSet!![position].fileName)
+                if (viewHolder.photoMessage != null) {
+                    Glide.with(context)
+                        .load(config().portAddress + "photo/Chat/" + dataSet[position].fileName)
 //                        .override(,675)
                         .into(viewHolder.photoMessage)
                 }
-            }
-            else if(dataSet!![position].messageType == MessageType.FileMessage.type.toString().toInt()){
+            } else if (dataSet[position].messageType == MessageType.FileMessage.type.toString()
+                    .toInt()
+            ) {
                 viewHolder.fileContainer?.visibility = VISIBLE
-                viewHolder.fileName?.text = dataSet!![position].message
-                viewHolder.messageContainer?.setOnClickListener{
-                    positionOnBottom.downloadFile(dataSet!![position])
+                viewHolder.fileName?.text = dataSet[position].message
+                viewHolder.messageContainer?.setOnClickListener {
+                    positionOnBottom.downloadFile(dataSet[position])
                 }
 
             }
 
             viewHolder.createdOn?.text = DateUtils().GetTime(dataSet[position].createdOn)
 
-            val sender : Long? = SessionManager(context).user?.userNo
+            val sender: Long? = SessionManager(context).user?.userNo
 
-            if (dataSet.size == position+1 ) {
-                viewHolder.timeContainer?.visibility= VISIBLE
-            }
-            else{
+            if (dataSet.size == position + 1) {
+                viewHolder.timeContainer?.visibility = VISIBLE
+            } else {
                 var date1 = dataSet[position].createdOn
-                var date2 = dataSet[position+1].createdOn
-                if(
-                    (dataSet[position+1].createdBy != dataSet[position].createdBy)
-                    || DateUtils().GetDiffMinute(date2, date1) >= 5 ) {
-                    viewHolder.timeContainer?.visibility= VISIBLE
-                } else{
-                    viewHolder.timeContainer?.visibility= GONE
+                var date2 = dataSet[position + 1].createdOn
+                if ((dataSet[position + 1].createdBy != dataSet[position].createdBy) || DateUtils().GetDiffMinute(
+                        date2,
+                        date1
+                    ) >= 5
+                ) {
+                    viewHolder.timeContainer?.visibility = VISIBLE
+                } else {
+                    viewHolder.timeContainer?.visibility = GONE
                 }
             }
 
@@ -228,15 +220,14 @@ class ChatAdapter
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() : Int{
-        val currentSection = SessionManager(context).chatData!!.sections?.find {
+    override fun getItemCount(): Int {
+        val currentSection = SessionManager(context).chatData!!.sections.find {
             it.jobNo == jobNo && it.receiver.contains(receiver)
         }
-        if(currentSection != null){
-          return currentSection.messages.size
-        }
-        else{
-             return 0
+        if (currentSection != null) {
+            return currentSection.messages.size
+        } else {
+            return 0
         }
     }
 

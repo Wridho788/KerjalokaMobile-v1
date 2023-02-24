@@ -12,11 +12,13 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.Applic
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class KomentarAdapter(private val context: Context?, private val commentModel: List<CommentModel>) : RecyclerView.Adapter<KomentarAdapter.ViewHolder>() {
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+class KomentarAdapter(private val context: Context?, private val commentModel: List<CommentModel>) :
+    RecyclerView.Adapter<KomentarAdapter.ViewHolder>() {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var companyName: TextView
         var comment: TextView
         var createdOn: TextView
+
         init {
             companyName = itemView.findViewById(R.id.company_name_text)
             comment = itemView.findViewById(R.id.comment_text)
@@ -27,10 +29,9 @@ class KomentarAdapter(private val context: Context?, private val commentModel: L
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card_comment, null)
         val lp = RecyclerView.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        view.setLayoutParams(lp)
+        view.layoutParams = lp
         return ViewHolder(view)
     }
 
@@ -38,7 +39,8 @@ class KomentarAdapter(private val context: Context?, private val commentModel: L
         val currentItem = commentModel[position]
         holder.companyName.text = SessionManager(context).user?.company?.companyName.toString()
         holder.comment.text = currentItem.comment
-        holder.createdOn.text = LocalDateTime.parse(currentItem.commentAt).format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm"))
+        holder.createdOn.text = LocalDateTime.parse(currentItem.commentAt)
+            .format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm"))
     }
 
     override fun getItemCount(): Int {

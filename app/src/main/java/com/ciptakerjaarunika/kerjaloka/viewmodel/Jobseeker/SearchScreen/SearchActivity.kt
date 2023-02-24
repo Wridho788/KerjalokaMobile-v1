@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,13 +34,13 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
 
-class SearchActivity : Fragment(), onFragmentTransactionList,
-    onFragmentTransactionListCompany {
+class SearchActivity : Fragment(), onFragmentTransactionList, onFragmentTransactionListCompany {
     private var list: general_search_model? = null
     private var listTopSearch: List<list_top_search>? = null
     private var keyword: String? = ""
     private lateinit var binding: ActivitySearchBinding
     private var listBookmark: List<jobList> = listOf()
+
     @AddTrace(name = "onTraceSearchActivity", enabled = true)
     class ItemCache {
         fun fetch(name: String): Item? {
@@ -59,10 +60,10 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         }
         myTrace.stop()
     }
+
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         if (SessionManager(context).latestGeneralSearch == null) {
             SessionManager(context).latestGeneralSearch = listOf()
@@ -89,9 +90,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                                 isCheckable = false
                                 binding.apply {
                                     chipGroupTopSearch.addView(chipTop as View)
-//                                    if (chipGroupTopSearch.size > 8) {
-//                                        latestResultGrup.removeViewAt(0)
-//                                    }
+
                                 }
                             }
                         }
@@ -123,16 +122,13 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 
                     binding.recycleJob.apply {
                         layoutManager = LinearLayoutManager(context)
-                        adapter =
-                            SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
+                        adapter = SearchJobAdapter(list!!.jobList, context, this@SearchActivity)
                     }
                     binding.recycleJob.adapter?.notifyDataSetChanged()
                     binding.recycleCompany.apply {
                         layoutManager = LinearLayoutManager(context)
                         adapter = SearchCompanyAdapter(
-                            list!!.companyList,
-                            context,
-                            this@SearchActivity
+                            list!!.companyList, context, this@SearchActivity
                         )
                     }
                 }
@@ -156,22 +152,13 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
                     setOnClickListener {
                         SearchJob(data.toString())
                         binding.searchBar.setQuery(data.toString(), true)
-                        binding.layoutLatestSearchResults.visibility = View.GONE
+                        binding.layoutLatestSearchResults.visibility = GONE
                     }
                     binding.apply {
                         latestResultGrup.addView(chip as View)
                     }
                 }
-               /* val chipTop = Chip(context)
-                chipTop.setChipBackgroundColorResource(R.color.danger_100)
-                chipTop.apply {
-                    textSize = 12f
-                    text = data.toString()
-                    isChipIconVisible = false
-                    isCloseIconVisible = false
-                    isClickable = true
-                    isCheckable = false
-                }*/
+
             }
         } else {
             binding.layoutLatestSearchResults.isVisible = true
@@ -205,20 +192,15 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
 
                             binding.recycleJob.apply {
                                 layoutManager = LinearLayoutManager(context)
-                                adapter =
-                                    SearchJobAdapter(
-                                        list!!.jobList,
-                                        context,
-                                        this@SearchActivity
-                                    )
+                                adapter = SearchJobAdapter(
+                                    list!!.jobList, context, this@SearchActivity
+                                )
                             }
                             binding.recycleJob.adapter?.notifyDataSetChanged()
                             binding.recycleCompany.apply {
                                 layoutManager = LinearLayoutManager(context)
                                 adapter = SearchCompanyAdapter(
-                                    list!!.companyList,
-                                    context,
-                                    this@SearchActivity
+                                    list!!.companyList, context, this@SearchActivity
                                 )
                             }
                         }
@@ -324,6 +306,7 @@ class SearchActivity : Fragment(), onFragmentTransactionList,
         replaceFragment(CompanyDetailFragment(companyNo))
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun BookmarkJob(jobNo: Long, Index: Int) {
         var bookmark = !list!!.jobList[Index].bookmarked
         JobAPI().BookmarkJob(jobNo, bookmark, context) {

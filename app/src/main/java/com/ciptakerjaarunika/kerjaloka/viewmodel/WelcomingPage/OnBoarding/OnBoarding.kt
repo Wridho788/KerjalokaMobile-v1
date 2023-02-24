@@ -18,14 +18,8 @@ class OnBoarding : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_on_boarding2)
-//        val settings = getSharedPreferences("prefs", 0)
-//        val editor = settings.edit()
-//        editor.putBoolean("firstRun", true)
-//        editor.commit()
-//        val intent = Intent(this, MainActivity::class.java)
-//        startActivity(intent)
         val btn_Skip = findViewById<TextView>(R.id.textSkip)
-        btn_Skip.setOnClickListener{
+        btn_Skip.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -39,35 +33,31 @@ class OnBoarding : AppCompatActivity() {
         if (!firstRun) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            Log.d("TAG1", "firstRun(false): " + Boolean.valueOf(firstRun).toString())
         } else {
             Log.d("TAG1", "firstRun(true): " + Boolean.valueOf(firstRun).toString())
         }
     }
 
-    private fun setOnBoardingItems(){
+    private fun setOnBoardingItems() {
         onboardingItemsAdapter = OnBoardingItemAdapter(
             listOf(
                 OnBoardingItem(
-                    id =1,
+                    id = 1,
                     onboardingImage = R.drawable.temukan_beragam_pekerjaan,
                     title = "Temukan Beragam Pekerjaan",
                     description = "Temukan beragam pekerjaan yang kamu inginkan.",
-                    ),
-                OnBoardingItem(
-                    id=2,
+                ), OnBoardingItem(
+                    id = 2,
                     onboardingImage = R.drawable.beragam_test,
                     title = "Beragam Test",
                     description = "Temukan ribuan tes untuk pengembangan diri",
-                ),
-                OnBoardingItem(
-                    id=3,
+                ), OnBoardingItem(
+                    id = 3,
                     onboardingImage = R.drawable.cv,
                     title = "Buat e-CV",
                     description = "kirim e-cv hanya dengan menggunakan link",
-                ),
-                OnBoardingItem(
-                    id =4,
+                ), OnBoardingItem(
+                    id = 4,
                     onboardingImage = R.drawable.apply,
                     title = "Interview langsung",
                     description = "Atur tanggal dan langsung interview dengan perusahaan",

@@ -7,18 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Test.Listener.TestDetailListener
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Test.Listener.TestDetailListener
 import com.google.gson.Gson
 
 class view_mytest_list : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapterTest: RecyclerView.Adapter<mytest_adapter.ViewHolder>? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,8 +22,8 @@ class view_mytest_list : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_view_mytest_list, container, false)
 
-        company_profile_api().MyTest(context){
-            val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView;
+        company_profile_api().MyTest(context) {
+            val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             recyclerView.layoutManager = layoutManager
             adapterTest = it?.let { it1 -> assignAdapter(it1.data) }
@@ -35,9 +31,6 @@ class view_mytest_list : Fragment() {
         }
 
         return view
-    }
-    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(itemView, savedInstanceState)
     }
 
     internal fun assignAdapter(list: List<Test>): mytest_adapter {
@@ -55,7 +48,7 @@ class view_mytest_list : Fragment() {
         mBundle.putString(TestDetail.EXTRA_DETAIL_TEST, testData)
         testDetailFragment.arguments = mBundle
         val mFragmentManager = parentFragmentManager
-        mFragmentManager?.beginTransaction()?.apply {
+        mFragmentManager.beginTransaction()?.apply {
             replace(
                 R.id.fragment_container,
                 testDetailFragment,
@@ -67,7 +60,4 @@ class view_mytest_list : Fragment() {
         }
     }
 
-    companion object {
-
-    }
 }

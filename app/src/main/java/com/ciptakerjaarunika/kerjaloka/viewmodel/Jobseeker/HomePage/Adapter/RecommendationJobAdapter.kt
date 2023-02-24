@@ -32,8 +32,7 @@ class RecommendationJobAdapter(
     private val context: Context,
     private var rJobList: List<SearchJobModel>?,
     private val onFragmentClick: OnFragmentClickListener,
-) :
-    RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecommendationJobAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobPosition: TextView
@@ -59,9 +58,8 @@ class RecommendationJobAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
-        view.layoutParams= ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+        view.layoutParams = ConstraintLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         return ViewHolder(view)
     }
@@ -77,7 +75,8 @@ class RecommendationJobAdapter(
             val currentItem = rJobList!![position]
             holder.jobPosition.text = currentItem.jobPosition
             holder.companyName.text = currentItem.company.companyName
-            holder.jobLocation.text = if(currentItem.jobLocation.size > 1) "Banyak lokasi" else currentItem.jobLocation[0].label
+            holder.jobLocation.text =
+                if (currentItem.jobLocation.size > 1) "Banyak lokasi" else currentItem.jobLocation[0].label
             val SECOND = 1
             val MINUTE = 60 * SECOND
             val HOUR = 60 * MINUTE
@@ -116,16 +115,16 @@ class RecommendationJobAdapter(
             holder.CreatedOn.text = dateDiff()
 
             Glide.with(holder.itemView.context)
-                .load(config().portAddress + "photo/Profile/" + currentItem.company.logo).fitCenter()
-                .into(holder.logo)
+                .load(config().portAddress + "photo/Profile/" + currentItem.company.logo)
+                .fitCenter().into(holder.logo)
             holder.bookmarkedJob.setImageResource(if (currentItem.bookmarked) R.drawable.ic_bookmark_primary_filled else R.drawable.ic_bookmark_primary)
 
-            if(SessionManager(context).user == null){
+            if (SessionManager(context).user == null) {
                 holder.bookmarkedJob.visibility = GONE
             }
             holder.bookmarkedJob.setOnClickListener {
                 JobAPI().BookmarkJob(currentItem.jobNo.toLong(), !currentItem.bookmarked, context) {
-                    if(it != null) {
+                    if (it != null) {
                         if (it.code == 210) {
                             currentItem.bookmarked = !currentItem.bookmarked
                             rJobList!![position].bookmarked = rJobList!![position].bookmarked
@@ -149,7 +148,10 @@ class RecommendationJobAdapter(
                 startActivity(context, shareIntent, null)
             }
             holder.cardRecommendationJob.setOnClickListener {
-                onFragmentClick.onFragmentClick(currentItem.jobNo.toLong(), currentItem.company.companyNo)
+                onFragmentClick.onFragmentClick(
+                    currentItem.jobNo.toLong(),
+                    currentItem.company.companyNo
+                )
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +13,11 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anychart.ui.contextmenu.Item
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.DataAPI
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentEditKemampuanBinding
 import com.ciptakerjaarunika.kerjaloka.enum.SkillScale
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerSkills
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
@@ -27,16 +29,17 @@ import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
 
 
-class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRefreshData) : Fragment(),
+class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRefreshData) :
+    Fragment(),
     iEditKemampuan {
-    private lateinit var binding : FragmentEditKemampuanBinding
-    private var initialSkills : List<SkillFilter> = listOf()
-    private var skills : List<SkillFilter> = listOf()
+    private lateinit var binding: FragmentEditKemampuanBinding
+    private var initialSkills: List<SkillFilter> = listOf()
+    private var skills: List<SkillFilter> = listOf()
     private var skill: SkillFilter? = null
-    private var scale : Int? = null
+    private var scale: Int? = null
 
-    @AddTrace(name="onEditKemampuanTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onEditKemampuanTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -71,7 +74,7 @@ class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backBtn.setOnClickListener{
+        binding.backBtn.setOnClickListener {
             back()
         }
         requireActivity().onBackPressedDispatcher.addCallback(this) {
@@ -80,9 +83,14 @@ class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRe
 
         binding.jsEditSkillLevel.setOnClickListener {
             val sheet = ChooseScale(scale, this)
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+            activity?.let { it1 ->
+                sheet.show(
+                    it1.supportFragmentManager,
+                    "DemoBottomSheetFragment"
+                )
+            }
         }
-        DataAPI().GetSkill(context){
+        DataAPI().GetSkill(context) {
             if (it != null) {
                 skills = it
                 initialSkills = it
@@ -90,32 +98,32 @@ class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRe
                 refreshSkill()
                 binding.recycleView.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter = dataList?.let { it1 -> SkillAdapter(it1, context, this@edit_kemampuan) }
+                    adapter =
+                        dataList?.let { it1 -> SkillAdapter(it1, context, this@edit_kemampuan) }
                 }
             }
         }
         binding.btnAddSkill.setOnClickListener {
             binding.errorTxt.visibility = VISIBLE
 
-            if(skill == null){
+            if (skill == null) {
                 binding.errorTxt.text = "Silahkan Pilih Skill"
-            }
-            else if(scale == null)  {
+            } else if (scale == null) {
                 binding.errorTxt.text = "Skill Level tidak boleh kosong"
-            }
-            else {
+            } else {
                 binding.errorTxt.visibility = GONE
                 dataList = dataList?.plus(
                     JobseekerSkills(
                         jobseekerNo = SessionManager(context).user!!.userNo,
                         scale = scale!!,
-                        skillName =  skill!!.skillName,
+                        skillName = skill!!.skillName,
                         skillNo = skill!!.skillNo
                     )
                 )
                 binding.recycleView.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter = dataList?.let { it1 -> SkillAdapter(it1, context, this@edit_kemampuan) }
+                    adapter =
+                        dataList?.let { it1 -> SkillAdapter(it1, context, this@edit_kemampuan) }
                 }
                 binding.recycleView.adapter?.notifyDataSetChanged()
                 skill = null
@@ -127,19 +135,25 @@ class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRe
         }
 
         binding.saveBtn.setOnClickListener {
-            ManageProfileAPI().JobseekerEditSkills(dataList, context){
-                if(it != null) {
-                    Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
-                    back()
-                }
-                else{
-                    Toast.makeText(activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT).show()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                ManageProfileAPI().JobseekerEditSkills(dataList, context) {
+                    if (it != null) {
+                        Toast.makeText(activity, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                        back()
+                    } else {
+                        Toast.makeText(
+                            activity,
+                            "Terjadi kesalahan yang tidak diketahui",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }
     }
-    private fun back(){
-       fragmentManager?.popBackStack()
+
+    private fun back() {
+        fragmentManager?.popBackStack()
         iRefreshData.refresh()
     }
 
@@ -150,9 +164,11 @@ class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRe
 
     override fun updateScale(value: Int) {
         scale = value
-        binding.jsEditSkillLevel.text = SkillScale.values().find{scale -> scale.value == value}?.description
+        binding.jsEditSkillLevel.text =
+            SkillScale.values().find { scale -> scale.value == value }?.description
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun removeSkill(value: JobseekerSkills) {
         dataList = dataList?.toMutableList()?.apply {
             remove(value)
@@ -165,16 +181,23 @@ class edit_kemampuan(var dataList: List<JobseekerSkills>?, val iRefreshData: iRe
         refreshSkill()
     }
 
-    fun refreshSkill(){
-        skills = initialSkills.filter {filt -> !dataList!!.any { data-> data.skillNo == filt.skillNo} }
+    fun refreshSkill() {
+        skills =
+            initialSkills.filter { filt -> !dataList!!.any { data -> data.skillNo == filt.skillNo } }
         binding.jsEditSkill.setOnClickListener {
             val sheet = ChooseSkill(skill, skills, this)
-            activity?.let { it1 -> sheet.show(it1.supportFragmentManager, "DemoBottomSheetFragment") }
+            activity?.let { it1 ->
+                sheet.show(
+                    it1.supportFragmentManager,
+                    "DemoBottomSheetFragment"
+                )
+            }
         }
     }
 }
-interface iEditKemampuan{
-    fun updateSkill(value : SkillFilter)
-    fun updateScale(value : Int)
-    fun removeSkill(value : JobseekerSkills)
+
+interface iEditKemampuan {
+    fun updateSkill(value: SkillFilter)
+    fun updateScale(value: Int)
+    fun removeSkill(value: JobseekerSkills)
 }

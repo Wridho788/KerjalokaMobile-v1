@@ -10,20 +10,20 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
 
 class SkillAdapter(private var dataSet: List<SkillFilter>, val context: Context) :
-    RecyclerView.Adapter<SkillAdapter.ViewHolder?>(){
+    RecyclerView.Adapter<SkillAdapter.ViewHolder?>() {
 
-        inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-            var filterText: TextView
-            var checked: CheckBox
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var filterText: TextView
+        var checked: CheckBox
 
-            init {
-                filterText = itemView.findViewById(R.id.filter_txt)
-                checked = itemView.findViewById(R.id.checked)
-            }
+        init {
+            filterText = itemView.findViewById(R.id.filter_txt)
+            checked = itemView.findViewById(R.id.checked)
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.item_filter,null)
+        val view = View.inflate(parent.context, R.layout.item_filter, null)
         return ViewHolder(view)
     }
 
@@ -36,7 +36,7 @@ class SkillAdapter(private var dataSet: List<SkillFilter>, val context: Context)
         holder.filterText.text = currentItem.skillName
         holder.checked.isChecked = currentItem.checked == true
 
-        holder.checked.setOnClickListener{
+        holder.checked.setOnClickListener {
             currentItem.checked = holder.checked.isChecked
             dataSet[position].checked = holder.checked.isChecked
         }

@@ -13,14 +13,19 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.SkillAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.SkillFilter
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobSkill
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.SkillAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 import com.google.android.material.button.MaterialButton
+import java.util.*
 
-class SkillModal(var data : List<JobSkill>, private val dataList : List<SkillFilter>,private val updateData: iUpdateJobAdditionalInfo) : SuperBottomSheetFragment(),
+class SkillModal(
+    var data: List<JobSkill>,
+    private val dataList: List<SkillFilter>,
+    private val updateData: iUpdateJobAdditionalInfo
+) : SuperBottomSheetFragment(),
     iUpdateSkill {
 
     override fun onCreateView(
@@ -47,8 +52,9 @@ class SkillModal(var data : List<JobSkill>, private val dataList : List<SkillFil
                 return true
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
-                val keyword = newText.toString().toLowerCase()
+                val keyword = newText.toString().lowercase(Locale.getDefault())
                 if (keyword.isNullOrEmpty()) {
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -56,8 +62,8 @@ class SkillModal(var data : List<JobSkill>, private val dataList : List<SkillFil
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 } else {
-                    var temp = dataList?.filter { data ->
-                        "${data.skillName}".toLowerCase().contains(keyword)
+                    var temp = dataList.filter { data ->
+                        "${data.skillName}".lowercase(Locale.getDefault()).contains(keyword)
                     }
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -65,7 +71,7 @@ class SkillModal(var data : List<JobSkill>, private val dataList : List<SkillFil
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
-                return true;
+                return true
             }
         })
 
@@ -86,7 +92,7 @@ class SkillModal(var data : List<JobSkill>, private val dataList : List<SkillFil
         (context as Activity?)!!.windowManager
             .defaultDisplay
             .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun updateSkill(value: List<JobSkill>) {
@@ -94,6 +100,6 @@ class SkillModal(var data : List<JobSkill>, private val dataList : List<SkillFil
     }
 }
 
-interface iUpdateSkill{
-    fun updateSkill(value : List<JobSkill>)
+interface iUpdateSkill {
+    fun updateSkill(value: List<JobSkill>)
 }

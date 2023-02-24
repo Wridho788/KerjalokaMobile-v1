@@ -16,25 +16,33 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.Applic
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.Model.applicantModel
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.iJobApplicant
 
-class MoreActionFragment(val jobseekerNo: Long, val jobNo: Long, var applicantModel: applicantModel, val iJobApplicant: iJobApplicant) :
-    SuperBottomSheetFragment() {
+class MoreActionFragment(
+    val jobseekerNo: Long,
+    val jobNo: Long,
+    var applicantModel: applicantModel,
+    val iJobApplicant: iJobApplicant
+) : SuperBottomSheetFragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_more_action, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val btn_banding = view.findViewById<TextView>(R.id.txt_banding)
-
         val btn_pin = view.findViewById<TextView>(R.id.txt_pin)
         updateText()
 
         btn_pin.setOnClickListener {
-            BookmarkAPI().BookmarkJob(context, send_bookmark(jobNo, jobseekerNo), jobNo, jobseekerNo, applicantModel.bookmarked){
+            BookmarkAPI().BookmarkJob(
+                context,
+                send_bookmark(jobNo, jobseekerNo),
+                jobNo,
+                jobseekerNo,
+                applicantModel.bookmarked
+            ) {
                 if (it != null) {
                     applicantModel.bookmarked = !applicantModel.bookmarked
                     iJobApplicant.getRefreshData()
@@ -48,24 +56,23 @@ class MoreActionFragment(val jobseekerNo: Long, val jobNo: Long, var applicantMo
 
 
     }
-    fun updateText(){
+
+    fun updateText() {
         val btn_pin = view?.findViewById<TextView>(R.id.txt_pin)
 
         if (applicantModel.bookmarked == true) {
             btn_pin?.text = "UNPIN"
-
         } else if (applicantModel.bookmarked == false) {
             btn_pin?.text = "PIN"
         }
     }
+
     override fun getCornerRadius() = 20f
 
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
         return (displayMetrics.heightPixels * 0.5).toInt()
     }
 }

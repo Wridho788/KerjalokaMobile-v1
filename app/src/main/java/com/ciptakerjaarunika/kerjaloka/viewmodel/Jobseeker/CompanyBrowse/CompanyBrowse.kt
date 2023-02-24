@@ -24,8 +24,9 @@ class CompanyBrowse : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentCompanyWantToKnowBinding
     private var listSearchJob: List<company_browse_list>? = listOf()
     private var isLoading: Boolean = true
-    @AddTrace(name="onCompanyBrowseTrace", enabled = true)
-    class ItemCache{
+
+    @AddTrace(name = "onCompanyBrowseTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -43,14 +44,14 @@ class CompanyBrowse : Fragment(), OnFragmentClickListener {
         }
         myTrace.stop()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         CompanyBrowseTrace()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentCompanyWantToKnowBinding.inflate(layoutInflater)
         val view = binding.root
@@ -61,11 +62,9 @@ class CompanyBrowse : Fragment(), OnFragmentClickListener {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
-
         getBrowserJobData()
     }
 

@@ -14,14 +14,19 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.LocationAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobBasicInfo
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobLocation
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.LocationAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobBasicInfo
 import com.google.android.material.button.MaterialButton
+import java.util.*
 
-class LocationModal(var data : List<JobLocation>, private val locations : List<LocationFilter>,private val updateData: iUpdateJobBasicInfo) : SuperBottomSheetFragment(),
+class LocationModal(
+    var data: List<JobLocation>,
+    private val locations: List<LocationFilter>,
+    private val updateData: iUpdateJobBasicInfo
+) : SuperBottomSheetFragment(),
     iUpdateLocation {
 
     override fun onCreateView(
@@ -48,8 +53,9 @@ class LocationModal(var data : List<JobLocation>, private val locations : List<L
                 return true
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
-                val keyword = newText.toString().toLowerCase()
+                val keyword = newText.toString().lowercase(Locale.getDefault())
                 if (keyword.isNullOrEmpty()) {
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -57,8 +63,8 @@ class LocationModal(var data : List<JobLocation>, private val locations : List<L
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 } else {
-                    var temp = locations?.filter { data ->
-                        "${data.city}, ${data.province}".toLowerCase().contains(keyword)
+                    var temp = locations.filter { data ->
+                        "${data.city}, ${data.province}".lowercase(Locale.getDefault()).contains(keyword)
                     }
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -66,12 +72,11 @@ class LocationModal(var data : List<JobLocation>, private val locations : List<L
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
-                return true;
+                return true
             }
         })
 
         view.findViewById<MaterialButton>(R.id.confirm_btn).setOnClickListener {
-            Log.d("Location" , data.toString())
             updateData.updateLocation(data.distinct())
             this.dismiss()
         }
@@ -88,7 +93,7 @@ class LocationModal(var data : List<JobLocation>, private val locations : List<L
         (context as Activity?)!!.windowManager
             .defaultDisplay
             .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun updateLocation(value: List<JobLocation>) {
@@ -96,6 +101,6 @@ class LocationModal(var data : List<JobLocation>, private val locations : List<L
     }
 }
 
-interface iUpdateLocation{
-    fun updateLocation(value : List<JobLocation>)
+interface iUpdateLocation {
+    fun updateLocation(value: List<JobLocation>)
 }

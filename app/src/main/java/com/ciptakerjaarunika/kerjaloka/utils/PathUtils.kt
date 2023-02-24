@@ -149,6 +149,7 @@ open class PathUtil {
 
         return null
     }
+
     fun getDataColumn(
         context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?
     ): String? {

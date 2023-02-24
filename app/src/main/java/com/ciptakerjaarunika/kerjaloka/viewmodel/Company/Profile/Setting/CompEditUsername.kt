@@ -11,8 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.google.android.material.button.MaterialButton
 
 class CompEditUsername(val iRefreshData: iRefreshData) : Fragment() {
@@ -22,7 +22,6 @@ class CompEditUsername(val iRefreshData: iRefreshData) : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_comp_edit_username, container, false)
-
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveUsername)
         val username = view.findViewById<EditText>(R.id.js_EditusrName)
         val errorText = view.findViewById<TextView>(R.id.errorMessage)
@@ -40,14 +39,12 @@ class CompEditUsername(val iRefreshData: iRefreshData) : Fragment() {
             }
         })
 
-
         btnSave.setOnClickListener {
             val username = view.findViewById<EditText>(R.id.js_EditusrName).text.toString()
             if (!username.isNullOrEmpty()) {
                 company_profile_api().ChangeUsername(username, context) {
                     if (it != null) {
                         fragmentManager?.popBackStack()
-
                         Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                     }
                 }

@@ -5,12 +5,6 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.HomePage.Model.jobLocation
 import java.math.BigDecimal
 
-data class SearchJobResponse(
-    val code : Int,
-    val Message: String,
-    val data: List<SearchJobModel>
-)
-
 data class SearchJobModel(
     val jobNo : String,
     val jobPosition : String,

@@ -10,13 +10,17 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.RoleAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Roles
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.*
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.RoleAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 
-class RoleModal(var data : JobRole?, private val dataList : List<Roles>, private val updateData: iUpdateJobAdditionalInfo) : SuperBottomSheetFragment(),
+class RoleModal(
+    var data: JobRole?,
+    private val dataList: List<Roles>,
+    private val updateData: iUpdateJobAdditionalInfo
+) : SuperBottomSheetFragment(),
     iUpdateJobRole {
 
     override fun onCreateView(
@@ -42,6 +46,7 @@ class RoleModal(var data : JobRole?, private val dataList : List<Roles>, private
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
     }
+
     @SuppressLint("Range")
     override fun getExpandedHeight() = ViewGroup.LayoutParams.WRAP_CONTENT
 
@@ -50,6 +55,7 @@ class RoleModal(var data : JobRole?, private val dataList : List<Roles>, private
         this.dismiss()
     }
 }
-interface iUpdateJobRole{
-    fun updateJobRole(value : JobRole)
+
+interface iUpdateJobRole {
+    fun updateJobRole(value: JobRole)
 }

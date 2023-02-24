@@ -14,14 +14,18 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.E
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iEditBasic
 
 data class GenderModel(
-    val value : Char,
-    val Description : String,
+    val value: Char,
+    val Description: String,
 )
 
-class EditGender(val value : Char?, private val iEditBasic: iEditBasic) : SuperBottomSheetFragment(),
+class EditGender(val value: Char?, private val iEditBasic: iEditBasic) : SuperBottomSheetFragment(),
     iGender {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
@@ -30,8 +34,6 @@ class EditGender(val value : Char?, private val iEditBasic: iEditBasic) : SuperB
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,11 +41,9 @@ class EditGender(val value : Char?, private val iEditBasic: iEditBasic) : SuperB
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = EditGenderAdapter(
-                value,
-                listOf(
-                    GenderModel('M', "Laki-laki"),
-                    GenderModel('W', "Perempuan")
-                ), iEditBasic,this@EditGender
+                value, listOf(
+                    GenderModel('M', "Laki-laki"), GenderModel('W', "Perempuan")
+                ), iEditBasic, this@EditGender
             )
         }
     }
@@ -61,6 +61,7 @@ class EditGender(val value : Char?, private val iEditBasic: iEditBasic) : SuperB
     }
 
 }
-interface iGender{
+
+interface iGender {
     fun close()
 }

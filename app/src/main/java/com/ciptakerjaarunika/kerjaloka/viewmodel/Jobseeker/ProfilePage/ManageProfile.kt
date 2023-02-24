@@ -19,8 +19,7 @@ class ManageProfile(val data: JobseekerProfile?) : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.jsprofile_basic_info, container, false)
         val editBasic = view?.findViewById<TextView>(R.id.editBasicInfo)
@@ -64,8 +63,7 @@ class ManageProfile(val data: JobseekerProfile?) : Fragment() {
             if (data?.additionals?.placeOfBirth != null) data.additionals.placeOfBirth else "-"
         txt_postalCode.text =
             if (data?.additionals?.postalCode != null) data.additionals.postalCode else "-"
-        txt_ethnic.text =
-            if (data?.additionals?.ethnics != null) data.additionals.ethnics else "-"
+        txt_ethnic.text = if (data?.additionals?.ethnics != null) data.additionals.ethnics else "-"
         txt_Religion.text = if (data?.religion != null) data.religion.religionName else "-"
         txt_TeleID.text =
             if (data?.additionals?.telegramId.isNullOrEmpty()) "-" else data?.additionals?.telegramId

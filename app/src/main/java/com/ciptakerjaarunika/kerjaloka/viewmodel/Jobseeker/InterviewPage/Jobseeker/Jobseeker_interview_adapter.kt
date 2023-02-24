@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.InterviewPage.Jobseeker
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
@@ -22,9 +23,9 @@ class jobseeker_interview_adapter
     private val dataList: List<jobseeker_interview_list>,
     private val context: Context?,
     private val cellClickListener: CellClickListener
-) :
-    RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
+) : RecyclerView.Adapter<jobseeker_interview_adapter.ViewHolder>() {
 
+    @SuppressLint("CutPasteId")
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val userPhoto: ImageView
         val sectionName: TextView
@@ -49,6 +50,7 @@ class jobseeker_interview_adapter
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.sectionName.text =
@@ -56,8 +58,7 @@ class jobseeker_interview_adapter
 
         val chatData = SessionManager(context).chatData
         Glide.with(viewHolder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + dataList[position].photo)
-            .fitCenter()
+            .load(config().portAddress + "photo/Profile/" + dataList[position].photo).fitCenter()
             .into(viewHolder.logo)
 
         if (chatData != null) {
@@ -70,13 +71,11 @@ class jobseeker_interview_adapter
                 viewHolder.notRead.visibility =
                     if (currentSection.notRead != 0) View.VISIBLE else View.GONE
 
-                viewHolder.lastMessageOn.text =
-                    DateUtils().GetLastMessageOn(
-                        currentSection.messages.last()?.createdOn ?: ""
-                    )
+                viewHolder.lastMessageOn.text = DateUtils().GetLastMessageOn(
+                    currentSection.messages.last().createdOn
+                )
 
-                viewHolder.lastMessage.text =
-                    currentSection.messages.last().message
+                viewHolder.lastMessage.text = currentSection.messages.last().message
 
                 viewHolder.itemView.setOnClickListener {
                     cellClickListener.goToChatPage(

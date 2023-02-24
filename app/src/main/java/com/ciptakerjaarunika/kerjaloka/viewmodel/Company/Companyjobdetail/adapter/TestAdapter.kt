@@ -7,17 +7,21 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.iAddidiontalInfoPage
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.TestJob
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobTest
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.iAddidiontalInfoPage
 
-class TestAdapter(var data : List<JobTest>, private var dataset: List<TestJob>?, val iAddidiontalInfoPage: iAddidiontalInfoPage) :
+class TestAdapter(
+    var data: List<JobTest>,
+    private var dataset: List<TestJob>?,
+    val iAddidiontalInfoPage: iAddidiontalInfoPage
+) :
     RecyclerView.Adapter<TestAdapter.ViewHolder?>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val container : LinearLayout
+        val container: LinearLayout
         val titleTest: TextView
-        val questionList : TextView
+        val questionList: TextView
 
         init {
             container = itemView.findViewById(R.id.container)
@@ -40,33 +44,32 @@ class TestAdapter(var data : List<JobTest>, private var dataset: List<TestJob>?,
 
         holder.titleTest.text = item.testName
         var question = ""
-        item.question.forEachIndexed{index, it->
-            question += "${index+1}. ${it.question?.get(0)?.question}<br/>"
+        item.question.forEachIndexed { index, it ->
+            question += "${index + 1}. ${it.question.get(0)?.question}<br/>"
         }
         holder.questionList.text = Html.fromHtml(question)
 
-        var currentData = data.find { test -> test.testNo == item.testNo}
-        if(currentData == null){
+        var currentData = data.find { test -> test.testNo == item.testNo }
+        if (currentData == null) {
             holder.container.setBackgroundResource(R.drawable.card_background_500)
-        }
-        else {
+        } else {
             holder.container.setBackgroundResource(R.drawable.card_background_selected)
         }
 
         holder.container.setOnClickListener {
 
-            Log.d("current data", currentData.toString())
-            if(currentData != null){
+            if (currentData != null) {
                 holder.container.setBackgroundResource(R.drawable.card_background_500)
-                data = data.toMutableList()?.apply {
+                data = data.toMutableList().apply {
                     remove(currentData)
-                }!!
-            }
-            else{
+                }
+            } else {
                 holder.container.setBackgroundResource(R.drawable.card_background_selected)
-                data += JobTest(null,null,null,null,null,null,null,
-                    null,null,null,null,null,null,null,null,null,
-                    null,item.testNo,null)
+                data += JobTest(
+                    null, null, null, null, null, null, null,
+                    null, null, null, null, null, null, null, null, null,
+                    null, item.testNo, null
+                )
             }
             iAddidiontalInfoPage.updateJobTest(data)
         }

@@ -29,14 +29,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ManageProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentLampiranBinding
 import com.ciptakerjaarunika.kerjaloka.enum.DocumentType
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.AttachmentAdapter
 import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.AttachmentAdapter
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -87,6 +87,7 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
         return column_index?.let { cursor.getString(it) }
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     fun SelectFile() {
         var intent = Intent(Intent.ACTION_GET_CONTENT)
         val mimeTypes = arrayOf(
@@ -117,6 +118,7 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
         activityResultLauncher.launch(requestIntent)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -226,7 +228,8 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
 
                 if (sizeInMb != null) {
                     if (sizeInMb >= 25) {
-                      Toast.makeText(context, "batas maksimal dokumen 25 Mb", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "batas maksimal dokumen 25 Mb", Toast.LENGTH_SHORT)
+                            .show()
                     } else {
                         dataList = dataList?.plus(
                             Documents(
@@ -240,10 +243,10 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
                         )
                         binding.recycleview.apply {
                             layoutManager = LinearLayoutManager(activity)
-                            adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
+                            adapter =
+                                dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
                         }
                         binding.recycleview.adapter?.notifyDataSetChanged()
-
                         document = null
                         file = null
                         binding.uploadDocumentBtn.text = "Upload Lampiran"
@@ -252,58 +255,59 @@ class FragmentEditLampiran(var dataList: List<Documents>?, val iRefreshData: iRe
                 }
 
 
-
-        }
-    }
-}
-
-fun EditLampiran(totalProcess: Int) {
-    if (totalProcess == 0) {
-        ManageProfileAPI().JobseekerEditLampiran(dataList, context) {
-            if (it != null && context != null) {
-                Toast.makeText(context, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
-                back()
-            } else {
-                Toast.makeText(
-                    context,
-                    "Terjadi kesalahan yang tidak diketahui",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }
-}
 
-private fun back() {
-    fragmentManager?.popBackStack()
-    iRefreshData!!.refresh()
-}
-
-override fun delete(value: Documents) {
-    dataList = dataList?.toMutableList()?.apply {
-        remove(value)
-    }
-    binding.recycleview.apply {
-        layoutManager = LinearLayoutManager(activity)
-        adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
-    }
-    binding.recycleview.adapter?.notifyDataSetChanged()
-}
-
-override fun onRequestPermissionsResult(
-    requestCode: Int,
-    permissions: Array<out String>,
-    grantResults: IntArray
-) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    if (requestCode == id + context!!.resources.getInteger(R.integer.LampiranUploadFile)) {
-        if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
-            SelectFile()
-        } else {
-            Toast.makeText(activity, "Perlu akses untuk upload file", Toast.LENGTH_SHORT).show()
+    fun EditLampiran(totalProcess: Int) {
+        if (totalProcess == 0) {
+            ManageProfileAPI().JobseekerEditLampiran(dataList, context) {
+                if (it != null && context != null) {
+                    Toast.makeText(context, "Berhasil mengubah data", Toast.LENGTH_SHORT).show()
+                    back()
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Terjadi kesalahan yang tidak diketahui",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
-}
+
+    private fun back() {
+        fragmentManager?.popBackStack()
+        iRefreshData!!.refresh()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun delete(value: Documents) {
+        dataList = dataList?.toMutableList()?.apply {
+            remove(value)
+        }
+        binding.recycleview.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = dataList?.let { AttachmentAdapter(it, this@FragmentEditLampiran) }
+        }
+        binding.recycleview.adapter?.notifyDataSetChanged()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == id + context!!.resources.getInteger(R.integer.LampiranUploadFile)) {
+            if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
+                SelectFile()
+            } else {
+                Toast.makeText(activity, "Perlu akses untuk upload file", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
 }
 

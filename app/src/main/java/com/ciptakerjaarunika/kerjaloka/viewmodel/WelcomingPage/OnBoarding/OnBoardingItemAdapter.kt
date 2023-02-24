@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
 import com.google.android.material.button.MaterialButton
+
 data class OnBoardingItem(
     val id: Int,
     val onboardingImage: Int,
@@ -28,30 +29,27 @@ class OnBoardingItemAdapter(private val onboardingItems: List<OnBoardingItem>) :
         private val Title = view.findViewById<TextView>(R.id.Title)
         private val Description = view.findViewById<TextView>(R.id.Description)
         private val Mulai = view.findViewById<MaterialButton>(R.id.mulai)
-        private val anim = AnimationUtils.loadAnimation( context, R.anim.slide)
+        private val anim = AnimationUtils.loadAnimation(context, R.anim.slide)
 
         fun bind(onboardingItem: OnBoardingItem) {
             imageOnBoarding.setImageResource(onboardingItem.onboardingImage)
             Title.text = onboardingItem.title
             Description.text = onboardingItem.description
             Mulai.setOnClickListener(View.OnClickListener {
-                val context=Mulai.context
-                val intent = Intent( context, MainActivity::class.java)
+                val context = Mulai.context
+                val intent = Intent(context, MainActivity::class.java)
                 context.startActivity(intent)
             })
-            do{
-                if(onboardingItem.id==4){
-                    Mulai.isVisible=false
-                    Mulai.isVisible=true
+            do {
+                if (onboardingItem.id == 4) {
+                    Mulai.isVisible = false
+                    Mulai.isVisible = true
                     Mulai.startAnimation(anim)
-                }
-                else{
-                    Mulai.isVisible=false
+                } else {
+                    Mulai.isVisible = false
                 }
                 break
-            }while (
-                onboardingItem.id >-1
-            )
+            } while (onboardingItem.id > -1)
 
         }
     }
@@ -59,9 +57,7 @@ class OnBoardingItemAdapter(private val onboardingItems: List<OnBoardingItem>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBoarding {
         return OnBoarding(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.onboarding_container,
-                parent,
-                false
+                R.layout.onboarding_container, parent, false
             ), parent.context
         )
     }

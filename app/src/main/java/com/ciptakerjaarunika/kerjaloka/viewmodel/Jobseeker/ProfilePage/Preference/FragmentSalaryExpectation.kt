@@ -19,8 +19,7 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: i
     private lateinit var binding: FragmentSalaryExpectationBinding
     var salary: String = ""
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSalaryExpectationBinding.inflate(layoutInflater)
         val view = binding.root
@@ -67,9 +66,7 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: i
                         back()
                     } else {
                         Toast.makeText(
-                            activity,
-                            "Terjadi kesalahan yang tidak diketahui",
-                            Toast.LENGTH_SHORT
+                            activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -81,9 +78,7 @@ class FragmentSalaryExpectation(val salaryExpectation: Int?, val iRefreshData: i
                         back()
                     } else {
                         Toast.makeText(
-                            activity,
-                            "Terjadi kesalahan yang tidak diketahui",
-                            Toast.LENGTH_SHORT
+                            activity, "Terjadi kesalahan yang tidak diketahui", Toast.LENGTH_SHORT
                         ).show()
                     }
                 }

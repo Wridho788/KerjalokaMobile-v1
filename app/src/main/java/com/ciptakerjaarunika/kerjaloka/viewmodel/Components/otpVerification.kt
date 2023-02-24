@@ -3,7 +3,6 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Components
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,6 @@ class otpVerification : Fragment() {
 
             val phoneTextView = view.findViewById<TextView>(R.id.phone_verif)
             token = descFromBundle.toString()
-            Log.d("token lama", token.toString())
 
             if (description == "phone") {
                 phoneTextView.text = descNewPhone
@@ -52,16 +50,12 @@ class otpVerification : Fragment() {
                 btnResend.setOnClickListener {
                     resetTimer()
                     starTimer(pauseOffSet)
-                    Log.d("new phone", descNewPhone.toString())
                     company_profile_api().checkPhone(descNewPhone.toString(), context) {
                         company_profile_api().ChangeNumber(
-                            descNewPhone.toString(),
-                            context
+                            descNewPhone.toString(), context
                         ) { it1 ->
                             if (it1?.code == 210) {
                                 token = it1.token.toString()
-                                Log.d("token resend", token)
-
                             }
                         }
                     }
@@ -76,8 +70,6 @@ class otpVerification : Fragment() {
                         company_profile_api().ChangeEmail(descNewEmail.toString(), context) { it1 ->
                             if (it1?.code == 210) {
                                 token = it1.token.toString()
-                                Log.d("token resend", token)
-
                             }
                         }
                     }
@@ -93,7 +85,7 @@ class otpVerification : Fragment() {
                 val otp4 = view.findViewById<EditText>(R.id.otp4)?.text.toString()
                 val otp5 = view.findViewById<EditText>(R.id.otp5)?.text.toString()
                 val otp6 = view.findViewById<EditText>(R.id.otp6)?.text.toString()
-                val code = "${otp1 + otp2 + otp3 + otp4 + otp5 + otp6}"
+                val code = otp1 + otp2 + otp3 + otp4 + otp5 + otp6
 
                 if (description == "phone") {
                     company_profile_api().PhoneChangeVerification(token, code, context) {
@@ -110,12 +102,8 @@ class otpVerification : Fragment() {
                         }
                     }
                 } else if (description == "email") {
-                    Log.d("token email", description.toString())
-                    Log.d("token email", token)
                     company_profile_api().EmailChangeVerification(token, code, context) {
-                        Log.d("token email", it.toString())
                         if (it != null) {
-                            Log.d("token email not null", it.toString())
                             if (it.code == "210") {
                                 resetTimer()
                                 Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
@@ -128,15 +116,10 @@ class otpVerification : Fragment() {
                 }
             }
         }
-
-        if (savedInstanceState != null) {
-        }
-
     }
 
     private fun starTimer(pauseOffSetL: Long) {
         val ticker = view?.findViewById<TextView>(R.id.time)
-
         countdown_timer = object : CountDownTimer(time_in_milliseconds - pauseOffSetL, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 pauseOffSet = time_in_milliseconds - millisUntilFinished
@@ -149,6 +132,7 @@ class otpVerification : Fragment() {
         }.start()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun resetTimer() {
         val ticker = view?.findViewById<TextView>(R.id.time)
         if (countdown_timer != null) {
@@ -160,8 +144,7 @@ class otpVerification : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_otp_verification, container, false)
 

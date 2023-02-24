@@ -54,14 +54,11 @@ class manage_lampiran : Fragment(), iRefreshData {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun pickGallery() {
         context?.let {
-            defaultImagePicker
-                .openGallery(
-                    it,
-                    DefaultSystemGalleryConfig.instance(
+            defaultImagePicker.openGallery(
+                    it, DefaultSystemGalleryConfig.instance(
                         mimesType = DefaultGalleryMimes.customTypes("video/*") // multiType
                     )
-                )
-                .subscribe { result -> onPickUriSuccess(result.uri) }
+                ).subscribe { result -> onPickUriSuccess(result.uri) }
         }
     }
 
@@ -74,9 +71,7 @@ class manage_lampiran : Fragment(), iRefreshData {
                 val requestFile: RequestBody =
                     file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
                 val files = MultipartBody.Part.createFormData(
-                    "files",
-                    file.name,
-                    requestFile
+                    "files", file.name, requestFile
                 )
                 this.fileVideo = file
                 val m = (fileVideo?.length()?.toDouble()!! / 1024.0 / 1024.0)
@@ -84,9 +79,7 @@ class manage_lampiran : Fragment(), iRefreshData {
                 if (m != null) {
                     if (m >= 100) {
                         Toast.makeText(
-                            context,
-                            "batas maksimal video resume 100 Mb",
-                            Toast.LENGTH_SHORT
+                            context, "batas maksimal video resume 100 Mb", Toast.LENGTH_SHORT
                         ).show()
                     } else {
                         ManageProfileAPI().UploadVideoResume(files, context) {
@@ -96,13 +89,11 @@ class manage_lampiran : Fragment(), iRefreshData {
                                 binding.spinnerResume.visibility = VISIBLE
                                 binding.uploadVideoResumeBtn.visibility = GONE
                                 if (it.code == 210) {
-                                    Log.d("upload video resume", it.data.toString())
                                     binding.spinnerResume.visibility = GONE
                                     binding.uploadVideoResumeBtn.visibility = VISIBLE
                                     binding.videoResumeName.text = it.data?.videoName
                                 }
                                 if (it.data != null) {
-                                    Log.d("upload", it.data.toString())
                                     binding.videoResumeName.text = it.data.videoName
                                     binding.btnRemoveResume.visibility = VISIBLE
                                     binding.btnRemoveResume.setOnClickListener {
@@ -140,8 +131,7 @@ class manage_lampiran : Fragment(), iRefreshData {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentManageLampiranPageBinding.inflate(layoutInflater)
         return binding.root
@@ -184,9 +174,7 @@ class manage_lampiran : Fragment(), iRefreshData {
                     binding.btnRemoveResume.setOnClickListener {
                         ProfileAPI().DeleteJobseekerResume(context) {
                             Toast.makeText(
-                                context,
-                                "Berhasil menghapus video resume",
-                                Toast.LENGTH_SHORT
+                                context, "Berhasil menghapus video resume", Toast.LENGTH_SHORT
                             ).show()
                             binding.videoResumeName.text = "Upload Video Resume"
                             binding.btnRemoveResume.visibility = GONE
@@ -206,11 +194,8 @@ class manage_lampiran : Fragment(), iRefreshData {
                     binding.editStatusVaksinPelamar.setOnClickListener {
                         replaceFragment(
                             fragment_editlampiran_upload_vaksin(
-                                vaccine.data
-                                    .filter { doc ->
-                                        doc.documentType == DocumentType.Vaccine1.value ||
-                                                doc.documentType == DocumentType.Vaccine2.value ||
-                                                doc.documentType == DocumentType.Vaccine3.value
+                                vaccine.data.filter { doc ->
+                                        doc.documentType == DocumentType.Vaccine1.value || doc.documentType == DocumentType.Vaccine2.value || doc.documentType == DocumentType.Vaccine3.value
                                     }, this
                             )
                         )
@@ -226,7 +211,6 @@ class manage_lampiran : Fragment(), iRefreshData {
                         } else if (doc.documentType == DocumentType.Vaccine3.value) {
                             vaccineLogo = view!!.findViewById(R.id.vaccine3Status)
                         }
-
                         when (doc.documentStatus) {
                             VerifyStatus.Accept.value -> {
                                 vaccineLogo.setImageResource(R.drawable.ic_vaccine_approve)

@@ -15,9 +15,16 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.E
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iUpdateAdditional
 
 
-class EditResident(private val residentNo : Int?, val residentList : List<Resident>, val iUpdateAdditional: iUpdateAdditional): SuperBottomSheetFragment(),
-    iResident {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+class EditResident(
+    private val residentNo: Int?,
+    val residentList: List<Resident>,
+    val iUpdateAdditional: iUpdateAdditional
+) : SuperBottomSheetFragment(), iResident {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
@@ -26,17 +33,22 @@ class EditResident(private val residentNo : Int?, val residentList : List<Reside
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
         recyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = residentList?.let { it1 -> EditResidentAdapter(residentNo, it1, iUpdateAdditional, this@EditResident) }
+            adapter = residentList.let { it1 ->
+                EditResidentAdapter(
+                    residentNo,
+                    it1,
+                    iUpdateAdditional,
+                    this@EditResident
+                )
+            }
         }
     }
-
 
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
@@ -48,6 +60,7 @@ class EditResident(private val residentNo : Int?, val residentList : List<Reside
         this.dismiss()
     }
 }
-interface iResident{
+
+interface iResident {
     fun close()
 }

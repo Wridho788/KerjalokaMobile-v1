@@ -3,10 +3,6 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.NotificationPage.Mod
 import java.time.LocalDateTime
 
 data class NotifModel(
-    val read: Int,
-    val title: String,
-    val desc: String,
-    val time: LocalDateTime,
-    val img: Int
+    val read: Int, val title: String, val desc: String, val time: LocalDateTime, val img: Int
 
-    )
+)

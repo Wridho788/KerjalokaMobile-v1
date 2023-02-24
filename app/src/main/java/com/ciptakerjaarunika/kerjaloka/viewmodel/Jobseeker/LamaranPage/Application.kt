@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.LamaranPage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,6 @@ class Application(
         val TestTaken: TextView
         val CompanyLogo: ImageView
         val TestContainer: LinearLayout
-//            val Requirment: TextView
 
         init {
             Jobposition = view.findViewById(R.id.card_title)
@@ -38,7 +38,6 @@ class Application(
             TestTaken = view.findViewById(R.id.card_testHasTake)
             CompanyLogo = view.findViewById(R.id.img_company_logo)
             TestContainer = view.findViewById(R.id.test_container)
-//                Requirment = view.findViewById(R.id.ca)
         }
     }
 
@@ -48,6 +47,7 @@ class Application(
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         Glide.with(context)
             .load(config().portAddress + "photo/Profile/" + data[position].job.company.logo)
@@ -63,7 +63,6 @@ class Application(
         if (data[position].tests.isEmpty()) {
             viewHolder.TestContainer.visibility = GONE
         }
-//            viewHolder.Requirment.text= data[position].requirentment
         viewHolder.itemView.setOnClickListener {
             cellClickListener.onCellClickListener(
                 data[position].job.jobNo,

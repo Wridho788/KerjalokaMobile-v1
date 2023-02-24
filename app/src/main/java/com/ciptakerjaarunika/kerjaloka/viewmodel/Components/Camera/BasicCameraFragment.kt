@@ -6,9 +6,9 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentActivity
+import com.ciptakerjaarunika.kerjaloka.entity.CameraResult
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerConfiguration
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerView
-import com.ciptakerjaarunika.kerjaloka.entity.CameraResult
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.text.SimpleDateFormat
@@ -18,9 +18,11 @@ class BasicCameraFragment : BaseSystemPickerFragment(), ICustomPickerView {
 
     private var cameraPictureUrl: Uri? = null
 
-    override fun display(fragmentActivity: FragmentActivity,
-                         @IdRes viewContainer: Int,
-                         configuration: ICustomPickerConfiguration?) {
+    override fun display(
+        fragmentActivity: FragmentActivity,
+        @IdRes viewContainer: Int,
+        configuration: ICustomPickerConfiguration?
+    ) {
         val fragmentManager = fragmentActivity.supportFragmentManager
         val fragment: androidx.fragment.app.Fragment? = fragmentManager.findFragmentByTag(tag)
         if (fragment == null) {
@@ -46,7 +48,6 @@ class BasicCameraFragment : BaseSystemPickerFragment(), ICustomPickerView {
         cameraPictureUrl = createImageUri()
         val pictureChooseIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         pictureChooseIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraPictureUrl)
-
         startActivityForResult(pictureChooseIntent, CAMERA_REQUEST_CODE)
     }
 

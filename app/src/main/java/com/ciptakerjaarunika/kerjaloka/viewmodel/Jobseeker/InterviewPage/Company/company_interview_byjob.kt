@@ -46,8 +46,7 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
         if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
             hubConnection.start()
             hubConnection.on(
-                "connected",
-                { res ->
+                "connected", { res ->
                     binding.spinnerInterviewByJob.visibility = View.GONE
                     val userNo = SessionManager(context).user!!.userNo.toString()
                     hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
@@ -67,18 +66,12 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
 
                     binding.recyclerViewSection.adapter?.notifyDataSetChanged()
                 }
-//                Log.d("hubConnesction response chat", res.toString())
-            },
-            chat_data::class.java
+            }, chat_data::class.java
         )
         binding.recyclerViewSection.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = company_interview_byjob_adapter(
-                SectionDetail,
-                Context,
-                jobNo,
-                context,
-                SectionDetail.jobPosition
+                SectionDetail, Context, jobNo, context, SectionDetail.jobPosition
             )
         }
         val search = view?.findViewById<EditText>(R.id.searchInput)
@@ -101,9 +94,7 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
                         layoutManager = LinearLayoutManager(activity)
                         adapter = company_interview_byjob_adapter(
                             company_interview_list(
-                                SectionDetail.jobPosition,
-                                SectionDetail.jobNo,
-                                temp
+                                SectionDetail.jobPosition, SectionDetail.jobNo, temp
                             ), Context, jobNo, context, SectionDetail.jobPosition
                         )
                     }
@@ -112,11 +103,7 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
                         adapter = company_interview_byjob_adapter(
-                            SectionDetail,
-                            Context,
-                            jobNo,
-                            context,
-                            SectionDetail.jobPosition
+                            SectionDetail, Context, jobNo, context, SectionDetail.jobPosition
                         )
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
@@ -153,16 +140,13 @@ class company_interview_byjob(val SectionDetail: company_interview_list, val job
 //        hubConnection.stop()
         val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
         ft.replace(
-            id,
-            ChatPage(sectionName, sectionNo, jobNo, receiver, logo, jobPosition),
-            "ChatFragment"
+            id, ChatPage(sectionName, sectionNo, jobNo, receiver, logo, jobPosition), "ChatFragment"
         )
         ft.commit()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCompanyInterviewPerjobBinding.inflate(layoutInflater)
         val view = binding.root

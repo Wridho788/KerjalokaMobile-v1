@@ -25,8 +25,7 @@ class RecordsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_records, container, false)
     }
@@ -41,36 +40,7 @@ class RecordsFragment : Fragment() {
             "12 Agustus 2022 pada 16:24",
             "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
         )
-        val list2 = RecordsModel(
-            2,
-            "PT. Mantap Indonesia",
-            "12 Agustus 2022 pada 16:24",
-            ""
-        )
-        val list3 = RecordsModel(
-            3,
-            "PT. Mantap Indonesia",
-            "12 Agustus 2022 pada 16:24",
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-        )
-        val list4 = RecordsModel(
-            4,
-            "PT. Mantap Indonesia",
-            "12 Agustus 2022 pada 16:24",
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-        )
-        val list5 = RecordsModel(
-            5,
-            "PT. Mantap Indonesia",
-            "12 Agustus 2022 pada 16:24",
-            "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet."
-        )
-
         list.add(list1)
-        list.add(list2)
-        list.add(list3)
-        list.add(list4)
-        list.add(list5)
 
         val toolbar = view.findViewById<ImageView>(R.id.btn_back_records)
         toolbar.setOnClickListener {

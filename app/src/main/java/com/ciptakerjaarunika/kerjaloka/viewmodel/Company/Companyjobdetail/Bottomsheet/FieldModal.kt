@@ -12,16 +12,25 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.FieldAdapter
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.FieldFilter
 import com.ciptakerjaarunika.kerjaloka.model.Job.CompanyJobDetail.JobField
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.FieldAdapter
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.ManageJobPage.iUpdateJobAdditionalInfo
+import java.util.*
 
 
-class FieldModal(val value: Int?, val data : List<FieldFilter>, val updateData : iUpdateJobAdditionalInfo): SuperBottomSheetFragment(),
+class FieldModal(
+    val value: Int?,
+    val data: List<FieldFilter>,
+    val updateData: iUpdateJobAdditionalInfo
+) : SuperBottomSheetFragment(),
     iUpdateField {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
@@ -34,10 +43,10 @@ class FieldModal(val value: Int?, val data : List<FieldFilter>, val updateData :
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
-                recyclerView.apply {
-                    layoutManager = LinearLayoutManager(activity)
-                    adapter = FieldAdapter(value, data, this@FieldModal)
-                }
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = FieldAdapter(value, data, this@FieldModal)
+        }
 
         var searchInput = view.findViewById<SearchView>(R.id.search_filter)
         searchInput.visibility = View.VISIBLE
@@ -47,8 +56,9 @@ class FieldModal(val value: Int?, val data : List<FieldFilter>, val updateData :
                 return true
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             override fun onQueryTextChange(newText: String?): Boolean {
-                val keyword = newText.toString().toLowerCase()
+                val keyword = newText.toString().lowercase(Locale.getDefault())
                 if (keyword.isNullOrEmpty()) {
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -56,8 +66,8 @@ class FieldModal(val value: Int?, val data : List<FieldFilter>, val updateData :
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 } else {
-                    var temp = data?.filter { item ->
-                        "${item.fieldName}".toLowerCase().contains(keyword)
+                    var temp = data.filter { item ->
+                        "${item.fieldName}".lowercase(Locale.getDefault()).contains(keyword)
                     }
                     recyclerView.apply {
                         layoutManager = LinearLayoutManager(activity)
@@ -65,7 +75,7 @@ class FieldModal(val value: Int?, val data : List<FieldFilter>, val updateData :
                     }
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
-                return true;
+                return true
             }
         })
     }
@@ -81,7 +91,7 @@ class FieldModal(val value: Int?, val data : List<FieldFilter>, val updateData :
         (context as Activity?)!!.windowManager
             .defaultDisplay
             .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
     override fun updateField(value: JobField) {
@@ -89,6 +99,7 @@ class FieldModal(val value: Int?, val data : List<FieldFilter>, val updateData :
         this.dismiss()
     }
 }
-interface iUpdateField{
-    fun updateField(value : JobField)
+
+interface iUpdateField {
+    fun updateField(value: JobField)
 }

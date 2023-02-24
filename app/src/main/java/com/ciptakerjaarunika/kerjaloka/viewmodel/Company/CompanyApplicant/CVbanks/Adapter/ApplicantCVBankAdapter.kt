@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.CVbanks.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,7 @@ class ApplicantCVBankAdapter(
     private val context: Context,
     private val applicantModel: List<applicantModel>?,
     private val iCVBankAdapter: iCvBankInterface
-) :
-    RecyclerView.Adapter<ApplicantCVBankAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ApplicantCVBankAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var nameApplicant: TextView
         var locationApplicant: TextView
@@ -40,13 +40,13 @@ class ApplicantCVBankAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_applicant, null)
         val lp = RecyclerView.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         view.layoutParams = lp
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = applicantModel!![position]
         holder.nameApplicant.text = currentItem.applicant.name
@@ -58,21 +58,15 @@ class ApplicantCVBankAdapter(
         } else {
             holder.locationApplicant.text = ""
         }
-//        val status = currentItem.publish
-//        if (status == true) {
-//            holder.statusApplicant.text = "Qualified"
-//            holder.statusApplicant.setTextColor(R.color.green_300)
-//        } else {
-//            holder.statusApplicant.text = "Not Qualified"
-//            holder.statusApplicant.setTextColor(Color.RED)
-//        }
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.applicant.photo)
-            .fitCenter()
-            .into(holder.profileApplicant)
+            .load(config().portAddress + "photo/Profile/" + currentItem.applicant.photo)
+            .fitCenter().into(holder.profileApplicant)
 
         holder.cardApplicant.setOnClickListener {
-            iCVBankAdapter.goToJobApplicant(currentItem.application.jobNo, currentItem.application.jobseekerNo)
+            iCVBankAdapter.goToJobApplicant(
+                currentItem.application.jobNo,
+                currentItem.application.jobseekerNo
+            )
         }
     }
 

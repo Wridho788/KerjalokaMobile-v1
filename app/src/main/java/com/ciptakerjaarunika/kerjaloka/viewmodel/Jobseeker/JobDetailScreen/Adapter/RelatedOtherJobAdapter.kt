@@ -10,8 +10,7 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobDetailScreen.Model.relatedOtherJobModel
 import com.google.android.material.card.MaterialCardView
 
-class RelatedOtherJobAdapter() :
-    RecyclerView.Adapter<RelatedOtherJobAdapter.ViewHolder>() {
+class RelatedOtherJobAdapter : RecyclerView.Adapter<RelatedOtherJobAdapter.ViewHolder>() {
     private var listItem = listOf<relatedOtherJobModel>(
         relatedOtherJobModel(
             1,

@@ -1,16 +1,15 @@
 package com.ciptakerjaarunika.kerjaloka.service.WebSocket
 
 import MessageListener
-import  android.util.Log
-import com.ciptakerjaarunika.kerjaloka.model.Interview.chat_model
+import android.util.Log
 import okhttp3.*
 import okio.ByteString
-import  java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeUnit
 
-object  WebSocketManager {
+object WebSocketManager {
     private val TAG = WebSocketManager::class.java.simpleName
-    private  const  val  MAX_NUM  =  5  // Maximum number of reconnections
-    private  const  val  MILLIS  =  5000  // Reconnection interval, milliseconds
+    private const val MAX_NUM = 5  // Maximum number of reconnections
+    private const val MILLIS = 5000  // Reconnection interval, milliseconds
     private lateinit var client: OkHttpClient
     private lateinit var request: Request
     private lateinit var messageListener: MessageListener
@@ -43,7 +42,7 @@ object  WebSocketManager {
                 connect()
                 connectNum++
             } catch (e: InterruptedException) {
-                e.printStackTrace ()
+                e.printStackTrace()
             }
         } else {
             Log.i(
@@ -70,7 +69,7 @@ object  WebSocketManager {
     fun close() {
         if (isConnect()) {
             mWebSocket.cancel()
-            mWebSocket.close( 1001 , "The client actively closes the connection " )
+            mWebSocket.close(1001, "The client actively closes the connection ")
         }
     }
 
@@ -91,6 +90,7 @@ object  WebSocketManager {
                     messageListener.onConnectSuccess()
                 }
             }
+
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
                 Log.i(TAG, text)

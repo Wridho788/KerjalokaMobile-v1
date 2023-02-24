@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyReview.Adapter
 
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class CompanyReviewAdapter(
         var ratingBar: RatingBar
         var chipProRating: ChipGroup
         var chipConRating: ChipGroup
+
         init {
             picture = itemView.findViewById(R.id.profile_picture)
             username = itemView.findViewById(R.id.username)
@@ -42,13 +44,14 @@ class CompanyReviewAdapter(
         }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_review, null)
-        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
-
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -56,7 +59,7 @@ class CompanyReviewAdapter(
         holder.username.text = currentItem.userFullName
         holder.comment.text = currentItem.comment
         val proRating = currentItem.proRating
-        proRating.forEach{
+        proRating.forEach {
             val chip = Chip(holder.chipProRating.context)
             chip.setChipBackgroundColorResource(R.color.danger_100)
             chip.apply {
@@ -72,7 +75,7 @@ class CompanyReviewAdapter(
             }
         }
         val conRating = currentItem.conRating
-        conRating.forEach{
+        conRating.forEach {
             val chip = Chip(holder.chipConRating.context)
             chip.setChipBackgroundColorResource(R.color.danger_100)
             chip.apply {
@@ -89,7 +92,7 @@ class CompanyReviewAdapter(
         }
         holder.ratingBar.rating = currentItem.rating
         Glide.with(holder.itemView.context)
-            .load(config().portAddress + "/photo/Profile/" + currentItem.raterPhoto).fitCenter()
+            .load(config().portAddress + "photo/Profile/" + currentItem.raterPhoto).fitCenter()
             .into(holder.picture)
 
         val SECOND = 1
@@ -100,7 +103,11 @@ class CompanyReviewAdapter(
 
         var time = currentItem.ratingAt
         Log.d("time", time.toString())
-        val now = LocalDateTime.now().toString()
+        val now = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDateTime.now().toString()
+        } else {
+            TODO("VERSION.SDK_INT < O")
+        }
 
         fun GetDateValue(value: String): Date? {
             val temp = value.split("T")
@@ -123,7 +130,8 @@ class CompanyReviewAdapter(
                 diff < 24 * HOUR -> "${diff / HOUR} Jam Lalu"
                 diff < 2 * DAY -> "Kemarin"
                 diff < WEEK -> "${diff / DAY} Hari Lalu"
-                else -> LocalDateTime.parse(time).format(DateTimeFormatter.ofPattern("dd MMMM yyyy 'pada' h:mm "))
+                else -> LocalDateTime.parse(time)
+                    .format(DateTimeFormatter.ofPattern("dd MMMM yyyy 'pada' h:mm "))
             }
         }
         holder.ratingAt.text = dateDiff()

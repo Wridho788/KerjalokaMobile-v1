@@ -10,8 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.otpVerification
 import com.google.android.material.button.MaterialButton
 
@@ -25,11 +25,9 @@ class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragmen
         val view = inflater.inflate(R.layout.fragment_comp_edit_phone, container, false)
         val phoneText = view.findViewById<TextView>(R.id.comp_phone)
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveNewPhone)
-
         phoneText.text = phone
-
         btnSave.setOnClickListener {
-        var keyword = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
+            var keyword = view.findViewById<EditText>(R.id.comp_EditusrPhone)?.text.toString()
             if (keyword.length == 0) {
                 Toast.makeText(context, "Phone Number Is Not Valid", Toast.LENGTH_SHORT).show()
             } else if (keyword.length == 8) {
@@ -60,7 +58,6 @@ class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragmen
             fragmentManager?.popBackStack()
             iRefreshData.refresh()
         }
-
         return view
     }
 
@@ -78,7 +75,6 @@ class CompEditPhone(val iRefreshData: iRefreshData, var phone: String) : Fragmen
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION, token)
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION_PHONE, phone)
         mBundle.putString(otpVerification.EXTRA_DESCRIPTION_NEW_PHONE, newPhone)
-
         otpVerificationFragment.arguments = mBundle
         otpVerificationFragment.description = "phone"
         val mFragmentManager = parentFragmentManager

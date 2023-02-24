@@ -3,7 +3,6 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.HomePage
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,8 +42,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = ActivityCompanyDashboardBinding.inflate(layoutInflater)
         val view = binding.root
@@ -73,20 +71,11 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
             }
         }
 
-//        company_profile_api().InterviewAmount(context) {
-//            if (it != null) {
-//                Log.d("total interview", it.toString())
-//                jlhInterview.text = it.interview.toString() + " Orang"
-//            } else {
-//                jlhInterview.text = "0 Orang"
-//            }
-//        }
         hubConnection = HubConnectionBuilder.create(config().portAddress + "/ws/chat").build()
         if (SessionManager(context).user != null && hubConnection.connectionState != HubConnectionState.CONNECTED) {
             hubConnection.start()
             hubConnection.on(
-                "connected",
-                { res ->
+                "connected", { res ->
                     val userNo = SessionManager(context).user!!.userNo.toString()
                     hubConnection.send("Connecting", userNo, SessionManager(context).deviceId)
                 }, String::class.java
@@ -95,8 +84,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
                 "getmessage", { res: chat_data ->
                     SessionManager(context).chatData = res
                     jlhInterview.text = "${res.sections[0].notRead} Orang"
-                },
-                chat_data::class.java
+                }, chat_data::class.java
             )
         }
 
@@ -109,7 +97,6 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
 
         company_profile_api().MyJob(context) {
             var count = 0
-            Log.d("myjob", it.toString())
             if (it != null) {
                 it.data.forEach {
                     if (it.publish == true) {
@@ -117,7 +104,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
                     }
                 }
             }
-            jlhApplicant.text = count.toString() + " Pekerjaan"
+            jlhApplicant.text = "$count Pekerjaan"
         }
 
         btnSeeApp.setOnClickListener {
@@ -148,11 +135,9 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         }
 
         img_btn_calendar1.setOnClickListener {
-            val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker
-                .Builder
-                .dateRangePicker()
-                .setTitleText("Select a date")
-                .setCalendarConstraints(calendarConstraints())
+            val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> =
+                MaterialDatePicker.Builder.dateRangePicker().setTitleText("Select a date")
+                    .setCalendarConstraints(calendarConstraints())
             val datePicker = datePickerBuilder.build()
             datePicker.show(requireActivity().supportFragmentManager, "DATE_PICKER_RANGE")
 
@@ -163,7 +148,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
                 val daysDiff: Long = TimeUnit.MILLISECONDS.toDays(msDiff)
                 company_profile_api().CheckApplicant(startDate, endDate, context) {
                     if (it != null) {
-                        plg_tgl1.text = startDate + " - " + endDate
+                        plg_tgl1.text = "$startDate - $endDate"
                         jlhAppl.text = it.data.toString() + " Orang"
                     }
                 }
@@ -171,11 +156,9 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         }
 
         img_btn_calendar2.setOnClickListener {
-            val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> = MaterialDatePicker
-                .Builder
-                .dateRangePicker()
-                .setTitleText("Select a date")
-                .setCalendarConstraints(calendarConstraints())
+            val datePickerBuilder: MaterialDatePicker.Builder<Pair<Long, Long>> =
+                MaterialDatePicker.Builder.dateRangePicker().setTitleText("Select a date")
+                    .setCalendarConstraints(calendarConstraints())
             val datePicker = datePickerBuilder.build()
             datePicker.show(requireActivity().supportFragmentManager, "DATE_PICKER_RANGE")
 
@@ -184,7 +167,7 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
                 val endDate = sdf.format(it.second)
                 val msDiff: Long = (it.second - it.first).toLong()
                 val daysDiff: Long = TimeUnit.MILLISECONDS.toDays(msDiff)
-                plg_tgl2.text = startDate + " - " + endDate
+                plg_tgl2.text = "$startDate - $endDate"
                 company_profile_api().CheckAccepted(startDate, endDate, context) {
                     if (it != null) {
                         jlhAccepted.text = it.data.toString() + " Orang"
@@ -208,16 +191,8 @@ class CompanyDashboard : Fragment(), DatePickerDialog.OnDateSetListener {
         }
         val validators = CompositeDateValidator.allOf(listValidators)
 
-        return CalendarConstraints.Builder()
-            .setValidator(validators)
-            .build()
+        return CalendarConstraints.Builder().setValidator(validators).build()
     }
-
-//    class DayAxisValueFormatter(private val chart: BarLineChartBase<*>) : ValueFormatter() {
-//        override fun getFormattedValue(value: Float): String {
-//            return "your text $value"
-//        }
-//    }
 
     fun getLongAsDate(year: Int, month: Int, date: Int): Long {
         val calendar: Calendar = GregorianCalendar()

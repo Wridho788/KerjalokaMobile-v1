@@ -11,13 +11,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.MajorAdapter
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.companyAddJob.Majors
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.Adapter.MajorAdapter
 import com.google.android.material.button.MaterialButton
 
-class BottomSheetMajorJob() : SuperBottomSheetFragment(),
+class BottomSheetMajorJob : SuperBottomSheetFragment(),
     iChooseMajor {
     private var list: List<Title>? = null
     override fun onCreateView(

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,9 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentManagePreferenceBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerProfile
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Preference.FragmentEditJobType
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Preference.FragmentSalaryExpectation
@@ -39,13 +40,13 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
         getData()
     }
 
+    @SuppressLint("SetTextI18n")
     fun getData() {
         ProfileAPI().GetJobseekerField(context) { fields ->
             loading -= 1
             if (activity != null) {
                 LoadingDone()
                 binding.editMinat.setOnClickListener {
-//                    fields?.data = listOf()
                     binding.chipGroupMinat.removeAllViews()
                     binding.chipGroupTipePekerjaan.removeAllViews()
                     binding.nullField.visibility = GONE
@@ -90,21 +91,21 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                 }
                 if (jobTypes?.data?.size != 0) {
                     jobTypes?.data?.forEach {
-                    val jTypeChip = Chip(context)
+                        val jTypeChip = Chip(context)
                         binding.jobTypeGroup.isVisible = true
-                            jTypeChip.setChipBackgroundColorResource(R.color.danger_100)
-                            jTypeChip.apply {
-                                textSize = 12f
-                                text = it.jobTypeName
-                                isChipIconVisible = false
-                                isCloseIconVisible = false
-                                isClickable = false
-                                isCheckable = false
-                                view.apply {
-                                    binding.chipGroupTipePekerjaan.addView(jTypeChip as View)
+                        jTypeChip.setChipBackgroundColorResource(R.color.danger_100)
+                        jTypeChip.apply {
+                            textSize = 12f
+                            text = it.jobTypeName
+                            isChipIconVisible = false
+                            isCloseIconVisible = false
+                            isClickable = false
+                            isCheckable = false
+                            view.apply {
+                                binding.chipGroupTipePekerjaan.addView(jTypeChip as View)
 
-                                }
                             }
+                        }
                     }
                 } else {
                     binding.nullJobType.visibility = VISIBLE
@@ -118,9 +119,9 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
                 val expectedSalary = view!!.findViewById<TextView>(R.id.expectedSalary)
                 if (salary != null) {
                     if (salary.data != null) {
-                        expectedSalary.text =  salary.data.toString()
+                        expectedSalary.text = salary.data.toString()
                     } else expectedSalary.text = "0"
-                }  else expectedSalary.text = "0"
+                } else expectedSalary.text = "0"
 
                 val btn_gaji = view!!.findViewById<TextView>(R.id.edit_ekspektasi_gaji)
 
@@ -142,7 +143,7 @@ class ManagePreferenceFragment(val data: JobseekerProfile?) : Fragment(), iRefre
 
     fun LoadingDone() {
         if (loading == 0) {
-         binding.spinnerPref.visibility = GONE
+            binding.spinnerPref.visibility = GONE
             binding.contentPref.visibility = VISIBLE
         }
     }

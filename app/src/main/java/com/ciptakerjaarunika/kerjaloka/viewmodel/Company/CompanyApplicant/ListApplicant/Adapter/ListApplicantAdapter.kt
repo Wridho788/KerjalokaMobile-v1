@@ -1,11 +1,14 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ListApplicant.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ListApplicant.Model.listApplicantJobModel
@@ -20,8 +23,7 @@ class ListApplicantAdapter(
     private val context: Context,
     private val listApplicantJobModel: List<listApplicantJobModel>?,
     private val onFragmentClickListener: OnFragmentClickListener?
-) :
-    RecyclerView.Adapter<ListApplicantAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ListApplicantAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var jobPosition: TextView
         var uploadAt: TextView
@@ -38,10 +40,14 @@ class ListApplicantAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_applicant, null)
-        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = listApplicantJobModel?.get(position)
         holder.jobPosition.text = currentItem?.jobPosition
@@ -57,6 +63,7 @@ class ListApplicantAdapter(
             var time = currentItem.createdOn
             val now = LocalDateTime.now().toString()
 
+            @SuppressLint("SimpleDateFormat")
             fun GetDateValue(value: String): Date {
                 val temp = value.split("T")
                 val time = temp[1].split(":")

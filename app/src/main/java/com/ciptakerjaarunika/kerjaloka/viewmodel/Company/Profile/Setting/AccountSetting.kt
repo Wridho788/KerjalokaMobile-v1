@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -12,20 +11,20 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.MainActivity
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.ProfileAPI
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
 import com.ciptakerjaarunika.kerjaloka.api.users
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentAccountSettingBinding
 import com.ciptakerjaarunika.kerjaloka.enum.SocialMediaType
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.model.Data.socialMedia
 import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.AkunPage.AkunPage
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.data
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.ModalDeactivateAccount
 import com.ciptakerjaarunika.kerjaloka.viewmodel.LoginPage.Login
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -71,7 +70,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
         users().CompanyGetUserData(context) {
             if (it != null) {
                 if (it.code == 200) {
-
                     binding.switchDiscoverable.isChecked = it.data.isDiscoverable
                     binding.switchNewsLetter.isChecked = it.data.isNewsletter
                     if (it.data.userGoogleId.isNullOrEmpty()) {
@@ -96,7 +94,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                             company_profile_api().undiscoverable(context) {}
                         }
                     }
-
 
                     binding.switchNewsLetter.setOnClickListener { it1 ->
                         if (binding.switchNewsLetter.isChecked == true) {
@@ -162,7 +159,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
     override fun refresh() {
         company_profile_api().CompanyGetProfileData(context) {
             binding.spinner.visibility = GONE
-//            binding.contentContainer.visibility = VISIBLE
             if (it != null) {
                 data = it.data
                 binding.profileUsername.text = data?.username
@@ -242,7 +238,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
     }
 
     private fun signIn() {
-
         val signInIntent: Intent = AkunPage.mGoogleSignInClient!!.signInIntent
         startActivityForResult(signInIntent, AkunPage.Req_Code)
     }
@@ -274,7 +269,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
         } catch (e: ApiException) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
             e.printStackTrace()
-            Log.d("err", "handleSignInResult:" + e.toString())
         }
     }
 
@@ -297,8 +291,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                 val hash = BigInteger(1, crypt.digest()).toString(16)
                 fun md5(str: String): ByteArray =
                     MessageDigest.getInstance("MD5").digest(str.toByteArray(Charsets.UTF_8))
-                Log.d("Crypt", hash)
-
                 FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         return@OnCompleteListener
@@ -314,9 +306,7 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                         hash,
                         deviceToken = SessionManager(context).device_token
                     )
-                Log.d("googleRequest", googleRequest.toString())
                 ProfileAPI().GetSocialMediaCheck(context) {
-                    Log.d("SocialMedia", it.toString())
                     if (it != null) {
                         if (it.google == true) {
                             Toast.makeText(
@@ -334,7 +324,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                                 accessToken = account.idToken.toString()
                             )
                             ProfileAPI().AddSocialMedia(context, socialMedia) {
-                                Log.d("SocialMedia", it.toString())
                             }
                         }
                     } else {
@@ -345,21 +334,6 @@ class AccountSetting(var data: data?) : Fragment(), iRefreshData {
                         ).show()
                     }
                 }
-//                AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
-//                    Log.d("google login", it.toString())
-//                    if (it != null)
-//                        if (it.code == "252") {
-//                            SessionManager(context).access_token = it.userToken
-//                            val mainActivity = activity as MainActivity
-//
-//                            AUTHAPI().CheckLogin(context, mainActivity) {
-//                                mainActivity.replaceFragment(AkunPage())
-//                            }
-//                        } else {
-//                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-//                            SessionManager(context).user = null
-//                        }
-//                }
             }
         }
     }

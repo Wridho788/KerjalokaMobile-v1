@@ -12,14 +12,13 @@ import com.ciptakerjaarunika.kerjaloka.databinding.FragmentSearchMoreCompanyBind
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchMoreCompany.Adapter.SearchMoreCompanyAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.SearchScreen.Model.companyList
 
-class SearchMoreCompanyFragment(var query: String): Fragment(), OnFragmentClickListener {
+class SearchMoreCompanyFragment(var query: String) : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentSearchMoreCompanyBinding
     private var isLoading: Boolean = true
     private var list: List<companyList>? = listOf()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentSearchMoreCompanyBinding.inflate(layoutInflater)
         val view = binding.root
@@ -37,7 +36,11 @@ class SearchMoreCompanyFragment(var query: String): Fragment(), OnFragmentClickL
                     list = it.data.companyList
                     binding.rvMoreCompany.apply {
                         layoutManager = LinearLayoutManager(context)
-                        adapter = SearchMoreCompanyAdapter(list!!, context, this@SearchMoreCompanyFragment)
+                        adapter = SearchMoreCompanyAdapter(
+                            list!!,
+                            context,
+                            this@SearchMoreCompanyFragment
+                        )
                     }
 
                 }
@@ -67,8 +70,8 @@ class SearchMoreCompanyFragment(var query: String): Fragment(), OnFragmentClickL
     }
 
 
-
 }
+
 interface OnFragmentClickListener {
     fun onCompanyDetailPage(companyNo: Long)
     fun BookmarkJob(jobNo: Long, Index: Int)

@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.JobseekerReview
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +16,8 @@ import com.ciptakerjaarunika.kerjaloka.api.DeleteReviewResponse
 import com.ciptakerjaarunika.kerjaloka.config.config
 import com.ciptakerjaarunika.kerjaloka.databinding.FragmentJobseekerReviewBinding
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.JobseekerReview.Adapter.JobseekerReviewAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.Model.applicantModel
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.JobseekerReview.Adapter.JobseekerReviewAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyReview.Bottomsheet.SendReview
 
 
@@ -35,6 +36,7 @@ class JobseekerReviewFragment(
         return view
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -48,7 +50,7 @@ class JobseekerReviewFragment(
         binding.applicantDetailSection.jobseekerAddress.text =
             applicantDetail.applicant.location.city + ", " + applicantDetail.applicant.location.province
         Glide.with(this)
-            .load(config().portAddress + "/photo/Profile/" + applicantDetail.applicant.photo)
+            .load(config().portAddress + "photo/Profile/" + applicantDetail.applicant.photo)
             .fitCenter().into(binding.applicantDetailSection.jobseekerPicture)
         binding.applicantDetailSection.jobseekerName.text = applicantDetail.applicant.name
         val qualified = applicantDetail.qualified
@@ -81,13 +83,13 @@ class JobseekerReviewFragment(
         val companyUserNo = SessionManager(context).user?.company?.userNo
         // my review
         binding.layoutReviewParent.visibility = View.GONE
-        CompanyReviewAPI().getCompanyReviewAsync(context, applicantDetail.applicant.jobseekerNo!!) {
+        CompanyReviewAPI().getCompanyReviewAsync(context, applicantDetail.applicant.jobseekerNo) {
             if (it != null) {
                 binding.rvItemCard.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = JobseekerReviewAdapter(it.data.reviewList)
                 }
-                val my_review = it!!.data.reviewList.filter { item ->
+                val my_review = it.data.reviewList.filter { item ->
                     item.userNo == companyUserNo
                 }
                 if (!my_review.isEmpty()) {

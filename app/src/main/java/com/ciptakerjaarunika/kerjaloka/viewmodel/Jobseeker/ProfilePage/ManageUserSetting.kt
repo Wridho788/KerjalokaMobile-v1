@@ -1,10 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,11 +23,11 @@ import com.ciptakerjaarunika.kerjaloka.model.User.GoogleLoginRequest
 import com.ciptakerjaarunika.kerjaloka.session.SessionManager
 import com.ciptakerjaarunika.kerjaloka.viewmodel.AkunPage.AkunPage
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.ModalDeactivateAccount
-import com.ciptakerjaarunika.kerjaloka.viewmodel.LoginPage.Login
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.UserSetting.EditEmail
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.UserSetting.EditPassword
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.UserSetting.EditPhone
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.UserSetting.EditUserName
+import com.ciptakerjaarunika.kerjaloka.viewmodel.LoginPage.Login
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -47,6 +47,7 @@ class ManageUserSetting : Fragment() {
     var setNewsletter: Boolean = false
 
     companion object {
+        @SuppressLint("StaticFieldLeak")
         var mGoogleSignInClient: GoogleSignInClient? = null
         private var mAuth: FirebaseAuth? = null
         val Req_Code: Int = 123
@@ -182,7 +183,6 @@ class ManageUserSetting : Fragment() {
         } catch (e: ApiException) {
             Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
             e.printStackTrace()
-            Log.d("err", "handleSignInResult:" + e.toString())
         }
     }
 
@@ -205,8 +205,6 @@ class ManageUserSetting : Fragment() {
                 val hash = BigInteger(1, crypt.digest()).toString(16)
                 fun md5(str: String): ByteArray =
                     MessageDigest.getInstance("MD5").digest(str.toByteArray(Charsets.UTF_8))
-                Log.d("Crypt", hash)
-
                 FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
                         return@OnCompleteListener
@@ -222,9 +220,7 @@ class ManageUserSetting : Fragment() {
                         hash,
                         deviceToken = SessionManager(context).device_token
                     )
-                Log.d("googleRequest", googleRequest.toString())
                 ProfileAPI().GetSocialMediaCheck(context) {
-                    Log.d("SocialMedia", it.toString())
                     if (it != null) {
                         if (it.google == true) {
                             Toast.makeText(
@@ -243,7 +239,6 @@ class ManageUserSetting : Fragment() {
                             )
                             ProfileAPI().AddSocialMedia(context, socialMedia) {
                                 if (it != null) {
-                                    Log.d("SocialMedia", it.toString())
                                     Toast.makeText(
                                         context,
                                         it.message.toString(),
@@ -264,15 +259,12 @@ class ManageUserSetting : Fragment() {
         }
     }
 
-
     private fun replaceFragment(fragment: Fragment) {
-
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.fragment_container, fragment)
         fragmentTransaction?.commit()
     }
-
 
     private fun editEmailFragment(data: String?) {
         val editEmailFragment = EditEmail()

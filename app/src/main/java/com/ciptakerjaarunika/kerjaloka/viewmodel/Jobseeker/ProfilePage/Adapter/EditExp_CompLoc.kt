@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.City
 
-class EditExp_CompLoc(private val cityList: List<City>):
-    RecyclerView.Adapter<EditExp_CompLoc.ChooseCity>()
-{
+class EditExp_CompLoc(private val cityList: List<City>) :
+    RecyclerView.Adapter<EditExp_CompLoc.ChooseCity>() {
 
     inner class ChooseCity(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -27,7 +26,7 @@ class EditExp_CompLoc(private val cityList: List<City>):
 
     override fun onBindViewHolder(holder: ChooseCity, position: Int) {
         val currentItem = cityList[position]
-        holder.item.text= currentItem.cityName
+        holder.item.text = currentItem.cityName
     }
 
     override fun getItemCount(): Int {

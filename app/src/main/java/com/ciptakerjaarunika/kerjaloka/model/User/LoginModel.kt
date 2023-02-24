@@ -1,9 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.model.User
 
 data class LoginRequest(
-    val email : String,
-    val password : String,
-    val deviceToken : String
+    val email: String, val password: String, val deviceToken: String
 )
 
 data class GoogleLoginRequest(
@@ -19,7 +17,7 @@ data class LoginResponse(
     val code: String,
     val message: String,
     val userToken: String? = null,
-    val userNo: Long ? = null ,
+    val userNo: Long? = null,
     val userFullname: String? = null,
     val userRole: Int? = null,
     val suspended: Boolean? = null,

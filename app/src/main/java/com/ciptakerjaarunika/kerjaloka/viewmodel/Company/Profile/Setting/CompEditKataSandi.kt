@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Setting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +10,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.google.android.material.button.MaterialButton
 
-
 class CompEditKataSandi(val iRefreshData: iRefreshData) : Fragment() {
+    @SuppressLint("CutPasteId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,8 +59,7 @@ class CompEditKataSandi(val iRefreshData: iRefreshData) : Fragment() {
                     "Kata sandi tidak boleh sama dengan sebelumnya",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else {
+            } else {
                 company_profile_api().ChangePassword(password, newpassword, context) {
                     if (it != null) {
                         if (it.code == "210") {
@@ -70,7 +70,8 @@ class CompEditKataSandi(val iRefreshData: iRefreshData) : Fragment() {
                             )
                                 .show()
                             fragmentManager?.popBackStack()
-                            view?.findViewById<TextView>(R.id.password_rules_1)?.visibility = View.GONE
+                            view?.findViewById<TextView>(R.id.password_rules_1)?.visibility =
+                                View.GONE
                         } else {
                             Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                         }

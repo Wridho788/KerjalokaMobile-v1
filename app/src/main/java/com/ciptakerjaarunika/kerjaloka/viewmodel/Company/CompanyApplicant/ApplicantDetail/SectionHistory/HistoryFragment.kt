@@ -14,7 +14,8 @@ import com.ciptakerjaarunika.kerjaloka.databinding.ActivityMainBinding
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.ApplicantDetail.SectionHistory.Adapter.HistoryAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.CompanyApplicant.JobApplicant.Model.jobApplicantHistory
 
-class HistoryFragment(private val jobApplicationHistory: List<List<jobApplicantHistory>>) : Fragment() {
+class HistoryFragment(private val jobApplicationHistory: List<List<jobApplicantHistory>>) :
+    Fragment() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -25,8 +26,7 @@ class HistoryFragment(private val jobApplicationHistory: List<List<jobApplicantH
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
         return view

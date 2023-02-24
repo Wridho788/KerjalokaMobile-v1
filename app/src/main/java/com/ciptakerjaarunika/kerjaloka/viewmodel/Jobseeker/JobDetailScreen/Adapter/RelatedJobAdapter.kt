@@ -21,10 +21,8 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class RelatedJobAdapter(
-    private val jobList: List<RelatedModel>,
-    private val onFragmentClickListener: IJobDetail
-) :
-    RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>() {
+    private val jobList: List<RelatedModel>, private val onFragmentClickListener: IJobDetail
+) : RecyclerView.Adapter<RelatedJobAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var relatedjobPosition: TextView
@@ -45,7 +43,8 @@ class RelatedJobAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_job_related, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_card_job_related, parent, false)
 
         return ViewHolder(view)
     }
@@ -56,7 +55,10 @@ class RelatedJobAdapter(
         val currentItem = jobList[position]
         holder.relatedjobPosition.text = currentItem.jobPosition
         holder.relatedjobCompany.text = currentItem.company.companyName
-        holder.relatedjobLocation.text = if(currentItem?.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem?.jobLocation?.get(0)?.label
+        holder.relatedjobLocation.text =
+            if (currentItem.jobLocation?.size!! > 1) "Banyak lokasi" else currentItem.jobLocation.get(
+                0
+            )?.label
         val SECOND = 1
         val MINUTE = 60 * SECOND
         val HOUR = 60 * MINUTE
@@ -72,7 +74,7 @@ class RelatedJobAdapter(
             val time = temp[1].split(":")
             val date = "${temp[0]} ${time[0]}:${time[1]}"
             var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-            return dateFormat.parse(date)
+            return dateFormat.parse(date)!!
         }
 
         fun dateDiff(): String {
@@ -99,8 +101,7 @@ class RelatedJobAdapter(
 
         holder.cardrelatedJob.setOnClickListener {
             onFragmentClickListener.onFragmentClick(
-                currentItem.jobNo.toLong(),
-                currentItem.company.companyNo
+                currentItem.jobNo.toLong(), currentItem.company.companyNo
             )
         }
     }

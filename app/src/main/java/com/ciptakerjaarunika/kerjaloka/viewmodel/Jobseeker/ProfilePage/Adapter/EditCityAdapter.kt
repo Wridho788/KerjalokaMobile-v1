@@ -11,12 +11,15 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ModalEdit.iCity
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.manage_profile.iEditBasic
 
-class EditCityAdapter(private val cityNo: Int?, private val locations: List<LocationFilter>, private val iEditBasic: iEditBasic, private val iCity: iCity):
-    RecyclerView.Adapter<EditCityAdapter.EditCity>()
-{
-    inner class EditCity(view: View): RecyclerView.ViewHolder(view){
+class EditCityAdapter(
+    private val cityNo: Int?,
+    private val locations: List<LocationFilter>,
+    private val iEditBasic: iEditBasic,
+    private val iCity: iCity
+) : RecyclerView.Adapter<EditCityAdapter.EditCity>() {
+    inner class EditCity(view: View) : RecyclerView.ViewHolder(view) {
         var item: TextView
-        var container : LinearLayout
+        var container: LinearLayout
 
         init {
             item = view.findViewById(R.id.item_modal)
@@ -26,15 +29,18 @@ class EditCityAdapter(private val cityNo: Int?, private val locations: List<Loca
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EditCity {
         val view = View.inflate(parent.context, R.layout.modal_list, null)
-        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return EditCity(view)
     }
 
     override fun onBindViewHolder(holder: EditCity, position: Int) {
         val currentItem = locations[position]
-        holder.item.text= "${currentItem.city}, ${currentItem.province}"
+        holder.item.text = "${currentItem.city}, ${currentItem.province}"
 
-        if(currentItem.locationsNo == cityNo){
+        if (currentItem.locationsNo == cityNo) {
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
         }
         holder.container.setOnClickListener {

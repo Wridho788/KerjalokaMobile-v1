@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var hubConnection: HubConnection
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     @AddTrace(name = "onCreateTrace", enabled = true)
     class ItemCache {
         fun fetch(name: String): Item? {
@@ -121,7 +122,6 @@ class MainActivity : AppCompatActivity() {
 
                 hubConnection.on(
                     "getmessage", { res: chat_data ->
-                        Log.d("getmessage Res", res.toString())
                         SessionManager(context).chatData = res
                     }, chat_data::class.java
                 )

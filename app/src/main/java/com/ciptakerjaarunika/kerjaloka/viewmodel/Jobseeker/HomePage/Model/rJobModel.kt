@@ -4,7 +4,6 @@ import com.ciptakerjaarunika.kerjaloka.model.Data.City
 import com.ciptakerjaarunika.kerjaloka.model.Test.ShortQuestions
 import com.ciptakerjaarunika.kerjaloka.model.Test.Tests
 
-
 data class rjob_model(
     val code: Int,
     val errorCode: Int,
@@ -25,10 +24,7 @@ data class rJobModel(
 )
 
 data class rJobDetailResponse(
-    val code: Int,
-    val errorCode: Int,
-    val message: String,
-    val data: rJobDetailModel
+    val code: Int, val errorCode: Int, val message: String, val data: rJobDetailModel
 )
 
 data class rJobDetailModel(
@@ -51,15 +47,15 @@ data class rJobDetailModel(
     val bookmarked: Boolean?,
     val applied: Boolean?,
 
-    val jobShortQuestion : List<ShortQuestions>,
+    val jobShortQuestion: List<ShortQuestions>,
     val jobTests: List<Tests>,
     val publish: Boolean,
 )
 
 data class jobLocation(
-    val label : String,
-    val cityNo : Int,
-    val cityName : String,
+    val label: String,
+    val cityNo: Int,
+    val cityName: String,
 )
 
 data class jobField(val fieldName: String)
@@ -67,24 +63,15 @@ data class jobTitle(val titleName: String)
 data class jobRole(val jobRoleName: String)
 
 data class company(
-    val logo: String,
-    val companyName: String,
-    val city: City,
-    val province: province
+    val logo: String, val companyName: String, val city: City, val province: province
 )
 
 data class job(
-    val jobNo: Long,
-    val jobPosition: String,
-    val createdOn: String,
-    val company: companies
+    val jobNo: Long, val jobPosition: String, val createdOn: String, val company: companies
 )
 
 data class companies(
-    val companyNo: Long,
-    val companyName: String,
-    val logo: String,
-    val location: locationCompany
+    val companyNo: Long, val companyName: String, val logo: String, val location: locationCompany
 )
 
 data class locationCompany(

@@ -13,8 +13,11 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Preferenc
 import kotlin.math.ceil
 
 
-class JobTypeAdapter(val context: Context, var dataList: List<JobTypeFilter>,val iEditJobType: iEditJobType):
-    RecyclerView.Adapter<JobTypeAdapter.ViewHolder>() {
+class JobTypeAdapter(
+    val context: Context,
+    var dataList: List<JobTypeFilter>,
+    val iEditJobType: iEditJobType
+) : RecyclerView.Adapter<JobTypeAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var left: TextView
         var right: TextView
@@ -31,7 +34,7 @@ class JobTypeAdapter(val context: Context, var dataList: List<JobTypeFilter>,val
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val leftItem = dataList[position*2]
+        val leftItem = dataList[position * 2]
         holder.left.text = leftItem.jobTypeName
         holder.left.setOnClickListener {
             leftItem.checked = leftItem.checked == false
@@ -39,14 +42,15 @@ class JobTypeAdapter(val context: Context, var dataList: List<JobTypeFilter>,val
         }
 
         Log.d("Left ", (leftItem.checked == true).toString())
-        if(leftItem.checked == true) {
-            holder.left.background = ContextCompat.getDrawable(context, R.drawable.card_background_primary_filled)
+        if (leftItem.checked == true) {
+            holder.left.background =
+                ContextCompat.getDrawable(context, R.drawable.card_background_primary_filled)
+        } else {
+            holder.left.background =
+                ContextCompat.getDrawable(context, R.drawable.card_background_primary)
         }
-        else{
-            holder.left.background = ContextCompat.getDrawable(context, R.drawable.card_background_primary)
-        }
-        if((position*2) +1 < dataList.size){
-            val rightItem = dataList[(position*2) +1]
+        if ((position * 2) + 1 < dataList.size) {
+            val rightItem = dataList[(position * 2) + 1]
 
             holder.right.text = rightItem.jobTypeName
 
@@ -55,17 +59,18 @@ class JobTypeAdapter(val context: Context, var dataList: List<JobTypeFilter>,val
                 iEditJobType.refreshRecyCleview()
             }
 
-            if(rightItem.checked == true) {
-                holder.right.background = ContextCompat.getDrawable(context, R.drawable.card_background_primary_filled)
-            }
-            else{
-                holder.right.background = ContextCompat.getDrawable(context, R.drawable.card_background_primary)
+            if (rightItem.checked == true) {
+                holder.right.background =
+                    ContextCompat.getDrawable(context, R.drawable.card_background_primary_filled)
+            } else {
+                holder.right.background =
+                    ContextCompat.getDrawable(context, R.drawable.card_background_primary)
             }
         }
 
     }
 
     override fun getItemCount(): Int {
-        return ceil((dataList.size/2).toDouble()).toInt()
+        return ceil((dataList.size / 2).toDouble()).toInt()
     }
 }

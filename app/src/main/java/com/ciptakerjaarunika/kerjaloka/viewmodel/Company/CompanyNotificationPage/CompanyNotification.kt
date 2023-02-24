@@ -27,20 +27,15 @@ class CompanyNotification : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCompanyNotificationBinding.inflate(layoutInflater)
 
-        binding.btnBackJob.setOnClickListener{
+        binding.btnBackJob.setOnClickListener {
             finish()
         }
         setContentView(binding.root)
-            initList()
-            reload()
+        initList()
+        reload()
     }
 
     private fun initList() {
-//        scrollNotif.setOnRefreshListener {
-//            scrollNotif.isRefreshing=false
-//            reload()
-//        }
-
         layoutManager = LinearLayoutManager(this)
         adapter = CompanyAdapter {
             loadMore()

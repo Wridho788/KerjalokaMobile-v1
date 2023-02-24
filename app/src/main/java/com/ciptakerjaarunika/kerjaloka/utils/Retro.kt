@@ -10,10 +10,8 @@ object Retro {
     val client: Retrofit
         get() {
             if (mRetrofit == null) {
-                mRetrofit = Retrofit.Builder()
-                    .baseUrl(Base_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
+                mRetrofit = Retrofit.Builder().baseUrl(Base_URL)
+                    .addConverterFactory(GsonConverterFactory.create()).build()
             }
             return mRetrofit!!
         }

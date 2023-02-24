@@ -79,19 +79,16 @@ class JobDetailFragment(
 
     }
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     @SuppressWarnings("deprecation")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentJobDetailBinding.inflate(layoutInflater)
         val view = binding.root
         return view
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,6 +111,7 @@ class JobDetailFragment(
 
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun RefreshData() {
         val view = view
@@ -199,6 +197,7 @@ class JobDetailFragment(
                     var time = it.data.createdOn
                     val now = LocalDateTime.now().toString()
 
+                    @SuppressLint("SimpleDateFormat")
                     fun GetDateValue(value: String): Date {
                         val temp = value.split("T")
                         val time = temp[1].split(":")
@@ -227,9 +226,6 @@ class JobDetailFragment(
 
                     }
                     createdOn.text = dateDiff()
-
-//                    job_field.text =
-//                        if (it.data.jobField != null) it.data.jobField.fieldName else ""
                     job_role.text = if (it.data.jobRole != null) it.data.jobRole.jobRoleName else ""
 
                     var jobDesc = it.data.jobDescription
@@ -247,21 +243,13 @@ class JobDetailFragment(
                         }
                         location.text = Html.fromHtml(locationText)
                     }
-
-                    //                recyclerView.apply {
-                    //                    layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                    //                    adapter = RelatedJobAdapter(it.data.job, Context)
-                    //                }
-
                     val titleJob = it.data.jobPosition
                     val link = it.data.link
                     val job = it.data
                     Log.d("link", link.toString())
                     toolbarShare.setOnClickListener {
                         val text =
-                            "${job.company.companyName}\n" +
-                                    "sedang membuka lowongan pekerjaan sebagai '${job.jobPosition}'.\n" +
-                                    "Lihat informasi selengkapnya ${link}"
+                            "${job.company.companyName}\n" + "sedang membuka lowongan pekerjaan sebagai '${job.jobPosition}'.\n" + "Lihat informasi selengkapnya ${link}"
                         val sendIntent: Intent = Intent().apply {
                             action = Intent.ACTION_SEND
                             putExtra(Intent.EXTRA_TITLE, job.jobPosition)
@@ -289,7 +277,6 @@ class JobDetailFragment(
 
                         toolbarBookmark.setOnClickListener {
                             JobAPI().BookmarkJob(job.jobNo, !jobBookmark, context) {
-                                Log.d("Bookmark Response", it.toString())
                                 if (it != null) {
                                     if (it.code == 210) {
                                         jobBookmark = !jobBookmark
@@ -313,8 +300,7 @@ class JobDetailFragment(
                                             val sheet = ApplyJob(currentJob, it.data, this)
                                             activity?.let { it1 ->
                                                 sheet.show(
-                                                    it1.supportFragmentManager,
-                                                    "ApplyJob"
+                                                    it1.supportFragmentManager, "ApplyJob"
                                                 )
                                             }
                                         }
@@ -323,8 +309,7 @@ class JobDetailFragment(
                                     val sheet = ApplyJob(currentJob, listOf(), this)
                                     activity?.let { it1 ->
                                         sheet.show(
-                                            it1.supportFragmentManager,
-                                            "ApplyJob"
+                                            it1.supportFragmentManager, "ApplyJob"
                                         )
                                     }
                                 }
@@ -336,10 +321,6 @@ class JobDetailFragment(
                     view.findViewById<LinearLayout>(R.id.spinnerDetailPekerjaan).visibility = GONE
                     fragmentManager?.popBackStack()
                 }
-//                else {
-//                    val intent = Intent(context, PageNotFoundActivity()::class.java)
-//                    startActivity(intent)
-//                }
             }
 
             report_job.setOnClickListener {
@@ -361,9 +342,7 @@ class JobDetailFragment(
                         if (otherJob.isNotEmpty()) {
                             recyclerView.apply {
                                 layoutManager = LinearLayoutManager(
-                                    context,
-                                    LinearLayoutManager.HORIZONTAL,
-                                    false
+                                    context, LinearLayoutManager.HORIZONTAL, false
                                 )
                                 adapter =
                                     RelatedOtherCompanyJobAdapter(otherJob, this@JobDetailFragment)

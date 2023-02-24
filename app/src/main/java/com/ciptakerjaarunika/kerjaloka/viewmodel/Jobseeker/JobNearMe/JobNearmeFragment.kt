@@ -1,9 +1,9 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobNearMe
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,8 +56,7 @@ class JobNearmeFragment : Fragment(), IJobPage {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentJobBookmarkBinding.inflate(layoutInflater)
         val view = binding.root
@@ -76,29 +75,17 @@ class JobNearmeFragment : Fragment(), IJobPage {
     override fun RefreshData() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
         if (ActivityCompat.checkSelfPermission(
-                context!!,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                context!!, Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                context!!,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                context!!, Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         fusedLocationClient.getCurrentLocation(102, null).addOnSuccessListener {
 
             var latitude = it.latitude.toString()
             var longtitude = it.longitude.toString()
-            Log.d("lokasi latitude", latitude.toString())
-            Log.d("lokasi longtitude", longtitude.toString())
-
             JobAPI().getNearJob(latitude, longtitude, context) {
                 if (it != null) {
                     listData = it.data
@@ -121,6 +108,7 @@ class JobNearmeFragment : Fragment(), IJobPage {
         ft.commit()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun BookmarkJob(ListNo: Int, JobNo: Long, Index: Int) {
         JobAPI().BookmarkJob(JobNo, !listData[Index].bookmarked, context) {
             if (it != null) {

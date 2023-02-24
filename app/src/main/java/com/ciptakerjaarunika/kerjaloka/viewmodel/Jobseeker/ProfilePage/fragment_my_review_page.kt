@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +25,7 @@ import com.google.firebase.perf.metrics.AddTrace
 import com.google.gson.Gson
 
 class fragment_my_review_page : Fragment() {
-    private lateinit var binding : FragmentMyReviewPageBinding
+    private lateinit var binding: FragmentMyReviewPageBinding
 
     @AddTrace(name = "onReviewPageTrace", enabled = true)
     class ItemCache {
@@ -52,28 +53,26 @@ class fragment_my_review_page : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentMyReviewPageBinding.inflate((layoutInflater))
         val view = binding.root
         return view
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        ProfileAPI().JobseekerGetMyReview(context){
-            if(it != null){
+        ProfileAPI().JobseekerGetMyReview(context) {
+            if (it != null) {
                 binding.spinner.visibility = GONE
                 binding.contentContainer.visibility = VISIBLE
                 binding.reviewBtn.setOnClickListener {
                     seeHistory()
                 }
-
                 binding.ratingValue.rating = it.data.userInfo.rating.toFloat()
-                binding.jumlahReview.text = "${String.format("%.0f",it.data.userInfo.rating.toFloat())} dari 5"
+                binding.jumlahReview.text =
+                    "${String.format("%.0f", it.data.userInfo.rating.toFloat())} dari 5"
                 binding.totalReview.text = "${it.data.reviewList.size} Reviews"
                 val recyclerViewLang = view.findViewById<RecyclerView>(R.id.revList)
                 recyclerViewLang.apply {
@@ -96,8 +95,7 @@ class fragment_my_review_page : Fragment() {
                     sheet.arguments = mBundle
                     activity?.let { it1 ->
                         sheet.show(
-                            it1.supportFragmentManager,
-                            "DemoBottomSheetFragment"
+                            it1.supportFragmentManager, "DemoBottomSheetFragment"
                         )
                     }
                 }
@@ -105,7 +103,7 @@ class fragment_my_review_page : Fragment() {
         }
     }
 
-    private fun seeHistory(){
+    private fun seeHistory() {
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.addToBackStack("")

@@ -24,8 +24,7 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentCompanyListApplicantBinding
     private var loading = 1
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentCompanyListApplicantBinding.inflate(layoutInflater)
         val view = binding.root
@@ -52,15 +51,11 @@ class CompanyListApplicantFragment : Fragment(), OnFragmentClickListener {
             if (it != null) {
                 LoadingDone()
                 listJob = it.data
-                Log.d("own", listJob.toString())
                 rv_applicantJob.apply {
                     layoutManager = LinearLayoutManager(activity)
-                    adapter =
-                        ListApplicantAdapter(
-                            context,
-                            listJob,
-                            this@CompanyListApplicantFragment
-                        )
+                    adapter = ListApplicantAdapter(
+                        context, listJob, this@CompanyListApplicantFragment
+                    )
                 }
             }
         }

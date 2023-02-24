@@ -6,13 +6,11 @@ import com.ciptakerjaarunika.kerjaloka.model.User.JobseekerAdditional
 import com.ciptakerjaarunika.kerjaloka.model.User.User
 
 data class JobseekerProfileResponse(
-    val code : Int,
-    val data : JobseekerProfile,
-    val message : String?
+    val code: Int, val data: JobseekerProfile, val message: String?
 )
 
 data class JobseekerProfile(
-    val additionals : JobseekerAdditional,
+    val additionals: JobseekerAdditional,
     val city: City,
     val country: Country,
     val jobseeker: Jobseeker,
@@ -20,5 +18,5 @@ data class JobseekerProfile(
     val province: Province,
     val religion: Religion,
     val resident: Resident,
-    val users : User
+    val users: User
 )

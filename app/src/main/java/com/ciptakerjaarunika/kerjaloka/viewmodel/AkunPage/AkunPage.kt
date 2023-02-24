@@ -57,8 +57,8 @@ class AkunPage : Fragment() {
         private var isLoading: Boolean = true
     }
 
-    @AddTrace(name="onAkunPageTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onAkunPageTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -157,7 +157,7 @@ class AkunPage : Fragment() {
                                 authorized = it.ownerStatus == true,
                                 notice = it.notice,
                                 rolePrivileges = it.privilege,
-                                email =  email,
+                                email = email,
                                 emailHasVerified = null,
                                 isDeleted = null,
                                 isDiscoverable = false,
@@ -187,12 +187,9 @@ class AkunPage : Fragment() {
         }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+            .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
         mGoogleSignInClient = GoogleSignIn.getClient(
-            context!!,
-            gso
+            context!!, gso
         )
 
         val register = itemView.findViewById<TextView>(R.id.register)
@@ -277,34 +274,31 @@ class AkunPage : Fragment() {
                     SessionManager(context).device_token = token
                 })
 
-                val googleRequest =
-                    GoogleLoginRequest(
-                        account.idToken.toString(),
-                        oneHourBack.toString(),
-                        hash,
-                        deviceToken = SessionManager(context).device_token
-                    )
+                val googleRequest = GoogleLoginRequest(
+                    account.idToken.toString(),
+                    oneHourBack.toString(),
+                    hash,
+                    deviceToken = SessionManager(context).device_token
+                )
                 AUTHGOOGLEAPI().GoogleLogin(context, googleRequest) {
-                    if (it != null)
-                        if (it.code == "252") {
-                            SessionManager(context).access_token = it.userToken
-                            val mainActivity = activity as MainActivity
+                    if (it != null) if (it.code == "252") {
+                        SessionManager(context).access_token = it.userToken
+                        val mainActivity = activity as MainActivity
 
-                            AUTHAPI().CheckLogin(context, mainActivity) {
-                                mainActivity.replaceFragment(AkunPage())
-                            }
-                        } else {
-                            Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
-                            SessionManager(context).user = null
+                        AUTHAPI().CheckLogin(context, mainActivity) {
+                            mainActivity.replaceFragment(AkunPage())
                         }
+                    } else {
+                        Toast.makeText(activity, it.message, Toast.LENGTH_SHORT).show()
+                        SessionManager(context).user = null
+                    }
                 }
             }
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.activity_login, container, false)

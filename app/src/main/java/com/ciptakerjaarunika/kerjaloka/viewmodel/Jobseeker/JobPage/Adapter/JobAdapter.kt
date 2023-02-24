@@ -32,8 +32,7 @@ class JobAdapter(
     private val context: Context,
     private val iJobPage: IJobPage,
     private val searchJob: iSearchJob?
-) :
-    RecyclerView.Adapter<JobAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<JobAdapter.ViewHolder>() {
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -62,8 +61,7 @@ class JobAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_recommendation_job, null)
         view.layoutParams = ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
         )
         return ViewHolder(view)
     }
@@ -134,9 +132,7 @@ class JobAdapter(
         }
         holder.shareableJob.setOnClickListener {
             val text =
-                "${currentItem.company.companyName}\n" +
-                        "sedang membuka lowongan pekerjaan sebagai '${currentItem.jobPosition}'.\n" +
-                        "Lihat informasi selengkapnya ${currentItem.link}"
+                "${currentItem.company.companyName}\n" + "sedang membuka lowongan pekerjaan sebagai '${currentItem.jobPosition}'.\n" + "Lihat informasi selengkapnya ${currentItem.link}"
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TITLE, currentItem.jobPosition)

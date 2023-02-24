@@ -15,10 +15,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.andrefrsousa.superbottomsheet.SuperBottomSheetFragment
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.Review
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.UserRatingAPI
 import com.ciptakerjaarunika.kerjaloka.utils.PathUtil
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.Review
 import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -69,18 +69,6 @@ class AppealReviewModal : SuperBottomSheetFragment() {
                 "text/plain"
             )
             intent.type = "*/*"
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                intent.type = if (mimeTypes.size === 1) mimeTypes[0] else "*/*"
-//                if (mimeTypes.size > 0) {
-//                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-//                }
-//            } else {
-//                var mimeTypesStr = ""
-//                for (mimeType in mimeTypes) {
-//                    mimeTypesStr += "$mimeType|"
-//                }
-//                intent.type = mimeTypesStr.substring(0, mimeTypesStr.length - 1)
-//            }
             intent.addCategory(Intent.CATEGORY_OPENABLE)
             val requestIntent = Intent.createChooser(intent, "Choose a File")
             activityResultLauncher.launch(requestIntent)
@@ -138,7 +126,6 @@ class AppealReviewModal : SuperBottomSheetFragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_appeal_review_modal, container, false)
-
         return view
     }
 

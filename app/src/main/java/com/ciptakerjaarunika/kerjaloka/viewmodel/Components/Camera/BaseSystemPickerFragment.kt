@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -19,7 +18,8 @@ abstract class BaseSystemPickerFragment : Fragment() {
 
     private val attachedSubject = PublishSubject.create<Boolean>()
 
-    protected var publishSubject: PublishSubject<CameraResult> = PublishSubject.create<CameraResult>()
+    protected var publishSubject: PublishSubject<CameraResult> =
+        PublishSubject.create<CameraResult>()
 
     private val canceledSubject: PublishSubject<Int> = PublishSubject.create<Int>()
 
@@ -70,17 +70,23 @@ abstract class BaseSystemPickerFragment : Fragment() {
     }
 
     protected fun checkPermission(): Boolean {
-        return if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
-            }
+        return if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
             false
         } else {
             true
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startRequest()
         }
@@ -89,10 +95,9 @@ abstract class BaseSystemPickerFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
-                GALLERY_REQUEST_CODE, CAMERA_REQUEST_CODE ->
-                    onImagePicked(
-                        getActivityResultUri(data)
-                    )
+                GALLERY_REQUEST_CODE, CAMERA_REQUEST_CODE -> onImagePicked(
+                    getActivityResultUri(data)
+                )
             }
         } else {
             canceledSubject.onNext(requestCode)

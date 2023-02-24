@@ -33,11 +33,10 @@ class ModalDeactivateAccount : SuperBottomSheetFragment() {
         btnSave.setOnClickListener {
             spinner.visibility = View.VISIBLE
             layoutDeactivate.visibility = View.GONE
-            if (pswd.text.toString().length != 0) {
+            if (pswd.text.toString().isNotEmpty()) {
                 UsersAPI().DeactiveAccount(pswd.text.toString(), context) { it ->
-                    Log.d("deactivate", it.toString())
                     if (it != null) {
-                        if(it.code == "210") {
+                        if (it.code == "210") {
                             Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                             spinner.visibility = View.GONE
                             layoutDeactivate.visibility = View.VISIBLE
@@ -60,20 +59,16 @@ class ModalDeactivateAccount : SuperBottomSheetFragment() {
                 spinner.visibility = View.GONE
                 layoutDeactivate.visibility = View.VISIBLE
                 Toast.makeText(
-                    context,
-                    "Mohon masukkan kata sandi",
-                    Toast.LENGTH_SHORT
+                    context, "Mohon masukkan kata sandi", Toast.LENGTH_SHORT
                 ).show()
             }
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_modal_deactivate_account, container, false)
     }
 

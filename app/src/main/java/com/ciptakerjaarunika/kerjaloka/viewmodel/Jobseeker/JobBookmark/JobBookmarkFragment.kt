@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobBookmark
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,8 +51,7 @@ class JobBookmarkFragment : Fragment(), IJobPage {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentJobBookmarkBinding.inflate(layoutInflater)
         val view = binding.root
@@ -91,6 +91,7 @@ class JobBookmarkFragment : Fragment(), IJobPage {
         ft.commit()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun BookmarkJob(ListNo: Int, JobNo: Long, Index: Int) {
         JobAPI().BookmarkJob(JobNo, !listData[Index].bookmarked, context) {
             if (it != null) {

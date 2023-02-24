@@ -26,8 +26,7 @@ class CVbanks : Fragment(), iCvBankInterface {
     private var loading = 1
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCVbanksBinding.inflate(layoutInflater)
         val view = binding.root
@@ -47,7 +46,6 @@ class CVbanks : Fragment(), iCvBankInterface {
                 loading -= 1
                 LoadingDone()
                 listJob = it.data
-                Log.d("list", listJob.toString())
                 rvListApplicant.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = ApplicantCVBankAdapter(context, listJob, this@CVbanks)
@@ -68,10 +66,14 @@ class CVbanks : Fragment(), iCvBankInterface {
         CompanyListApplicantAPI().GetListApplicantPost(context, jobNo.toString()) {
             if (it != null) {
                 list = it.data
-                var temp  = list!!.find { data -> data.applicant.jobseekerNo == jobseekerNo }
-                var applicantObj : applicantModel = temp!!
+                var temp = list!!.find { data -> data.applicant.jobseekerNo == jobseekerNo }
+                var applicantObj: applicantModel = temp!!
                 val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
-                ft.replace(id, ApplicantDetailFragment(applicantObj, null, this@CVbanks), "CompanyApplicant")
+                ft.replace(
+                    id,
+                    ApplicantDetailFragment(applicantObj, null, this@CVbanks),
+                    "CompanyApplicant"
+                )
                 ft.addToBackStack("CompanyApplicant")
                 ft.commit()
             }

@@ -1,9 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.model.Profile
 
-import com.ciptakerjaarunika.kerjaloka.model.Data.*
-import com.ciptakerjaarunika.kerjaloka.model.User.Jobseeker
-import com.ciptakerjaarunika.kerjaloka.model.User.JobseekerAdditional
-import com.ciptakerjaarunika.kerjaloka.model.User.User
 import java.math.BigDecimal
 
 data class JobseekerExperiencesResponse(

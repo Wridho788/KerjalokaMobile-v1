@@ -8,9 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Documents
 
-class DocumentAdapter(private val docList: List<Documents>):
-    RecyclerView.Adapter<DocumentAdapter.exp>()
-{
+class DocumentAdapter(private val docList: List<Documents>) :
+    RecyclerView.Adapter<DocumentAdapter.exp>() {
 
     inner class exp(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -30,7 +29,7 @@ class DocumentAdapter(private val docList: List<Documents>):
 
     override fun onBindViewHolder(holder: exp, position: Int) {
         val currentItem = docList[position]
-        holder.documentName?.text= currentItem.documentName
+        holder.documentName?.text = currentItem.documentName
     }
 
     override fun getItemCount(): Int {

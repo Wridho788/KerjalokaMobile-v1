@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.JobSearch.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +11,19 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.LocationFilter
 
 class FilterLocationAdapter(private var dataSet: List<LocationFilter>, val context: Context) :
-    RecyclerView.Adapter<FilterLocationAdapter.ViewHolder?>(){
-        inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-            var filterText: TextView
-            var checked: CheckBox
+    RecyclerView.Adapter<FilterLocationAdapter.ViewHolder?>() {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var filterText: TextView
+        var checked: CheckBox
 
-            init {
-                filterText = itemView.findViewById(R.id.filter_txt)
-                checked = itemView.findViewById(R.id.checked)
-            }
+        init {
+            filterText = itemView.findViewById(R.id.filter_txt)
+            checked = itemView.findViewById(R.id.checked)
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = View.inflate(parent.context, R.layout.item_filter,null)
+        val view = View.inflate(parent.context, R.layout.item_filter, null)
         return ViewHolder(view)
     }
 
@@ -30,11 +31,12 @@ class FilterLocationAdapter(private var dataSet: List<LocationFilter>, val conte
         return dataSet.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataSet[position]
         holder.filterText.text = "${currentItem.city}, ${currentItem.province}"
         holder.checked.isChecked = currentItem.checked == true
-        holder.checked.setOnClickListener{
+        holder.checked.setOnClickListener {
             currentItem.checked = holder.checked.isChecked
             dataSet[position].checked = holder.checked.isChecked
         }

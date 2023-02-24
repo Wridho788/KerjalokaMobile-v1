@@ -1,10 +1,10 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Camera
+
 import android.app.Activity
 import android.content.Intent
+import com.ciptakerjaarunika.kerjaloka.entity.CameraResult
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerConfiguration
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerView
-import com.ciptakerjaarunika.kerjaloka.entity.CameraResult
-
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
@@ -22,9 +22,11 @@ class ActivityPickerViewController private constructor() : ICustomPickerView {
         publishSubject = PublishSubject.create()
     }
 
-    override fun display(fragmentActivity: androidx.fragment.app.FragmentActivity,
-                         viewContainer: Int,
-                         configuration: ICustomPickerConfiguration?) {
+    override fun display(
+        fragmentActivity: androidx.fragment.app.FragmentActivity,
+        viewContainer: Int,
+        configuration: ICustomPickerConfiguration?
+    ) {
         resetSubject()
         fragmentActivity.startActivity(Intent(fragmentActivity, activityClass))
     }

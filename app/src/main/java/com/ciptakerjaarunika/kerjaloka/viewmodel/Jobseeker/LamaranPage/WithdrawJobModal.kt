@@ -14,21 +14,23 @@ import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.api.JobAPI
 import com.google.android.material.button.MaterialButton
 
-
-class WithdrawJob(val JobNo : Long, val fragmentId : Int,val GotoFragment : Fragment): SuperBottomSheetFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+class WithdrawJob(val JobNo: Long, val fragmentId: Int, val GotoFragment: Fragment) :
+    SuperBottomSheetFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.modal_withdraw_layout, container, false)
     }
 
-//    override fun getCornerRadius() =
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.findViewById<MaterialButton>(R.id.confirmWithdraw).setOnClickListener{
-            JobAPI().WithdrawJob(context, JobNo){
+        view.findViewById<MaterialButton>(R.id.confirmWithdraw).setOnClickListener {
+            JobAPI().WithdrawJob(context, JobNo) {
                 this.dismiss()
-                if(it?.code == 210){
+                if (it?.code == 210) {
                     val ft: FragmentTransaction = parentFragmentManager.beginTransaction()
                     ft.replace(fragmentId, GotoFragment, "LamaranPage")
                     ft.commit()
@@ -36,8 +38,6 @@ class WithdrawJob(val JobNo : Long, val fragmentId : Int,val GotoFragment : Frag
             }
         }
     }
-
-
     override fun isSheetAlwaysExpanded(): Boolean {
         return true
     }
@@ -45,10 +45,8 @@ class WithdrawJob(val JobNo : Long, val fragmentId : Int,val GotoFragment : Frag
     @SuppressLint("Range")
     override fun getExpandedHeight(): Int {
         val displayMetrics = DisplayMetrics()
-        (context as Activity?)!!.windowManager
-            .defaultDisplay
-            .getMetrics(displayMetrics)
-        return (displayMetrics.heightPixels * 0.8).toInt();
+        (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        return (displayMetrics.heightPixels * 0.8).toInt()
     }
 
 }

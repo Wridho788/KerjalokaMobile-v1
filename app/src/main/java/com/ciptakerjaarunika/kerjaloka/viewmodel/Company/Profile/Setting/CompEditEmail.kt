@@ -10,8 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.api.company_profile_api
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.otpVerification
 import com.google.android.material.button.MaterialButton
 
@@ -23,7 +23,6 @@ class CompEditEmail(val iRefreshData: iRefreshData, var email: String) : Fragmen
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_comp_edit_email, container, false)
-
         val newEmail = view.findViewById<EditText>(R.id.comp_EditusrEmail)
         val btnSave = view.findViewById<MaterialButton>(R.id.btnSaveEmail)
         val txtEmail = view.findViewById<TextView>(R.id.comp_email)

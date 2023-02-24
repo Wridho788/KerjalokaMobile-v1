@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Screens.CompanyCompareJobseeker.bottomsheet.Model.AddJobseekerModel
 
-class AddJobseekerAdapter(private val addJobseekerModel: List<AddJobseekerModel>) : RecyclerView.Adapter<AddJobseekerAdapter.ViewHolder>() {
+class AddJobseekerAdapter(private val addJobseekerModel: List<AddJobseekerModel>) :
+    RecyclerView.Adapter<AddJobseekerAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var nameApplicant: TextView
         var location: TextView
@@ -15,6 +16,7 @@ class AddJobseekerAdapter(private val addJobseekerModel: List<AddJobseekerModel>
         var jobLocation: TextView
         var pendidikan: TextView
         var instansi: TextView
+
         init {
             nameApplicant = itemView.findViewById(R.id.name_applicant)
             location = itemView.findViewById(R.id.location_text)
@@ -24,7 +26,6 @@ class AddJobseekerAdapter(private val addJobseekerModel: List<AddJobseekerModel>
             instansi = itemView.findViewById(R.id.instansi)
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.item_card_pelamar_list, null)
         return ViewHolder(view)

@@ -63,9 +63,7 @@ data class preferenceJobType(
 )
 
 data class qualified(
-    val shortQuestionNo: Long,
-    val mustHave: Boolean,
-    val Qualified: Boolean
+    val shortQuestionNo: Long, val mustHave: Boolean, val Qualified: Boolean
 )
 
 data class jobApplicantHistory(
@@ -77,8 +75,7 @@ data class jobApplicantHistory(
 )
 
 data class papiKostickResult_applicant(
-    val PAPIKostickResult: PAPIKostickResult,
-    val createdOn: String
+    val PAPIKostickResult: PAPIKostickResult, val createdOn: String
 )
 
 data class documents(
@@ -102,7 +99,7 @@ data class PAPIKostickResult(
     val needToBelongToGroups: Int = 5,
     val socialExtension: Int = 7,
     val needToBeNoticed: Int = 8,
-    val organizedType: Int= 9 ,
+    val organizedType: Int = 9,
     val interestInWorkingWithDetails: Int = 8,
     val theoreticalType: Int = 9,
     val needForChange: Int = 4,

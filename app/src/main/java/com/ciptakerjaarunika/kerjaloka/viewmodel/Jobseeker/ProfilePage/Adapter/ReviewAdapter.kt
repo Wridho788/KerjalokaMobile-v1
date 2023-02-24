@@ -10,19 +10,17 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyReview.Model.r
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
-class ReviewAdapter (private val reviewList: List<reviewList>):
+class ReviewAdapter(private val reviewList: List<reviewList>) :
     RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
-//        var reviewTime: TextView
         var Desc: TextView
-        var proChip : ChipGroup
-        var conChip : ChipGroup
-        var ratBar : RatingBar
+        var proChip: ChipGroup
+        var conChip: ChipGroup
+        var ratBar: RatingBar
 
         init {
             creator = itemView.findViewById(R.id.nama_perusahaan)
-//            reviewTime = itemView.findViewById(R.id.record_page_date)
             Desc = itemView.findViewById(R.id.reviewDesc)
             proChip = itemView.findViewById(R.id.chipGroup_kelebihan)
             conChip = itemView.findViewById(R.id.chipGroup_kekurangan)
@@ -42,7 +40,7 @@ class ReviewAdapter (private val reviewList: List<reviewList>):
         holder.Desc.text = currentItem.comment
         holder.ratBar.rating = currentItem.rating.toFloat()
 
-        if (currentItem.conRating.isNotEmpty()){
+        if (currentItem.conRating.isNotEmpty()) {
             currentItem.conRating.forEach {
                 val chip = Chip(holder.conChip.context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
@@ -59,7 +57,7 @@ class ReviewAdapter (private val reviewList: List<reviewList>):
                 }
             }
         }
-        if (currentItem.proRating.isNotEmpty()){
+        if (currentItem.proRating.isNotEmpty()) {
             currentItem.proRating.forEach {
                 val chip = Chip(holder.proChip.context)
                 chip.setChipBackgroundColorResource(R.color.danger_100)
@@ -80,7 +78,7 @@ class ReviewAdapter (private val reviewList: List<reviewList>):
     }
 
     override fun getItemCount(): Int {
-        return reviewList?.size ?:0
+        return reviewList.size
     }
 
 }

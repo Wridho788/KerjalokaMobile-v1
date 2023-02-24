@@ -15,13 +15,17 @@ import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Adapter.E
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.ManageCV.iManageExp
 
 
-class EditExpTypeJob(val value: Int?, val data : List<JobTypeFilter>,val iManageExp: iManageExp): SuperBottomSheetFragment(),
-    iCloseModal {
+class EditExpTypeJob(val value: Int?, val data: List<JobTypeFilter>, val iManageExp: iManageExp) :
+    SuperBottomSheetFragment(), iCloseModal {
 
-    private var layoutManager: RecyclerView.LayoutManager? =null
+    private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<EditExp_TypeJob.ChooseType>? = null
     private lateinit var editGenderAdapter: EditExp_TypeJob
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = View.inflate(context, R.layout.global_modal_edit, null)
         val title = view.findViewById<TextView>(R.id.judul_bottom_sheet)
@@ -30,28 +34,22 @@ class EditExpTypeJob(val value: Int?, val data : List<JobTypeFilter>,val iManage
         return view
     }
 
-//    override fun getCornerRadius() = requireContext().resources.getDimension(R.dimen.demo_sheet_rounded_corner)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycleEdit)
 
-                recyclerView.apply {
-                    layoutManager = LinearLayoutManager(activity)
-                    adapter = EditExp_TypeJob(value,
-                        data.map { item ->
-                            JobTypeFilter(
-                                item.jobTypeName, item.jobTypeNo, value == item.jobTypeNo,
-                            )
-                        },
-                        iManageExp,
-                        this@EditExpTypeJob
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = EditExp_TypeJob(
+                value, data.map { item ->
+                    JobTypeFilter(
+                        item.jobTypeName, item.jobTypeNo, value == item.jobTypeNo,
                     )
-                }
-
+                }, iManageExp, this@EditExpTypeJob
+            )
+        }
     }
-
 
     override fun isSheetAlwaysExpanded(): Boolean {
         return true

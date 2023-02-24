@@ -20,10 +20,10 @@ class Notification : AppCompatActivity() {
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var itemSectionDecoration: CompanyItemSectionDecoration
     private lateinit var binding: ActivityNotificationBinding
-    private var notificationsList : List<CompanyNotificationModel> = listOf()
+    private var notificationsList: List<CompanyNotificationModel> = listOf()
 
-    @AddTrace(name="onNotificationPageTrace", enabled = true)
-    class ItemCache{
+    @AddTrace(name = "onNotificationPageTrace", enabled = true)
+    class ItemCache {
         fun fetch(name: String): Item? {
             return null
         }
@@ -52,7 +52,7 @@ class Notification : AppCompatActivity() {
         (thisActivity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (thisActivity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        binding.btnBackJob.setOnClickListener{
+        binding.btnBackJob.setOnClickListener {
             finish()
         }
         initList()
@@ -61,29 +61,21 @@ class Notification : AppCompatActivity() {
 
 
     private fun initList() {
-//        scrollNotif.setOnRefreshListener {
-//            scrollNotif.isRefreshing=false
-//            reload()
-//        }
-
         layoutManager = LinearLayoutManager(this)
         adapter = NotifAdapter {
             loadMore()
         }
-
         itemSectionDecoration = CompanyItemSectionDecoration(this) {
             adapter.list
         }
-
         binding.notifContainer.addItemDecoration(itemSectionDecoration)
-
         binding.notifContainer.layoutManager = layoutManager
         binding.notifContainer.adapter = adapter
     }
 
     private fun reload() {
         UsersAPI().GetNotification(this) { it ->
-            if(it?.data != null) {
+            if (it?.data != null) {
                 binding.spinner.visibility = GONE
                 binding.notifContainer.visibility = VISIBLE
                 val list = it.data.sortedByDescending { it.createdOn }

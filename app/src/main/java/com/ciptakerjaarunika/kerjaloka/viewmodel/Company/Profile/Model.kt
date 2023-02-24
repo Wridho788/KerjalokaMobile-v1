@@ -1,14 +1,11 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile
 
 data class CompanyProfileResponse(
-    val code : Int,
-    val data : data,
-    val message : String?
+    val code: Int, val data: data, val message: String?
 )
 
 data class user_response(
-    val code: Int,
-    val data: user
+    val code: Int, val data: user
 )
 
 data class user(
@@ -80,31 +77,23 @@ data class data(
 )
 
 data class city(
-    val cityName: String = "Kabupaten Merauke",
-    val cityNo: Int = 312,
-    val cityProvinceNo: Int = 11
+    val cityName: String = "Kabupaten Merauke", val cityNo: Int = 312, val cityProvinceNo: Int = 11
 )
 
 data class country(
-    val countryName: String = "Indonesia",
-    val countryNo: Int = 192
+    val countryName: String = "Indonesia", val countryNo: Int = 192
 )
 
 data class field(
-    val fieldName: String = "Arts",
-    val fieldNo: Int = 4,
-    val fieldParentNo: Long? = null
+    val fieldName: String = "Arts", val fieldNo: Int = 4, val fieldParentNo: Long? = null
 )
 
 data class province(
-    val provinceCountryNo: Int,
-    val provinceName: String,
-    val provinceNo: Int
+    val provinceCountryNo: Int, val provinceName: String, val provinceNo: Int
 )
 
 data class size(
-    val sizeName: String = "500+",
-    val sizeNo: Int = 6
+    val sizeName: String = "500+", val sizeNo: Int = 6
 )
 
 data class review(
@@ -113,7 +102,7 @@ data class review(
     val canAppeal: Boolean = true,
     val comment: String = "asdasd",
     val conRating: ArrayList<conRat>,
-    val ownerInfo:String,
+    val ownerInfo: String,
     val proRating: ArrayList<proRat>,
     val raterPhoto: String = "202110271410221246.jpg",
     val rating: Int = 4,
@@ -134,23 +123,16 @@ data class proRat(
     val con: String = "Disiplin",
 )
 
-data class ratingSended_response (
-    val code: Int,
-    val errorCode: Int,
-    val message: String,
-    val data: ratingData
+data class ratingSended_response(
+    val code: Int, val errorCode: Int, val message: String, val data: ratingData
 )
 
-data class ratingData (
-    val userInfo: userInfo,
-    val reviewList: List<myReview>
+data class ratingData(
+    val userInfo: userInfo, val reviewList: List<myReview>
 )
 
 data class userInfo(
-    val rating: Int,
-    val email: String,
-    val name: String,
-    val ownerPhoto: String?
+    val rating: Int, val email: String, val name: String, val ownerPhoto: String?
 )
 
 data class myReview(
@@ -173,7 +155,7 @@ data class ChangeUsernameRequest(
 )
 
 data class DeactivatedAccount(
-    val password : String
+    val password: String
 )
 
 data class CheckPhoneResponse(
@@ -189,8 +171,7 @@ data class ChangeEmailRequest(
 )
 
 data class ChangePasswordRequest(
-    val password: String,
-    val newPassword: String
+    val password: String, val newPassword: String
 )
 
 

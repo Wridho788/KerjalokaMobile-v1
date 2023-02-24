@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.iChooseMajor
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.model.Data.Title
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.iChooseMajor
 
 class MajorAdapter(
     private var dataset: List<Title>?,
@@ -37,7 +37,7 @@ class MajorAdapter(
         holder.txtJobType.text = item.titleName
         holder.checkBox.setOnClickListener {
             dataset!![position].checked = holder.checkBox.isChecked
-            val titles = dataset!!.filter{ item -> item.checked == true }
+            val titles = dataset!!.filter { item -> item.checked == true }
 //            iChooseMajor.close(titles)
             iChooseMajor.close()
         }

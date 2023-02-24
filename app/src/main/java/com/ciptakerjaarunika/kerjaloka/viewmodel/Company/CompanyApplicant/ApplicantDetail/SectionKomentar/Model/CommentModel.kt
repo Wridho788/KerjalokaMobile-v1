@@ -9,7 +9,7 @@ data class CommentResponse(
 
 data class CommentModel(
     val applicantCommentNo: Long,
-    val jobseekerNo:Long,
+    val jobseekerNo: Long,
     val companyNo: Long,
     val commentByUserNo: Long,
     val comment: String,
@@ -17,6 +17,6 @@ data class CommentModel(
 )
 
 data class send_comment(
-    val jobseekerNo:Long,
+    val jobseekerNo: Long,
     val comment: String,
 )

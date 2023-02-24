@@ -1,8 +1,5 @@
 package com.ciptakerjaarunika.kerjaloka.model.Interview
 
-import com.ciptakerjaarunika.kerjaloka.model.Job.jobHomeListData
-import java.util.*
-
 data class conmpany_interview_list_api(
     val code : Int,
     val errorCode : Int,

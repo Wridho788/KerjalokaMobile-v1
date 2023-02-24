@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -11,13 +12,13 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ciptakerjaarunika.kerjaloka.R
+import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
+import com.ciptakerjaarunika.kerjaloka.databinding.FragmentReviewHistoryBinding
+import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Adapter.CompReviewHistoryAdapter
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.Listener.ShowModal
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.ReviewSaya.Model.DataX
-import com.ciptakerjaarunika.kerjaloka.R
-import com.ciptakerjaarunika.kerjaloka.`interface`.iRefreshData
-import com.ciptakerjaarunika.kerjaloka.api.UsersAPI
-import com.ciptakerjaarunika.kerjaloka.databinding.FragmentReviewHistoryBinding
 import com.google.gson.Gson
 
 class ReviewHistory : Fragment(), iRefreshData {
@@ -27,7 +28,7 @@ class ReviewHistory : Fragment(), iRefreshData {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentReviewHistoryBinding.inflate(layoutInflater)
         val view = binding.root
         val btn_back = view.findViewById<ImageButton>(R.id.btn_back)
@@ -41,7 +42,6 @@ class ReviewHistory : Fragment(), iRefreshData {
                     refreshData()
 
                 }
-
             }
         }
 
@@ -52,6 +52,7 @@ class ReviewHistory : Fragment(), iRefreshData {
         return view
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun refreshData() {
         UsersAPI().CompSendedReview(SortByNewest = false, context) {
             binding.spinner.visibility = GONE
@@ -93,22 +94,11 @@ class ReviewHistory : Fragment(), iRefreshData {
             }
 
             override fun showDelete(review: DataX) {
-//                val sheet = DeleteReviewModal()
-//                val mBundle = Bundle()
-//                val reviewData = Gson().toJson(review)
-//
-//                mBundle.putString(DeleteReviewModal.EXTRA_DELETE_REVIEW, reviewData)
-//                sheet.arguments = mBundle
-//                activity?.let { it1 ->
-//                    sheet.show(
-//                        it1.supportFragmentManager,
-//                        "DemoBottomSheetFragment"
-//                    )
-//                }
                 AlertDialog.Builder(context)
                     .setMessage("Yakin ingin menghapus review pada '${review.userFullName}'?")
                     .setTitle("Konfirmasi menghapus")
                     .setPositiveButton("Ya", object : DialogInterface.OnClickListener {
+                        @SuppressLint("NotifyDataSetChanged")
                         override fun onClick(dialog: DialogInterface, which: Int) {
                             UsersAPI().DeleteSendedReview(review.userRatingNo, context) {
                                 dialog.dismiss()
@@ -130,11 +120,8 @@ class ReviewHistory : Fragment(), iRefreshData {
                             }
                         }
                     })
-                    .setNegativeButton("Batal", object : DialogInterface.OnClickListener {
-                        override fun onClick(dialog: DialogInterface, which: Int) {
-                            dialog.dismiss()
-                        }
-                    }).create().show()
+                    .setNegativeButton("Batal"
+                    ) { dialog, which -> dialog.dismiss() }.create().show()
             }
         })
     }

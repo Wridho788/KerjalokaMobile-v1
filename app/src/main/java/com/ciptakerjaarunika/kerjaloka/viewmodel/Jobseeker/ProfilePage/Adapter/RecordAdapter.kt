@@ -11,13 +11,16 @@ import com.ciptakerjaarunika.kerjaloka.model.Profile.JobseekerRecord
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.ProfilePage.Record.AppealRecordModal
 import com.google.android.material.button.MaterialButton
 
-class RecordAdapter (private val recordList: List<JobseekerRecord>?,val activity: FragmentActivity):
-    RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
+class RecordAdapter(
+    private val recordList: List<JobseekerRecord>?,
+    val activity: FragmentActivity
+) : RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var creator: TextView
         var recordTime: TextView
         var Desc: TextView
-        var appealBtn : MaterialButton
+        var appealBtn: MaterialButton
+
         init {
             creator = itemView.findViewById(R.id.record_page_by)
             recordTime = itemView.findViewById(R.id.record_page_date)
@@ -28,7 +31,10 @@ class RecordAdapter (private val recordList: List<JobseekerRecord>?,val activity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = View.inflate(parent.context, R.layout.section_my_record_page, null)
-        view.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         return ViewHolder(view)
     }
 
@@ -45,7 +51,7 @@ class RecordAdapter (private val recordList: List<JobseekerRecord>?,val activity
     }
 
     override fun getItemCount(): Int {
-        return recordList?.size ?:0
+        return recordList?.size ?: 0
     }
 
 }

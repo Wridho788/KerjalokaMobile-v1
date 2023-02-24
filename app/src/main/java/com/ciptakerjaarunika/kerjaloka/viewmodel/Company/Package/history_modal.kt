@@ -23,7 +23,7 @@ class history_modal : SuperBottomSheetFragment() {
         if (arguments != null) {
             val descFromBundle = arguments?.getString(EXTRA_HISTORY_PACKAGE)
             val type = object : TypeToken<List<pckHistory>>() {}.type
-            history = Gson().fromJson(descFromBundle,  type)
+            history = Gson().fromJson(descFromBundle, type)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recycleHistoryPack)
             layoutManager = LinearLayoutManager(activity)
             recyclerView.layoutManager = layoutManager
@@ -33,8 +33,7 @@ class history_modal : SuperBottomSheetFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_history_modal, container, false)

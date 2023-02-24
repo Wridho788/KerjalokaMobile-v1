@@ -17,7 +17,7 @@ import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
 
 class fragment_my_record_page : Fragment() {
-    private lateinit var binding : FragmentMyRecordPageBinding
+    private lateinit var binding: FragmentMyRecordPageBinding
 
     @AddTrace(name = "onRecordPageTrace", enabled = true)
     class ItemCache {
@@ -45,17 +45,16 @@ class fragment_my_record_page : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMyRecordPageBinding.inflate(layoutInflater)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        ProfileAPI().JobseekerGetRecord(context){ res->
-            if(res != null) {
+        ProfileAPI().JobseekerGetRecord(context) { res ->
+            if (res != null) {
                 binding.spinner.visibility = GONE
                 binding.contentContainer.visibility = VISIBLE
                 if (res.data.isEmpty()) {

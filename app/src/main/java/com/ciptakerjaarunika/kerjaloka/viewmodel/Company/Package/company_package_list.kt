@@ -21,8 +21,7 @@ class company_package_list : Fragment() {
     private var adapter: RecyclerView.Adapter<myPackageAdapter.myPackage>? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_company_package_list, container, false)
         val back_button = view.findViewById<ImageView>(R.id.btn_back)
@@ -33,7 +32,7 @@ class company_package_list : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
 
         company_profile_api().CompanyGetPackageData(context) {
-             if (it != null) {
+            if (it != null) {
                 val recyclerView = view.findViewById<RecyclerView>(R.id.myPackageRecycler)
                 layoutManager = LinearLayoutManager(activity)
                 recyclerView.layoutManager = layoutManager
@@ -41,8 +40,6 @@ class company_package_list : Fragment() {
                 recyclerView.adapter = adapter
             }
         }
-
-
         return view
     }
 
@@ -50,9 +47,7 @@ class company_package_list : Fragment() {
         return myPackageAdapter(requireContext(), list, object : ShowModalHistory {
             override fun showDetail(pack: Data) {
                 company_profile_api().HistoryPackage(
-                    pack.packageX.packageNo,
-                    pack.userPackageNo,
-                    context
+                    pack.packageX.packageNo, pack.userPackageNo, context
                 ) {
                     val sheet = history_modal()
                     val mBundle = Bundle()
@@ -62,13 +57,10 @@ class company_package_list : Fragment() {
 
                     activity?.let { it1 ->
                         sheet.show(
-                            it1.supportFragmentManager,
-                            "DemoBottomSheetFragment"
+                            it1.supportFragmentManager, "DemoBottomSheetFragment"
                         )
                     }
                 }
-
-
             }
         })
     }

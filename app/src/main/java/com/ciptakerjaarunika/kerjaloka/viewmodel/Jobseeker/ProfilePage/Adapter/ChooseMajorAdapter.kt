@@ -7,23 +7,23 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.iChooseMajor
 import com.ciptakerjaarunika.kerjaloka.R
 import com.ciptakerjaarunika.kerjaloka.`interface`.iUpdateMajor
 import com.ciptakerjaarunika.kerjaloka.model.Data.Major
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.Bottomsheet.iChooseMajor
 
-class ChooseMajorAdapter(val value : Int?,
-                         private var dataset: List<Major>,
-                         val iChooseMajor: iChooseMajor,
-                         val iUpdateMajor: iUpdateMajor
-):
-    RecyclerView.Adapter<ChooseMajorAdapter.chooseMajor>()
-{
+class ChooseMajorAdapter(
+    val value: Int?,
+    private var dataset: List<Major>,
+    val iChooseMajor: iChooseMajor,
+    val iUpdateMajor: iUpdateMajor
+) :
+    RecyclerView.Adapter<ChooseMajorAdapter.chooseMajor>() {
 
     inner class chooseMajor(view: View) : RecyclerView.ViewHolder(view) {
 
         var item: TextView
-        var container : LinearLayout
+        var container: LinearLayout
 
         init {
             item = view.findViewById(R.id.item_modal)
@@ -42,9 +42,9 @@ class ChooseMajorAdapter(val value : Int?,
 
     override fun onBindViewHolder(holder: chooseMajor, position: Int) {
         val currentItem = dataset[position]
-        holder.item.text= currentItem.majorName
+        holder.item.text = currentItem.majorName
 
-        if(currentItem.majorNo == value){
+        if (currentItem.majorNo == value) {
             holder.container.setBackgroundColor(Color.parseColor("#FFDEDE"))
             holder.container.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT

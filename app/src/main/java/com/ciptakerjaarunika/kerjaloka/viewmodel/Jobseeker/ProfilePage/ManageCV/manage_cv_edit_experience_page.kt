@@ -82,7 +82,6 @@ class manage_cv_edit_experience_page(
 
         var timeNow =
             DateUtils().GetDateValueWithFormat(LocalDateTime.now().toString(), "yyyy-MM-dd HH:mm")
-//        Log.d("timeNow", timeNow.toString())
         binding.masukkanJlhGaji.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
@@ -214,10 +213,6 @@ class manage_cv_edit_experience_page(
                 showError("Tanggal berakhir harus lebih besar dari tanggal mulai")
             } else if (beginYear != null && beginYear.toString() >= timeNow) {
                 showError("Tanggal tidak boleh melebihi tanggal hari ini")
-//                Log.d(
-//                    "beginyear ${beginYear != null && beginYear.toString() >= timeNow}",
-//                    beginYear.toString()
-//                )
             } else if (binding.checkStillWorking.isChecked) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     binding.pilihBulanBerakhir.setAllowClickWhenDisabled(true)
@@ -259,8 +254,7 @@ class manage_cv_edit_experience_page(
                 }
             } else if (endedMonth != null && endedMonth.toString() >= timeNow) {
                 showError("Tanggal tidak boleh melebihi tanggal hari ini")
-            }
-            else {
+            } else {
                 var endedAt = "${endedYear}-${String.format("%02d", endedMonth)}-01T00:00:00"
                 var beginAt = "${beginYear}-${String.format("%02d", beginMonth)}-01T00:00:00"
 
@@ -296,12 +290,6 @@ class manage_cv_edit_experience_page(
             }
         }
     }
-
-//    private fun formatRupiah(number: Double): String? {
-//        val localeID = Locale("in", "ID")
-//        val formatRupiah = NumberFormat.getCurrencyInstance(localeID)
-//        return formatRupiah.format(number)
-//    }
 
     fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

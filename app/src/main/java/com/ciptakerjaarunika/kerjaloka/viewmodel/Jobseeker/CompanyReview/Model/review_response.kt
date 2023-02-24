@@ -3,15 +3,11 @@ package com.ciptakerjaarunika.kerjaloka.viewmodel.Jobseeker.CompanyReview.Model
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Profile.review
 
 data class review_response(
-    val code: Int,
-    val errorCode: Int?,
-    val message: String?,
-    val data: company_reviews
+    val code: Int, val errorCode: Int?, val message: String?, val data: company_reviews
 )
 
 data class company_reviews(
-    val userInfo: userInfo,
-    val reviewList: List<reviewList>
+    val userInfo: userInfo, val reviewList: List<reviewList>
 )
 
 data class userInfo(
@@ -35,29 +31,19 @@ data class reviewList(
 )
 
 data class send_review_response(
-    val code: Int,
-    val errorCode: Int?,
-    val message: String?,
-    val data: send
+    val code: Int, val errorCode: Int?, val message: String?, val data: send
 )
 
 data class my_review_response(
-    val code: Int,
-    val errorCode: Int,
-    val message: String,
-    val data: my_review
+    val code: Int, val errorCode: Int, val message: String, val data: my_review
 )
 
 data class my_review(
-    val userInfo: userInfo,
-    val reviewList: List<review>
+    val userInfo: userInfo, val reviewList: List<review>
 )
 
 data class delete_review_response(
-    val code: Int,
-    val errorCode: Int?,
-    val message: String?,
-    val data: delete?
+    val code: Int, val errorCode: Int?, val message: String?, val data: delete?
 )
 
 data class delete(
@@ -79,8 +65,7 @@ data class send_Request(
 )
 
 data class proRating(
-    val categoryName: String,
-    val categoryNo: Long
+    val categoryName: String, val categoryNo: Long
 )
 
 data class proRatingList(

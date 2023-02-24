@@ -13,11 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ciptakerjaarunika.kerjaloka.viewmodel.NotificationPage.Model.CompanyNotificationModel
 import java.time.LocalDateTime
 
-
 class CompanyItemSectionDecoration(
     private val context: Context,
     private val getItemList: () -> MutableList<CompanyNotificationModel>
-): RecyclerView.ItemDecoration() {
+) : RecyclerView.ItemDecoration() {
 
     private val dividerHeight = dipToPx(context, 0.8f)
     private val dividerPaint = Paint(Paint.ANTI_ALIAS_FLAG).also {
@@ -28,64 +27,58 @@ class CompanyItemSectionDecoration(
     }
 
     private val sectionItemHeight: Int by lazy {
-        dipToPx(context,50f)
+        dipToPx(context, 50f)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
+        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
         val layoutManager = parent.layoutManager
 
-        if(layoutManager !is LinearLayoutManager){
+        if (layoutManager !is LinearLayoutManager) {
             return
         }
 
-        if(LinearLayoutManager.VERTICAL != layoutManager.orientation){
+        if (LinearLayoutManager.VERTICAL != layoutManager.orientation) {
             return
         }
         val list = getItemList()
-        if(list.isEmpty()){
+        if (list.isEmpty()) {
             return
         }
 
         val position = parent.getChildAdapterPosition(view)
-        if(0 == position){
+        if (0 == position) {
             outRect.top = sectionItemHeight
             return
         }
 
         val currentModel = getItemList()[position]
-        val previousModel = getItemList()[position-1]
+        val previousModel = getItemList()[position - 1]
         val dt1 = LocalDateTime.parse(currentModel.createdOn)
         val dt2 = LocalDateTime.parse(previousModel.createdOn)
 
-        if(dt1.dayOfYear == LocalDateTime.now().dayOfYear){
+        if (dt1.dayOfYear == LocalDateTime.now().dayOfYear) {
             outRect.top = dividerHeight
-        }
-        else if(LocalDateTime.now().dayOfYear - dt1.dayOfYear <= 7){
-            if(dt2.dayOfYear == LocalDateTime.now().dayOfYear){
+        } else if (LocalDateTime.now().dayOfYear - dt1.dayOfYear <= 7) {
+            if (dt2.dayOfYear == LocalDateTime.now().dayOfYear) {
                 outRect.top = sectionItemHeight
-            }else{
+            } else {
                 outRect.top = dividerHeight
             }
-        }
-        else if(LocalDateTime.now().month == dt1.month){
-            if(LocalDateTime.now().dayOfYear - dt2.dayOfYear <= 7){
+        } else if (LocalDateTime.now().month == dt1.month) {
+            if (LocalDateTime.now().dayOfYear - dt2.dayOfYear <= 7) {
                 outRect.top = sectionItemHeight
-            }else{
+            } else {
                 outRect.top = dividerHeight
             }
-        }
-        else{
-            if(LocalDateTime.now().month == dt2.month){
+        } else {
+            if (LocalDateTime.now().month == dt2.month) {
                 outRect.top = sectionItemHeight
-            }else{
+            } else {
                 outRect.top = dividerHeight
             }
         }
@@ -97,34 +90,31 @@ class CompanyItemSectionDecoration(
         super.onDraw(c, parent, state)
         val childCount = parent.childCount
 
-        for (i in 0 until childCount){
-            val childView: View=parent.getChildAt(i)
+        for (i in 0 until childCount) {
+            val childView: View = parent.getChildAt(i)
             val position: Int = parent.getChildAdapterPosition(childView)
             val itemModel = getItemList()[position]
             val dt = LocalDateTime.parse(itemModel.createdOn)
 
-            if(dt.dayOfYear == LocalDateTime.now().dayOfYear){
-                    val top = childView.top - sectionItemHeight
-                    drawSectionView(c, "Hari Ini", top, "Tandai semua telah dibaca")
+            if (dt.dayOfYear == LocalDateTime.now().dayOfYear) {
+                val top = childView.top - sectionItemHeight
+                drawSectionView(c, "Hari Ini", top, "Tandai semua telah dibaca")
 
-            }
-            else if(LocalDateTime.now().dayOfYear - dt.dayOfYear <= 7){
-                    val top = childView.top - sectionItemHeight
-                    drawSectionView(c, "Minggu Ini", top, "")
-            }
-            else if(LocalDateTime.now().month == dt.month){
-                    val top = childView.top - sectionItemHeight
-                    drawSectionView(c, "Bulan Ini", top, "")
-            }
-            else{
-                    val top = childView.top - sectionItemHeight
-                    drawSectionView(c, "Terdahulu", top, "")
+            } else if (LocalDateTime.now().dayOfYear - dt.dayOfYear <= 7) {
+                val top = childView.top - sectionItemHeight
+                drawSectionView(c, "Minggu Ini", top, "")
+            } else if (LocalDateTime.now().month == dt.month) {
+                val top = childView.top - sectionItemHeight
+                drawSectionView(c, "Bulan Ini", top, "")
+            } else {
+                val top = childView.top - sectionItemHeight
+                drawSectionView(c, "Terdahulu", top, "")
             }
         }
 
     }
 
-    private fun drawDivider(canvas: Canvas, childView: View){
+    private fun drawDivider(canvas: Canvas, childView: View) {
         canvas.drawRect(
             0f,
             (childView.top - dividerHeight).toFloat(),
@@ -134,11 +124,11 @@ class CompanyItemSectionDecoration(
         )
     }
 
-    private fun drawSectionView(canvas: Canvas, text: String, top: Int, mark: String){
+    private fun drawSectionView(canvas: Canvas, text: String, top: Int, mark: String) {
         val view = CompanySectionViewHolder(context)
         view.setDate(text, mark)
         val paint = Paint()
-        paint.setColor(Color.WHITE);
+        paint.color = Color.WHITE
         val bitmap = getViewGroupBitmap(view)
         val bitmapCanvas = Canvas(bitmap)
         view.draw(bitmapCanvas)
@@ -146,7 +136,7 @@ class CompanyItemSectionDecoration(
         canvas.drawBitmap(bitmap, 0f, top.toFloat(), paint)
     }
 
-    private fun getViewGroupBitmap(viewGroup: ViewGroup): Bitmap{
+    private fun getViewGroupBitmap(viewGroup: ViewGroup): Bitmap {
         val layoutParams = ViewGroup.LayoutParams(sectionItemWidth, sectionItemHeight)
         viewGroup.layoutParams = layoutParams
 
@@ -165,20 +155,19 @@ class CompanyItemSectionDecoration(
     }
 
 
-
     private fun dipToPx(context: Context, dipValue: Float): Int {
         return (dipValue * context.resources.displayMetrics.density).toInt()
     }
 
-    private fun getScreenWidth(context: Context): Int{
+    private fun getScreenWidth(context: Context): Int {
         val outMetrics = DisplayMetrics()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val display = context.display
             display?.getRealMetrics(outMetrics)
-        }
-        else{
-            val display = (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
+        } else {
+            val display =
+                (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay
             display.getMetrics(outMetrics)
         }
         return outMetrics.widthPixels
