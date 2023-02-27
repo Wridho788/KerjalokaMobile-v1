@@ -50,7 +50,7 @@ class CompanyPage : Fragment(), OnFragmentClickListener {
         }
     }
 
-    fun companyPageTrace() {
+    private fun companyPageTrace() {
         val cache = ItemCache()
         val myTrace = Firebase.performance.newTrace("company_review_trace")
         myTrace.start()

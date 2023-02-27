@@ -5,7 +5,6 @@ import android.content.Context
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerConfiguration
 import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerView
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Camera.ActivityPickerViewController
-import java.lang.NullPointerException
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
@@ -50,10 +49,10 @@ class ProxyTranslator {
     private fun asFragment(method: Method, sourcesFrom: CameraSourcesFrom): Boolean {
         return when (sourcesFrom) {
             CameraSourcesFrom.CAMERA -> {
-                method.getAnnotation(Camera::class.java).openAsFragment
+                method.getAnnotation(Camera::class.java)!!.openAsFragment
             }
             CameraSourcesFrom.GALLERY -> {
-                method.getAnnotation(Gallery::class.java).openAsFragment
+                method.getAnnotation(Gallery::class.java)!!.openAsFragment
             }
         }
     }
@@ -95,10 +94,10 @@ class ProxyTranslator {
     private fun containerViewId(method: Method, sourcesFrom: CameraSourcesFrom): Int {
         return when (sourcesFrom) {
             CameraSourcesFrom.CAMERA -> {
-                method.getAnnotation(Camera::class.java).containerViewId
+                method.getAnnotation(Camera::class.java)!!.containerViewId
             }
             CameraSourcesFrom.GALLERY -> {
-                method.getAnnotation(Gallery::class.java).containerViewId
+                method.getAnnotation(Gallery::class.java)!!.containerViewId
             }
         }
     }

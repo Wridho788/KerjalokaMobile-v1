@@ -1,11 +1,12 @@
 package com.ciptakerjaarunika.kerjaloka.api.companyAddJob
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.getJobResponse
 import com.ciptakerjaarunika.kerjaloka.model.Data.CompanyAnalytic
 import com.ciptakerjaarunika.kerjaloka.service.ServiceBuilder
+import com.ciptakerjaarunika.kerjaloka.viewmodel.Company.Companyjobdetail.model.getJobResponse
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,6 +31,7 @@ class CompanyJobAPI {
                     onResult(response.body())
                 }
 
+                @SuppressLint("LogNotTimber")
                 override fun onFailure(call: Call<getJobResponse>, t: Throwable) {
                     onResult(null)
                     Log.d("response fail", t.toString())
@@ -41,9 +43,18 @@ class CompanyJobAPI {
 
     interface getCompanyAnalytic {
         @GET("users/analytic/get")
-        fun getCompanyAnalytic(@Query("analyticItemType") analyticItemType: Int, @Query("itemNo") itemNo: Long): Call<CompanyAnalytic>
+        fun getCompanyAnalytic(
+            @Query("analyticItemType") analyticItemType: Int,
+            @Query("itemNo") itemNo: Long
+        ): Call<CompanyAnalytic>
     }
-    fun GetCompanyAnalytic(context: Context?, analyticItemType: Int,itemNo: Long, onResult: (CompanyAnalytic?) -> Unit) {
+
+    fun GetCompanyAnalytic(
+        context: Context?,
+        analyticItemType: Int,
+        itemNo: Long,
+        onResult: (CompanyAnalytic?) -> Unit
+    ) {
         val retrofit = ServiceBuilder(context).GET(getCompanyAnalytic::class.java)
         retrofit.getCompanyAnalytic(analyticItemType, itemNo).enqueue(
             object : Callback<CompanyAnalytic> {
@@ -65,7 +76,6 @@ class CompanyJobAPI {
                         } catch (e: Exception) {
                             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
                         }
-                        Log.d("response", response.toString())
                     }
                 }
 

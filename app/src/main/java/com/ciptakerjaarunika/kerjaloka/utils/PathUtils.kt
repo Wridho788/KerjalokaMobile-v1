@@ -92,7 +92,7 @@ open class PathUtil {
         return result
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint("NewApi", "ObsoleteSdkInt")
     fun getRealPathFromURI_API19(context: Context, uri: Uri): String? {
 
         val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT

@@ -134,6 +134,7 @@ class AdditionalInfoPage(val data: CompanyJobDetail, val updateData: iAddidionta
         })
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun updateSkill(value: List<JobSkill>) {
         data.jobSkills = value
         binding.recycleSkill.apply {

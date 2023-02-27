@@ -1,5 +1,6 @@
 package com.ciptakerjaarunika.kerjaloka.utils
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
@@ -64,12 +65,13 @@ class DateUtils {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     open fun GetDateValue(value: String): Date {
         val temp = value.split("T")
         val time = temp[1].split(":")
         val date = "${temp[0]} ${time[0]}:${time[1]}"
         var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        return dateFormat.parse(date)
+        return dateFormat.parse(date)!!
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

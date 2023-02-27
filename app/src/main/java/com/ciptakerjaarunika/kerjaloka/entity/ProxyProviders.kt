@@ -7,13 +7,12 @@ import com.ciptakerjaarunika.kerjaloka.`interface`.ICustomPickerView
 import com.ciptakerjaarunika.kerjaloka.`interface`.IRxImagePickerSchedulers
 import com.ciptakerjaarunika.kerjaloka.viewmodel.Components.Camera.ActivityPickerViewController
 import io.reactivex.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.util.concurrent.Callable
 import kotlin.reflect.KClass
-import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 
 class ProxyProviders : InvocationHandler {
@@ -41,7 +40,13 @@ class ProxyProviders : InvocationHandler {
                 return@Callable Observable.just<Single<*>>(Single.fromObservable(observable))
 
             if (methodType == Maybe::class.java)
-                return@Callable Observable.just<Maybe<*>>(Maybe.fromSingle(Single.fromObservable(observable)))
+                return@Callable Observable.just<Maybe<*>>(
+                    Maybe.fromSingle(
+                        Single.fromObservable(
+                            observable
+                        )
+                    )
+                )
 
             if (methodType == Flowable::class.java)
                 return@Callable Observable.just(observable.toFlowable(BackpressureStrategy.MISSING))
@@ -51,14 +56,16 @@ class ProxyProviders : InvocationHandler {
     }
 }
 
-data class ConfigProvider(val componentClazz: KClass<*>,
-                          val asFragment: Boolean,
-                          val sourcesFrom: CameraSourcesFrom,
-                          @param:IdRes val containerViewId: Int,
-                          /** runtime injection **/
-                          val fragmentActivity: FragmentActivity,
-                          val pickerView: ICustomPickerView,
-                          val config: ICustomPickerConfiguration?)
+data class ConfigProvider(
+    val componentClazz: KClass<*>,
+    val asFragment: Boolean,
+    val sourcesFrom: CameraSourcesFrom,
+    @param:IdRes val containerViewId: Int,
+    /** runtime injection **/
+    val fragmentActivity: FragmentActivity,
+    val pickerView: ICustomPickerView,
+    val config: ICustomPickerConfiguration?
+)
 
 class ConfigProcessor(private val schedulers: IRxImagePickerSchedulers) {
 

@@ -1,6 +1,7 @@
 package com.ciptakerjaarunika.kerjaloka.service.WebSocket
 
 import MessageListener
+import android.annotation.SuppressLint
 import android.util.Log
 import okhttp3.*
 import okio.ByteString
@@ -18,11 +19,8 @@ object WebSocketManager {
     private var connectNum = 0
 
     fun init(url: String, _messageListener: MessageListener) {
-        client = OkHttpClient.Builder()
-            .writeTimeout(5, TimeUnit.SECONDS)
-            .readTimeout(5, TimeUnit.SECONDS)
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .build()
+        client = OkHttpClient.Builder().writeTimeout(5, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS).connectTimeout(10, TimeUnit.SECONDS).build()
         request = Request.Builder().url(url).build()
         messageListener = _messageListener
     }
@@ -35,6 +33,7 @@ object WebSocketManager {
         client.newWebSocket(request, createListener())
     }
 
+    @SuppressLint("LogNotTimber")
     fun reconnect() {
         if (connectNum <= MAX_NUM) {
             try {
@@ -46,8 +45,7 @@ object WebSocketManager {
             }
         } else {
             Log.i(
-                TAG,
-                "reconnect over $MAX_NUM,please check url or network"
+                TAG, "reconnect over $MAX_NUM,please check url or network"
             )
         }
     }
@@ -76,37 +74,30 @@ object WebSocketManager {
     private fun createListener(): WebSocketListener {
         return object : WebSocketListener() {
             override fun onOpen(
-                webSocket: WebSocket,
-                response: Response
+                webSocket: WebSocket, response: Response
             ) {
                 super.onOpen(webSocket, response)
-                Log.d(TAG, "open:$response")
                 mWebSocket = webSocket
                 isConnect = response.code == 101
                 if (!isConnect) {
                     reconnect()
                 } else {
-                    Log.i(TAG, "connect success.")
                     messageListener.onConnectSuccess()
                 }
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
-                Log.i(TAG, text)
                 messageListener.onMessage(text)
             }
 
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
                 super.onMessage(webSocket, bytes)
-                Log.i(TAG, bytes.toString())
                 messageListener.onMessage(bytes.base64())
             }
 
             override fun onClosing(
-                webSocket: WebSocket,
-                code: Int,
-                reason: String
+                webSocket: WebSocket, code: Int, reason: String
             ) {
                 super.onClosing(webSocket, code, reason)
                 isConnect = false
@@ -114,30 +105,25 @@ object WebSocketManager {
             }
 
             override fun onClosed(
-                webSocket: WebSocket,
-                code: Int,
-                reason: String
+                webSocket: WebSocket, code: Int, reason: String
             ) {
                 super.onClosed(webSocket, code, reason)
                 isConnect = false
                 messageListener.onClose()
             }
 
+            @SuppressLint("LogNotTimber")
             override fun onFailure(
-                webSocket: WebSocket,
-                t: Throwable,
-                response: Response?
+                webSocket: WebSocket, t: Throwable, response: Response?
             ) {
                 super.onFailure(webSocket, t, response)
                 if (response != null) {
                     Log.i(
-                        TAG,
-                        "connect failed：" + response.message
+                        TAG, "connect failed：" + response.message
                     )
                 }
                 Log.i(
-                    TAG,
-                    "connect failed throwable：" + t.message
+                    TAG, "connect failed throwable：" + t.message
                 )
                 isConnect = false
                 messageListener.onConnectFailed()

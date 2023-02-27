@@ -35,7 +35,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.perf.ktx.performance
 import com.google.firebase.perf.metrics.AddTrace
-import com.instabug.apm.APM
+//import com.instabug.apm.APM
 
 class HomePage : Fragment(), OnFragmentClickListener {
     private lateinit var binding: FragmentHomeBinding
@@ -72,9 +72,9 @@ class HomePage : Fragment(), OnFragmentClickListener {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val view = binding.root
-        APM.setFragmentSpansEnabled(true)
+//        APM.setFragmentSpansEnabled(true)
         if (SessionManager(context).user != null) {
-            view.findViewById<TextView>(R.id.greeting_txt).text =
+            view.findViewById<TextView>(R.id.textusername).text =
                 SessionManager(context).user?.userFullname!!.split(" ")[0]
         }
         binding.swipeToRefresh.setColorSchemeColors(R.color.danger_500)

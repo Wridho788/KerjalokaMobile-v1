@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -203,7 +202,7 @@ class JobDetailFragment(
                         val time = temp[1].split(":")
                         val date = "${temp[0]} ${time[0]}:${time[1]}"
                         var dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
-                        return dateFormat.parse(date)
+                        return dateFormat.parse(date)!!
                     }
 
                     @RequiresApi(Build.VERSION_CODES.O)
@@ -246,7 +245,6 @@ class JobDetailFragment(
                     val titleJob = it.data.jobPosition
                     val link = it.data.link
                     val job = it.data
-                    Log.d("link", link.toString())
                     toolbarShare.setOnClickListener {
                         val text =
                             "${job.company.companyName}\n" + "sedang membuka lowongan pekerjaan sebagai '${job.jobPosition}'.\n" + "Lihat informasi selengkapnya ${link}"

@@ -39,14 +39,13 @@ data class location(
 )
 
 data class rating(
-    val ratingValue: Float,
-    val ratingList: List<reviewList>
+    val ratingValue: Float, val ratingList: List<reviewList>
 )
+
 data class jobLocation(
-    val cityNo : Int,
-    val location : String,
-    val label : String
+    val cityNo: Int, val location: String, val label: String
 )
+
 data class job(
     val jobNo: Long,
     val jobPosition: String,
@@ -56,14 +55,11 @@ data class job(
 )
 
 data class company(
-    val companyNo: Long,
-    val companyName: String,
-    val logo: String,
-    val location: locationCompany
+    val companyNo: Long, val companyName: String, val logo: String, val location: locationCompany
 )
 
 data class locationCompany(
     val city: String,
     val province: String,
-    val country : String,
+    val country: String,
 )
