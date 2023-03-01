@@ -44,7 +44,7 @@ class KerjalokaMessagingService : FirebaseMessagingService() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun generateNotification(title: String, message: String, isCall: Boolean) {
-        var intent: Intent? = null
+        var intent: Intent?
         if (!isCall) {
             intent = Intent(this, MainActivity::class.java)
         } else {

@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class DateUtils {
+open class DateUtils {
     open fun GetDayName(value: Int): String {
         var dayName = ""
         when (value) {
@@ -29,12 +29,12 @@ class DateUtils {
         val diffMinute = GetDiffMinute(LocalDateTime.now().toString(), value)
 
         var Time = value.split("T")[1].split(":")
-        if (diffMinute < 1440 && LocalDateTime.now().dayOfMonth == dateValue.date) {
-            return "${Time[0]}:${Time[1]}"
+        return if (diffMinute < 1440 && LocalDateTime.now().dayOfMonth == dateValue.date) {
+            "${Time[0]}:${Time[1]}"
         } else if (diffMinute < 10080) {
-            return DateUtils().GetDayName(dateValue.day)
+            DateUtils().GetDayName(dateValue.day)
         } else {
-            return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+            LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
         }
     }
 
@@ -55,13 +55,13 @@ class DateUtils {
         val dateValue = GetDateValue(value)
         val diffMinute = GetDiffMinute(LocalDateTime.now().toString(), value)
 
-        var Time = value.split("T")[1].split(":")
-        if (diffMinute < 1440 && LocalDateTime.now().dayOfMonth == dateValue.date) {
-            return "Hari ini"
+        value.split("T")[1].split(":")
+        return if (diffMinute < 1440 && LocalDateTime.now().dayOfMonth == dateValue.date) {
+            "Hari ini"
         } else if (diffMinute < 10080) {
-            return DateUtils().GetDayName(dateValue.day)
+            DateUtils().GetDayName(dateValue.day)
         } else {
-            return LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
+            LocalDateTime.parse(value).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
         }
     }
 

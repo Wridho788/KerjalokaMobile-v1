@@ -60,10 +60,10 @@ class ProxyTranslator {
     private fun getComponentClass(method: Method, sourcesFrom: CameraSourcesFrom): KClass<*> {
         return when (sourcesFrom) {
             CameraSourcesFrom.CAMERA -> {
-                method.getAnnotation(Camera::class.java).componentClazz
+                method.getAnnotation(Camera::class.java)!!.componentClazz
             }
             CameraSourcesFrom.GALLERY -> {
-                method.getAnnotation(Gallery::class.java).componentClazz
+                method.getAnnotation(Gallery::class.java)!!.componentClazz
             }
         }
     }

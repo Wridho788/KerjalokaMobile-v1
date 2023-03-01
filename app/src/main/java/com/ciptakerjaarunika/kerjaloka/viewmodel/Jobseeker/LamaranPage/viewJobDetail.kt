@@ -92,23 +92,23 @@ class viewJobDetail(val JobNo: Long, val CompanyNo: Long, val applicationData: A
 
                 val localeID = Locale("in", "ID")
                 val formatRupiah: NumberFormat = NumberFormat.getCurrencyInstance(localeID)
-                val salaryMin = job.jobSalaryMin.toBigDecimal()
-                val salaryMax = job.jobSalaryMax.toBigDecimal()
+//                val salaryMin = job.jobSalaryMin.toBigDecimal()
+//                val salaryMax = job.jobSalaryMax.toBigDecimal()
 
-                if (job.jobSalaryMin == null || job.jobSalaryMax == null) {
-                    view.findViewById<TextView>(R.id.jobSalaryMin)?.text = " - "
-                }
-                if (job.jobSalaryMax != null) {
-                    view.findViewById<TextView>(R.id.jobSalaryMax)?.text =
-                        formatRupiah.format(salaryMax)
-                }
-                if (job.jobSalaryMin != null) {
-                    view.findViewById<TextView>(R.id.jobSalaryMin)?.text =
-                        formatRupiah.format(salaryMin) + " - "
-                } else if (job.jobSalaryMin != null && job.jobSalaryMax == null) {
-                    view.findViewById<TextView>(R.id.jobSalaryMin)?.text =
-                        formatRupiah.format(salaryMin)
-                }
+//                if (job.jobSalaryMin == null || job.jobSalaryMax == null) {
+//                    view.findViewById<TextView>(R.id.jobSalaryMin)?.text = " - "
+//                }
+//                if (job.jobSalaryMax != null) {
+//                    view.findViewById<TextView>(R.id.jobSalaryMax)?.text =
+//                        formatRupiah.format(salaryMax)
+//                }
+//                if (job.jobSalaryMin != null) {
+//                    view.findViewById<TextView>(R.id.jobSalaryMin)?.text =
+//                        formatRupiah.format(salaryMin) + " - "
+//                } else if (job.jobSalaryMin != null && job.jobSalaryMax == null) {
+//                    view.findViewById<TextView>(R.id.jobSalaryMin)?.text =
+//                        formatRupiah.format(salaryMin)
+//                }
 
                 view.findViewById<TextView>(R.id.jobQualification)?.text =
                     if (job.jobTitle.isEmpty()) "-" else job.jobTitle.joinToString { data -> data.titleName + ", " }
